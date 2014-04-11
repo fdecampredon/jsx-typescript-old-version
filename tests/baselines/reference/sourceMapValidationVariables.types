@@ -1,8 +1,16 @@
 === tests/cases/compiler/sourceMapValidationVariables.ts ===
-Line 0 col 4 IdentifierName "a" = number
-Line 1 col 4 IdentifierName "b" = any
-Line 2 col 4 IdentifierName "c" = number
-Line 2 col 12 IdentifierName "d" = any
-Line 2 col 15 IdentifierName "e" = any
-Line 3 col 4 IdentifierName "c2" = any
-Line 3 col 8 IdentifierName "d2" = number
+var a = 10;
+>a : number
+
+var b;
+>b : any
+
+var c = 10, d, e;
+>c : number
+>d : any
+>e : any
+
+var c2, d2 = 10;
+>c2 : any
+>d2 : number
+

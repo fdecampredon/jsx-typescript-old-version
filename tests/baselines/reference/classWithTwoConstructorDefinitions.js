@@ -1,3 +1,4 @@
+//// [classWithTwoConstructorDefinitions.js]
 var C = (function () {
     function C(x) {
     }

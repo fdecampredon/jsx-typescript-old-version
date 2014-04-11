@@ -1,3 +1,4 @@
+//// [staticsNotInScopeInClodule.js]
 var Clod = (function () {
     function Clod() {
     }

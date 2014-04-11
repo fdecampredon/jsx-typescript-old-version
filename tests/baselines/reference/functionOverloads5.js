@@ -1,3 +1,4 @@
+//// [functionOverloads5.js]
 var baz = (function () {
     function baz() {
     }

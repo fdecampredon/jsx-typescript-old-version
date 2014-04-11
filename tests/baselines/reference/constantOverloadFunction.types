@@ -1,27 +1,48 @@
 === tests/cases/compiler/constantOverloadFunction.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 0 col 13 IdentifierName "foo" = () => void
-Line 1 col 6 IdentifierName "Derived1" = Derived1
-Line 1 col 23 IdentifierName "Base" = Base
-Line 1 col 30 IdentifierName "bar" = () => void
-Line 2 col 6 IdentifierName "Derived2" = Derived2
-Line 2 col 23 IdentifierName "Base" = Base
-Line 2 col 30 IdentifierName "baz" = () => void
-Line 3 col 6 IdentifierName "Derived3" = Derived3
-Line 3 col 23 IdentifierName "Base" = Base
-Line 3 col 30 IdentifierName "biz" = () => void
-Line 5 col 9 IdentifierName "foo" = typeof foo
-Line 5 col 13 IdentifierName "tagName" = 'canvas'
-Line 5 col 33 IdentifierName "Derived1" = Derived1
-Line 6 col 9 IdentifierName "foo" = typeof foo
-Line 6 col 13 IdentifierName "tagName" = 'div'
-Line 6 col 31 IdentifierName "Derived2" = Derived2
-Line 7 col 9 IdentifierName "foo" = typeof foo
-Line 7 col 13 IdentifierName "tagName" = 'span'
-Line 7 col 31 IdentifierName "Derived3" = Derived3
-Line 8 col 9 IdentifierName "foo" = typeof foo
-Line 8 col 13 IdentifierName "tagName" = string
-Line 8 col 31 IdentifierName "Base" = Base
-Line 9 col 9 IdentifierName "foo" = typeof foo
-Line 9 col 13 IdentifierName "tagName" = any
-Line 9 col 28 IdentifierName "Base" = Base
+class Base { foo() { } }
+>Base : Base
+>foo : () => void
+
+class Derived1 extends Base { bar() { } }
+>Derived1 : Derived1
+>Base : Base
+>bar : () => void
+
+class Derived2 extends Base { baz() { } }
+>Derived2 : Derived2
+>Base : Base
+>baz : () => void
+
+class Derived3 extends Base { biz() { } }
+>Derived3 : Derived3
+>Base : Base
+>biz : () => void
+
+function foo(tagName: 'canvas'): Derived1;
+>foo : typeof foo
+>tagName : 'canvas'
+>Derived1 : Derived1
+
+function foo(tagName:  'div'): Derived2;
+>foo : typeof foo
+>tagName : 'div'
+>Derived2 : Derived2
+
+function foo(tagName: 'span'): Derived3;
+>foo : typeof foo
+>tagName : 'span'
+>Derived3 : Derived3
+
+function foo(tagName: string): Base;
+>foo : typeof foo
+>tagName : string
+>Base : Base
+
+function foo(tagName: any): Base {
+>foo : typeof foo
+>tagName : any
+>Base : Base
+
+    return null;
+}
+

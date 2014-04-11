@@ -1,42 +1,71 @@
 === tests/cases/compiler/noCollisionThisExpressionAndLocalVarInMethod.ts ===
-Line 0 col 4 IdentifierName "_this" = number
-Line 1 col 6 IdentifierName "a" = a
-Line 2 col 0 IdentifierName "method1" = () => { doStuff: (callback: any) => () => any; }
-Line 3 col 15 ObjectLiteralExpression "{
+var _this = 2;
+>_this : number
+
+class a {
+>a : a
+
+    method1() {
+>method1 : () => { doStuff: (callback: any) => () => any; }
+
+        return {
+>{
             doStuff: (callback) => () => {
                 var _this = 2;
                 return callback(_this);
             }
-        }" = { doStuff: (callback: any) => () => any; }
-Line 4 col 0 IdentifierName "doStuff" = (callback: any) => () => any
-Line 4 col 21 ParenthesizedArrowFunctionExpression "(callback) => () => {
+        } : { doStuff: (callback: any) => () => any; }
+
+            doStuff: (callback) => () => {
+>doStuff : (callback: any) => () => any
+>(callback) => () => {
                 var _this = 2;
                 return callback(_this);
-            }" = (callback: any) => () => any
-Line 4 col 22 IdentifierName "callback" = any
-Line 4 col 35 ParenthesizedArrowFunctionExpression "() => {
+            } : (callback: any) => () => any
+>callback : any
+>() => {
                 var _this = 2;
                 return callback(_this);
-            }" = () => any
-Line 5 col 20 IdentifierName "_this" = number
-Line 6 col 23 InvocationExpression "callback(_this)" = any
-Line 6 col 23 IdentifierName "callback" = any
-Line 6 col 32 IdentifierName "_this" = number
-Line 10 col 0 IdentifierName "method2" = () => { doStuff: (callback: any) => () => any; }
-Line 11 col 12 IdentifierName "_this" = number
-Line 12 col 15 ObjectLiteralExpression "{
+            } : () => any
+
+                var _this = 2;
+>_this : number
+
+                return callback(_this);
+>callback(_this) : any
+>callback : any
+>_this : number
+            }
+        }
+    }
+    method2() {
+>method2 : () => { doStuff: (callback: any) => () => any; }
+
+        var _this = 2;
+>_this : number
+
+        return {
+>{
             doStuff: (callback) => () => {
                 return callback(_this);
             }
-        }" = { doStuff: (callback: any) => () => any; }
-Line 13 col 0 IdentifierName "doStuff" = (callback: any) => () => any
-Line 13 col 21 ParenthesizedArrowFunctionExpression "(callback) => () => {
+        } : { doStuff: (callback: any) => () => any; }
+
+            doStuff: (callback) => () => {
+>doStuff : (callback: any) => () => any
+>(callback) => () => {
                 return callback(_this);
-            }" = (callback: any) => () => any
-Line 13 col 22 IdentifierName "callback" = any
-Line 13 col 35 ParenthesizedArrowFunctionExpression "() => {
+            } : (callback: any) => () => any
+>callback : any
+>() => {
                 return callback(_this);
-            }" = () => any
-Line 14 col 23 InvocationExpression "callback(_this)" = any
-Line 14 col 23 IdentifierName "callback" = any
-Line 14 col 32 IdentifierName "_this" = number
+            } : () => any
+
+                return callback(_this);
+>callback(_this) : any
+>callback : any
+>_this : number
+            }
+        }
+    }
+}

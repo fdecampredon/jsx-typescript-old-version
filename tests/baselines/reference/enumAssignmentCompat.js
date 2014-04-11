@@ -1,3 +1,4 @@
+//// [enumAssignmentCompat.js]
 var W;
 (function (W) {
     var D = (function () {

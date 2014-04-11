@@ -1,3 +1,4 @@
+//// [numericIndexExpressions.js]
 var x;
 x[1] = 4; // error
 x['1'] = 4; // error

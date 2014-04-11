@@ -1,3 +1,4 @@
+//// [privacyLocalInternalReferenceImportWithExport.js]
 // private elements
 var m_private;
 (function (m_private) {

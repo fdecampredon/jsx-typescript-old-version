@@ -1,12 +1,30 @@
 === tests/cases/compiler/sourceMapValidationModule.ts ===
-Line 0 col 7 IdentifierName "m2" = m2
-Line 1 col 8 IdentifierName "a" = number
-Line 2 col 0 PostIncrementExpression "a++" = number
-Line 2 col 0 IdentifierName "a" = number
-Line 4 col 7 IdentifierName "m3" = m3
-Line 5 col 11 IdentifierName "m4" = m4
-Line 6 col 19 IdentifierName "x" = number
-Line 9 col 20 IdentifierName "foo" = typeof foo
-Line 10 col 15 MemberAccessExpression "m4.x" = number
-Line 10 col 15 IdentifierName "m4" = typeof m4
-Line 10 col 18 IdentifierName "x" = number
+module m2 {
+>m2 : m2
+
+    var a = 10;
+>a : number
+
+    a++;
+>a++ : number
+>a : number
+}
+module m3 {
+>m3 : m3
+
+    module m4 {
+>m4 : m4
+
+        export var x = 30;
+>x : number
+    }
+
+    export function foo() {
+>foo : typeof foo
+
+        return m4.x;
+>m4.x : number
+>m4 : typeof m4
+>x : number
+    }
+}

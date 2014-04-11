@@ -1,22 +1,52 @@
 === tests/cases/compiler/recursiveMods.ts ===
-Line 0 col 14 IdentifierName "Foo" = Foo
-Line 1 col 14 IdentifierName "C" = C
-Line 4 col 14 IdentifierName "Foo" = Foo
-Line 6 col 10 IdentifierName "Bar" = typeof Bar
-Line 6 col 18 IdentifierName "C" = C
-Line 7 col 21 InvocationExpression "Bar()" = C
-Line 7 col 21 IdentifierName "Bar" = typeof Bar
-Line 8 col 9 ObjectCreationExpression "new C()" = C
-Line 8 col 13 IdentifierName "C" = typeof C
-Line 11 col 10 IdentifierName "Baz" = typeof Baz
-Line 11 col 18 IdentifierName "C" = C
-Line 12 col 6 IdentifierName "c" = C
-Line 12 col 10 InvocationExpression "Baz()" = C
-Line 12 col 10 IdentifierName "Baz" = typeof Baz
-Line 13 col 9 InvocationExpression "Bar()" = C
-Line 13 col 9 IdentifierName "Bar" = typeof Bar
-Line 16 col 10 IdentifierName "Gar" = typeof Gar
-Line 17 col 6 IdentifierName "c" = C
-Line 17 col 10 IdentifierName "C" = C
-Line 17 col 14 InvocationExpression "Baz()" = C
-Line 17 col 14 IdentifierName "Baz" = typeof Baz
+export module Foo {
+>Foo : Foo
+
+	export class C {}
+>C : C
+}
+
+export module Foo {
+>Foo : Foo
+
+	function Bar() : C {
+>Bar : typeof Bar
+>C : C
+
+		if (true) { return Bar();}
+>Bar() : C
+>Bar : typeof Bar
+
+		return new C();
+>new C() : C
+>C : typeof C
+	}
+
+	function Baz() : C {
+>Baz : typeof Baz
+>C : C
+
+		var c = Baz();
+>c : C
+>Baz() : C
+>Baz : typeof Baz
+
+		return Bar();
+>Bar() : C
+>Bar : typeof Bar
+	}
+
+	function Gar() {
+>Gar : typeof Gar
+
+		var c : C = Baz();
+>c : C
+>C : C
+>Baz() : C
+>Baz : typeof Baz
+
+		return;
+	}
+	
+}
+

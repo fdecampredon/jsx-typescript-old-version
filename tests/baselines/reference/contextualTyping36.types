@@ -1,11 +1,13 @@
 === tests/cases/compiler/contextualTyping36.ts ===
-Line 0 col 4 IdentifierName "foo" = { id: number; }[]
-Line 0 col 10 CastExpression "<{ id: number; }[]>[{ id: 4 }, <{ id: number; }>({  })]" = { id: number; }[]
-Line 0 col 13 IdentifierName "id" = number
-Line 0 col 29 ArrayLiteralExpression "[{ id: 4 }, <{ id: number; }>({  })]" = { id: number; }[]
-Line 0 col 30 ObjectLiteralExpression "{ id: 4 }" = { id: number; }
-Line 0 col 32 IdentifierName "id" = number
-Line 0 col 41 CastExpression "<{ id: number; }>({  })" = { id: number; }
-Line 0 col 44 IdentifierName "id" = number
-Line 0 col 58 ParenthesizedExpression "({  })" = {}
-Line 0 col 59 ObjectLiteralExpression "{  }" = {}
+var foo = <{ id: number; }[]>[{ id: 4 }, <{ id: number; }>({  })];
+>foo : { id: number; }[]
+><{ id: number; }[]>[{ id: 4 }, <{ id: number; }>({  })] : { id: number; }[]
+>id : number
+>[{ id: 4 }, <{ id: number; }>({  })] : { id: number; }[]
+>{ id: 4 } : { id: number; }
+>id : number
+><{ id: number; }>({  }) : { id: number; }
+>id : number
+>({  }) : {}
+>{  } : {}
+

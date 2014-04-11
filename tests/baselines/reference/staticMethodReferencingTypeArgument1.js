@@ -1,3 +1,4 @@
+//// [staticMethodReferencingTypeArgument1.js]
 var Editor;
 (function (Editor) {
     var List = (function () {

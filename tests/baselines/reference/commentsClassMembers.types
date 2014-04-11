@@ -1,463 +1,758 @@
 === tests/cases/compiler/commentsClassMembers.ts ===
-Line 2 col 6 IdentifierName "c1" = c1
-Line 4 col 11 IdentifierName "p1" = number
-Line 6 col 11 IdentifierName "p2" = (b: number) => number
-Line 6 col 33 IdentifierName "b" = number
-Line 7 col 15 AddExpression "this.p1 + b" = number
-Line 7 col 15 MemberAccessExpression "this.p1" = number
-Line 7 col 15 ThisKeyword "this" = c1
-Line 7 col 20 IdentifierName "p1" = number
-Line 7 col 25 IdentifierName "b" = number
-Line 10 col 15 IdentifierName "p3" = number
-Line 11 col 15 InvocationExpression "this.p2(this.p1)" = number
-Line 11 col 15 MemberAccessExpression "this.p2" = (b: number) => number
-Line 11 col 15 ThisKeyword "this" = c1
-Line 11 col 20 IdentifierName "p2" = (b: number) => number
-Line 11 col 23 MemberAccessExpression "this.p1" = number
-Line 11 col 23 ThisKeyword "this" = c1
-Line 11 col 28 IdentifierName "p1" = number
-Line 14 col 15 IdentifierName "p3" = number
-Line 14 col 37 IdentifierName "value" = number
-Line 15 col 0 AssignmentExpression "this.p1 = this.p2(value)" = number
-Line 15 col 0 MemberAccessExpression "this.p1" = number
-Line 15 col 0 ThisKeyword "this" = c1
-Line 15 col 13 IdentifierName "p1" = number
-Line 15 col 18 InvocationExpression "this.p2(value)" = number
-Line 15 col 18 MemberAccessExpression "this.p2" = (b: number) => number
-Line 15 col 18 ThisKeyword "this" = c1
-Line 15 col 23 IdentifierName "p2" = (b: number) => number
-Line 15 col 26 IdentifierName "value" = number
-Line 18 col 12 IdentifierName "pp1" = number
-Line 20 col 12 IdentifierName "pp2" = (b: number) => number
-Line 20 col 35 IdentifierName "b" = number
-Line 21 col 15 AddExpression "this.p1 + b" = number
-Line 21 col 15 MemberAccessExpression "this.p1" = number
-Line 21 col 15 ThisKeyword "this" = c1
-Line 21 col 20 IdentifierName "p1" = number
-Line 21 col 25 IdentifierName "b" = number
-Line 24 col 16 IdentifierName "pp3" = number
-Line 25 col 15 InvocationExpression "this.pp2(this.pp1)" = number
-Line 25 col 15 MemberAccessExpression "this.pp2" = (b: number) => number
-Line 25 col 15 ThisKeyword "this" = c1
-Line 25 col 20 IdentifierName "pp2" = (b: number) => number
-Line 25 col 24 MemberAccessExpression "this.pp1" = number
-Line 25 col 24 ThisKeyword "this" = c1
-Line 25 col 29 IdentifierName "pp1" = number
-Line 28 col 16 IdentifierName "pp3" = number
-Line 28 col 40 IdentifierName "value" = number
-Line 29 col 0 AssignmentExpression "this.pp1 = this.pp2(value)" = number
-Line 29 col 0 MemberAccessExpression "this.pp1" = number
-Line 29 col 0 ThisKeyword "this" = c1
-Line 29 col 13 IdentifierName "pp1" = number
-Line 29 col 19 InvocationExpression "this.pp2(value)" = number
-Line 29 col 19 MemberAccessExpression "this.pp2" = (b: number) => number
-Line 29 col 19 ThisKeyword "this" = c1
-Line 29 col 24 IdentifierName "pp2" = (b: number) => number
-Line 29 col 28 IdentifierName "value" = number
-Line 35 col 11 IdentifierName "s1" = number
-Line 37 col 11 IdentifierName "s2" = (b: number) => number
-Line 37 col 33 IdentifierName "b" = number
-Line 38 col 15 AddExpression "c1.s1 + b" = number
-Line 38 col 15 MemberAccessExpression "c1.s1" = number
-Line 38 col 15 IdentifierName "c1" = typeof c1
-Line 38 col 18 IdentifierName "s1" = number
-Line 38 col 23 IdentifierName "b" = number
-Line 41 col 15 IdentifierName "s3" = number
-Line 42 col 15 InvocationExpression "c1.s2(c1.s1)" = number
-Line 42 col 15 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 42 col 15 IdentifierName "c1" = typeof c1
-Line 42 col 18 IdentifierName "s2" = (b: number) => number
-Line 42 col 21 MemberAccessExpression "c1.s1" = number
-Line 42 col 21 IdentifierName "c1" = typeof c1
-Line 42 col 24 IdentifierName "s1" = number
-Line 45 col 15 IdentifierName "s3" = number
-Line 45 col 38 IdentifierName "value" = number
-Line 46 col 0 AssignmentExpression "c1.s1 = c1.s2(value)" = number
-Line 46 col 0 MemberAccessExpression "c1.s1" = number
-Line 46 col 0 IdentifierName "c1" = typeof c1
-Line 46 col 11 IdentifierName "s1" = number
-Line 46 col 16 InvocationExpression "c1.s2(value)" = number
-Line 46 col 16 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 46 col 16 IdentifierName "c1" = typeof c1
-Line 46 col 19 IdentifierName "s2" = (b: number) => number
-Line 46 col 22 IdentifierName "value" = number
-Line 48 col 11 IdentifierName "nc_p1" = number
-Line 49 col 11 IdentifierName "nc_p2" = (b: number) => number
-Line 49 col 17 IdentifierName "b" = number
-Line 50 col 15 AddExpression "this.nc_p1 + b" = number
-Line 50 col 15 MemberAccessExpression "this.nc_p1" = number
-Line 50 col 15 ThisKeyword "this" = c1
-Line 50 col 20 IdentifierName "nc_p1" = number
-Line 50 col 28 IdentifierName "b" = number
-Line 52 col 15 IdentifierName "nc_p3" = number
-Line 53 col 15 InvocationExpression "this.nc_p2(this.nc_p1)" = number
-Line 53 col 15 MemberAccessExpression "this.nc_p2" = (b: number) => number
-Line 53 col 15 ThisKeyword "this" = c1
-Line 53 col 20 IdentifierName "nc_p2" = (b: number) => number
-Line 53 col 26 MemberAccessExpression "this.nc_p1" = number
-Line 53 col 26 ThisKeyword "this" = c1
-Line 53 col 31 IdentifierName "nc_p1" = number
-Line 55 col 15 IdentifierName "nc_p3" = number
-Line 55 col 21 IdentifierName "value" = number
-Line 56 col 0 AssignmentExpression "this.nc_p1 = this.nc_p2(value)" = number
-Line 56 col 0 MemberAccessExpression "this.nc_p1" = number
-Line 56 col 0 ThisKeyword "this" = c1
-Line 56 col 13 IdentifierName "nc_p1" = number
-Line 56 col 21 InvocationExpression "this.nc_p2(value)" = number
-Line 56 col 21 MemberAccessExpression "this.nc_p2" = (b: number) => number
-Line 56 col 21 ThisKeyword "this" = c1
-Line 56 col 26 IdentifierName "nc_p2" = (b: number) => number
-Line 56 col 32 IdentifierName "value" = number
-Line 58 col 12 IdentifierName "nc_pp1" = number
-Line 59 col 12 IdentifierName "nc_pp2" = (b: number) => number
-Line 59 col 19 IdentifierName "b" = number
-Line 60 col 15 AddExpression "this.nc_pp1 + b" = number
-Line 60 col 15 MemberAccessExpression "this.nc_pp1" = number
-Line 60 col 15 ThisKeyword "this" = c1
-Line 60 col 20 IdentifierName "nc_pp1" = number
-Line 60 col 29 IdentifierName "b" = number
-Line 62 col 16 IdentifierName "nc_pp3" = number
-Line 63 col 15 InvocationExpression "this.nc_pp2(this.nc_pp1)" = number
-Line 63 col 15 MemberAccessExpression "this.nc_pp2" = (b: number) => number
-Line 63 col 15 ThisKeyword "this" = c1
-Line 63 col 20 IdentifierName "nc_pp2" = (b: number) => number
-Line 63 col 27 MemberAccessExpression "this.nc_pp1" = number
-Line 63 col 27 ThisKeyword "this" = c1
-Line 63 col 32 IdentifierName "nc_pp1" = number
-Line 65 col 16 IdentifierName "nc_pp3" = number
-Line 65 col 23 IdentifierName "value" = number
-Line 66 col 0 AssignmentExpression "this.nc_pp1 = this.nc_pp2(value)" = number
-Line 66 col 0 MemberAccessExpression "this.nc_pp1" = number
-Line 66 col 0 ThisKeyword "this" = c1
-Line 66 col 13 IdentifierName "nc_pp1" = number
-Line 66 col 22 InvocationExpression "this.nc_pp2(value)" = number
-Line 66 col 22 MemberAccessExpression "this.nc_pp2" = (b: number) => number
-Line 66 col 22 ThisKeyword "this" = c1
-Line 66 col 27 IdentifierName "nc_pp2" = (b: number) => number
-Line 66 col 34 IdentifierName "value" = number
-Line 68 col 11 IdentifierName "nc_s1" = number
-Line 69 col 11 IdentifierName "nc_s2" = (b: number) => number
-Line 69 col 17 IdentifierName "b" = number
-Line 70 col 15 AddExpression "c1.nc_s1 + b" = number
-Line 70 col 15 MemberAccessExpression "c1.nc_s1" = number
-Line 70 col 15 IdentifierName "c1" = typeof c1
-Line 70 col 18 IdentifierName "nc_s1" = number
-Line 70 col 26 IdentifierName "b" = number
-Line 72 col 15 IdentifierName "nc_s3" = number
-Line 73 col 15 InvocationExpression "c1.nc_s2(c1.nc_s1)" = number
-Line 73 col 15 MemberAccessExpression "c1.nc_s2" = (b: number) => number
-Line 73 col 15 IdentifierName "c1" = typeof c1
-Line 73 col 18 IdentifierName "nc_s2" = (b: number) => number
-Line 73 col 24 MemberAccessExpression "c1.nc_s1" = number
-Line 73 col 24 IdentifierName "c1" = typeof c1
-Line 73 col 27 IdentifierName "nc_s1" = number
-Line 75 col 15 IdentifierName "nc_s3" = number
-Line 75 col 21 IdentifierName "value" = number
-Line 76 col 0 AssignmentExpression "c1.nc_s1 = c1.nc_s2(value)" = number
-Line 76 col 0 MemberAccessExpression "c1.nc_s1" = number
-Line 76 col 0 IdentifierName "c1" = typeof c1
-Line 76 col 11 IdentifierName "nc_s1" = number
-Line 76 col 19 InvocationExpression "c1.nc_s2(value)" = number
-Line 76 col 19 MemberAccessExpression "c1.nc_s2" = (b: number) => number
-Line 76 col 19 IdentifierName "c1" = typeof c1
-Line 76 col 22 IdentifierName "nc_s2" = (b: number) => number
-Line 76 col 28 IdentifierName "value" = number
-Line 80 col 11 IdentifierName "a_p1" = number
-Line 82 col 11 IdentifierName "a_p2" = (b: number) => number
-Line 82 col 16 IdentifierName "b" = number
-Line 83 col 15 AddExpression "this.a_p1 + b" = number
-Line 83 col 15 MemberAccessExpression "this.a_p1" = number
-Line 83 col 15 ThisKeyword "this" = c1
-Line 83 col 20 IdentifierName "a_p1" = number
-Line 83 col 27 IdentifierName "b" = number
-Line 86 col 15 IdentifierName "a_p3" = number
-Line 87 col 15 InvocationExpression "this.a_p2(this.a_p1)" = number
-Line 87 col 15 MemberAccessExpression "this.a_p2" = (b: number) => number
-Line 87 col 15 ThisKeyword "this" = c1
-Line 87 col 20 IdentifierName "a_p2" = (b: number) => number
-Line 87 col 25 MemberAccessExpression "this.a_p1" = number
-Line 87 col 25 ThisKeyword "this" = c1
-Line 87 col 30 IdentifierName "a_p1" = number
-Line 90 col 15 IdentifierName "a_p3" = number
-Line 90 col 20 IdentifierName "value" = number
-Line 91 col 0 AssignmentExpression "this.a_p1 = this.a_p2(value)" = number
-Line 91 col 0 MemberAccessExpression "this.a_p1" = number
-Line 91 col 0 ThisKeyword "this" = c1
-Line 91 col 13 IdentifierName "a_p1" = number
-Line 91 col 20 InvocationExpression "this.a_p2(value)" = number
-Line 91 col 20 MemberAccessExpression "this.a_p2" = (b: number) => number
-Line 91 col 20 ThisKeyword "this" = c1
-Line 91 col 25 IdentifierName "a_p2" = (b: number) => number
-Line 91 col 30 IdentifierName "value" = number
-Line 94 col 12 IdentifierName "a_pp1" = number
-Line 96 col 12 IdentifierName "a_pp2" = (b: number) => number
-Line 96 col 18 IdentifierName "b" = number
-Line 97 col 15 AddExpression "this.a_p1 + b" = number
-Line 97 col 15 MemberAccessExpression "this.a_p1" = number
-Line 97 col 15 ThisKeyword "this" = c1
-Line 97 col 20 IdentifierName "a_p1" = number
-Line 97 col 27 IdentifierName "b" = number
-Line 100 col 16 IdentifierName "a_pp3" = number
-Line 101 col 15 InvocationExpression "this.a_pp2(this.a_pp1)" = number
-Line 101 col 15 MemberAccessExpression "this.a_pp2" = (b: number) => number
-Line 101 col 15 ThisKeyword "this" = c1
-Line 101 col 20 IdentifierName "a_pp2" = (b: number) => number
-Line 101 col 26 MemberAccessExpression "this.a_pp1" = number
-Line 101 col 26 ThisKeyword "this" = c1
-Line 101 col 31 IdentifierName "a_pp1" = number
-Line 104 col 16 IdentifierName "a_pp3" = number
-Line 104 col 22 IdentifierName "value" = number
-Line 105 col 0 AssignmentExpression "this.a_pp1 = this.a_pp2(value)" = number
-Line 105 col 0 MemberAccessExpression "this.a_pp1" = number
-Line 105 col 0 ThisKeyword "this" = c1
-Line 105 col 13 IdentifierName "a_pp1" = number
-Line 105 col 21 InvocationExpression "this.a_pp2(value)" = number
-Line 105 col 21 MemberAccessExpression "this.a_pp2" = (b: number) => number
-Line 105 col 21 ThisKeyword "this" = c1
-Line 105 col 26 IdentifierName "a_pp2" = (b: number) => number
-Line 105 col 32 IdentifierName "value" = number
-Line 109 col 11 IdentifierName "a_s1" = number
-Line 111 col 11 IdentifierName "a_s2" = (b: number) => number
-Line 111 col 16 IdentifierName "b" = number
-Line 112 col 15 AddExpression "c1.a_s1 + b" = number
-Line 112 col 15 MemberAccessExpression "c1.a_s1" = number
-Line 112 col 15 IdentifierName "c1" = typeof c1
-Line 112 col 18 IdentifierName "a_s1" = number
-Line 112 col 25 IdentifierName "b" = number
-Line 115 col 15 IdentifierName "a_s3" = number
-Line 116 col 15 InvocationExpression "c1.s2(c1.s1)" = number
-Line 116 col 15 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 116 col 15 IdentifierName "c1" = typeof c1
-Line 116 col 18 IdentifierName "s2" = (b: number) => number
-Line 116 col 21 MemberAccessExpression "c1.s1" = number
-Line 116 col 21 IdentifierName "c1" = typeof c1
-Line 116 col 24 IdentifierName "s1" = number
-Line 120 col 15 IdentifierName "a_s3" = number
-Line 120 col 20 IdentifierName "value" = number
-Line 121 col 0 AssignmentExpression "c1.a_s1 = c1.a_s2(value)" = number
-Line 121 col 0 MemberAccessExpression "c1.a_s1" = number
-Line 121 col 0 IdentifierName "c1" = typeof c1
-Line 121 col 11 IdentifierName "a_s1" = number
-Line 121 col 18 InvocationExpression "c1.a_s2(value)" = number
-Line 121 col 18 MemberAccessExpression "c1.a_s2" = (b: number) => number
-Line 121 col 18 IdentifierName "c1" = typeof c1
-Line 121 col 21 IdentifierName "a_s2" = (b: number) => number
-Line 121 col 26 IdentifierName "value" = number
-Line 125 col 11 IdentifierName "b_p1" = number
-Line 127 col 11 IdentifierName "b_p2" = (b: number) => number
-Line 127 col 16 IdentifierName "b" = number
-Line 128 col 15 AddExpression "this.b_p1 + b" = number
-Line 128 col 15 MemberAccessExpression "this.b_p1" = number
-Line 128 col 15 ThisKeyword "this" = c1
-Line 128 col 20 IdentifierName "b_p1" = number
-Line 128 col 27 IdentifierName "b" = number
-Line 131 col 15 IdentifierName "b_p3" = number
-Line 132 col 15 InvocationExpression "this.b_p2(this.b_p1)" = number
-Line 132 col 15 MemberAccessExpression "this.b_p2" = (b: number) => number
-Line 132 col 15 ThisKeyword "this" = c1
-Line 132 col 20 IdentifierName "b_p2" = (b: number) => number
-Line 132 col 25 MemberAccessExpression "this.b_p1" = number
-Line 132 col 25 ThisKeyword "this" = c1
-Line 132 col 30 IdentifierName "b_p1" = number
-Line 135 col 15 IdentifierName "b_p3" = number
-Line 135 col 20 IdentifierName "value" = number
-Line 136 col 0 AssignmentExpression "this.b_p1 = this.b_p2(value)" = number
-Line 136 col 0 MemberAccessExpression "this.b_p1" = number
-Line 136 col 0 ThisKeyword "this" = c1
-Line 136 col 13 IdentifierName "b_p1" = number
-Line 136 col 20 InvocationExpression "this.b_p2(value)" = number
-Line 136 col 20 MemberAccessExpression "this.b_p2" = (b: number) => number
-Line 136 col 20 ThisKeyword "this" = c1
-Line 136 col 25 IdentifierName "b_p2" = (b: number) => number
-Line 136 col 30 IdentifierName "value" = number
-Line 139 col 12 IdentifierName "b_pp1" = number
-Line 141 col 12 IdentifierName "b_pp2" = (b: number) => number
-Line 141 col 18 IdentifierName "b" = number
-Line 142 col 15 AddExpression "this.b_p1 + b" = number
-Line 142 col 15 MemberAccessExpression "this.b_p1" = number
-Line 142 col 15 ThisKeyword "this" = c1
-Line 142 col 20 IdentifierName "b_p1" = number
-Line 142 col 27 IdentifierName "b" = number
-Line 145 col 16 IdentifierName "b_pp3" = number
-Line 146 col 15 InvocationExpression "this.b_pp2(this.b_pp1)" = number
-Line 146 col 15 MemberAccessExpression "this.b_pp2" = (b: number) => number
-Line 146 col 15 ThisKeyword "this" = c1
-Line 146 col 20 IdentifierName "b_pp2" = (b: number) => number
-Line 146 col 26 MemberAccessExpression "this.b_pp1" = number
-Line 146 col 26 ThisKeyword "this" = c1
-Line 146 col 31 IdentifierName "b_pp1" = number
-Line 149 col 16 IdentifierName "b_pp3" = number
-Line 149 col 22 IdentifierName "value" = number
-Line 150 col 0 AssignmentExpression "this.b_pp1 = this.b_pp2(value)" = number
-Line 150 col 0 MemberAccessExpression "this.b_pp1" = number
-Line 150 col 0 ThisKeyword "this" = c1
-Line 150 col 13 IdentifierName "b_pp1" = number
-Line 150 col 21 InvocationExpression "this.b_pp2(value)" = number
-Line 150 col 21 MemberAccessExpression "this.b_pp2" = (b: number) => number
-Line 150 col 21 ThisKeyword "this" = c1
-Line 150 col 26 IdentifierName "b_pp2" = (b: number) => number
-Line 150 col 32 IdentifierName "value" = number
-Line 154 col 11 IdentifierName "b_s1" = number
-Line 156 col 11 IdentifierName "b_s2" = (b: number) => number
-Line 156 col 16 IdentifierName "b" = number
-Line 157 col 15 AddExpression "c1.b_s1 + b" = number
-Line 157 col 15 MemberAccessExpression "c1.b_s1" = number
-Line 157 col 15 IdentifierName "c1" = typeof c1
-Line 157 col 18 IdentifierName "b_s1" = number
-Line 157 col 25 IdentifierName "b" = number
-Line 161 col 15 IdentifierName "b_s3" = number
-Line 162 col 15 InvocationExpression "c1.s2(c1.s1)" = number
-Line 162 col 15 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 162 col 15 IdentifierName "c1" = typeof c1
-Line 162 col 18 IdentifierName "s2" = (b: number) => number
-Line 162 col 21 MemberAccessExpression "c1.s1" = number
-Line 162 col 21 IdentifierName "c1" = typeof c1
-Line 162 col 24 IdentifierName "s1" = number
-Line 167 col 15 IdentifierName "b_s3" = number
-Line 167 col 20 IdentifierName "value" = number
-Line 168 col 0 AssignmentExpression "/** setter */
-        c1.b_s1 = c1.b_s2(value)" = number
-Line 168 col 0 MemberAccessExpression "/** setter */
-        c1.b_s1" = number
-Line 168 col 0 IdentifierName "/** setter */
-        c1" = typeof c1
-Line 169 col 11 IdentifierName "b_s1" = number
-Line 169 col 18 InvocationExpression "c1.b_s2(value)" = number
-Line 169 col 18 MemberAccessExpression "c1.b_s2" = (b: number) => number
-Line 169 col 18 IdentifierName "c1" = typeof c1
-Line 169 col 21 IdentifierName "b_s2" = (b: number) => number
-Line 169 col 26 IdentifierName "value" = number
-Line 172 col 4 IdentifierName "i1" = c1
-Line 172 col 9 ObjectCreationExpression "new c1()" = c1
-Line 172 col 13 IdentifierName "c1" = typeof c1
-Line 173 col 4 IdentifierName "i1_p" = number
-Line 173 col 11 MemberAccessExpression "i1.p1" = number
-Line 173 col 11 IdentifierName "i1" = c1
-Line 173 col 14 IdentifierName "p1" = number
-Line 174 col 4 IdentifierName "i1_f" = (b: number) => number
-Line 174 col 11 MemberAccessExpression "i1.p2" = (b: number) => number
-Line 174 col 11 IdentifierName "i1" = c1
-Line 174 col 14 IdentifierName "p2" = (b: number) => number
-Line 175 col 4 IdentifierName "i1_r" = number
-Line 175 col 11 InvocationExpression "i1.p2(20)" = number
-Line 175 col 11 MemberAccessExpression "i1.p2" = (b: number) => number
-Line 175 col 11 IdentifierName "i1" = c1
-Line 175 col 14 IdentifierName "p2" = (b: number) => number
-Line 176 col 4 IdentifierName "i1_prop" = number
-Line 176 col 14 MemberAccessExpression "i1.p3" = number
-Line 176 col 14 IdentifierName "i1" = c1
-Line 176 col 17 IdentifierName "p3" = number
-Line 177 col 0 AssignmentExpression "i1.p3 = i1_prop" = number
-Line 177 col 0 MemberAccessExpression "i1.p3" = number
-Line 177 col 0 IdentifierName "i1" = c1
-Line 177 col 3 IdentifierName "p3" = number
-Line 177 col 8 IdentifierName "i1_prop" = number
-Line 178 col 4 IdentifierName "i1_nc_p" = number
-Line 178 col 14 MemberAccessExpression "i1.nc_p1" = number
-Line 178 col 14 IdentifierName "i1" = c1
-Line 178 col 17 IdentifierName "nc_p1" = number
-Line 179 col 4 IdentifierName "i1_ncf" = (b: number) => number
-Line 179 col 13 MemberAccessExpression "i1.nc_p2" = (b: number) => number
-Line 179 col 13 IdentifierName "i1" = c1
-Line 179 col 16 IdentifierName "nc_p2" = (b: number) => number
-Line 180 col 4 IdentifierName "i1_ncr" = number
-Line 180 col 13 InvocationExpression "i1.nc_p2(20)" = number
-Line 180 col 13 MemberAccessExpression "i1.nc_p2" = (b: number) => number
-Line 180 col 13 IdentifierName "i1" = c1
-Line 180 col 16 IdentifierName "nc_p2" = (b: number) => number
-Line 181 col 4 IdentifierName "i1_ncprop" = number
-Line 181 col 16 MemberAccessExpression "i1.nc_p3" = number
-Line 181 col 16 IdentifierName "i1" = c1
-Line 181 col 19 IdentifierName "nc_p3" = number
-Line 182 col 0 AssignmentExpression "i1.nc_p3 = i1_ncprop" = number
-Line 182 col 0 MemberAccessExpression "i1.nc_p3" = number
-Line 182 col 0 IdentifierName "i1" = c1
-Line 182 col 3 IdentifierName "nc_p3" = number
-Line 182 col 11 IdentifierName "i1_ncprop" = number
-Line 183 col 4 IdentifierName "i1_s_p" = number
-Line 183 col 13 MemberAccessExpression "c1.s1" = number
-Line 183 col 13 IdentifierName "c1" = typeof c1
-Line 183 col 16 IdentifierName "s1" = number
-Line 184 col 4 IdentifierName "i1_s_f" = (b: number) => number
-Line 184 col 13 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 184 col 13 IdentifierName "c1" = typeof c1
-Line 184 col 16 IdentifierName "s2" = (b: number) => number
-Line 185 col 4 IdentifierName "i1_s_r" = number
-Line 185 col 13 InvocationExpression "c1.s2(20)" = number
-Line 185 col 13 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 185 col 13 IdentifierName "c1" = typeof c1
-Line 185 col 16 IdentifierName "s2" = (b: number) => number
-Line 186 col 4 IdentifierName "i1_s_prop" = number
-Line 186 col 16 MemberAccessExpression "c1.s3" = number
-Line 186 col 16 IdentifierName "c1" = typeof c1
-Line 186 col 19 IdentifierName "s3" = number
-Line 187 col 0 AssignmentExpression "c1.s3 = i1_s_prop" = number
-Line 187 col 0 MemberAccessExpression "c1.s3" = number
-Line 187 col 0 IdentifierName "c1" = typeof c1
-Line 187 col 3 IdentifierName "s3" = number
-Line 187 col 8 IdentifierName "i1_s_prop" = number
-Line 188 col 4 IdentifierName "i1_s_nc_p" = number
-Line 188 col 16 MemberAccessExpression "c1.nc_s1" = number
-Line 188 col 16 IdentifierName "c1" = typeof c1
-Line 188 col 19 IdentifierName "nc_s1" = number
-Line 189 col 4 IdentifierName "i1_s_ncf" = (b: number) => number
-Line 189 col 15 MemberAccessExpression "c1.nc_s2" = (b: number) => number
-Line 189 col 15 IdentifierName "c1" = typeof c1
-Line 189 col 18 IdentifierName "nc_s2" = (b: number) => number
-Line 190 col 4 IdentifierName "i1_s_ncr" = number
-Line 190 col 15 InvocationExpression "c1.nc_s2(20)" = number
-Line 190 col 15 MemberAccessExpression "c1.nc_s2" = (b: number) => number
-Line 190 col 15 IdentifierName "c1" = typeof c1
-Line 190 col 18 IdentifierName "nc_s2" = (b: number) => number
-Line 191 col 4 IdentifierName "i1_s_ncprop" = number
-Line 191 col 18 MemberAccessExpression "c1.nc_s3" = number
-Line 191 col 18 IdentifierName "c1" = typeof c1
-Line 191 col 21 IdentifierName "nc_s3" = number
-Line 192 col 0 AssignmentExpression "c1.nc_s3 = i1_s_ncprop" = number
-Line 192 col 0 MemberAccessExpression "c1.nc_s3" = number
-Line 192 col 0 IdentifierName "c1" = typeof c1
-Line 192 col 3 IdentifierName "nc_s3" = number
-Line 192 col 11 IdentifierName "i1_s_ncprop" = number
-Line 193 col 4 IdentifierName "i1_c" = typeof c1
-Line 193 col 11 IdentifierName "c1" = typeof c1
-Line 194 col 6 IdentifierName "cProperties" = cProperties
-Line 195 col 12 IdentifierName "val" = number
-Line 197 col 15 IdentifierName "p1" = number
-Line 198 col 15 MemberAccessExpression "this.val" = number
-Line 198 col 15 ThisKeyword "this" = cProperties
-Line 198 col 20 IdentifierName "val" = number
-Line 200 col 15 IdentifierName "nc_p1" = number
-Line 201 col 15 MemberAccessExpression "this.val" = number
-Line 201 col 15 ThisKeyword "this" = cProperties
-Line 201 col 20 IdentifierName "val" = number
-Line 204 col 15 IdentifierName "p2" = number
-Line 204 col 18 IdentifierName "value" = number
-Line 205 col 0 AssignmentExpression "this.val = value" = number
-Line 205 col 0 MemberAccessExpression "this.val" = number
-Line 205 col 0 ThisKeyword "this" = cProperties
-Line 205 col 13 IdentifierName "val" = number
-Line 205 col 19 IdentifierName "value" = number
-Line 207 col 15 IdentifierName "nc_p2" = number
-Line 207 col 21 IdentifierName "value" = number
-Line 208 col 0 AssignmentExpression "this.val = value" = number
-Line 208 col 0 MemberAccessExpression "this.val" = number
-Line 208 col 0 ThisKeyword "this" = cProperties
-Line 208 col 13 IdentifierName "val" = number
-Line 208 col 19 IdentifierName "value" = number
-Line 211 col 4 IdentifierName "cProperties_i" = cProperties
-Line 211 col 20 ObjectCreationExpression "new cProperties()" = cProperties
-Line 211 col 24 IdentifierName "cProperties" = typeof cProperties
-Line 212 col 0 AssignmentExpression "cProperties_i.p2 = cProperties_i.p1" = number
-Line 212 col 0 MemberAccessExpression "cProperties_i.p2" = number
-Line 212 col 0 IdentifierName "cProperties_i" = cProperties
-Line 212 col 14 IdentifierName "p2" = number
-Line 212 col 19 MemberAccessExpression "cProperties_i.p1" = number
-Line 212 col 19 IdentifierName "cProperties_i" = cProperties
-Line 212 col 33 IdentifierName "p1" = number
-Line 213 col 0 AssignmentExpression "cProperties_i.nc_p2 = cProperties_i.nc_p1" = number
-Line 213 col 0 MemberAccessExpression "cProperties_i.nc_p2" = number
-Line 213 col 0 IdentifierName "cProperties_i" = cProperties
-Line 213 col 14 IdentifierName "nc_p2" = number
-Line 213 col 22 MemberAccessExpression "cProperties_i.nc_p1" = number
-Line 213 col 22 IdentifierName "cProperties_i" = cProperties
-Line 213 col 36 IdentifierName "nc_p1" = number
+
+/** This is comment for c1*/
+class c1 {
+>c1 : c1
+
+    /** p1 is property of c1*/
+    public p1: number;
+>p1 : number
+
+    /** sum with property*/
+    public p2(/** number to add*/b: number) {
+>p2 : (b: number) => number
+>b : number
+
+        return this.p1 + b;
+>this.p1 + b : number
+>this.p1 : number
+>this : c1
+>p1 : number
+>b : number
+    }
+    /** getter property*/
+    public get p3() {
+>p3 : number
+
+        return this.p2(this.p1);
+>this.p2(this.p1) : number
+>this.p2 : (b: number) => number
+>this : c1
+>p2 : (b: number) => number
+>this.p1 : number
+>this : c1
+>p1 : number
+    }
+    /** setter property*/
+    public set p3(/** this is value*/value: number) {
+>p3 : number
+>value : number
+
+        this.p1 = this.p2(value);
+>this.p1 = this.p2(value) : number
+>this.p1 : number
+>this : c1
+>p1 : number
+>this.p2(value) : number
+>this.p2 : (b: number) => number
+>this : c1
+>p2 : (b: number) => number
+>value : number
+    }
+    /** pp1 is property of c1*/
+    private pp1: number;
+>pp1 : number
+
+    /** sum with property*/
+    private pp2(/** number to add*/b: number) {
+>pp2 : (b: number) => number
+>b : number
+
+        return this.p1 + b;
+>this.p1 + b : number
+>this.p1 : number
+>this : c1
+>p1 : number
+>b : number
+    }
+    /** getter property*/
+    private get pp3() {
+>pp3 : number
+
+        return this.pp2(this.pp1);
+>this.pp2(this.pp1) : number
+>this.pp2 : (b: number) => number
+>this : c1
+>pp2 : (b: number) => number
+>this.pp1 : number
+>this : c1
+>pp1 : number
+    }
+    /** setter property*/
+    private set pp3( /** this is value*/value: number) {
+>pp3 : number
+>value : number
+
+        this.pp1 = this.pp2(value);
+>this.pp1 = this.pp2(value) : number
+>this.pp1 : number
+>this : c1
+>pp1 : number
+>this.pp2(value) : number
+>this.pp2 : (b: number) => number
+>this : c1
+>pp2 : (b: number) => number
+>value : number
+    }
+    /** Constructor method*/
+    constructor() {
+    }
+    /** s1 is static property of c1*/
+    static s1: number;
+>s1 : number
+
+    /** static sum with property*/
+    static s2(/** number to add*/b: number) {
+>s2 : (b: number) => number
+>b : number
+
+        return c1.s1 + b;
+>c1.s1 + b : number
+>c1.s1 : number
+>c1 : typeof c1
+>s1 : number
+>b : number
+    }
+    /** static getter property*/
+    static get s3() {
+>s3 : number
+
+        return c1.s2(c1.s1);
+>c1.s2(c1.s1) : number
+>c1.s2 : (b: number) => number
+>c1 : typeof c1
+>s2 : (b: number) => number
+>c1.s1 : number
+>c1 : typeof c1
+>s1 : number
+    }
+    /** setter property*/
+    static set s3( /** this is value*/value: number) {
+>s3 : number
+>value : number
+
+        c1.s1 = c1.s2(value);
+>c1.s1 = c1.s2(value) : number
+>c1.s1 : number
+>c1 : typeof c1
+>s1 : number
+>c1.s2(value) : number
+>c1.s2 : (b: number) => number
+>c1 : typeof c1
+>s2 : (b: number) => number
+>value : number
+    }
+    public nc_p1: number;
+>nc_p1 : number
+
+    public nc_p2(b: number) {
+>nc_p2 : (b: number) => number
+>b : number
+
+        return this.nc_p1 + b;
+>this.nc_p1 + b : number
+>this.nc_p1 : number
+>this : c1
+>nc_p1 : number
+>b : number
+    }
+    public get nc_p3() {
+>nc_p3 : number
+
+        return this.nc_p2(this.nc_p1);
+>this.nc_p2(this.nc_p1) : number
+>this.nc_p2 : (b: number) => number
+>this : c1
+>nc_p2 : (b: number) => number
+>this.nc_p1 : number
+>this : c1
+>nc_p1 : number
+    }
+    public set nc_p3(value: number) {
+>nc_p3 : number
+>value : number
+
+        this.nc_p1 = this.nc_p2(value);
+>this.nc_p1 = this.nc_p2(value) : number
+>this.nc_p1 : number
+>this : c1
+>nc_p1 : number
+>this.nc_p2(value) : number
+>this.nc_p2 : (b: number) => number
+>this : c1
+>nc_p2 : (b: number) => number
+>value : number
+    }
+    private nc_pp1: number;
+>nc_pp1 : number
+
+    private nc_pp2(b: number) {
+>nc_pp2 : (b: number) => number
+>b : number
+
+        return this.nc_pp1 + b;
+>this.nc_pp1 + b : number
+>this.nc_pp1 : number
+>this : c1
+>nc_pp1 : number
+>b : number
+    }
+    private get nc_pp3() {
+>nc_pp3 : number
+
+        return this.nc_pp2(this.nc_pp1);
+>this.nc_pp2(this.nc_pp1) : number
+>this.nc_pp2 : (b: number) => number
+>this : c1
+>nc_pp2 : (b: number) => number
+>this.nc_pp1 : number
+>this : c1
+>nc_pp1 : number
+    }
+    private set nc_pp3(value: number) {
+>nc_pp3 : number
+>value : number
+
+        this.nc_pp1 = this.nc_pp2(value);
+>this.nc_pp1 = this.nc_pp2(value) : number
+>this.nc_pp1 : number
+>this : c1
+>nc_pp1 : number
+>this.nc_pp2(value) : number
+>this.nc_pp2 : (b: number) => number
+>this : c1
+>nc_pp2 : (b: number) => number
+>value : number
+    }
+    static nc_s1: number;
+>nc_s1 : number
+
+    static nc_s2(b: number) {
+>nc_s2 : (b: number) => number
+>b : number
+
+        return c1.nc_s1 + b;
+>c1.nc_s1 + b : number
+>c1.nc_s1 : number
+>c1 : typeof c1
+>nc_s1 : number
+>b : number
+    }
+    static get nc_s3() {
+>nc_s3 : number
+
+        return c1.nc_s2(c1.nc_s1);
+>c1.nc_s2(c1.nc_s1) : number
+>c1.nc_s2 : (b: number) => number
+>c1 : typeof c1
+>nc_s2 : (b: number) => number
+>c1.nc_s1 : number
+>c1 : typeof c1
+>nc_s1 : number
+    }
+    static set nc_s3(value: number) {
+>nc_s3 : number
+>value : number
+
+        c1.nc_s1 = c1.nc_s2(value);
+>c1.nc_s1 = c1.nc_s2(value) : number
+>c1.nc_s1 : number
+>c1 : typeof c1
+>nc_s1 : number
+>c1.nc_s2(value) : number
+>c1.nc_s2 : (b: number) => number
+>c1 : typeof c1
+>nc_s2 : (b: number) => number
+>value : number
+    }
+
+    // p1 is property of c1
+    public a_p1: number;
+>a_p1 : number
+
+    // sum with property
+    public a_p2(b: number) {
+>a_p2 : (b: number) => number
+>b : number
+
+        return this.a_p1 + b;
+>this.a_p1 + b : number
+>this.a_p1 : number
+>this : c1
+>a_p1 : number
+>b : number
+    }
+    // getter property
+    public get a_p3() {
+>a_p3 : number
+
+        return this.a_p2(this.a_p1);
+>this.a_p2(this.a_p1) : number
+>this.a_p2 : (b: number) => number
+>this : c1
+>a_p2 : (b: number) => number
+>this.a_p1 : number
+>this : c1
+>a_p1 : number
+    }
+    // setter property
+    public set a_p3(value: number) {
+>a_p3 : number
+>value : number
+
+        this.a_p1 = this.a_p2(value);
+>this.a_p1 = this.a_p2(value) : number
+>this.a_p1 : number
+>this : c1
+>a_p1 : number
+>this.a_p2(value) : number
+>this.a_p2 : (b: number) => number
+>this : c1
+>a_p2 : (b: number) => number
+>value : number
+    }
+    // pp1 is property of c1
+    private a_pp1: number;
+>a_pp1 : number
+
+    // sum with property
+    private a_pp2(b: number) {
+>a_pp2 : (b: number) => number
+>b : number
+
+        return this.a_p1 + b;
+>this.a_p1 + b : number
+>this.a_p1 : number
+>this : c1
+>a_p1 : number
+>b : number
+    }
+    // getter property
+    private get a_pp3() {
+>a_pp3 : number
+
+        return this.a_pp2(this.a_pp1);
+>this.a_pp2(this.a_pp1) : number
+>this.a_pp2 : (b: number) => number
+>this : c1
+>a_pp2 : (b: number) => number
+>this.a_pp1 : number
+>this : c1
+>a_pp1 : number
+    }
+    // setter property
+    private set a_pp3(value: number) {
+>a_pp3 : number
+>value : number
+
+        this.a_pp1 = this.a_pp2(value);
+>this.a_pp1 = this.a_pp2(value) : number
+>this.a_pp1 : number
+>this : c1
+>a_pp1 : number
+>this.a_pp2(value) : number
+>this.a_pp2 : (b: number) => number
+>this : c1
+>a_pp2 : (b: number) => number
+>value : number
+    }
+    
+    // s1 is static property of c1
+    static a_s1: number;
+>a_s1 : number
+
+    // static sum with property
+    static a_s2(b: number) {
+>a_s2 : (b: number) => number
+>b : number
+
+        return c1.a_s1 + b;
+>c1.a_s1 + b : number
+>c1.a_s1 : number
+>c1 : typeof c1
+>a_s1 : number
+>b : number
+    }
+    // static getter property
+    static get a_s3() {
+>a_s3 : number
+
+        return c1.s2(c1.s1);
+>c1.s2(c1.s1) : number
+>c1.s2 : (b: number) => number
+>c1 : typeof c1
+>s2 : (b: number) => number
+>c1.s1 : number
+>c1 : typeof c1
+>s1 : number
+    }
+    
+    // setter property
+    static set a_s3(value: number) {
+>a_s3 : number
+>value : number
+
+        c1.a_s1 = c1.a_s2(value);
+>c1.a_s1 = c1.a_s2(value) : number
+>c1.a_s1 : number
+>c1 : typeof c1
+>a_s1 : number
+>c1.a_s2(value) : number
+>c1.a_s2 : (b: number) => number
+>c1 : typeof c1
+>a_s2 : (b: number) => number
+>value : number
+    }
+
+    /** p1 is property of c1 */
+    public b_p1: number;
+>b_p1 : number
+
+    /** sum with property */
+    public b_p2(b: number) {
+>b_p2 : (b: number) => number
+>b : number
+
+        return this.b_p1 + b;
+>this.b_p1 + b : number
+>this.b_p1 : number
+>this : c1
+>b_p1 : number
+>b : number
+    }
+    /** getter property */
+    public get b_p3() {
+>b_p3 : number
+
+        return this.b_p2(this.b_p1);
+>this.b_p2(this.b_p1) : number
+>this.b_p2 : (b: number) => number
+>this : c1
+>b_p2 : (b: number) => number
+>this.b_p1 : number
+>this : c1
+>b_p1 : number
+    }
+    /** setter property */
+    public set b_p3(value: number) {
+>b_p3 : number
+>value : number
+
+        this.b_p1 = this.b_p2(value);
+>this.b_p1 = this.b_p2(value) : number
+>this.b_p1 : number
+>this : c1
+>b_p1 : number
+>this.b_p2(value) : number
+>this.b_p2 : (b: number) => number
+>this : c1
+>b_p2 : (b: number) => number
+>value : number
+    }
+    /** pp1 is property of c1 */
+    private b_pp1: number;
+>b_pp1 : number
+
+    /** sum with property */
+    private b_pp2(b: number) {
+>b_pp2 : (b: number) => number
+>b : number
+
+        return this.b_p1 + b;
+>this.b_p1 + b : number
+>this.b_p1 : number
+>this : c1
+>b_p1 : number
+>b : number
+    }
+    /** getter property */
+    private get b_pp3() {
+>b_pp3 : number
+
+        return this.b_pp2(this.b_pp1);
+>this.b_pp2(this.b_pp1) : number
+>this.b_pp2 : (b: number) => number
+>this : c1
+>b_pp2 : (b: number) => number
+>this.b_pp1 : number
+>this : c1
+>b_pp1 : number
+    }
+    /** setter property */
+    private set b_pp3(value: number) {
+>b_pp3 : number
+>value : number
+
+        this.b_pp1 = this.b_pp2(value);
+>this.b_pp1 = this.b_pp2(value) : number
+>this.b_pp1 : number
+>this : c1
+>b_pp1 : number
+>this.b_pp2(value) : number
+>this.b_pp2 : (b: number) => number
+>this : c1
+>b_pp2 : (b: number) => number
+>value : number
+    }
+    
+    /** s1 is static property of c1 */
+    static b_s1: number;
+>b_s1 : number
+
+    /** static sum with property */
+    static b_s2(b: number) {
+>b_s2 : (b: number) => number
+>b : number
+
+        return c1.b_s1 + b;
+>c1.b_s1 + b : number
+>c1.b_s1 : number
+>c1 : typeof c1
+>b_s1 : number
+>b : number
+    }
+    /** static getter property 
+    */
+    static get b_s3() {
+>b_s3 : number
+
+        return c1.s2(c1.s1);
+>c1.s2(c1.s1) : number
+>c1.s2 : (b: number) => number
+>c1 : typeof c1
+>s2 : (b: number) => number
+>c1.s1 : number
+>c1 : typeof c1
+>s1 : number
+    }
+    
+    /** setter property 
+    */
+    static set b_s3(value: number) {
+>b_s3 : number
+>value : number
+
+        /** setter */
+>/** setter */
+        c1.b_s1 = c1.b_s2(value) : number
+>/** setter */
+        c1.b_s1 : number
+>/** setter */
+        c1 : typeof c1
+
+        c1.b_s1 = c1.b_s2(value);
+>b_s1 : number
+>c1.b_s2(value) : number
+>c1.b_s2 : (b: number) => number
+>c1 : typeof c1
+>b_s2 : (b: number) => number
+>value : number
+    }
+}
+var i1 = new c1();
+>i1 : c1
+>new c1() : c1
+>c1 : typeof c1
+
+var i1_p = i1.p1;
+>i1_p : number
+>i1.p1 : number
+>i1 : c1
+>p1 : number
+
+var i1_f = i1.p2;
+>i1_f : (b: number) => number
+>i1.p2 : (b: number) => number
+>i1 : c1
+>p2 : (b: number) => number
+
+var i1_r = i1.p2(20);
+>i1_r : number
+>i1.p2(20) : number
+>i1.p2 : (b: number) => number
+>i1 : c1
+>p2 : (b: number) => number
+
+var i1_prop = i1.p3;
+>i1_prop : number
+>i1.p3 : number
+>i1 : c1
+>p3 : number
+
+i1.p3 = i1_prop;
+>i1.p3 = i1_prop : number
+>i1.p3 : number
+>i1 : c1
+>p3 : number
+>i1_prop : number
+
+var i1_nc_p = i1.nc_p1;
+>i1_nc_p : number
+>i1.nc_p1 : number
+>i1 : c1
+>nc_p1 : number
+
+var i1_ncf = i1.nc_p2;
+>i1_ncf : (b: number) => number
+>i1.nc_p2 : (b: number) => number
+>i1 : c1
+>nc_p2 : (b: number) => number
+
+var i1_ncr = i1.nc_p2(20);
+>i1_ncr : number
+>i1.nc_p2(20) : number
+>i1.nc_p2 : (b: number) => number
+>i1 : c1
+>nc_p2 : (b: number) => number
+
+var i1_ncprop = i1.nc_p3;
+>i1_ncprop : number
+>i1.nc_p3 : number
+>i1 : c1
+>nc_p3 : number
+
+i1.nc_p3 = i1_ncprop;
+>i1.nc_p3 = i1_ncprop : number
+>i1.nc_p3 : number
+>i1 : c1
+>nc_p3 : number
+>i1_ncprop : number
+
+var i1_s_p = c1.s1;
+>i1_s_p : number
+>c1.s1 : number
+>c1 : typeof c1
+>s1 : number
+
+var i1_s_f = c1.s2;
+>i1_s_f : (b: number) => number
+>c1.s2 : (b: number) => number
+>c1 : typeof c1
+>s2 : (b: number) => number
+
+var i1_s_r = c1.s2(20);
+>i1_s_r : number
+>c1.s2(20) : number
+>c1.s2 : (b: number) => number
+>c1 : typeof c1
+>s2 : (b: number) => number
+
+var i1_s_prop = c1.s3;
+>i1_s_prop : number
+>c1.s3 : number
+>c1 : typeof c1
+>s3 : number
+
+c1.s3 = i1_s_prop;
+>c1.s3 = i1_s_prop : number
+>c1.s3 : number
+>c1 : typeof c1
+>s3 : number
+>i1_s_prop : number
+
+var i1_s_nc_p = c1.nc_s1;
+>i1_s_nc_p : number
+>c1.nc_s1 : number
+>c1 : typeof c1
+>nc_s1 : number
+
+var i1_s_ncf = c1.nc_s2;
+>i1_s_ncf : (b: number) => number
+>c1.nc_s2 : (b: number) => number
+>c1 : typeof c1
+>nc_s2 : (b: number) => number
+
+var i1_s_ncr = c1.nc_s2(20);
+>i1_s_ncr : number
+>c1.nc_s2(20) : number
+>c1.nc_s2 : (b: number) => number
+>c1 : typeof c1
+>nc_s2 : (b: number) => number
+
+var i1_s_ncprop = c1.nc_s3;
+>i1_s_ncprop : number
+>c1.nc_s3 : number
+>c1 : typeof c1
+>nc_s3 : number
+
+c1.nc_s3 = i1_s_ncprop;
+>c1.nc_s3 = i1_s_ncprop : number
+>c1.nc_s3 : number
+>c1 : typeof c1
+>nc_s3 : number
+>i1_s_ncprop : number
+
+var i1_c = c1;
+>i1_c : typeof c1
+>c1 : typeof c1
+
+class cProperties {
+>cProperties : cProperties
+
+    private val: number;
+>val : number
+
+    /** getter only property*/
+    public get p1() {
+>p1 : number
+
+        return this.val;
+>this.val : number
+>this : cProperties
+>val : number
+    }
+    public get nc_p1() {
+>nc_p1 : number
+
+        return this.val;
+>this.val : number
+>this : cProperties
+>val : number
+    }
+    /**setter only property*/
+    public set p2(value: number) {
+>p2 : number
+>value : number
+
+        this.val = value;
+>this.val = value : number
+>this.val : number
+>this : cProperties
+>val : number
+>value : number
+    }
+    public set nc_p2(value: number) {
+>nc_p2 : number
+>value : number
+
+        this.val = value;
+>this.val = value : number
+>this.val : number
+>this : cProperties
+>val : number
+>value : number
+    }
+}
+var cProperties_i = new cProperties();
+>cProperties_i : cProperties
+>new cProperties() : cProperties
+>cProperties : typeof cProperties
+
+cProperties_i.p2 = cProperties_i.p1;
+>cProperties_i.p2 = cProperties_i.p1 : number
+>cProperties_i.p2 : number
+>cProperties_i : cProperties
+>p2 : number
+>cProperties_i.p1 : number
+>cProperties_i : cProperties
+>p1 : number
+
+cProperties_i.nc_p2 = cProperties_i.nc_p1;
+>cProperties_i.nc_p2 = cProperties_i.nc_p1 : number
+>cProperties_i.nc_p2 : number
+>cProperties_i : cProperties
+>nc_p2 : number
+>cProperties_i.nc_p1 : number
+>cProperties_i : cProperties
+>nc_p1 : number
+

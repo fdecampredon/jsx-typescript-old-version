@@ -1,6 +1,15 @@
 === tests/cases/compiler/typeOfSuperCall.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 3 col 6 IdentifierName "D" = D
-Line 3 col 16 IdentifierName "C" = C
-Line 5 col 12 IdentifierName "x" = void
-Line 5 col 22 InvocationExpression "super()" = void
+class C {
+>C : C
+}
+
+class D extends C {
+>D : D
+>C : C
+
+    constructor() {
+        var x: void = super();
+>x : void
+>super() : void
+    }
+}

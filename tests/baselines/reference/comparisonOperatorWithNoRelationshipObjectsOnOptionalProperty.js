@@ -1,3 +1,4 @@
+//// [comparisonOperatorWithNoRelationshipObjectsOnOptionalProperty.js]
 var a;
 var b;
 

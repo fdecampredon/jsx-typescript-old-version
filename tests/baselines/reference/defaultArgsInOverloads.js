@@ -1,3 +1,4 @@
+//// [defaultArgsInOverloads.js]
 function fun(a) {
     if (typeof a === "undefined") { a = null; }
 }

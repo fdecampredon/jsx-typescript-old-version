@@ -1,3 +1,4 @@
+//// [ExportVariableOfGenericTypeWithInaccessibleTypeAsTypeArgument.js]
 var A;
 (function (A) {
     var B = (function () {

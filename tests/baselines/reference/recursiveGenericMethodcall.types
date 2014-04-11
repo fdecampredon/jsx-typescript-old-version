@@ -1,13 +1,20 @@
 === tests/cases/compiler/recursiveGenericMethodCall.ts ===
-Line 0 col 10 IdentifierName "Generator" = Generator<T>
-Line 0 col 20 IdentifierName "T" = T
-Line 0 col 29 IdentifierName "T" = T
-Line 2 col 9 IdentifierName "Generate" = typeof Generate
-Line 2 col 18 IdentifierName "T" = T
-Line 2 col 21 IdentifierName "func" = Generator<T>
-Line 2 col 27 IdentifierName "Generator" = Generator<T>
-Line 2 col 37 IdentifierName "T" = T
-Line 2 col 42 IdentifierName "T" = T
-Line 3 col 11 InvocationExpression "Generate(func)" = T
-Line 3 col 11 IdentifierName "Generate" = typeof Generate
-Line 3 col 20 IdentifierName "func" = Generator<T>
+interface Generator<T> { (): T; }
+>Generator : Generator<T>
+>T : T
+>T : T
+
+function Generate<T>(func: Generator<T>): T {
+>Generate : typeof Generate
+>T : T
+>func : Generator<T>
+>Generator : Generator<T>
+>T : T
+>T : T
+
+    return Generate(func);
+>Generate(func) : T
+>Generate : typeof Generate
+>func : Generator<T>
+}
+

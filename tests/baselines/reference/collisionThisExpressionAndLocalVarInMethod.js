@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndLocalVarInMethod.js]
 var a = (function () {
     function a() {
     }

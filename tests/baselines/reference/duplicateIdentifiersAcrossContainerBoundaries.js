@@ -1,3 +1,4 @@
+//// [duplicateIdentifiersAcrossContainerBoundaries.js]
 var M;
 (function (M) {
     var I = (function () {

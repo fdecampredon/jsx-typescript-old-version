@@ -1,23 +1,41 @@
 === tests/cases/compiler/newArrays.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 7 IdentifierName "Foo" = Foo
-Line 2 col 7 IdentifierName "Gar" = Gar
-Line 3 col 9 IdentifierName "fa" = Foo[]
-Line 3 col 13 IdentifierName "Foo" = Foo
-Line 4 col 9 IdentifierName "x" = number
-Line 5 col 9 IdentifierName "y" = number
-Line 7 col 9 IdentifierName "m" = () => void
-Line 8 col 0 AssignmentExpression "this.fa = new Array<Foo>(this.x * this.y)" = Foo[]
-Line 8 col 0 MemberAccessExpression "this.fa" = Foo[]
-Line 8 col 0 ThisKeyword "this" = Gar
-Line 8 col 8 IdentifierName "fa" = Foo[]
-Line 8 col 13 ObjectCreationExpression "new Array<Foo>(this.x * this.y)" = Foo[]
-Line 8 col 17 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
-Line 8 col 23 IdentifierName "Foo" = Foo
-Line 8 col 28 MultiplyExpression "this.x * this.y" = number
-Line 8 col 28 MemberAccessExpression "this.x" = number
-Line 8 col 28 ThisKeyword "this" = Gar
-Line 8 col 33 IdentifierName "x" = number
-Line 8 col 37 MemberAccessExpression "this.y" = number
-Line 8 col 37 ThisKeyword "this" = Gar
-Line 8 col 42 IdentifierName "y" = number
+module M {
+>M : M
+
+	class Foo {}
+>Foo : Foo
+
+	class Gar {
+>Gar : Gar
+
+		public fa: Foo[];
+>fa : Foo[]
+>Foo : Foo
+
+		public x = 10;
+>x : number
+
+		public y = 10;
+>y : number
+
+		public m () {
+>m : () => void
+
+			this.fa = new Array<Foo>(this.x * this.y);		
+>this.fa = new Array<Foo>(this.x * this.y) : Foo[]
+>this.fa : Foo[]
+>this : Gar
+>fa : Foo[]
+>new Array<Foo>(this.x * this.y) : Foo[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+>Foo : Foo
+>this.x * this.y : number
+>this.x : number
+>this : Gar
+>x : number
+>this.y : number
+>this : Gar
+>y : number
+		}
+	}
+}

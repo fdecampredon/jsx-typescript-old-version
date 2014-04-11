@@ -1,3 +1,4 @@
+//// [promiseChaining1.js]
 // same example but with constraints on each type parameter
 var Chain2 = (function () {
     function Chain2(value) {

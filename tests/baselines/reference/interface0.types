@@ -1,9 +1,16 @@
 === tests/cases/compiler/interface0.ts ===
-Line 0 col 10 IdentifierName "Generic" = Generic<T>
-Line 0 col 18 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "x" = T
-Line 1 col 7 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "y" = Generic<number>
-Line 4 col 7 IdentifierName "Generic" = Generic<T>
-Line 4 col 25 ObjectLiteralExpression "{ x: 3 }" = { x: number; }
-Line 4 col 27 IdentifierName "x" = number
+interface Generic<T> {
+>Generic : Generic<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+}
+
+var y: Generic<number> = { x: 3 };
+>y : Generic<number>
+>Generic : Generic<T>
+>{ x: 3 } : { x: number; }
+>x : number
+

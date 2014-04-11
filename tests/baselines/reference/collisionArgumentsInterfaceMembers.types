@@ -1,26 +1,63 @@
 === tests/cases/compiler/collisionArgumentsInterfaceMembers.ts ===
-Line 1 col 10 IdentifierName "i1" = i1
-Line 2 col 5 IdentifierName "i" = number
-Line 2 col 19 IdentifierName "arguments" = any[]
-Line 4 col 10 IdentifierName "i12" = i12
-Line 5 col 5 IdentifierName "arguments" = number
-Line 5 col 27 IdentifierName "rest" = any[]
-Line 7 col 10 IdentifierName "i1NoError" = i1NoError
-Line 8 col 5 IdentifierName "arguments" = number
-Line 12 col 10 IdentifierName "i2" = i2
-Line 13 col 9 IdentifierName "i" = number
-Line 13 col 23 IdentifierName "arguments" = any[]
-Line 15 col 10 IdentifierName "i21" = i21
-Line 16 col 9 IdentifierName "arguments" = number
-Line 16 col 31 IdentifierName "rest" = any[]
-Line 18 col 10 IdentifierName "i2NoError" = i2NoError
-Line 19 col 9 IdentifierName "arguments" = number
-Line 23 col 10 IdentifierName "i3" = i3
-Line 24 col 0 IdentifierName "foo" = (i: number, ...arguments: any[]) => any
-Line 24 col 8 IdentifierName "i" = number
-Line 24 col 22 IdentifierName "arguments" = any[]
-Line 25 col 0 IdentifierName "foo1" = (arguments: number, ...rest: any[]) => any
-Line 25 col 9 IdentifierName "arguments" = number
-Line 25 col 31 IdentifierName "rest" = any[]
-Line 26 col 0 IdentifierName "fooNoError" = (arguments: number) => any
-Line 26 col 15 IdentifierName "arguments" = number
+// call
+interface i1 {
+>i1 : i1
+
+    (i: number, ...arguments); // no error - no code gen
+>i : number
+>arguments : any[]
+}
+interface i12 {
+>i12 : i12
+
+    (arguments: number, ...rest); // no error - no code gen
+>arguments : number
+>rest : any[]
+}
+interface i1NoError {
+>i1NoError : i1NoError
+
+    (arguments: number);  // no error
+>arguments : number
+}
+
+// new
+interface i2 {
+>i2 : i2
+
+    new (i: number, ...arguments); // no error - no code gen
+>i : number
+>arguments : any[]
+}
+interface i21 {
+>i21 : i21
+
+    new (arguments: number, ...rest); // no error - no code gen
+>arguments : number
+>rest : any[]
+}
+interface i2NoError {
+>i2NoError : i2NoError
+
+    new (arguments: number);  // no error
+>arguments : number
+}
+
+// method
+interface i3 {
+>i3 : i3
+
+    foo(i: number, ...arguments); // no error - no code gen
+>foo : (i: number, ...arguments: any[]) => any
+>i : number
+>arguments : any[]
+
+    foo1(arguments: number, ...rest); // no error - no code gen
+>foo1 : (arguments: number, ...rest: any[]) => any
+>arguments : number
+>rest : any[]
+
+    fooNoError(arguments: number);  // no error
+>fooNoError : (arguments: number) => any
+>arguments : number
+}

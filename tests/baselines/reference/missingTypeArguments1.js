@@ -1,3 +1,4 @@
+//// [missingTypeArguments1.js]
 var Y = (function () {
     function Y() {
     }

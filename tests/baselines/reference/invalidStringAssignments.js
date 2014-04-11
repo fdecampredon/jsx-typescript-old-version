@@ -1,3 +1,4 @@
+//// [invalidStringAssignments.js]
 var x = '';
 
 var a = x;

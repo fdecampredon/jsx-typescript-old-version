@@ -1,3 +1,10 @@
+//// [foo_1.ts]
+import foo = require("./foo_0");
+if(foo.answer === 42){
+
+}
+
+
 //// [foo_0.js]
 define(["require", "exports"], function(require, exports) {
     var Foo;

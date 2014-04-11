@@ -1,3 +1,4 @@
+//// [typeParameterExplicitlyExtendsAny.js]
 function fee() {
     var t;
     t.blah; // Error

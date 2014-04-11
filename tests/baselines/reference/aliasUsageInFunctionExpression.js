@@ -1,3 +1,12 @@
+//// [aliasUsageInFunctionExpression_main.ts]
+import Backbone = require("aliasUsageInFunctionExpression_backbone");
+import moduleA = require("aliasUsageInFunctionExpression_moduleA");
+interface IHasVisualizationModel {
+    VisualizationModel: typeof Backbone.Model;
+}
+var f = (x: IHasVisualizationModel) => x;
+f = (x) => moduleA;
+
 //// [aliasUsageInFunctionExpression_backbone.js]
 var Model = (function () {
     function Model() {

@@ -1,3 +1,15 @@
+//// [functionExpressionAndLambdaMatchesFunction.ts]
+class CDoc {
+        constructor() {
+        function doSomething(a: Function) {
+        }
+        doSomething(() => undefined);
+        doSomething(function () { });
+    }
+}
+
+
+//// [functionExpressionAndLambdaMatchesFunction.js]
 var CDoc = (function () {
     function CDoc() {
         function doSomething(a) {

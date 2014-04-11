@@ -1,3 +1,4 @@
+//// [staticVisibility.js]
 var C1 = (function () {
     function C1() {
         var v = 0;

@@ -1,25 +1,54 @@
 === tests/cases/compiler/mergedModuleDeclarationCodeGen5.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 0 col 9 IdentifierName "buz" = M.buz
-Line 0 col 13 IdentifierName "plop" = M.buz.plop
-Line 1 col 20 IdentifierName "doom" = typeof doom
-Line 2 col 20 IdentifierName "M" = typeof M
-Line 4 col 7 IdentifierName "M" = M
-Line 4 col 9 IdentifierName "buz" = M.buz
-Line 4 col 13 IdentifierName "plop" = M.buz.plop
-Line 5 col 13 IdentifierName "gunk" = typeof gunk
-Line 6 col 13 IdentifierName "buz" = typeof buz
-Line 7 col 17 IdentifierName "fudge" = fudge
-Line 8 col 16 IdentifierName "plop" = plop
-Line 11 col 8 IdentifierName "v1" = typeof gunk
-Line 11 col 13 IdentifierName "gunk" = typeof gunk
-Line 12 col 8 IdentifierName "v2" = typeof buz
-Line 12 col 13 IdentifierName "buz" = typeof buz
-Line 13 col 15 IdentifierName "v3" = typeof doom
-Line 13 col 20 IdentifierName "doom" = typeof doom
-Line 14 col 15 IdentifierName "v4" = typeof M
-Line 14 col 20 IdentifierName "M" = typeof M
-Line 15 col 15 IdentifierName "v5" = typeof fudge
-Line 15 col 20 IdentifierName "fudge" = typeof fudge
-Line 16 col 15 IdentifierName "v6" = typeof plop
-Line 16 col 20 IdentifierName "plop" = typeof plop
+module M.buz.plop {
+>M : M
+>buz : M.buz
+>plop : M.buz.plop
+
+    export function doom() { }
+>doom : typeof doom
+
+    export function M() { }
+>M : typeof M
+}
+module M.buz.plop {
+>M : M
+>buz : M.buz
+>plop : M.buz.plop
+
+    function gunk() { }
+>gunk : typeof gunk
+
+    function buz() { }
+>buz : typeof buz
+
+    export class fudge { }
+>fudge : fudge
+
+    export enum plop { }
+>plop : plop
+
+    // Emit these references as follows
+    var v1 = gunk; // gunk
+>v1 : typeof gunk
+>gunk : typeof gunk
+
+    var v2 = buz; // buz
+>v2 : typeof buz
+>buz : typeof buz
+
+    export var v3 = doom; // _plop.doom
+>v3 : typeof doom
+>doom : typeof doom
+
+    export var v4 = M; // _plop.M
+>v4 : typeof M
+>M : typeof M
+
+    export var v5 = fudge; // fudge
+>v5 : typeof fudge
+>fudge : typeof fudge
+
+    export var v6 = plop; // plop
+>v6 : typeof plop
+>plop : typeof plop
+}

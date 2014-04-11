@@ -1,10 +1,18 @@
 === tests/cases/compiler/modFunctionCrash.ts ===
-Line 0 col 15 IdentifierName "Q" = Q
-Line 1 col 13 IdentifierName "f" = typeof f
-Line 1 col 15 IdentifierName "fn" = () => void
-Line 3 col 0 InvocationExpression "Q.f(function() {this;})" = any
-Line 3 col 0 MemberAccessExpression "Q.f" = typeof Q.f
-Line 3 col 0 IdentifierName "Q" = typeof Q
-Line 5 col 2 IdentifierName "f" = typeof Q.f
-Line 5 col 4 FunctionExpression "function() {this;}" = () => void
-Line 5 col 16 ThisKeyword "this" = any
+declare module Q {
+>Q : Q
+
+    function f(fn:()=>void); // typechecking the function type shouldnot crash the compiler
+>f : typeof f
+>fn : () => void
+}
+
+>Q.f(function() {this;}) : any
+>Q.f : typeof Q.f
+>Q : typeof Q
+
+Q.f(function() {this;});
+>f : typeof Q.f
+>function() {this;} : () => void
+>this : any
+

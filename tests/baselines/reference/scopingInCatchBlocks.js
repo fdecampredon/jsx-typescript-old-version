@@ -1,3 +1,4 @@
+//// [scopingInCatchBlocks.js]
 try  {
 } catch (ex1) {
     throw ex1;

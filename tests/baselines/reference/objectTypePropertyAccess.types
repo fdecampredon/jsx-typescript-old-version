@@ -1,62 +1,105 @@
 === tests/cases/compiler/objectTypePropertyAccess.ts ===
-Line 1 col 6 IdentifierName "C" = C
-Line 2 col 0 IdentifierName "foo" = string
-Line 5 col 4 IdentifierName "c" = C
-Line 5 col 7 IdentifierName "C" = C
-Line 6 col 4 IdentifierName "r1" = string
-Line 6 col 9 InvocationExpression "c.toString()" = string
-Line 6 col 9 MemberAccessExpression "c.toString" = () => string
-Line 6 col 9 IdentifierName "c" = C
-Line 6 col 11 IdentifierName "toString" = () => string
-Line 7 col 4 IdentifierName "r2" = string
-Line 7 col 9 InvocationExpression "c['toString']()" = string
-Line 7 col 9 ElementAccessExpression "c['toString']" = () => string
-Line 7 col 9 IdentifierName "c" = C
-Line 8 col 4 IdentifierName "r3" = string
-Line 8 col 9 MemberAccessExpression "c.foo" = string
-Line 8 col 9 IdentifierName "c" = C
-Line 8 col 11 IdentifierName "foo" = string
-Line 9 col 4 IdentifierName "r4" = string
-Line 9 col 9 ElementAccessExpression "c['foo']" = string
-Line 9 col 9 IdentifierName "c" = C
-Line 11 col 10 IdentifierName "I" = I
-Line 12 col 0 IdentifierName "bar" = string
-Line 14 col 4 IdentifierName "i" = I
-Line 14 col 7 IdentifierName "I" = I
-Line 15 col 4 IdentifierName "r4" = string
-Line 15 col 9 InvocationExpression "i.toString()" = string
-Line 15 col 9 MemberAccessExpression "i.toString" = () => string
-Line 15 col 9 IdentifierName "i" = I
-Line 15 col 11 IdentifierName "toString" = () => string
-Line 16 col 4 IdentifierName "r5" = string
-Line 16 col 9 InvocationExpression "i['toString']()" = string
-Line 16 col 9 ElementAccessExpression "i['toString']" = () => string
-Line 16 col 9 IdentifierName "i" = I
-Line 17 col 4 IdentifierName "r6" = string
-Line 17 col 9 MemberAccessExpression "i.bar" = string
-Line 17 col 9 IdentifierName "i" = I
-Line 17 col 11 IdentifierName "bar" = string
-Line 18 col 4 IdentifierName "r7" = string
-Line 18 col 9 ElementAccessExpression "i['bar']" = string
-Line 18 col 9 IdentifierName "i" = I
-Line 20 col 4 IdentifierName "a" = { foo: string; }
-Line 20 col 8 ObjectLiteralExpression "{
+// Index notation should resolve to the type of a declared property with that same name
+class C {
+>C : C
+
+    foo: string;
+>foo : string
+}
+
+var c: C;
+>c : C
+>C : C
+
+var r1 = c.toString();
+>r1 : string
+>c.toString() : string
+>c.toString : () => string
+>c : C
+>toString : () => string
+
+var r2 = c['toString']();
+>r2 : string
+>c['toString']() : string
+>c['toString'] : () => string
+>c : C
+
+var r3 = c.foo;
+>r3 : string
+>c.foo : string
+>c : C
+>foo : string
+
+var r4 = c['foo'];
+>r4 : string
+>c['foo'] : string
+>c : C
+
+interface I {
+>I : I
+
+    bar: string;
+>bar : string
+}
+var i: I;
+>i : I
+>I : I
+
+var r4 = i.toString();
+>r4 : string
+>i.toString() : string
+>i.toString : () => string
+>i : I
+>toString : () => string
+
+var r5 = i['toString']();
+>r5 : string
+>i['toString']() : string
+>i['toString'] : () => string
+>i : I
+
+var r6 = i.bar;
+>r6 : string
+>i.bar : string
+>i : I
+>bar : string
+
+var r7 = i['bar'];
+>r7 : string
+>i['bar'] : string
+>i : I
+
+var a = {
+>a : { foo: string; }
+>{
     foo: ''
-}" = { foo: string; }
-Line 21 col 0 IdentifierName "foo" = string
-Line 24 col 4 IdentifierName "r8" = string
-Line 24 col 9 InvocationExpression "a.toString()" = string
-Line 24 col 9 MemberAccessExpression "a.toString" = () => string
-Line 24 col 9 IdentifierName "a" = { foo: string; }
-Line 24 col 11 IdentifierName "toString" = () => string
-Line 25 col 4 IdentifierName "r9" = string
-Line 25 col 9 InvocationExpression "a['toString']()" = string
-Line 25 col 9 ElementAccessExpression "a['toString']" = () => string
-Line 25 col 9 IdentifierName "a" = { foo: string; }
-Line 26 col 4 IdentifierName "r10" = string
-Line 26 col 10 MemberAccessExpression "a.foo" = string
-Line 26 col 10 IdentifierName "a" = { foo: string; }
-Line 26 col 12 IdentifierName "foo" = string
-Line 27 col 4 IdentifierName "r11" = string
-Line 27 col 10 ElementAccessExpression "a['foo']" = string
-Line 27 col 10 IdentifierName "a" = { foo: string; }
+} : { foo: string; }
+
+    foo: ''
+>foo : string
+}
+
+var r8 = a.toString();
+>r8 : string
+>a.toString() : string
+>a.toString : () => string
+>a : { foo: string; }
+>toString : () => string
+
+var r9 = a['toString']();
+>r9 : string
+>a['toString']() : string
+>a['toString'] : () => string
+>a : { foo: string; }
+
+var r10 = a.foo;
+>r10 : string
+>a.foo : string
+>a : { foo: string; }
+>foo : string
+
+var r11 = a['foo'];
+>r11 : string
+>a['foo'] : string
+>a : { foo: string; }
+

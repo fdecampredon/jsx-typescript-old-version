@@ -1,16 +1,31 @@
 === tests/cases/compiler/es6ClassTest4.ts ===
-Line 0 col 14 IdentifierName "Point" = Point
-Line 2 col 0 IdentifierName "x" = number
-Line 3 col 0 IdentifierName "y" = number
-Line 4 col 0 IdentifierName "add" = (dx: number, dy: number) => Point
-Line 4 col 8 IdentifierName "dx" = number
-Line 4 col 20 IdentifierName "dy" = number
-Line 4 col 33 IdentifierName "Point" = Point
-Line 5 col 0 IdentifierName "mult" = (p: Point) => Point
-Line 5 col 9 IdentifierName "p" = Point
-Line 5 col 12 IdentifierName "Point" = Point
-Line 5 col 20 IdentifierName "Point" = Point
-Line 6 col 11 IdentifierName "origin" = Point
-Line 6 col 19 IdentifierName "Point" = Point
-Line 7 col 16 IdentifierName "x" = number
-Line 7 col 27 IdentifierName "y" = number
+declare class Point
+>Point : Point
+{
+    x: number;
+>x : number
+
+    y: number;
+>y : number
+
+    add(dx: number, dy: number): Point;
+>add : (dx: number, dy: number) => Point
+>dx : number
+>dy : number
+>Point : Point
+
+    mult(p: Point): Point;
+>mult : (p: Point) => Point
+>p : Point
+>Point : Point
+>Point : Point
+
+    static origin: Point;
+>origin : Point
+>Point : Point
+
+    constructor(x: number, y: number);
+>x : number
+>y : number
+}
+

@@ -1,10 +1,31 @@
 === tests/cases/compiler/inheritanceMemberAccessorOverridingAccessor.ts ===
-Line 0 col 6 IdentifierName "a" = a
-Line 1 col 8 IdentifierName "x" = string
-Line 4 col 8 IdentifierName "x" = string
-Line 4 col 10 IdentifierName "aValue" = string
-Line 9 col 6 IdentifierName "b" = b
-Line 9 col 16 IdentifierName "a" = a
-Line 10 col 8 IdentifierName "x" = string
-Line 13 col 8 IdentifierName "x" = string
-Line 13 col 10 IdentifierName "aValue" = string
+class a {
+>a : a
+
+    get x() {
+>x : string
+
+        return "20";
+    }
+    set x(aValue: string) {
+>x : string
+>aValue : string
+
+    }
+}
+
+class b extends a {
+>b : b
+>a : a
+
+    get x() {
+>x : string
+
+        return "20";
+    }
+    set x(aValue: string) {
+>x : string
+>aValue : string
+
+    }
+}

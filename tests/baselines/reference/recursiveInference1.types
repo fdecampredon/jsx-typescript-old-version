@@ -1,19 +1,23 @@
 === tests/cases/compiler/recursiveInference1.ts ===
-Line 0 col 9 IdentifierName "fib" = typeof fib
-Line 0 col 13 IdentifierName "x" = number
-Line 0 col 32 ConditionalExpression "x <= 1 ? x : fib(x - 1) + fib(x - 2)" = any
-Line 0 col 32 LessThanOrEqualExpression "x <= 1" = boolean
-Line 0 col 32 IdentifierName "x" = number
-Line 0 col 41 IdentifierName "x" = number
-Line 0 col 45 AddExpression "fib(x - 1) + fib(x - 2)" = any
-Line 0 col 45 InvocationExpression "fib(x - 1)" = any
-Line 0 col 45 IdentifierName "fib" = typeof fib
-Line 0 col 49 SubtractExpression "x - 1" = number
-Line 0 col 49 IdentifierName "x" = number
-Line 0 col 58 InvocationExpression "fib(x - 2)" = any
-Line 0 col 58 IdentifierName "fib" = typeof fib
-Line 0 col 62 SubtractExpression "x - 2" = number
-Line 0 col 62 IdentifierName "x" = number
-Line 1 col 4 IdentifierName "result" = any
-Line 1 col 13 InvocationExpression "fib(5)" = any
-Line 1 col 13 IdentifierName "fib" = typeof fib
+function fib(x:number) { return x <= 1 ? x : fib(x - 1) + fib(x - 2); }
+>fib : typeof fib
+>x : number
+>x <= 1 ? x : fib(x - 1) + fib(x - 2) : any
+>x <= 1 : boolean
+>x : number
+>x : number
+>fib(x - 1) + fib(x - 2) : any
+>fib(x - 1) : any
+>fib : typeof fib
+>x - 1 : number
+>x : number
+>fib(x - 2) : any
+>fib : typeof fib
+>x - 2 : number
+>x : number
+
+var result = fib(5);
+>result : any
+>fib(5) : any
+>fib : typeof fib
+

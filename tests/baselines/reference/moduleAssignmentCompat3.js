@@ -1,3 +1,4 @@
+//// [moduleAssignmentCompat3.js]
 var A;
 (function (A) {
     A.x = 1;

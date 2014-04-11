@@ -1,3 +1,4 @@
+//// [promisePermutations.js]
 var r1;
 var r1a = r1.then(testFunction, testFunction, testFunction);
 var r1b = r1.then(testFunction, testFunction, testFunction).then(testFunction, testFunction, testFunction);

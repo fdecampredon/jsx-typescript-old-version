@@ -1,31 +1,73 @@
 === tests/cases/compiler/classWithOnlyPublicMembersEquivalentToInterface.ts ===
-Line 2 col 6 IdentifierName "C" = C
-Line 3 col 11 IdentifierName "x" = string
-Line 4 col 11 IdentifierName "y" = (a: number) => number
-Line 4 col 13 IdentifierName "a" = number
-Line 5 col 15 IdentifierName "z" = number
-Line 6 col 15 IdentifierName "z" = number
-Line 6 col 17 IdentifierName "v" = number
-Line 7 col 5 IdentifierName "x" = string
-Line 7 col 17 IdentifierName "Object" = Object
-Line 8 col 5 IdentifierName "x" = number
-Line 8 col 17 IdentifierName "Object" = Object
-Line 12 col 10 IdentifierName "I" = I
-Line 13 col 0 IdentifierName "x" = string
-Line 14 col 0 IdentifierName "y" = (b: number) => number
-Line 14 col 6 IdentifierName "b" = number
-Line 15 col 0 IdentifierName "z" = number
-Line 16 col 5 IdentifierName "x" = string
-Line 16 col 17 IdentifierName "Object" = Object
-Line 17 col 5 IdentifierName "x" = number
-Line 17 col 17 IdentifierName "Object" = Object
-Line 21 col 4 IdentifierName "c" = C
-Line 21 col 7 IdentifierName "C" = C
-Line 22 col 4 IdentifierName "i" = I
-Line 22 col 7 IdentifierName "I" = I
-Line 23 col 0 AssignmentExpression "c = i" = I
-Line 23 col 0 IdentifierName "c" = C
-Line 23 col 4 IdentifierName "i" = I
-Line 24 col 0 AssignmentExpression "i = c" = C
-Line 24 col 0 IdentifierName "i" = I
-Line 24 col 4 IdentifierName "c" = C
+// no errors expected
+
+class C {
+>C : C
+
+    public x: string;
+>x : string
+
+    public y(a: number): number { return null; }
+>y : (a: number) => number
+>a : number
+
+    public get z() { return 1; }
+>z : number
+
+    public set z(v) { }
+>z : number
+>v : number
+
+    [x: string]: Object;
+>x : string
+>Object : Object
+
+    [x: number]: Object;
+>x : number
+>Object : Object
+
+    0: number;
+}
+
+interface I {
+>I : I
+
+    x: string;
+>x : string
+
+    y(b: number): number;
+>y : (b: number) => number
+>b : number
+
+    z: number;
+>z : number
+
+    [x: string]: Object;
+>x : string
+>Object : Object
+
+    [x: number]: Object;
+>x : number
+>Object : Object
+
+    0: number;
+}
+
+var c: C;
+>c : C
+>C : C
+
+var i: I;
+>i : I
+>I : I
+
+c = i;
+>c = i : I
+>c : C
+>i : I
+
+i = c;
+>i = c : C
+>i : I
+>c : C
+

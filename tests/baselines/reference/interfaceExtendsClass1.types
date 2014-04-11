@@ -1,16 +1,39 @@
 === tests/cases/compiler/interfaceExtendsClass1.ts ===
-Line 0 col 6 IdentifierName "Control" = Control
-Line 1 col 12 IdentifierName "state" = any
-Line 3 col 10 IdentifierName "SelectableControl" = SelectableControl
-Line 3 col 36 IdentifierName "Control" = Control
-Line 4 col 0 IdentifierName "select" = () => void
-Line 6 col 6 IdentifierName "Button" = Button
-Line 6 col 21 IdentifierName "Control" = Control
-Line 7 col 0 IdentifierName "select" = () => void
-Line 9 col 6 IdentifierName "TextBox" = TextBox
-Line 9 col 22 IdentifierName "Control" = Control
-Line 10 col 0 IdentifierName "select" = () => void
-Line 12 col 6 IdentifierName "Image" = Image
-Line 12 col 20 IdentifierName "Control" = Control
-Line 14 col 6 IdentifierName "Location" = Location
-Line 15 col 0 IdentifierName "select" = () => void
+class Control {
+>Control : Control
+
+    private state: any;
+>state : any
+}
+interface SelectableControl extends Control {
+>SelectableControl : SelectableControl
+>Control : Control
+
+    select(): void;
+>select : () => void
+}
+class Button extends Control {
+>Button : Button
+>Control : Control
+
+    select() { }
+>select : () => void
+}
+class TextBox extends Control {
+>TextBox : TextBox
+>Control : Control
+
+    select() { }
+>select : () => void
+}
+class Image extends Control {
+>Image : Image
+>Control : Control
+}
+class Location {
+>Location : Location
+
+    select() { }
+>select : () => void
+}
+

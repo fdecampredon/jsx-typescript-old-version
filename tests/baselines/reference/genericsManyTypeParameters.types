@@ -1,330 +1,408 @@
 === tests/cases/compiler/genericsManyTypeParameters.ts ===
-Line 0 col 9 IdentifierName "Foo" = typeof Foo
-Line 1 col 0 IdentifierName "a1" = a1
-Line 1 col 8 IdentifierName "a21" = a21
-Line 1 col 13 IdentifierName "a31" = a31
-Line 1 col 18 IdentifierName "a41" = a41
-Line 1 col 23 IdentifierName "a51" = a51
-Line 1 col 28 IdentifierName "a61" = a61
-Line 2 col 0 IdentifierName "a119" = a119
-Line 2 col 10 IdentifierName "a22" = a22
-Line 2 col 15 IdentifierName "a32" = a32
-Line 2 col 20 IdentifierName "a42" = a42
-Line 2 col 25 IdentifierName "a52" = a52
-Line 2 col 30 IdentifierName "a62" = a62
-Line 3 col 0 IdentifierName "a219" = a219
-Line 3 col 10 IdentifierName "a23" = a23
-Line 3 col 15 IdentifierName "a33" = a33
-Line 3 col 20 IdentifierName "a43" = a43
-Line 3 col 25 IdentifierName "a53" = a53
-Line 3 col 30 IdentifierName "a63" = a63
-Line 4 col 0 IdentifierName "a319" = a319
-Line 4 col 10 IdentifierName "a24" = a24
-Line 4 col 15 IdentifierName "a34" = a34
-Line 4 col 20 IdentifierName "a44" = a44
-Line 4 col 25 IdentifierName "a54" = a54
-Line 4 col 30 IdentifierName "a64" = a64
-Line 5 col 0 IdentifierName "a419" = a419
-Line 5 col 10 IdentifierName "a25" = a25
-Line 5 col 15 IdentifierName "a35" = a35
-Line 5 col 20 IdentifierName "a45" = a45
-Line 5 col 25 IdentifierName "a55" = a55
-Line 5 col 30 IdentifierName "a65" = a65
-Line 6 col 0 IdentifierName "a519" = a519
-Line 6 col 10 IdentifierName "a26" = a26
-Line 6 col 15 IdentifierName "a36" = a36
-Line 6 col 20 IdentifierName "a46" = a46
-Line 6 col 25 IdentifierName "a56" = a56
-Line 6 col 30 IdentifierName "a66" = a66
-Line 7 col 0 IdentifierName "a619" = a619
-Line 7 col 10 IdentifierName "a27" = a27
-Line 7 col 15 IdentifierName "a37" = a37
-Line 7 col 20 IdentifierName "a47" = a47
-Line 7 col 25 IdentifierName "a57" = a57
-Line 7 col 30 IdentifierName "a67" = a67
-Line 8 col 0 IdentifierName "a71" = a71
-Line 8 col 9 IdentifierName "a28" = a28
-Line 8 col 14 IdentifierName "a38" = a38
-Line 8 col 19 IdentifierName "a48" = a48
-Line 8 col 24 IdentifierName "a58" = a58
-Line 8 col 29 IdentifierName "a68" = a68
-Line 9 col 0 IdentifierName "a81" = a81
-Line 9 col 9 IdentifierName "a29" = a29
-Line 9 col 14 IdentifierName "a39" = a39
-Line 9 col 19 IdentifierName "a49" = a49
-Line 9 col 24 IdentifierName "a59" = a59
-Line 9 col 29 IdentifierName "a69" = a69
-Line 10 col 0 IdentifierName "a91" = a91
-Line 10 col 9 IdentifierName "a210" = a210
-Line 10 col 15 IdentifierName "a310" = a310
-Line 10 col 21 IdentifierName "a410" = a410
-Line 10 col 27 IdentifierName "a510" = a510
-Line 10 col 33 IdentifierName "a610" = a610
-Line 11 col 0 IdentifierName "a111" = a111
-Line 11 col 10 IdentifierName "a211" = a211
-Line 11 col 16 IdentifierName "a311" = a311
-Line 11 col 22 IdentifierName "a411" = a411
-Line 11 col 28 IdentifierName "a511" = a511
-Line 11 col 34 IdentifierName "a611" = a611
-Line 12 col 0 IdentifierName "a112" = a112
-Line 12 col 10 IdentifierName "a212" = a212
-Line 12 col 16 IdentifierName "a312" = a312
-Line 12 col 22 IdentifierName "a412" = a412
-Line 12 col 28 IdentifierName "a512" = a512
-Line 12 col 34 IdentifierName "a612" = a612
-Line 13 col 0 IdentifierName "a113" = a113
-Line 13 col 10 IdentifierName "a213" = a213
-Line 13 col 16 IdentifierName "a313" = a313
-Line 13 col 22 IdentifierName "a413" = a413
-Line 13 col 28 IdentifierName "a513" = a513
-Line 13 col 34 IdentifierName "a613" = a613
-Line 14 col 0 IdentifierName "a114" = a114
-Line 14 col 10 IdentifierName "a214" = a214
-Line 14 col 16 IdentifierName "a314" = a314
-Line 14 col 22 IdentifierName "a414" = a414
-Line 14 col 28 IdentifierName "a514" = a514
-Line 14 col 34 IdentifierName "a614" = a614
-Line 15 col 0 IdentifierName "a115" = a115
-Line 15 col 10 IdentifierName "a215" = a215
-Line 15 col 16 IdentifierName "a315" = a315
-Line 15 col 22 IdentifierName "a415" = a415
-Line 15 col 28 IdentifierName "a515" = a515
-Line 15 col 34 IdentifierName "a615" = a615
-Line 16 col 0 IdentifierName "a116" = a116
-Line 16 col 10 IdentifierName "a216" = a216
-Line 16 col 16 IdentifierName "a316" = a316
-Line 16 col 22 IdentifierName "a416" = a416
-Line 16 col 28 IdentifierName "a516" = a516
-Line 16 col 34 IdentifierName "a616" = a616
-Line 17 col 0 IdentifierName "a117" = a117
-Line 17 col 10 IdentifierName "a217" = a217
-Line 17 col 16 IdentifierName "a317" = a317
-Line 17 col 22 IdentifierName "a417" = a417
-Line 17 col 28 IdentifierName "a517" = a517
-Line 17 col 34 IdentifierName "a617" = a617
-Line 18 col 0 IdentifierName "a118" = a118
-Line 18 col 10 IdentifierName "a218" = a218
-Line 18 col 16 IdentifierName "a318" = a318
-Line 18 col 22 IdentifierName "a418" = a418
-Line 18 col 28 IdentifierName "a518" = a518
-Line 18 col 34 IdentifierName "a618" = a618
-Line 20 col 0 IdentifierName "x1" = a1
-Line 20 col 12 IdentifierName "a1" = a1
-Line 20 col 16 IdentifierName "y1" = a21
-Line 20 col 20 IdentifierName "a21" = a21
-Line 20 col 25 IdentifierName "z1" = a31
-Line 20 col 29 IdentifierName "a31" = a31
-Line 20 col 34 IdentifierName "a1" = a41
-Line 20 col 38 IdentifierName "a41" = a41
-Line 20 col 43 IdentifierName "b1" = a51
-Line 20 col 47 IdentifierName "a51" = a51
-Line 20 col 52 IdentifierName "c1" = a61
-Line 20 col 56 IdentifierName "a61" = a61
-Line 21 col 0 IdentifierName "x2" = a119
-Line 21 col 12 IdentifierName "a119" = a119
-Line 21 col 18 IdentifierName "y2" = a22
-Line 21 col 22 IdentifierName "a22" = a22
-Line 21 col 27 IdentifierName "z2" = a32
-Line 21 col 31 IdentifierName "a32" = a32
-Line 21 col 36 IdentifierName "a2" = a42
-Line 21 col 40 IdentifierName "a42" = a42
-Line 21 col 45 IdentifierName "b2" = a52
-Line 21 col 49 IdentifierName "a52" = a52
-Line 21 col 54 IdentifierName "c2" = a62
-Line 21 col 58 IdentifierName "a62" = a62
-Line 22 col 0 IdentifierName "x3" = a219
-Line 22 col 12 IdentifierName "a219" = a219
-Line 22 col 18 IdentifierName "y3" = a23
-Line 22 col 22 IdentifierName "a23" = a23
-Line 22 col 27 IdentifierName "z3" = a33
-Line 22 col 31 IdentifierName "a33" = a33
-Line 22 col 36 IdentifierName "a3" = a43
-Line 22 col 40 IdentifierName "a43" = a43
-Line 22 col 45 IdentifierName "b3" = a53
-Line 22 col 49 IdentifierName "a53" = a53
-Line 22 col 54 IdentifierName "c3" = a63
-Line 22 col 58 IdentifierName "a63" = a63
-Line 23 col 0 IdentifierName "x4" = a319
-Line 23 col 12 IdentifierName "a319" = a319
-Line 23 col 18 IdentifierName "y4" = a24
-Line 23 col 22 IdentifierName "a24" = a24
-Line 23 col 27 IdentifierName "z4" = a34
-Line 23 col 31 IdentifierName "a34" = a34
-Line 23 col 36 IdentifierName "a4" = a44
-Line 23 col 40 IdentifierName "a44" = a44
-Line 23 col 45 IdentifierName "b4" = a54
-Line 23 col 49 IdentifierName "a54" = a54
-Line 23 col 54 IdentifierName "c4" = a64
-Line 23 col 58 IdentifierName "a64" = a64
-Line 24 col 0 IdentifierName "x5" = a419
-Line 24 col 12 IdentifierName "a419" = a419
-Line 24 col 18 IdentifierName "y5" = a25
-Line 24 col 22 IdentifierName "a25" = a25
-Line 24 col 27 IdentifierName "z5" = a35
-Line 24 col 31 IdentifierName "a35" = a35
-Line 24 col 36 IdentifierName "a5" = a45
-Line 24 col 40 IdentifierName "a45" = a45
-Line 24 col 45 IdentifierName "b5" = a55
-Line 24 col 49 IdentifierName "a55" = a55
-Line 24 col 54 IdentifierName "c5" = a65
-Line 24 col 58 IdentifierName "a65" = a65
-Line 25 col 0 IdentifierName "x6" = a519
-Line 25 col 12 IdentifierName "a519" = a519
-Line 25 col 18 IdentifierName "y6" = a26
-Line 25 col 22 IdentifierName "a26" = a26
-Line 25 col 27 IdentifierName "z6" = a36
-Line 25 col 31 IdentifierName "a36" = a36
-Line 25 col 36 IdentifierName "a6" = a46
-Line 25 col 40 IdentifierName "a46" = a46
-Line 25 col 45 IdentifierName "b6" = a56
-Line 25 col 49 IdentifierName "a56" = a56
-Line 25 col 54 IdentifierName "c6" = a66
-Line 25 col 58 IdentifierName "a66" = a66
-Line 26 col 0 IdentifierName "x7" = a619
-Line 26 col 12 IdentifierName "a619" = a619
-Line 26 col 18 IdentifierName "y7" = a27
-Line 26 col 22 IdentifierName "a27" = a27
-Line 26 col 27 IdentifierName "z7" = a37
-Line 26 col 31 IdentifierName "a37" = a37
-Line 26 col 36 IdentifierName "a7" = a47
-Line 26 col 40 IdentifierName "a47" = a47
-Line 26 col 45 IdentifierName "b7" = a57
-Line 26 col 49 IdentifierName "a57" = a57
-Line 26 col 54 IdentifierName "c7" = a67
-Line 26 col 58 IdentifierName "a67" = a67
-Line 27 col 0 IdentifierName "x8" = a71
-Line 27 col 12 IdentifierName "a71" = a71
-Line 27 col 17 IdentifierName "y8" = a28
-Line 27 col 21 IdentifierName "a28" = a28
-Line 27 col 26 IdentifierName "z8" = a38
-Line 27 col 30 IdentifierName "a38" = a38
-Line 27 col 35 IdentifierName "a8" = a48
-Line 27 col 39 IdentifierName "a48" = a48
-Line 27 col 44 IdentifierName "b8" = a58
-Line 27 col 48 IdentifierName "a58" = a58
-Line 27 col 53 IdentifierName "c8" = a68
-Line 27 col 57 IdentifierName "a68" = a68
-Line 28 col 0 IdentifierName "x9" = a81
-Line 28 col 12 IdentifierName "a81" = a81
-Line 28 col 17 IdentifierName "y9" = a29
-Line 28 col 21 IdentifierName "a29" = a29
-Line 28 col 26 IdentifierName "z9" = a39
-Line 28 col 30 IdentifierName "a39" = a39
-Line 28 col 35 IdentifierName "a9" = a49
-Line 28 col 39 IdentifierName "a49" = a49
-Line 28 col 44 IdentifierName "b9" = a59
-Line 28 col 48 IdentifierName "a59" = a59
-Line 28 col 53 IdentifierName "c9" = a69
-Line 28 col 57 IdentifierName "a69" = a69
-Line 29 col 0 IdentifierName "x10" = a91
-Line 29 col 13 IdentifierName "a91" = a91
-Line 29 col 18 IdentifierName "y12" = a210
-Line 29 col 23 IdentifierName "a210" = a210
-Line 29 col 29 IdentifierName "z10" = a310
-Line 29 col 34 IdentifierName "a310" = a310
-Line 29 col 40 IdentifierName "a10" = a410
-Line 29 col 45 IdentifierName "a410" = a410
-Line 29 col 51 IdentifierName "b10" = a510
-Line 29 col 56 IdentifierName "a510" = a510
-Line 29 col 62 IdentifierName "c10" = a610
-Line 29 col 67 IdentifierName "a610" = a610
-Line 30 col 0 IdentifierName "x11" = a111
-Line 30 col 13 IdentifierName "a111" = a111
-Line 30 col 19 IdentifierName "y13" = a211
-Line 30 col 24 IdentifierName "a211" = a211
-Line 30 col 30 IdentifierName "z11" = a311
-Line 30 col 35 IdentifierName "a311" = a311
-Line 30 col 41 IdentifierName "a11" = a411
-Line 30 col 46 IdentifierName "a411" = a411
-Line 30 col 52 IdentifierName "b11" = a511
-Line 30 col 57 IdentifierName "a511" = a511
-Line 30 col 63 IdentifierName "c11" = a611
-Line 30 col 68 IdentifierName "a611" = a611
-Line 31 col 0 IdentifierName "x12" = a112
-Line 31 col 13 IdentifierName "a112" = a112
-Line 31 col 19 IdentifierName "y14" = a212
-Line 31 col 24 IdentifierName "a212" = a212
-Line 31 col 30 IdentifierName "z12" = a312
-Line 31 col 35 IdentifierName "a312" = a312
-Line 31 col 41 IdentifierName "a12" = a412
-Line 31 col 46 IdentifierName "a412" = a412
-Line 31 col 52 IdentifierName "b12" = a512
-Line 31 col 57 IdentifierName "a512" = a512
-Line 31 col 63 IdentifierName "c12" = a612
-Line 31 col 68 IdentifierName "a612" = a612
-Line 32 col 0 IdentifierName "x13" = a113
-Line 32 col 13 IdentifierName "a113" = a113
-Line 32 col 19 IdentifierName "y15" = a213
-Line 32 col 24 IdentifierName "a213" = a213
-Line 32 col 30 IdentifierName "z13" = a313
-Line 32 col 35 IdentifierName "a313" = a313
-Line 32 col 41 IdentifierName "a13" = a413
-Line 32 col 46 IdentifierName "a413" = a413
-Line 32 col 52 IdentifierName "b13" = a513
-Line 32 col 57 IdentifierName "a513" = a513
-Line 32 col 63 IdentifierName "c13" = a613
-Line 32 col 68 IdentifierName "a613" = a613
-Line 33 col 0 IdentifierName "x14" = a114
-Line 33 col 13 IdentifierName "a114" = a114
-Line 33 col 19 IdentifierName "y16" = a214
-Line 33 col 24 IdentifierName "a214" = a214
-Line 33 col 30 IdentifierName "z14" = a314
-Line 33 col 35 IdentifierName "a314" = a314
-Line 33 col 41 IdentifierName "a14" = a414
-Line 33 col 46 IdentifierName "a414" = a414
-Line 33 col 52 IdentifierName "b14" = a514
-Line 33 col 57 IdentifierName "a514" = a514
-Line 33 col 63 IdentifierName "c14" = a614
-Line 33 col 68 IdentifierName "a614" = a614
-Line 34 col 0 IdentifierName "x15" = a115
-Line 34 col 13 IdentifierName "a115" = a115
-Line 34 col 19 IdentifierName "y17" = a215
-Line 34 col 24 IdentifierName "a215" = a215
-Line 34 col 30 IdentifierName "z15" = a315
-Line 34 col 35 IdentifierName "a315" = a315
-Line 34 col 41 IdentifierName "a15" = a415
-Line 34 col 46 IdentifierName "a415" = a415
-Line 34 col 52 IdentifierName "b15" = a515
-Line 34 col 57 IdentifierName "a515" = a515
-Line 34 col 63 IdentifierName "c15" = a615
-Line 34 col 68 IdentifierName "a615" = a615
-Line 35 col 0 IdentifierName "x16" = a116
-Line 35 col 13 IdentifierName "a116" = a116
-Line 35 col 19 IdentifierName "y18" = a216
-Line 35 col 24 IdentifierName "a216" = a216
-Line 35 col 30 IdentifierName "z16" = a316
-Line 35 col 35 IdentifierName "a316" = a316
-Line 35 col 41 IdentifierName "a16" = a416
-Line 35 col 46 IdentifierName "a416" = a416
-Line 35 col 52 IdentifierName "b16" = a516
-Line 35 col 57 IdentifierName "a516" = a516
-Line 35 col 63 IdentifierName "c16" = a616
-Line 35 col 68 IdentifierName "a616" = a616
-Line 36 col 0 IdentifierName "x17" = a117
-Line 36 col 13 IdentifierName "a117" = a117
-Line 36 col 19 IdentifierName "y19" = a217
-Line 36 col 24 IdentifierName "a217" = a217
-Line 36 col 30 IdentifierName "z17" = a317
-Line 36 col 35 IdentifierName "a317" = a317
-Line 36 col 41 IdentifierName "a17" = a417
-Line 36 col 46 IdentifierName "a417" = a417
-Line 36 col 52 IdentifierName "b17" = a517
-Line 36 col 57 IdentifierName "a517" = a517
-Line 36 col 63 IdentifierName "c17" = a617
-Line 36 col 68 IdentifierName "a617" = a617
-Line 37 col 0 IdentifierName "x18" = a118
-Line 37 col 13 IdentifierName "a118" = a118
-Line 37 col 19 IdentifierName "y10" = a218
-Line 37 col 24 IdentifierName "a218" = a218
-Line 37 col 30 IdentifierName "z18" = a318
-Line 37 col 35 IdentifierName "a318" = a318
-Line 37 col 41 IdentifierName "a18" = a418
-Line 37 col 46 IdentifierName "a418" = a418
-Line 37 col 52 IdentifierName "b18" = a518
-Line 37 col 57 IdentifierName "a518" = a518
-Line 37 col 63 IdentifierName "c18" = a618
-Line 37 col 68 IdentifierName "a618" = a618
-Line 40 col 15 ArrayLiteralExpression "[x1 , y1 , z1 , a1 , b1 , c1,
+function Foo<
+>Foo : typeof Foo
+
+    a1, a21, a31, a41, a51, a61,
+>a1 : a1
+>a21 : a21
+>a31 : a31
+>a41 : a41
+>a51 : a51
+>a61 : a61
+
+    a119, a22, a32, a42, a52, a62,
+>a119 : a119
+>a22 : a22
+>a32 : a32
+>a42 : a42
+>a52 : a52
+>a62 : a62
+
+    a219, a23, a33, a43, a53, a63,
+>a219 : a219
+>a23 : a23
+>a33 : a33
+>a43 : a43
+>a53 : a53
+>a63 : a63
+
+    a319, a24, a34, a44, a54, a64,
+>a319 : a319
+>a24 : a24
+>a34 : a34
+>a44 : a44
+>a54 : a54
+>a64 : a64
+
+    a419, a25, a35, a45, a55, a65,
+>a419 : a419
+>a25 : a25
+>a35 : a35
+>a45 : a45
+>a55 : a55
+>a65 : a65
+
+    a519, a26, a36, a46, a56, a66,
+>a519 : a519
+>a26 : a26
+>a36 : a36
+>a46 : a46
+>a56 : a56
+>a66 : a66
+
+    a619, a27, a37, a47, a57, a67,
+>a619 : a619
+>a27 : a27
+>a37 : a37
+>a47 : a47
+>a57 : a57
+>a67 : a67
+
+    a71, a28, a38, a48, a58, a68,
+>a71 : a71
+>a28 : a28
+>a38 : a38
+>a48 : a48
+>a58 : a58
+>a68 : a68
+
+    a81, a29, a39, a49, a59, a69,
+>a81 : a81
+>a29 : a29
+>a39 : a39
+>a49 : a49
+>a59 : a59
+>a69 : a69
+
+    a91, a210, a310, a410, a510, a610,
+>a91 : a91
+>a210 : a210
+>a310 : a310
+>a410 : a410
+>a510 : a510
+>a610 : a610
+
+    a111, a211, a311, a411, a511, a611,
+>a111 : a111
+>a211 : a211
+>a311 : a311
+>a411 : a411
+>a511 : a511
+>a611 : a611
+
+    a112, a212, a312, a412, a512, a612,
+>a112 : a112
+>a212 : a212
+>a312 : a312
+>a412 : a412
+>a512 : a512
+>a612 : a612
+
+    a113, a213, a313, a413, a513, a613,
+>a113 : a113
+>a213 : a213
+>a313 : a313
+>a413 : a413
+>a513 : a513
+>a613 : a613
+
+    a114, a214, a314, a414, a514, a614,
+>a114 : a114
+>a214 : a214
+>a314 : a314
+>a414 : a414
+>a514 : a514
+>a614 : a614
+
+    a115, a215, a315, a415, a515, a615,
+>a115 : a115
+>a215 : a215
+>a315 : a315
+>a415 : a415
+>a515 : a515
+>a615 : a615
+
+    a116, a216, a316, a416, a516, a616,
+>a116 : a116
+>a216 : a216
+>a316 : a316
+>a416 : a416
+>a516 : a516
+>a616 : a616
+
+    a117, a217, a317, a417, a517, a617,
+>a117 : a117
+>a217 : a217
+>a317 : a317
+>a417 : a417
+>a517 : a517
+>a617 : a617
+
+    a118, a218, a318, a418, a518, a618>
+>a118 : a118
+>a218 : a218
+>a318 : a318
+>a418 : a418
+>a518 : a518
+>a618 : a618
+
+    (
+        x1: a1, y1: a21, z1: a31, a1: a41, b1: a51, c1: a61,
+>x1 : a1
+>a1 : a1
+>y1 : a21
+>a21 : a21
+>z1 : a31
+>a31 : a31
+>a1 : a41
+>a41 : a41
+>b1 : a51
+>a51 : a51
+>c1 : a61
+>a61 : a61
+
+        x2: a119, y2: a22, z2: a32, a2: a42, b2: a52, c2: a62,
+>x2 : a119
+>a119 : a119
+>y2 : a22
+>a22 : a22
+>z2 : a32
+>a32 : a32
+>a2 : a42
+>a42 : a42
+>b2 : a52
+>a52 : a52
+>c2 : a62
+>a62 : a62
+
+        x3: a219, y3: a23, z3: a33, a3: a43, b3: a53, c3: a63,
+>x3 : a219
+>a219 : a219
+>y3 : a23
+>a23 : a23
+>z3 : a33
+>a33 : a33
+>a3 : a43
+>a43 : a43
+>b3 : a53
+>a53 : a53
+>c3 : a63
+>a63 : a63
+
+        x4: a319, y4: a24, z4: a34, a4: a44, b4: a54, c4: a64,
+>x4 : a319
+>a319 : a319
+>y4 : a24
+>a24 : a24
+>z4 : a34
+>a34 : a34
+>a4 : a44
+>a44 : a44
+>b4 : a54
+>a54 : a54
+>c4 : a64
+>a64 : a64
+
+        x5: a419, y5: a25, z5: a35, a5: a45, b5: a55, c5: a65,
+>x5 : a419
+>a419 : a419
+>y5 : a25
+>a25 : a25
+>z5 : a35
+>a35 : a35
+>a5 : a45
+>a45 : a45
+>b5 : a55
+>a55 : a55
+>c5 : a65
+>a65 : a65
+
+        x6: a519, y6: a26, z6: a36, a6: a46, b6: a56, c6: a66,
+>x6 : a519
+>a519 : a519
+>y6 : a26
+>a26 : a26
+>z6 : a36
+>a36 : a36
+>a6 : a46
+>a46 : a46
+>b6 : a56
+>a56 : a56
+>c6 : a66
+>a66 : a66
+
+        x7: a619, y7: a27, z7: a37, a7: a47, b7: a57, c7: a67,
+>x7 : a619
+>a619 : a619
+>y7 : a27
+>a27 : a27
+>z7 : a37
+>a37 : a37
+>a7 : a47
+>a47 : a47
+>b7 : a57
+>a57 : a57
+>c7 : a67
+>a67 : a67
+
+        x8: a71, y8: a28, z8: a38, a8: a48, b8: a58, c8: a68,
+>x8 : a71
+>a71 : a71
+>y8 : a28
+>a28 : a28
+>z8 : a38
+>a38 : a38
+>a8 : a48
+>a48 : a48
+>b8 : a58
+>a58 : a58
+>c8 : a68
+>a68 : a68
+
+        x9: a81, y9: a29, z9: a39, a9: a49, b9: a59, c9: a69,
+>x9 : a81
+>a81 : a81
+>y9 : a29
+>a29 : a29
+>z9 : a39
+>a39 : a39
+>a9 : a49
+>a49 : a49
+>b9 : a59
+>a59 : a59
+>c9 : a69
+>a69 : a69
+
+        x10: a91, y12: a210, z10: a310, a10: a410, b10: a510, c10: a610,
+>x10 : a91
+>a91 : a91
+>y12 : a210
+>a210 : a210
+>z10 : a310
+>a310 : a310
+>a10 : a410
+>a410 : a410
+>b10 : a510
+>a510 : a510
+>c10 : a610
+>a610 : a610
+
+        x11: a111, y13: a211, z11: a311, a11: a411, b11: a511, c11: a611,
+>x11 : a111
+>a111 : a111
+>y13 : a211
+>a211 : a211
+>z11 : a311
+>a311 : a311
+>a11 : a411
+>a411 : a411
+>b11 : a511
+>a511 : a511
+>c11 : a611
+>a611 : a611
+
+        x12: a112, y14: a212, z12: a312, a12: a412, b12: a512, c12: a612,
+>x12 : a112
+>a112 : a112
+>y14 : a212
+>a212 : a212
+>z12 : a312
+>a312 : a312
+>a12 : a412
+>a412 : a412
+>b12 : a512
+>a512 : a512
+>c12 : a612
+>a612 : a612
+
+        x13: a113, y15: a213, z13: a313, a13: a413, b13: a513, c13: a613,
+>x13 : a113
+>a113 : a113
+>y15 : a213
+>a213 : a213
+>z13 : a313
+>a313 : a313
+>a13 : a413
+>a413 : a413
+>b13 : a513
+>a513 : a513
+>c13 : a613
+>a613 : a613
+
+        x14: a114, y16: a214, z14: a314, a14: a414, b14: a514, c14: a614,
+>x14 : a114
+>a114 : a114
+>y16 : a214
+>a214 : a214
+>z14 : a314
+>a314 : a314
+>a14 : a414
+>a414 : a414
+>b14 : a514
+>a514 : a514
+>c14 : a614
+>a614 : a614
+
+        x15: a115, y17: a215, z15: a315, a15: a415, b15: a515, c15: a615,
+>x15 : a115
+>a115 : a115
+>y17 : a215
+>a215 : a215
+>z15 : a315
+>a315 : a315
+>a15 : a415
+>a415 : a415
+>b15 : a515
+>a515 : a515
+>c15 : a615
+>a615 : a615
+
+        x16: a116, y18: a216, z16: a316, a16: a416, b16: a516, c16: a616,
+>x16 : a116
+>a116 : a116
+>y18 : a216
+>a216 : a216
+>z16 : a316
+>a316 : a316
+>a16 : a416
+>a416 : a416
+>b16 : a516
+>a516 : a516
+>c16 : a616
+>a616 : a616
+
+        x17: a117, y19: a217, z17: a317, a17: a417, b17: a517, c17: a617,
+>x17 : a117
+>a117 : a117
+>y19 : a217
+>a217 : a217
+>z17 : a317
+>a317 : a317
+>a17 : a417
+>a417 : a417
+>b17 : a517
+>a517 : a517
+>c17 : a617
+>a617 : a617
+
+        x18: a118, y10: a218, z18: a318, a18: a418, b18: a518, c18: a618
+>x18 : a118
+>a118 : a118
+>y10 : a218
+>a218 : a218
+>z18 : a318
+>a318 : a318
+>a18 : a418
+>a418 : a418
+>b18 : a518
+>a518 : a518
+>c18 : a618
+>a618 : a618
+
+    )
+    {
+        return [x1 , y1 , z1 , a1 , b1 , c1,
+>[x1 , y1 , z1 , a1 , b1 , c1,
            x2 , y2 , z2 , a2 , b2 , c2,
            x3 , y3 , z3 , a3 , b3 , c3,
            x4 , y4 , z4 , a4 , b4 , c4,
@@ -341,112 +419,147 @@ Line 40 col 15 ArrayLiteralExpression "[x1 , y1 , z1 , a1 , b1 , c1,
            x15 , y17 , z15 , a15 , b15 , c15,
            x16 , y18 , z16 , a16 , b16 , c16,
            x17 , y19 , z17 , a17 , b17 , c17,
-           x18 , y10 , z18 , a18 , b18 , c18]" = {}[]
-Line 40 col 16 IdentifierName "x1" = a1
-Line 40 col 21 IdentifierName "y1" = a21
-Line 40 col 26 IdentifierName "z1" = a31
-Line 40 col 31 IdentifierName "a1" = a41
-Line 40 col 36 IdentifierName "b1" = a51
-Line 40 col 41 IdentifierName "c1" = a61
-Line 41 col 0 IdentifierName "x2" = a119
-Line 41 col 16 IdentifierName "y2" = a22
-Line 41 col 21 IdentifierName "z2" = a32
-Line 41 col 26 IdentifierName "a2" = a42
-Line 41 col 31 IdentifierName "b2" = a52
-Line 41 col 36 IdentifierName "c2" = a62
-Line 42 col 0 IdentifierName "x3" = a219
-Line 42 col 16 IdentifierName "y3" = a23
-Line 42 col 21 IdentifierName "z3" = a33
-Line 42 col 26 IdentifierName "a3" = a43
-Line 42 col 31 IdentifierName "b3" = a53
-Line 42 col 36 IdentifierName "c3" = a63
-Line 43 col 0 IdentifierName "x4" = a319
-Line 43 col 16 IdentifierName "y4" = a24
-Line 43 col 21 IdentifierName "z4" = a34
-Line 43 col 26 IdentifierName "a4" = a44
-Line 43 col 31 IdentifierName "b4" = a54
-Line 43 col 36 IdentifierName "c4" = a64
-Line 44 col 0 IdentifierName "x5" = a419
-Line 44 col 16 IdentifierName "y5" = a25
-Line 44 col 21 IdentifierName "z5" = a35
-Line 44 col 26 IdentifierName "a5" = a45
-Line 44 col 31 IdentifierName "b5" = a55
-Line 44 col 36 IdentifierName "c5" = a65
-Line 45 col 0 IdentifierName "x6" = a519
-Line 45 col 16 IdentifierName "y6" = a26
-Line 45 col 21 IdentifierName "z6" = a36
-Line 45 col 26 IdentifierName "a6" = a46
-Line 45 col 31 IdentifierName "b6" = a56
-Line 45 col 36 IdentifierName "c6" = a66
-Line 46 col 0 IdentifierName "x7" = a619
-Line 46 col 16 IdentifierName "y7" = a27
-Line 46 col 21 IdentifierName "z7" = a37
-Line 46 col 26 IdentifierName "a7" = a47
-Line 46 col 31 IdentifierName "b7" = a57
-Line 46 col 36 IdentifierName "c7" = a67
-Line 47 col 0 IdentifierName "x8" = a71
-Line 47 col 16 IdentifierName "y8" = a28
-Line 47 col 21 IdentifierName "z8" = a38
-Line 47 col 26 IdentifierName "a8" = a48
-Line 47 col 31 IdentifierName "b8" = a58
-Line 47 col 36 IdentifierName "c8" = a68
-Line 48 col 0 IdentifierName "x9" = a81
-Line 48 col 16 IdentifierName "y9" = a29
-Line 48 col 21 IdentifierName "z9" = a39
-Line 48 col 26 IdentifierName "a9" = a49
-Line 48 col 31 IdentifierName "b9" = a59
-Line 48 col 36 IdentifierName "c9" = a69
-Line 49 col 0 IdentifierName "x10" = a91
-Line 49 col 17 IdentifierName "y12" = a210
-Line 49 col 23 IdentifierName "z10" = a310
-Line 49 col 29 IdentifierName "a10" = a410
-Line 49 col 35 IdentifierName "b10" = a510
-Line 49 col 41 IdentifierName "c10" = a610
-Line 50 col 0 IdentifierName "x11" = a111
-Line 50 col 17 IdentifierName "y13" = a211
-Line 50 col 23 IdentifierName "z11" = a311
-Line 50 col 29 IdentifierName "a11" = a411
-Line 50 col 35 IdentifierName "b11" = a511
-Line 50 col 41 IdentifierName "c11" = a611
-Line 51 col 0 IdentifierName "x12" = a112
-Line 51 col 17 IdentifierName "y14" = a212
-Line 51 col 23 IdentifierName "z12" = a312
-Line 51 col 29 IdentifierName "a12" = a412
-Line 51 col 35 IdentifierName "b12" = a512
-Line 51 col 41 IdentifierName "c12" = a612
-Line 52 col 0 IdentifierName "x13" = a113
-Line 52 col 17 IdentifierName "y15" = a213
-Line 52 col 23 IdentifierName "z13" = a313
-Line 52 col 29 IdentifierName "a13" = a413
-Line 52 col 35 IdentifierName "b13" = a513
-Line 52 col 41 IdentifierName "c13" = a613
-Line 53 col 0 IdentifierName "x14" = a114
-Line 53 col 17 IdentifierName "y16" = a214
-Line 53 col 23 IdentifierName "z14" = a314
-Line 53 col 29 IdentifierName "a14" = a414
-Line 53 col 35 IdentifierName "b14" = a514
-Line 53 col 41 IdentifierName "c14" = a614
-Line 54 col 0 IdentifierName "x15" = a115
-Line 54 col 17 IdentifierName "y17" = a215
-Line 54 col 23 IdentifierName "z15" = a315
-Line 54 col 29 IdentifierName "a15" = a415
-Line 54 col 35 IdentifierName "b15" = a515
-Line 54 col 41 IdentifierName "c15" = a615
-Line 55 col 0 IdentifierName "x16" = a116
-Line 55 col 17 IdentifierName "y18" = a216
-Line 55 col 23 IdentifierName "z16" = a316
-Line 55 col 29 IdentifierName "a16" = a416
-Line 55 col 35 IdentifierName "b16" = a516
-Line 55 col 41 IdentifierName "c16" = a616
-Line 56 col 0 IdentifierName "x17" = a117
-Line 56 col 17 IdentifierName "y19" = a217
-Line 56 col 23 IdentifierName "z17" = a317
-Line 56 col 29 IdentifierName "a17" = a417
-Line 56 col 35 IdentifierName "b17" = a517
-Line 56 col 41 IdentifierName "c17" = a617
-Line 57 col 0 IdentifierName "x18" = a118
-Line 57 col 17 IdentifierName "y10" = a218
-Line 57 col 23 IdentifierName "z18" = a318
-Line 57 col 29 IdentifierName "a18" = a418
-Line 57 col 35 IdentifierName "b18" = a518
-Line 57 col 41 IdentifierName "c18" = a618
+           x18 , y10 , z18 , a18 , b18 , c18] : {}[]
+>x1 : a1
+>y1 : a21
+>z1 : a31
+>a1 : a41
+>b1 : a51
+>c1 : a61
+
+           x2 , y2 , z2 , a2 , b2 , c2,
+>x2 : a119
+>y2 : a22
+>z2 : a32
+>a2 : a42
+>b2 : a52
+>c2 : a62
+
+           x3 , y3 , z3 , a3 , b3 , c3,
+>x3 : a219
+>y3 : a23
+>z3 : a33
+>a3 : a43
+>b3 : a53
+>c3 : a63
+
+           x4 , y4 , z4 , a4 , b4 , c4,
+>x4 : a319
+>y4 : a24
+>z4 : a34
+>a4 : a44
+>b4 : a54
+>c4 : a64
+
+           x5 , y5 , z5 , a5 , b5 , c5,
+>x5 : a419
+>y5 : a25
+>z5 : a35
+>a5 : a45
+>b5 : a55
+>c5 : a65
+
+           x6 , y6 , z6 , a6 , b6 , c6,
+>x6 : a519
+>y6 : a26
+>z6 : a36
+>a6 : a46
+>b6 : a56
+>c6 : a66
+
+           x7 , y7 , z7 , a7 , b7 , c7,
+>x7 : a619
+>y7 : a27
+>z7 : a37
+>a7 : a47
+>b7 : a57
+>c7 : a67
+
+           x8 , y8 , z8 , a8 , b8 , c8,
+>x8 : a71
+>y8 : a28
+>z8 : a38
+>a8 : a48
+>b8 : a58
+>c8 : a68
+
+           x9 , y9 , z9 , a9 , b9 , c9,
+>x9 : a81
+>y9 : a29
+>z9 : a39
+>a9 : a49
+>b9 : a59
+>c9 : a69
+
+           x10 , y12 , z10 , a10 , b10 , c10,
+>x10 : a91
+>y12 : a210
+>z10 : a310
+>a10 : a410
+>b10 : a510
+>c10 : a610
+
+           x11 , y13 , z11 , a11 , b11 , c11,
+>x11 : a111
+>y13 : a211
+>z11 : a311
+>a11 : a411
+>b11 : a511
+>c11 : a611
+
+           x12 , y14 , z12 , a12 , b12 , c12,
+>x12 : a112
+>y14 : a212
+>z12 : a312
+>a12 : a412
+>b12 : a512
+>c12 : a612
+
+           x13 , y15 , z13 , a13 , b13 , c13,
+>x13 : a113
+>y15 : a213
+>z13 : a313
+>a13 : a413
+>b13 : a513
+>c13 : a613
+
+           x14 , y16 , z14 , a14 , b14 , c14,
+>x14 : a114
+>y16 : a214
+>z14 : a314
+>a14 : a414
+>b14 : a514
+>c14 : a614
+
+           x15 , y17 , z15 , a15 , b15 , c15,
+>x15 : a115
+>y17 : a215
+>z15 : a315
+>a15 : a415
+>b15 : a515
+>c15 : a615
+
+           x16 , y18 , z16 , a16 , b16 , c16,
+>x16 : a116
+>y18 : a216
+>z16 : a316
+>a16 : a416
+>b16 : a516
+>c16 : a616
+
+           x17 , y19 , z17 , a17 , b17 , c17,
+>x17 : a117
+>y19 : a217
+>z17 : a317
+>a17 : a417
+>b17 : a517
+>c17 : a617
+
+           x18 , y10 , z18 , a18 , b18 , c18];
+>x18 : a118
+>y10 : a218
+>z18 : a318
+>a18 : a418
+>b18 : a518
+>c18 : a618
+    }

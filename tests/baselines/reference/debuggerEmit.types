@@ -1,5 +1,9 @@
 === tests/cases/compiler/debuggerEmit.ts ===
-Line 0 col 4 IdentifierName "x" = () => void
-Line 0 col 8 FunctionExpression "function () { debugger; }" = () => void
-Line 1 col 0 InvocationExpression "x()" = void
-Line 1 col 0 IdentifierName "x" = () => void
+var x = function () { debugger; }
+>x : () => void
+>function () { debugger; } : () => void
+
+x();
+>x() : void
+>x : () => void
+

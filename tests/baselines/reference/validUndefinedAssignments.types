@@ -1,41 +1,73 @@
 === tests/cases/compiler/validUndefinedAssignments.ts ===
-Line 0 col 4 IdentifierName "x" = any
-Line 0 col 14 IdentifierName "undefined" = any
-Line 2 col 4 IdentifierName "a" = number
-Line 2 col 16 IdentifierName "x" = any
-Line 3 col 4 IdentifierName "b" = boolean
-Line 3 col 17 IdentifierName "x" = any
-Line 4 col 4 IdentifierName "c" = string
-Line 4 col 16 IdentifierName "x" = any
-Line 5 col 4 IdentifierName "d" = void
-Line 5 col 14 IdentifierName "x" = any
-Line 7 col 4 IdentifierName "e" = any
-Line 7 col 14 IdentifierName "undefined" = any
-Line 7 col 26 IdentifierName "x" = any
-Line 8 col 0 AssignmentExpression "e = x" = any
-Line 8 col 0 IdentifierName "e" = any
-Line 8 col 4 IdentifierName "x" = any
-Line 10 col 6 IdentifierName "C" = C
-Line 10 col 10 IdentifierName "foo" = string
-Line 11 col 4 IdentifierName "f" = C
-Line 11 col 7 IdentifierName "C" = C
-Line 12 col 0 AssignmentExpression "f = x" = any
-Line 12 col 0 IdentifierName "f" = C
-Line 12 col 4 IdentifierName "x" = any
-Line 14 col 10 IdentifierName "I" = I
-Line 14 col 14 IdentifierName "foo" = string
-Line 15 col 4 IdentifierName "g" = I
-Line 15 col 7 IdentifierName "I" = I
-Line 16 col 0 AssignmentExpression "g = x" = any
-Line 16 col 0 IdentifierName "g" = I
-Line 16 col 4 IdentifierName "x" = any
-Line 18 col 4 IdentifierName "h" = { f(): void; }
-Line 18 col 9 IdentifierName "f" = () => void
-Line 18 col 23 IdentifierName "x" = any
-Line 20 col 9 IdentifierName "i" = typeof i
-Line 20 col 11 IdentifierName "T" = T
-Line 20 col 14 IdentifierName "a" = T
-Line 20 col 17 IdentifierName "T" = T
-Line 21 col 0 AssignmentExpression "a = x" = any
-Line 21 col 0 IdentifierName "a" = T
-Line 21 col 8 IdentifierName "x" = any
+var x: typeof undefined;
+>x : any
+>undefined : any
+
+var a: number = x;
+>a : number
+>x : any
+
+var b: boolean = x;
+>b : boolean
+>x : any
+
+var c: string = x;
+>c : string
+>x : any
+
+var d: void = x;
+>d : void
+>x : any
+
+var e: typeof undefined = x;
+>e : any
+>undefined : any
+>x : any
+
+e = x; // should work
+>e = x : any
+>e : any
+>x : any
+
+class C { foo: string }
+>C : C
+>foo : string
+
+var f: C;
+>f : C
+>C : C
+
+f = x;
+>f = x : any
+>f : C
+>x : any
+
+interface I { foo: string }
+>I : I
+>foo : string
+
+var g: I;
+>g : I
+>I : I
+
+g = x;
+>g = x : any
+>g : I
+>x : any
+
+var h: { f(): void } = x;
+>h : { f(): void; }
+>f : () => void
+>x : any
+
+function i<T>(a: T) {
+>i : typeof i
+>T : T
+>a : T
+>T : T
+
+    a = x;
+>a = x : any
+>a : T
+>x : any
+}

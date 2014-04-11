@@ -1,3 +1,4 @@
+//// [assignAnyToEveryType.js]
 // all of these are valid
 var x;
 

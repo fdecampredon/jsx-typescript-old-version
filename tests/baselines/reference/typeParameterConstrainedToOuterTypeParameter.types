@@ -1,18 +1,32 @@
 === tests/cases/compiler/typeParameterConstrainedToOuterTypeParameter.ts ===
-Line 0 col 10 IdentifierName "A" = A<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 5 IdentifierName "U" = U
-Line 1 col 15 IdentifierName "T" = T
-Line 1 col 18 IdentifierName "x" = U[]
-Line 1 col 21 IdentifierName "U" = U
-Line 4 col 10 IdentifierName "B" = B<T>
-Line 4 col 12 IdentifierName "T" = T
-Line 5 col 5 IdentifierName "U" = U
-Line 5 col 15 IdentifierName "T" = T
-Line 5 col 18 IdentifierName "x" = U
-Line 5 col 21 IdentifierName "U" = U
-Line 8 col 4 IdentifierName "a" = A<string>
-Line 8 col 7 IdentifierName "A" = A<T>
-Line 9 col 4 IdentifierName "b" = B<string>
-Line 9 col 7 IdentifierName "B" = B<T>
-Line 9 col 19 IdentifierName "a" = A<string>
+interface A<T> {
+>A : A<T>
+>T : T
+
+    <U extends T>(x: U[])
+>U : U
+>T : T
+>x : U[]
+>U : U
+}
+
+interface B<T> {
+>B : B<T>
+>T : T
+
+    <U extends T>(x: U)
+>U : U
+>T : T
+>x : U
+>U : U
+}
+
+var a: A<string>
+>a : A<string>
+>A : A<T>
+
+var b: B<string> = a; // assignment should be legal (both U's get instantiated to any for comparison)
+>b : B<string>
+>B : B<T>
+>a : A<string>
+

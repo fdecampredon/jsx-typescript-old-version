@@ -1,85 +1,142 @@
 === tests/cases/compiler/objectTypesIdentityWithGenericCallSignaturesDifferingTypeParameterCounts2.ts ===
-Line 3 col 10 IdentifierName "I" = I<X, Y, Z, A>
-Line 3 col 12 IdentifierName "X" = X
-Line 3 col 15 IdentifierName "Y" = Y
-Line 3 col 18 IdentifierName "Z" = Z
-Line 3 col 21 IdentifierName "A" = A
-Line 4 col 5 IdentifierName "x" = X
-Line 4 col 8 IdentifierName "X" = X
-Line 4 col 12 IdentifierName "X" = X
-Line 7 col 10 IdentifierName "I2" = I2
-Line 8 col 5 IdentifierName "Y" = Y
-Line 8 col 8 IdentifierName "Z" = Z
-Line 8 col 11 IdentifierName "A" = A
-Line 8 col 14 IdentifierName "B" = B
-Line 8 col 17 IdentifierName "x" = Y
-Line 8 col 20 IdentifierName "Y" = Y
-Line 8 col 24 IdentifierName "Y" = Y
-Line 11 col 4 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
-Line 11 col 10 IdentifierName "Z" = Z
-Line 11 col 13 IdentifierName "A" = A
-Line 11 col 16 IdentifierName "B" = B
-Line 11 col 19 IdentifierName "C" = C
-Line 11 col 22 IdentifierName "D" = D
-Line 11 col 25 IdentifierName "x" = Z
-Line 11 col 28 IdentifierName "Z" = Z
-Line 11 col 32 IdentifierName "Z" = Z
-Line 13 col 9 IdentifierName "foo1" = typeof foo1
-Line 13 col 14 IdentifierName "x" = I<string, boolean, number, string>
-Line 13 col 17 IdentifierName "I" = I<X, Y, Z, A>
-Line 14 col 9 IdentifierName "foo1" = typeof foo1
-Line 14 col 14 IdentifierName "x" = I<string, boolean, number, string>
-Line 14 col 17 IdentifierName "I" = I<X, Y, Z, A>
-Line 15 col 9 IdentifierName "foo1" = typeof foo1
-Line 15 col 14 IdentifierName "x" = any
-Line 17 col 9 IdentifierName "foo2" = typeof foo2
-Line 17 col 14 IdentifierName "x" = I2
-Line 17 col 17 IdentifierName "I2" = I2
-Line 18 col 9 IdentifierName "foo2" = typeof foo2
-Line 18 col 14 IdentifierName "x" = I2
-Line 18 col 17 IdentifierName "I2" = I2
-Line 19 col 9 IdentifierName "foo2" = typeof foo2
-Line 19 col 14 IdentifierName "x" = any
-Line 21 col 9 IdentifierName "foo3" = typeof foo3
-Line 21 col 14 IdentifierName "x" = <Z, A, B, C, D>(x: Z) => Z
-Line 21 col 24 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
-Line 22 col 9 IdentifierName "foo3" = typeof foo3
-Line 22 col 14 IdentifierName "x" = <Z, A, B, C, D>(x: Z) => Z
-Line 22 col 24 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
-Line 23 col 9 IdentifierName "foo3" = typeof foo3
-Line 23 col 14 IdentifierName "x" = any
-Line 25 col 9 IdentifierName "foo13" = typeof foo13
-Line 25 col 15 IdentifierName "x" = I<boolean, string, number, Date>
-Line 25 col 18 IdentifierName "I" = I<X, Y, Z, A>
-Line 25 col 45 IdentifierName "Date" = Date
-Line 26 col 9 IdentifierName "foo13" = typeof foo13
-Line 26 col 15 IdentifierName "x" = <Z, A, B, C, D>(x: Z) => Z
-Line 26 col 25 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
-Line 27 col 9 IdentifierName "foo13" = typeof foo13
-Line 27 col 15 IdentifierName "x" = any
-Line 29 col 9 IdentifierName "foo14" = typeof foo14
-Line 29 col 15 IdentifierName "x" = I<boolean, string, number, Date>
-Line 29 col 18 IdentifierName "I" = I<X, Y, Z, A>
-Line 29 col 45 IdentifierName "Date" = Date
-Line 30 col 9 IdentifierName "foo14" = typeof foo14
-Line 30 col 15 IdentifierName "x" = I2
-Line 30 col 18 IdentifierName "I2" = I2
-Line 31 col 9 IdentifierName "foo14" = typeof foo14
-Line 31 col 15 IdentifierName "x" = any
-Line 33 col 9 IdentifierName "foo14b" = typeof foo14b
-Line 33 col 16 IdentifierName "x" = <Z, A, B, C, D>(x: Z) => Z
-Line 33 col 26 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
-Line 34 col 9 IdentifierName "foo14b" = typeof foo14b
-Line 34 col 16 IdentifierName "x" = I2
-Line 34 col 19 IdentifierName "I2" = I2
-Line 35 col 9 IdentifierName "foo14b" = typeof foo14b
-Line 35 col 16 IdentifierName "x" = any
-Line 37 col 9 IdentifierName "foo15" = typeof foo15
-Line 37 col 15 IdentifierName "x" = I<boolean, string, number, Date>
-Line 37 col 18 IdentifierName "I" = I<X, Y, Z, A>
-Line 37 col 45 IdentifierName "Date" = Date
-Line 38 col 9 IdentifierName "foo15" = typeof foo15
-Line 38 col 15 IdentifierName "x" = I2
-Line 38 col 18 IdentifierName "I2" = I2
-Line 39 col 9 IdentifierName "foo15" = typeof foo15
-Line 39 col 15 IdentifierName "x" = any
+// object types are identical structurally
+
+
+interface I<X, Y, Z, A> {
+>I : I<X, Y, Z, A>
+>X : X
+>Y : Y
+>Z : Z
+>A : A
+
+    (x: X): X;
+>x : X
+>X : X
+>X : X
+}
+
+interface I2 {
+>I2 : I2
+
+    <Y, Z, A, B>(x: Y): Y;
+>Y : Y
+>Z : Z
+>A : A
+>B : B
+>x : Y
+>Y : Y
+>Y : Y
+}
+
+var a: { <Z, A, B, C, D>(x: Z): Z }
+>a : <Z, A, B, C, D>(x: Z) => Z
+>Z : Z
+>A : A
+>B : B
+>C : C
+>D : D
+>x : Z
+>Z : Z
+>Z : Z
+
+function foo1(x: I<string, boolean, number, string>);
+>foo1 : typeof foo1
+>x : I<string, boolean, number, string>
+>I : I<X, Y, Z, A>
+
+function foo1(x: I<string, boolean, number, string>); // error
+>foo1 : typeof foo1
+>x : I<string, boolean, number, string>
+>I : I<X, Y, Z, A>
+
+function foo1(x: any) { }
+>foo1 : typeof foo1
+>x : any
+
+function foo2(x: I2);
+>foo2 : typeof foo2
+>x : I2
+>I2 : I2
+
+function foo2(x: I2); // error
+>foo2 : typeof foo2
+>x : I2
+>I2 : I2
+
+function foo2(x: any) { }
+>foo2 : typeof foo2
+>x : any
+
+function foo3(x: typeof a);
+>foo3 : typeof foo3
+>x : <Z, A, B, C, D>(x: Z) => Z
+>a : <Z, A, B, C, D>(x: Z) => Z
+
+function foo3(x: typeof a); // error
+>foo3 : typeof foo3
+>x : <Z, A, B, C, D>(x: Z) => Z
+>a : <Z, A, B, C, D>(x: Z) => Z
+
+function foo3(x: any) { }
+>foo3 : typeof foo3
+>x : any
+
+function foo13(x: I<boolean, string, number, Date>);
+>foo13 : typeof foo13
+>x : I<boolean, string, number, Date>
+>I : I<X, Y, Z, A>
+>Date : Date
+
+function foo13(x: typeof a); // ok
+>foo13 : typeof foo13
+>x : <Z, A, B, C, D>(x: Z) => Z
+>a : <Z, A, B, C, D>(x: Z) => Z
+
+function foo13(x: any) { }
+>foo13 : typeof foo13
+>x : any
+
+function foo14(x: I<boolean, string, number, Date>);
+>foo14 : typeof foo14
+>x : I<boolean, string, number, Date>
+>I : I<X, Y, Z, A>
+>Date : Date
+
+function foo14(x: I2); // error
+>foo14 : typeof foo14
+>x : I2
+>I2 : I2
+
+function foo14(x: any) { }
+>foo14 : typeof foo14
+>x : any
+
+function foo14b(x: typeof a);
+>foo14b : typeof foo14b
+>x : <Z, A, B, C, D>(x: Z) => Z
+>a : <Z, A, B, C, D>(x: Z) => Z
+
+function foo14b(x: I2); // ok
+>foo14b : typeof foo14b
+>x : I2
+>I2 : I2
+
+function foo14b(x: any) { }
+>foo14b : typeof foo14b
+>x : any
+
+function foo15(x: I<boolean, string, number, Date>);
+>foo15 : typeof foo15
+>x : I<boolean, string, number, Date>
+>I : I<X, Y, Z, A>
+>Date : Date
+
+function foo15(x: I2); // ok
+>foo15 : typeof foo15
+>x : I2
+>I2 : I2
+
+function foo15(x: any) { }
+>foo15 : typeof foo15
+>x : any
+

@@ -1,8 +1,16 @@
 === tests/cases/compiler/reboundBaseClassSymbol.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 0 col 14 IdentifierName "a" = number
-Line 1 col 7 IdentifierName "Foo" = Foo
-Line 2 col 8 IdentifierName "A" = number
-Line 3 col 14 IdentifierName "B" = B
-Line 3 col 24 IdentifierName "A" = A
-Line 3 col 28 IdentifierName "b" = string
+interface A { a: number; }
+>A : A
+>a : number
+
+module Foo {
+>Foo : Foo
+
+    var A = 1;
+>A : number
+
+    interface B extends A { b: string; } 
+>B : B
+>A : A
+>b : string
+}

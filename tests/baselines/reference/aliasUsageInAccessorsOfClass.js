@@ -1,3 +1,19 @@
+//// [aliasUsage1_main.ts]
+import Backbone = require("aliasUsage1_backbone");
+import moduleA = require("aliasUsage1_moduleA");
+interface IHasVisualizationModel {
+    VisualizationModel: typeof Backbone.Model;
+}
+class C2 {
+    x: IHasVisualizationModel;
+    get A() {
+        return this.x;
+    }
+    set A(x) {
+        x = moduleA;
+    }
+}
+
 //// [aliasUsage1_backbone.js]
 var Model = (function () {
     function Model() {

@@ -1,6 +1,10 @@
 === tests/cases/compiler/functionCall3.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 28 ArrayLiteralExpression "[1]" = any[]
-Line 1 col 4 IdentifierName "x" = any[]
-Line 1 col 8 InvocationExpression "foo()" = any[]
-Line 1 col 8 IdentifierName "foo" = typeof foo
+function foo():any[]{return [1];} 
+>foo : typeof foo
+>[1] : any[]
+
+var x = foo();
+>x : any[]
+>foo() : any[]
+>foo : typeof foo
+

@@ -1,3 +1,4 @@
+//// [constructorParameterProperties.js]
 var C = (function () {
     function C(x) {
         this.x = x;

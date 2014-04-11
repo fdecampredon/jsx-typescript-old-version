@@ -1,3 +1,16 @@
+//// [aliasUsageInGenericFunction_main.ts]
+import Backbone = require("aliasUsageInGenericFunction_backbone");
+import moduleA = require("aliasUsageInGenericFunction_moduleA");
+interface IHasVisualizationModel {
+    VisualizationModel: typeof Backbone.Model;
+}
+function foo<T extends { a: IHasVisualizationModel }>(x: T) {
+    return x;
+}
+var r = foo({ a: moduleA });
+var r2 = foo({ a: <IHasVisualizationModel>null });
+
+
 //// [aliasUsageInGenericFunction_backbone.js]
 var Model = (function () {
     function Model() {

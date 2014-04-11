@@ -1,25 +1,44 @@
 === tests/cases/compiler/indexerReturningTypeParameter1.ts ===
-Line 0 col 10 IdentifierName "f" = f
-Line 1 col 0 IdentifierName "groupBy" = <T>() => { [key: string]: T[]; }
-Line 1 col 12 IdentifierName "T" = T
-Line 1 col 21 IdentifierName "key" = string
-Line 1 col 35 IdentifierName "T" = T
-Line 3 col 4 IdentifierName "a" = f
-Line 3 col 7 IdentifierName "f" = f
-Line 4 col 4 IdentifierName "r" = { [key: string]: {}[]; }
-Line 4 col 8 InvocationExpression "a.groupBy()" = { [key: string]: {}[]; }
-Line 4 col 8 MemberAccessExpression "a.groupBy" = <T>() => { [key: string]: T[]; }
-Line 4 col 8 IdentifierName "a" = f
-Line 4 col 10 IdentifierName "groupBy" = <T>() => { [key: string]: T[]; }
-Line 6 col 6 IdentifierName "c" = c
-Line 7 col 0 IdentifierName "groupBy" = <T>() => { [key: string]: T[]; }
-Line 7 col 12 IdentifierName "T" = T
-Line 7 col 21 IdentifierName "key" = string
-Line 7 col 35 IdentifierName "T" = T
-Line 11 col 4 IdentifierName "a2" = c
-Line 11 col 8 IdentifierName "c" = c
-Line 12 col 4 IdentifierName "r2" = { [key: string]: {}[]; }
-Line 12 col 9 InvocationExpression "a2.groupBy()" = { [key: string]: {}[]; }
-Line 12 col 9 MemberAccessExpression "a2.groupBy" = <T>() => { [key: string]: T[]; }
-Line 12 col 9 IdentifierName "a2" = c
-Line 12 col 12 IdentifierName "groupBy" = <T>() => { [key: string]: T[]; }
+interface f {
+>f : f
+
+    groupBy<T>(): { [key: string]: T[]; };
+>groupBy : <T>() => { [key: string]: T[]; }
+>T : T
+>key : string
+>T : T
+}
+var a: f;
+>a : f
+>f : f
+
+var r = a.groupBy();
+>r : { [key: string]: {}[]; }
+>a.groupBy() : { [key: string]: {}[]; }
+>a.groupBy : <T>() => { [key: string]: T[]; }
+>a : f
+>groupBy : <T>() => { [key: string]: T[]; }
+
+class c {
+>c : c
+
+    groupBy<T>(): { [key: string]: T[]; } {
+>groupBy : <T>() => { [key: string]: T[]; }
+>T : T
+>key : string
+>T : T
+
+        return null;
+    }
+}
+var a2: c;
+>a2 : c
+>c : c
+
+var r2 = a2.groupBy();
+>r2 : { [key: string]: {}[]; }
+>a2.groupBy() : { [key: string]: {}[]; }
+>a2.groupBy : <T>() => { [key: string]: T[]; }
+>a2 : c
+>groupBy : <T>() => { [key: string]: T[]; }
+

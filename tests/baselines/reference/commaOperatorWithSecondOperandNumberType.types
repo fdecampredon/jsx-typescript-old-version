@@ -1,104 +1,163 @@
 === tests/cases/compiler/commaOperatorWithSecondOperandNumberType.ts ===
-Line 0 col 4 IdentifierName "ANY" = any
-Line 1 col 4 IdentifierName "BOOLEAN" = boolean
-Line 2 col 4 IdentifierName "NUMBER" = number
-Line 3 col 4 IdentifierName "STRING" = string
-Line 4 col 4 IdentifierName "OBJECT" = Object
-Line 4 col 12 IdentifierName "Object" = Object
-Line 5 col 0 CommaExpression "//The second operand type is number
-ANY, NUMBER" = number
-Line 5 col 0 IdentifierName "//The second operand type is number
-ANY" = any
-Line 7 col 5 IdentifierName "NUMBER" = number
-Line 8 col 0 CommaExpression "BOOLEAN, NUMBER" = number
-Line 8 col 0 IdentifierName "BOOLEAN" = boolean
-Line 8 col 9 IdentifierName "NUMBER" = number
-Line 9 col 0 CommaExpression "NUMBER, NUMBER" = number
-Line 9 col 0 IdentifierName "NUMBER" = number
-Line 9 col 8 IdentifierName "NUMBER" = number
-Line 10 col 0 CommaExpression "STRING, NUMBER" = number
-Line 10 col 0 IdentifierName "STRING" = string
-Line 10 col 8 IdentifierName "NUMBER" = number
-Line 11 col 0 CommaExpression "OBJECT, NUMBER" = number
-Line 11 col 0 IdentifierName "OBJECT" = Object
-Line 11 col 8 IdentifierName "NUMBER" = number
-Line 14 col 4 IdentifierName "resultIsNumber1" = number
-Line 14 col 22 ParenthesizedExpression "(ANY, NUMBER)" = number
-Line 14 col 23 CommaExpression "ANY, NUMBER" = number
-Line 14 col 23 IdentifierName "ANY" = any
-Line 14 col 28 IdentifierName "NUMBER" = number
-Line 15 col 4 IdentifierName "resultIsNumber2" = number
-Line 15 col 22 ParenthesizedExpression "(BOOLEAN, NUMBER)" = number
-Line 15 col 23 CommaExpression "BOOLEAN, NUMBER" = number
-Line 15 col 23 IdentifierName "BOOLEAN" = boolean
-Line 15 col 32 IdentifierName "NUMBER" = number
-Line 16 col 4 IdentifierName "resultIsNumber3" = number
-Line 16 col 22 ParenthesizedExpression "(NUMBER, NUMBER)" = number
-Line 16 col 23 CommaExpression "NUMBER, NUMBER" = number
-Line 16 col 23 IdentifierName "NUMBER" = number
-Line 16 col 31 IdentifierName "NUMBER" = number
-Line 17 col 4 IdentifierName "resultIsNumber4" = number
-Line 17 col 22 ParenthesizedExpression "(STRING, NUMBER)" = number
-Line 17 col 23 CommaExpression "STRING, NUMBER" = number
-Line 17 col 23 IdentifierName "STRING" = string
-Line 17 col 31 IdentifierName "NUMBER" = number
-Line 18 col 4 IdentifierName "resultIsNumber5" = number
-Line 18 col 22 ParenthesizedExpression "(OBJECT, NUMBER)" = number
-Line 18 col 23 CommaExpression "OBJECT, NUMBER" = number
-Line 18 col 23 IdentifierName "OBJECT" = Object
-Line 18 col 31 IdentifierName "NUMBER" = number
-Line 19 col 0 CommaExpression "//Literal and expression
-null, NUMBER" = number
-Line 21 col 6 IdentifierName "NUMBER" = number
-Line 22 col 0 CommaExpression "ANY = undefined, NUMBER" = number
-Line 22 col 0 AssignmentExpression "ANY = undefined" = any
-Line 22 col 0 IdentifierName "ANY" = any
-Line 22 col 6 IdentifierName "undefined" = any
-Line 22 col 17 IdentifierName "NUMBER" = number
-Line 23 col 0 CommaExpression "true, 1" = number
-Line 24 col 0 CommaExpression "BOOLEAN = false, 1" = number
-Line 24 col 0 AssignmentExpression "BOOLEAN = false" = boolean
-Line 24 col 0 IdentifierName "BOOLEAN" = boolean
-Line 25 col 0 CommaExpression """, NUMBER = 1" = number
-Line 25 col 4 AssignmentExpression "NUMBER = 1" = number
-Line 25 col 4 IdentifierName "NUMBER" = number
-Line 26 col 0 CommaExpression "STRING.trim(), NUMBER = 1" = number
-Line 26 col 0 InvocationExpression "STRING.trim()" = string
-Line 26 col 0 MemberAccessExpression "STRING.trim" = () => string
-Line 26 col 0 IdentifierName "STRING" = string
-Line 26 col 7 IdentifierName "trim" = () => string
-Line 26 col 15 AssignmentExpression "NUMBER = 1" = number
-Line 26 col 15 IdentifierName "NUMBER" = number
-Line 28 col 4 IdentifierName "resultIsNumber6" = number
-Line 28 col 22 ParenthesizedExpression "(null, NUMBER)" = number
-Line 28 col 23 CommaExpression "null, NUMBER" = number
-Line 28 col 29 IdentifierName "NUMBER" = number
-Line 29 col 4 IdentifierName "resultIsNumber7" = number
-Line 29 col 22 ParenthesizedExpression "(ANY = undefined, NUMBER)" = number
-Line 29 col 23 CommaExpression "ANY = undefined, NUMBER" = number
-Line 29 col 23 AssignmentExpression "ANY = undefined" = any
-Line 29 col 23 IdentifierName "ANY" = any
-Line 29 col 29 IdentifierName "undefined" = any
-Line 29 col 40 IdentifierName "NUMBER" = number
-Line 30 col 4 IdentifierName "resultIsNumber8" = number
-Line 30 col 22 ParenthesizedExpression "(true, 1)" = number
-Line 30 col 23 CommaExpression "true, 1" = number
-Line 31 col 4 IdentifierName "resultIsNumber9" = number
-Line 31 col 22 ParenthesizedExpression "(BOOLEAN = false, 1)" = number
-Line 31 col 23 CommaExpression "BOOLEAN = false, 1" = number
-Line 31 col 23 AssignmentExpression "BOOLEAN = false" = boolean
-Line 31 col 23 IdentifierName "BOOLEAN" = boolean
-Line 32 col 4 IdentifierName "resultIsNumber10" = number
-Line 32 col 23 ParenthesizedExpression "("", NUMBER = 1)" = number
-Line 32 col 24 CommaExpression """, NUMBER = 1" = number
-Line 32 col 28 AssignmentExpression "NUMBER = 1" = number
-Line 32 col 28 IdentifierName "NUMBER" = number
-Line 33 col 4 IdentifierName "resultIsNumber11" = number
-Line 33 col 23 ParenthesizedExpression "(STRING.trim(), NUMBER = 1)" = number
-Line 33 col 24 CommaExpression "STRING.trim(), NUMBER = 1" = number
-Line 33 col 24 InvocationExpression "STRING.trim()" = string
-Line 33 col 24 MemberAccessExpression "STRING.trim" = () => string
-Line 33 col 24 IdentifierName "STRING" = string
-Line 33 col 31 IdentifierName "trim" = () => string
-Line 33 col 39 AssignmentExpression "NUMBER = 1" = number
-Line 33 col 39 IdentifierName "NUMBER" = number
+var ANY: any;
+>ANY : any
+
+var BOOLEAN: boolean;
+>BOOLEAN : boolean
+
+var NUMBER: number;
+>NUMBER : number
+
+var STRING: string;
+>STRING : string
+
+var OBJECT: Object;
+>OBJECT : Object
+>Object : Object
+
+>//The second operand type is number
+ANY, NUMBER : number
+>//The second operand type is number
+ANY : any
+
+//The second operand type is number
+ANY, NUMBER;
+>NUMBER : number
+
+BOOLEAN, NUMBER;
+>BOOLEAN, NUMBER : number
+>BOOLEAN : boolean
+>NUMBER : number
+
+NUMBER, NUMBER;
+>NUMBER, NUMBER : number
+>NUMBER : number
+>NUMBER : number
+
+STRING, NUMBER;
+>STRING, NUMBER : number
+>STRING : string
+>NUMBER : number
+
+OBJECT, NUMBER;
+>OBJECT, NUMBER : number
+>OBJECT : Object
+>NUMBER : number
+
+//Return type is number
+var resultIsNumber1 = (ANY, NUMBER);
+>resultIsNumber1 : number
+>(ANY, NUMBER) : number
+>ANY, NUMBER : number
+>ANY : any
+>NUMBER : number
+
+var resultIsNumber2 = (BOOLEAN, NUMBER);
+>resultIsNumber2 : number
+>(BOOLEAN, NUMBER) : number
+>BOOLEAN, NUMBER : number
+>BOOLEAN : boolean
+>NUMBER : number
+
+var resultIsNumber3 = (NUMBER, NUMBER);
+>resultIsNumber3 : number
+>(NUMBER, NUMBER) : number
+>NUMBER, NUMBER : number
+>NUMBER : number
+>NUMBER : number
+
+var resultIsNumber4 = (STRING, NUMBER);
+>resultIsNumber4 : number
+>(STRING, NUMBER) : number
+>STRING, NUMBER : number
+>STRING : string
+>NUMBER : number
+
+var resultIsNumber5 = (OBJECT, NUMBER);
+>resultIsNumber5 : number
+>(OBJECT, NUMBER) : number
+>OBJECT, NUMBER : number
+>OBJECT : Object
+>NUMBER : number
+
+>//Literal and expression
+null, NUMBER : number
+
+//Literal and expression
+null, NUMBER;
+>NUMBER : number
+
+ANY = undefined, NUMBER;
+>ANY = undefined, NUMBER : number
+>ANY = undefined : any
+>ANY : any
+>undefined : any
+>NUMBER : number
+
+true, 1;
+>true, 1 : number
+
+BOOLEAN = false, 1;
+>BOOLEAN = false, 1 : number
+>BOOLEAN = false : boolean
+>BOOLEAN : boolean
+
+"", NUMBER = 1;
+>"", NUMBER = 1 : number
+>NUMBER = 1 : number
+>NUMBER : number
+
+STRING.trim(), NUMBER = 1;
+>STRING.trim(), NUMBER = 1 : number
+>STRING.trim() : string
+>STRING.trim : () => string
+>STRING : string
+>trim : () => string
+>NUMBER = 1 : number
+>NUMBER : number
+
+var resultIsNumber6 = (null, NUMBER);
+>resultIsNumber6 : number
+>(null, NUMBER) : number
+>null, NUMBER : number
+>NUMBER : number
+
+var resultIsNumber7 = (ANY = undefined, NUMBER);
+>resultIsNumber7 : number
+>(ANY = undefined, NUMBER) : number
+>ANY = undefined, NUMBER : number
+>ANY = undefined : any
+>ANY : any
+>undefined : any
+>NUMBER : number
+
+var resultIsNumber8 = (true, 1);
+>resultIsNumber8 : number
+>(true, 1) : number
+>true, 1 : number
+
+var resultIsNumber9 = (BOOLEAN = false, 1);
+>resultIsNumber9 : number
+>(BOOLEAN = false, 1) : number
+>BOOLEAN = false, 1 : number
+>BOOLEAN = false : boolean
+>BOOLEAN : boolean
+
+var resultIsNumber10 = ("", NUMBER = 1);
+>resultIsNumber10 : number
+>("", NUMBER = 1) : number
+>"", NUMBER = 1 : number
+>NUMBER = 1 : number
+>NUMBER : number
+
+var resultIsNumber11 = (STRING.trim(), NUMBER = 1);
+>resultIsNumber11 : number
+>(STRING.trim(), NUMBER = 1) : number
+>STRING.trim(), NUMBER = 1 : number
+>STRING.trim() : string
+>STRING.trim : () => string
+>STRING : string
+>trim : () => string
+>NUMBER = 1 : number
+>NUMBER : number
+

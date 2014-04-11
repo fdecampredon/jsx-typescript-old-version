@@ -1,14 +1,25 @@
 === tests/cases/compiler/commentsOnObjectLiteral4.ts ===
-Line 1 col 4 IdentifierName "v" = { bar: number; }
-Line 1 col 8 ObjectLiteralExpression "{
+
+var v = {
+>v : { bar: number; }
+>{
  /**
   * @type {number}
   */
  get bar(): number {
   return this._bar;
  }
-}" = { bar: number; }
-Line 5 col 5 IdentifierName "bar" = number
-Line 6 col 9 MemberAccessExpression "this._bar" = any
-Line 6 col 9 ThisKeyword "this" = any
-Line 6 col 14 IdentifierName "_bar" = any
+} : { bar: number; }
+
+ /**
+  * @type {number}
+  */
+ get bar(): number {
+>bar : number
+
+  return this._bar;
+>this._bar : any
+>this : any
+>_bar : any
+ }
+}

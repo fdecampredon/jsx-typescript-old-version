@@ -1,3 +1,4 @@
+//// [sourceMapSample.js]
 var Foo;
 (function (Foo) {
     (function (Bar) {

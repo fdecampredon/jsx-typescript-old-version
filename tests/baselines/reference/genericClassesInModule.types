@@ -1,12 +1,22 @@
 === tests/cases/compiler/genericClassesInModule.ts ===
-Line 1 col 7 IdentifierName "Foo" = Foo
-Line 3 col 17 IdentifierName "B" = B<T>
-Line 3 col 19 IdentifierName "T" = T
-Line 5 col 17 IdentifierName "A" = A
-Line 8 col 4 IdentifierName "a" = Foo.B<Foo.A>
-Line 8 col 8 ObjectCreationExpression "new Foo.B<Foo.A>()" = Foo.B<Foo.A>
-Line 8 col 12 MemberAccessExpression "Foo.B" = typeof Foo.B
-Line 8 col 12 IdentifierName "Foo" = typeof Foo
-Line 8 col 16 IdentifierName "B" = typeof Foo.B
-Line 8 col 18 IdentifierName "Foo" = Foo
-Line 8 col 22 IdentifierName "A" = Foo.A
+
+module Foo {
+>Foo : Foo
+
+    export class B<T>{ }
+>B : B<T>
+>T : T
+
+    export class A { }
+>A : A
+}
+
+var a = new Foo.B<Foo.A>();
+>a : Foo.B<Foo.A>
+>new Foo.B<Foo.A>() : Foo.B<Foo.A>
+>Foo.B : typeof Foo.B
+>Foo : typeof Foo
+>B : typeof Foo.B
+>Foo : Foo
+>A : Foo.A
+

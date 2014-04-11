@@ -1,10 +1,26 @@
 === tests/cases/compiler/numericIndexerConstraint3.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 1 col 0 IdentifierName "foo" = number
-Line 4 col 6 IdentifierName "B" = B
-Line 4 col 16 IdentifierName "A" = A
-Line 5 col 0 IdentifierName "bar" = string
-Line 8 col 6 IdentifierName "C" = C
-Line 9 col 7 IdentifierName "B" = B
-Line 10 col 5 IdentifierName "x" = number
-Line 10 col 17 IdentifierName "A" = A
+class A {
+>A : A
+
+    foo: number;
+>foo : number
+}
+
+class B extends A {
+>B : B
+>A : A
+
+    bar: string;
+>bar : string
+}
+
+class C {
+>C : C
+
+    0: B;
+>B : B
+
+    [x: number]: A;
+>x : number
+>A : A
+}

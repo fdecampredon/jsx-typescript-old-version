@@ -1,3 +1,4 @@
+//// [collisionArgumentsArrowFunctions.js]
 var f1 = function (i) {
     var arguments = [];
     for (var _i = 0; _i < (arguments.length - 1); _i++) {

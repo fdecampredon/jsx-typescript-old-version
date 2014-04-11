@@ -1,24 +1,48 @@
 === tests/cases/compiler/ExportModuleWithAccessibleTypesOnItsExportedMembers.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 2 col 17 IdentifierName "Point" = Point
-Line 3 col 27 IdentifierName "x" = number
-Line 3 col 45 IdentifierName "y" = number
-Line 6 col 18 IdentifierName "B" = B
-Line 7 col 19 IdentifierName "Origin" = Point
-Line 7 col 27 IdentifierName "Point" = Point
-Line 7 col 35 ObjectCreationExpression "new Point(0, 0)" = Point
-Line 7 col 39 IdentifierName "Point" = typeof Point
-Line 9 col 21 IdentifierName "Line" = Line
-Line 10 col 24 IdentifierName "start" = Point
-Line 10 col 31 IdentifierName "Point" = Point
-Line 10 col 38 IdentifierName "end" = Point
-Line 10 col 43 IdentifierName "Point" = Point
-Line 14 col 19 IdentifierName "fromOrigin" = (p: Point) => Line
-Line 14 col 30 IdentifierName "p" = Point
-Line 14 col 33 IdentifierName "Point" = Point
-Line 15 col 23 ObjectCreationExpression "new Line({ x: 0, y: 0 }, p)" = Line
-Line 15 col 27 IdentifierName "Line" = typeof Line
-Line 15 col 32 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 15 col 34 IdentifierName "x" = number
-Line 15 col 40 IdentifierName "y" = number
-Line 15 col 48 IdentifierName "p" = Point
+module A {
+>A : A
+
+    export class Point {
+>Point : Point
+
+        constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+    }
+
+    export module B {
+>B : B
+
+        export var Origin: Point = new Point(0, 0);
+>Origin : Point
+>Point : Point
+>new Point(0, 0) : Point
+>Point : typeof Point
+
+        export class Line {
+>Line : Line
+
+            constructor(start: Point, end: Point) {
+>start : Point
+>Point : Point
+>end : Point
+>Point : Point
+
+            }
+
+            static fromOrigin(p: Point) {
+>fromOrigin : (p: Point) => Line
+>p : Point
+>Point : Point
+
+                return new Line({ x: 0, y: 0 }, p);
+>new Line({ x: 0, y: 0 }, p) : Line
+>Line : typeof Line
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+>p : Point
+            }
+        }
+    }
+}

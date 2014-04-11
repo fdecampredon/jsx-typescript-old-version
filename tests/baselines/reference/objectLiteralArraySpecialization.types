@@ -1,39 +1,51 @@
 === tests/cases/compiler/objectLiteralArraySpecialization.ts ===
-Line 0 col 17 IdentifierName "create" = typeof create
-Line 0 col 24 IdentifierName "T" = T
-Line 0 col 27 IdentifierName "initialValues" = T[]
-Line 0 col 43 IdentifierName "T" = T
-Line 0 col 49 IdentifierName "MyArrayWrapper" = MyArrayWrapper<T>
-Line 0 col 64 IdentifierName "T" = T
-Line 1 col 10 IdentifierName "MyArrayWrapper" = MyArrayWrapper<T>
-Line 1 col 25 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "constructor" = (initialItems?: T[]) => any
-Line 2 col 13 IdentifierName "initialItems" = T[]
-Line 2 col 28 IdentifierName "T" = T
-Line 3 col 0 IdentifierName "doSomething" = (predicate: (x: T, y: T) => boolean) => void
-Line 3 col 13 IdentifierName "predicate" = (x: T, y: T) => boolean
-Line 3 col 25 IdentifierName "x" = T
-Line 3 col 28 IdentifierName "T" = T
-Line 3 col 31 IdentifierName "y" = T
-Line 3 col 34 IdentifierName "T" = T
-Line 5 col 4 IdentifierName "thing" = MyArrayWrapper<{ name: string; id: number; }>
-Line 5 col 12 InvocationExpression "create([ { name: "bob", id: 24 }, { name: "doug", id: 32 } ])" = MyArrayWrapper<{ name: string; id: number; }>
-Line 5 col 12 IdentifierName "create" = typeof create
-Line 5 col 19 ArrayLiteralExpression "[ { name: "bob", id: 24 }, { name: "doug", id: 32 } ]" = { name: string; id: number; }[]
-Line 5 col 21 ObjectLiteralExpression "{ name: "bob", id: 24 }" = { name: string; id: number; }
-Line 5 col 23 IdentifierName "name" = string
-Line 5 col 36 IdentifierName "id" = number
-Line 5 col 46 ObjectLiteralExpression "{ name: "doug", id: 32 }" = { name: string; id: number; }
-Line 5 col 48 IdentifierName "name" = string
-Line 5 col 62 IdentifierName "id" = number
-Line 6 col 0 InvocationExpression "thing.doSomething((x, y) => x.name === "bob")" = void
-Line 6 col 0 MemberAccessExpression "thing.doSomething" = (predicate: (x: { name: string; id: number; }, y: { name: string; id: number; }) => boolean) => void
-Line 6 col 0 IdentifierName "thing" = MyArrayWrapper<{ name: string; id: number; }>
-Line 6 col 6 IdentifierName "doSomething" = (predicate: (x: { name: string; id: number; }, y: { name: string; id: number; }) => boolean) => void
-Line 6 col 18 ParenthesizedArrowFunctionExpression "(x, y) => x.name === "bob"" = (x: { name: string; id: number; }, y: { name: string; id: number; }) => boolean
-Line 6 col 19 IdentifierName "x" = { name: string; id: number; }
-Line 6 col 22 IdentifierName "y" = { name: string; id: number; }
-Line 6 col 28 EqualsExpression "x.name === "bob"" = boolean
-Line 6 col 28 MemberAccessExpression "x.name" = string
-Line 6 col 28 IdentifierName "x" = { name: string; id: number; }
-Line 6 col 30 IdentifierName "name" = string
+declare function create<T>(initialValues?: T[]): MyArrayWrapper<T>;
+>create : typeof create
+>T : T
+>initialValues : T[]
+>T : T
+>MyArrayWrapper : MyArrayWrapper<T>
+>T : T
+
+interface MyArrayWrapper<T> {
+>MyArrayWrapper : MyArrayWrapper<T>
+>T : T
+
+	constructor(initialItems?: T[]);
+>constructor : (initialItems?: T[]) => any
+>initialItems : T[]
+>T : T
+
+	doSomething(predicate: (x: T, y: T) => boolean): void;
+>doSomething : (predicate: (x: T, y: T) => boolean) => void
+>predicate : (x: T, y: T) => boolean
+>x : T
+>T : T
+>y : T
+>T : T
+}
+var thing = create([ { name: "bob", id: 24 }, { name: "doug", id: 32 } ]); // should not error
+>thing : MyArrayWrapper<{ name: string; id: number; }>
+>create([ { name: "bob", id: 24 }, { name: "doug", id: 32 } ]) : MyArrayWrapper<{ name: string; id: number; }>
+>create : typeof create
+>[ { name: "bob", id: 24 }, { name: "doug", id: 32 } ] : { name: string; id: number; }[]
+>{ name: "bob", id: 24 } : { name: string; id: number; }
+>name : string
+>id : number
+>{ name: "doug", id: 32 } : { name: string; id: number; }
+>name : string
+>id : number
+
+thing.doSomething((x, y) => x.name === "bob"); // should not error
+>thing.doSomething((x, y) => x.name === "bob") : void
+>thing.doSomething : (predicate: (x: { name: string; id: number; }, y: { name: string; id: number; }) => boolean) => void
+>thing : MyArrayWrapper<{ name: string; id: number; }>
+>doSomething : (predicate: (x: { name: string; id: number; }, y: { name: string; id: number; }) => boolean) => void
+>(x, y) => x.name === "bob" : (x: { name: string; id: number; }, y: { name: string; id: number; }) => boolean
+>x : { name: string; id: number; }
+>y : { name: string; id: number; }
+>x.name === "bob" : boolean
+>x.name : string
+>x : { name: string; id: number; }
+>name : string
+

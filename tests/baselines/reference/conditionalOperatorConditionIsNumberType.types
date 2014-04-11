@@ -1,159 +1,253 @@
 === tests/cases/compiler/conditionalOperatorConditionIsNumberType.ts ===
-Line 1 col 4 IdentifierName "condNumber" = number
-Line 3 col 4 IdentifierName "exprAny1" = any
-Line 4 col 4 IdentifierName "exprBoolean1" = boolean
-Line 5 col 4 IdentifierName "exprNumber1" = number
-Line 6 col 4 IdentifierName "exprString1" = string
-Line 7 col 4 IdentifierName "exprIsObject1" = Object
-Line 7 col 19 IdentifierName "Object" = Object
-Line 9 col 4 IdentifierName "exprAny2" = any
-Line 10 col 4 IdentifierName "exprBoolean2" = boolean
-Line 11 col 4 IdentifierName "exprNumber2" = number
-Line 12 col 4 IdentifierName "exprString2" = string
-Line 13 col 4 IdentifierName "exprIsObject2" = Object
-Line 13 col 19 IdentifierName "Object" = Object
-Line 14 col 0 ConditionalExpression "//Cond is a number type variable
-condNumber ? exprAny1 : exprAny2" = any
-Line 14 col 0 IdentifierName "//Cond is a number type variable
-condNumber" = number
-Line 16 col 13 IdentifierName "exprAny1" = any
-Line 16 col 24 IdentifierName "exprAny2" = any
-Line 17 col 0 ConditionalExpression "condNumber ? exprBoolean1 : exprBoolean2" = boolean
-Line 17 col 0 IdentifierName "condNumber" = number
-Line 17 col 13 IdentifierName "exprBoolean1" = boolean
-Line 17 col 28 IdentifierName "exprBoolean2" = boolean
-Line 18 col 0 ConditionalExpression "condNumber ? exprNumber1 : exprNumber2" = number
-Line 18 col 0 IdentifierName "condNumber" = number
-Line 18 col 13 IdentifierName "exprNumber1" = number
-Line 18 col 27 IdentifierName "exprNumber2" = number
-Line 19 col 0 ConditionalExpression "condNumber ? exprString1 : exprString2" = string
-Line 19 col 0 IdentifierName "condNumber" = number
-Line 19 col 13 IdentifierName "exprString1" = string
-Line 19 col 27 IdentifierName "exprString2" = string
-Line 20 col 0 ConditionalExpression "condNumber ? exprIsObject1 : exprIsObject2" = Object
-Line 20 col 0 IdentifierName "condNumber" = number
-Line 20 col 13 IdentifierName "exprIsObject1" = Object
-Line 20 col 29 IdentifierName "exprIsObject2" = Object
-Line 21 col 0 ConditionalExpression "//Cond is a number type literal
-1 ? exprAny1 : exprAny2" = any
-Line 23 col 4 IdentifierName "exprAny1" = any
-Line 23 col 15 IdentifierName "exprAny2" = any
-Line 24 col 0 ConditionalExpression "0 ? exprBoolean1 : exprBoolean2" = boolean
-Line 24 col 4 IdentifierName "exprBoolean1" = boolean
-Line 24 col 19 IdentifierName "exprBoolean2" = boolean
-Line 25 col 0 ConditionalExpression "0.123456789 ? exprNumber1 : exprNumber2" = number
-Line 25 col 14 IdentifierName "exprNumber1" = number
-Line 25 col 28 IdentifierName "exprNumber2" = number
-Line 26 col 0 ConditionalExpression "- 10000000000000 ? exprString1 : exprString2" = string
-Line 26 col 0 NegateExpression "- 10000000000000" = number
-Line 26 col 19 IdentifierName "exprString1" = string
-Line 26 col 33 IdentifierName "exprString2" = string
-Line 27 col 0 ConditionalExpression "1000000000000 ? exprIsObject1 : exprIsObject2" = Object
-Line 27 col 16 IdentifierName "exprIsObject1" = Object
-Line 27 col 32 IdentifierName "exprIsObject2" = Object
-Line 30 col 9 IdentifierName "foo" = typeof foo
-Line 31 col 4 IdentifierName "array" = number[]
-Line 31 col 12 ArrayLiteralExpression "[1, 2, 3]" = number[]
-Line 32 col 0 ConditionalExpression "1 * 0 ? exprAny1 : exprAny2" = any
-Line 32 col 0 MultiplyExpression "1 * 0" = number
-Line 33 col 8 IdentifierName "exprAny1" = any
-Line 33 col 19 IdentifierName "exprAny2" = any
-Line 34 col 0 ConditionalExpression "1 + 1 ? exprBoolean1 : exprBoolean2" = boolean
-Line 34 col 0 AddExpression "1 + 1" = number
-Line 34 col 8 IdentifierName "exprBoolean1" = boolean
-Line 34 col 23 IdentifierName "exprBoolean2" = boolean
-Line 35 col 0 ConditionalExpression ""string".length ? exprNumber1 : exprNumber2" = number
-Line 35 col 0 MemberAccessExpression ""string".length" = number
-Line 35 col 9 IdentifierName "length" = number
-Line 35 col 18 IdentifierName "exprNumber1" = number
-Line 35 col 32 IdentifierName "exprNumber2" = number
-Line 36 col 0 ConditionalExpression "foo() ? exprString1 : exprString2" = string
-Line 36 col 0 InvocationExpression "foo()" = number
-Line 36 col 0 IdentifierName "foo" = typeof foo
-Line 36 col 8 IdentifierName "exprString1" = string
-Line 36 col 22 IdentifierName "exprString2" = string
-Line 37 col 0 ConditionalExpression "foo() / array[1] ? exprIsObject1 : exprIsObject2" = Object
-Line 37 col 0 DivideExpression "foo() / array[1]" = number
-Line 37 col 0 InvocationExpression "foo()" = number
-Line 37 col 0 IdentifierName "foo" = typeof foo
-Line 37 col 8 ElementAccessExpression "array[1]" = number
-Line 37 col 8 IdentifierName "array" = number[]
-Line 37 col 19 IdentifierName "exprIsObject1" = Object
-Line 37 col 35 IdentifierName "exprIsObject2" = Object
-Line 40 col 4 IdentifierName "resultIsAny1" = any
-Line 40 col 19 ConditionalExpression "condNumber ? exprAny1 : exprAny2" = any
-Line 40 col 19 IdentifierName "condNumber" = number
-Line 40 col 32 IdentifierName "exprAny1" = any
-Line 40 col 43 IdentifierName "exprAny2" = any
-Line 41 col 4 IdentifierName "resultIsBoolean1" = boolean
-Line 41 col 23 ConditionalExpression "condNumber ? exprBoolean1 : exprBoolean2" = boolean
-Line 41 col 23 IdentifierName "condNumber" = number
-Line 41 col 36 IdentifierName "exprBoolean1" = boolean
-Line 41 col 51 IdentifierName "exprBoolean2" = boolean
-Line 42 col 4 IdentifierName "resultIsNumber1" = number
-Line 42 col 22 ConditionalExpression "condNumber ? exprNumber1 : exprNumber2" = number
-Line 42 col 22 IdentifierName "condNumber" = number
-Line 42 col 35 IdentifierName "exprNumber1" = number
-Line 42 col 49 IdentifierName "exprNumber2" = number
-Line 43 col 4 IdentifierName "resultIsString1" = string
-Line 43 col 22 ConditionalExpression "condNumber ? exprString1 : exprString2" = string
-Line 43 col 22 IdentifierName "condNumber" = number
-Line 43 col 35 IdentifierName "exprString1" = string
-Line 43 col 49 IdentifierName "exprString2" = string
-Line 44 col 4 IdentifierName "resultIsObject1" = Object
-Line 44 col 22 ConditionalExpression "condNumber ? exprIsObject1 : exprIsObject2" = Object
-Line 44 col 22 IdentifierName "condNumber" = number
-Line 44 col 35 IdentifierName "exprIsObject1" = Object
-Line 44 col 51 IdentifierName "exprIsObject2" = Object
-Line 46 col 4 IdentifierName "resultIsAny2" = any
-Line 46 col 19 ConditionalExpression "1 ? exprAny1 : exprAny2" = any
-Line 46 col 23 IdentifierName "exprAny1" = any
-Line 46 col 34 IdentifierName "exprAny2" = any
-Line 47 col 4 IdentifierName "resultIsBoolean2" = boolean
-Line 47 col 23 ConditionalExpression "0 ? exprBoolean1 : exprBoolean2" = boolean
-Line 47 col 27 IdentifierName "exprBoolean1" = boolean
-Line 47 col 42 IdentifierName "exprBoolean2" = boolean
-Line 48 col 4 IdentifierName "resultIsNumber2" = number
-Line 48 col 22 ConditionalExpression "0.123456789 ? exprNumber1 : exprNumber2" = number
-Line 48 col 36 IdentifierName "exprNumber1" = number
-Line 48 col 50 IdentifierName "exprNumber2" = number
-Line 49 col 4 IdentifierName "resultIsString2" = string
-Line 49 col 22 ConditionalExpression "- 10000000000000 ? exprString1 : exprString2" = string
-Line 49 col 22 NegateExpression "- 10000000000000" = number
-Line 49 col 41 IdentifierName "exprString1" = string
-Line 49 col 55 IdentifierName "exprString2" = string
-Line 50 col 4 IdentifierName "resultIsObject2" = Object
-Line 50 col 22 ConditionalExpression "1000000000000 ? exprIsObject1 : exprIsObject2" = Object
-Line 50 col 38 IdentifierName "exprIsObject1" = Object
-Line 50 col 54 IdentifierName "exprIsObject2" = Object
-Line 52 col 4 IdentifierName "resultIsAny3" = any
-Line 52 col 19 ConditionalExpression "1 * 0 ? exprAny1 : exprAny2" = any
-Line 52 col 19 MultiplyExpression "1 * 0" = number
-Line 52 col 27 IdentifierName "exprAny1" = any
-Line 52 col 38 IdentifierName "exprAny2" = any
-Line 53 col 4 IdentifierName "resultIsBoolean3" = boolean
-Line 53 col 23 ConditionalExpression "1 + 1 ? exprBoolean1 : exprBoolean2" = boolean
-Line 53 col 23 AddExpression "1 + 1" = number
-Line 53 col 31 IdentifierName "exprBoolean1" = boolean
-Line 53 col 46 IdentifierName "exprBoolean2" = boolean
-Line 54 col 4 IdentifierName "resultIsNumber3" = number
-Line 54 col 22 ConditionalExpression ""string".length ? exprNumber1 : exprNumber2" = number
-Line 54 col 22 MemberAccessExpression ""string".length" = number
-Line 54 col 31 IdentifierName "length" = number
-Line 54 col 40 IdentifierName "exprNumber1" = number
-Line 54 col 54 IdentifierName "exprNumber2" = number
-Line 55 col 4 IdentifierName "resultIsString3" = string
-Line 55 col 22 ConditionalExpression "foo() ? exprString1 : exprString2" = string
-Line 55 col 22 InvocationExpression "foo()" = number
-Line 55 col 22 IdentifierName "foo" = typeof foo
-Line 55 col 30 IdentifierName "exprString1" = string
-Line 55 col 44 IdentifierName "exprString2" = string
-Line 56 col 4 IdentifierName "resultIsObject3" = Object
-Line 56 col 22 ConditionalExpression "foo() / array[1] ? exprIsObject1 : exprIsObject2" = Object
-Line 56 col 22 DivideExpression "foo() / array[1]" = number
-Line 56 col 22 InvocationExpression "foo()" = number
-Line 56 col 22 IdentifierName "foo" = typeof foo
-Line 56 col 30 ElementAccessExpression "array[1]" = number
-Line 56 col 30 IdentifierName "array" = number[]
-Line 56 col 41 IdentifierName "exprIsObject1" = Object
-Line 56 col 57 IdentifierName "exprIsObject2" = Object
+//Cond ? Expr1 : Expr2,  Cond is of number type, Expr1 and Expr2 have the same type
+var condNumber: number;
+>condNumber : number
+
+var exprAny1: any;
+>exprAny1 : any
+
+var exprBoolean1: boolean;
+>exprBoolean1 : boolean
+
+var exprNumber1: number;
+>exprNumber1 : number
+
+var exprString1: string;
+>exprString1 : string
+
+var exprIsObject1: Object;
+>exprIsObject1 : Object
+>Object : Object
+
+var exprAny2: any;
+>exprAny2 : any
+
+var exprBoolean2: boolean;
+>exprBoolean2 : boolean
+
+var exprNumber2: number;
+>exprNumber2 : number
+
+var exprString2: string;
+>exprString2 : string
+
+var exprIsObject2: Object;
+>exprIsObject2 : Object
+>Object : Object
+
+>//Cond is a number type variable
+condNumber ? exprAny1 : exprAny2 : any
+>//Cond is a number type variable
+condNumber : number
+
+//Cond is a number type variable
+condNumber ? exprAny1 : exprAny2;
+>exprAny1 : any
+>exprAny2 : any
+
+condNumber ? exprBoolean1 : exprBoolean2;
+>condNumber ? exprBoolean1 : exprBoolean2 : boolean
+>condNumber : number
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+condNumber ? exprNumber1 : exprNumber2;
+>condNumber ? exprNumber1 : exprNumber2 : number
+>condNumber : number
+>exprNumber1 : number
+>exprNumber2 : number
+
+condNumber ? exprString1 : exprString2;
+>condNumber ? exprString1 : exprString2 : string
+>condNumber : number
+>exprString1 : string
+>exprString2 : string
+
+condNumber ? exprIsObject1 : exprIsObject2;
+>condNumber ? exprIsObject1 : exprIsObject2 : Object
+>condNumber : number
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+>//Cond is a number type literal
+1 ? exprAny1 : exprAny2 : any
+
+//Cond is a number type literal
+1 ? exprAny1 : exprAny2;
+>exprAny1 : any
+>exprAny2 : any
+
+0 ? exprBoolean1 : exprBoolean2;
+>0 ? exprBoolean1 : exprBoolean2 : boolean
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+0.123456789 ? exprNumber1 : exprNumber2;
+>0.123456789 ? exprNumber1 : exprNumber2 : number
+>exprNumber1 : number
+>exprNumber2 : number
+
+- 10000000000000 ? exprString1 : exprString2;
+>- 10000000000000 ? exprString1 : exprString2 : string
+>- 10000000000000 : number
+>exprString1 : string
+>exprString2 : string
+
+1000000000000 ? exprIsObject1 : exprIsObject2;
+>1000000000000 ? exprIsObject1 : exprIsObject2 : Object
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+//Cond is a number type expression
+function foo() { return 1 };
+>foo : typeof foo
+
+var array = [1, 2, 3];
+>array : number[]
+>[1, 2, 3] : number[]
+
+>1 * 0 ? exprAny1 : exprAny2 : any
+>1 * 0 : number
+
+1 * 0 ? exprAny1 : exprAny2;
+>exprAny1 : any
+>exprAny2 : any
+
+1 + 1 ? exprBoolean1 : exprBoolean2;
+>1 + 1 ? exprBoolean1 : exprBoolean2 : boolean
+>1 + 1 : number
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+"string".length ? exprNumber1 : exprNumber2;
+>"string".length ? exprNumber1 : exprNumber2 : number
+>"string".length : number
+>length : number
+>exprNumber1 : number
+>exprNumber2 : number
+
+foo() ? exprString1 : exprString2;
+>foo() ? exprString1 : exprString2 : string
+>foo() : number
+>foo : typeof foo
+>exprString1 : string
+>exprString2 : string
+
+foo() / array[1] ? exprIsObject1 : exprIsObject2;
+>foo() / array[1] ? exprIsObject1 : exprIsObject2 : Object
+>foo() / array[1] : number
+>foo() : number
+>foo : typeof foo
+>array[1] : number
+>array : number[]
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+//Results shoud be same as Expr1 and Expr2
+var resultIsAny1 = condNumber ? exprAny1 : exprAny2;
+>resultIsAny1 : any
+>condNumber ? exprAny1 : exprAny2 : any
+>condNumber : number
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean1 = condNumber ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean1 : boolean
+>condNumber ? exprBoolean1 : exprBoolean2 : boolean
+>condNumber : number
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber1 = condNumber ? exprNumber1 : exprNumber2;
+>resultIsNumber1 : number
+>condNumber ? exprNumber1 : exprNumber2 : number
+>condNumber : number
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString1 = condNumber ? exprString1 : exprString2;
+>resultIsString1 : string
+>condNumber ? exprString1 : exprString2 : string
+>condNumber : number
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject1 = condNumber ? exprIsObject1 : exprIsObject2;
+>resultIsObject1 : Object
+>condNumber ? exprIsObject1 : exprIsObject2 : Object
+>condNumber : number
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+var resultIsAny2 = 1 ? exprAny1 : exprAny2;
+>resultIsAny2 : any
+>1 ? exprAny1 : exprAny2 : any
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean2 = 0 ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean2 : boolean
+>0 ? exprBoolean1 : exprBoolean2 : boolean
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber2 = 0.123456789 ? exprNumber1 : exprNumber2;
+>resultIsNumber2 : number
+>0.123456789 ? exprNumber1 : exprNumber2 : number
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString2 = - 10000000000000 ? exprString1 : exprString2;
+>resultIsString2 : string
+>- 10000000000000 ? exprString1 : exprString2 : string
+>- 10000000000000 : number
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject2 = 1000000000000 ? exprIsObject1 : exprIsObject2;
+>resultIsObject2 : Object
+>1000000000000 ? exprIsObject1 : exprIsObject2 : Object
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+var resultIsAny3 = 1 * 0 ? exprAny1 : exprAny2;
+>resultIsAny3 : any
+>1 * 0 ? exprAny1 : exprAny2 : any
+>1 * 0 : number
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean3 = 1 + 1 ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean3 : boolean
+>1 + 1 ? exprBoolean1 : exprBoolean2 : boolean
+>1 + 1 : number
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber3 = "string".length ? exprNumber1 : exprNumber2;
+>resultIsNumber3 : number
+>"string".length ? exprNumber1 : exprNumber2 : number
+>"string".length : number
+>length : number
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString3 = foo() ? exprString1 : exprString2;
+>resultIsString3 : string
+>foo() ? exprString1 : exprString2 : string
+>foo() : number
+>foo : typeof foo
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject3 = foo() / array[1] ? exprIsObject1 : exprIsObject2;
+>resultIsObject3 : Object
+>foo() / array[1] ? exprIsObject1 : exprIsObject2 : Object
+>foo() / array[1] : number
+>foo() : number
+>foo : typeof foo
+>array[1] : number
+>array : number[]
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+

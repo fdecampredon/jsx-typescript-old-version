@@ -1,41 +1,78 @@
 === tests/cases/compiler/part1.ts ===
-Line 0 col 7 IdentifierName "Root" = Root
-Line 1 col 18 IdentifierName "A" = A
-Line 2 col 25 IdentifierName "Point" = Point
-Line 3 col 0 IdentifierName "x" = number
-Line 4 col 0 IdentifierName "y" = number
-Line 7 col 22 IdentifierName "Utils" = Utils
-Line 8 col 28 IdentifierName "mirror" = typeof mirror
-Line 8 col 35 IdentifierName "T" = T
-Line 8 col 45 IdentifierName "Point" = Point
-Line 8 col 52 IdentifierName "p" = T
-Line 8 col 55 IdentifierName "T" = T
-Line 9 col 23 ObjectLiteralExpression "{ x: p.y, y: p.x }" = { x: number; y: number; }
-Line 9 col 25 IdentifierName "x" = number
-Line 9 col 28 MemberAccessExpression "p.y" = number
-Line 9 col 28 IdentifierName "p" = T
-Line 9 col 30 IdentifierName "y" = number
-Line 9 col 33 IdentifierName "y" = number
-Line 9 col 36 MemberAccessExpression "p.x" = number
-Line 9 col 36 IdentifierName "p" = T
-Line 9 col 38 IdentifierName "x" = number
+module Root {
+>Root : Root
+
+    export module A {
+>A : A
+
+        export interface Point {
+>Point : Point
+
+            x: number;
+>x : number
+
+            y: number;
+>y : number
+        }
+
+        export module Utils {
+>Utils : Utils
+
+            export function mirror<T extends Point>(p: T) {
+>mirror : typeof mirror
+>T : T
+>Point : Point
+>p : T
+>T : T
+
+                return { x: p.y, y: p.x };
+>{ x: p.y, y: p.x } : { x: number; y: number; }
+>x : number
+>p.y : number
+>p : T
+>y : number
+>y : number
+>p.x : number
+>p : T
+>x : number
+            }
+        }
+    }
+}
+
 === tests/cases/compiler/part2.ts ===
-Line 0 col 7 IdentifierName "otherRoot" = otherRoot
-Line 1 col 18 IdentifierName "A" = A
-Line 3 col 19 IdentifierName "Origin" = Root.A.Point
-Line 3 col 27 IdentifierName "Root" = Root
-Line 3 col 32 IdentifierName "A" = Root.A
-Line 3 col 34 IdentifierName "Point" = Root.A.Point
-Line 3 col 42 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 3 col 44 IdentifierName "x" = number
-Line 3 col 50 IdentifierName "y" = number
-Line 5 col 22 IdentifierName "Utils" = Utils
-Line 6 col 25 IdentifierName "Plane" = Plane
-Line 7 col 35 IdentifierName "tl" = Root.A.Point
-Line 7 col 39 IdentifierName "Root" = Root
-Line 7 col 44 IdentifierName "A" = Root.A
-Line 7 col 46 IdentifierName "Point" = Root.A.Point
-Line 7 col 60 IdentifierName "br" = Root.A.Point
-Line 7 col 64 IdentifierName "Root" = Root
-Line 7 col 69 IdentifierName "A" = Root.A
-Line 7 col 71 IdentifierName "Point" = Root.A.Point
+module otherRoot {
+>otherRoot : otherRoot
+
+    export module A {
+>A : A
+
+        // have to be fully qualified since in different root
+        export var Origin: Root.A.Point = { x: 0, y: 0 };
+>Origin : Root.A.Point
+>Root : Root
+>A : Root.A
+>Point : Root.A.Point
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+
+        export module Utils {
+>Utils : Utils
+
+            export class Plane {
+>Plane : Plane
+
+                constructor(public tl: Root.A.Point, public br: Root.A.Point) { }
+>tl : Root.A.Point
+>Root : Root
+>A : Root.A
+>Point : Root.A.Point
+>br : Root.A.Point
+>Root : Root
+>A : Root.A
+>Point : Root.A.Point
+            }
+        }
+    }
+}

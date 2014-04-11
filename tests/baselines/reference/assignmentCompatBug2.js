@@ -1,3 +1,4 @@
+//// [assignmentCompatBug2.js]
 var b2 = { a: 0 };
 
 b2 = { a: 0 }; // error

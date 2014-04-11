@@ -1,2 +1,6 @@
 === tests/cases/compiler/quotedFunctionName1.ts ===
-Line 0 col 6 IdentifierName "Test1" = Test1
+class Test1 {
+>Test1 : Test1
+
+  "prop1"() { }
+}

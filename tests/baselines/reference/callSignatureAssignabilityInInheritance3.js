@@ -1,3 +1,4 @@
+//// [callSignatureAssignabilityInInheritance3.js]
 // checking subtype relations for function types as it relates to contextual signature instantiation
 // error cases
 var __extends = this.__extends || function (d, b) {

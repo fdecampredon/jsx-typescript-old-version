@@ -1,7 +1,16 @@
 === tests/cases/compiler/funduleOfFunctionWithoutReturnTypeAnnotation.ts ===
-Line 0 col 9 IdentifierName "fn" = typeof fn
-Line 1 col 11 MemberAccessExpression "fn.n" = number
-Line 1 col 11 IdentifierName "fn" = typeof fn
-Line 1 col 14 IdentifierName "n" = number
-Line 3 col 7 IdentifierName "fn" = fn
-Line 4 col 15 IdentifierName "n" = number
+function fn() {
+>fn : typeof fn
+
+    return fn.n;
+>fn.n : number
+>fn : typeof fn
+>n : number
+}
+module fn {
+>fn : fn
+
+    export var n = 1;
+>n : number
+}
+

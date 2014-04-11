@@ -1,6 +1,16 @@
 === tests/cases/compiler/mergedModuleDeclarationWithSharedExportedVar.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 15 IdentifierName "v" = number
-Line 2 col 0 IdentifierName "v" = number
-Line 4 col 7 IdentifierName "M" = M
-Line 5 col 0 IdentifierName "v" = number
+module M {
+>M : M
+
+    export var v = 10;
+>v : number
+
+    v;
+>v : number
+}
+module M {
+>M : M
+
+    v;
+>v : number
+}

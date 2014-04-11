@@ -1,15 +1,32 @@
 === tests/cases/compiler/foo_1.ts ===
-Line 0 col 7 IdentifierName "foo" = foo
-Line 1 col 3 EqualsExpression "foo.answer === 42" = boolean
-Line 1 col 3 MemberAccessExpression "foo.answer" = number
-Line 1 col 3 IdentifierName "foo" = typeof foo
-Line 1 col 7 IdentifierName "answer" = number
-Line 2 col 5 IdentifierName "x" = foo
-Line 2 col 9 ObjectCreationExpression "new foo()" = foo
-Line 2 col 13 IdentifierName "foo" = typeof foo
+import foo = require("./foo_0");
+>foo : foo
+
+if(foo.answer === 42){
+>foo.answer === 42 : boolean
+>foo.answer : number
+>foo : typeof foo
+>answer : number
+
+	var x = new foo();
+>x : foo
+>new foo() : foo
+>foo : typeof foo
+}
+
 === tests/cases/compiler/foo_0.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo
-Line 1 col 0 IdentifierName "test" = string
-Line 3 col 7 IdentifierName "Foo" = Foo
-Line 4 col 12 IdentifierName "answer" = number
-Line 6 col 9 IdentifierName "Foo" = typeof Foo
+class Foo {
+>Foo : Foo
+
+	test = "test";
+>test : string
+}
+module Foo {
+>Foo : Foo
+
+	export var answer = 42;
+>answer : number
+}
+export = Foo;
+>Foo : typeof Foo
+

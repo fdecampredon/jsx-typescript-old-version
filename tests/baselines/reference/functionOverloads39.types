@@ -1,17 +1,25 @@
 === tests/cases/compiler/functionOverloads39.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "bar" = { a: number; }[]
-Line 0 col 18 IdentifierName "a" = number
-Line 1 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 13 IdentifierName "bar" = { a: boolean; }[]
-Line 1 col 18 IdentifierName "a" = boolean
-Line 2 col 9 IdentifierName "foo" = typeof foo
-Line 2 col 13 IdentifierName "bar" = { a: any; }[]
-Line 2 col 18 IdentifierName "a" = any
-Line 2 col 41 IdentifierName "bar" = { a: any; }[]
-Line 3 col 4 IdentifierName "x" = number
-Line 3 col 8 InvocationExpression "foo([{a:true}])" = number
-Line 3 col 8 IdentifierName "foo" = typeof foo
-Line 3 col 12 ArrayLiteralExpression "[{a:true}]" = { a: boolean; }[]
-Line 3 col 13 ObjectLiteralExpression "{a:true}" = { a: boolean; }
-Line 3 col 14 IdentifierName "a" = boolean
+function foo(bar:{a:number;}[]):string;
+>foo : typeof foo
+>bar : { a: number; }[]
+>a : number
+
+function foo(bar:{a:boolean;}[]):number;
+>foo : typeof foo
+>bar : { a: boolean; }[]
+>a : boolean
+
+function foo(bar:{a:any;}[]):any{ return bar }
+>foo : typeof foo
+>bar : { a: any; }[]
+>a : any
+>bar : { a: any; }[]
+
+var x = foo([{a:true}]);
+>x : number
+>foo([{a:true}]) : number
+>foo : typeof foo
+>[{a:true}] : { a: boolean; }[]
+>{a:true} : { a: boolean; }
+>a : boolean
+

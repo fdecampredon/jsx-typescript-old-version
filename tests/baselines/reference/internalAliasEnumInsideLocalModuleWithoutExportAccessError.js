@@ -1,3 +1,4 @@
+//// [internalAliasEnumInsideLocalModuleWithoutExportAccessError.js]
 (function (a) {
     (function (weekend) {
         weekend[weekend["Friday"] = 0] = "Friday";

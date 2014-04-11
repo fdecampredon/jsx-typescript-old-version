@@ -1,3 +1,4 @@
+//// [assignmentStricterConstraints.js]
 var f = function (x, y) {
     x = y;
 };

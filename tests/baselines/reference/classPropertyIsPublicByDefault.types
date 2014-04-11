@@ -1,43 +1,81 @@
 === tests/cases/compiler/classPropertyIsPublicByDefault.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "x" = string
-Line 2 col 8 IdentifierName "y" = any
-Line 3 col 8 IdentifierName "y" = any
-Line 3 col 10 IdentifierName "x" = any
-Line 4 col 0 IdentifierName "foo" = () => void
-Line 6 col 11 IdentifierName "a" = string
-Line 7 col 15 IdentifierName "b" = any
-Line 8 col 15 IdentifierName "b" = any
-Line 8 col 17 IdentifierName "x" = any
-Line 9 col 11 IdentifierName "foo" = () => void
-Line 12 col 4 IdentifierName "c" = C
-Line 12 col 7 IdentifierName "C" = C
-Line 13 col 0 MemberAccessExpression "c.x" = string
-Line 13 col 0 IdentifierName "c" = C
-Line 13 col 2 IdentifierName "x" = string
-Line 14 col 0 MemberAccessExpression "c.y" = any
-Line 14 col 0 IdentifierName "c" = C
-Line 14 col 2 IdentifierName "y" = any
-Line 15 col 0 AssignmentExpression "c.y = 1" = number
-Line 15 col 0 MemberAccessExpression "c.y" = any
-Line 15 col 0 IdentifierName "c" = C
-Line 15 col 2 IdentifierName "y" = any
-Line 16 col 0 InvocationExpression "c.foo()" = void
-Line 16 col 0 MemberAccessExpression "c.foo" = () => void
-Line 16 col 0 IdentifierName "c" = C
-Line 16 col 2 IdentifierName "foo" = () => void
-Line 17 col 0 MemberAccessExpression "C.a" = string
-Line 17 col 0 IdentifierName "C" = typeof C
-Line 18 col 2 IdentifierName "a" = string
-Line 19 col 0 InvocationExpression "C.b()" = any
-Line 19 col 0 MemberAccessExpression "C.b" = any
-Line 19 col 0 IdentifierName "C" = typeof C
-Line 19 col 2 IdentifierName "b" = any
-Line 20 col 0 AssignmentExpression "C.b = 1" = number
-Line 20 col 0 MemberAccessExpression "C.b" = any
-Line 20 col 0 IdentifierName "C" = typeof C
-Line 20 col 2 IdentifierName "b" = any
-Line 21 col 0 InvocationExpression "C.foo()" = void
-Line 21 col 0 MemberAccessExpression "C.foo" = () => void
-Line 21 col 0 IdentifierName "C" = typeof C
-Line 21 col 2 IdentifierName "foo" = () => void
+class C {
+>C : C
+
+    x: string;
+>x : string
+
+    get y() { return null; }
+>y : any
+
+    set y(x) { }
+>y : any
+>x : any
+
+    foo() { }
+>foo : () => void
+
+    static a: string;
+>a : string
+
+    static get b() { return null; }
+>b : any
+
+    static set b(x) { }
+>b : any
+>x : any
+
+    static foo() { }
+>foo : () => void
+}
+
+var c: C;
+>c : C
+>C : C
+
+c.x;
+>c.x : string
+>c : C
+>x : string
+
+c.y;
+>c.y : any
+>c : C
+>y : any
+
+c.y = 1;
+>c.y = 1 : number
+>c.y : any
+>c : C
+>y : any
+
+c.foo();
+>c.foo() : void
+>c.foo : () => void
+>c : C
+>foo : () => void
+
+>C.a : string
+>C : typeof C
+
+C.a;
+>a : string
+
+C.b();
+>C.b() : any
+>C.b : any
+>C : typeof C
+>b : any
+
+C.b = 1;
+>C.b = 1 : number
+>C.b : any
+>C : typeof C
+>b : any
+
+C.foo();
+>C.foo() : void
+>C.foo : () => void
+>C : typeof C
+>foo : () => void
+

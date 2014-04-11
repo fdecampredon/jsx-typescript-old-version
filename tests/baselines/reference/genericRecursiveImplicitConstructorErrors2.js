@@ -1,3 +1,32 @@
+//// [genericRecursiveImplicitConstructorErrors2.ts]
+module TypeScript2 {
+  export interface DeclKind { };
+  export interface PullTypesymbol { };
+  export interface SymbolLinkKind { };
+  export enum PullSymbolVisibility {
+    Private,
+    Public
+  }
+　
+  export class PullSymbol {
+    constructor (name: string, declKind: DeclKind) {
+
+    }
+    // link methods
+    public addOutgoingLink<A,B,C>(linkTo: PullSymbol, kind: SymbolLinkKind) {
+
+    }
+
+    public getType<A,B,C>(): PullTypeSymbol<A,B,C> {
+      return undefined;
+    }
+  }
+  export class PullTypeSymbol <A,B,C>extends PullSymbol {
+  }
+}
+
+
+//// [genericRecursiveImplicitConstructorErrors2.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

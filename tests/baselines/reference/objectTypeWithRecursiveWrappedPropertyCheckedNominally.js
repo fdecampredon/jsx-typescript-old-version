@@ -1,3 +1,4 @@
+//// [objectTypeWithRecursiveWrappedPropertyCheckedNominally.js]
 // Types with infinitely expanding recursive types are type checked nominally
 var List = (function () {
     function List() {

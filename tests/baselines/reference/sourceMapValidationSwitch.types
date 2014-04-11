@@ -1,20 +1,54 @@
 === tests/cases/compiler/sourceMapValidationSwitch.ts ===
-Line 0 col 4 IdentifierName "x" = number
-Line 1 col 8 IdentifierName "x" = number
-Line 3 col 0 PostIncrementExpression "x++" = number
-Line 3 col 0 IdentifierName "x" = number
-Line 7 col 0 PostDecrementExpression "x--" = number
-Line 7 col 0 IdentifierName "x" = number
-Line 11 col 0 AssignmentExpression "x = x *10" = number
-Line 11 col 0 IdentifierName "x" = number
-Line 11 col 12 MultiplyExpression "x *10" = number
-Line 11 col 12 IdentifierName "x" = number
-Line 13 col 8 IdentifierName "x" = number
-Line 16 col 0 PostIncrementExpression "x++" = number
-Line 16 col 0 IdentifierName "x" = number
-Line 20 col 0 PostDecrementExpression "x--" = number
-Line 20 col 0 IdentifierName "x" = number
-Line 25 col 0 AssignmentExpression "x = x * 10" = number
-Line 25 col 0 IdentifierName "x" = number
-Line 25 col 16 MultiplyExpression "x * 10" = number
-Line 25 col 16 IdentifierName "x" = number
+var x = 10;
+>x : number
+
+switch (x) {
+>x : number
+
+    case 5:
+        x++;
+>x++ : number
+>x : number
+
+        break;
+    case 10:
+        {
+            x--;
+>x-- : number
+>x : number
+
+            break;
+        }
+    default:
+        x = x *10;
+>x = x *10 : number
+>x : number
+>x *10 : number
+>x : number
+}
+switch (x)
+>x : number
+{
+    case 5:
+        x++;
+>x++ : number
+>x : number
+
+        break;
+    case 10:
+        {
+            x--;
+>x-- : number
+>x : number
+
+            break;
+        }
+    default:
+        {
+            x = x * 10;
+>x = x * 10 : number
+>x : number
+>x * 10 : number
+>x : number
+        }
+}

@@ -1,6 +1,15 @@
 === tests/cases/compiler/commentOnClassMethod1.ts ===
-Line 0 col 6 IdentifierName "WebControls" = WebControls
-Line 1 col 0 IdentifierName "/**
+class WebControls {
+>WebControls : WebControls
+
+    /**
+>/**
      * Render a control
      */
-    createControl" = () => any
+    createControl : () => any
+
+     * Render a control
+     */
+    createControl(): any {
+    }
+}

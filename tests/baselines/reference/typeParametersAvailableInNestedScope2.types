@@ -1,22 +1,36 @@
 === tests/cases/compiler/typeParametersAvailableInNestedScope2.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "U" = U
-Line 0 col 19 IdentifierName "x" = T
-Line 0 col 22 IdentifierName "T" = T
-Line 0 col 25 IdentifierName "y" = U
-Line 0 col 28 IdentifierName "U" = U
-Line 1 col 13 IdentifierName "bar" = <V>(z: V) => void
-Line 1 col 17 IdentifierName "V" = V
-Line 1 col 20 IdentifierName "z" = V
-Line 1 col 23 IdentifierName "V" = V
-Line 2 col 17 IdentifierName "baz" = <W>(a: W) => void
-Line 2 col 21 IdentifierName "W" = W
-Line 2 col 24 IdentifierName "a" = W
-Line 2 col 27 IdentifierName "W" = W
-Line 3 col 16 IdentifierName "c" = T
-Line 3 col 19 IdentifierName "T" = T
-Line 4 col 16 IdentifierName "d" = U
-Line 4 col 19 IdentifierName "U" = U
-Line 5 col 16 IdentifierName "e" = V
-Line 5 col 19 IdentifierName "V" = V
+function foo<T, U>(x: T, y: U) {
+>foo : typeof foo
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+
+    function bar<V>(z: V) {
+>bar : <V>(z: V) => void
+>V : V
+>z : V
+>V : V
+
+        function baz<W>(a: W) {
+>baz : <W>(a: W) => void
+>W : W
+>a : W
+>W : W
+
+            var c: T;
+>c : T
+>T : T
+
+            var d: U;
+>d : U
+>U : U
+
+            var e: V;
+>e : V
+>V : V
+        }
+    }
+}

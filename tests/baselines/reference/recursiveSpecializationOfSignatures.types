@@ -1,11 +1,18 @@
 === tests/cases/compiler/recursiveSpecializationOfSignatures.ts ===
-Line 0 col 6 IdentifierName "S0" = S0<B, A>
-Line 0 col 9 IdentifierName "B" = B
-Line 0 col 12 IdentifierName "A" = A
-Line 1 col 4 IdentifierName "S1" = S0<any, any>
-Line 1 col 7 IdentifierName "S2" = S0<any, any>
-Line 1 col 11 IdentifierName "S0" = S0<B, A>
-Line 3 col 19 IdentifierName "S17" = S0<any, (S18: any) => A>
-Line 3 col 24 IdentifierName "S0" = S0<B, A>
-Line 3 col 33 IdentifierName "S18" = any
-Line 3 col 41 IdentifierName "A" = A
+class S0<B, A> {
+>S0 : S0<B, A>
+>B : B
+>A : A
+
+set S1(S2: S0<any,any>) {
+>S1 : S0<any, any>
+>S2 : S0<any, any>
+>S0 : S0<B, A>
+}
+constructor(public S17: S0<any, (S18) => A>) { }
+>S17 : S0<any, (S18: any) => A>
+>S0 : S0<B, A>
+>S18 : any
+>A : A
+}
+

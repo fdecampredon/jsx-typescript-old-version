@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndNameResolution.js]
 var console;
 var Foo = (function () {
     function Foo() {

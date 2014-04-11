@@ -1,3 +1,7 @@
+//// [consumer.ts]
+import x = require('./foo');
+x.X // .ts should be picked
+
 //// [foo.js]
 var M2;
 (function (M2) {

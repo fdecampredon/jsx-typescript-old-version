@@ -1,10 +1,20 @@
 === tests/cases/compiler/quotedPropertyName3.ts ===
-Line 0 col 6 IdentifierName "Test" = Test
-Line 2 col 0 IdentifierName "foo" = () => void
-Line 3 col 12 IdentifierName "x" = () => number
-Line 3 col 16 ParenthesizedArrowFunctionExpression "() => this["prop1"]" = () => number
-Line 3 col 22 ElementAccessExpression "this["prop1"]" = number
-Line 3 col 22 ThisKeyword "this" = Test
-Line 4 col 12 IdentifierName "y" = number
-Line 4 col 24 InvocationExpression "x()" = number
-Line 4 col 24 IdentifierName "x" = () => number
+class Test {
+>Test : Test
+
+    "prop1": number;
+    foo() {
+>foo : () => void
+
+        var x = () => this["prop1"];
+>x : () => number
+>() => this["prop1"] : () => number
+>this["prop1"] : number
+>this : Test
+
+        var y: number = x();
+>y : number
+>x() : number
+>x : () => number
+    }
+}

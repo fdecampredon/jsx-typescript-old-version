@@ -1,3 +1,4 @@
+//// [voidArrayLit.js]
 var va = [(function () {
     })()];
 (function () {

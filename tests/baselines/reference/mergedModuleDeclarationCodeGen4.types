@@ -1,17 +1,40 @@
 === tests/cases/compiler/mergedModuleDeclarationCodeGen4.ts ===
-Line 0 col 7 IdentifierName "superContain" = superContain
-Line 1 col 18 IdentifierName "contain" = contain
-Line 2 col 22 IdentifierName "my" = my
-Line 2 col 25 IdentifierName "buz" = my.buz
-Line 3 col 26 IdentifierName "data" = data
-Line 4 col 32 IdentifierName "foo" = typeof foo
-Line 7 col 22 IdentifierName "my" = my
-Line 7 col 25 IdentifierName "buz" = my.buz
-Line 8 col 26 IdentifierName "data" = data
-Line 9 col 32 IdentifierName "bar" = typeof bar
-Line 9 col 36 IdentifierName "contain" = any
-Line 9 col 45 IdentifierName "my" = any
-Line 9 col 49 IdentifierName "buz" = any
-Line 9 col 54 IdentifierName "data" = any
-Line 10 col 0 InvocationExpression "foo()" = void
-Line 10 col 0 IdentifierName "foo" = typeof foo
+module superContain {
+>superContain : superContain
+
+    export module contain {
+>contain : contain
+
+        export module my.buz {
+>my : my
+>buz : my.buz
+
+            export module data {
+>data : data
+
+                export function foo() { }
+>foo : typeof foo
+            }
+        }
+        export module my.buz {
+>my : my
+>buz : my.buz
+
+            export module data {
+>data : data
+
+                export function bar(contain, my, buz, data) {
+>bar : typeof bar
+>contain : any
+>my : any
+>buz : any
+>data : any
+
+                    foo();
+>foo() : void
+>foo : typeof foo
+                }
+            }
+        }
+    }
+}

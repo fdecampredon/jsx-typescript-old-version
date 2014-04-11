@@ -1,35 +1,66 @@
 === tests/cases/compiler/genericCallWithObjectTypeArgsAndIndexers.ts ===
-Line 2 col 9 IdentifierName "foo" = typeof foo
-Line 2 col 13 IdentifierName "T" = T
-Line 2 col 16 IdentifierName "x" = T
-Line 2 col 19 IdentifierName "T" = T
-Line 3 col 11 IdentifierName "x" = T
-Line 6 col 4 IdentifierName "a" = { [x: string]: Object; [x: number]: Date; }
-Line 7 col 5 IdentifierName "x" = string
-Line 7 col 17 IdentifierName "Object" = Object
-Line 8 col 5 IdentifierName "x" = number
-Line 8 col 17 IdentifierName "Date" = Date
-Line 10 col 4 IdentifierName "r" = { [x: string]: Object; [x: number]: Date; }
-Line 10 col 8 InvocationExpression "foo(a)" = { [x: string]: Object; [x: number]: Date; }
-Line 10 col 8 IdentifierName "foo" = typeof foo
-Line 10 col 12 IdentifierName "a" = { [x: string]: Object; [x: number]: Date; }
-Line 12 col 9 IdentifierName "other" = typeof other
-Line 12 col 15 IdentifierName "T" = T
-Line 12 col 25 IdentifierName "Date" = Date
-Line 12 col 31 IdentifierName "arg" = T
-Line 12 col 36 IdentifierName "T" = T
-Line 13 col 8 IdentifierName "b" = { [x: string]: Object; [x: number]: T; }
-Line 14 col 9 IdentifierName "x" = string
-Line 14 col 21 IdentifierName "Object" = Object
-Line 15 col 9 IdentifierName "x" = number
-Line 15 col 21 IdentifierName "T" = T
-Line 17 col 8 IdentifierName "r2" = { [x: string]: Object; [x: number]: T; }
-Line 17 col 13 InvocationExpression "foo(b)" = { [x: string]: Object; [x: number]: T; }
-Line 17 col 13 IdentifierName "foo" = typeof foo
-Line 17 col 17 IdentifierName "b" = { [x: string]: Object; [x: number]: T; }
-Line 18 col 8 IdentifierName "d" = T
-Line 18 col 12 ElementAccessExpression "r2[1]" = T
-Line 18 col 12 IdentifierName "r2" = { [x: string]: Object; [x: number]: T; }
-Line 19 col 8 IdentifierName "e" = Object
-Line 19 col 12 ElementAccessExpression "r2['1']" = Object
-Line 19 col 12 IdentifierName "r2" = { [x: string]: Object; [x: number]: T; }
+// Type inference infers from indexers in target type, no errors expected
+
+function foo<T>(x: T) {
+>foo : typeof foo
+>T : T
+>x : T
+>T : T
+
+    return x;
+>x : T
+}
+
+var a: {
+>a : { [x: string]: Object; [x: number]: Date; }
+
+    [x: string]: Object;
+>x : string
+>Object : Object
+
+    [x: number]: Date;
+>x : number
+>Date : Date
+
+};
+var r = foo(a);
+>r : { [x: string]: Object; [x: number]: Date; }
+>foo(a) : { [x: string]: Object; [x: number]: Date; }
+>foo : typeof foo
+>a : { [x: string]: Object; [x: number]: Date; }
+
+function other<T extends Date>(arg: T) {
+>other : typeof other
+>T : T
+>Date : Date
+>arg : T
+>T : T
+
+    var b: {
+>b : { [x: string]: Object; [x: number]: T; }
+
+        [x: string]: Object;
+>x : string
+>Object : Object
+
+        [x: number]: T
+>x : number
+>T : T
+
+    };
+    var r2 = foo(b);
+>r2 : { [x: string]: Object; [x: number]: T; }
+>foo(b) : { [x: string]: Object; [x: number]: T; }
+>foo : typeof foo
+>b : { [x: string]: Object; [x: number]: T; }
+
+    var d = r2[1]; 
+>d : T
+>r2[1] : T
+>r2 : { [x: string]: Object; [x: number]: T; }
+
+    var e = r2['1']; 
+>e : Object
+>r2['1'] : Object
+>r2 : { [x: string]: Object; [x: number]: T; }
+}

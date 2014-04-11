@@ -1,3 +1,4 @@
+//// [objectLitIndexerContextualType.js]
 var x;
 var y;
 x = {

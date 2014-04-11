@@ -1,36 +1,73 @@
 === tests/cases/compiler/returnStatements.ts ===
-Line 1 col 9 IdentifierName "fn1" = typeof fn1
-Line 2 col 9 IdentifierName "fn2" = typeof fn2
-Line 3 col 9 IdentifierName "fn3" = typeof fn3
-Line 3 col 30 IdentifierName "undefined" = any
-Line 4 col 9 IdentifierName "fn4" = typeof fn4
-Line 5 col 9 IdentifierName "fn5" = typeof fn5
-Line 6 col 9 IdentifierName "fn6" = typeof fn6
-Line 6 col 16 IdentifierName "Date" = Date
-Line 6 col 30 ObjectCreationExpression "new Date(12)" = Date
-Line 6 col 34 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 7 col 9 IdentifierName "fn7" = typeof fn7
-Line 8 col 9 IdentifierName "fn8" = typeof fn8
-Line 10 col 10 IdentifierName "I" = I
-Line 10 col 14 IdentifierName "id" = number
-Line 11 col 6 IdentifierName "C" = C
-Line 11 col 19 IdentifierName "I" = I
-Line 12 col 0 IdentifierName "id" = number
-Line 13 col 0 IdentifierName "dispose" = () => void
-Line 15 col 6 IdentifierName "D" = D
-Line 15 col 16 IdentifierName "C" = C
-Line 16 col 0 IdentifierName "name" = string
-Line 18 col 9 IdentifierName "fn10" = typeof fn10
-Line 18 col 17 IdentifierName "I" = I
-Line 18 col 28 ObjectLiteralExpression "{ id: 12 }" = { id: number; }
-Line 18 col 30 IdentifierName "id" = number
-Line 20 col 9 IdentifierName "fn11" = typeof fn11
-Line 20 col 17 IdentifierName "I" = I
-Line 20 col 28 ObjectCreationExpression "new C()" = C
-Line 20 col 32 IdentifierName "C" = typeof C
-Line 21 col 9 IdentifierName "fn12" = typeof fn12
-Line 21 col 17 IdentifierName "C" = C
-Line 21 col 28 ObjectCreationExpression "new D()" = D
-Line 21 col 32 IdentifierName "D" = typeof D
-Line 22 col 9 IdentifierName "fn13" = typeof fn13
-Line 22 col 17 IdentifierName "C" = C
+// all the following should be valid
+function fn1(): number { return 1; }
+>fn1 : typeof fn1
+
+function fn2(): string { return ''; }
+>fn2 : typeof fn2
+
+function fn3(): void { return undefined; }
+>fn3 : typeof fn3
+>undefined : any
+
+function fn4(): void { return; }
+>fn4 : typeof fn4
+
+function fn5(): boolean { return true; }
+>fn5 : typeof fn5
+
+function fn6(): Date { return new Date(12); }
+>fn6 : typeof fn6
+>Date : Date
+>new Date(12) : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+function fn7(): any { return null; }
+>fn7 : typeof fn7
+
+function fn8(): any { return; } // OK, eq. to 'return undefined'
+>fn8 : typeof fn8
+
+interface I { id: number }
+>I : I
+>id : number
+
+class C implements I {
+>C : C
+>I : I
+
+    id: number;
+>id : number
+
+    dispose() {}
+>dispose : () => void
+}
+class D extends C {
+>D : D
+>C : C
+
+    name: string;
+>name : string
+}
+function fn10(): I { return { id: 12 }; } 
+>fn10 : typeof fn10
+>I : I
+>{ id: 12 } : { id: number; }
+>id : number
+
+function fn11(): I { return new C(); }
+>fn11 : typeof fn11
+>I : I
+>new C() : C
+>C : typeof C
+
+function fn12(): C { return new D(); }
+>fn12 : typeof fn12
+>C : C
+>new D() : D
+>D : typeof D
+
+function fn13(): C { return null; }
+>fn13 : typeof fn13
+>C : C
+

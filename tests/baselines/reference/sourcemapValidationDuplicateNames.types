@@ -1,10 +1,21 @@
 === tests/cases/compiler/sourcemapValidationDuplicateNames.ts ===
-Line 0 col 7 IdentifierName "m1" = m1
-Line 1 col 8 IdentifierName "x" = number
-Line 2 col 17 IdentifierName "c" = c
-Line 5 col 7 IdentifierName "m1" = m1
-Line 6 col 8 IdentifierName "b" = c
-Line 6 col 12 ObjectCreationExpression "new m1.c()" = c
-Line 6 col 16 MemberAccessExpression "m1.c" = typeof c
-Line 6 col 16 IdentifierName "m1" = typeof m1
-Line 6 col 19 IdentifierName "c" = typeof c
+module m1 {
+>m1 : m1
+
+    var x = 10;
+>x : number
+
+    export class c {
+>c : c
+    }
+}
+module m1 {
+>m1 : m1
+
+    var b = new m1.c();
+>b : c
+>new m1.c() : c
+>m1.c : typeof c
+>m1 : typeof m1
+>c : typeof c
+}

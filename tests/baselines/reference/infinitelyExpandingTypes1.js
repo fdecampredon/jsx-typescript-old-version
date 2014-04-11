@@ -1,3 +1,4 @@
+//// [infinitelyExpandingTypes1.js]
 var l;
 var m;
 

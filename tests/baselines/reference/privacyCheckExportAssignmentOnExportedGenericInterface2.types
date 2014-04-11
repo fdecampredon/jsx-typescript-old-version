@@ -1,13 +1,28 @@
 === tests/cases/compiler/privacyCheckExportAssignmentOnExportedGenericInterface2.ts ===
-Line 0 col 9 IdentifierName "Foo" = typeof Foo
-Line 2 col 10 IdentifierName "Foo" = Foo<T>
-Line 2 col 14 IdentifierName "T" = T
-Line 5 col 9 IdentifierName "Foo" = typeof Foo
-Line 5 col 13 IdentifierName "T" = T
-Line 5 col 16 IdentifierName "array" = T[]
-Line 5 col 23 IdentifierName "T" = T
-Line 5 col 29 IdentifierName "Foo" = Foo<T>
-Line 5 col 33 IdentifierName "T" = T
-Line 6 col 11 IdentifierName "undefined" = any
-Line 9 col 7 IdentifierName "Foo" = Foo
-Line 10 col 15 IdentifierName "x" = string
+export = Foo;
+>Foo : typeof Foo
+
+interface Foo<T> {
+>Foo : Foo<T>
+>T : T
+}
+
+function Foo<T>(array: T[]): Foo<T> {
+>Foo : typeof Foo
+>T : T
+>array : T[]
+>T : T
+>Foo : Foo<T>
+>T : T
+
+    return undefined;
+>undefined : any
+}
+
+module Foo {
+>Foo : Foo
+
+    export var x = "hello";
+>x : string
+}
+

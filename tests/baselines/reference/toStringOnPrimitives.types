@@ -1,12 +1,20 @@
 === tests/cases/compiler/toStringOnPrimitives.ts ===
-Line 0 col 0 InvocationExpression "true.toString()" = string
-Line 0 col 0 MemberAccessExpression "true.toString" = () => string
-Line 0 col 5 IdentifierName "toString" = () => string
-Line 1 col 4 IdentifierName "aBool" = boolean
-Line 2 col 0 InvocationExpression "aBool.toString()" = string
-Line 2 col 0 MemberAccessExpression "aBool.toString" = () => string
-Line 2 col 0 IdentifierName "aBool" = boolean
-Line 2 col 6 IdentifierName "toString" = () => string
-Line 3 col 0 InvocationExpression "1..toString()" = string
-Line 3 col 0 MemberAccessExpression "1..toString" = (radix?: number) => string
-Line 3 col 3 IdentifierName "toString" = (radix?: number) => string
+true.toString()
+>true.toString() : string
+>true.toString : () => string
+>toString : () => string
+
+var aBool = false;
+>aBool : boolean
+
+aBool.toString();
+>aBool.toString() : string
+>aBool.toString : () => string
+>aBool : boolean
+>toString : () => string
+
+1..toString();
+>1..toString() : string
+>1..toString : (radix?: number) => string
+>toString : (radix?: number) => string
+

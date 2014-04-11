@@ -1,26 +1,41 @@
 === tests/cases/compiler/overloadCrash.ts ===
-Line 0 col 10 IdentifierName "I1" = I1
-Line 0 col 14 IdentifierName "a" = number
-Line 0 col 24 IdentifierName "b" = number
-Line 1 col 10 IdentifierName "I2" = I2
-Line 1 col 14 IdentifierName "c" = number
-Line 1 col 24 IdentifierName "d" = number
-Line 2 col 10 IdentifierName "I3" = I3
-Line 2 col 14 IdentifierName "a" = number
-Line 2 col 24 IdentifierName "b" = number
-Line 2 col 34 IdentifierName "c" = number
-Line 2 col 44 IdentifierName "d" = number
-Line 4 col 17 IdentifierName "foo" = typeof foo
-Line 4 col 24 IdentifierName "n" = I1[]
-Line 4 col 26 IdentifierName "I1" = I1
-Line 5 col 17 IdentifierName "foo" = typeof foo
-Line 5 col 21 IdentifierName "n1" = I2
-Line 5 col 24 IdentifierName "I2" = I2
-Line 5 col 28 IdentifierName "n3" = I2
-Line 5 col 31 IdentifierName "I2" = I2
-Line 7 col 4 IdentifierName "i3" = I3
-Line 7 col 7 IdentifierName "I3" = I3
-Line 8 col 0 InvocationExpression "foo(i3, i3)" = any
-Line 8 col 0 IdentifierName "foo" = typeof foo
-Line 9 col 4 IdentifierName "i3" = I3
-Line 9 col 8 IdentifierName "i3" = I3
+interface I1 {a:number; b:number;};
+>I1 : I1
+>a : number
+>b : number
+
+interface I2 {c:number; d:number;};
+>I2 : I2
+>c : number
+>d : number
+
+interface I3 {a:number; b:number; c:number; d:number;};
+>I3 : I3
+>a : number
+>b : number
+>c : number
+>d : number
+
+declare function foo(...n:I1[]);
+>foo : typeof foo
+>n : I1[]
+>I1 : I1
+
+declare function foo(n1:I2, n3:I2);
+>foo : typeof foo
+>n1 : I2
+>I2 : I2
+>n3 : I2
+>I2 : I2
+
+var i3:I3;
+>i3 : I3
+>I3 : I3
+
+>foo(i3, i3) : any
+>foo : typeof foo
+
+foo(i3, i3); // should not crash the compiler :)
+>i3 : I3
+>i3 : I3
+

@@ -1,3 +1,4 @@
+//// [ExportVariableWithInaccessibleTypeInTypeAnnotation.js]
 var A;
 (function (A) {
     // valid since Point is exported

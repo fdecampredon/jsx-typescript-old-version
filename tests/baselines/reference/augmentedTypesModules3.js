@@ -1,3 +1,4 @@
+//// [augmentedTypesModules3.js]
 var m3 = (function () {
     function m3() {
     }

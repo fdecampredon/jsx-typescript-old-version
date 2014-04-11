@@ -1,79 +1,130 @@
 === tests/cases/compiler/compoundAssignmentLHSIsReference.ts ===
-Line 0 col 4 IdentifierName "value" = any
-Line 3 col 4 IdentifierName "x1" = number
-Line 4 col 0 MultiplyAssignmentExpression "x1 *= value" = number
-Line 4 col 0 IdentifierName "x1" = number
-Line 4 col 6 IdentifierName "value" = any
-Line 5 col 0 AddAssignmentExpression "x1 += value" = any
-Line 5 col 0 IdentifierName "x1" = number
-Line 5 col 6 IdentifierName "value" = any
-Line 7 col 9 IdentifierName "fn1" = typeof fn1
-Line 7 col 13 IdentifierName "x2" = number
-Line 8 col 0 MultiplyAssignmentExpression "x2 *= value" = number
-Line 8 col 0 IdentifierName "x2" = number
-Line 8 col 10 IdentifierName "value" = any
-Line 9 col 0 AddAssignmentExpression "x2 += value" = any
-Line 9 col 0 IdentifierName "x2" = number
-Line 9 col 10 IdentifierName "value" = any
-Line 13 col 4 IdentifierName "x3" = { a: number; }
-Line 13 col 10 IdentifierName "a" = number
-Line 14 col 0 MultiplyAssignmentExpression "x3.a *= value" = number
-Line 14 col 0 MemberAccessExpression "x3.a" = number
-Line 14 col 0 IdentifierName "x3" = { a: number; }
-Line 14 col 3 IdentifierName "a" = number
-Line 14 col 8 IdentifierName "value" = any
-Line 15 col 0 AddAssignmentExpression "x3.a += value" = any
-Line 15 col 0 MemberAccessExpression "x3.a" = number
-Line 15 col 0 IdentifierName "x3" = { a: number; }
-Line 15 col 3 IdentifierName "a" = number
-Line 15 col 8 IdentifierName "value" = any
-Line 16 col 0 MultiplyAssignmentExpression "x3['a'] *= value" = number
-Line 16 col 0 ElementAccessExpression "x3['a']" = number
-Line 16 col 0 IdentifierName "x3" = { a: number; }
-Line 17 col 11 IdentifierName "value" = any
-Line 18 col 0 AddAssignmentExpression "x3['a'] += value" = any
-Line 18 col 0 ElementAccessExpression "x3['a']" = number
-Line 18 col 0 IdentifierName "x3" = { a: number; }
-Line 18 col 11 IdentifierName "value" = any
-Line 19 col 0 MultiplyAssignmentExpression "// parentheses, the contained expression is reference
-(x1) *= value" = number
-Line 19 col 0 ParenthesizedExpression "// parentheses, the contained expression is reference
-(x1)" = number
-Line 21 col 1 IdentifierName "x1" = number
-Line 21 col 8 IdentifierName "value" = any
-Line 22 col 0 AddAssignmentExpression "(x1) += value" = any
-Line 22 col 0 ParenthesizedExpression "(x1)" = number
-Line 22 col 1 IdentifierName "x1" = number
-Line 22 col 8 IdentifierName "value" = any
-Line 24 col 9 IdentifierName "fn2" = typeof fn2
-Line 24 col 13 IdentifierName "x4" = number
-Line 25 col 0 MultiplyAssignmentExpression "(x4) *= value" = number
-Line 25 col 0 ParenthesizedExpression "(x4)" = number
-Line 25 col 5 IdentifierName "x4" = number
-Line 25 col 12 IdentifierName "value" = any
-Line 26 col 0 AddAssignmentExpression "(x4) += value" = any
-Line 26 col 0 ParenthesizedExpression "(x4)" = number
-Line 26 col 5 IdentifierName "x4" = number
-Line 26 col 12 IdentifierName "value" = any
-Line 28 col 0 MultiplyAssignmentExpression "(x3.a) *= value" = number
-Line 28 col 0 ParenthesizedExpression "(x3.a)" = number
-Line 29 col 1 MemberAccessExpression "x3.a" = number
-Line 29 col 1 IdentifierName "x3" = { a: number; }
-Line 29 col 4 IdentifierName "a" = number
-Line 29 col 10 IdentifierName "value" = any
-Line 30 col 0 AddAssignmentExpression "(x3.a) += value" = any
-Line 30 col 0 ParenthesizedExpression "(x3.a)" = number
-Line 30 col 1 MemberAccessExpression "x3.a" = number
-Line 30 col 1 IdentifierName "x3" = { a: number; }
-Line 30 col 4 IdentifierName "a" = number
-Line 30 col 10 IdentifierName "value" = any
-Line 31 col 0 MultiplyAssignmentExpression "(x3['a']) *= value" = number
-Line 31 col 0 ParenthesizedExpression "(x3['a'])" = number
-Line 32 col 1 ElementAccessExpression "x3['a']" = number
-Line 32 col 1 IdentifierName "x3" = { a: number; }
-Line 32 col 13 IdentifierName "value" = any
-Line 33 col 0 AddAssignmentExpression "(x3['a']) += value" = any
-Line 33 col 0 ParenthesizedExpression "(x3['a'])" = number
-Line 33 col 1 ElementAccessExpression "x3['a']" = number
-Line 33 col 1 IdentifierName "x3" = { a: number; }
-Line 33 col 13 IdentifierName "value" = any
+var value;
+>value : any
+
+// identifiers: variable and parameter
+var x1: number;
+>x1 : number
+
+x1 *= value;
+>x1 *= value : number
+>x1 : number
+>value : any
+
+x1 += value;
+>x1 += value : any
+>x1 : number
+>value : any
+
+function fn1(x2: number) {
+>fn1 : typeof fn1
+>x2 : number
+
+    x2 *= value;
+>x2 *= value : number
+>x2 : number
+>value : any
+
+    x2 += value;
+>x2 += value : any
+>x2 : number
+>value : any
+}
+
+// property accesses
+var x3: { a: number };
+>x3 : { a: number; }
+>a : number
+
+x3.a *= value;
+>x3.a *= value : number
+>x3.a : number
+>x3 : { a: number; }
+>a : number
+>value : any
+
+x3.a += value;
+>x3.a += value : any
+>x3.a : number
+>x3 : { a: number; }
+>a : number
+>value : any
+
+>x3['a'] *= value : number
+>x3['a'] : number
+>x3 : { a: number; }
+
+x3['a'] *= value;
+>value : any
+
+x3['a'] += value;
+>x3['a'] += value : any
+>x3['a'] : number
+>x3 : { a: number; }
+>value : any
+
+>// parentheses, the contained expression is reference
+(x1) *= value : number
+>// parentheses, the contained expression is reference
+(x1) : number
+
+// parentheses, the contained expression is reference
+(x1) *= value;
+>x1 : number
+>value : any
+
+(x1) += value;
+>(x1) += value : any
+>(x1) : number
+>x1 : number
+>value : any
+
+function fn2(x4: number) {
+>fn2 : typeof fn2
+>x4 : number
+
+    (x4) *= value;
+>(x4) *= value : number
+>(x4) : number
+>x4 : number
+>value : any
+
+    (x4) += value;
+>(x4) += value : any
+>(x4) : number
+>x4 : number
+>value : any
+}
+
+>(x3.a) *= value : number
+>(x3.a) : number
+
+(x3.a) *= value;
+>x3.a : number
+>x3 : { a: number; }
+>a : number
+>value : any
+
+(x3.a) += value;
+>(x3.a) += value : any
+>(x3.a) : number
+>x3.a : number
+>x3 : { a: number; }
+>a : number
+>value : any
+
+>(x3['a']) *= value : number
+>(x3['a']) : number
+
+(x3['a']) *= value;
+>x3['a'] : number
+>x3 : { a: number; }
+>value : any
+
+(x3['a']) += value;
+>(x3['a']) += value : any
+>(x3['a']) : number
+>x3['a'] : number
+>x3 : { a: number; }
+>value : any
+

@@ -1,15 +1,27 @@
 === tests/cases/compiler/collisionRestParameterInType.ts ===
-Line 0 col 4 IdentifierName "v1" = (_i: number, ...restParameters: any[]) => void
-Line 0 col 9 IdentifierName "_i" = number
-Line 0 col 24 IdentifierName "restParameters" = any[]
-Line 1 col 4 IdentifierName "v2" = { foo(_i: number, ...restParameters: any[]): any; prop: (_i: number, ...restParameters: any[]) => void; (_i: number, ...restParameters: any[]): any; new(_i: number, ...restParameters: any[]): any; }
-Line 2 col 5 IdentifierName "_i" = number
-Line 2 col 20 IdentifierName "restParameters" = any[]
-Line 3 col 9 IdentifierName "_i" = number
-Line 3 col 24 IdentifierName "restParameters" = any[]
-Line 4 col 0 IdentifierName "foo" = (_i: number, ...restParameters: any[]) => any
-Line 4 col 8 IdentifierName "_i" = number
-Line 4 col 23 IdentifierName "restParameters" = any[]
-Line 5 col 0 IdentifierName "prop" = (_i: number, ...restParameters: any[]) => void
-Line 5 col 11 IdentifierName "_i" = number
-Line 5 col 26 IdentifierName "restParameters" = any[]
+var v1: (_i: number, ...restParameters) => void; // no error - no code gen
+>v1 : (_i: number, ...restParameters: any[]) => void
+>_i : number
+>restParameters : any[]
+
+var v2: {
+>v2 : { foo(_i: number, ...restParameters: any[]): any; prop: (_i: number, ...restParameters: any[]) => void; (_i: number, ...restParameters: any[]): any; new(_i: number, ...restParameters: any[]): any; }
+
+    (_i: number, ...restParameters); // no error - no code gen
+>_i : number
+>restParameters : any[]
+
+    new (_i: number, ...restParameters); // no error - no code gen
+>_i : number
+>restParameters : any[]
+
+    foo(_i: number, ...restParameters); // no error - no code gen
+>foo : (_i: number, ...restParameters: any[]) => any
+>_i : number
+>restParameters : any[]
+
+    prop: (_i: number, ...restParameters) => void; // no error - no code gen
+>prop : (_i: number, ...restParameters: any[]) => void
+>_i : number
+>restParameters : any[]
+}

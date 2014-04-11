@@ -1,28 +1,48 @@
 === tests/cases/compiler/recursiveIdenticalOverloadResolution.ts ===
-Line 1 col 7 IdentifierName "M" = M
-Line 3 col 13 IdentifierName "I" = I
-Line 3 col 18 IdentifierName "i" = I
-Line 3 col 21 IdentifierName "I" = I
-Line 3 col 25 IdentifierName "I" = I
-Line 5 col 12 IdentifierName "f" = typeof f
-Line 5 col 14 IdentifierName "p" = I
-Line 5 col 17 IdentifierName "I" = I
-Line 5 col 29 IdentifierName "f" = typeof f
-Line 7 col 7 IdentifierName "i" = I
-Line 7 col 10 IdentifierName "I" = I
-Line 8 col 0 InvocationExpression "f(i)" = typeof f
-Line 8 col 0 IdentifierName "f" = typeof f
-Line 9 col 5 IdentifierName "i" = I
-Line 10 col 0 InvocationExpression "f(f(i))" = typeof f
-Line 10 col 0 IdentifierName "f" = typeof f
-Line 11 col 5 InvocationExpression "f(i)" = typeof f
-Line 11 col 5 IdentifierName "f" = typeof f
-Line 11 col 7 IdentifierName "i" = I
-Line 12 col 0 InvocationExpression "f((f(f(i))))" = typeof f
-Line 12 col 0 IdentifierName "f" = typeof f
-Line 13 col 5 ParenthesizedExpression "(f(f(i)))" = typeof f
-Line 13 col 6 InvocationExpression "f(f(i))" = typeof f
-Line 13 col 6 IdentifierName "f" = typeof f
-Line 13 col 8 InvocationExpression "f(i)" = typeof f
-Line 13 col 8 IdentifierName "f" = typeof f
-Line 13 col 10 IdentifierName "i" = I
+
+module M {
+>M : M
+
+   interface I { (i: I): I; }
+>I : I
+>i : I
+>I : I
+>I : I
+
+   function f(p: I) { return f };
+>f : typeof f
+>p : I
+>I : I
+>f : typeof f
+
+   var i: I;
+>i : I
+>I : I
+
+>f(i) : typeof f
+>f : typeof f
+
+   f(i);
+>i : I
+
+>f(f(i)) : typeof f
+>f : typeof f
+
+   f(f(i));
+>f(i) : typeof f
+>f : typeof f
+>i : I
+
+>f((f(f(i)))) : typeof f
+>f : typeof f
+
+   f((f(f(i))));
+>(f(f(i))) : typeof f
+>f(f(i)) : typeof f
+>f : typeof f
+>f(i) : typeof f
+>f : typeof f
+>i : I
+
+}
+

@@ -1,31 +1,76 @@
 === tests/cases/compiler/TwoInternalModulesThatMergeEachWithExportedModulesOfTheSameName.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 0 col 9 IdentifierName "B" = A.B
-Line 1 col 15 IdentifierName "x" = number
-Line 4 col 7 IdentifierName "A" = A
-Line 5 col 11 IdentifierName "B" = A.B
-Line 6 col 19 IdentifierName "x" = string
-Line 11 col 4 IdentifierName "x" = number
-Line 12 col 4 IdentifierName "x" = number
-Line 12 col 8 MemberAccessExpression "A.B.x" = number
-Line 12 col 8 MemberAccessExpression "A.B" = typeof A.B
-Line 12 col 8 IdentifierName "A" = typeof A
-Line 12 col 10 IdentifierName "B" = typeof A.B
-Line 12 col 12 IdentifierName "x" = number
-Line 14 col 7 IdentifierName "X" = X
-Line 14 col 9 IdentifierName "Y" = X.Y
-Line 14 col 11 IdentifierName "Z" = X.Y.Z
-Line 15 col 17 IdentifierName "Line" = Line
-Line 16 col 0 IdentifierName "length" = number
-Line 20 col 7 IdentifierName "X" = X
-Line 21 col 18 IdentifierName "Y" = Y
-Line 22 col 15 IdentifierName "Z" = Y.Z
-Line 23 col 25 IdentifierName "Line" = Line
-Line 24 col 0 IdentifierName "name" = string
-Line 31 col 4 IdentifierName "l" = { length: number; }
-Line 31 col 9 IdentifierName "length" = number
-Line 32 col 4 IdentifierName "l" = X.Y.Z.Line
-Line 32 col 7 IdentifierName "X" = X
-Line 32 col 9 IdentifierName "Y" = X.Y
-Line 32 col 11 IdentifierName "Z" = X.Y.Z
-Line 32 col 13 IdentifierName "Line" = X.Y.Z.Line
+module A.B {
+>A : A
+>B : A.B
+
+    export var x: number;
+>x : number
+}
+
+module A{ 
+>A : A
+
+    module B {
+>B : A.B
+
+        export var x: string;
+>x : string
+    }
+}
+
+// ensure the right var decl is exported
+var x: number;
+>x : number
+
+var x = A.B.x;
+>x : number
+>A.B.x : number
+>A.B : typeof A.B
+>A : typeof A
+>B : typeof A.B
+>x : number
+
+module X.Y.Z {
+>X : X
+>Y : X.Y
+>Z : X.Y.Z
+
+    export class Line {
+>Line : Line
+
+        length: number;
+>length : number
+    }
+}
+
+module X {
+>X : X
+
+    export module Y {
+>Y : Y
+
+        module Z {
+>Z : Y.Z
+
+            export class Line {
+>Line : Line
+
+                name: string;
+>name : string
+            }
+        }
+    }
+}
+
+// make sure merging works as expected
+var l: { length: number };
+>l : { length: number; }
+>length : number
+
+var l: X.Y.Z.Line;
+>l : X.Y.Z.Line
+>X : X
+>Y : X.Y
+>Z : X.Y.Z
+>Line : X.Y.Z.Line
+

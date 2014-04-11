@@ -1,11 +1,24 @@
 === tests/cases/compiler/qualifiedName_ImportDeclarations-entity-names-referencing-a-var.ts ===
-Line 0 col 7 IdentifierName "Alpha" = Alpha
-Line 1 col 15 IdentifierName "x" = number
-Line 4 col 7 IdentifierName "Beta" = Beta
-Line 5 col 11 IdentifierName "p" = p
-Line 5 col 15 IdentifierName "Alpha" = Alpha
-Line 5 col 21 IdentifierName "x" = number
-Line 9 col 4 IdentifierName "x" = number
-Line 9 col 8 MemberAccessExpression "Alpha.x" = number
-Line 9 col 8 IdentifierName "Alpha" = typeof Alpha
-Line 9 col 14 IdentifierName "x" = number
+module Alpha {
+>Alpha : Alpha
+
+    export var x = 100;
+>x : number
+}
+
+module Beta {
+>Beta : Beta
+
+    import p = Alpha.x;
+>p : p
+>Alpha : Alpha
+>x : number
+}
+
+
+var x = Alpha.x
+>x : number
+>Alpha.x : number
+>Alpha : typeof Alpha
+>x : number
+

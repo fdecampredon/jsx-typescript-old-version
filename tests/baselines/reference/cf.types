@@ -1,64 +1,138 @@
 === tests/cases/compiler/cf.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 1 col 8 IdentifierName "z" = any
-Line 2 col 8 IdentifierName "x" = number
-Line 3 col 8 IdentifierName "y" = number
-Line 5 col 17 IdentifierName "i" = number
-Line 5 col 21 LessThanExpression "i<19" = boolean
-Line 5 col 21 IdentifierName "i" = number
-Line 5 col 26 PostIncrementExpression "i++" = number
-Line 5 col 26 IdentifierName "i" = number
-Line 6 col 12 EqualsWithTypeConversionExpression "y==7" = boolean
-Line 6 col 12 IdentifierName "y" = number
-Line 8 col 0 AssignmentExpression "x=11" = number
-Line 8 col 0 IdentifierName "x" = number
-Line 10 col 12 EqualsWithTypeConversionExpression "y==3" = boolean
-Line 10 col 12 IdentifierName "y" = number
-Line 11 col 0 PostIncrementExpression "y++" = number
-Line 11 col 0 IdentifierName "y" = number
-Line 14 col 0 PostDecrementExpression "y--" = number
-Line 14 col 0 IdentifierName "y" = number
-Line 17 col 0 AddAssignmentExpression "y+=2" = number
-Line 17 col 0 IdentifierName "y" = number
-Line 18 col 16 EqualsWithTypeConversionExpression "y==20" = boolean
-Line 18 col 16 IdentifierName "y" = number
-Line 20 col 0 AssignmentExpression "x=12" = number
-Line 20 col 0 IdentifierName "x" = number
-Line 22 col 17 LessThanExpression "y<41" = boolean
-Line 22 col 17 IdentifierName "y" = number
-Line 23 col 0 PostIncrementExpression "y++" = number
-Line 23 col 0 IdentifierName "y" = number
-Line 25 col 11 GreaterThanExpression "y>2" = boolean
-Line 25 col 11 IdentifierName "y" = number
-Line 26 col 0 AssignmentExpression "y=y>>1" = number
-Line 26 col 0 IdentifierName "y" = number
-Line 26 col 10 SignedRightShiftExpression "y>>1" = number
-Line 26 col 10 IdentifierName "y" = number
-Line 29 col 16 LessThanExpression "x<y" = boolean
-Line 29 col 16 IdentifierName "x" = number
-Line 29 col 18 IdentifierName "y" = number
-Line 31 col 0 AssignmentExpression "x=13" = number
-Line 31 col 0 IdentifierName "x" = number
-Line 35 col 0 AssignmentExpression "x=14" = number
-Line 35 col 0 IdentifierName "x" = number
-Line 38 col 11 IdentifierName "e" = any
-Line 39 col 0 PostIncrementExpression "x++" = number
-Line 39 col 0 IdentifierName "x" = number
-Line 42 col 0 AddAssignmentExpression "x+=3" = number
-Line 42 col 0 IdentifierName "x" = number
-Line 44 col 0 PostIncrementExpression "y++" = number
-Line 44 col 0 IdentifierName "y" = number
-Line 45 col 13 IdentifierName "k" = number
-Line 45 col 17 LessThanExpression "k<10" = boolean
-Line 45 col 17 IdentifierName "k" = number
-Line 45 col 22 PostIncrementExpression "k++" = number
-Line 45 col 22 IdentifierName "k" = number
-Line 46 col 0 IdentifierName "z" = any
-Line 49 col 9 AssignmentExpression "k=0" = number
-Line 49 col 9 IdentifierName "k" = number
-Line 49 col 13 LessThanExpression "k<10" = boolean
-Line 49 col 13 IdentifierName "k" = number
-Line 49 col 18 PostIncrementExpression "k++" = number
-Line 49 col 18 IdentifierName "k" = number
-Line 50 col 12 EqualsWithTypeConversionExpression "k==6" = boolean
-Line 50 col 12 IdentifierName "k" = number
+function f() {
+>f : typeof f
+
+    var z;
+>z : any
+
+    var x=10;
+>x : number
+
+    var y=3;
+>y : number
+
+    L1: for (var i=0;i<19;i++) {
+>i : number
+>i<19 : boolean
+>i : number
+>i++ : number
+>i : number
+
+        if (y==7) {
+>y==7 : boolean
+>y : number
+
+            continue L1;
+            x=11;
+>x=11 : number
+>x : number
+        }
+        if (y==3) {
+>y==3 : boolean
+>y : number
+
+            y++;
+>y++ : number
+>y : number
+        }
+        else {
+            y--;
+>y-- : number
+>y : number
+        }
+        do {
+            y+=2;
+>y+=2 : number
+>y : number
+
+            if (y==20) {
+>y==20 : boolean
+>y : number
+
+                break;
+                x=12;
+>x=12 : number
+>x : number
+            }
+        } while (y<41);
+>y<41 : boolean
+>y : number
+
+        y++;
+>y++ : number
+>y : number
+    }
+    while (y>2) {
+>y>2 : boolean
+>y : number
+
+        y=y>>1;
+>y=y>>1 : number
+>y : number
+>y>>1 : number
+>y : number
+    }
+    L2: try {
+        L3: if (x<y) {
+>x<y : boolean
+>x : number
+>y : number
+
+            break L2;
+            x=13;
+>x=13 : number
+>x : number
+        }
+        else {
+            break L3;
+            x=14;
+>x=14 : number
+>x : number
+        }
+    }
+    catch (e) {
+>e : any
+
+        x++;
+>x++ : number
+>x : number
+    }    
+    finally {
+        x+=3;
+>x+=3 : number
+>x : number
+    }
+    y++;
+>y++ : number
+>y : number
+
+    for (var k=0;k<10;k++) {
+>k : number
+>k<10 : boolean
+>k : number
+>k++ : number
+>k : number
+
+        z;
+>z : any
+
+        break;
+    }
+    for (k=0;k<10;k++) {
+>k=0 : number
+>k : number
+>k<10 : boolean
+>k : number
+>k++ : number
+>k : number
+
+        if (k==6) {
+>k==6 : boolean
+>k : number
+
+            continue;
+        }
+        break;
+    }
+}
+

@@ -1,3 +1,4 @@
+//// [arrayReferenceWithoutTypeArgs.js]
 var X = (function () {
     function X() {
     }

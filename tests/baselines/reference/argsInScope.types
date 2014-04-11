@@ -1,21 +1,36 @@
 === tests/cases/compiler/argsInScope.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "P" = (ii: number, j: number, k: number) => void
-Line 1 col 6 IdentifierName "ii" = number
-Line 1 col 17 IdentifierName "j" = number
-Line 1 col 27 IdentifierName "k" = number
-Line 2 col 16 IdentifierName "i" = number
-Line 2 col 23 LessThanExpression "i < arguments.length" = boolean
-Line 2 col 23 IdentifierName "i" = number
-Line 2 col 27 MemberAccessExpression "arguments.length" = number
-Line 2 col 27 IdentifierName "arguments" = IArguments
-Line 2 col 37 IdentifierName "length" = number
-Line 2 col 45 PostIncrementExpression "i++" = number
-Line 2 col 45 IdentifierName "i" = number
-Line 8 col 4 IdentifierName "c" = C
-Line 8 col 8 ObjectCreationExpression "new C()" = C
-Line 8 col 12 IdentifierName "C" = typeof C
-Line 9 col 0 InvocationExpression "c.P(1,2,3)" = void
-Line 9 col 0 MemberAccessExpression "c.P" = (ii: number, j: number, k: number) => void
-Line 9 col 0 IdentifierName "c" = C
-Line 9 col 2 IdentifierName "P" = (ii: number, j: number, k: number) => void
+class C {
+>C : C
+
+    P(ii:number, j:number, k:number) {
+>P : (ii: number, j: number, k: number) => void
+>ii : number
+>j : number
+>k : number
+
+       for (var i = 0; i < arguments.length; i++) {
+>i : number
+>i < arguments.length : boolean
+>i : number
+>arguments.length : number
+>arguments : IArguments
+>length : number
+>i++ : number
+>i : number
+
+           // WScript.Echo("param: " + arguments[i]);
+       }
+    }
+}
+
+var c = new C();
+>c : C
+>new C() : C
+>C : typeof C
+
+c.P(1,2,3);
+>c.P(1,2,3) : void
+>c.P : (ii: number, j: number, k: number) => void
+>c : C
+>P : (ii: number, j: number, k: number) => void
+

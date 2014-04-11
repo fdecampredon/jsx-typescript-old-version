@@ -1,3 +1,4 @@
+//// [collisionRestParameterClassConstructor.js]
 // Constructors
 var c1 = (function () {
     function c1(_i) {

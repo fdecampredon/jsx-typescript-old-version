@@ -1,3 +1,19 @@
+//// [innerExtern.ts]
+module A {
+    export declare module BB {
+        export var Elephant;
+    }
+    export module B {
+        export class C {
+            x = BB.Elephant.X;
+        }
+    }
+}
+
+
+
+
+//// [innerExtern.js]
 var A;
 (function (A) {
     (function (B) {

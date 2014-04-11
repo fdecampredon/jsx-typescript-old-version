@@ -1,8 +1,18 @@
 === tests/cases/compiler/localVariablesReturnedFromCatchBlocks.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 2 col 13 IdentifierName "e" = any
-Line 3 col 12 IdentifierName "stack2" = any
-Line 3 col 21 MemberAccessExpression "e.stack" = any
-Line 3 col 21 IdentifierName "e" = any
-Line 3 col 23 IdentifierName "stack" = any
-Line 4 col 15 IdentifierName "stack2" = any
+function f() {
+>f : typeof f
+
+    try {
+    } catch (e) {
+>e : any
+
+        var stack2 = e.stack;
+>stack2 : any
+>e.stack : any
+>e : any
+>stack : any
+
+        return stack2; //error TS2095: Could not find symbol 'stack2'.
+>stack2 : any
+    }
+}

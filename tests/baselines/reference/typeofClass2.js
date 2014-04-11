@@ -1,3 +1,27 @@
+//// [typeofClass2.ts]
+class C {
+    constructor(x: number);
+    constructor(x: string);
+    constructor(x) { }
+
+    static foo(x: number);
+    static foo(x: C);
+    static foo(x) { }
+
+    static bar(x) { }
+}
+
+class D extends C {
+    static baz(x: number) { }
+    foo() { }
+}
+
+var d: D;
+
+var r1: typeof D;
+var r2: typeof d;
+
+//// [typeofClass2.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

@@ -1,3 +1,4 @@
+//// [incrementOperatorWithUnsupportedBooleanType.js]
 // ++ operator on boolean type
 var BOOLEAN;
 

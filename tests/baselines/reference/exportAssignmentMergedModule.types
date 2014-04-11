@@ -1,33 +1,62 @@
 === tests/cases/compiler/foo_1.ts ===
-Line 0 col 7 IdentifierName "foo" = foo
-Line 1 col 4 IdentifierName "a" = number
-Line 1 col 16 InvocationExpression "foo.a()" = number
-Line 1 col 16 MemberAccessExpression "foo.a" = typeof foo.a
-Line 1 col 16 IdentifierName "foo" = typeof foo
-Line 1 col 20 IdentifierName "a" = typeof foo.a
-Line 2 col 3 LogicalNotExpression "!!foo.b" = boolean
-Line 2 col 4 LogicalNotExpression "!foo.b" = boolean
-Line 2 col 5 MemberAccessExpression "foo.b" = boolean
-Line 2 col 5 IdentifierName "foo" = typeof foo
-Line 2 col 9 IdentifierName "b" = boolean
-Line 3 col 0 AssignmentExpression "foo.Test.answer = foo.c(42)" = number
-Line 3 col 0 MemberAccessExpression "foo.Test.answer" = number
-Line 3 col 0 MemberAccessExpression "foo.Test" = typeof foo.Test
-Line 3 col 0 IdentifierName "foo" = typeof foo
-Line 3 col 5 IdentifierName "Test" = typeof foo.Test
-Line 3 col 10 IdentifierName "answer" = number
-Line 3 col 19 InvocationExpression "foo.c(42)" = number
-Line 3 col 19 MemberAccessExpression "foo.c" = typeof foo.c
-Line 3 col 19 IdentifierName "foo" = typeof foo
-Line 3 col 23 IdentifierName "c" = typeof foo.c
+import foo = require("./foo_0");
+>foo : foo
+
+var a: number = foo.a();
+>a : number
+>foo.a() : number
+>foo.a : typeof foo.a
+>foo : typeof foo
+>a : typeof foo.a
+
+if(!!foo.b){
+>!!foo.b : boolean
+>!foo.b : boolean
+>foo.b : boolean
+>foo : typeof foo
+>b : boolean
+
+	foo.Test.answer = foo.c(42);
+>foo.Test.answer = foo.c(42) : number
+>foo.Test.answer : number
+>foo.Test : typeof foo.Test
+>foo : typeof foo
+>Test : typeof foo.Test
+>answer : number
+>foo.c(42) : number
+>foo.c : typeof foo.c
+>foo : typeof foo
+>c : typeof foo.c
+}
 === tests/cases/compiler/foo_0.ts ===
-Line 0 col 7 IdentifierName "Foo" = Foo
-Line 1 col 17 IdentifierName "a" = typeof a
-Line 4 col 12 IdentifierName "b" = boolean
-Line 6 col 7 IdentifierName "Foo" = Foo
-Line 7 col 17 IdentifierName "c" = typeof c
-Line 7 col 19 IdentifierName "a" = number
-Line 8 col 9 IdentifierName "a" = number
-Line 10 col 15 IdentifierName "Test" = Test
-Line 11 col 13 IdentifierName "answer" = number
-Line 14 col 9 IdentifierName "Foo" = typeof Foo
+module Foo {
+>Foo : Foo
+
+	export function a(){
+>a : typeof a
+
+		return 5;
+	}
+	export var b = true;
+>b : boolean
+}
+module Foo {
+>Foo : Foo
+
+	export function c(a: number){
+>c : typeof c
+>a : number
+
+		return a;
+>a : number
+	}
+	export module Test {
+>Test : Test
+
+		export var answer = 42;
+>answer : number
+	}
+}
+export = Foo;
+>Foo : typeof Foo
+

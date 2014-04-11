@@ -1,3 +1,4 @@
+//// [interfaceDeclaration3.js]
 define(["require", "exports"], function(require, exports) {
     var M1;
     (function (M1) {

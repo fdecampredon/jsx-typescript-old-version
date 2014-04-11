@@ -1,3 +1,4 @@
+//// [typeofInternalModules.js]
 var Outer;
 (function (Outer) {
     (function (instantiated) {

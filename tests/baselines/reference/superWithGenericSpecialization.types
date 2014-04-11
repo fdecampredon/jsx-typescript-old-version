@@ -1,21 +1,41 @@
 === tests/cases/compiler/superWithGenericSpecialization.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "x" = T
-Line 1 col 7 IdentifierName "T" = T
-Line 4 col 6 IdentifierName "D" = D<T>
-Line 4 col 8 IdentifierName "T" = T
-Line 4 col 19 IdentifierName "C" = C<T>
-Line 5 col 0 IdentifierName "y" = T
-Line 5 col 7 IdentifierName "T" = T
-Line 7 col 0 InvocationExpression "super()" = void
-Line 11 col 4 IdentifierName "d" = D<number>
-Line 11 col 7 IdentifierName "D" = D<T>
-Line 12 col 4 IdentifierName "r" = string
-Line 12 col 16 MemberAccessExpression "d.x" = string
-Line 12 col 16 IdentifierName "d" = D<number>
-Line 12 col 18 IdentifierName "x" = string
-Line 13 col 4 IdentifierName "r2" = number
-Line 13 col 17 MemberAccessExpression "d.y" = number
-Line 13 col 17 IdentifierName "d" = D<number>
-Line 13 col 19 IdentifierName "y" = number
+class C<T> {
+>C : C<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+}
+
+class D<T> extends C<string> {
+>D : D<T>
+>T : T
+>C : C<T>
+
+    y: T;
+>y : T
+>T : T
+
+    constructor() {
+        super(); // uses the type parameter type of the base class, ie string
+>super() : void
+    }
+}
+
+var d: D<number>;
+>d : D<number>
+>D : D<T>
+
+var r: string = d.x;
+>r : string
+>d.x : string
+>d : D<number>
+>x : string
+
+var r2: number = d.y;
+>r2 : number
+>d.y : number
+>d : D<number>
+>y : number
+

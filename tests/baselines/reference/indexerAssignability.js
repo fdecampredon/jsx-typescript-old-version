@@ -1,3 +1,4 @@
+//// [indexerAssignability.js]
 var a;
 var b;
 var c;

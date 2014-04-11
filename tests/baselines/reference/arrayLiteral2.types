@@ -1,4 +1,6 @@
 === tests/cases/compiler/arrayLiteral2.ts ===
-Line 0 col 4 IdentifierName "v30" = number[]
-Line 0 col 10 ArrayLiteralExpression "[1, 2]" = number[]
-Line 0 col 18 IdentifierName "v31" = any
+var v30 = [1, 2], v31;
+>v30 : number[]
+>[1, 2] : number[]
+>v31 : any
+

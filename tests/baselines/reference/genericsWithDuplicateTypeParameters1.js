@@ -1,3 +1,4 @@
+//// [genericsWithDuplicateTypeParameters1.js]
 function f() {
 }
 function f2(a, b) {

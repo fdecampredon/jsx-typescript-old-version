@@ -1,3 +1,4 @@
+//// [typeArgumentsShouldDisallowNonGenericOverloads.js]
 function foo(a) {
     return "hi";
 }

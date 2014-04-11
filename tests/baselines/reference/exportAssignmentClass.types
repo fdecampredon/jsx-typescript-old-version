@@ -1,13 +1,23 @@
 === tests/cases/compiler/exportAssignmentClass_B.ts ===
-Line 0 col 7 IdentifierName "D" = D
-Line 2 col 4 IdentifierName "d" = D
-Line 2 col 8 ObjectCreationExpression "new D()" = D
-Line 2 col 12 IdentifierName "D" = typeof D
-Line 3 col 4 IdentifierName "x" = number
-Line 3 col 8 MemberAccessExpression "d.p" = number
-Line 3 col 8 IdentifierName "d" = D
-Line 3 col 10 IdentifierName "p" = number
+import D = require("exportAssignmentClass_A");
+>D : D
+
+var d = new D();
+>d : D
+>new D() : D
+>D : typeof D
+
+var x = d.p;
+>x : number
+>d.p : number
+>d : D
+>p : number
+
 === tests/cases/compiler/exportAssignmentClass_A.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 0 col 17 IdentifierName "p" = number
-Line 2 col 9 IdentifierName "C" = typeof C
+class C { public p = 0; }
+>C : C
+>p : number
+
+export = C;
+>C : typeof C
+

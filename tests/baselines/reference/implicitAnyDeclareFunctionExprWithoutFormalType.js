@@ -1,3 +1,4 @@
+//// [implicitAnyDeclareFunctionExprWithoutFormalType.js]
 // these should be errors for implicit any parameter
 var lambda = function (l1) {
 };

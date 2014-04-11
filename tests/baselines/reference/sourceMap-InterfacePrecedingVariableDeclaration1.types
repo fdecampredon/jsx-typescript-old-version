@@ -1,3 +1,8 @@
 === tests/cases/compiler/sourceMap-InterfacePrecedingVariableDeclaration1.ts ===
-Line 1 col 10 IdentifierName "I" = I
-Line 2 col 4 IdentifierName "x" = number
+
+interface I {}
+>I : I
+
+var x = 0;
+>x : number
+

@@ -1,3 +1,4 @@
+//// [contextualTypingWithFixedTypeParameters1.js]
 var f10;
 f10('', function () {
     return function (a) {

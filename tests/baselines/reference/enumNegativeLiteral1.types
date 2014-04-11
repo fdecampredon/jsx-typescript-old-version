@@ -1,6 +1,11 @@
 === tests/cases/compiler/enumNegativeLiteral1.ts ===
-Line 0 col 5 IdentifierName "E" = E
-Line 1 col 0 IdentifierName "a" = E
-Line 1 col 8 NegateExpression "-5" = number
-Line 1 col 12 IdentifierName "b" = E
-Line 1 col 15 IdentifierName "c" = E
+enum E {
+>E : E
+
+    a = -5, b, c
+>a : E
+>-5 : number
+>b : E
+>c : E
+}
+

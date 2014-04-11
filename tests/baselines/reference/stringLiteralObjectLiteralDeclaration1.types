@@ -1,4 +1,9 @@
 === tests/cases/compiler/stringLiteralObjectLiteralDeclaration1.ts ===
-Line 0 col 7 IdentifierName "m1" = m1
-Line 1 col 13 IdentifierName "n" = { 'foo bar': number; }
-Line 1 col 17 ObjectLiteralExpression "{ 'foo bar': 4 }" = { 'foo bar': number; }
+module m1 {
+>m1 : m1
+
+  export var n = { 'foo bar': 4 };
+>n : { 'foo bar': number; }
+>{ 'foo bar': 4 } : { 'foo bar': number; }
+}
+

@@ -1,25 +1,49 @@
 === tests/cases/compiler/specializationsShouldNotAffectEachOther.ts ===
-Line 1 col 10 IdentifierName "Series" = Series
-Line 2 col 0 IdentifierName "data" = string[]
-Line 5 col 4 IdentifierName "series" = Series
-Line 5 col 12 IdentifierName "Series" = Series
-Line 8 col 9 IdentifierName "foo" = typeof foo
-Line 10 col 8 IdentifierName "seriesExtent" = (series: any) => any
-Line 10 col 23 ParenthesizedArrowFunctionExpression "(series) => null" = (series: any) => any
-Line 10 col 24 IdentifierName "series" = any
-Line 12 col 8 IdentifierName "series2" = number[]
-Line 13 col 0 InvocationExpression "series2.map(seriesExtent)" = any[]
-Line 13 col 0 MemberAccessExpression "series2.map" = <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
-Line 13 col 0 IdentifierName "series2" = number[]
-Line 14 col 12 IdentifierName "map" = <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
-Line 14 col 16 IdentifierName "seriesExtent" = (series: any) => any
-Line 19 col 4 IdentifierName "keyExtent2" = any[]
-Line 19 col 24 InvocationExpression "series.data.map(function (d: string) { return d; })" = string[]
-Line 19 col 24 MemberAccessExpression "series.data.map" = <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
-Line 19 col 24 MemberAccessExpression "series.data" = string[]
-Line 19 col 24 IdentifierName "series" = Series
-Line 19 col 31 IdentifierName "data" = string[]
-Line 19 col 36 IdentifierName "map" = <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
-Line 19 col 40 FunctionExpression "function (d: string) { return d; }" = (d: string) => string
-Line 19 col 50 IdentifierName "d" = string
-Line 19 col 70 IdentifierName "d" = string
+
+interface Series  {
+>Series : Series
+
+    data: string[];
+>data : string[]
+}
+
+var series: Series;
+>series : Series
+>Series : Series
+
+
+function foo() {
+>foo : typeof foo
+
+    var seriesExtent = (series) => null;
+>seriesExtent : (series: any) => any
+>(series) => null : (series: any) => any
+>series : any
+
+    var series2: number[];
+>series2 : number[]
+
+>series2.map(seriesExtent) : any[]
+>series2.map : <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
+>series2 : number[]
+
+    series2.map(seriesExtent);
+>map : <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
+>seriesExtent : (series: any) => any
+
+    return null;
+}
+
+
+var keyExtent2: any[] = series.data.map(function (d: string) { return d; });
+>keyExtent2 : any[]
+>series.data.map(function (d: string) { return d; }) : string[]
+>series.data.map : <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
+>series.data : string[]
+>series : Series
+>data : string[]
+>map : <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
+>function (d: string) { return d; } : (d: string) => string
+>d : string
+>d : string
+

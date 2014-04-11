@@ -1,110 +1,174 @@
 === tests/cases/compiler/commaOperatorWithSecondOperandObjectType.ts ===
-Line 0 col 4 IdentifierName "ANY" = any
-Line 1 col 4 IdentifierName "BOOLEAN" = boolean
-Line 2 col 4 IdentifierName "NUMBER" = number
-Line 3 col 4 IdentifierName "STRING" = string
-Line 4 col 4 IdentifierName "OBJECT" = Object
-Line 4 col 12 IdentifierName "Object" = Object
-Line 6 col 6 IdentifierName "CLASS" = CLASS
-Line 7 col 0 IdentifierName "num" = number
-Line 9 col 0 CommaExpression "//The second operand type is Object
-ANY, OBJECT" = Object
-Line 9 col 0 IdentifierName "//The second operand type is Object
-ANY" = any
-Line 11 col 5 IdentifierName "OBJECT" = Object
-Line 12 col 0 CommaExpression "BOOLEAN, OBJECT" = Object
-Line 12 col 0 IdentifierName "BOOLEAN" = boolean
-Line 12 col 9 IdentifierName "OBJECT" = Object
-Line 13 col 0 CommaExpression "NUMBER, OBJECT" = Object
-Line 13 col 0 IdentifierName "NUMBER" = number
-Line 13 col 8 IdentifierName "OBJECT" = Object
-Line 14 col 0 CommaExpression "STRING, OBJECT" = Object
-Line 14 col 0 IdentifierName "STRING" = string
-Line 14 col 8 IdentifierName "OBJECT" = Object
-Line 15 col 0 CommaExpression "OBJECT, OBJECT" = Object
-Line 15 col 0 IdentifierName "OBJECT" = Object
-Line 15 col 8 IdentifierName "OBJECT" = Object
-Line 18 col 4 IdentifierName "resultIsObject1" = Object
-Line 18 col 22 ParenthesizedExpression "(ANY, OBJECT)" = Object
-Line 18 col 23 CommaExpression "ANY, OBJECT" = Object
-Line 18 col 23 IdentifierName "ANY" = any
-Line 18 col 28 IdentifierName "OBJECT" = Object
-Line 19 col 4 IdentifierName "resultIsObject2" = Object
-Line 19 col 22 ParenthesizedExpression "(BOOLEAN, OBJECT)" = Object
-Line 19 col 23 CommaExpression "BOOLEAN, OBJECT" = Object
-Line 19 col 23 IdentifierName "BOOLEAN" = boolean
-Line 19 col 32 IdentifierName "OBJECT" = Object
-Line 20 col 4 IdentifierName "resultIsObject3" = Object
-Line 20 col 22 ParenthesizedExpression "(NUMBER, OBJECT)" = Object
-Line 20 col 23 CommaExpression "NUMBER, OBJECT" = Object
-Line 20 col 23 IdentifierName "NUMBER" = number
-Line 20 col 31 IdentifierName "OBJECT" = Object
-Line 21 col 4 IdentifierName "resultIsObject4" = Object
-Line 21 col 22 ParenthesizedExpression "(STRING, OBJECT)" = Object
-Line 21 col 23 CommaExpression "STRING, OBJECT" = Object
-Line 21 col 23 IdentifierName "STRING" = string
-Line 21 col 31 IdentifierName "OBJECT" = Object
-Line 22 col 4 IdentifierName "resultIsObject5" = Object
-Line 22 col 22 ParenthesizedExpression "(OBJECT, OBJECT)" = Object
-Line 22 col 23 CommaExpression "OBJECT, OBJECT" = Object
-Line 22 col 23 IdentifierName "OBJECT" = Object
-Line 22 col 31 IdentifierName "OBJECT" = Object
-Line 23 col 0 CommaExpression "//Literal and expression
-null, OBJECT" = Object
-Line 25 col 6 IdentifierName "OBJECT" = Object
-Line 26 col 0 CommaExpression "ANY = null, OBJECT" = Object
-Line 26 col 0 AssignmentExpression "ANY = null" = any
-Line 26 col 0 IdentifierName "ANY" = any
-Line 26 col 12 IdentifierName "OBJECT" = Object
-Line 27 col 0 CommaExpression "true, {}" = {}
-Line 27 col 6 ObjectLiteralExpression "{}" = {}
-Line 28 col 0 CommaExpression "!BOOLEAN, []" = any[]
-Line 28 col 0 LogicalNotExpression "!BOOLEAN" = boolean
-Line 28 col 1 IdentifierName "BOOLEAN" = boolean
-Line 28 col 10 ArrayLiteralExpression "[]" = any[]
-Line 29 col 0 CommaExpression ""string", new Date()" = Date
-Line 29 col 10 ObjectCreationExpression "new Date()" = Date
-Line 29 col 14 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 30 col 0 CommaExpression "STRING.toLowerCase(), new CLASS()" = CLASS
-Line 30 col 0 InvocationExpression "STRING.toLowerCase()" = string
-Line 30 col 0 MemberAccessExpression "STRING.toLowerCase" = () => string
-Line 30 col 0 IdentifierName "STRING" = string
-Line 30 col 7 IdentifierName "toLowerCase" = () => string
-Line 30 col 22 ObjectCreationExpression "new CLASS()" = CLASS
-Line 30 col 26 IdentifierName "CLASS" = typeof CLASS
-Line 32 col 4 IdentifierName "resultIsObject6" = Object
-Line 32 col 22 ParenthesizedExpression "(null, OBJECT)" = Object
-Line 32 col 23 CommaExpression "null, OBJECT" = Object
-Line 32 col 29 IdentifierName "OBJECT" = Object
-Line 33 col 4 IdentifierName "resultIsObject7" = Object
-Line 33 col 22 ParenthesizedExpression "(ANY = null, OBJECT)" = Object
-Line 33 col 23 CommaExpression "ANY = null, OBJECT" = Object
-Line 33 col 23 AssignmentExpression "ANY = null" = any
-Line 33 col 23 IdentifierName "ANY" = any
-Line 33 col 35 IdentifierName "OBJECT" = Object
-Line 34 col 4 IdentifierName "resultIsObject8" = {}
-Line 34 col 22 ParenthesizedExpression "(true, {})" = {}
-Line 34 col 23 CommaExpression "true, {}" = {}
-Line 34 col 29 ObjectLiteralExpression "{}" = {}
-Line 35 col 4 IdentifierName "resultIsObject9" = { a: number; b: string; }
-Line 35 col 22 ParenthesizedExpression "(!BOOLEAN, { a: 1, b: "s" })" = { a: number; b: string; }
-Line 35 col 23 CommaExpression "!BOOLEAN, { a: 1, b: "s" }" = { a: number; b: string; }
-Line 35 col 23 LogicalNotExpression "!BOOLEAN" = boolean
-Line 35 col 24 IdentifierName "BOOLEAN" = boolean
-Line 35 col 33 ObjectLiteralExpression "{ a: 1, b: "s" }" = { a: number; b: string; }
-Line 35 col 35 IdentifierName "a" = number
-Line 35 col 41 IdentifierName "b" = string
-Line 36 col 4 IdentifierName "resultIsObject10" = Date
-Line 36 col 23 ParenthesizedExpression "("string", new Date())" = Date
-Line 36 col 24 CommaExpression ""string", new Date()" = Date
-Line 36 col 34 ObjectCreationExpression "new Date()" = Date
-Line 36 col 38 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 37 col 4 IdentifierName "resultIsObject11" = CLASS
-Line 37 col 23 ParenthesizedExpression "(STRING.toLowerCase(), new CLASS())" = CLASS
-Line 37 col 24 CommaExpression "STRING.toLowerCase(), new CLASS()" = CLASS
-Line 37 col 24 InvocationExpression "STRING.toLowerCase()" = string
-Line 37 col 24 MemberAccessExpression "STRING.toLowerCase" = () => string
-Line 37 col 24 IdentifierName "STRING" = string
-Line 37 col 31 IdentifierName "toLowerCase" = () => string
-Line 37 col 46 ObjectCreationExpression "new CLASS()" = CLASS
-Line 37 col 50 IdentifierName "CLASS" = typeof CLASS
+var ANY: any;
+>ANY : any
+
+var BOOLEAN: boolean;
+>BOOLEAN : boolean
+
+var NUMBER: number;
+>NUMBER : number
+
+var STRING: string;
+>STRING : string
+
+var OBJECT: Object;
+>OBJECT : Object
+>Object : Object
+
+class CLASS {
+>CLASS : CLASS
+
+    num: number;
+>num : number
+}
+
+>//The second operand type is Object
+ANY, OBJECT : Object
+>//The second operand type is Object
+ANY : any
+
+//The second operand type is Object
+ANY, OBJECT;
+>OBJECT : Object
+
+BOOLEAN, OBJECT;
+>BOOLEAN, OBJECT : Object
+>BOOLEAN : boolean
+>OBJECT : Object
+
+NUMBER, OBJECT;
+>NUMBER, OBJECT : Object
+>NUMBER : number
+>OBJECT : Object
+
+STRING, OBJECT;
+>STRING, OBJECT : Object
+>STRING : string
+>OBJECT : Object
+
+OBJECT, OBJECT;
+>OBJECT, OBJECT : Object
+>OBJECT : Object
+>OBJECT : Object
+
+//Return type is Object
+var resultIsObject1 = (ANY, OBJECT);
+>resultIsObject1 : Object
+>(ANY, OBJECT) : Object
+>ANY, OBJECT : Object
+>ANY : any
+>OBJECT : Object
+
+var resultIsObject2 = (BOOLEAN, OBJECT);
+>resultIsObject2 : Object
+>(BOOLEAN, OBJECT) : Object
+>BOOLEAN, OBJECT : Object
+>BOOLEAN : boolean
+>OBJECT : Object
+
+var resultIsObject3 = (NUMBER, OBJECT);
+>resultIsObject3 : Object
+>(NUMBER, OBJECT) : Object
+>NUMBER, OBJECT : Object
+>NUMBER : number
+>OBJECT : Object
+
+var resultIsObject4 = (STRING, OBJECT);
+>resultIsObject4 : Object
+>(STRING, OBJECT) : Object
+>STRING, OBJECT : Object
+>STRING : string
+>OBJECT : Object
+
+var resultIsObject5 = (OBJECT, OBJECT);
+>resultIsObject5 : Object
+>(OBJECT, OBJECT) : Object
+>OBJECT, OBJECT : Object
+>OBJECT : Object
+>OBJECT : Object
+
+>//Literal and expression
+null, OBJECT : Object
+
+//Literal and expression
+null, OBJECT
+>OBJECT : Object
+
+ANY = null, OBJECT
+>ANY = null, OBJECT : Object
+>ANY = null : any
+>ANY : any
+>OBJECT : Object
+
+true, {}
+>true, {} : {}
+>{} : {}
+
+!BOOLEAN, []
+>!BOOLEAN, [] : any[]
+>!BOOLEAN : boolean
+>BOOLEAN : boolean
+>[] : any[]
+
+"string", new Date()
+>"string", new Date() : Date
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+STRING.toLowerCase(), new CLASS()
+>STRING.toLowerCase(), new CLASS() : CLASS
+>STRING.toLowerCase() : string
+>STRING.toLowerCase : () => string
+>STRING : string
+>toLowerCase : () => string
+>new CLASS() : CLASS
+>CLASS : typeof CLASS
+
+var resultIsObject6 = (null, OBJECT);
+>resultIsObject6 : Object
+>(null, OBJECT) : Object
+>null, OBJECT : Object
+>OBJECT : Object
+
+var resultIsObject7 = (ANY = null, OBJECT);
+>resultIsObject7 : Object
+>(ANY = null, OBJECT) : Object
+>ANY = null, OBJECT : Object
+>ANY = null : any
+>ANY : any
+>OBJECT : Object
+
+var resultIsObject8 = (true, {});
+>resultIsObject8 : {}
+>(true, {}) : {}
+>true, {} : {}
+>{} : {}
+
+var resultIsObject9 = (!BOOLEAN, { a: 1, b: "s" });
+>resultIsObject9 : { a: number; b: string; }
+>(!BOOLEAN, { a: 1, b: "s" }) : { a: number; b: string; }
+>!BOOLEAN, { a: 1, b: "s" } : { a: number; b: string; }
+>!BOOLEAN : boolean
+>BOOLEAN : boolean
+>{ a: 1, b: "s" } : { a: number; b: string; }
+>a : number
+>b : string
+
+var resultIsObject10 = ("string", new Date());
+>resultIsObject10 : Date
+>("string", new Date()) : Date
+>"string", new Date() : Date
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+var resultIsObject11 = (STRING.toLowerCase(), new CLASS());
+>resultIsObject11 : CLASS
+>(STRING.toLowerCase(), new CLASS()) : CLASS
+>STRING.toLowerCase(), new CLASS() : CLASS
+>STRING.toLowerCase() : string
+>STRING.toLowerCase : () => string
+>STRING : string
+>toLowerCase : () => string
+>new CLASS() : CLASS
+>CLASS : typeof CLASS
+

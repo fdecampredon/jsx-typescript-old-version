@@ -1,3 +1,4 @@
+//// [unknownSymbolInGenericReturnType.js]
 var Linq = (function () {
     function Linq() {
     }

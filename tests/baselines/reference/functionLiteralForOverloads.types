@@ -1,35 +1,69 @@
 === tests/cases/compiler/functionLiteralForOverloads.ts ===
-Line 2 col 4 IdentifierName "f" = { (x: string): string; (x: number): number; }
-Line 3 col 5 IdentifierName "x" = string
-Line 4 col 5 IdentifierName "x" = number
-Line 5 col 4 ParenthesizedArrowFunctionExpression "(x) => x" = (x: any) => any
-Line 5 col 5 IdentifierName "x" = any
-Line 5 col 11 IdentifierName "x" = any
-Line 7 col 4 IdentifierName "f2" = { <T>(x: string): string; <T>(x: number): number; }
-Line 8 col 5 IdentifierName "T" = T
-Line 8 col 8 IdentifierName "x" = string
-Line 9 col 5 IdentifierName "T" = T
-Line 9 col 8 IdentifierName "x" = number
-Line 10 col 4 ParenthesizedArrowFunctionExpression "(x) => x" = (x: any) => any
-Line 10 col 5 IdentifierName "x" = any
-Line 10 col 11 IdentifierName "x" = any
-Line 12 col 4 IdentifierName "f3" = { <T>(x: T): string; <T>(x: T): number; }
-Line 13 col 5 IdentifierName "T" = T
-Line 13 col 8 IdentifierName "x" = T
-Line 13 col 11 IdentifierName "T" = T
-Line 14 col 5 IdentifierName "T" = T
-Line 14 col 8 IdentifierName "x" = T
-Line 14 col 11 IdentifierName "T" = T
-Line 15 col 4 ParenthesizedArrowFunctionExpression "(x) => x" = (x: any) => any
-Line 15 col 5 IdentifierName "x" = any
-Line 15 col 11 IdentifierName "x" = any
-Line 17 col 4 IdentifierName "f4" = { <T>(x: string): T; <T>(x: number): T; }
-Line 18 col 5 IdentifierName "T" = T
-Line 18 col 8 IdentifierName "x" = string
-Line 18 col 20 IdentifierName "T" = T
-Line 19 col 5 IdentifierName "T" = T
-Line 19 col 8 IdentifierName "x" = number
-Line 19 col 20 IdentifierName "T" = T
-Line 20 col 4 ParenthesizedArrowFunctionExpression "(x) => x" = (x: any) => any
-Line 20 col 5 IdentifierName "x" = any
-Line 20 col 11 IdentifierName "x" = any
+// basic uses of function literals with overloads
+
+var f: {
+>f : { (x: string): string; (x: number): number; }
+
+    (x: string): string;
+>x : string
+
+    (x: number): number;
+>x : number
+
+} = (x) => x;
+>(x) => x : (x: any) => any
+>x : any
+>x : any
+
+var f2: {
+>f2 : { <T>(x: string): string; <T>(x: number): number; }
+
+    <T>(x: string): string;
+>T : T
+>x : string
+
+    <T>(x: number): number;
+>T : T
+>x : number
+
+} = (x) => x;
+>(x) => x : (x: any) => any
+>x : any
+>x : any
+
+var f3: {
+>f3 : { <T>(x: T): string; <T>(x: T): number; }
+
+    <T>(x: T): string;
+>T : T
+>x : T
+>T : T
+
+    <T>(x: T): number;
+>T : T
+>x : T
+>T : T
+
+} = (x) => x;
+>(x) => x : (x: any) => any
+>x : any
+>x : any
+
+var f4: {
+>f4 : { <T>(x: string): T; <T>(x: number): T; }
+
+    <T>(x: string): T;
+>T : T
+>x : string
+>T : T
+
+    <T>(x: number): T;
+>T : T
+>x : number
+>T : T
+
+} = (x) => x;
+>(x) => x : (x: any) => any
+>x : any
+>x : any
+

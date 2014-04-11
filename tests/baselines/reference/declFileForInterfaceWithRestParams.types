@@ -1,13 +1,22 @@
 === tests/cases/compiler/declFileForInterfaceWithRestParams.ts ===
-Line 1 col 10 IdentifierName "I" = I
-Line 2 col 0 IdentifierName "foo" = (...x: any[]) => any[]
-Line 2 col 11 IdentifierName "x" = any[]
-Line 2 col 22 IdentifierName "x" = any[]
-Line 3 col 0 IdentifierName "foo2" = (a: number, ...x: any[]) => any[]
-Line 3 col 9 IdentifierName "a" = number
-Line 3 col 23 IdentifierName "x" = any[]
-Line 3 col 34 IdentifierName "x" = any[]
-Line 4 col 0 IdentifierName "foo3" = (b: string, ...x: string[]) => string[]
-Line 4 col 9 IdentifierName "b" = string
-Line 4 col 23 IdentifierName "x" = string[]
-Line 4 col 44 IdentifierName "x" = string[]
+
+interface I {
+>I : I
+
+    foo(...x): typeof x;
+>foo : (...x: any[]) => any[]
+>x : any[]
+>x : any[]
+
+    foo2(a: number, ...x): typeof x;
+>foo2 : (a: number, ...x: any[]) => any[]
+>a : number
+>x : any[]
+>x : any[]
+
+    foo3(b: string, ...x: string[]): typeof x;
+>foo3 : (b: string, ...x: string[]) => string[]
+>b : string
+>x : string[]
+>x : string[]
+}

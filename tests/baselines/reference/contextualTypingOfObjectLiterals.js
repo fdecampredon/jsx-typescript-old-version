@@ -1,3 +1,4 @@
+//// [contextualTypingOfObjectLiterals.js]
 var obj1;
 var obj2 = { x: "" };
 obj1 = {}; // Ok

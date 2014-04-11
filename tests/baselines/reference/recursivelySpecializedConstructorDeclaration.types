@@ -1,19 +1,51 @@
 === tests/cases/compiler/recursivelySpecializedConstructorDeclaration.ts ===
-Line 0 col 7 IdentifierName "MsPortal" = MsPortal
-Line 0 col 16 IdentifierName "Controls" = MsPortal.Controls
-Line 0 col 25 IdentifierName "Base" = MsPortal.Controls.Base
-Line 0 col 30 IdentifierName "ItemList" = MsPortal.Controls.Base.ItemList
-Line 2 col 21 IdentifierName "Interface" = Interface<TValue>
-Line 2 col 31 IdentifierName "TValue" = TValue
-Line 3 col 0 IdentifierName "// Removing this line fixes the constructor of ItemValue
-        options" = ViewModel<TValue>
-Line 4 col 17 IdentifierName "ViewModel" = ViewModel<TValue>
-Line 4 col 27 IdentifierName "TValue" = TValue
-Line 7 col 17 IdentifierName "ItemValue" = ItemValue<T>
-Line 7 col 27 IdentifierName "T" = T
-Line 8 col 20 IdentifierName "value" = T
-Line 8 col 27 IdentifierName "T" = T
-Line 12 col 17 IdentifierName "ViewModel" = ViewModel<TValue>
-Line 12 col 27 IdentifierName "TValue" = TValue
-Line 12 col 43 IdentifierName "ItemValue" = ItemValue<T>
-Line 12 col 53 IdentifierName "TValue" = TValue
+module MsPortal.Controls.Base.ItemList {
+>MsPortal : MsPortal
+>Controls : MsPortal.Controls
+>Base : MsPortal.Controls.Base
+>ItemList : MsPortal.Controls.Base.ItemList
+
+    export interface Interface<TValue> {
+>Interface : Interface<TValue>
+>TValue : TValue
+
+        // Removing this line fixes the constructor of ItemValue
+>// Removing this line fixes the constructor of ItemValue
+        options : ViewModel<TValue>
+
+        options: ViewModel<TValue>;
+>ViewModel : ViewModel<TValue>
+>TValue : TValue
+    }    
+
+    export class ItemValue<T> {
+>ItemValue : ItemValue<T>
+>T : T
+
+        constructor(value: T) {
+>value : T
+>T : T
+        }
+    }    
+ 
+    export class ViewModel<TValue> extends ItemValue<TValue> {
+>ViewModel : ViewModel<TValue>
+>TValue : TValue
+>ItemValue : ItemValue<T>
+>TValue : TValue
+    }
+}
+
+// Generates:
+/*
+declare module MsPortal.Controls.Base.ItemList {
+    interface Interface<TValue> {
+        options: ViewModel<TValue>;
+    }
+    class ItemValue<T> {
+        constructor(value: T);
+    }
+    class ViewModel<TValue> extends ItemValue<TValue> {
+    }
+}
+*/

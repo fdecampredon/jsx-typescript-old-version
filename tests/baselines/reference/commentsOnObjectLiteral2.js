@@ -1,3 +1,4 @@
+//// [commentsOnObjectLiteral2.js]
 var Person = makeClass({
     /**
     This is just another way to define a constructor.

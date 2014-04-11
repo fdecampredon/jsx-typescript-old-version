@@ -1,3 +1,4 @@
+//// [enumAssignmentCompat2.js]
 var W;
 (function (W) {
     W[W["a"] = 0] = "a";

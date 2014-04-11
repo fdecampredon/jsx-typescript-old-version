@@ -1,152 +1,280 @@
 === tests/cases/compiler/objectTypesIdentityWithPublics.ts ===
-Line 2 col 6 IdentifierName "A" = A
-Line 3 col 11 IdentifierName "foo" = string
-Line 6 col 6 IdentifierName "B" = B
-Line 7 col 11 IdentifierName "foo" = string
-Line 10 col 6 IdentifierName "C" = C<T>
-Line 10 col 8 IdentifierName "T" = T
-Line 11 col 11 IdentifierName "foo" = T
-Line 11 col 16 IdentifierName "T" = T
-Line 14 col 10 IdentifierName "I" = I
-Line 15 col 0 IdentifierName "foo" = string
-Line 18 col 4 IdentifierName "a" = { foo: string; }
-Line 18 col 9 IdentifierName "foo" = string
-Line 19 col 4 IdentifierName "b" = { foo: string; }
-Line 19 col 8 ObjectLiteralExpression "{ foo: '' }" = { foo: string; }
-Line 19 col 10 IdentifierName "foo" = string
-Line 21 col 9 IdentifierName "foo1" = typeof foo1
-Line 21 col 14 IdentifierName "x" = A
-Line 21 col 17 IdentifierName "A" = A
-Line 22 col 9 IdentifierName "foo1" = typeof foo1
-Line 22 col 14 IdentifierName "x" = A
-Line 22 col 17 IdentifierName "A" = A
-Line 23 col 9 IdentifierName "foo1" = typeof foo1
-Line 23 col 14 IdentifierName "x" = any
-Line 25 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 25 col 15 IdentifierName "x" = B
-Line 25 col 18 IdentifierName "B" = B
-Line 26 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 26 col 15 IdentifierName "x" = B
-Line 26 col 18 IdentifierName "B" = B
-Line 27 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 27 col 15 IdentifierName "x" = any
-Line 29 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 29 col 15 IdentifierName "x" = C<string>
-Line 29 col 18 IdentifierName "C" = C<T>
-Line 30 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 30 col 15 IdentifierName "x" = C<string>
-Line 30 col 18 IdentifierName "C" = C<T>
-Line 31 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 31 col 15 IdentifierName "x" = any
-Line 33 col 9 IdentifierName "foo2" = typeof foo2
-Line 33 col 14 IdentifierName "x" = I
-Line 33 col 17 IdentifierName "I" = I
-Line 34 col 9 IdentifierName "foo2" = typeof foo2
-Line 34 col 14 IdentifierName "x" = I
-Line 34 col 17 IdentifierName "I" = I
-Line 35 col 9 IdentifierName "foo2" = typeof foo2
-Line 35 col 14 IdentifierName "x" = any
-Line 37 col 9 IdentifierName "foo3" = typeof foo3
-Line 37 col 14 IdentifierName "x" = { foo: string; }
-Line 37 col 24 IdentifierName "a" = { foo: string; }
-Line 38 col 9 IdentifierName "foo3" = typeof foo3
-Line 38 col 14 IdentifierName "x" = { foo: string; }
-Line 38 col 24 IdentifierName "a" = { foo: string; }
-Line 39 col 9 IdentifierName "foo3" = typeof foo3
-Line 39 col 14 IdentifierName "x" = any
-Line 41 col 9 IdentifierName "foo4" = typeof foo4
-Line 41 col 14 IdentifierName "x" = { foo: string; }
-Line 41 col 24 IdentifierName "b" = { foo: string; }
-Line 42 col 9 IdentifierName "foo4" = typeof foo4
-Line 42 col 14 IdentifierName "x" = { foo: string; }
-Line 42 col 24 IdentifierName "b" = { foo: string; }
-Line 43 col 9 IdentifierName "foo4" = typeof foo4
-Line 43 col 14 IdentifierName "x" = any
-Line 45 col 9 IdentifierName "foo5" = typeof foo5
-Line 45 col 14 IdentifierName "x" = A
-Line 45 col 17 IdentifierName "A" = A
-Line 46 col 9 IdentifierName "foo5" = typeof foo5
-Line 46 col 14 IdentifierName "x" = B
-Line 46 col 17 IdentifierName "B" = B
-Line 47 col 9 IdentifierName "foo5" = typeof foo5
-Line 47 col 14 IdentifierName "x" = any
-Line 49 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 49 col 15 IdentifierName "x" = A
-Line 49 col 18 IdentifierName "A" = A
-Line 50 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 50 col 15 IdentifierName "x" = C<string>
-Line 50 col 18 IdentifierName "C" = C<T>
-Line 51 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 51 col 15 IdentifierName "x" = any
-Line 53 col 9 IdentifierName "foo6" = typeof foo6
-Line 53 col 14 IdentifierName "x" = A
-Line 53 col 17 IdentifierName "A" = A
-Line 54 col 9 IdentifierName "foo6" = typeof foo6
-Line 54 col 14 IdentifierName "x" = I
-Line 54 col 17 IdentifierName "I" = I
-Line 55 col 9 IdentifierName "foo6" = typeof foo6
-Line 55 col 14 IdentifierName "x" = any
-Line 57 col 9 IdentifierName "foo7" = typeof foo7
-Line 57 col 14 IdentifierName "x" = A
-Line 57 col 17 IdentifierName "A" = A
-Line 58 col 9 IdentifierName "foo7" = typeof foo7
-Line 58 col 14 IdentifierName "x" = { foo: string; }
-Line 58 col 24 IdentifierName "a" = { foo: string; }
-Line 59 col 9 IdentifierName "foo7" = typeof foo7
-Line 59 col 14 IdentifierName "x" = any
-Line 61 col 9 IdentifierName "foo8" = typeof foo8
-Line 61 col 14 IdentifierName "x" = B
-Line 61 col 17 IdentifierName "B" = B
-Line 62 col 9 IdentifierName "foo8" = typeof foo8
-Line 62 col 14 IdentifierName "x" = I
-Line 62 col 17 IdentifierName "I" = I
-Line 63 col 9 IdentifierName "foo8" = typeof foo8
-Line 63 col 14 IdentifierName "x" = any
-Line 65 col 9 IdentifierName "foo9" = typeof foo9
-Line 65 col 14 IdentifierName "x" = B
-Line 65 col 17 IdentifierName "B" = B
-Line 66 col 9 IdentifierName "foo9" = typeof foo9
-Line 66 col 14 IdentifierName "x" = C<string>
-Line 66 col 17 IdentifierName "C" = C<T>
-Line 67 col 9 IdentifierName "foo9" = typeof foo9
-Line 67 col 14 IdentifierName "x" = any
-Line 69 col 9 IdentifierName "foo10" = typeof foo10
-Line 69 col 15 IdentifierName "x" = B
-Line 69 col 18 IdentifierName "B" = B
-Line 70 col 9 IdentifierName "foo10" = typeof foo10
-Line 70 col 15 IdentifierName "x" = { foo: string; }
-Line 70 col 25 IdentifierName "a" = { foo: string; }
-Line 71 col 9 IdentifierName "foo10" = typeof foo10
-Line 71 col 15 IdentifierName "x" = any
-Line 73 col 9 IdentifierName "foo11" = typeof foo11
-Line 73 col 15 IdentifierName "x" = B
-Line 73 col 18 IdentifierName "B" = B
-Line 74 col 9 IdentifierName "foo11" = typeof foo11
-Line 74 col 15 IdentifierName "x" = { foo: string; }
-Line 74 col 25 IdentifierName "b" = { foo: string; }
-Line 75 col 9 IdentifierName "foo11" = typeof foo11
-Line 75 col 15 IdentifierName "x" = any
-Line 77 col 9 IdentifierName "foo12" = typeof foo12
-Line 77 col 15 IdentifierName "x" = I
-Line 77 col 18 IdentifierName "I" = I
-Line 78 col 9 IdentifierName "foo12" = typeof foo12
-Line 78 col 15 IdentifierName "x" = C<string>
-Line 78 col 18 IdentifierName "C" = C<T>
-Line 79 col 9 IdentifierName "foo12" = typeof foo12
-Line 79 col 15 IdentifierName "x" = any
-Line 81 col 9 IdentifierName "foo13" = typeof foo13
-Line 81 col 15 IdentifierName "x" = I
-Line 81 col 18 IdentifierName "I" = I
-Line 82 col 9 IdentifierName "foo13" = typeof foo13
-Line 82 col 15 IdentifierName "x" = { foo: string; }
-Line 82 col 25 IdentifierName "a" = { foo: string; }
-Line 83 col 9 IdentifierName "foo13" = typeof foo13
-Line 83 col 15 IdentifierName "x" = any
-Line 85 col 9 IdentifierName "foo14" = typeof foo14
-Line 85 col 15 IdentifierName "x" = I
-Line 85 col 18 IdentifierName "I" = I
-Line 86 col 9 IdentifierName "foo14" = typeof foo14
-Line 86 col 15 IdentifierName "x" = { foo: string; }
-Line 86 col 25 IdentifierName "b" = { foo: string; }
-Line 87 col 9 IdentifierName "foo14" = typeof foo14
-Line 87 col 15 IdentifierName "x" = any
+// object types are identical structurally
+
+class A {
+>A : A
+
+    public foo: string;
+>foo : string
+}
+
+class B {
+>B : B
+
+    public foo: string;
+>foo : string
+}
+
+class C<T> {
+>C : C<T>
+>T : T
+
+    public foo: T;
+>foo : T
+>T : T
+}
+
+interface I {
+>I : I
+
+    foo: string;
+>foo : string
+}
+
+var a: { foo: string; }
+>a : { foo: string; }
+>foo : string
+
+var b = { foo: '' };
+>b : { foo: string; }
+>{ foo: '' } : { foo: string; }
+>foo : string
+
+function foo1(x: A);
+>foo1 : typeof foo1
+>x : A
+>A : A
+
+function foo1(x: A); // error
+>foo1 : typeof foo1
+>x : A
+>A : A
+
+function foo1(x: any) { }
+>foo1 : typeof foo1
+>x : any
+
+function foo1b(x: B);
+>foo1b : typeof foo1b
+>x : B
+>B : B
+
+function foo1b(x: B); // error
+>foo1b : typeof foo1b
+>x : B
+>B : B
+
+function foo1b(x: any) { }
+>foo1b : typeof foo1b
+>x : any
+
+function foo1c(x: C<string>);
+>foo1c : typeof foo1c
+>x : C<string>
+>C : C<T>
+
+function foo1c(x: C<string>); // error
+>foo1c : typeof foo1c
+>x : C<string>
+>C : C<T>
+
+function foo1c(x: any) { }
+>foo1c : typeof foo1c
+>x : any
+
+function foo2(x: I);
+>foo2 : typeof foo2
+>x : I
+>I : I
+
+function foo2(x: I); // error
+>foo2 : typeof foo2
+>x : I
+>I : I
+
+function foo2(x: any) { }
+>foo2 : typeof foo2
+>x : any
+
+function foo3(x: typeof a);
+>foo3 : typeof foo3
+>x : { foo: string; }
+>a : { foo: string; }
+
+function foo3(x: typeof a); // error
+>foo3 : typeof foo3
+>x : { foo: string; }
+>a : { foo: string; }
+
+function foo3(x: any) { }
+>foo3 : typeof foo3
+>x : any
+
+function foo4(x: typeof b);
+>foo4 : typeof foo4
+>x : { foo: string; }
+>b : { foo: string; }
+
+function foo4(x: typeof b); // error
+>foo4 : typeof foo4
+>x : { foo: string; }
+>b : { foo: string; }
+
+function foo4(x: any) { }
+>foo4 : typeof foo4
+>x : any
+
+function foo5(x: A);
+>foo5 : typeof foo5
+>x : A
+>A : A
+
+function foo5(x: B); // error
+>foo5 : typeof foo5
+>x : B
+>B : B
+
+function foo5(x: any) { }
+>foo5 : typeof foo5
+>x : any
+
+function foo5b(x: A);
+>foo5b : typeof foo5b
+>x : A
+>A : A
+
+function foo5b(x: C<string>); // error
+>foo5b : typeof foo5b
+>x : C<string>
+>C : C<T>
+
+function foo5b(x: any) { }
+>foo5b : typeof foo5b
+>x : any
+
+function foo6(x: A);
+>foo6 : typeof foo6
+>x : A
+>A : A
+
+function foo6(x: I); // error
+>foo6 : typeof foo6
+>x : I
+>I : I
+
+function foo6(x: any) { }
+>foo6 : typeof foo6
+>x : any
+
+function foo7(x: A);
+>foo7 : typeof foo7
+>x : A
+>A : A
+
+function foo7(x: typeof a); // error
+>foo7 : typeof foo7
+>x : { foo: string; }
+>a : { foo: string; }
+
+function foo7(x: any) { }
+>foo7 : typeof foo7
+>x : any
+
+function foo8(x: B);
+>foo8 : typeof foo8
+>x : B
+>B : B
+
+function foo8(x: I); // error
+>foo8 : typeof foo8
+>x : I
+>I : I
+
+function foo8(x: any) { }
+>foo8 : typeof foo8
+>x : any
+
+function foo9(x: B);
+>foo9 : typeof foo9
+>x : B
+>B : B
+
+function foo9(x: C<string>); // error
+>foo9 : typeof foo9
+>x : C<string>
+>C : C<T>
+
+function foo9(x: any) { }
+>foo9 : typeof foo9
+>x : any
+
+function foo10(x: B);
+>foo10 : typeof foo10
+>x : B
+>B : B
+
+function foo10(x: typeof a); // error
+>foo10 : typeof foo10
+>x : { foo: string; }
+>a : { foo: string; }
+
+function foo10(x: any) { }
+>foo10 : typeof foo10
+>x : any
+
+function foo11(x: B);
+>foo11 : typeof foo11
+>x : B
+>B : B
+
+function foo11(x: typeof b); // error
+>foo11 : typeof foo11
+>x : { foo: string; }
+>b : { foo: string; }
+
+function foo11(x: any) { }
+>foo11 : typeof foo11
+>x : any
+
+function foo12(x: I);
+>foo12 : typeof foo12
+>x : I
+>I : I
+
+function foo12(x: C<string>); // error
+>foo12 : typeof foo12
+>x : C<string>
+>C : C<T>
+
+function foo12(x: any) { }
+>foo12 : typeof foo12
+>x : any
+
+function foo13(x: I);
+>foo13 : typeof foo13
+>x : I
+>I : I
+
+function foo13(x: typeof a); // error
+>foo13 : typeof foo13
+>x : { foo: string; }
+>a : { foo: string; }
+
+function foo13(x: any) { }
+>foo13 : typeof foo13
+>x : any
+
+function foo14(x: I);
+>foo14 : typeof foo14
+>x : I
+>I : I
+
+function foo14(x: typeof b); // error
+>foo14 : typeof foo14
+>x : { foo: string; }
+>b : { foo: string; }
+
+function foo14(x: any) { }
+>foo14 : typeof foo14
+>x : any
+

@@ -1,27 +1,58 @@
 === tests/cases/compiler/stringNamedPropertyAccess.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 4 col 4 IdentifierName "c" = C
-Line 4 col 7 IdentifierName "C" = C
-Line 5 col 4 IdentifierName "r1" = number
-Line 5 col 9 ElementAccessExpression "c["a b"]" = number
-Line 5 col 9 IdentifierName "c" = C
-Line 6 col 4 IdentifierName "r1b" = number
-Line 6 col 10 ElementAccessExpression "C['c d']" = number
-Line 6 col 10 IdentifierName "C" = typeof C
-Line 8 col 10 IdentifierName "I" = I
-Line 11 col 4 IdentifierName "i" = I
-Line 11 col 7 IdentifierName "I" = I
-Line 12 col 4 IdentifierName "r2" = number
-Line 12 col 9 ElementAccessExpression "i["a b"]" = number
-Line 12 col 9 IdentifierName "i" = I
-Line 14 col 4 IdentifierName "a" = { "a b": number; }
-Line 17 col 4 IdentifierName "r3" = number
-Line 17 col 9 ElementAccessExpression "a["a b"]" = number
-Line 17 col 9 IdentifierName "a" = { "a b": number; }
-Line 19 col 4 IdentifierName "b" = { "a b": number; }
-Line 19 col 8 ObjectLiteralExpression "{
+class C {
+>C : C
+
+    "a b": number;
+    static "c d": number;
+}
+var c: C;
+>c : C
+>C : C
+
+var r1 = c["a b"];
+>r1 : number
+>c["a b"] : number
+>c : C
+
+var r1b = C['c d'];
+>r1b : number
+>C['c d'] : number
+>C : typeof C
+
+interface I {
+>I : I
+
+    "a b": number;
+}
+var i: I;
+>i : I
+>I : I
+
+var r2 = i["a b"];
+>r2 : number
+>i["a b"] : number
+>i : I
+
+var a: {
+>a : { "a b": number; }
+
+    "a b": number;
+}
+var r3 = a["a b"];
+>r3 : number
+>a["a b"] : number
+>a : { "a b": number; }
+
+var b = {
+>b : { "a b": number; }
+>{
     "a b": 1
-}" = { "a b": number; }
-Line 22 col 4 IdentifierName "r4" = number
-Line 22 col 9 ElementAccessExpression "b["a b"]" = number
-Line 22 col 9 IdentifierName "b" = { "a b": number; }
+} : { "a b": number; }
+
+    "a b": 1
+}
+var r4 = b["a b"];
+>r4 : number
+>b["a b"] : number
+>b : { "a b": number; }
+

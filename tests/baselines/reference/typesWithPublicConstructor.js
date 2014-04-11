@@ -1,3 +1,4 @@
+//// [typesWithPublicConstructor.js]
 // public is allowed on a constructor but is not meaningful
 var C = (function () {
     function C() {

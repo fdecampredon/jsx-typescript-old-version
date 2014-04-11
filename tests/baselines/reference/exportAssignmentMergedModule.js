@@ -1,3 +1,10 @@
+//// [foo_1.ts]
+import foo = require("./foo_0");
+var a: number = foo.a();
+if(!!foo.b){
+	foo.Test.answer = foo.c(42);
+}
+
 //// [foo_0.js]
 var Foo;
 (function (Foo) {

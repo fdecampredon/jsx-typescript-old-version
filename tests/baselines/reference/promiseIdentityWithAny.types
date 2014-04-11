@@ -1,31 +1,45 @@
 === tests/cases/compiler/promiseIdentityWithAny.ts ===
-Line 0 col 10 IdentifierName "IPromise" = IPromise<T, V>
-Line 0 col 19 IdentifierName "T" = T
-Line 0 col 22 IdentifierName "V" = V
-Line 1 col 0 IdentifierName "then" = <U, W>(callback: (x: T) => IPromise<U, W>) => IPromise<U, W>
-Line 1 col 9 IdentifierName "U" = U
-Line 1 col 12 IdentifierName "W" = W
-Line 1 col 15 IdentifierName "callback" = (x: T) => IPromise<U, W>
-Line 1 col 26 IdentifierName "x" = T
-Line 1 col 29 IdentifierName "T" = T
-Line 1 col 35 IdentifierName "IPromise" = IPromise<T, V>
-Line 1 col 44 IdentifierName "U" = U
-Line 1 col 47 IdentifierName "W" = W
-Line 1 col 52 IdentifierName "IPromise" = IPromise<T, V>
-Line 1 col 61 IdentifierName "U" = U
-Line 1 col 64 IdentifierName "W" = W
-Line 3 col 10 IdentifierName "Promise" = Promise<T, V>
-Line 3 col 18 IdentifierName "T" = T
-Line 3 col 21 IdentifierName "V" = V
-Line 4 col 0 IdentifierName "then" = <U, W>(callback: (x: T) => Promise<any, any>) => Promise<any, any>
-Line 4 col 9 IdentifierName "U" = U
-Line 4 col 12 IdentifierName "W" = W
-Line 4 col 15 IdentifierName "callback" = (x: T) => Promise<any, any>
-Line 4 col 26 IdentifierName "x" = T
-Line 4 col 29 IdentifierName "T" = T
-Line 4 col 35 IdentifierName "Promise" = Promise<T, V>
-Line 4 col 55 IdentifierName "Promise" = Promise<T, V>
-Line 8 col 4 IdentifierName "x" = IPromise<string, number>
-Line 8 col 7 IdentifierName "IPromise" = IPromise<T, V>
-Line 9 col 4 IdentifierName "x" = Promise<string, boolean>
-Line 9 col 7 IdentifierName "Promise" = Promise<T, V>
+interface IPromise<T, V> {
+>IPromise : IPromise<T, V>
+>T : T
+>V : V
+
+    then<U, W>(callback: (x: T) => IPromise<U, W>): IPromise<U, W>;
+>then : <U, W>(callback: (x: T) => IPromise<U, W>) => IPromise<U, W>
+>U : U
+>W : W
+>callback : (x: T) => IPromise<U, W>
+>x : T
+>T : T
+>IPromise : IPromise<T, V>
+>U : U
+>W : W
+>IPromise : IPromise<T, V>
+>U : U
+>W : W
+}
+interface Promise<T, V> {
+>Promise : Promise<T, V>
+>T : T
+>V : V
+
+    then<U, W>(callback: (x: T) => Promise<any, any>): Promise<any, any>;
+>then : <U, W>(callback: (x: T) => Promise<any, any>) => Promise<any, any>
+>U : U
+>W : W
+>callback : (x: T) => Promise<any, any>
+>x : T
+>T : T
+>Promise : Promise<T, V>
+>Promise : Promise<T, V>
+}
+
+// Should be ok because signature type parameters get erased to any
+var x: IPromise<string, number>;
+>x : IPromise<string, number>
+>IPromise : IPromise<T, V>
+
+var x: Promise<string, boolean>;
+>x : Promise<string, boolean>
+>Promise : Promise<T, V>
+

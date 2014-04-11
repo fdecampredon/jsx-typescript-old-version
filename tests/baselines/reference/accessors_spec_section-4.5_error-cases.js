@@ -1,3 +1,4 @@
+//// [accessors_spec_section-4.5_error-cases.js]
 var LanguageSpec_section_4_5_error_cases = (function () {
     function LanguageSpec_section_4_5_error_cases() {
     }

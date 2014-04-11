@@ -1,3 +1,4 @@
+//// [typeCheckingInsideFunctionExpressionInArray.js]
 var functions = [function () {
         var k = 10;
         k = new Object();

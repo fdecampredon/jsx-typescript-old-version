@@ -1,3 +1,13 @@
+//// [aliasUsageInArray_main.ts]
+import Backbone = require("aliasUsageInArray_backbone");
+import moduleA = require("aliasUsageInArray_moduleA");
+interface IHasVisualizationModel {
+    VisualizationModel: typeof Backbone.Model;
+}
+
+var xs: IHasVisualizationModel[] = [moduleA];
+var xs2: typeof moduleA[] = [moduleA];
+
 //// [aliasUsageInArray_backbone.js]
 var Model = (function () {
     function Model() {

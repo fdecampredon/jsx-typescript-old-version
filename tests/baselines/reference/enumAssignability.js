@@ -1,3 +1,4 @@
+//// [enumAssignability.js]
 // enums assignable to number, any, Object, errors unless otherwise noted
 var E;
 (function (E) {

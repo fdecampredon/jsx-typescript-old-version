@@ -1,3 +1,42 @@
+//// [baseTypeOrderChecking.ts]
+var someVariable: Class4<Class2>;
+
+ 
+
+class Class1
+
+{
+
+}
+
+ 
+
+class Class2 extends Class1
+
+{
+
+}
+
+ 
+
+class Class3<T>
+
+{
+
+               public memberVariable: Class2;
+
+}
+
+ 
+
+class Class4<T> extends Class3<T>
+
+{
+
+}
+
+
+//// [baseTypeOrderChecking.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

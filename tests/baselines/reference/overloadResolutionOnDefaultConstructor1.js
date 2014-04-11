@@ -1,3 +1,4 @@
+//// [overloadResolutionOnDefaultConstructor1.js]
 var Bar = (function () {
     function Bar() {
     }

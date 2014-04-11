@@ -1,21 +1,34 @@
 === tests/cases/compiler/instanceMemberInitialization.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "x" = number
-Line 4 col 4 IdentifierName "c" = C
-Line 4 col 8 ObjectCreationExpression "new C()" = C
-Line 4 col 12 IdentifierName "C" = typeof C
-Line 5 col 0 AssignmentExpression "c.x = 3" = number
-Line 5 col 0 MemberAccessExpression "c.x" = number
-Line 5 col 0 IdentifierName "c" = C
-Line 5 col 2 IdentifierName "x" = number
-Line 6 col 4 IdentifierName "c2" = C
-Line 6 col 9 ObjectCreationExpression "new C()" = C
-Line 6 col 13 IdentifierName "C" = typeof C
-Line 7 col 4 IdentifierName "r" = boolean
-Line 7 col 8 EqualsExpression "c.x === c2.x" = boolean
-Line 7 col 8 MemberAccessExpression "c.x" = number
-Line 7 col 8 IdentifierName "c" = C
-Line 7 col 10 IdentifierName "x" = number
-Line 7 col 16 MemberAccessExpression "c2.x" = number
-Line 7 col 16 IdentifierName "c2" = C
-Line 7 col 19 IdentifierName "x" = number
+class C {
+>C : C
+
+    x = 1;
+>x : number
+}
+
+var c = new C();
+>c : C
+>new C() : C
+>C : typeof C
+
+c.x = 3;
+>c.x = 3 : number
+>c.x : number
+>c : C
+>x : number
+
+var c2 = new C();
+>c2 : C
+>new C() : C
+>C : typeof C
+
+var r = c.x === c2.x;
+>r : boolean
+>c.x === c2.x : boolean
+>c.x : number
+>c : C
+>x : number
+>c2.x : number
+>c2 : C
+>x : number
+

@@ -1,3 +1,15 @@
+//// [internalAliasInterfaceInsideLocalModuleWithExport.ts]
+export module a {
+    export interface I {
+    }
+}
+
+export module c {
+    export import b = a.I;
+    export var x: b;
+}
+
+
 //// [internalAliasInterfaceInsideLocalModuleWithExport.js]
 define(["require", "exports"], function(require, exports) {
     (function (c) {

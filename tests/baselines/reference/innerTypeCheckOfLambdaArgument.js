@@ -1,3 +1,4 @@
+//// [innerTypeCheckOfLambdaArgument.js]
 function takesCallback(callback) {
 }
 

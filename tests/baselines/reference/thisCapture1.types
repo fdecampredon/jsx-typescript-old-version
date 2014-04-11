@@ -1,26 +1,41 @@
 === tests/cases/compiler/thisCapture1.ts ===
-Line 0 col 6 IdentifierName "X" = X
-Line 1 col 12 IdentifierName "y" = number
-Line 2 col 11 IdentifierName "getSettings" = (keys: string[]) => any
-Line 2 col 23 IdentifierName "keys" = string[]
-Line 3 col 12 IdentifierName "ret" = any
-Line 4 col 15 InvocationExpression "ret.always(() => {
+class X {
+>X : X
+
+    private y = 0;
+>y : number
+
+    public getSettings(keys: string[]): any {
+>getSettings : (keys: string[]) => any
+>keys : string[]
+
+        var ret: any;
+>ret : any
+
+        return ret.always(() => {
+>ret.always(() => {
             this.y = 0;
-        }).promise()" = any
-Line 4 col 15 MemberAccessExpression "ret.always(() => {
+        }).promise() : any
+>ret.always(() => {
             this.y = 0;
-        }).promise" = any
-Line 4 col 15 InvocationExpression "ret.always(() => {
+        }).promise : any
+>ret.always(() => {
             this.y = 0;
-        })" = any
-Line 4 col 15 MemberAccessExpression "ret.always" = any
-Line 4 col 15 IdentifierName "ret" = any
-Line 4 col 19 IdentifierName "always" = any
-Line 4 col 26 ParenthesizedArrowFunctionExpression "() => {
+        }) : any
+>ret.always : any
+>ret : any
+>always : any
+>() => {
             this.y = 0;
-        }" = () => void
-Line 5 col 0 AssignmentExpression "this.y = 0" = number
-Line 5 col 0 MemberAccessExpression "this.y" = number
-Line 5 col 0 ThisKeyword "this" = X
-Line 5 col 17 IdentifierName "y" = number
-Line 6 col 11 IdentifierName "promise" = any
+        } : () => void
+
+            this.y = 0;
+>this.y = 0 : number
+>this.y : number
+>this : X
+>y : number
+
+        }).promise();
+>promise : any
+    }
+}

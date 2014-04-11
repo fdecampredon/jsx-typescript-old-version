@@ -1,21 +1,38 @@
 === tests/cases/compiler/declFileGenericClassWithGenericExtendedClass.ts ===
-Line 0 col 10 IdentifierName "IFoo" = IFoo
-Line 1 col 0 IdentifierName "baz" = Baz
-Line 1 col 9 IdentifierName "Baz" = Baz
-Line 3 col 6 IdentifierName "Base" = Base<T>
-Line 3 col 11 IdentifierName "T" = T
-Line 4 col 6 IdentifierName "Derived" = Derived<T>
-Line 4 col 14 IdentifierName "T" = T
-Line 4 col 25 IdentifierName "Base" = Base<T>
-Line 4 col 30 IdentifierName "T" = T
-Line 5 col 10 IdentifierName "IBar" = IBar<T>
-Line 5 col 15 IdentifierName "T" = T
-Line 6 col 0 IdentifierName "derived" = Derived<T>
-Line 6 col 13 IdentifierName "Derived" = Derived<T>
-Line 6 col 21 IdentifierName "T" = T
-Line 8 col 6 IdentifierName "Baz" = Baz
-Line 8 col 21 IdentifierName "IBar" = IBar<T>
-Line 8 col 26 IdentifierName "Baz" = Baz
-Line 9 col 0 IdentifierName "derived" = Derived<Baz>
-Line 9 col 13 IdentifierName "Derived" = Derived<T>
-Line 9 col 21 IdentifierName "Baz" = Baz
+interface IFoo {
+>IFoo : IFoo
+
+    baz: Baz;
+>baz : Baz
+>Baz : Baz
+}
+class Base<T> { }
+>Base : Base<T>
+>T : T
+
+class Derived<T> extends Base<T> { }
+>Derived : Derived<T>
+>T : T
+>Base : Base<T>
+>T : T
+
+interface IBar<T> {
+>IBar : IBar<T>
+>T : T
+
+    derived: Derived<T>;
+>derived : Derived<T>
+>Derived : Derived<T>
+>T : T
+}
+class Baz implements IBar<Baz> {
+>Baz : Baz
+>IBar : IBar<T>
+>Baz : Baz
+
+    derived: Derived<Baz>;
+>derived : Derived<Baz>
+>Derived : Derived<T>
+>Baz : Baz
+}
+

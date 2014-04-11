@@ -1,3 +1,7 @@
 === tests/cases/compiler/deprecatedBool.ts ===
-Line 0 col 4 IdentifierName "b4" = boolean
-Line 1 col 4 IdentifierName "bool" = boolean
+var b4: boolean;
+>b4 : boolean
+
+var bool: boolean;
+>bool : boolean
+

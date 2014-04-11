@@ -1,4 +1,11 @@
 === tests/cases/compiler/enumsWithMultipleDeclarations3.ts ===
-Line 0 col 7 IdentifierName "E" = E
-Line 3 col 5 IdentifierName "E" = E
-Line 4 col 0 IdentifierName "A" = E
+module E {
+>E : E
+}
+
+enum E {
+>E : E
+
+  A
+>A : E
+}

@@ -1,3 +1,4 @@
+//// [prototypes.js]
 Object.prototype; // ok
 new Object().prototype; // error
 function f() {

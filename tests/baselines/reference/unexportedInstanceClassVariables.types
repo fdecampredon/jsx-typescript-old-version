@@ -1,9 +1,24 @@
 === tests/cases/compiler/unexportedInstanceClassVariables.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 7 IdentifierName "A" = A
-Line 2 col 14 IdentifierName "val" = string
-Line 6 col 7 IdentifierName "M" = M
-Line 7 col 7 IdentifierName "A" = A
-Line 9 col 6 IdentifierName "a" = A
-Line 9 col 10 ObjectCreationExpression "new A()" = A
-Line 9 col 14 IdentifierName "A" = typeof A
+module M{
+>M : M
+
+	class A{
+>A : A
+
+		constructor(val:string){}
+>val : string
+	}
+}
+
+module M{
+>M : M
+
+	class A {}  
+>A : A
+ 
+ 	var a = new A();
+>a : A
+>new A() : A
+>A : typeof A
+}
+

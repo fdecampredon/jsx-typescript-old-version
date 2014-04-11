@@ -1,3 +1,4 @@
+//// [genericCallWithObjectLiteralArguments1.js]
 function foo(n, m) {
     return m;
 }

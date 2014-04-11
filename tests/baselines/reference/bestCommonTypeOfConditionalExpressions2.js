@@ -1,3 +1,4 @@
+//// [bestCommonTypeOfConditionalExpressions2.js]
 // conditional expressions return the best common type of the branches plus contextual type (using the first candidate if multiple BCTs exist)
 // these are errors
 var __extends = this.__extends || function (d, b) {

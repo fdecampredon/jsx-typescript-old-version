@@ -1,4 +1,8 @@
 === tests/cases/compiler/functionOnlyHasThrow.ts ===
-Line 0 col 9 IdentifierName "clone" = typeof clone
-Line 1 col 7 ObjectCreationExpression "new Error("To be implemented")" = Error
-Line 1 col 11 IdentifierName "Error" = { prototype: Error; (message?: string): Error; new(message?: string): Error; }
+function clone():number {
+>clone : typeof clone
+
+	throw new Error("To be implemented");
+>new Error("To be implemented") : Error
+>Error : { prototype: Error; (message?: string): Error; new(message?: string): Error; }
+}

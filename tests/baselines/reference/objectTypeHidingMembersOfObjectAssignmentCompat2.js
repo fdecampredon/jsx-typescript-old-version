@@ -1,3 +1,4 @@
+//// [objectTypeHidingMembersOfObjectAssignmentCompat2.js]
 var i;
 var o;
 o = i; // error

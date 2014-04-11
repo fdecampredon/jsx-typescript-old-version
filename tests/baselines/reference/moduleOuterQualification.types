@@ -1,7 +1,19 @@
 === tests/cases/compiler/moduleOuterQualification.ts ===
-Line 1 col 15 IdentifierName "outer" = outer
-Line 2 col 12 IdentifierName "Beta" = Beta
-Line 3 col 9 IdentifierName "inner" = inner
-Line 5 col 21 IdentifierName "Beta" = Beta
-Line 5 col 34 IdentifierName "outer" = outer
-Line 5 col 40 IdentifierName "Beta" = outer.Beta
+
+declare module outer {
+>outer : outer
+
+  interface Beta { }
+>Beta : Beta
+
+  module inner {
+>inner : inner
+
+    // .d.ts emit: should be 'extends outer.Beta'
+    export interface Beta extends outer.Beta { }
+>Beta : Beta
+>outer : outer
+>Beta : outer.Beta
+  }
+}
+

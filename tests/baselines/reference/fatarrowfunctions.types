@@ -1,186 +1,248 @@
 === tests/cases/compiler/fatarrowfunctions.ts ===
-Line 1 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 13 IdentifierName "x" = any
-Line 2 col 8 InvocationExpression "x()" = any
-Line 2 col 8 IdentifierName "x" = any
-Line 4 col 0 InvocationExpression "foo((x:number,y,z)=>{return x+y+z;})" = any
-Line 4 col 0 IdentifierName "foo" = typeof foo
-Line 6 col 4 ParenthesizedArrowFunctionExpression "(x:number,y,z)=>{return x+y+z;}" = (x: number, y: any, z: any) => any
-Line 6 col 5 IdentifierName "x" = number
-Line 6 col 14 IdentifierName "y" = any
-Line 6 col 16 IdentifierName "z" = any
-Line 6 col 28 AddExpression "x+y+z" = any
-Line 6 col 28 AddExpression "x+y" = any
-Line 6 col 28 IdentifierName "x" = number
-Line 6 col 30 IdentifierName "y" = any
-Line 6 col 32 IdentifierName "z" = any
-Line 7 col 0 InvocationExpression "foo((x,y,z)=>{return x+y+z;})" = any
-Line 7 col 0 IdentifierName "foo" = typeof foo
-Line 7 col 4 ParenthesizedArrowFunctionExpression "(x,y,z)=>{return x+y+z;}" = (x: any, y: any, z: any) => any
-Line 7 col 5 IdentifierName "x" = any
-Line 7 col 7 IdentifierName "y" = any
-Line 7 col 9 IdentifierName "z" = any
-Line 7 col 21 AddExpression "x+y+z" = any
-Line 7 col 21 AddExpression "x+y" = any
-Line 7 col 21 IdentifierName "x" = any
-Line 7 col 23 IdentifierName "y" = any
-Line 7 col 25 IdentifierName "z" = any
-Line 8 col 0 InvocationExpression "foo((x,y:number,z)=>{return x+y+z;})" = any
-Line 8 col 0 IdentifierName "foo" = typeof foo
-Line 8 col 4 ParenthesizedArrowFunctionExpression "(x,y:number,z)=>{return x+y+z;}" = (x: any, y: number, z: any) => any
-Line 8 col 5 IdentifierName "x" = any
-Line 8 col 7 IdentifierName "y" = number
-Line 8 col 16 IdentifierName "z" = any
-Line 8 col 28 AddExpression "x+y+z" = any
-Line 8 col 28 AddExpression "x+y" = any
-Line 8 col 28 IdentifierName "x" = any
-Line 8 col 30 IdentifierName "y" = number
-Line 8 col 32 IdentifierName "z" = any
-Line 9 col 0 InvocationExpression "foo((x,y:number,z:number)=>{return x+y+z;})" = any
-Line 9 col 0 IdentifierName "foo" = typeof foo
-Line 9 col 4 ParenthesizedArrowFunctionExpression "(x,y:number,z:number)=>{return x+y+z;}" = (x: any, y: number, z: number) => any
-Line 9 col 5 IdentifierName "x" = any
-Line 9 col 7 IdentifierName "y" = number
-Line 9 col 16 IdentifierName "z" = number
-Line 9 col 35 AddExpression "x+y+z" = any
-Line 9 col 35 AddExpression "x+y" = any
-Line 9 col 35 IdentifierName "x" = any
-Line 9 col 37 IdentifierName "y" = number
-Line 9 col 39 IdentifierName "z" = number
-Line 10 col 0 InvocationExpression "foo((x,y,z:number)=>{return x+y+z;})" = any
-Line 10 col 0 IdentifierName "foo" = typeof foo
-Line 10 col 4 ParenthesizedArrowFunctionExpression "(x,y,z:number)=>{return x+y+z;}" = (x: any, y: any, z: number) => any
-Line 10 col 5 IdentifierName "x" = any
-Line 10 col 7 IdentifierName "y" = any
-Line 10 col 9 IdentifierName "z" = number
-Line 10 col 28 AddExpression "x+y+z" = any
-Line 10 col 28 AddExpression "x+y" = any
-Line 10 col 28 IdentifierName "x" = any
-Line 10 col 30 IdentifierName "y" = any
-Line 10 col 32 IdentifierName "z" = number
-Line 11 col 0 InvocationExpression "foo(()=>{return 0;})" = any
-Line 11 col 0 IdentifierName "foo" = typeof foo
-Line 11 col 4 ParenthesizedArrowFunctionExpression "()=>{return 0;}" = () => number
-Line 12 col 0 InvocationExpression "foo((x:number,y,z)=>x+y+z)" = any
-Line 12 col 0 IdentifierName "foo" = typeof foo
-Line 13 col 4 ParenthesizedArrowFunctionExpression "(x:number,y,z)=>x+y+z" = (x: number, y: any, z: any) => any
-Line 13 col 5 IdentifierName "x" = number
-Line 13 col 14 IdentifierName "y" = any
-Line 13 col 16 IdentifierName "z" = any
-Line 13 col 20 AddExpression "x+y+z" = any
-Line 13 col 20 AddExpression "x+y" = any
-Line 13 col 20 IdentifierName "x" = number
-Line 13 col 22 IdentifierName "y" = any
-Line 13 col 24 IdentifierName "z" = any
-Line 14 col 0 InvocationExpression "foo((x,y,z)=>x+y+z)" = any
-Line 14 col 0 IdentifierName "foo" = typeof foo
-Line 14 col 4 ParenthesizedArrowFunctionExpression "(x,y,z)=>x+y+z" = (x: any, y: any, z: any) => any
-Line 14 col 5 IdentifierName "x" = any
-Line 14 col 7 IdentifierName "y" = any
-Line 14 col 9 IdentifierName "z" = any
-Line 14 col 13 AddExpression "x+y+z" = any
-Line 14 col 13 AddExpression "x+y" = any
-Line 14 col 13 IdentifierName "x" = any
-Line 14 col 15 IdentifierName "y" = any
-Line 14 col 17 IdentifierName "z" = any
-Line 15 col 0 InvocationExpression "foo((x,y:number,z)=>{return x+y+z;})" = any
-Line 15 col 0 IdentifierName "foo" = typeof foo
-Line 15 col 4 ParenthesizedArrowFunctionExpression "(x,y:number,z)=>{return x+y+z;}" = (x: any, y: number, z: any) => any
-Line 15 col 5 IdentifierName "x" = any
-Line 15 col 7 IdentifierName "y" = number
-Line 15 col 16 IdentifierName "z" = any
-Line 15 col 28 AddExpression "x+y+z" = any
-Line 15 col 28 AddExpression "x+y" = any
-Line 15 col 28 IdentifierName "x" = any
-Line 15 col 30 IdentifierName "y" = number
-Line 15 col 32 IdentifierName "z" = any
-Line 16 col 0 InvocationExpression "foo((x,y:number,z:number)=>{return x+y+z;})" = any
-Line 16 col 0 IdentifierName "foo" = typeof foo
-Line 16 col 4 ParenthesizedArrowFunctionExpression "(x,y:number,z:number)=>{return x+y+z;}" = (x: any, y: number, z: number) => any
-Line 16 col 5 IdentifierName "x" = any
-Line 16 col 7 IdentifierName "y" = number
-Line 16 col 16 IdentifierName "z" = number
-Line 16 col 35 AddExpression "x+y+z" = any
-Line 16 col 35 AddExpression "x+y" = any
-Line 16 col 35 IdentifierName "x" = any
-Line 16 col 37 IdentifierName "y" = number
-Line 16 col 39 IdentifierName "z" = number
-Line 17 col 0 InvocationExpression "foo((x,y,z:number)=>{return x+y+z;})" = any
-Line 17 col 0 IdentifierName "foo" = typeof foo
-Line 17 col 4 ParenthesizedArrowFunctionExpression "(x,y,z:number)=>{return x+y+z;}" = (x: any, y: any, z: number) => any
-Line 17 col 5 IdentifierName "x" = any
-Line 17 col 7 IdentifierName "y" = any
-Line 17 col 9 IdentifierName "z" = number
-Line 17 col 28 AddExpression "x+y+z" = any
-Line 17 col 28 AddExpression "x+y" = any
-Line 17 col 28 IdentifierName "x" = any
-Line 17 col 30 IdentifierName "y" = any
-Line 17 col 32 IdentifierName "z" = number
-Line 18 col 0 InvocationExpression "foo(()=>{return 0;})" = any
-Line 18 col 0 IdentifierName "foo" = typeof foo
-Line 18 col 4 ParenthesizedArrowFunctionExpression "()=>{return 0;}" = () => number
-Line 19 col 0 InvocationExpression "foo(((x) => x))" = any
-Line 19 col 0 IdentifierName "foo" = typeof foo
-Line 21 col 4 ParenthesizedExpression "((x) => x)" = (x: any) => any
-Line 21 col 5 ParenthesizedArrowFunctionExpression "(x) => x" = (x: any) => any
-Line 21 col 6 IdentifierName "x" = any
-Line 21 col 12 IdentifierName "x" = any
-Line 22 col 0 InvocationExpression "foo(x => x*x)" = any
-Line 22 col 0 IdentifierName "foo" = typeof foo
-Line 23 col 4 SimpleArrowFunctionExpression "x => x*x" = (x: any) => number
-Line 23 col 4 IdentifierName "x" = any
-Line 23 col 9 MultiplyExpression "x*x" = number
-Line 23 col 9 IdentifierName "x" = any
-Line 23 col 11 IdentifierName "x" = any
-Line 25 col 4 IdentifierName "y" = (x: any) => number
-Line 25 col 8 SimpleArrowFunctionExpression "x => x*x" = (x: any) => number
-Line 25 col 8 IdentifierName "x" = any
-Line 25 col 13 MultiplyExpression "x*x" = number
-Line 25 col 13 IdentifierName "x" = any
-Line 25 col 15 IdentifierName "x" = any
-Line 26 col 4 IdentifierName "z" = (x: number) => number
-Line 26 col 8 ParenthesizedArrowFunctionExpression "(x:number) => x*x" = (x: number) => number
-Line 26 col 9 IdentifierName "x" = number
-Line 26 col 22 MultiplyExpression "x*x" = number
-Line 26 col 22 IdentifierName "x" = number
-Line 26 col 24 IdentifierName "x" = number
-Line 28 col 4 IdentifierName "w" = () => number
-Line 28 col 8 ParenthesizedArrowFunctionExpression "() => 3" = () => number
-Line 30 col 9 IdentifierName "ternaryTest" = typeof ternaryTest
-Line 30 col 21 IdentifierName "isWhile" = boolean
-Line 32 col 20 IdentifierName "f" = (n: any) => boolean
-Line 32 col 24 ConditionalExpression "isWhile ? function (n) { return n > 0; } : function (n) { return n === 0; }" = (n: any) => boolean
-Line 32 col 24 IdentifierName "isWhile" = boolean
-Line 32 col 34 FunctionExpression "function (n) { return n > 0; }" = (n: any) => boolean
-Line 32 col 44 IdentifierName "n" = any
-Line 32 col 56 GreaterThanExpression "n > 0" = boolean
-Line 32 col 56 IdentifierName "n" = any
-Line 32 col 67 FunctionExpression "function (n) { return n === 0; }" = (n: any) => boolean
-Line 32 col 77 IdentifierName "n" = any
-Line 32 col 89 EqualsExpression "n === 0" = boolean
-Line 32 col 89 IdentifierName "n" = any
-Line 36 col 17 IdentifierName "setTimeout" = typeof setTimeout
-Line 36 col 28 IdentifierName "expression" = any
-Line 36 col 45 IdentifierName "msec" = number
-Line 36 col 60 IdentifierName "language" = any
-Line 38 col 4 IdentifierName "messenger" = { message: string; start: () => void; }
-Line 38 col 16 ObjectLiteralExpression "{
+
+function foo(x:any) {
+>foo : typeof foo
+>x : any
+
+	return x();
+>x() : any
+>x : any
+}
+
+>foo((x:number,y,z)=>{return x+y+z;}) : any
+>foo : typeof foo
+
+foo((x:number,y,z)=>{return x+y+z;});
+>(x:number,y,z)=>{return x+y+z;} : (x: number, y: any, z: any) => any
+>x : number
+>y : any
+>z : any
+>x+y+z : any
+>x+y : any
+>x : number
+>y : any
+>z : any
+
+foo((x,y,z)=>{return x+y+z;});
+>foo((x,y,z)=>{return x+y+z;}) : any
+>foo : typeof foo
+>(x,y,z)=>{return x+y+z;} : (x: any, y: any, z: any) => any
+>x : any
+>y : any
+>z : any
+>x+y+z : any
+>x+y : any
+>x : any
+>y : any
+>z : any
+
+foo((x,y:number,z)=>{return x+y+z;});
+>foo((x,y:number,z)=>{return x+y+z;}) : any
+>foo : typeof foo
+>(x,y:number,z)=>{return x+y+z;} : (x: any, y: number, z: any) => any
+>x : any
+>y : number
+>z : any
+>x+y+z : any
+>x+y : any
+>x : any
+>y : number
+>z : any
+
+foo((x,y:number,z:number)=>{return x+y+z;});
+>foo((x,y:number,z:number)=>{return x+y+z;}) : any
+>foo : typeof foo
+>(x,y:number,z:number)=>{return x+y+z;} : (x: any, y: number, z: number) => any
+>x : any
+>y : number
+>z : number
+>x+y+z : any
+>x+y : any
+>x : any
+>y : number
+>z : number
+
+foo((x,y,z:number)=>{return x+y+z;});
+>foo((x,y,z:number)=>{return x+y+z;}) : any
+>foo : typeof foo
+>(x,y,z:number)=>{return x+y+z;} : (x: any, y: any, z: number) => any
+>x : any
+>y : any
+>z : number
+>x+y+z : any
+>x+y : any
+>x : any
+>y : any
+>z : number
+
+foo(()=>{return 0;});
+>foo(()=>{return 0;}) : any
+>foo : typeof foo
+>()=>{return 0;} : () => number
+
+>foo((x:number,y,z)=>x+y+z) : any
+>foo : typeof foo
+
+foo((x:number,y,z)=>x+y+z);
+>(x:number,y,z)=>x+y+z : (x: number, y: any, z: any) => any
+>x : number
+>y : any
+>z : any
+>x+y+z : any
+>x+y : any
+>x : number
+>y : any
+>z : any
+
+foo((x,y,z)=>x+y+z);
+>foo((x,y,z)=>x+y+z) : any
+>foo : typeof foo
+>(x,y,z)=>x+y+z : (x: any, y: any, z: any) => any
+>x : any
+>y : any
+>z : any
+>x+y+z : any
+>x+y : any
+>x : any
+>y : any
+>z : any
+
+foo((x,y:number,z)=>{return x+y+z;});
+>foo((x,y:number,z)=>{return x+y+z;}) : any
+>foo : typeof foo
+>(x,y:number,z)=>{return x+y+z;} : (x: any, y: number, z: any) => any
+>x : any
+>y : number
+>z : any
+>x+y+z : any
+>x+y : any
+>x : any
+>y : number
+>z : any
+
+foo((x,y:number,z:number)=>{return x+y+z;});
+>foo((x,y:number,z:number)=>{return x+y+z;}) : any
+>foo : typeof foo
+>(x,y:number,z:number)=>{return x+y+z;} : (x: any, y: number, z: number) => any
+>x : any
+>y : number
+>z : number
+>x+y+z : any
+>x+y : any
+>x : any
+>y : number
+>z : number
+
+foo((x,y,z:number)=>{return x+y+z;});
+>foo((x,y,z:number)=>{return x+y+z;}) : any
+>foo : typeof foo
+>(x,y,z:number)=>{return x+y+z;} : (x: any, y: any, z: number) => any
+>x : any
+>y : any
+>z : number
+>x+y+z : any
+>x+y : any
+>x : any
+>y : any
+>z : number
+
+foo(()=>{return 0;});
+>foo(()=>{return 0;}) : any
+>foo : typeof foo
+>()=>{return 0;} : () => number
+
+>foo(((x) => x)) : any
+>foo : typeof foo
+
+foo(((x) => x));
+>((x) => x) : (x: any) => any
+>(x) => x : (x: any) => any
+>x : any
+>x : any
+
+>foo(x => x*x) : any
+>foo : typeof foo
+
+foo(x => x*x);
+>x => x*x : (x: any) => number
+>x : any
+>x*x : number
+>x : any
+>x : any
+
+var y = x => x*x;
+>y : (x: any) => number
+>x => x*x : (x: any) => number
+>x : any
+>x*x : number
+>x : any
+>x : any
+
+var z = (x:number) => x*x;
+>z : (x: number) => number
+>(x:number) => x*x : (x: number) => number
+>x : number
+>x*x : number
+>x : number
+>x : number
+
+var w = () => 3;
+>w : () => number
+>() => 3 : () => number
+
+function ternaryTest(isWhile:boolean) {
+>ternaryTest : typeof ternaryTest
+>isWhile : boolean
+
+                var f = isWhile ? function (n) { return n > 0; } : function (n) { return n === 0; };
+>f : (n: any) => boolean
+>isWhile ? function (n) { return n > 0; } : function (n) { return n === 0; } : (n: any) => boolean
+>isWhile : boolean
+>function (n) { return n > 0; } : (n: any) => boolean
+>n : any
+>n > 0 : boolean
+>n : any
+>function (n) { return n === 0; } : (n: any) => boolean
+>n : any
+>n === 0 : boolean
+>n : any
+
+}
+
+declare function setTimeout(expression: any, msec?: number, language?: any): number;
+>setTimeout : typeof setTimeout
+>expression : any
+>msec : number
+>language : any
+
+var messenger = {
+>messenger : { message: string; start: () => void; }
+>{
     message: "Hello World",
     start: function() {
         setTimeout(() => { this.message.toString(); }, 3000);
     }
-}" = { message: string; start: () => void; }
-Line 39 col 0 IdentifierName "message" = string
-Line 40 col 0 IdentifierName "start" = () => void
-Line 40 col 11 FunctionExpression "function() {
+} : { message: string; start: () => void; }
+
+    message: "Hello World",
+>message : string
+
+    start: function() {
+>start : () => void
+>function() {
         setTimeout(() => { this.message.toString(); }, 3000);
-    }" = () => void
-Line 41 col 0 InvocationExpression "setTimeout(() => { this.message.toString(); }, 3000)" = number
-Line 41 col 0 IdentifierName "setTimeout" = typeof setTimeout
-Line 41 col 19 ParenthesizedArrowFunctionExpression "() => { this.message.toString(); }" = () => void
-Line 41 col 27 InvocationExpression "this.message.toString()" = any
-Line 41 col 27 MemberAccessExpression "this.message.toString" = any
-Line 41 col 27 MemberAccessExpression "this.message" = any
-Line 41 col 27 ThisKeyword "this" = any
-Line 41 col 32 IdentifierName "message" = any
-Line 41 col 40 IdentifierName "toString" = any
+    } : () => void
+
+        setTimeout(() => { this.message.toString(); }, 3000);
+>setTimeout(() => { this.message.toString(); }, 3000) : number
+>setTimeout : typeof setTimeout
+>() => { this.message.toString(); } : () => void
+>this.message.toString() : any
+>this.message.toString : any
+>this.message : any
+>this : any
+>message : any
+>toString : any
+    }
+};
+

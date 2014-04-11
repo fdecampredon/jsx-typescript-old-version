@@ -1,14 +1,29 @@
 === tests/cases/compiler/emptyIndexer.ts ===
-Line 0 col 10 IdentifierName "I1" = I1
-Line 1 col 0 IdentifierName "m" = () => number
-Line 4 col 10 IdentifierName "I2" = I2
-Line 5 col 2 IdentifierName "s" = string
-Line 5 col 13 IdentifierName "I1" = I1
-Line 9 col 4 IdentifierName "x" = I2
-Line 9 col 7 IdentifierName "I2" = I2
-Line 11 col 4 IdentifierName "n" = number
-Line 11 col 8 InvocationExpression "x[''].m()" = number
-Line 11 col 8 MemberAccessExpression "x[''].m" = () => number
-Line 11 col 8 ElementAccessExpression "x['']" = I1
-Line 11 col 8 IdentifierName "x" = I2
-Line 11 col 14 IdentifierName "m" = () => number
+interface I1 {
+>I1 : I1
+
+	m(): number;
+>m : () => number
+}
+
+interface I2 {
+>I2 : I2
+
+	[s:string]: I1;
+>s : string
+>I1 : I1
+}
+
+
+var x: I2;
+>x : I2
+>I2 : I2
+
+var n = x[''].m(); // should not crash compiler
+>n : number
+>x[''].m() : number
+>x[''].m : () => number
+>x[''] : I1
+>x : I2
+>m : () => number
+

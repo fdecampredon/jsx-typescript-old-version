@@ -1,120 +1,204 @@
 === tests/cases/compiler/enumMerging.ts ===
-Line 2 col 7 IdentifierName "M1" = M1
-Line 3 col 9 IdentifierName "EImpl1" = EImpl1
-Line 4 col 0 IdentifierName "A" = EImpl1
-Line 4 col 11 IdentifierName "B" = EImpl1
-Line 4 col 14 IdentifierName "C" = EImpl1
-Line 7 col 9 IdentifierName "EImpl1" = EImpl1
-Line 8 col 0 IdentifierName "D" = EImpl1
-Line 8 col 15 IdentifierName "E" = EImpl1
-Line 8 col 18 IdentifierName "F" = EImpl1
-Line 11 col 16 IdentifierName "EConst1" = EConst1
-Line 12 col 0 IdentifierName "A" = EConst1
-Line 12 col 15 IdentifierName "B" = EConst1
-Line 12 col 22 IdentifierName "C" = EConst1
-Line 15 col 16 IdentifierName "EConst1" = EConst1
-Line 16 col 0 IdentifierName "D" = EConst1
-Line 16 col 15 IdentifierName "E" = EConst1
-Line 16 col 22 IdentifierName "F" = EConst1
-Line 19 col 8 IdentifierName "x" = EConst1[]
-Line 19 col 12 ArrayLiteralExpression "[EConst1.A, EConst1.B, EConst1.C, EConst1.D, EConst1.E, EConst1.F]" = EConst1[]
-Line 19 col 13 MemberAccessExpression "EConst1.A" = EConst1
-Line 19 col 13 IdentifierName "EConst1" = typeof EConst1
-Line 19 col 21 IdentifierName "A" = EConst1
-Line 19 col 24 MemberAccessExpression "EConst1.B" = EConst1
-Line 19 col 24 IdentifierName "EConst1" = typeof EConst1
-Line 19 col 32 IdentifierName "B" = EConst1
-Line 19 col 35 MemberAccessExpression "EConst1.C" = EConst1
-Line 19 col 35 IdentifierName "EConst1" = typeof EConst1
-Line 19 col 43 IdentifierName "C" = EConst1
-Line 19 col 46 MemberAccessExpression "EConst1.D" = EConst1
-Line 19 col 46 IdentifierName "EConst1" = typeof EConst1
-Line 19 col 54 IdentifierName "D" = EConst1
-Line 19 col 57 MemberAccessExpression "EConst1.E" = EConst1
-Line 19 col 57 IdentifierName "EConst1" = typeof EConst1
-Line 19 col 65 IdentifierName "E" = EConst1
-Line 19 col 68 MemberAccessExpression "EConst1.F" = EConst1
-Line 19 col 68 IdentifierName "EConst1" = typeof EConst1
-Line 19 col 76 IdentifierName "F" = EConst1
-Line 23 col 7 IdentifierName "M2" = M2
-Line 24 col 16 IdentifierName "EComp2" = EComp2
-Line 25 col 0 IdentifierName "A" = EComp2
-Line 25 col 12 MemberAccessExpression "'foo'.length" = number
-Line 25 col 18 IdentifierName "length" = number
-Line 25 col 26 IdentifierName "B" = EComp2
-Line 25 col 30 MemberAccessExpression "'foo'.length" = number
-Line 25 col 36 IdentifierName "length" = number
-Line 25 col 44 IdentifierName "C" = EComp2
-Line 25 col 48 MemberAccessExpression "'foo'.length" = number
-Line 25 col 54 IdentifierName "length" = number
-Line 28 col 16 IdentifierName "EComp2" = EComp2
-Line 29 col 0 IdentifierName "D" = EComp2
-Line 29 col 12 MemberAccessExpression "'foo'.length" = number
-Line 29 col 18 IdentifierName "length" = number
-Line 29 col 26 IdentifierName "E" = EComp2
-Line 29 col 30 MemberAccessExpression "'foo'.length" = number
-Line 29 col 36 IdentifierName "length" = number
-Line 29 col 44 IdentifierName "F" = EComp2
-Line 29 col 48 MemberAccessExpression "'foo'.length" = number
-Line 29 col 54 IdentifierName "length" = number
-Line 32 col 8 IdentifierName "x" = EComp2[]
-Line 32 col 12 ArrayLiteralExpression "[EComp2.A, EComp2.B, EComp2.C, EComp2.D, EComp2.E, EComp2.F]" = EComp2[]
-Line 32 col 13 MemberAccessExpression "EComp2.A" = EComp2
-Line 32 col 13 IdentifierName "EComp2" = typeof EComp2
-Line 32 col 20 IdentifierName "A" = EComp2
-Line 32 col 23 MemberAccessExpression "EComp2.B" = EComp2
-Line 32 col 23 IdentifierName "EComp2" = typeof EComp2
-Line 32 col 30 IdentifierName "B" = EComp2
-Line 32 col 33 MemberAccessExpression "EComp2.C" = EComp2
-Line 32 col 33 IdentifierName "EComp2" = typeof EComp2
-Line 32 col 40 IdentifierName "C" = EComp2
-Line 32 col 43 MemberAccessExpression "EComp2.D" = EComp2
-Line 32 col 43 IdentifierName "EComp2" = typeof EComp2
-Line 32 col 50 IdentifierName "D" = EComp2
-Line 32 col 53 MemberAccessExpression "EComp2.E" = EComp2
-Line 32 col 53 IdentifierName "EComp2" = typeof EComp2
-Line 32 col 60 IdentifierName "E" = EComp2
-Line 32 col 63 MemberAccessExpression "EComp2.F" = EComp2
-Line 32 col 63 IdentifierName "EComp2" = typeof EComp2
-Line 32 col 70 IdentifierName "F" = EComp2
-Line 36 col 7 IdentifierName "M3" = M3
-Line 37 col 9 IdentifierName "EInit" = EInit
-Line 38 col 0 IdentifierName "A" = EInit
-Line 39 col 0 IdentifierName "B" = EInit
-Line 42 col 9 IdentifierName "EInit" = EInit
-Line 43 col 0 IdentifierName "C" = EInit
-Line 43 col 15 IdentifierName "D" = EInit
-Line 43 col 18 IdentifierName "E" = EInit
-Line 48 col 7 IdentifierName "M4" = M4
-Line 49 col 16 IdentifierName "Color" = Color
-Line 49 col 24 IdentifierName "Red" = Color
-Line 49 col 29 IdentifierName "Green" = Color
-Line 49 col 36 IdentifierName "Blue" = Color
-Line 51 col 7 IdentifierName "M5" = M5
-Line 52 col 16 IdentifierName "Color" = Color
-Line 52 col 24 IdentifierName "Red" = Color
-Line 52 col 29 IdentifierName "Green" = Color
-Line 52 col 36 IdentifierName "Blue" = Color
-Line 55 col 7 IdentifierName "M6" = M6
-Line 55 col 10 IdentifierName "A" = M6.A
-Line 56 col 16 IdentifierName "Color" = Color
-Line 56 col 24 IdentifierName "Red" = Color
-Line 56 col 29 IdentifierName "Green" = Color
-Line 56 col 36 IdentifierName "Blue" = Color
-Line 58 col 7 IdentifierName "M6" = M6
-Line 59 col 18 IdentifierName "A" = A
-Line 60 col 20 IdentifierName "Color" = Color
-Line 60 col 28 IdentifierName "Yellow" = Color
-Line 62 col 8 IdentifierName "t" = A.Color
-Line 62 col 12 MemberAccessExpression "A.Color.Yellow" = A.Color
-Line 62 col 12 MemberAccessExpression "A.Color" = typeof A.Color
-Line 62 col 12 IdentifierName "A" = typeof A
-Line 62 col 14 IdentifierName "Color" = typeof A.Color
-Line 62 col 20 IdentifierName "Yellow" = A.Color
-Line 63 col 0 AssignmentExpression "t = A.Color.Red" = A.Color
-Line 63 col 0 IdentifierName "t" = A.Color
-Line 63 col 8 MemberAccessExpression "A.Color.Red" = A.Color
-Line 63 col 8 MemberAccessExpression "A.Color" = typeof A.Color
-Line 63 col 8 IdentifierName "A" = typeof A
-Line 63 col 10 IdentifierName "Color" = typeof A.Color
-Line 63 col 16 IdentifierName "Red" = A.Color
+// Enum with only constant members across 2 declarations with the same root module
+// Enum with initializer in all declarations with constant members with the same root module
+module M1 {
+>M1 : M1
+
+    enum EImpl1 {
+>EImpl1 : EImpl1
+
+        A, B, C
+>A : EImpl1
+>B : EImpl1
+>C : EImpl1
+    }
+
+    enum EImpl1 {
+>EImpl1 : EImpl1
+
+        D = 1, E, F
+>D : EImpl1
+>E : EImpl1
+>F : EImpl1
+    }
+
+    export enum EConst1 {
+>EConst1 : EConst1
+
+        A = 3, B = 2, C = 1
+>A : EConst1
+>B : EConst1
+>C : EConst1
+    }
+
+    export enum EConst1 {
+>EConst1 : EConst1
+
+        D = 7, E = 9, F = 8
+>D : EConst1
+>E : EConst1
+>F : EConst1
+    }
+
+    var x = [EConst1.A, EConst1.B, EConst1.C, EConst1.D, EConst1.E, EConst1.F];
+>x : EConst1[]
+>[EConst1.A, EConst1.B, EConst1.C, EConst1.D, EConst1.E, EConst1.F] : EConst1[]
+>EConst1.A : EConst1
+>EConst1 : typeof EConst1
+>A : EConst1
+>EConst1.B : EConst1
+>EConst1 : typeof EConst1
+>B : EConst1
+>EConst1.C : EConst1
+>EConst1 : typeof EConst1
+>C : EConst1
+>EConst1.D : EConst1
+>EConst1 : typeof EConst1
+>D : EConst1
+>EConst1.E : EConst1
+>EConst1 : typeof EConst1
+>E : EConst1
+>EConst1.F : EConst1
+>EConst1 : typeof EConst1
+>F : EConst1
+}
+
+// Enum with only computed members across 2 declarations with the same root module 
+module M2 {
+>M2 : M2
+
+    export enum EComp2 {
+>EComp2 : EComp2
+
+        A = 'foo'.length, B = 'foo'.length, C = 'foo'.length
+>A : EComp2
+>'foo'.length : number
+>length : number
+>B : EComp2
+>'foo'.length : number
+>length : number
+>C : EComp2
+>'foo'.length : number
+>length : number
+    }
+
+    export enum EComp2 {
+>EComp2 : EComp2
+
+        D = 'foo'.length, E = 'foo'.length, F = 'foo'.length
+>D : EComp2
+>'foo'.length : number
+>length : number
+>E : EComp2
+>'foo'.length : number
+>length : number
+>F : EComp2
+>'foo'.length : number
+>length : number
+    }
+
+    var x = [EComp2.A, EComp2.B, EComp2.C, EComp2.D, EComp2.E, EComp2.F];
+>x : EComp2[]
+>[EComp2.A, EComp2.B, EComp2.C, EComp2.D, EComp2.E, EComp2.F] : EComp2[]
+>EComp2.A : EComp2
+>EComp2 : typeof EComp2
+>A : EComp2
+>EComp2.B : EComp2
+>EComp2 : typeof EComp2
+>B : EComp2
+>EComp2.C : EComp2
+>EComp2 : typeof EComp2
+>C : EComp2
+>EComp2.D : EComp2
+>EComp2 : typeof EComp2
+>D : EComp2
+>EComp2.E : EComp2
+>EComp2 : typeof EComp2
+>E : EComp2
+>EComp2.F : EComp2
+>EComp2 : typeof EComp2
+>F : EComp2
+}
+
+// Enum with initializer in only one of two declarations with constant members with the same root module
+module M3 {
+>M3 : M3
+
+    enum EInit {
+>EInit : EInit
+
+        A,
+>A : EInit
+
+        B
+>B : EInit
+    }
+
+    enum EInit {
+>EInit : EInit
+
+        C = 1, D, E
+>C : EInit
+>D : EInit
+>E : EInit
+    }
+}
+
+// Enums with same name but different root module
+module M4 {
+>M4 : M4
+
+    export enum Color { Red, Green, Blue }
+>Color : Color
+>Red : Color
+>Green : Color
+>Blue : Color
+}
+module M5 {
+>M5 : M5
+
+    export enum Color { Red, Green, Blue }
+>Color : Color
+>Red : Color
+>Green : Color
+>Blue : Color
+}
+
+module M6.A {
+>M6 : M6
+>A : M6.A
+
+    export enum Color { Red, Green, Blue }
+>Color : Color
+>Red : Color
+>Green : Color
+>Blue : Color
+}
+module M6 {
+>M6 : M6
+
+    export module A {
+>A : A
+
+        export enum Color { Yellow = 1 }
+>Color : Color
+>Yellow : Color
+    }
+    var t = A.Color.Yellow;
+>t : A.Color
+>A.Color.Yellow : A.Color
+>A.Color : typeof A.Color
+>A : typeof A
+>Color : typeof A.Color
+>Yellow : A.Color
+
+    t = A.Color.Red;
+>t = A.Color.Red : A.Color
+>t : A.Color
+>A.Color.Red : A.Color
+>A.Color : typeof A.Color
+>A : typeof A
+>Color : typeof A.Color
+>Red : A.Color
+}
+

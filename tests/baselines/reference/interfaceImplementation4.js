@@ -1,3 +1,4 @@
+//// [interfaceImplementation4.js]
 var C5 = (function () {
     function C5() {
     }

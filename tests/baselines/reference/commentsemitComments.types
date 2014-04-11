@@ -1,55 +1,157 @@
 === tests/cases/compiler/commentsemitComments.ts ===
-Line 2 col 4 IdentifierName "myVariable" = number
-Line 5 col 9 IdentifierName "foo" = typeof foo
-Line 5 col 36 IdentifierName "p" = number
-Line 9 col 4 IdentifierName "fooVar" = () => void
-Line 10 col 0 InvocationExpression "foo(50)" = void
-Line 10 col 0 IdentifierName "foo" = typeof foo
-Line 11 col 0 InvocationExpression "fooVar()" = void
-Line 11 col 0 IdentifierName "fooVar" = () => void
-Line 14 col 6 IdentifierName "c" = c
-Line 20 col 11 IdentifierName "b" = number
-Line 23 col 11 IdentifierName "myFoo" = () => number
-Line 24 col 15 MemberAccessExpression "this.b" = number
-Line 24 col 15 ThisKeyword "this" = c
-Line 24 col 20 IdentifierName "b" = number
-Line 28 col 15 IdentifierName "prop1" = number
-Line 29 col 15 MemberAccessExpression "this.b" = number
-Line 29 col 15 ThisKeyword "this" = c
-Line 29 col 20 IdentifierName "b" = number
-Line 33 col 15 IdentifierName "prop1" = number
-Line 33 col 21 IdentifierName "val" = number
-Line 34 col 0 AssignmentExpression "this.b = val" = number
-Line 34 col 0 MemberAccessExpression "this.b" = number
-Line 34 col 0 ThisKeyword "this" = c
-Line 34 col 13 IdentifierName "b" = number
-Line 34 col 17 IdentifierName "val" = number
-Line 38 col 11 IdentifierName "foo1" = { (a: number): string; (b: string): string; }
-Line 38 col 16 IdentifierName "a" = number
-Line 40 col 11 IdentifierName "foo1" = { (a: number): string; (b: string): string; }
-Line 40 col 16 IdentifierName "b" = string
-Line 42 col 11 IdentifierName "foo1" = { (a: number): string; (b: string): string; }
-Line 42 col 16 IdentifierName "aOrb" = any
-Line 43 col 15 InvocationExpression "aOrb.toString()" = any
-Line 43 col 15 MemberAccessExpression "aOrb.toString" = any
-Line 43 col 15 IdentifierName "aOrb" = any
-Line 43 col 20 IdentifierName "toString" = any
-Line 48 col 4 IdentifierName "i" = c
-Line 48 col 8 ObjectCreationExpression "new c()" = c
-Line 48 col 12 IdentifierName "c" = typeof c
-Line 51 col 10 IdentifierName "i1" = i1
-Line 53 col 5 IdentifierName "a" = number
-Line 56 col 9 IdentifierName "b" = string
-Line 59 col 5 IdentifierName "a" = number
-Line 60 col 0 IdentifierName "/** function property;*/
-    myFoo" = (a: number) => string
-Line 62 col 24 IdentifierName "a" = number
-Line 63 col 0 IdentifierName "/** prop*/
-    prop" = string
-Line 69 col 4 IdentifierName "i1_i" = i1
-Line 69 col 10 IdentifierName "i1" = i1
-Line 72 col 7 IdentifierName "m1" = m1
-Line 74 col 17 IdentifierName "b" = b
-Line 75 col 27 IdentifierName "x" = number
-Line 81 col 18 IdentifierName "m2" = m2
-Line 86 col 12 IdentifierName "x" = any
+
+/** Variable comments*/
+var myVariable = 10;
+>myVariable : number
+
+/** function comments*/
+function foo(/** parameter comment*/p: number) {
+>foo : typeof foo
+>p : number
+}
+
+/** variable with function type comment*/
+var fooVar: () => void;
+>fooVar : () => void
+
+foo(50);
+>foo(50) : void
+>foo : typeof foo
+
+fooVar();
+>fooVar() : void
+>fooVar : () => void
+
+/**class comment*/
+class c {
+>c : c
+
+    /** constructor comment*/
+    constructor() {
+    }
+
+    /** property comment */
+    public b = 10;
+>b : number
+
+    /** function comment */
+    public myFoo() {
+>myFoo : () => number
+
+        return this.b;
+>this.b : number
+>this : c
+>b : number
+    }
+
+    /** getter comment*/
+    public get prop1() {
+>prop1 : number
+
+        return this.b;
+>this.b : number
+>this : c
+>b : number
+    }
+
+    /** setter comment*/
+    public set prop1(val: number) {
+>prop1 : number
+>val : number
+
+        this.b = val;
+>this.b = val : number
+>this.b : number
+>this : c
+>b : number
+>val : number
+    }
+
+    /** overload signature1*/
+    public foo1(a: number): string;
+>foo1 : { (a: number): string; (b: string): string; }
+>a : number
+
+    /** Overload signature 2*/
+    public foo1(b: string): string;
+>foo1 : { (a: number): string; (b: string): string; }
+>b : string
+
+    /** overload implementation signature*/
+    public foo1(aOrb) {
+>foo1 : { (a: number): string; (b: string): string; }
+>aOrb : any
+
+        return aOrb.toString();
+>aOrb.toString() : any
+>aOrb.toString : any
+>aOrb : any
+>toString : any
+    }
+}
+
+/**instance comment*/
+var i = new c();
+>i : c
+>new c() : c
+>c : typeof c
+
+/** interface comments*/
+interface i1 {
+>i1 : i1
+
+    /** caller comments*/
+    (a: number): number;
+>a : number
+
+    /** new comments*/
+    new (b: string);
+>b : string
+
+    /**indexer property*/
+    [a: number]: string;
+>a : number
+
+>/** function property;*/
+    myFoo : (a: number) => string
+
+    /** function property;*/
+    myFoo(/*param prop*/a: number): string;
+>a : number
+
+>/** prop*/
+    prop : string
+
+    /** prop*/
+    prop: string;
+}
+
+/**interface instance comments*/
+var i1_i: i1;
+>i1_i : i1
+>i1 : i1
+
+/** this is module comment*/
+module m1 {
+>m1 : m1
+
+    /** class b */
+    export class b {
+>b : b
+
+        constructor(public x: number) {
+>x : number
+
+        }
+    }
+
+    /// module m2
+    export module m2 {
+>m2 : m2
+    }
+}
+
+/// this is x
+declare var x;
+>x : any
+

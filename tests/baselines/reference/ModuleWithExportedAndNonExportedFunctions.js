@@ -1,3 +1,4 @@
+//// [ModuleWithExportedAndNonExportedFunctions.js]
 var A;
 (function (A) {
     function fn(s) {

@@ -1,86 +1,130 @@
 === tests/cases/compiler/propertyAccessOnTypeParameterWithoutConstraints.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "f" = () => string
-Line 2 col 12 IdentifierName "x" = T
-Line 2 col 15 IdentifierName "T" = T
-Line 3 col 12 IdentifierName "a" = string
-Line 3 col 16 InvocationExpression "x['toString']()" = string
-Line 3 col 16 ElementAccessExpression "x['toString']" = () => string
-Line 3 col 16 IdentifierName "x" = T
-Line 4 col 15 AddExpression "a + x.toString()" = string
-Line 4 col 15 IdentifierName "a" = string
-Line 4 col 19 InvocationExpression "x.toString()" = string
-Line 4 col 19 MemberAccessExpression "x.toString" = () => string
-Line 4 col 19 IdentifierName "x" = T
-Line 4 col 21 IdentifierName "toString" = () => string
-Line 8 col 4 IdentifierName "r" = string
-Line 8 col 8 InvocationExpression "(new C<number>()).f()" = string
-Line 8 col 8 MemberAccessExpression "(new C<number>()).f" = () => string
-Line 8 col 8 ParenthesizedExpression "(new C<number>())" = C<number>
-Line 8 col 9 ObjectCreationExpression "new C<number>()" = C<number>
-Line 8 col 13 IdentifierName "C" = typeof C
-Line 8 col 26 IdentifierName "f" = () => string
-Line 10 col 10 IdentifierName "I" = I<T>
-Line 10 col 12 IdentifierName "T" = T
-Line 11 col 0 IdentifierName "foo" = T
-Line 11 col 9 IdentifierName "T" = T
-Line 13 col 4 IdentifierName "i" = I<number>
-Line 13 col 7 IdentifierName "I" = I<T>
-Line 14 col 4 IdentifierName "r2" = string
-Line 14 col 9 InvocationExpression "i.foo.toString()" = string
-Line 14 col 9 MemberAccessExpression "i.foo.toString" = (radix?: number) => string
-Line 14 col 9 MemberAccessExpression "i.foo" = number
-Line 14 col 9 IdentifierName "i" = I<number>
-Line 14 col 11 IdentifierName "foo" = number
-Line 14 col 15 IdentifierName "toString" = (radix?: number) => string
-Line 15 col 4 IdentifierName "r2b" = string
-Line 15 col 10 InvocationExpression "i.foo['toString']()" = string
-Line 15 col 10 ElementAccessExpression "i.foo['toString']" = (radix?: number) => string
-Line 15 col 10 MemberAccessExpression "i.foo" = number
-Line 15 col 10 IdentifierName "i" = I<number>
-Line 15 col 12 IdentifierName "foo" = number
-Line 17 col 4 IdentifierName "a" = <T>() => T
-Line 18 col 5 IdentifierName "T" = T
-Line 18 col 11 IdentifierName "T" = T
-Line 20 col 4 IdentifierName "r3" = string
-Line 20 col 17 InvocationExpression "a().toString()" = string
-Line 20 col 17 MemberAccessExpression "a().toString" = () => string
-Line 20 col 17 InvocationExpression "a()" = {}
-Line 20 col 17 IdentifierName "a" = <T>() => T
-Line 20 col 21 IdentifierName "toString" = () => string
-Line 21 col 4 IdentifierName "r3b" = string
-Line 21 col 18 InvocationExpression "a()['toString']()" = string
-Line 21 col 18 ElementAccessExpression "a()['toString']" = () => string
-Line 21 col 18 InvocationExpression "a()" = {}
-Line 21 col 18 IdentifierName "a" = <T>() => T
-Line 23 col 4 IdentifierName "b" = { foo: <T>(x: T) => string; }
-Line 23 col 8 ObjectLiteralExpression "{
+class C<T> {
+>C : C<T>
+>T : T
+
+    f() {
+>f : () => string
+
+        var x: T;
+>x : T
+>T : T
+
+        var a = x['toString'](); // should be string
+>a : string
+>x['toString']() : string
+>x['toString'] : () => string
+>x : T
+
+        return a + x.toString();
+>a + x.toString() : string
+>a : string
+>x.toString() : string
+>x.toString : () => string
+>x : T
+>toString : () => string
+    }
+}
+
+var r = (new C<number>()).f();
+>r : string
+>(new C<number>()).f() : string
+>(new C<number>()).f : () => string
+>(new C<number>()) : C<number>
+>new C<number>() : C<number>
+>C : typeof C
+>f : () => string
+
+interface I<T> {
+>I : I<T>
+>T : T
+
+    foo: T;
+>foo : T
+>T : T
+}
+var i: I<number>;
+>i : I<number>
+>I : I<T>
+
+var r2 = i.foo.toString();
+>r2 : string
+>i.foo.toString() : string
+>i.foo.toString : (radix?: number) => string
+>i.foo : number
+>i : I<number>
+>foo : number
+>toString : (radix?: number) => string
+
+var r2b = i.foo['toString']();
+>r2b : string
+>i.foo['toString']() : string
+>i.foo['toString'] : (radix?: number) => string
+>i.foo : number
+>i : I<number>
+>foo : number
+
+var a: {
+>a : <T>() => T
+
+    <T>(): T;
+>T : T
+>T : T
+}
+var r3: string = a().toString();
+>r3 : string
+>a().toString() : string
+>a().toString : () => string
+>a() : {}
+>a : <T>() => T
+>toString : () => string
+
+var r3b: string = a()['toString']();
+>r3b : string
+>a()['toString']() : string
+>a()['toString'] : () => string
+>a() : {}
+>a : <T>() => T
+
+var b = {
+>b : { foo: <T>(x: T) => string; }
+>{
     foo: <T>(x: T) => {
         var a = x['toString'](); // should be string
         return a + x.toString();
     }
-}" = { foo: <T>(x: T) => string; }
-Line 24 col 0 IdentifierName "foo" = <T>(x: T) => string
-Line 24 col 9 ParenthesizedArrowFunctionExpression "<T>(x: T) => {
+} : { foo: <T>(x: T) => string; }
+
+    foo: <T>(x: T) => {
+>foo : <T>(x: T) => string
+><T>(x: T) => {
         var a = x['toString'](); // should be string
         return a + x.toString();
-    }" = <T>(x: T) => string
-Line 24 col 10 IdentifierName "T" = T
-Line 24 col 13 IdentifierName "x" = T
-Line 24 col 16 IdentifierName "T" = T
-Line 25 col 12 IdentifierName "a" = string
-Line 25 col 16 InvocationExpression "x['toString']()" = string
-Line 25 col 16 ElementAccessExpression "x['toString']" = () => string
-Line 25 col 16 IdentifierName "x" = T
-Line 26 col 15 AddExpression "a + x.toString()" = string
-Line 26 col 15 IdentifierName "a" = string
-Line 26 col 19 InvocationExpression "x.toString()" = string
-Line 26 col 19 MemberAccessExpression "x.toString" = () => string
-Line 26 col 19 IdentifierName "x" = T
-Line 26 col 21 IdentifierName "toString" = () => string
-Line 30 col 4 IdentifierName "r4" = string
-Line 30 col 9 InvocationExpression "b.foo(1)" = string
-Line 30 col 9 MemberAccessExpression "b.foo" = <T>(x: T) => string
-Line 30 col 9 IdentifierName "b" = { foo: <T>(x: T) => string; }
-Line 30 col 11 IdentifierName "foo" = <T>(x: T) => string
+    } : <T>(x: T) => string
+>T : T
+>x : T
+>T : T
+
+        var a = x['toString'](); // should be string
+>a : string
+>x['toString']() : string
+>x['toString'] : () => string
+>x : T
+
+        return a + x.toString();
+>a + x.toString() : string
+>a : string
+>x.toString() : string
+>x.toString : () => string
+>x : T
+>toString : () => string
+    }
+}
+
+var r4 = b.foo(1);
+>r4 : string
+>b.foo(1) : string
+>b.foo : <T>(x: T) => string
+>b : { foo: <T>(x: T) => string; }
+>foo : <T>(x: T) => string
+

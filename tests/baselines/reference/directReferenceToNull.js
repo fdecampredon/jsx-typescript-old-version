@@ -1,1 +1,2 @@
+//// [directReferenceToNull.js]
 var x;

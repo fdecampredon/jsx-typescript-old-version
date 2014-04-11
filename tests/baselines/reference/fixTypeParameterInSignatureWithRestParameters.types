@@ -1,9 +1,13 @@
 === tests/cases/compiler/fixTypeParameterInSignatureWithRestParameters.ts ===
-Line 0 col 9 IdentifierName "bar" = typeof bar
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "item1" = T
-Line 0 col 23 IdentifierName "T" = T
-Line 0 col 26 IdentifierName "item2" = T
-Line 0 col 33 IdentifierName "T" = T
-Line 1 col 0 InvocationExpression "bar(1, "")" = void
-Line 1 col 0 IdentifierName "bar" = typeof bar
+function bar<T>(item1: T, item2: T) { }
+>bar : typeof bar
+>T : T
+>item1 : T
+>T : T
+>item2 : T
+>T : T
+
+bar(1, ""); // Should be ok
+>bar(1, "") : void
+>bar : typeof bar
+

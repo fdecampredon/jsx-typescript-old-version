@@ -1,31 +1,52 @@
 === tests/cases/compiler/accessOverriddenBaseClassMember1.ts ===
-Line 0 col 6 IdentifierName "Point" = Point
-Line 1 col 23 IdentifierName "x" = number
-Line 1 col 41 IdentifierName "y" = number
-Line 2 col 11 IdentifierName "toString" = () => string
-Line 3 col 15 AddExpression ""x=" + this.x + " y=" + this.y" = string
-Line 3 col 15 AddExpression ""x=" + this.x + " y="" = string
-Line 3 col 15 AddExpression ""x=" + this.x" = string
-Line 3 col 22 MemberAccessExpression "this.x" = number
-Line 3 col 22 ThisKeyword "this" = Point
-Line 3 col 27 IdentifierName "x" = number
-Line 3 col 39 MemberAccessExpression "this.y" = number
-Line 3 col 39 ThisKeyword "this" = Point
-Line 3 col 44 IdentifierName "y" = number
-Line 6 col 6 IdentifierName "ColoredPoint" = ColoredPoint
-Line 6 col 27 IdentifierName "Point" = Point
-Line 7 col 16 IdentifierName "x" = number
-Line 7 col 27 IdentifierName "y" = number
-Line 7 col 45 IdentifierName "color" = string
-Line 8 col 0 InvocationExpression "super(x, y)" = void
-Line 8 col 14 IdentifierName "x" = number
-Line 8 col 17 IdentifierName "y" = number
-Line 10 col 11 IdentifierName "toString" = () => string
-Line 11 col 15 AddExpression "super.toString() + " color=" + this.color" = string
-Line 11 col 15 AddExpression "super.toString() + " color="" = string
-Line 11 col 15 InvocationExpression "super.toString()" = string
-Line 11 col 15 MemberAccessExpression "super.toString" = () => string
-Line 11 col 21 IdentifierName "toString" = () => string
-Line 11 col 46 MemberAccessExpression "this.color" = string
-Line 11 col 46 ThisKeyword "this" = ColoredPoint
-Line 11 col 51 IdentifierName "color" = string
+class Point {
+>Point : Point
+
+    constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+
+    public toString() {
+>toString : () => string
+
+        return "x=" + this.x + " y=" + this.y;
+>"x=" + this.x + " y=" + this.y : string
+>"x=" + this.x + " y=" : string
+>"x=" + this.x : string
+>this.x : number
+>this : Point
+>x : number
+>this.y : number
+>this : Point
+>y : number
+    }
+}
+class ColoredPoint extends Point {
+>ColoredPoint : ColoredPoint
+>Point : Point
+
+    constructor(x: number, y: number, public color: string) {
+>x : number
+>y : number
+>color : string
+
+        super(x, y);
+>super(x, y) : void
+>x : number
+>y : number
+    }
+    public toString() {
+>toString : () => string
+
+        return super.toString() + " color=" + this.color;
+>super.toString() + " color=" + this.color : string
+>super.toString() + " color=" : string
+>super.toString() : string
+>super.toString : () => string
+>toString : () => string
+>this.color : string
+>this : ColoredPoint
+>color : string
+    }
+}
+

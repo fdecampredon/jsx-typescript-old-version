@@ -1,242 +1,392 @@
 === tests/cases/compiler/typeResolution.ts ===
-Line 0 col 14 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 1 col 18 IdentifierName "SubModule1" = SubModule1
-Line 2 col 22 IdentifierName "SubSubModule1" = SubSubModule1
-Line 3 col 25 IdentifierName "ClassA" = ClassA
-Line 4 col 23 IdentifierName "AisIn1_1_1" = () => void
-Line 6 col 24 IdentifierName "a1" = ClassA
-Line 6 col 28 IdentifierName "ClassA" = ClassA
-Line 6 col 36 InvocationExpression "a1.AisIn1_1_1()" = void
-Line 6 col 36 MemberAccessExpression "a1.AisIn1_1_1" = () => void
-Line 6 col 36 IdentifierName "a1" = ClassA
-Line 6 col 39 IdentifierName "AisIn1_1_1" = () => void
-Line 7 col 24 IdentifierName "a2" = ClassA
-Line 7 col 28 IdentifierName "SubSubModule1" = SubSubModule1
-Line 7 col 42 IdentifierName "ClassA" = ClassA
-Line 7 col 50 InvocationExpression "a2.AisIn1_1_1()" = void
-Line 7 col 50 MemberAccessExpression "a2.AisIn1_1_1" = () => void
-Line 7 col 50 IdentifierName "a2" = ClassA
-Line 7 col 53 IdentifierName "AisIn1_1_1" = () => void
-Line 8 col 24 IdentifierName "a3" = ClassA
-Line 8 col 28 IdentifierName "SubModule1" = SubModule1
-Line 8 col 39 IdentifierName "SubSubModule1" = SubSubModule1
-Line 8 col 53 IdentifierName "ClassA" = ClassA
-Line 8 col 61 InvocationExpression "a3.AisIn1_1_1()" = void
-Line 8 col 61 MemberAccessExpression "a3.AisIn1_1_1" = () => void
-Line 8 col 61 IdentifierName "a3" = ClassA
-Line 8 col 64 IdentifierName "AisIn1_1_1" = () => void
-Line 9 col 24 IdentifierName "a4" = ClassA
-Line 9 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 9 col 44 IdentifierName "SubModule1" = SubModule1
-Line 9 col 55 IdentifierName "SubSubModule1" = SubSubModule1
-Line 9 col 69 IdentifierName "ClassA" = ClassA
-Line 9 col 77 InvocationExpression "a4.AisIn1_1_1()" = void
-Line 9 col 77 MemberAccessExpression "a4.AisIn1_1_1" = () => void
-Line 9 col 77 IdentifierName "a4" = ClassA
-Line 9 col 80 IdentifierName "AisIn1_1_1" = () => void
-Line 12 col 24 IdentifierName "b1" = ClassB
-Line 12 col 28 IdentifierName "ClassB" = ClassB
-Line 12 col 36 InvocationExpression "b1.BisIn1_1_1()" = void
-Line 12 col 36 MemberAccessExpression "b1.BisIn1_1_1" = () => void
-Line 12 col 36 IdentifierName "b1" = ClassB
-Line 12 col 39 IdentifierName "BisIn1_1_1" = () => void
-Line 13 col 24 IdentifierName "b2" = ClassB
-Line 13 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 13 col 44 IdentifierName "SubModule1" = SubModule1
-Line 13 col 55 IdentifierName "SubSubModule1" = SubSubModule1
-Line 13 col 69 IdentifierName "ClassB" = ClassB
-Line 13 col 77 InvocationExpression "b2.BisIn1_1_1()" = void
-Line 13 col 77 MemberAccessExpression "b2.BisIn1_1_1" = () => void
-Line 13 col 77 IdentifierName "b2" = ClassB
-Line 13 col 80 IdentifierName "BisIn1_1_1" = () => void
-Line 16 col 24 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
-Line 16 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 16 col 44 IdentifierName "SubModule2" = SubModule2
-Line 16 col 55 IdentifierName "SubSubModule2" = SubModule2.SubSubModule2
-Line 16 col 69 IdentifierName "ClassA" = SubModule2.SubSubModule2.ClassA
-Line 16 col 77 InvocationExpression "c1.AisIn1_2_2()" = void
-Line 16 col 77 MemberAccessExpression "c1.AisIn1_2_2" = () => void
-Line 16 col 77 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
-Line 16 col 80 IdentifierName "AisIn1_2_2" = () => void
-Line 19 col 24 IdentifierName "d1" = InterfaceX
-Line 19 col 28 IdentifierName "InterfaceX" = InterfaceX
-Line 19 col 40 InvocationExpression "d1.XisIn1_1_1()" = any
-Line 19 col 40 MemberAccessExpression "d1.XisIn1_1_1" = () => any
-Line 19 col 40 IdentifierName "d1" = InterfaceX
-Line 19 col 43 IdentifierName "XisIn1_1_1" = () => any
-Line 20 col 24 IdentifierName "d2" = InterfaceX
-Line 20 col 28 IdentifierName "SubSubModule1" = SubSubModule1
-Line 20 col 42 IdentifierName "InterfaceX" = InterfaceX
-Line 20 col 54 InvocationExpression "d2.XisIn1_1_1()" = any
-Line 20 col 54 MemberAccessExpression "d2.XisIn1_1_1" = () => any
-Line 20 col 54 IdentifierName "d2" = InterfaceX
-Line 20 col 57 IdentifierName "XisIn1_1_1" = () => any
-Line 23 col 25 IdentifierName "ClassB" = ClassB
-Line 24 col 23 IdentifierName "BisIn1_1_1" = () => void
-Line 28 col 24 IdentifierName "a1" = ClassA
-Line 28 col 28 IdentifierName "ClassA" = ClassA
-Line 28 col 36 InvocationExpression "a1.AisIn1_1_1()" = void
-Line 28 col 36 MemberAccessExpression "a1.AisIn1_1_1" = () => void
-Line 28 col 36 IdentifierName "a1" = ClassA
-Line 28 col 39 IdentifierName "AisIn1_1_1" = () => void
-Line 29 col 24 IdentifierName "a2" = ClassA
-Line 29 col 28 IdentifierName "SubSubModule1" = SubSubModule1
-Line 29 col 42 IdentifierName "ClassA" = ClassA
-Line 29 col 50 InvocationExpression "a2.AisIn1_1_1()" = void
-Line 29 col 50 MemberAccessExpression "a2.AisIn1_1_1" = () => void
-Line 29 col 50 IdentifierName "a2" = ClassA
-Line 29 col 53 IdentifierName "AisIn1_1_1" = () => void
-Line 30 col 24 IdentifierName "a3" = ClassA
-Line 30 col 28 IdentifierName "SubModule1" = SubModule1
-Line 30 col 39 IdentifierName "SubSubModule1" = SubSubModule1
-Line 30 col 53 IdentifierName "ClassA" = ClassA
-Line 30 col 61 InvocationExpression "a3.AisIn1_1_1()" = void
-Line 30 col 61 MemberAccessExpression "a3.AisIn1_1_1" = () => void
-Line 30 col 61 IdentifierName "a3" = ClassA
-Line 30 col 64 IdentifierName "AisIn1_1_1" = () => void
-Line 31 col 24 IdentifierName "a4" = ClassA
-Line 31 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 31 col 44 IdentifierName "SubModule1" = SubModule1
-Line 31 col 55 IdentifierName "SubSubModule1" = SubSubModule1
-Line 31 col 69 IdentifierName "ClassA" = ClassA
-Line 31 col 77 InvocationExpression "a4.AisIn1_1_1()" = void
-Line 31 col 77 MemberAccessExpression "a4.AisIn1_1_1" = () => void
-Line 31 col 77 IdentifierName "a4" = ClassA
-Line 31 col 80 IdentifierName "AisIn1_1_1" = () => void
-Line 34 col 24 IdentifierName "b1" = ClassB
-Line 34 col 28 IdentifierName "ClassB" = ClassB
-Line 34 col 36 InvocationExpression "b1.BisIn1_1_1()" = void
-Line 34 col 36 MemberAccessExpression "b1.BisIn1_1_1" = () => void
-Line 34 col 36 IdentifierName "b1" = ClassB
-Line 34 col 39 IdentifierName "BisIn1_1_1" = () => void
-Line 35 col 24 IdentifierName "b2" = ClassB
-Line 35 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 35 col 44 IdentifierName "SubModule1" = SubModule1
-Line 35 col 55 IdentifierName "SubSubModule1" = SubSubModule1
-Line 35 col 69 IdentifierName "ClassB" = ClassB
-Line 35 col 77 InvocationExpression "b2.BisIn1_1_1()" = void
-Line 35 col 77 MemberAccessExpression "b2.BisIn1_1_1" = () => void
-Line 35 col 77 IdentifierName "b2" = ClassB
-Line 35 col 80 IdentifierName "BisIn1_1_1" = () => void
-Line 38 col 24 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
-Line 38 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 38 col 44 IdentifierName "SubModule2" = SubModule2
-Line 38 col 55 IdentifierName "SubSubModule2" = SubModule2.SubSubModule2
-Line 38 col 69 IdentifierName "ClassA" = SubModule2.SubSubModule2.ClassA
-Line 38 col 77 InvocationExpression "c1.AisIn1_2_2()" = void
-Line 38 col 77 MemberAccessExpression "c1.AisIn1_2_2" = () => void
-Line 38 col 77 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
-Line 38 col 80 IdentifierName "AisIn1_2_2" = () => void
-Line 39 col 24 IdentifierName "c2" = TopLevelModule2.SubModule3.ClassA
-Line 39 col 28 IdentifierName "TopLevelModule2" = TopLevelModule2
-Line 39 col 44 IdentifierName "SubModule3" = TopLevelModule2.SubModule3
-Line 39 col 55 IdentifierName "ClassA" = TopLevelModule2.SubModule3.ClassA
-Line 39 col 63 InvocationExpression "c2.AisIn2_3()" = void
-Line 39 col 63 MemberAccessExpression "c2.AisIn2_3" = () => void
-Line 39 col 63 IdentifierName "c2" = TopLevelModule2.SubModule3.ClassA
-Line 39 col 66 IdentifierName "AisIn2_3" = () => void
-Line 42 col 24 IdentifierName "d1" = InterfaceX
-Line 42 col 28 IdentifierName "InterfaceX" = InterfaceX
-Line 42 col 40 InvocationExpression "d1.XisIn1_1_1()" = any
-Line 42 col 40 MemberAccessExpression "d1.XisIn1_1_1" = () => any
-Line 42 col 40 IdentifierName "d1" = InterfaceX
-Line 42 col 43 IdentifierName "XisIn1_1_1" = () => any
-Line 43 col 24 IdentifierName "d2" = InterfaceX
-Line 43 col 28 IdentifierName "SubSubModule1" = SubSubModule1
-Line 43 col 42 IdentifierName "InterfaceX" = InterfaceX
-Line 43 col 54 InvocationExpression "d2.XisIn1_1_1()" = any
-Line 43 col 54 MemberAccessExpression "d2.XisIn1_1_1" = () => any
-Line 43 col 54 IdentifierName "d2" = InterfaceX
-Line 43 col 57 IdentifierName "XisIn1_1_1" = () => any
-Line 46 col 29 IdentifierName "InterfaceX" = InterfaceX
-Line 46 col 42 IdentifierName "XisIn1_1_1" = () => any
-Line 47 col 18 IdentifierName "NonExportedClassQ" = NonExportedClassQ
-Line 49 col 29 IdentifierName "QQ" = () => void
-Line 51 col 28 IdentifierName "a4" = ClassA
-Line 51 col 32 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 51 col 48 IdentifierName "SubModule1" = SubModule1
-Line 51 col 59 IdentifierName "SubSubModule1" = SubSubModule1
-Line 51 col 73 IdentifierName "ClassA" = ClassA
-Line 51 col 81 InvocationExpression "a4.AisIn1_1_1()" = void
-Line 51 col 81 MemberAccessExpression "a4.AisIn1_1_1" = () => void
-Line 51 col 81 IdentifierName "a4" = ClassA
-Line 51 col 84 IdentifierName "AisIn1_1_1" = () => void
-Line 52 col 28 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
-Line 52 col 32 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 52 col 48 IdentifierName "SubModule2" = SubModule2
-Line 52 col 59 IdentifierName "SubSubModule2" = SubModule2.SubSubModule2
-Line 52 col 73 IdentifierName "ClassA" = SubModule2.SubSubModule2.ClassA
-Line 52 col 81 InvocationExpression "c1.AisIn1_2_2()" = void
-Line 52 col 81 MemberAccessExpression "c1.AisIn1_2_2" = () => void
-Line 52 col 81 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
-Line 52 col 84 IdentifierName "AisIn1_2_2" = () => void
-Line 53 col 28 IdentifierName "d1" = InterfaceX
-Line 53 col 32 IdentifierName "InterfaceX" = InterfaceX
-Line 53 col 44 InvocationExpression "d1.XisIn1_1_1()" = any
-Line 53 col 44 MemberAccessExpression "d1.XisIn1_1_1" = () => any
-Line 53 col 44 IdentifierName "d1" = InterfaceX
-Line 53 col 47 IdentifierName "XisIn1_1_1" = () => any
-Line 54 col 28 IdentifierName "c2" = TopLevelModule2.SubModule3.ClassA
-Line 54 col 32 IdentifierName "TopLevelModule2" = TopLevelModule2
-Line 54 col 48 IdentifierName "SubModule3" = TopLevelModule2.SubModule3
-Line 54 col 59 IdentifierName "ClassA" = TopLevelModule2.SubModule3.ClassA
-Line 54 col 67 InvocationExpression "c2.AisIn2_3()" = void
-Line 54 col 67 MemberAccessExpression "c2.AisIn2_3" = () => void
-Line 54 col 67 IdentifierName "c2" = TopLevelModule2.SubModule3.ClassA
-Line 54 col 70 IdentifierName "AisIn2_3" = () => void
-Line 61 col 14 IdentifierName "ClassA" = ClassA
-Line 63 col 25 IdentifierName "AA" = () => void
-Line 64 col 24 IdentifierName "a2" = SubSubModule1.ClassA
-Line 64 col 28 IdentifierName "SubSubModule1" = SubSubModule1
-Line 64 col 42 IdentifierName "ClassA" = SubSubModule1.ClassA
-Line 64 col 50 InvocationExpression "a2.AisIn1_1_1()" = void
-Line 64 col 50 MemberAccessExpression "a2.AisIn1_1_1" = () => void
-Line 64 col 50 IdentifierName "a2" = SubSubModule1.ClassA
-Line 64 col 53 IdentifierName "AisIn1_1_1" = () => void
-Line 65 col 24 IdentifierName "a3" = SubSubModule1.ClassA
-Line 65 col 28 IdentifierName "SubModule1" = SubModule1
-Line 65 col 39 IdentifierName "SubSubModule1" = SubSubModule1
-Line 65 col 53 IdentifierName "ClassA" = SubSubModule1.ClassA
-Line 65 col 61 InvocationExpression "a3.AisIn1_1_1()" = void
-Line 65 col 61 MemberAccessExpression "a3.AisIn1_1_1" = () => void
-Line 65 col 61 IdentifierName "a3" = SubSubModule1.ClassA
-Line 65 col 64 IdentifierName "AisIn1_1_1" = () => void
-Line 66 col 24 IdentifierName "a4" = SubSubModule1.ClassA
-Line 66 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 66 col 44 IdentifierName "SubModule1" = SubModule1
-Line 66 col 55 IdentifierName "SubSubModule1" = SubSubModule1
-Line 66 col 69 IdentifierName "ClassA" = SubSubModule1.ClassA
-Line 66 col 77 InvocationExpression "a4.AisIn1_1_1()" = void
-Line 66 col 77 MemberAccessExpression "a4.AisIn1_1_1" = () => void
-Line 66 col 77 IdentifierName "a4" = SubSubModule1.ClassA
-Line 66 col 80 IdentifierName "AisIn1_1_1" = () => void
-Line 69 col 24 IdentifierName "d2" = SubSubModule1.InterfaceX
-Line 69 col 28 IdentifierName "SubSubModule1" = SubSubModule1
-Line 69 col 42 IdentifierName "InterfaceX" = SubSubModule1.InterfaceX
-Line 69 col 54 InvocationExpression "d2.XisIn1_1_1()" = any
-Line 69 col 54 MemberAccessExpression "d2.XisIn1_1_1" = () => any
-Line 69 col 54 IdentifierName "d2" = SubSubModule1.InterfaceX
-Line 69 col 57 IdentifierName "XisIn1_1_1" = () => any
-Line 75 col 18 IdentifierName "SubModule2" = SubModule2
-Line 76 col 22 IdentifierName "SubSubModule2" = SubSubModule2
-Line 78 col 25 IdentifierName "ClassA" = ClassA
-Line 78 col 41 IdentifierName "AisIn1_2_2" = () => void
-Line 79 col 25 IdentifierName "ClassB" = ClassB
-Line 79 col 41 IdentifierName "BisIn1_2_2" = () => void
-Line 80 col 25 IdentifierName "ClassC" = ClassC
-Line 80 col 41 IdentifierName "CisIn1_2_2" = () => void
-Line 81 col 29 IdentifierName "InterfaceY" = InterfaceY
-Line 81 col 42 IdentifierName "YisIn1_2_2" = () => any
-Line 82 col 22 IdentifierName "NonExportedInterfaceQ" = NonExportedInterfaceQ
-Line 85 col 25 IdentifierName "InterfaceY" = InterfaceY
-Line 85 col 38 IdentifierName "YisIn1_2" = () => any
-Line 88 col 10 IdentifierName "ClassA" = ClassA
-Line 89 col 15 IdentifierName "AisIn1" = () => void
-Line 92 col 14 IdentifierName "InterfaceY" = InterfaceY
-Line 93 col 0 IdentifierName "YisIn1" = () => any
-Line 96 col 11 IdentifierName "NotExportedModule" = NotExportedModule
-Line 97 col 21 IdentifierName "ClassA" = ClassA
-Line 101 col 7 IdentifierName "TopLevelModule2" = TopLevelModule2
-Line 102 col 18 IdentifierName "SubModule3" = SubModule3
-Line 103 col 21 IdentifierName "ClassA" = ClassA
-Line 104 col 19 IdentifierName "AisIn2_3" = () => void
+export module TopLevelModule1 {
+>TopLevelModule1 : TopLevelModule1
+
+    export module SubModule1 {
+>SubModule1 : SubModule1
+
+        export module SubSubModule1 {
+>SubSubModule1 : SubSubModule1
+
+            export class ClassA {
+>ClassA : ClassA
+
+                public AisIn1_1_1() {
+>AisIn1_1_1 : () => void
+
+                    // Try all qualified names of this type
+                    var a1: ClassA; a1.AisIn1_1_1();
+>a1 : ClassA
+>ClassA : ClassA
+>a1.AisIn1_1_1() : void
+>a1.AisIn1_1_1 : () => void
+>a1 : ClassA
+>AisIn1_1_1 : () => void
+
+                    var a2: SubSubModule1.ClassA; a2.AisIn1_1_1();
+>a2 : ClassA
+>SubSubModule1 : SubSubModule1
+>ClassA : ClassA
+>a2.AisIn1_1_1() : void
+>a2.AisIn1_1_1 : () => void
+>a2 : ClassA
+>AisIn1_1_1 : () => void
+
+                    var a3: SubModule1.SubSubModule1.ClassA; a3.AisIn1_1_1();
+>a3 : ClassA
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassA : ClassA
+>a3.AisIn1_1_1() : void
+>a3.AisIn1_1_1 : () => void
+>a3 : ClassA
+>AisIn1_1_1 : () => void
+
+                    var a4: TopLevelModule1.SubModule1.SubSubModule1.ClassA; a4.AisIn1_1_1();
+>a4 : ClassA
+>TopLevelModule1 : TopLevelModule1
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassA : ClassA
+>a4.AisIn1_1_1() : void
+>a4.AisIn1_1_1 : () => void
+>a4 : ClassA
+>AisIn1_1_1 : () => void
+                    
+                    // Two variants of qualifying a peer type
+                    var b1: ClassB; b1.BisIn1_1_1();
+>b1 : ClassB
+>ClassB : ClassB
+>b1.BisIn1_1_1() : void
+>b1.BisIn1_1_1 : () => void
+>b1 : ClassB
+>BisIn1_1_1 : () => void
+
+                    var b2: TopLevelModule1.SubModule1.SubSubModule1.ClassB; b2.BisIn1_1_1();
+>b2 : ClassB
+>TopLevelModule1 : TopLevelModule1
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassB : ClassB
+>b2.BisIn1_1_1() : void
+>b2.BisIn1_1_1 : () => void
+>b2 : ClassB
+>BisIn1_1_1 : () => void
+                    
+                    // Type only accessible from the root
+                    var c1: TopLevelModule1.SubModule2.SubSubModule2.ClassA; c1.AisIn1_2_2();
+>c1 : SubModule2.SubSubModule2.ClassA
+>TopLevelModule1 : TopLevelModule1
+>SubModule2 : SubModule2
+>SubSubModule2 : SubModule2.SubSubModule2
+>ClassA : SubModule2.SubSubModule2.ClassA
+>c1.AisIn1_2_2() : void
+>c1.AisIn1_2_2 : () => void
+>c1 : SubModule2.SubSubModule2.ClassA
+>AisIn1_2_2 : () => void
+                    
+                    // Interface reference
+                    var d1: InterfaceX; d1.XisIn1_1_1();
+>d1 : InterfaceX
+>InterfaceX : InterfaceX
+>d1.XisIn1_1_1() : any
+>d1.XisIn1_1_1 : () => any
+>d1 : InterfaceX
+>XisIn1_1_1 : () => any
+
+                    var d2: SubSubModule1.InterfaceX; d2.XisIn1_1_1();
+>d2 : InterfaceX
+>SubSubModule1 : SubSubModule1
+>InterfaceX : InterfaceX
+>d2.XisIn1_1_1() : any
+>d2.XisIn1_1_1 : () => any
+>d2 : InterfaceX
+>XisIn1_1_1 : () => any
+                }
+            }
+            export class ClassB {
+>ClassB : ClassB
+
+                public BisIn1_1_1() {
+>BisIn1_1_1 : () => void
+
+                    /** Exactly the same as above in AisIn1_1_1 **/
+                    
+                    // Try all qualified names of this type
+                    var a1: ClassA; a1.AisIn1_1_1();
+>a1 : ClassA
+>ClassA : ClassA
+>a1.AisIn1_1_1() : void
+>a1.AisIn1_1_1 : () => void
+>a1 : ClassA
+>AisIn1_1_1 : () => void
+
+                    var a2: SubSubModule1.ClassA; a2.AisIn1_1_1();
+>a2 : ClassA
+>SubSubModule1 : SubSubModule1
+>ClassA : ClassA
+>a2.AisIn1_1_1() : void
+>a2.AisIn1_1_1 : () => void
+>a2 : ClassA
+>AisIn1_1_1 : () => void
+
+                    var a3: SubModule1.SubSubModule1.ClassA; a3.AisIn1_1_1();
+>a3 : ClassA
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassA : ClassA
+>a3.AisIn1_1_1() : void
+>a3.AisIn1_1_1 : () => void
+>a3 : ClassA
+>AisIn1_1_1 : () => void
+
+                    var a4: TopLevelModule1.SubModule1.SubSubModule1.ClassA; a4.AisIn1_1_1();
+>a4 : ClassA
+>TopLevelModule1 : TopLevelModule1
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassA : ClassA
+>a4.AisIn1_1_1() : void
+>a4.AisIn1_1_1 : () => void
+>a4 : ClassA
+>AisIn1_1_1 : () => void
+                    
+                    // Two variants of qualifying a peer type
+                    var b1: ClassB; b1.BisIn1_1_1();
+>b1 : ClassB
+>ClassB : ClassB
+>b1.BisIn1_1_1() : void
+>b1.BisIn1_1_1 : () => void
+>b1 : ClassB
+>BisIn1_1_1 : () => void
+
+                    var b2: TopLevelModule1.SubModule1.SubSubModule1.ClassB; b2.BisIn1_1_1();
+>b2 : ClassB
+>TopLevelModule1 : TopLevelModule1
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassB : ClassB
+>b2.BisIn1_1_1() : void
+>b2.BisIn1_1_1 : () => void
+>b2 : ClassB
+>BisIn1_1_1 : () => void
+                    
+                    // Type only accessible from the root
+                    var c1: TopLevelModule1.SubModule2.SubSubModule2.ClassA; c1.AisIn1_2_2();
+>c1 : SubModule2.SubSubModule2.ClassA
+>TopLevelModule1 : TopLevelModule1
+>SubModule2 : SubModule2
+>SubSubModule2 : SubModule2.SubSubModule2
+>ClassA : SubModule2.SubSubModule2.ClassA
+>c1.AisIn1_2_2() : void
+>c1.AisIn1_2_2 : () => void
+>c1 : SubModule2.SubSubModule2.ClassA
+>AisIn1_2_2 : () => void
+
+                    var c2: TopLevelModule2.SubModule3.ClassA; c2.AisIn2_3();
+>c2 : TopLevelModule2.SubModule3.ClassA
+>TopLevelModule2 : TopLevelModule2
+>SubModule3 : TopLevelModule2.SubModule3
+>ClassA : TopLevelModule2.SubModule3.ClassA
+>c2.AisIn2_3() : void
+>c2.AisIn2_3 : () => void
+>c2 : TopLevelModule2.SubModule3.ClassA
+>AisIn2_3 : () => void
+                    
+                    // Interface reference
+                    var d1: InterfaceX; d1.XisIn1_1_1();
+>d1 : InterfaceX
+>InterfaceX : InterfaceX
+>d1.XisIn1_1_1() : any
+>d1.XisIn1_1_1 : () => any
+>d1 : InterfaceX
+>XisIn1_1_1 : () => any
+
+                    var d2: SubSubModule1.InterfaceX; d2.XisIn1_1_1();
+>d2 : InterfaceX
+>SubSubModule1 : SubSubModule1
+>InterfaceX : InterfaceX
+>d2.XisIn1_1_1() : any
+>d2.XisIn1_1_1 : () => any
+>d2 : InterfaceX
+>XisIn1_1_1 : () => any
+                }
+            }
+            export interface InterfaceX { XisIn1_1_1(); }
+>InterfaceX : InterfaceX
+>XisIn1_1_1 : () => any
+
+            class NonExportedClassQ {
+>NonExportedClassQ : NonExportedClassQ
+
+                constructor() {
+                    function QQ() {
+>QQ : () => void
+
+                        /* Sampling of stuff from AisIn1_1_1 */
+                        var a4: TopLevelModule1.SubModule1.SubSubModule1.ClassA; a4.AisIn1_1_1();
+>a4 : ClassA
+>TopLevelModule1 : TopLevelModule1
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassA : ClassA
+>a4.AisIn1_1_1() : void
+>a4.AisIn1_1_1 : () => void
+>a4 : ClassA
+>AisIn1_1_1 : () => void
+
+                        var c1: TopLevelModule1.SubModule2.SubSubModule2.ClassA; c1.AisIn1_2_2();
+>c1 : SubModule2.SubSubModule2.ClassA
+>TopLevelModule1 : TopLevelModule1
+>SubModule2 : SubModule2
+>SubSubModule2 : SubModule2.SubSubModule2
+>ClassA : SubModule2.SubSubModule2.ClassA
+>c1.AisIn1_2_2() : void
+>c1.AisIn1_2_2 : () => void
+>c1 : SubModule2.SubSubModule2.ClassA
+>AisIn1_2_2 : () => void
+
+                        var d1: InterfaceX; d1.XisIn1_1_1();
+>d1 : InterfaceX
+>InterfaceX : InterfaceX
+>d1.XisIn1_1_1() : any
+>d1.XisIn1_1_1 : () => any
+>d1 : InterfaceX
+>XisIn1_1_1 : () => any
+
+                        var c2: TopLevelModule2.SubModule3.ClassA; c2.AisIn2_3();
+>c2 : TopLevelModule2.SubModule3.ClassA
+>TopLevelModule2 : TopLevelModule2
+>SubModule3 : TopLevelModule2.SubModule3
+>ClassA : TopLevelModule2.SubModule3.ClassA
+>c2.AisIn2_3() : void
+>c2.AisIn2_3 : () => void
+>c2 : TopLevelModule2.SubModule3.ClassA
+>AisIn2_3 : () => void
+                    }
+                }
+            }
+        }
+        
+        // Should have no effect on S1.SS1.ClassA above because it is not exported
+        class ClassA {
+>ClassA : ClassA
+
+            constructor() {
+                function AA() {
+>AA : () => void
+
+                    var a2: SubSubModule1.ClassA; a2.AisIn1_1_1();
+>a2 : SubSubModule1.ClassA
+>SubSubModule1 : SubSubModule1
+>ClassA : SubSubModule1.ClassA
+>a2.AisIn1_1_1() : void
+>a2.AisIn1_1_1 : () => void
+>a2 : SubSubModule1.ClassA
+>AisIn1_1_1 : () => void
+
+                    var a3: SubModule1.SubSubModule1.ClassA; a3.AisIn1_1_1();
+>a3 : SubSubModule1.ClassA
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassA : SubSubModule1.ClassA
+>a3.AisIn1_1_1() : void
+>a3.AisIn1_1_1 : () => void
+>a3 : SubSubModule1.ClassA
+>AisIn1_1_1 : () => void
+
+                    var a4: TopLevelModule1.SubModule1.SubSubModule1.ClassA; a4.AisIn1_1_1();
+>a4 : SubSubModule1.ClassA
+>TopLevelModule1 : TopLevelModule1
+>SubModule1 : SubModule1
+>SubSubModule1 : SubSubModule1
+>ClassA : SubSubModule1.ClassA
+>a4.AisIn1_1_1() : void
+>a4.AisIn1_1_1 : () => void
+>a4 : SubSubModule1.ClassA
+>AisIn1_1_1 : () => void
+                    
+                    // Interface reference
+                    var d2: SubSubModule1.InterfaceX; d2.XisIn1_1_1();
+>d2 : SubSubModule1.InterfaceX
+>SubSubModule1 : SubSubModule1
+>InterfaceX : SubSubModule1.InterfaceX
+>d2.XisIn1_1_1() : any
+>d2.XisIn1_1_1 : () => any
+>d2 : SubSubModule1.InterfaceX
+>XisIn1_1_1 : () => any
+                }
+            }
+        }
+    }
+
+    export module SubModule2 {
+>SubModule2 : SubModule2
+
+        export module SubSubModule2 {
+>SubSubModule2 : SubSubModule2
+
+            // No code here since these are the mirror of the above calls
+            export class ClassA { public AisIn1_2_2() { } }
+>ClassA : ClassA
+>AisIn1_2_2 : () => void
+
+            export class ClassB { public BisIn1_2_2() { } }
+>ClassB : ClassB
+>BisIn1_2_2 : () => void
+
+            export class ClassC { public CisIn1_2_2() { } }
+>ClassC : ClassC
+>CisIn1_2_2 : () => void
+
+            export interface InterfaceY { YisIn1_2_2(); }
+>InterfaceY : InterfaceY
+>YisIn1_2_2 : () => any
+
+            interface NonExportedInterfaceQ { }
+>NonExportedInterfaceQ : NonExportedInterfaceQ
+        }
+        
+        export interface InterfaceY { YisIn1_2(); }
+>InterfaceY : InterfaceY
+>YisIn1_2 : () => any
+    }
+    
+    class ClassA {
+>ClassA : ClassA
+
+        public AisIn1() { }
+>AisIn1 : () => void
+    }
+
+    interface InterfaceY {
+>InterfaceY : InterfaceY
+
+        YisIn1();
+>YisIn1 : () => any
+    }
+    
+    module NotExportedModule {
+>NotExportedModule : NotExportedModule
+
+        export class ClassA { }
+>ClassA : ClassA
+    }
+}
+
+module TopLevelModule2 {
+>TopLevelModule2 : TopLevelModule2
+
+    export module SubModule3 {
+>SubModule3 : SubModule3
+
+        export class ClassA {
+>ClassA : ClassA
+
+            public AisIn2_3() { }
+>AisIn2_3 : () => void
+        }
+    }
+}
+
+

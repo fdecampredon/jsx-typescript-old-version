@@ -1,19 +1,43 @@
 === tests/cases/compiler/recursiveExportAssignmentAndFindAliasedType7_moduleA.ts ===
-Line 0 col 7 IdentifierName "moduleC" = moduleC
-Line 1 col 7 IdentifierName "ClassB" = ClassB
-Line 2 col 11 IdentifierName "b" = ClassB
-Line 2 col 14 IdentifierName "ClassB" = ClassB
+import moduleC = require("recursiveExportAssignmentAndFindAliasedType7_moduleC");
+>moduleC : moduleC
+
+import ClassB = require("recursiveExportAssignmentAndFindAliasedType7_moduleB");
+>ClassB : ClassB
+
+export var b: ClassB; // This should result in type ClassB
+>b : ClassB
+>ClassB : ClassB
+
 === tests/cases/compiler/recursiveExportAssignmentAndFindAliasedType7_moduleC.ts ===
-Line 0 col 7 IdentifierName "self" = self
-Line 1 col 4 IdentifierName "selfVar" = any
-Line 1 col 14 IdentifierName "self" = any
-Line 2 col 9 IdentifierName "selfVar" = any
+import self = require("recursiveExportAssignmentAndFindAliasedType7_moduleD");
+>self : self
+
+var selfVar = self;
+>selfVar : any
+>self : any
+
+export = selfVar;
+>selfVar : any
+
 === tests/cases/compiler/recursiveExportAssignmentAndFindAliasedType7_moduleD.ts ===
-Line 0 col 7 IdentifierName "self" = self
-Line 1 col 9 IdentifierName "self" = any
+import self = require("recursiveExportAssignmentAndFindAliasedType7_moduleE");
+>self : self
+
+export = self;
+>self : any
+
 === tests/cases/compiler/recursiveExportAssignmentAndFindAliasedType7_moduleE.ts ===
-Line 0 col 7 IdentifierName "self" = self
-Line 1 col 9 IdentifierName "self" = any
+import self = require("recursiveExportAssignmentAndFindAliasedType7_moduleC");
+>self : self
+
+export = self;
+>self : any
+
 === tests/cases/compiler/recursiveExportAssignmentAndFindAliasedType7_moduleB.ts ===
-Line 0 col 6 IdentifierName "ClassB" = ClassB
-Line 1 col 9 IdentifierName "ClassB" = typeof ClassB
+class ClassB { }
+>ClassB : ClassB
+
+export = ClassB;
+>ClassB : typeof ClassB
+

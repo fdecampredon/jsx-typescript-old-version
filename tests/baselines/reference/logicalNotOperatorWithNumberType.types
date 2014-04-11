@@ -1,101 +1,166 @@
 === tests/cases/compiler/logicalNotOperatorWithNumberType.ts ===
-Line 1 col 4 IdentifierName "NUMBER" = number
-Line 2 col 4 IdentifierName "NUMBER1" = number[]
-Line 2 col 24 ArrayLiteralExpression "[1, 2]" = number[]
-Line 4 col 9 IdentifierName "foo" = typeof foo
-Line 6 col 6 IdentifierName "A" = A
-Line 7 col 11 IdentifierName "a" = number
-Line 8 col 11 IdentifierName "foo" = () => number
-Line 10 col 7 IdentifierName "M" = M
-Line 11 col 15 IdentifierName "n" = number
-Line 14 col 4 IdentifierName "objA" = A
-Line 14 col 11 ObjectCreationExpression "new A()" = A
-Line 14 col 15 IdentifierName "A" = typeof A
-Line 17 col 4 IdentifierName "ResultIsBoolean1" = boolean
-Line 17 col 23 LogicalNotExpression "!NUMBER" = boolean
-Line 17 col 24 IdentifierName "NUMBER" = number
-Line 18 col 4 IdentifierName "ResultIsBoolean2" = boolean
-Line 18 col 23 LogicalNotExpression "!NUMBER1" = boolean
-Line 18 col 24 IdentifierName "NUMBER1" = number[]
-Line 21 col 4 IdentifierName "ResultIsBoolean3" = boolean
-Line 21 col 23 LogicalNotExpression "!1" = boolean
-Line 22 col 4 IdentifierName "ResultIsBoolean4" = boolean
-Line 22 col 23 LogicalNotExpression "!{ x: 1, y: 2}" = boolean
-Line 22 col 24 ObjectLiteralExpression "{ x: 1, y: 2}" = { x: number; y: number; }
-Line 22 col 26 IdentifierName "x" = number
-Line 22 col 32 IdentifierName "y" = number
-Line 23 col 4 IdentifierName "ResultIsBoolean5" = boolean
-Line 23 col 23 LogicalNotExpression "!{ x: 1, y: (n: number) => { return n; } }" = boolean
-Line 23 col 24 ObjectLiteralExpression "{ x: 1, y: (n: number) => { return n; } }" = { x: number; y: (n: number) => number; }
-Line 23 col 26 IdentifierName "x" = number
-Line 23 col 32 IdentifierName "y" = (n: number) => number
-Line 23 col 35 ParenthesizedArrowFunctionExpression "(n: number) => { return n; }" = (n: number) => number
-Line 23 col 36 IdentifierName "n" = number
-Line 23 col 59 IdentifierName "n" = number
-Line 26 col 4 IdentifierName "ResultIsBoolean6" = boolean
-Line 26 col 23 LogicalNotExpression "!objA.a" = boolean
-Line 26 col 24 MemberAccessExpression "objA.a" = number
-Line 26 col 24 IdentifierName "objA" = A
-Line 26 col 29 IdentifierName "a" = number
-Line 27 col 4 IdentifierName "ResultIsBoolean7" = boolean
-Line 27 col 23 LogicalNotExpression "!M.n" = boolean
-Line 27 col 24 MemberAccessExpression "M.n" = number
-Line 27 col 24 IdentifierName "M" = typeof M
-Line 27 col 26 IdentifierName "n" = number
-Line 28 col 4 IdentifierName "ResultIsBoolean8" = boolean
-Line 28 col 23 LogicalNotExpression "!NUMBER1[0]" = boolean
-Line 28 col 24 ElementAccessExpression "NUMBER1[0]" = number
-Line 28 col 24 IdentifierName "NUMBER1" = number[]
-Line 29 col 4 IdentifierName "ResultIsBoolean9" = boolean
-Line 29 col 23 LogicalNotExpression "!foo()" = boolean
-Line 29 col 24 InvocationExpression "foo()" = number
-Line 29 col 24 IdentifierName "foo" = typeof foo
-Line 30 col 4 IdentifierName "ResultIsBoolean10" = boolean
-Line 30 col 24 LogicalNotExpression "!A.foo()" = boolean
-Line 30 col 25 InvocationExpression "A.foo()" = number
-Line 30 col 25 MemberAccessExpression "A.foo" = () => number
-Line 30 col 25 IdentifierName "A" = typeof A
-Line 30 col 27 IdentifierName "foo" = () => number
-Line 31 col 4 IdentifierName "ResultIsBoolean11" = boolean
-Line 31 col 24 LogicalNotExpression "!(NUMBER + NUMBER)" = boolean
-Line 31 col 25 ParenthesizedExpression "(NUMBER + NUMBER)" = number
-Line 31 col 26 AddExpression "NUMBER + NUMBER" = number
-Line 31 col 26 IdentifierName "NUMBER" = number
-Line 31 col 35 IdentifierName "NUMBER" = number
-Line 34 col 4 IdentifierName "ResultIsBoolean12" = boolean
-Line 34 col 24 LogicalNotExpression "!!NUMBER" = boolean
-Line 34 col 25 LogicalNotExpression "!NUMBER" = boolean
-Line 34 col 26 IdentifierName "NUMBER" = number
-Line 35 col 4 IdentifierName "ResultIsBoolean13" = boolean
-Line 35 col 24 LogicalNotExpression "!!!(NUMBER + NUMBER)" = boolean
-Line 35 col 25 LogicalNotExpression "!!(NUMBER + NUMBER)" = boolean
-Line 35 col 26 LogicalNotExpression "!(NUMBER + NUMBER)" = boolean
-Line 35 col 27 ParenthesizedExpression "(NUMBER + NUMBER)" = number
-Line 35 col 28 AddExpression "NUMBER + NUMBER" = number
-Line 35 col 28 IdentifierName "NUMBER" = number
-Line 35 col 37 IdentifierName "NUMBER" = number
-Line 36 col 0 LogicalNotExpression "// miss assignment operators
-!1" = boolean
-Line 39 col 0 LogicalNotExpression "!NUMBER" = boolean
-Line 39 col 1 IdentifierName "NUMBER" = number
-Line 40 col 0 LogicalNotExpression "!NUMBER1" = boolean
-Line 40 col 1 IdentifierName "NUMBER1" = number[]
-Line 41 col 0 LogicalNotExpression "!foo()" = boolean
-Line 41 col 1 InvocationExpression "foo()" = number
-Line 41 col 1 IdentifierName "foo" = typeof foo
-Line 42 col 0 LogicalNotExpression "!objA.a" = boolean
-Line 42 col 1 MemberAccessExpression "objA.a" = number
-Line 42 col 1 IdentifierName "objA" = A
-Line 42 col 6 IdentifierName "a" = number
-Line 43 col 0 LogicalNotExpression "!M.n" = boolean
-Line 43 col 1 MemberAccessExpression "M.n" = number
-Line 43 col 1 IdentifierName "M" = typeof M
-Line 43 col 3 IdentifierName "n" = number
-Line 44 col 0 CommaExpression "!objA.a, M.n" = number
-Line 44 col 0 LogicalNotExpression "!objA.a" = boolean
-Line 44 col 1 MemberAccessExpression "objA.a" = number
-Line 44 col 1 IdentifierName "objA" = A
-Line 44 col 6 IdentifierName "a" = number
-Line 44 col 9 MemberAccessExpression "M.n" = number
-Line 44 col 9 IdentifierName "M" = typeof M
-Line 44 col 11 IdentifierName "n" = number
+// ! operator on number type
+var NUMBER: number;
+>NUMBER : number
+
+var NUMBER1: number[] = [1, 2];
+>NUMBER1 : number[]
+>[1, 2] : number[]
+
+function foo(): number { return 1; }
+>foo : typeof foo
+
+class A {
+>A : A
+
+    public a: number;
+>a : number
+
+    static foo() { return 1; }
+>foo : () => number
+}
+module M {
+>M : M
+
+    export var n: number;
+>n : number
+}
+
+var objA = new A();
+>objA : A
+>new A() : A
+>A : typeof A
+
+// number type var
+var ResultIsBoolean1 = !NUMBER;
+>ResultIsBoolean1 : boolean
+>!NUMBER : boolean
+>NUMBER : number
+
+var ResultIsBoolean2 = !NUMBER1;
+>ResultIsBoolean2 : boolean
+>!NUMBER1 : boolean
+>NUMBER1 : number[]
+
+// number type literal
+var ResultIsBoolean3 = !1;
+>ResultIsBoolean3 : boolean
+>!1 : boolean
+
+var ResultIsBoolean4 = !{ x: 1, y: 2};
+>ResultIsBoolean4 : boolean
+>!{ x: 1, y: 2} : boolean
+>{ x: 1, y: 2} : { x: number; y: number; }
+>x : number
+>y : number
+
+var ResultIsBoolean5 = !{ x: 1, y: (n: number) => { return n; } };
+>ResultIsBoolean5 : boolean
+>!{ x: 1, y: (n: number) => { return n; } } : boolean
+>{ x: 1, y: (n: number) => { return n; } } : { x: number; y: (n: number) => number; }
+>x : number
+>y : (n: number) => number
+>(n: number) => { return n; } : (n: number) => number
+>n : number
+>n : number
+
+// number type expressions
+var ResultIsBoolean6 = !objA.a;
+>ResultIsBoolean6 : boolean
+>!objA.a : boolean
+>objA.a : number
+>objA : A
+>a : number
+
+var ResultIsBoolean7 = !M.n;
+>ResultIsBoolean7 : boolean
+>!M.n : boolean
+>M.n : number
+>M : typeof M
+>n : number
+
+var ResultIsBoolean8 = !NUMBER1[0];
+>ResultIsBoolean8 : boolean
+>!NUMBER1[0] : boolean
+>NUMBER1[0] : number
+>NUMBER1 : number[]
+
+var ResultIsBoolean9 = !foo();
+>ResultIsBoolean9 : boolean
+>!foo() : boolean
+>foo() : number
+>foo : typeof foo
+
+var ResultIsBoolean10 = !A.foo();
+>ResultIsBoolean10 : boolean
+>!A.foo() : boolean
+>A.foo() : number
+>A.foo : () => number
+>A : typeof A
+>foo : () => number
+
+var ResultIsBoolean11 = !(NUMBER + NUMBER);
+>ResultIsBoolean11 : boolean
+>!(NUMBER + NUMBER) : boolean
+>(NUMBER + NUMBER) : number
+>NUMBER + NUMBER : number
+>NUMBER : number
+>NUMBER : number
+
+// multiple ! operator
+var ResultIsBoolean12 = !!NUMBER;
+>ResultIsBoolean12 : boolean
+>!!NUMBER : boolean
+>!NUMBER : boolean
+>NUMBER : number
+
+var ResultIsBoolean13 = !!!(NUMBER + NUMBER);
+>ResultIsBoolean13 : boolean
+>!!!(NUMBER + NUMBER) : boolean
+>!!(NUMBER + NUMBER) : boolean
+>!(NUMBER + NUMBER) : boolean
+>(NUMBER + NUMBER) : number
+>NUMBER + NUMBER : number
+>NUMBER : number
+>NUMBER : number
+
+>// miss assignment operators
+!1 : boolean
+
+// miss assignment operators
+!1;
+!NUMBER;
+>!NUMBER : boolean
+>NUMBER : number
+
+!NUMBER1;
+>!NUMBER1 : boolean
+>NUMBER1 : number[]
+
+!foo();
+>!foo() : boolean
+>foo() : number
+>foo : typeof foo
+
+!objA.a;
+>!objA.a : boolean
+>objA.a : number
+>objA : A
+>a : number
+
+!M.n;
+>!M.n : boolean
+>M.n : number
+>M : typeof M
+>n : number
+
+!objA.a, M.n;
+>!objA.a, M.n : number
+>!objA.a : boolean
+>objA.a : number
+>objA : A
+>a : number
+>M.n : number
+>M : typeof M
+>n : number
+

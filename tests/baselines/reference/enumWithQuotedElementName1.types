@@ -1,2 +1,6 @@
 === tests/cases/compiler/enumWithQuotedElementName1.ts ===
-Line 0 col 5 IdentifierName "E" = E
+enum E {
+>E : E
+
+   'fo"o',
+}

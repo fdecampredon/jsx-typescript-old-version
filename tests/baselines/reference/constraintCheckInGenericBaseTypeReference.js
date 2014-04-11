@@ -1,3 +1,25 @@
+//// [constraintCheckInGenericBaseTypeReference.ts]
+// No errors
+class Constraint {
+    public method() { }
+}
+class GenericBase<T extends Constraint> {
+    public items: any;
+}
+class Derived extends GenericBase<TypeArg> {
+
+}
+class TypeArg {
+    public method() {
+        Container.People.items;
+    }
+}
+
+class Container {
+    public static People: Derived
+}
+
+//// [constraintCheckInGenericBaseTypeReference.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

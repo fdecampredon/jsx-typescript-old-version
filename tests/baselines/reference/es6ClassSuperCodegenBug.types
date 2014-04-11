@@ -1,8 +1,24 @@
 === tests/cases/compiler/es6ClassSuperCodegenBug.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 1 col 13 IdentifierName "str1" = string
-Line 1 col 26 IdentifierName "str2" = string
-Line 3 col 6 IdentifierName "B" = B
-Line 3 col 16 IdentifierName "A" = A
-Line 6 col 0 InvocationExpression "super('a1', 'b1')" = void
-Line 8 col 0 InvocationExpression "super('a2', 'b2')" = void
+class A {
+>A : A
+
+	constructor(str1:string, str2:string) {}
+>str1 : string
+>str2 : string
+}
+class B extends A {
+>B : B
+>A : A
+
+    constructor() {
+	    if (true) {
+	        super('a1', 'b1');
+>super('a1', 'b1') : void
+
+	    } else {
+	        super('a2', 'b2');
+>super('a2', 'b2') : void
+	    }
+    }
+}
+

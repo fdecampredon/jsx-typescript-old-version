@@ -1,12 +1,22 @@
 === tests/cases/compiler/instanceOfInExternalModules_1.ts ===
-Line 1 col 7 IdentifierName "Bar" = Bar
-Line 2 col 9 IdentifierName "IsFoo" = typeof IsFoo
-Line 2 col 15 IdentifierName "value" = any
-Line 3 col 11 InstanceOfExpression "value instanceof Bar.Foo" = boolean
-Line 3 col 11 IdentifierName "value" = any
-Line 3 col 28 MemberAccessExpression "Bar.Foo" = typeof Bar.Foo
-Line 3 col 28 IdentifierName "Bar" = typeof Bar
-Line 3 col 32 IdentifierName "Foo" = typeof Bar.Foo
+///<reference path='instanceOfInExternalModules_require.ts'/>
+import Bar = require("instanceOfInExternalModules_require");
+>Bar : Bar
+
+function IsFoo(value: any): boolean {
+>IsFoo : typeof IsFoo
+>value : any
+
+    return value instanceof Bar.Foo;
+>value instanceof Bar.Foo : boolean
+>value : any
+>Bar.Foo : typeof Bar.Foo
+>Bar : typeof Bar
+>Foo : typeof Bar.Foo
+}
+
 === tests/cases/compiler/instanceOfInExternalModules_require.ts ===
-Line 0 col 13 IdentifierName "Foo" = Foo
-Line 0 col 19 IdentifierName "foo" = string
+export class Foo { foo: string; }
+>Foo : Foo
+>foo : string
+

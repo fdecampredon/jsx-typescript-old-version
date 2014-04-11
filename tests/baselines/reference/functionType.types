@@ -1,11 +1,19 @@
 === tests/cases/compiler/functionType.ts ===
-Line 0 col 9 IdentifierName "salt" = typeof salt
-Line 1 col 0 InvocationExpression "salt.apply("hello", [])" = any
-Line 1 col 0 MemberAccessExpression "salt.apply" = (thisArg: any, argArray?: any) => any
-Line 1 col 0 IdentifierName "salt" = typeof salt
-Line 1 col 5 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
-Line 1 col 20 ArrayLiteralExpression "[]" = any[]
-Line 2 col 0 InvocationExpression "(new Function("return 5"))()" = any
-Line 2 col 0 ParenthesizedExpression "(new Function("return 5"))" = Function
-Line 2 col 1 ObjectCreationExpression "new Function("return 5")" = Function
-Line 2 col 5 IdentifierName "Function" = { prototype: Function; (...args: string[]): Function; new(...args: string[]): Function; }
+function salt() {}
+>salt : typeof salt
+
+salt.apply("hello", []);
+>salt.apply("hello", []) : any
+>salt.apply : (thisArg: any, argArray?: any) => any
+>salt : typeof salt
+>apply : (thisArg: any, argArray?: any) => any
+>[] : any[]
+
+(new Function("return 5"))();
+>(new Function("return 5"))() : any
+>(new Function("return 5")) : Function
+>new Function("return 5") : Function
+>Function : { prototype: Function; (...args: string[]): Function; new(...args: string[]): Function; }
+ 
+ 
+

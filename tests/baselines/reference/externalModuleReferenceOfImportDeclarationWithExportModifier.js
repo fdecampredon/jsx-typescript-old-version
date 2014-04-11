@@ -1,3 +1,8 @@
+//// [externalModuleReferenceOfImportDeclarationWithExportModifier_1.ts]
+export import file1 = require('externalModuleReferenceOfImportDeclarationWithExportModifier_0');
+file1.foo();
+
+
 //// [externalModuleReferenceOfImportDeclarationWithExportModifier_0.js]
 define(["require", "exports"], function(require, exports) {
     function foo() {

@@ -1,79 +1,155 @@
 === tests/cases/compiler/commentsExternalModules_1.ts ===
-Line 1 col 7 IdentifierName "extMod" = extMod
-Line 2 col 0 InvocationExpression "extMod.m1.fooExport()" = number
-Line 2 col 0 MemberAccessExpression "extMod.m1.fooExport" = typeof extMod.m1.fooExport
-Line 2 col 0 MemberAccessExpression "extMod.m1" = typeof extMod.m1
-Line 2 col 0 IdentifierName "extMod" = typeof extMod
-Line 2 col 7 IdentifierName "m1" = typeof extMod.m1
-Line 2 col 10 IdentifierName "fooExport" = typeof extMod.m1.fooExport
-Line 3 col 4 IdentifierName "newVar" = extMod.m1.m2.c
-Line 3 col 13 ObjectCreationExpression "new extMod.m1.m2.c()" = extMod.m1.m2.c
-Line 3 col 17 MemberAccessExpression "extMod.m1.m2.c" = typeof extMod.m1.m2.c
-Line 3 col 17 MemberAccessExpression "extMod.m1.m2" = typeof extMod.m1.m2
-Line 3 col 17 MemberAccessExpression "extMod.m1" = typeof extMod.m1
-Line 3 col 17 IdentifierName "extMod" = typeof extMod
-Line 3 col 24 IdentifierName "m1" = typeof extMod.m1
-Line 3 col 27 IdentifierName "m2" = typeof extMod.m1.m2
-Line 3 col 30 IdentifierName "c" = typeof extMod.m1.m2.c
-Line 4 col 0 InvocationExpression "extMod.m4.fooExport()" = number
-Line 4 col 0 MemberAccessExpression "extMod.m4.fooExport" = typeof extMod.m4.fooExport
-Line 4 col 0 MemberAccessExpression "extMod.m4" = typeof extMod.m4
-Line 4 col 0 IdentifierName "extMod" = typeof extMod
-Line 4 col 7 IdentifierName "m4" = typeof extMod.m4
-Line 4 col 10 IdentifierName "fooExport" = typeof extMod.m4.fooExport
-Line 5 col 4 IdentifierName "newVar2" = extMod.m4.m2.c
-Line 5 col 14 ObjectCreationExpression "new extMod.m4.m2.c()" = extMod.m4.m2.c
-Line 5 col 18 MemberAccessExpression "extMod.m4.m2.c" = typeof extMod.m4.m2.c
-Line 5 col 18 MemberAccessExpression "extMod.m4.m2" = typeof extMod.m4.m2
-Line 5 col 18 MemberAccessExpression "extMod.m4" = typeof extMod.m4
-Line 5 col 18 IdentifierName "extMod" = typeof extMod
-Line 5 col 25 IdentifierName "m4" = typeof extMod.m4
-Line 5 col 28 IdentifierName "m2" = typeof extMod.m4.m2
-Line 5 col 31 IdentifierName "c" = typeof extMod.m4.m2.c
+/**This is on import declaration*/
+import extMod = require("commentsExternalModules_0");
+>extMod : extMod
+
+extMod.m1.fooExport();
+>extMod.m1.fooExport() : number
+>extMod.m1.fooExport : typeof extMod.m1.fooExport
+>extMod.m1 : typeof extMod.m1
+>extMod : typeof extMod
+>m1 : typeof extMod.m1
+>fooExport : typeof extMod.m1.fooExport
+
+var newVar = new extMod.m1.m2.c();
+>newVar : extMod.m1.m2.c
+>new extMod.m1.m2.c() : extMod.m1.m2.c
+>extMod.m1.m2.c : typeof extMod.m1.m2.c
+>extMod.m1.m2 : typeof extMod.m1.m2
+>extMod.m1 : typeof extMod.m1
+>extMod : typeof extMod
+>m1 : typeof extMod.m1
+>m2 : typeof extMod.m1.m2
+>c : typeof extMod.m1.m2.c
+
+extMod.m4.fooExport();
+>extMod.m4.fooExport() : number
+>extMod.m4.fooExport : typeof extMod.m4.fooExport
+>extMod.m4 : typeof extMod.m4
+>extMod : typeof extMod
+>m4 : typeof extMod.m4
+>fooExport : typeof extMod.m4.fooExport
+
+var newVar2 = new extMod.m4.m2.c();
+>newVar2 : extMod.m4.m2.c
+>new extMod.m4.m2.c() : extMod.m4.m2.c
+>extMod.m4.m2.c : typeof extMod.m4.m2.c
+>extMod.m4.m2 : typeof extMod.m4.m2
+>extMod.m4 : typeof extMod.m4
+>extMod : typeof extMod
+>m4 : typeof extMod.m4
+>m2 : typeof extMod.m4.m2
+>c : typeof extMod.m4.m2.c
+
 === tests/cases/compiler/commentsExternalModules_0.ts ===
-Line 2 col 14 IdentifierName "m1" = m1
-Line 4 col 15 IdentifierName "b" = number
-Line 6 col 13 IdentifierName "foo" = typeof foo
-Line 7 col 15 IdentifierName "b" = number
-Line 10 col 18 IdentifierName "m2" = m2
-Line 12 col 21 IdentifierName "c" = c
-Line 15 col 19 IdentifierName "i" = c
-Line 15 col 23 ObjectCreationExpression "new c()" = c
-Line 15 col 27 IdentifierName "c" = typeof c
-Line 18 col 20 IdentifierName "fooExport" = typeof fooExport
-Line 19 col 15 InvocationExpression "foo()" = number
-Line 19 col 15 IdentifierName "foo" = typeof foo
-Line 22 col 0 InvocationExpression "m1.fooExport()" = number
-Line 22 col 0 MemberAccessExpression "m1.fooExport" = typeof m1.fooExport
-Line 22 col 0 IdentifierName "m1" = typeof m1
-Line 22 col 3 IdentifierName "fooExport" = typeof m1.fooExport
-Line 23 col 4 IdentifierName "myvar" = m1.m2.c
-Line 23 col 12 ObjectCreationExpression "new m1.m2.c()" = m1.m2.c
-Line 23 col 16 MemberAccessExpression "m1.m2.c" = typeof m1.m2.c
-Line 23 col 16 MemberAccessExpression "m1.m2" = typeof m1.m2
-Line 23 col 16 IdentifierName "m1" = typeof m1
-Line 23 col 19 IdentifierName "m2" = typeof m1.m2
-Line 23 col 22 IdentifierName "c" = typeof m1.m2.c
-Line 26 col 14 IdentifierName "m4" = m4
-Line 28 col 15 IdentifierName "b" = number
-Line 31 col 13 IdentifierName "foo" = typeof foo
-Line 32 col 15 IdentifierName "b" = number
-Line 36 col 18 IdentifierName "m2" = m2
-Line 38 col 21 IdentifierName "c" = c
-Line 41 col 19 IdentifierName "i" = c
-Line 41 col 23 ObjectCreationExpression "new c()" = c
-Line 41 col 27 IdentifierName "c" = typeof c
-Line 44 col 20 IdentifierName "fooExport" = typeof fooExport
-Line 45 col 15 InvocationExpression "foo()" = number
-Line 45 col 15 IdentifierName "foo" = typeof foo
-Line 48 col 0 InvocationExpression "m4.fooExport()" = number
-Line 48 col 0 MemberAccessExpression "m4.fooExport" = typeof m4.fooExport
-Line 48 col 0 IdentifierName "m4" = typeof m4
-Line 48 col 3 IdentifierName "fooExport" = typeof m4.fooExport
-Line 49 col 4 IdentifierName "myvar2" = m4.m2.c
-Line 49 col 13 ObjectCreationExpression "new m4.m2.c()" = m4.m2.c
-Line 49 col 17 MemberAccessExpression "m4.m2.c" = typeof m4.m2.c
-Line 49 col 17 MemberAccessExpression "m4.m2" = typeof m4.m2
-Line 49 col 17 IdentifierName "m4" = typeof m4
-Line 49 col 20 IdentifierName "m2" = typeof m4.m2
-Line 49 col 23 IdentifierName "c" = typeof m4.m2.c
+
+/** Module comment*/
+export module m1 {
+>m1 : m1
+
+    /** b's comment*/
+    export var b: number;
+>b : number
+
+    /** foo's comment*/
+    function foo() {
+>foo : typeof foo
+
+        return b;
+>b : number
+    }
+    /** m2 comments*/
+    export module m2 {
+>m2 : m2
+
+        /** class comment;*/
+        export class c {
+>c : c
+
+        };
+        /** i*/
+        export var i = new c();
+>i : c
+>new c() : c
+>c : typeof c
+    }
+    /** exported function*/
+    export function fooExport() {
+>fooExport : typeof fooExport
+
+        return foo();
+>foo() : number
+>foo : typeof foo
+    }
+}
+m1.fooExport();
+>m1.fooExport() : number
+>m1.fooExport : typeof m1.fooExport
+>m1 : typeof m1
+>fooExport : typeof m1.fooExport
+
+var myvar = new m1.m2.c();
+>myvar : m1.m2.c
+>new m1.m2.c() : m1.m2.c
+>m1.m2.c : typeof m1.m2.c
+>m1.m2 : typeof m1.m2
+>m1 : typeof m1
+>m2 : typeof m1.m2
+>c : typeof m1.m2.c
+
+/** Module comment */
+export module m4 {
+>m4 : m4
+
+    /** b's comment */
+    export var b: number;
+>b : number
+
+    /** foo's comment
+    */
+    function foo() {
+>foo : typeof foo
+
+        return b;
+>b : number
+    }
+    /** m2 comments
+    */
+    export module m2 {
+>m2 : m2
+
+        /** class comment; */
+        export class c {
+>c : c
+
+        };
+        /** i */
+        export var i = new c();
+>i : c
+>new c() : c
+>c : typeof c
+    }
+    /** exported function */
+    export function fooExport() {
+>fooExport : typeof fooExport
+
+        return foo();
+>foo() : number
+>foo : typeof foo
+    }
+}
+m4.fooExport();
+>m4.fooExport() : number
+>m4.fooExport : typeof m4.fooExport
+>m4 : typeof m4
+>fooExport : typeof m4.fooExport
+
+var myvar2 = new m4.m2.c();
+>myvar2 : m4.m2.c
+>new m4.m2.c() : m4.m2.c
+>m4.m2.c : typeof m4.m2.c
+>m4.m2 : typeof m4.m2
+>m4 : typeof m4
+>m2 : typeof m4.m2
+>c : typeof m4.m2.c
+

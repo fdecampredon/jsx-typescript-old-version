@@ -1,42 +1,78 @@
 === tests/cases/compiler/overloadOnConstConstraintChecks1.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 0 col 13 IdentifierName "foo" = () => void
-Line 1 col 6 IdentifierName "Derived1" = Derived1
-Line 1 col 23 IdentifierName "Base" = Base
-Line 1 col 30 IdentifierName "bar" = () => void
-Line 2 col 6 IdentifierName "Derived2" = Derived2
-Line 2 col 23 IdentifierName "Base" = Base
-Line 2 col 30 IdentifierName "baz" = () => void
-Line 3 col 6 IdentifierName "Derived3" = Derived3
-Line 3 col 23 IdentifierName "Base" = Base
-Line 3 col 30 IdentifierName "biz" = () => void
-Line 5 col 10 IdentifierName "MyDoc" = MyDoc
-Line 6 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 6 col 18 IdentifierName "tagName" = string
-Line 6 col 36 IdentifierName "Base" = Base
-Line 7 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 7 col 18 IdentifierName "tagName" = 'canvas'
-Line 7 col 38 IdentifierName "Derived1" = Derived1
-Line 8 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 8 col 18 IdentifierName "tagName" = 'div'
-Line 8 col 35 IdentifierName "Derived2" = Derived2
-Line 9 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 9 col 18 IdentifierName "tagName" = 'span'
-Line 9 col 36 IdentifierName "Derived3" = Derived3
-Line 13 col 6 IdentifierName "D" = D
-Line 13 col 19 IdentifierName "MyDoc" = MyDoc
-Line 14 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 14 col 18 IdentifierName "tagName" = string
-Line 14 col 35 IdentifierName "Base" = Base
-Line 15 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 15 col 18 IdentifierName "tagName" = 'canvas'
-Line 15 col 38 IdentifierName "Derived1" = Derived1
-Line 16 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 16 col 18 IdentifierName "tagName" = 'div'
-Line 16 col 35 IdentifierName "Derived2" = Derived2
-Line 17 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 17 col 18 IdentifierName "tagName" = 'span'
-Line 17 col 36 IdentifierName "Derived3" = Derived3
-Line 18 col 0 IdentifierName "createElement" = { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
-Line 18 col 18 IdentifierName "tagName" = any
-Line 18 col 32 IdentifierName "Base" = Base
+class Base { foo() { } }
+>Base : Base
+>foo : () => void
+
+class Derived1 extends Base { bar() { } }
+>Derived1 : Derived1
+>Base : Base
+>bar : () => void
+
+class Derived2 extends Base { baz() { } }
+>Derived2 : Derived2
+>Base : Base
+>baz : () => void
+
+class Derived3 extends Base { biz() { } }
+>Derived3 : Derived3
+>Base : Base
+>biz : () => void
+
+interface MyDoc { // Document
+>MyDoc : MyDoc
+
+    createElement(tagName: string): Base;
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : string
+>Base : Base
+
+    createElement(tagName: 'canvas'): Derived1;
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : 'canvas'
+>Derived1 : Derived1
+
+    createElement(tagName: 'div'): Derived2;
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : 'div'
+>Derived2 : Derived2
+
+    createElement(tagName: 'span'): Derived3;
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : 'span'
+>Derived3 : Derived3
+
+    // + 100 more
+}
+
+class D implements MyDoc {
+>D : D
+>MyDoc : MyDoc
+
+    createElement(tagName:string): Base;
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : string
+>Base : Base
+
+    createElement(tagName: 'canvas'): Derived1;
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : 'canvas'
+>Derived1 : Derived1
+
+    createElement(tagName: 'div'): Derived2;
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : 'div'
+>Derived2 : Derived2
+
+    createElement(tagName: 'span'): Derived3;
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : 'span'
+>Derived3 : Derived3
+
+    createElement(tagName:any): Base {
+>createElement : { (tagName: string): Base; (tagName: 'canvas'): Derived1; (tagName: 'div'): Derived2; (tagName: 'span'): Derived3; }
+>tagName : any
+>Base : Base
+
+        return null;
+    }
+}

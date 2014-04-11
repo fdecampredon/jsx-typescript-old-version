@@ -1,3 +1,4 @@
+//// [assignFromStringInterface2.js]
 var x = '';
 var a;
 var b;

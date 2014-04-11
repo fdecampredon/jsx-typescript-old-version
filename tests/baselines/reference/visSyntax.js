@@ -1,3 +1,17 @@
+//// [visSyntax.ts]
+module M {
+    export class C {
+    }
+
+    export interface I {
+	
+    }
+
+    export var x=10;
+}
+
+
+//// [visSyntax.js]
 var M;
 (function (M) {
     var C = (function () {

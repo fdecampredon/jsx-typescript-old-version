@@ -1,33 +1,47 @@
 === tests/cases/compiler/assignmentCompatability5.ts ===
-Line 0 col 7 IdentifierName "__test1__" = __test1__
-Line 1 col 21 IdentifierName "interfaceWithPublicAndOptional" = interfaceWithPublicAndOptional<T, U>
-Line 1 col 52 IdentifierName "T" = T
-Line 1 col 54 IdentifierName "U" = U
-Line 1 col 59 IdentifierName "one" = T
-Line 1 col 64 IdentifierName "T" = T
-Line 1 col 67 IdentifierName "two" = U
-Line 1 col 73 IdentifierName "U" = U
-Line 1 col 84 IdentifierName "obj4" = interfaceWithPublicAndOptional<number, string>
-Line 1 col 90 IdentifierName "interfaceWithPublicAndOptional" = interfaceWithPublicAndOptional<T, U>
-Line 1 col 138 ObjectLiteralExpression "{ one: 1 }" = { one: number; }
-Line 1 col 140 IdentifierName "one" = number
-Line 2 col 15 IdentifierName "__val__obj4" = interfaceWithPublicAndOptional<number, string>
-Line 2 col 29 IdentifierName "obj4" = interfaceWithPublicAndOptional<number, string>
-Line 4 col 7 IdentifierName "__test2__" = __test2__
-Line 5 col 39 IdentifierName "interfaceOne" = interfaceOne<T>
-Line 5 col 52 IdentifierName "T" = T
-Line 5 col 57 IdentifierName "one" = T
-Line 5 col 62 IdentifierName "T" = T
-Line 5 col 87 IdentifierName "obj1" = interfaceOne<number>
-Line 5 col 93 IdentifierName "interfaceOne" = interfaceOne<T>
-Line 5 col 116 ObjectLiteralExpression "{ one: 1 }" = { one: number; }
-Line 5 col 118 IdentifierName "one" = number
-Line 6 col 15 IdentifierName "__val__obj1" = interfaceOne<number>
-Line 6 col 29 IdentifierName "obj1" = interfaceOne<number>
-Line 8 col 0 AssignmentExpression "__test2__.__val__obj1 = __test1__.__val__obj4" = __test1__.interfaceWithPublicAndOptional<number, string>
-Line 8 col 0 MemberAccessExpression "__test2__.__val__obj1" = __test2__.interfaceOne<number>
-Line 8 col 0 IdentifierName "__test2__" = typeof __test2__
-Line 8 col 10 IdentifierName "__val__obj1" = __test2__.interfaceOne<number>
-Line 8 col 24 MemberAccessExpression "__test1__.__val__obj4" = __test1__.interfaceWithPublicAndOptional<number, string>
-Line 8 col 24 IdentifierName "__test1__" = typeof __test1__
-Line 8 col 34 IdentifierName "__val__obj4" = __test1__.interfaceWithPublicAndOptional<number, string>
+module __test1__ {
+>__test1__ : __test1__
+
+    export interface interfaceWithPublicAndOptional<T,U> { one: T; two?: U; };  var obj4: interfaceWithPublicAndOptional<number,string> = { one: 1 };;
+>interfaceWithPublicAndOptional : interfaceWithPublicAndOptional<T, U>
+>T : T
+>U : U
+>one : T
+>T : T
+>two : U
+>U : U
+>obj4 : interfaceWithPublicAndOptional<number, string>
+>interfaceWithPublicAndOptional : interfaceWithPublicAndOptional<T, U>
+>{ one: 1 } : { one: number; }
+>one : number
+
+    export var __val__obj4 = obj4;
+>__val__obj4 : interfaceWithPublicAndOptional<number, string>
+>obj4 : interfaceWithPublicAndOptional<number, string>
+}
+module __test2__ {
+>__test2__ : __test2__
+
+    export                   interface interfaceOne<T> { one: T; };                var obj1: interfaceOne<number> = { one: 1 };;
+>interfaceOne : interfaceOne<T>
+>T : T
+>one : T
+>T : T
+>obj1 : interfaceOne<number>
+>interfaceOne : interfaceOne<T>
+>{ one: 1 } : { one: number; }
+>one : number
+
+    export var __val__obj1 = obj1;
+>__val__obj1 : interfaceOne<number>
+>obj1 : interfaceOne<number>
+}
+__test2__.__val__obj1 = __test1__.__val__obj4
+>__test2__.__val__obj1 = __test1__.__val__obj4 : __test1__.interfaceWithPublicAndOptional<number, string>
+>__test2__.__val__obj1 : __test2__.interfaceOne<number>
+>__test2__ : typeof __test2__
+>__val__obj1 : __test2__.interfaceOne<number>
+>__test1__.__val__obj4 : __test1__.interfaceWithPublicAndOptional<number, string>
+>__test1__ : typeof __test1__
+>__val__obj4 : __test1__.interfaceWithPublicAndOptional<number, string>
+

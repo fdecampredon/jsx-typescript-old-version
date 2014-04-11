@@ -1,17 +1,30 @@
 === tests/cases/compiler/infiniteExpansionThroughTypeInference.ts ===
-Line 0 col 10 IdentifierName "G" = G<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "x" = G<G<T>>
-Line 1 col 7 IdentifierName "G" = G<T>
-Line 1 col 9 IdentifierName "G" = G<T>
-Line 1 col 11 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "y" = T
-Line 2 col 7 IdentifierName "T" = T
-Line 5 col 9 IdentifierName "ff" = typeof ff
-Line 5 col 12 IdentifierName "T" = T
-Line 5 col 15 IdentifierName "g" = G<T>
-Line 5 col 18 IdentifierName "G" = G<T>
-Line 5 col 20 IdentifierName "T" = T
-Line 6 col 0 InvocationExpression "ff(g) // when infering T here we need to make sure to not descend into the structure of G<T> infinitely" = void
-Line 6 col 0 IdentifierName "ff" = typeof ff
-Line 6 col 7 IdentifierName "g" = G<T>
+interface G<T> {
+>G : G<T>
+>T : T
+
+    x: G<G<T>> // infinitely expanding type reference
+>x : G<G<T>>
+>G : G<T>
+>G : G<T>
+>T : T
+
+    y: T
+>y : T
+>T : T
+}
+
+function ff<T>(g: G<T>): void {
+>ff : typeof ff
+>T : T
+>g : G<T>
+>G : G<T>
+>T : T
+
+    ff(g) // when infering T here we need to make sure to not descend into the structure of G<T> infinitely
+>ff(g) // when infering T here we need to make sure to not descend into the structure of G<T> infinitely : void
+>ff : typeof ff
+>g : G<T>
+}
+
+

@@ -1,95 +1,163 @@
 === tests/cases/compiler/twoMergedInterfacesWithDifferingOverloads.ts ===
-Line 2 col 10 IdentifierName "A" = A
-Line 3 col 0 IdentifierName "foo" = { (x: Date): Date; (x: number): number; (x: string): string; }
-Line 3 col 8 IdentifierName "x" = number
-Line 4 col 0 IdentifierName "foo" = { (x: Date): Date; (x: number): number; (x: string): string; }
-Line 4 col 8 IdentifierName "x" = string
-Line 7 col 10 IdentifierName "A" = A
-Line 8 col 0 IdentifierName "foo" = { (x: Date): Date; (x: number): number; (x: string): string; }
-Line 8 col 8 IdentifierName "x" = Date
-Line 8 col 11 IdentifierName "Date" = Date
-Line 8 col 18 IdentifierName "Date" = Date
-Line 11 col 10 IdentifierName "B" = B<T>
-Line 11 col 12 IdentifierName "T" = T
-Line 12 col 0 IdentifierName "foo" = { (x: T): Date; (x: Date): string; (x: T): number; (x: string): string; }
-Line 12 col 8 IdentifierName "x" = T
-Line 12 col 11 IdentifierName "T" = T
-Line 13 col 0 IdentifierName "foo" = { (x: T): Date; (x: Date): string; (x: T): number; (x: string): string; }
-Line 13 col 8 IdentifierName "x" = string
-Line 16 col 10 IdentifierName "B" = B<T>
-Line 16 col 12 IdentifierName "T" = T
-Line 17 col 0 IdentifierName "foo" = { (x: T): Date; (x: Date): string; (x: T): number; (x: string): string; }
-Line 17 col 8 IdentifierName "x" = T
-Line 17 col 11 IdentifierName "T" = T
-Line 17 col 15 IdentifierName "Date" = Date
-Line 18 col 0 IdentifierName "foo" = { (x: T): Date; (x: Date): string; (x: T): number; (x: string): string; }
-Line 18 col 8 IdentifierName "x" = Date
-Line 18 col 11 IdentifierName "Date" = Date
-Line 21 col 4 IdentifierName "b" = B<boolean>
-Line 21 col 7 IdentifierName "B" = B<T>
-Line 22 col 4 IdentifierName "r" = Date
-Line 22 col 8 InvocationExpression "b.foo(true)" = Date
-Line 22 col 8 MemberAccessExpression "b.foo" = { (x: boolean): Date; (x: Date): string; (x: boolean): number; (x: string): string; }
-Line 22 col 8 IdentifierName "b" = B<boolean>
-Line 22 col 10 IdentifierName "foo" = { (x: boolean): Date; (x: Date): string; (x: boolean): number; (x: string): string; }
-Line 25 col 10 IdentifierName "C" = C<T, U>
-Line 25 col 12 IdentifierName "T" = T
-Line 25 col 15 IdentifierName "U" = U
-Line 26 col 0 IdentifierName "foo" = { <W>(x: W, y: W): W; (x: T, y: U): string; (x: string, y: string): number; }
-Line 26 col 8 IdentifierName "x" = T
-Line 26 col 11 IdentifierName "T" = T
-Line 26 col 14 IdentifierName "y" = U
-Line 26 col 17 IdentifierName "U" = U
-Line 27 col 0 IdentifierName "foo" = { <W>(x: W, y: W): W; (x: T, y: U): string; (x: string, y: string): number; }
-Line 27 col 8 IdentifierName "x" = string
-Line 27 col 19 IdentifierName "y" = string
-Line 30 col 10 IdentifierName "C" = C<T, U>
-Line 30 col 12 IdentifierName "T" = T
-Line 30 col 15 IdentifierName "U" = U
-Line 31 col 0 IdentifierName "foo" = { <W>(x: W, y: W): W; (x: T, y: U): string; (x: string, y: string): number; }
-Line 31 col 8 IdentifierName "W" = W
-Line 31 col 11 IdentifierName "x" = W
-Line 31 col 14 IdentifierName "W" = W
-Line 31 col 17 IdentifierName "y" = W
-Line 31 col 20 IdentifierName "W" = W
-Line 31 col 24 IdentifierName "W" = W
-Line 34 col 4 IdentifierName "c" = C<boolean, Date>
-Line 34 col 7 IdentifierName "C" = C<T, U>
-Line 34 col 18 IdentifierName "Date" = Date
-Line 35 col 4 IdentifierName "r2" = number
-Line 35 col 9 InvocationExpression "c.foo(1, 2)" = number
-Line 35 col 9 MemberAccessExpression "c.foo" = { <W>(x: W, y: W): W; (x: boolean, y: Date): string; (x: string, y: string): number; }
-Line 35 col 9 IdentifierName "c" = C<boolean, Date>
-Line 35 col 11 IdentifierName "foo" = { <W>(x: W, y: W): W; (x: boolean, y: Date): string; (x: string, y: string): number; }
-Line 38 col 10 IdentifierName "D" = D<T, U>
-Line 38 col 12 IdentifierName "T" = T
-Line 38 col 15 IdentifierName "U" = U
-Line 39 col 0 IdentifierName "a" = T
-Line 39 col 7 IdentifierName "T" = T
-Line 40 col 0 IdentifierName "b" = U
-Line 40 col 7 IdentifierName "U" = U
-Line 41 col 0 IdentifierName "foo" = { <W>(x: W, y: W): T; <A>(x: A, y: A): U; }
-Line 41 col 8 IdentifierName "A" = A
-Line 41 col 11 IdentifierName "x" = A
-Line 41 col 14 IdentifierName "A" = A
-Line 41 col 17 IdentifierName "y" = A
-Line 41 col 20 IdentifierName "A" = A
-Line 41 col 24 IdentifierName "U" = U
-Line 44 col 10 IdentifierName "D" = D<T, U>
-Line 44 col 12 IdentifierName "T" = T
-Line 44 col 15 IdentifierName "U" = U
-Line 45 col 0 IdentifierName "foo" = { <W>(x: W, y: W): T; <A>(x: A, y: A): U; }
-Line 45 col 8 IdentifierName "W" = W
-Line 45 col 11 IdentifierName "x" = W
-Line 45 col 14 IdentifierName "W" = W
-Line 45 col 17 IdentifierName "y" = W
-Line 45 col 20 IdentifierName "W" = W
-Line 45 col 24 IdentifierName "T" = T
-Line 48 col 4 IdentifierName "d" = D<boolean, Date>
-Line 48 col 7 IdentifierName "D" = D<T, U>
-Line 48 col 18 IdentifierName "Date" = Date
-Line 49 col 4 IdentifierName "r3" = boolean
-Line 49 col 9 InvocationExpression "d.foo(1, 1)" = boolean
-Line 49 col 9 MemberAccessExpression "d.foo" = { <W>(x: W, y: W): boolean; <A>(x: A, y: A): Date; }
-Line 49 col 9 IdentifierName "d" = D<boolean, Date>
-Line 49 col 11 IdentifierName "foo" = { <W>(x: W, y: W): boolean; <A>(x: A, y: A): Date; }
+// interfaces that merge must not have members that conflict
+
+interface A {
+>A : A
+
+    foo(x: number): number;
+>foo : { (x: Date): Date; (x: number): number; (x: string): string; }
+>x : number
+
+    foo(x: string): string;
+>foo : { (x: Date): Date; (x: number): number; (x: string): string; }
+>x : string
+}
+
+interface A {
+>A : A
+
+    foo(x: Date): Date;
+>foo : { (x: Date): Date; (x: number): number; (x: string): string; }
+>x : Date
+>Date : Date
+>Date : Date
+}
+
+interface B<T> {
+>B : B<T>
+>T : T
+
+    foo(x: T): number;
+>foo : { (x: T): Date; (x: Date): string; (x: T): number; (x: string): string; }
+>x : T
+>T : T
+
+    foo(x: string): string;
+>foo : { (x: T): Date; (x: Date): string; (x: T): number; (x: string): string; }
+>x : string
+}
+
+interface B<T> {
+>B : B<T>
+>T : T
+
+    foo(x: T): Date;
+>foo : { (x: T): Date; (x: Date): string; (x: T): number; (x: string): string; }
+>x : T
+>T : T
+>Date : Date
+
+    foo(x: Date): string;
+>foo : { (x: T): Date; (x: Date): string; (x: T): number; (x: string): string; }
+>x : Date
+>Date : Date
+}
+
+var b: B<boolean>;
+>b : B<boolean>
+>B : B<T>
+
+var r = b.foo(true); // returns Date
+>r : Date
+>b.foo(true) : Date
+>b.foo : { (x: boolean): Date; (x: Date): string; (x: boolean): number; (x: string): string; }
+>b : B<boolean>
+>foo : { (x: boolean): Date; (x: Date): string; (x: boolean): number; (x: string): string; }
+
+// add generic overload
+interface C<T, U> {
+>C : C<T, U>
+>T : T
+>U : U
+
+    foo(x: T, y: U): string;
+>foo : { <W>(x: W, y: W): W; (x: T, y: U): string; (x: string, y: string): number; }
+>x : T
+>T : T
+>y : U
+>U : U
+
+    foo(x: string, y: string): number;
+>foo : { <W>(x: W, y: W): W; (x: T, y: U): string; (x: string, y: string): number; }
+>x : string
+>y : string
+}
+
+interface C<T, U> {
+>C : C<T, U>
+>T : T
+>U : U
+
+    foo<W>(x: W, y: W): W;
+>foo : { <W>(x: W, y: W): W; (x: T, y: U): string; (x: string, y: string): number; }
+>W : W
+>x : W
+>W : W
+>y : W
+>W : W
+>W : W
+}
+
+var c: C<boolean, Date>;
+>c : C<boolean, Date>
+>C : C<T, U>
+>Date : Date
+
+var r2 = c.foo(1, 2); // number
+>r2 : number
+>c.foo(1, 2) : number
+>c.foo : { <W>(x: W, y: W): W; (x: boolean, y: Date): string; (x: string, y: string): number; }
+>c : C<boolean, Date>
+>foo : { <W>(x: W, y: W): W; (x: boolean, y: Date): string; (x: string, y: string): number; }
+
+// add generic overload that would be ambiguous
+interface D<T, U> {
+>D : D<T, U>
+>T : T
+>U : U
+
+    a: T;
+>a : T
+>T : T
+
+    b: U;
+>b : U
+>U : U
+
+    foo<A>(x: A, y: A): U;
+>foo : { <W>(x: W, y: W): T; <A>(x: A, y: A): U; }
+>A : A
+>x : A
+>A : A
+>y : A
+>A : A
+>U : U
+}
+
+interface D<T, U> {
+>D : D<T, U>
+>T : T
+>U : U
+
+    foo<W>(x: W, y: W): T;
+>foo : { <W>(x: W, y: W): T; <A>(x: A, y: A): U; }
+>W : W
+>x : W
+>W : W
+>y : W
+>W : W
+>T : T
+}
+
+var d: D<boolean, Date>;
+>d : D<boolean, Date>
+>D : D<T, U>
+>Date : Date
+
+var r3 = d.foo(1, 1); // boolean, last definition wins
+>r3 : boolean
+>d.foo(1, 1) : boolean
+>d.foo : { <W>(x: W, y: W): boolean; <A>(x: A, y: A): Date; }
+>d : D<boolean, Date>
+>foo : { <W>(x: W, y: W): boolean; <A>(x: A, y: A): Date; }
+

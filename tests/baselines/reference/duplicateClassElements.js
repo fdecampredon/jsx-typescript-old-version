@@ -1,3 +1,4 @@
+//// [duplicateClassElements.js]
 var a = (function () {
     function a() {
     }

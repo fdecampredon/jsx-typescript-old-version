@@ -1,29 +1,48 @@
 === tests/cases/compiler/declFileObjectLiteralWithAccessors.ts ===
-Line 1 col 14 IdentifierName "makePoint" = typeof makePoint
-Line 1 col 24 IdentifierName "x" = number
-Line 2 col 11 ObjectLiteralExpression "{
+
+function /*1*/makePoint(x: number) { 
+>makePoint : typeof makePoint
+>x : number
+
+    return {
+>{
         b: 10,
         get x() { return x; },
         set x(a: number) { this.b = a; }
-    }" = { b: number; x: number; }
-Line 3 col 0 IdentifierName "b" = number
-Line 4 col 12 IdentifierName "x" = number
-Line 4 col 25 IdentifierName "x" = number
-Line 5 col 12 IdentifierName "x" = number
-Line 5 col 14 IdentifierName "a" = number
-Line 5 col 27 AssignmentExpression "this.b = a" = number
-Line 5 col 27 MemberAccessExpression "this.b" = any
-Line 5 col 27 ThisKeyword "this" = any
-Line 5 col 32 IdentifierName "b" = any
-Line 5 col 36 IdentifierName "a" = number
-Line 8 col 9 IdentifierName "point" = { b: number; x: number; }
-Line 8 col 17 InvocationExpression "makePoint(2)" = { b: number; x: number; }
-Line 8 col 17 IdentifierName "makePoint" = typeof makePoint
-Line 9 col 9 IdentifierName "x" = number
-Line 9 col 13 MemberAccessExpression "point.x" = number
-Line 9 col 13 IdentifierName "point" = { b: number; x: number; }
-Line 9 col 19 IdentifierName "x" = number
-Line 10 col 0 AssignmentExpression "point./*3*/x = 30" = number
-Line 10 col 0 MemberAccessExpression "point./*3*/x" = number
-Line 10 col 0 IdentifierName "point" = { b: number; x: number; }
-Line 10 col 11 IdentifierName "x" = number
+    } : { b: number; x: number; }
+
+        b: 10,
+>b : number
+
+        get x() { return x; },
+>x : number
+>x : number
+
+        set x(a: number) { this.b = a; }
+>x : number
+>a : number
+>this.b = a : number
+>this.b : any
+>this : any
+>b : any
+>a : number
+
+    };
+};
+var /*4*/point = makePoint(2);
+>point : { b: number; x: number; }
+>makePoint(2) : { b: number; x: number; }
+>makePoint : typeof makePoint
+
+var /*2*/x = point.x;
+>x : number
+>point.x : number
+>point : { b: number; x: number; }
+>x : number
+
+point./*3*/x = 30;
+>point./*3*/x = 30 : number
+>point./*3*/x : number
+>point : { b: number; x: number; }
+>x : number
+

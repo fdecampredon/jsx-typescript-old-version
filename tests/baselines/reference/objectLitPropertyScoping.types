@@ -1,8 +1,13 @@
 === tests/cases/compiler/objectLitPropertyScoping.ts ===
-Line 2 col 9 IdentifierName "makePoint" = typeof makePoint
-Line 2 col 19 IdentifierName "x" = number
-Line 2 col 30 IdentifierName "y" = number
-Line 3 col 11 ObjectLiteralExpression "{
+// Should compile, x and y should not be picked up from the properties
+
+function makePoint(x: number, y: number) {
+>makePoint : typeof makePoint
+>x : number
+>y : number
+
+    return {
+>{
         get x() {
             return x;
         },
@@ -12,23 +17,40 @@ Line 3 col 11 ObjectLiteralExpression "{
         dist: function () {
             return Math.sqrt(x * x + y * y);
         }
-    }" = { x: number; y: number; dist: () => number; }
-Line 4 col 12 IdentifierName "x" = number
-Line 5 col 19 IdentifierName "x" = number
-Line 7 col 12 IdentifierName "y" = number
-Line 8 col 19 IdentifierName "y" = number
-Line 10 col 0 IdentifierName "dist" = () => number
-Line 10 col 14 FunctionExpression "function () {
+    } : { x: number; y: number; dist: () => number; }
+
+        get x() {
+>x : number
+
+            return x;
+>x : number
+
+        },
+        get y() {
+>y : number
+
+            return y;
+>y : number
+
+        },
+        dist: function () {
+>dist : () => number
+>function () {
             return Math.sqrt(x * x + y * y);
-        }" = () => number
-Line 11 col 19 InvocationExpression "Math.sqrt(x * x + y * y)" = number
-Line 11 col 19 MemberAccessExpression "Math.sqrt" = (x: number) => number
-Line 11 col 19 IdentifierName "Math" = Math
-Line 11 col 24 IdentifierName "sqrt" = (x: number) => number
-Line 11 col 29 AddExpression "x * x + y * y" = number
-Line 11 col 29 MultiplyExpression "x * x" = number
-Line 11 col 29 IdentifierName "x" = number
-Line 11 col 33 IdentifierName "x" = number
-Line 11 col 37 MultiplyExpression "y * y" = number
-Line 11 col 37 IdentifierName "y" = number
-Line 11 col 41 IdentifierName "y" = number
+        } : () => number
+
+            return Math.sqrt(x * x + y * y);
+>Math.sqrt(x * x + y * y) : number
+>Math.sqrt : (x: number) => number
+>Math : Math
+>sqrt : (x: number) => number
+>x * x + y * y : number
+>x * x : number
+>x : number
+>x : number
+>y * y : number
+>y : number
+>y : number
+        }
+    }
+};

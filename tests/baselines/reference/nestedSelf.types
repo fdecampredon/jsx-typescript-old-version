@@ -1,16 +1,27 @@
 === tests/cases/compiler/nestedSelf.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 14 IdentifierName "C" = C
-Line 2 col 10 IdentifierName "n" = number
-Line 3 col 10 IdentifierName "foo" = () => void
-Line 3 col 18 InvocationExpression "[1,2,3].map((x) => { return this.n * x; })" = number[]
-Line 3 col 18 MemberAccessExpression "[1,2,3].map" = <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
-Line 3 col 18 ArrayLiteralExpression "[1,2,3]" = number[]
-Line 3 col 26 IdentifierName "map" = <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
-Line 3 col 30 ParenthesizedArrowFunctionExpression "(x) => { return this.n * x; }" = (x: number) => number
-Line 3 col 31 IdentifierName "x" = number
-Line 3 col 46 MultiplyExpression "this.n * x" = number
-Line 3 col 46 MemberAccessExpression "this.n" = number
-Line 3 col 46 ThisKeyword "this" = C
-Line 3 col 51 IdentifierName "n" = number
-Line 3 col 55 IdentifierName "x" = number
+module M {
+>M : M
+
+ export class C {
+>C : C
+
+   public n = 42;
+>n : number
+
+   public foo() { [1,2,3].map((x) => { return this.n * x; })}
+>foo : () => void
+>[1,2,3].map((x) => { return this.n * x; }) : number[]
+>[1,2,3].map : <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
+>[1,2,3] : number[]
+>map : <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
+>(x) => { return this.n * x; } : (x: number) => number
+>x : number
+>this.n * x : number
+>this.n : number
+>this : C
+>n : number
+>x : number
+ }
+}
+
+

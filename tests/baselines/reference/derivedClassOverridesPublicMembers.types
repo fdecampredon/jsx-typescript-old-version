@@ -1,137 +1,234 @@
 === tests/cases/compiler/derivedClassOverridesPublicMembers.ts ===
-Line 0 col 4 IdentifierName "x" = { foo: string; }
-Line 0 col 9 IdentifierName "foo" = string
-Line 1 col 4 IdentifierName "y" = { foo: string; bar: string; }
-Line 1 col 9 IdentifierName "foo" = string
-Line 1 col 22 IdentifierName "bar" = string
-Line 3 col 6 IdentifierName "Base" = Base
-Line 4 col 0 IdentifierName "a" = { foo: string; }
-Line 4 col 14 IdentifierName "x" = { foo: string; }
-Line 5 col 0 IdentifierName "b" = (a: { foo: string; }) => void
-Line 5 col 6 IdentifierName "a" = { foo: string; }
-Line 5 col 16 IdentifierName "x" = { foo: string; }
-Line 6 col 8 IdentifierName "c" = { foo: string; }
-Line 6 col 21 IdentifierName "x" = { foo: string; }
-Line 7 col 8 IdentifierName "c" = { foo: string; }
-Line 7 col 10 IdentifierName "v" = { foo: string; }
-Line 7 col 20 IdentifierName "x" = { foo: string; }
-Line 8 col 0 IdentifierName "d" = (a: { foo: string; }) => void
-Line 8 col 8 IdentifierName "a" = any
-Line 8 col 18 IdentifierName "x" = { foo: string; }
-Line 10 col 11 IdentifierName "r" = { foo: string; }
-Line 10 col 21 IdentifierName "x" = { foo: string; }
-Line 11 col 11 IdentifierName "s" = (a: { foo: string; }) => void
-Line 11 col 13 IdentifierName "a" = { foo: string; }
-Line 11 col 23 IdentifierName "x" = { foo: string; }
-Line 12 col 15 IdentifierName "t" = { foo: string; }
-Line 12 col 28 IdentifierName "x" = { foo: string; }
-Line 13 col 15 IdentifierName "t" = { foo: string; }
-Line 13 col 17 IdentifierName "v" = { foo: string; }
-Line 13 col 27 IdentifierName "x" = { foo: string; }
-Line 14 col 11 IdentifierName "u" = (a: { foo: string; }) => void
-Line 14 col 15 IdentifierName "a" = { foo: string; }
-Line 14 col 25 IdentifierName "x" = { foo: string; }
-Line 16 col 16 IdentifierName "a" = { foo: string; }
-Line 16 col 26 IdentifierName "x" = { foo: string; }
-Line 19 col 6 IdentifierName "Derived" = Derived
-Line 19 col 22 IdentifierName "Base" = Base
-Line 20 col 0 IdentifierName "a" = { foo: string; bar: string; }
-Line 20 col 14 IdentifierName "y" = { foo: string; bar: string; }
-Line 21 col 0 IdentifierName "b" = (a: { foo: string; bar: string; }) => void
-Line 21 col 6 IdentifierName "a" = { foo: string; bar: string; }
-Line 21 col 16 IdentifierName "y" = { foo: string; bar: string; }
-Line 22 col 8 IdentifierName "c" = { foo: string; bar: string; }
-Line 22 col 21 IdentifierName "y" = { foo: string; bar: string; }
-Line 23 col 8 IdentifierName "c" = { foo: string; bar: string; }
-Line 23 col 10 IdentifierName "v" = { foo: string; bar: string; }
-Line 23 col 20 IdentifierName "y" = { foo: string; bar: string; }
-Line 24 col 0 IdentifierName "d" = (a: { foo: string; bar: string; }) => void
-Line 24 col 8 IdentifierName "a" = any
-Line 24 col 18 IdentifierName "y" = { foo: string; bar: string; }
-Line 26 col 11 IdentifierName "r" = { foo: string; bar: string; }
-Line 26 col 21 IdentifierName "y" = { foo: string; bar: string; }
-Line 27 col 11 IdentifierName "s" = (a: { foo: string; bar: string; }) => void
-Line 27 col 13 IdentifierName "a" = { foo: string; bar: string; }
-Line 27 col 23 IdentifierName "y" = { foo: string; bar: string; }
-Line 28 col 15 IdentifierName "t" = { foo: string; bar: string; }
-Line 28 col 28 IdentifierName "y" = { foo: string; bar: string; }
-Line 29 col 15 IdentifierName "t" = { foo: string; bar: string; }
-Line 29 col 17 IdentifierName "a" = { foo: string; bar: string; }
-Line 29 col 27 IdentifierName "y" = { foo: string; bar: string; }
-Line 30 col 11 IdentifierName "u" = (a: { foo: string; bar: string; }) => void
-Line 30 col 15 IdentifierName "a" = { foo: string; bar: string; }
-Line 30 col 25 IdentifierName "y" = { foo: string; bar: string; }
-Line 32 col 16 IdentifierName "a" = { foo: string; bar: string; }
-Line 32 col 26 IdentifierName "y" = { foo: string; bar: string; }
-Line 32 col 31 InvocationExpression "super(x)" = void
-Line 32 col 37 IdentifierName "x" = { foo: string; }
-Line 35 col 4 IdentifierName "d" = Derived
-Line 35 col 7 IdentifierName "Derived" = Derived
-Line 35 col 17 ObjectCreationExpression "new Derived(y)" = Derived
-Line 35 col 21 IdentifierName "Derived" = typeof Derived
-Line 35 col 29 IdentifierName "y" = { foo: string; bar: string; }
-Line 36 col 4 IdentifierName "r1" = { foo: string; bar: string; }
-Line 36 col 9 MemberAccessExpression "d.a" = { foo: string; bar: string; }
-Line 36 col 9 IdentifierName "d" = Derived
-Line 36 col 11 IdentifierName "a" = { foo: string; bar: string; }
-Line 37 col 4 IdentifierName "r2" = void
-Line 37 col 9 InvocationExpression "d.b(y)" = void
-Line 37 col 9 MemberAccessExpression "d.b" = (a: { foo: string; bar: string; }) => void
-Line 37 col 9 IdentifierName "d" = Derived
-Line 37 col 11 IdentifierName "b" = (a: { foo: string; bar: string; }) => void
-Line 37 col 13 IdentifierName "y" = { foo: string; bar: string; }
-Line 38 col 4 IdentifierName "r3" = { foo: string; bar: string; }
-Line 38 col 9 MemberAccessExpression "d.c" = { foo: string; bar: string; }
-Line 38 col 9 IdentifierName "d" = Derived
-Line 38 col 11 IdentifierName "c" = { foo: string; bar: string; }
-Line 39 col 4 IdentifierName "r3a" = (a: { foo: string; bar: string; }) => void
-Line 39 col 10 MemberAccessExpression "d.d" = (a: { foo: string; bar: string; }) => void
-Line 39 col 10 IdentifierName "d" = Derived
-Line 39 col 12 IdentifierName "d" = (a: { foo: string; bar: string; }) => void
-Line 40 col 0 AssignmentExpression "d.c = y" = { foo: string; bar: string; }
-Line 40 col 0 MemberAccessExpression "d.c" = { foo: string; bar: string; }
-Line 40 col 0 IdentifierName "d" = Derived
-Line 40 col 2 IdentifierName "c" = { foo: string; bar: string; }
-Line 40 col 6 IdentifierName "y" = { foo: string; bar: string; }
-Line 41 col 4 IdentifierName "r4" = { foo: string; bar: string; }
-Line 41 col 9 MemberAccessExpression "Derived.r" = { foo: string; bar: string; }
-Line 41 col 9 IdentifierName "Derived" = typeof Derived
-Line 41 col 17 IdentifierName "r" = { foo: string; bar: string; }
-Line 42 col 4 IdentifierName "r5" = void
-Line 42 col 9 InvocationExpression "Derived.s(y)" = void
-Line 42 col 9 MemberAccessExpression "Derived.s" = (a: { foo: string; bar: string; }) => void
-Line 42 col 9 IdentifierName "Derived" = typeof Derived
-Line 42 col 17 IdentifierName "s" = (a: { foo: string; bar: string; }) => void
-Line 42 col 19 IdentifierName "y" = { foo: string; bar: string; }
-Line 43 col 4 IdentifierName "r6" = { foo: string; bar: string; }
-Line 43 col 9 MemberAccessExpression "Derived.t" = { foo: string; bar: string; }
-Line 43 col 9 IdentifierName "Derived" = typeof Derived
-Line 43 col 17 IdentifierName "t" = { foo: string; bar: string; }
-Line 44 col 4 IdentifierName "r6a" = (a: { foo: string; bar: string; }) => void
-Line 44 col 10 MemberAccessExpression "Derived.u" = (a: { foo: string; bar: string; }) => void
-Line 44 col 10 IdentifierName "Derived" = typeof Derived
-Line 44 col 18 IdentifierName "u" = (a: { foo: string; bar: string; }) => void
-Line 45 col 0 AssignmentExpression "Derived.t = y" = { foo: string; bar: string; }
-Line 45 col 0 MemberAccessExpression "Derived.t" = { foo: string; bar: string; }
-Line 45 col 0 IdentifierName "Derived" = typeof Derived
-Line 45 col 8 IdentifierName "t" = { foo: string; bar: string; }
-Line 45 col 12 IdentifierName "y" = { foo: string; bar: string; }
-Line 47 col 6 IdentifierName "Base2" = Base2
-Line 48 col 5 IdentifierName "i" = string
-Line 48 col 17 IdentifierName "Object" = Object
-Line 49 col 5 IdentifierName "i" = number
-Line 49 col 24 IdentifierName "x" = { foo: string; }
-Line 52 col 6 IdentifierName "Derived2" = Derived2
-Line 52 col 23 IdentifierName "Base2" = Base2
-Line 53 col 5 IdentifierName "i" = string
-Line 53 col 24 IdentifierName "x" = { foo: string; }
-Line 54 col 5 IdentifierName "i" = number
-Line 54 col 24 IdentifierName "y" = { foo: string; bar: string; }
-Line 57 col 4 IdentifierName "d2" = Derived2
-Line 57 col 8 IdentifierName "Derived2" = Derived2
-Line 58 col 4 IdentifierName "r7" = { foo: string; }
-Line 58 col 9 ElementAccessExpression "d2['']" = { foo: string; }
-Line 58 col 9 IdentifierName "d2" = Derived2
-Line 59 col 4 IdentifierName "r8" = { foo: string; bar: string; }
-Line 59 col 9 ElementAccessExpression "d2[1]" = { foo: string; bar: string; }
-Line 59 col 9 IdentifierName "d2" = Derived2
+var x: { foo: string; }
+>x : { foo: string; }
+>foo : string
+
+var y: { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+>foo : string
+>bar : string
+
+class Base {
+>Base : Base
+
+    a: typeof x;
+>a : { foo: string; }
+>x : { foo: string; }
+
+    b(a: typeof x) { }
+>b : (a: { foo: string; }) => void
+>a : { foo: string; }
+>x : { foo: string; }
+
+    get c() { return x; }
+>c : { foo: string; }
+>x : { foo: string; }
+
+    set c(v: typeof x) { }
+>c : { foo: string; }
+>v : { foo: string; }
+>x : { foo: string; }
+
+    d: (a: typeof x) => void;
+>d : (a: { foo: string; }) => void
+>a : any
+>x : { foo: string; }
+
+    static r: typeof x;
+>r : { foo: string; }
+>x : { foo: string; }
+
+    static s(a: typeof x) { }
+>s : (a: { foo: string; }) => void
+>a : { foo: string; }
+>x : { foo: string; }
+
+    static get t() { return x; }
+>t : { foo: string; }
+>x : { foo: string; }
+
+    static set t(v: typeof x) { }
+>t : { foo: string; }
+>v : { foo: string; }
+>x : { foo: string; }
+
+    static u: (a: typeof x) => void;
+>u : (a: { foo: string; }) => void
+>a : { foo: string; }
+>x : { foo: string; }
+
+    constructor(a: typeof x) { }
+>a : { foo: string; }
+>x : { foo: string; }
+}
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    a: typeof y;
+>a : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    b(a: typeof y) { }
+>b : (a: { foo: string; bar: string; }) => void
+>a : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    get c() { return y; }
+>c : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    set c(v: typeof y) { }
+>c : { foo: string; bar: string; }
+>v : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    d: (a: typeof y) => void;
+>d : (a: { foo: string; bar: string; }) => void
+>a : any
+>y : { foo: string; bar: string; }
+
+    static r: typeof y;
+>r : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    static s(a: typeof y) { }
+>s : (a: { foo: string; bar: string; }) => void
+>a : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    static get t() { return y; }
+>t : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    static set t(a: typeof y) { }
+>t : { foo: string; bar: string; }
+>a : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    static u: (a: typeof y) => void;
+>u : (a: { foo: string; bar: string; }) => void
+>a : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+    constructor(a: typeof y) { super(x) }
+>a : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+>super(x) : void
+>x : { foo: string; }
+}
+
+var d: Derived = new Derived(y);
+>d : Derived
+>Derived : Derived
+>new Derived(y) : Derived
+>Derived : typeof Derived
+>y : { foo: string; bar: string; }
+
+var r1 = d.a;
+>r1 : { foo: string; bar: string; }
+>d.a : { foo: string; bar: string; }
+>d : Derived
+>a : { foo: string; bar: string; }
+
+var r2 = d.b(y);
+>r2 : void
+>d.b(y) : void
+>d.b : (a: { foo: string; bar: string; }) => void
+>d : Derived
+>b : (a: { foo: string; bar: string; }) => void
+>y : { foo: string; bar: string; }
+
+var r3 = d.c;
+>r3 : { foo: string; bar: string; }
+>d.c : { foo: string; bar: string; }
+>d : Derived
+>c : { foo: string; bar: string; }
+
+var r3a = d.d;
+>r3a : (a: { foo: string; bar: string; }) => void
+>d.d : (a: { foo: string; bar: string; }) => void
+>d : Derived
+>d : (a: { foo: string; bar: string; }) => void
+
+d.c = y;
+>d.c = y : { foo: string; bar: string; }
+>d.c : { foo: string; bar: string; }
+>d : Derived
+>c : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+var r4 = Derived.r;
+>r4 : { foo: string; bar: string; }
+>Derived.r : { foo: string; bar: string; }
+>Derived : typeof Derived
+>r : { foo: string; bar: string; }
+
+var r5 = Derived.s(y);
+>r5 : void
+>Derived.s(y) : void
+>Derived.s : (a: { foo: string; bar: string; }) => void
+>Derived : typeof Derived
+>s : (a: { foo: string; bar: string; }) => void
+>y : { foo: string; bar: string; }
+
+var r6 = Derived.t;
+>r6 : { foo: string; bar: string; }
+>Derived.t : { foo: string; bar: string; }
+>Derived : typeof Derived
+>t : { foo: string; bar: string; }
+
+var r6a = Derived.u;
+>r6a : (a: { foo: string; bar: string; }) => void
+>Derived.u : (a: { foo: string; bar: string; }) => void
+>Derived : typeof Derived
+>u : (a: { foo: string; bar: string; }) => void
+
+Derived.t = y;
+>Derived.t = y : { foo: string; bar: string; }
+>Derived.t : { foo: string; bar: string; }
+>Derived : typeof Derived
+>t : { foo: string; bar: string; }
+>y : { foo: string; bar: string; }
+
+class Base2 {
+>Base2 : Base2
+
+    [i: string]: Object;
+>i : string
+>Object : Object
+
+    [i: number]: typeof x;
+>i : number
+>x : { foo: string; }
+}
+
+class Derived2 extends Base2 {
+>Derived2 : Derived2
+>Base2 : Base2
+
+    [i: string]: typeof x;
+>i : string
+>x : { foo: string; }
+
+    [i: number]: typeof y;
+>i : number
+>y : { foo: string; bar: string; }
+}
+
+var d2: Derived2;
+>d2 : Derived2
+>Derived2 : Derived2
+
+var r7 = d2[''];
+>r7 : { foo: string; }
+>d2[''] : { foo: string; }
+>d2 : Derived2
+
+var r8 = d2[1];
+>r8 : { foo: string; bar: string; }
+>d2[1] : { foo: string; bar: string; }
+>d2 : Derived2
+
+

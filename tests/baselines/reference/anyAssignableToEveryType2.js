@@ -1,3 +1,4 @@
+//// [anyAssignableToEveryType2.js]
 // any is not a subtype of any other types, but is assignable, all the below should work
 
 var A = (function () {

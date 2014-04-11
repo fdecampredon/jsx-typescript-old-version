@@ -1,141 +1,298 @@
 === tests/cases/compiler/escapedIdentifiers.ts ===
-Line 12 col 4 IdentifierName "\u0061" = number
-Line 13 col 0 PostIncrementExpression "a ++" = number
-Line 13 col 0 IdentifierName "a" = number
-Line 14 col 0 PostIncrementExpression "\u0061 ++" = number
-Line 14 col 0 IdentifierName "\u0061" = number
-Line 16 col 4 IdentifierName "b" = number
-Line 17 col 0 PostIncrementExpression "b ++" = number
-Line 17 col 0 IdentifierName "b" = number
-Line 18 col 0 PostIncrementExpression "\u0062 ++" = number
-Line 18 col 0 IdentifierName "\u0062" = number
-Line 21 col 7 IdentifierName "moduleType1" = moduleType1
-Line 22 col 15 IdentifierName "baz1" = number
-Line 24 col 7 IdentifierName "moduleType\u0032" = moduleType\u0032
-Line 25 col 15 IdentifierName "baz2" = number
-Line 27 col 0 AssignmentExpression "moduleType1.baz1 = 3" = number
-Line 27 col 0 MemberAccessExpression "moduleType1.baz1" = number
-Line 27 col 0 IdentifierName "moduleType1" = typeof moduleType1
-Line 28 col 12 IdentifierName "baz1" = number
-Line 29 col 0 AssignmentExpression "moduleType\u0031.baz1 = 3" = number
-Line 29 col 0 MemberAccessExpression "moduleType\u0031.baz1" = number
-Line 29 col 0 IdentifierName "moduleType\u0031" = typeof moduleType1
-Line 29 col 17 IdentifierName "baz1" = number
-Line 30 col 0 AssignmentExpression "moduleType2.baz2 = 3" = number
-Line 30 col 0 MemberAccessExpression "moduleType2.baz2" = number
-Line 30 col 0 IdentifierName "moduleType2" = typeof moduleType\u0032
-Line 30 col 12 IdentifierName "baz2" = number
-Line 31 col 0 AssignmentExpression "moduleType\u0032.baz2 = 3" = number
-Line 31 col 0 MemberAccessExpression "moduleType\u0032.baz2" = number
-Line 31 col 0 IdentifierName "moduleType\u0032" = typeof moduleType\u0032
-Line 31 col 17 IdentifierName "baz2" = number
-Line 35 col 6 IdentifierName "classType1" = classType1
-Line 36 col 11 IdentifierName "foo1" = number
-Line 38 col 6 IdentifierName "classType\u0032" = classType\u0032
-Line 39 col 11 IdentifierName "foo2" = number
-Line 42 col 4 IdentifierName "classType1Object1" = classType1
-Line 42 col 24 ObjectCreationExpression "new classType1()" = classType1
-Line 42 col 28 IdentifierName "classType1" = typeof classType1
-Line 43 col 0 AssignmentExpression "classType1Object1.foo1 = 2" = number
-Line 43 col 0 MemberAccessExpression "classType1Object1.foo1" = number
-Line 43 col 0 IdentifierName "classType1Object1" = classType1
-Line 43 col 18 IdentifierName "foo1" = number
-Line 44 col 4 IdentifierName "classType1Object2" = classType1
-Line 44 col 24 ObjectCreationExpression "new classType\u0031()" = classType1
-Line 44 col 28 IdentifierName "classType\u0031" = typeof classType1
-Line 45 col 0 AssignmentExpression "classType1Object2.foo1 = 2" = number
-Line 45 col 0 MemberAccessExpression "classType1Object2.foo1" = number
-Line 45 col 0 IdentifierName "classType1Object2" = classType1
-Line 45 col 18 IdentifierName "foo1" = number
-Line 46 col 4 IdentifierName "classType2Object1" = classType\u0032
-Line 46 col 24 ObjectCreationExpression "new classType2()" = classType\u0032
-Line 46 col 28 IdentifierName "classType2" = typeof classType\u0032
-Line 47 col 0 AssignmentExpression "classType2Object1.foo2 = 2" = number
-Line 47 col 0 MemberAccessExpression "classType2Object1.foo2" = number
-Line 47 col 0 IdentifierName "classType2Object1" = classType\u0032
-Line 47 col 18 IdentifierName "foo2" = number
-Line 48 col 4 IdentifierName "classType2Object2" = classType\u0032
-Line 48 col 24 ObjectCreationExpression "new classType\u0032()" = classType\u0032
-Line 48 col 28 IdentifierName "classType\u0032" = typeof classType\u0032
-Line 49 col 0 AssignmentExpression "classType2Object2.foo2 = 2" = number
-Line 49 col 0 MemberAccessExpression "classType2Object2.foo2" = number
-Line 49 col 0 IdentifierName "classType2Object2" = classType\u0032
-Line 49 col 18 IdentifierName "foo2" = number
-Line 52 col 10 IdentifierName "interfaceType1" = interfaceType1
-Line 53 col 0 IdentifierName "bar1" = number
-Line 55 col 10 IdentifierName "interfaceType\u0032" = interfaceType\u0032
-Line 56 col 0 IdentifierName "bar2" = number
-Line 59 col 4 IdentifierName "interfaceType1Object1" = interfaceType1
-Line 59 col 28 CastExpression "<interfaceType1>{ bar1: 0 }" = interfaceType1
-Line 59 col 29 IdentifierName "interfaceType1" = interfaceType1
-Line 59 col 44 ObjectLiteralExpression "{ bar1: 0 }" = { bar1: number; }
-Line 59 col 46 IdentifierName "bar1" = number
-Line 60 col 0 AssignmentExpression "interfaceType1Object1.bar1 = 2" = number
-Line 60 col 0 MemberAccessExpression "interfaceType1Object1.bar1" = number
-Line 60 col 0 IdentifierName "interfaceType1Object1" = interfaceType1
-Line 60 col 22 IdentifierName "bar1" = number
-Line 61 col 4 IdentifierName "interfaceType1Object2" = interfaceType1
-Line 61 col 28 CastExpression "<interfaceType\u0031>{ bar1: 0 }" = interfaceType1
-Line 61 col 29 IdentifierName "interfaceType\u0031" = interfaceType1
-Line 61 col 49 ObjectLiteralExpression "{ bar1: 0 }" = { bar1: number; }
-Line 61 col 51 IdentifierName "bar1" = number
-Line 62 col 0 AssignmentExpression "interfaceType1Object2.bar1 = 2" = number
-Line 62 col 0 MemberAccessExpression "interfaceType1Object2.bar1" = number
-Line 62 col 0 IdentifierName "interfaceType1Object2" = interfaceType1
-Line 62 col 22 IdentifierName "bar1" = number
-Line 63 col 4 IdentifierName "interfaceType2Object1" = interfaceType\u0032
-Line 63 col 28 CastExpression "<interfaceType2>{ bar2: 0 }" = interfaceType\u0032
-Line 63 col 29 IdentifierName "interfaceType2" = interfaceType\u0032
-Line 63 col 44 ObjectLiteralExpression "{ bar2: 0 }" = { bar2: number; }
-Line 63 col 46 IdentifierName "bar2" = number
-Line 64 col 0 AssignmentExpression "interfaceType2Object1.bar2 = 2" = number
-Line 64 col 0 MemberAccessExpression "interfaceType2Object1.bar2" = number
-Line 64 col 0 IdentifierName "interfaceType2Object1" = interfaceType\u0032
-Line 64 col 22 IdentifierName "bar2" = number
-Line 65 col 4 IdentifierName "interfaceType2Object2" = interfaceType\u0032
-Line 65 col 28 CastExpression "<interfaceType\u0032>{ bar2: 0 }" = interfaceType\u0032
-Line 65 col 29 IdentifierName "interfaceType\u0032" = interfaceType\u0032
-Line 65 col 49 ObjectLiteralExpression "{ bar2: 0 }" = { bar2: number; }
-Line 65 col 51 IdentifierName "bar2" = number
-Line 66 col 0 AssignmentExpression "interfaceType2Object2.bar2 = 2" = number
-Line 66 col 0 MemberAccessExpression "interfaceType2Object2.bar2" = number
-Line 66 col 0 IdentifierName "interfaceType2Object2" = interfaceType\u0032
-Line 66 col 22 IdentifierName "bar2" = number
-Line 70 col 6 IdentifierName "testClass" = testClass
-Line 71 col 11 IdentifierName "func" = (arg1: number, arg\u0032: string, arg\u0033: boolean, arg4: number) => void
-Line 71 col 16 IdentifierName "arg1" = number
-Line 71 col 30 IdentifierName "arg\u0032" = string
-Line 71 col 49 IdentifierName "arg\u0033" = boolean
-Line 71 col 69 IdentifierName "arg4" = number
-Line 72 col 0 AssignmentExpression "arg\u0031 = 1" = number
-Line 72 col 0 IdentifierName "arg\u0031" = number
-Line 73 col 0 AssignmentExpression "arg2 = 'string'" = string
-Line 73 col 0 IdentifierName "arg2" = string
-Line 74 col 0 AssignmentExpression "arg\u0033 = true" = boolean
-Line 74 col 0 IdentifierName "arg\u0033" = boolean
-Line 75 col 0 AssignmentExpression "arg4 = 2" = number
-Line 75 col 0 IdentifierName "arg4" = number
-Line 80 col 6 IdentifierName "constructorTestClass" = constructorTestClass
-Line 81 col 24 IdentifierName "arg1" = number
-Line 81 col 44 IdentifierName "arg\u0032" = string
-Line 81 col 69 IdentifierName "arg\u0033" = boolean
-Line 81 col 95 IdentifierName "arg4" = number
-Line 84 col 4 IdentifierName "constructorTestObject" = constructorTestClass
-Line 84 col 28 ObjectCreationExpression "new constructorTestClass(1, 'string', true, 2)" = constructorTestClass
-Line 84 col 32 IdentifierName "constructorTestClass" = typeof constructorTestClass
-Line 85 col 0 AssignmentExpression "constructorTestObject.arg\u0031 = 1" = number
-Line 85 col 0 MemberAccessExpression "constructorTestObject.arg\u0031" = number
-Line 85 col 0 IdentifierName "constructorTestObject" = constructorTestClass
-Line 85 col 22 IdentifierName "arg\u0031" = number
-Line 86 col 0 AssignmentExpression "constructorTestObject.arg2 = 'string'" = string
-Line 86 col 0 MemberAccessExpression "constructorTestObject.arg2" = string
-Line 86 col 0 IdentifierName "constructorTestObject" = constructorTestClass
-Line 86 col 22 IdentifierName "arg2" = string
-Line 87 col 0 AssignmentExpression "constructorTestObject.arg\u0033 = true" = boolean
-Line 87 col 0 MemberAccessExpression "constructorTestObject.arg\u0033" = boolean
-Line 87 col 0 IdentifierName "constructorTestObject" = constructorTestClass
-Line 87 col 22 IdentifierName "arg\u0033" = boolean
-Line 88 col 0 AssignmentExpression "constructorTestObject.arg4 = 2" = number
-Line 88 col 0 MemberAccessExpression "constructorTestObject.arg4" = number
-Line 88 col 0 IdentifierName "constructorTestObject" = constructorTestClass
-Line 88 col 22 IdentifierName "arg4" = number
+/*
+    0 .. \u0030
+    9 .. \u0039
+
+    A .. \u0041
+    Z .. \u005a
+
+    a .. \u0061
+    z .. \u00za
+*/
+
+// var decl
+var \u0061 = 1;
+>\u0061 : number
+
+a ++;
+>a ++ : number
+>a : number
+
+\u0061 ++;
+>\u0061 ++ : number
+>\u0061 : number
+
+var b = 1;
+>b : number
+
+b ++;
+>b ++ : number
+>b : number
+
+\u0062 ++;
+>\u0062 ++ : number
+>\u0062 : number
+
+// modules
+module moduleType1 { 
+>moduleType1 : moduleType1
+
+    export var baz1: number;
+>baz1 : number
+}
+module moduleType\u0032 { 
+>moduleType\u0032 : moduleType\u0032
+
+    export var baz2: number;
+>baz2 : number
+}
+
+>moduleType1.baz1 = 3 : number
+>moduleType1.baz1 : number
+>moduleType1 : typeof moduleType1
+
+moduleType1.baz1 = 3;
+>baz1 : number
+
+moduleType\u0031.baz1 = 3;
+>moduleType\u0031.baz1 = 3 : number
+>moduleType\u0031.baz1 : number
+>moduleType\u0031 : typeof moduleType1
+>baz1 : number
+
+moduleType2.baz2 = 3;
+>moduleType2.baz2 = 3 : number
+>moduleType2.baz2 : number
+>moduleType2 : typeof moduleType\u0032
+>baz2 : number
+
+moduleType\u0032.baz2 = 3;
+>moduleType\u0032.baz2 = 3 : number
+>moduleType\u0032.baz2 : number
+>moduleType\u0032 : typeof moduleType\u0032
+>baz2 : number
+
+// classes
+
+class classType1 { 
+>classType1 : classType1
+
+    public foo1: number;
+>foo1 : number
+}
+class classType\u0032 { 
+>classType\u0032 : classType\u0032
+
+    public foo2: number;
+>foo2 : number
+}
+
+var classType1Object1 = new classType1();
+>classType1Object1 : classType1
+>new classType1() : classType1
+>classType1 : typeof classType1
+
+classType1Object1.foo1 = 2;
+>classType1Object1.foo1 = 2 : number
+>classType1Object1.foo1 : number
+>classType1Object1 : classType1
+>foo1 : number
+
+var classType1Object2 = new classType\u0031();
+>classType1Object2 : classType1
+>new classType\u0031() : classType1
+>classType\u0031 : typeof classType1
+
+classType1Object2.foo1 = 2;
+>classType1Object2.foo1 = 2 : number
+>classType1Object2.foo1 : number
+>classType1Object2 : classType1
+>foo1 : number
+
+var classType2Object1 = new classType2();
+>classType2Object1 : classType\u0032
+>new classType2() : classType\u0032
+>classType2 : typeof classType\u0032
+
+classType2Object1.foo2 = 2;
+>classType2Object1.foo2 = 2 : number
+>classType2Object1.foo2 : number
+>classType2Object1 : classType\u0032
+>foo2 : number
+
+var classType2Object2 = new classType\u0032();
+>classType2Object2 : classType\u0032
+>new classType\u0032() : classType\u0032
+>classType\u0032 : typeof classType\u0032
+
+classType2Object2.foo2 = 2;
+>classType2Object2.foo2 = 2 : number
+>classType2Object2.foo2 : number
+>classType2Object2 : classType\u0032
+>foo2 : number
+
+// interfaces
+interface interfaceType1 { 
+>interfaceType1 : interfaceType1
+
+    bar1: number;
+>bar1 : number
+}
+interface interfaceType\u0032 { 
+>interfaceType\u0032 : interfaceType\u0032
+
+    bar2: number;
+>bar2 : number
+}
+
+var interfaceType1Object1 = <interfaceType1>{ bar1: 0 };
+>interfaceType1Object1 : interfaceType1
+><interfaceType1>{ bar1: 0 } : interfaceType1
+>interfaceType1 : interfaceType1
+>{ bar1: 0 } : { bar1: number; }
+>bar1 : number
+
+interfaceType1Object1.bar1 = 2;
+>interfaceType1Object1.bar1 = 2 : number
+>interfaceType1Object1.bar1 : number
+>interfaceType1Object1 : interfaceType1
+>bar1 : number
+
+var interfaceType1Object2 = <interfaceType\u0031>{ bar1: 0 };
+>interfaceType1Object2 : interfaceType1
+><interfaceType\u0031>{ bar1: 0 } : interfaceType1
+>interfaceType\u0031 : interfaceType1
+>{ bar1: 0 } : { bar1: number; }
+>bar1 : number
+
+interfaceType1Object2.bar1 = 2;
+>interfaceType1Object2.bar1 = 2 : number
+>interfaceType1Object2.bar1 : number
+>interfaceType1Object2 : interfaceType1
+>bar1 : number
+
+var interfaceType2Object1 = <interfaceType2>{ bar2: 0 };
+>interfaceType2Object1 : interfaceType\u0032
+><interfaceType2>{ bar2: 0 } : interfaceType\u0032
+>interfaceType2 : interfaceType\u0032
+>{ bar2: 0 } : { bar2: number; }
+>bar2 : number
+
+interfaceType2Object1.bar2 = 2;
+>interfaceType2Object1.bar2 = 2 : number
+>interfaceType2Object1.bar2 : number
+>interfaceType2Object1 : interfaceType\u0032
+>bar2 : number
+
+var interfaceType2Object2 = <interfaceType\u0032>{ bar2: 0 };
+>interfaceType2Object2 : interfaceType\u0032
+><interfaceType\u0032>{ bar2: 0 } : interfaceType\u0032
+>interfaceType\u0032 : interfaceType\u0032
+>{ bar2: 0 } : { bar2: number; }
+>bar2 : number
+
+interfaceType2Object2.bar2 = 2;
+>interfaceType2Object2.bar2 = 2 : number
+>interfaceType2Object2.bar2 : number
+>interfaceType2Object2 : interfaceType\u0032
+>bar2 : number
+
+
+// arguments
+class testClass { 
+>testClass : testClass
+
+    public func(arg1: number, arg\u0032: string, arg\u0033: boolean, arg4: number) { 
+>func : (arg1: number, arg\u0032: string, arg\u0033: boolean, arg4: number) => void
+>arg1 : number
+>arg\u0032 : string
+>arg\u0033 : boolean
+>arg4 : number
+
+        arg\u0031 = 1;
+>arg\u0031 = 1 : number
+>arg\u0031 : number
+
+        arg2 = 'string';
+>arg2 = 'string' : string
+>arg2 : string
+
+        arg\u0033 = true;
+>arg\u0033 = true : boolean
+>arg\u0033 : boolean
+
+        arg4 = 2;
+>arg4 = 2 : number
+>arg4 : number
+    }
+}
+
+// constructors
+class constructorTestClass { 
+>constructorTestClass : constructorTestClass
+
+    constructor (public arg1: number,public arg\u0032: string,public arg\u0033: boolean,public arg4: number) { 
+>arg1 : number
+>arg\u0032 : string
+>arg\u0033 : boolean
+>arg4 : number
+    }
+}
+var constructorTestObject = new constructorTestClass(1, 'string', true, 2);
+>constructorTestObject : constructorTestClass
+>new constructorTestClass(1, 'string', true, 2) : constructorTestClass
+>constructorTestClass : typeof constructorTestClass
+
+constructorTestObject.arg\u0031 = 1;
+>constructorTestObject.arg\u0031 = 1 : number
+>constructorTestObject.arg\u0031 : number
+>constructorTestObject : constructorTestClass
+>arg\u0031 : number
+
+constructorTestObject.arg2 = 'string';
+>constructorTestObject.arg2 = 'string' : string
+>constructorTestObject.arg2 : string
+>constructorTestObject : constructorTestClass
+>arg2 : string
+
+constructorTestObject.arg\u0033 = true;
+>constructorTestObject.arg\u0033 = true : boolean
+>constructorTestObject.arg\u0033 : boolean
+>constructorTestObject : constructorTestClass
+>arg\u0033 : boolean
+
+constructorTestObject.arg4 = 2;
+>constructorTestObject.arg4 = 2 : number
+>constructorTestObject.arg4 : number
+>constructorTestObject : constructorTestClass
+>arg4 : number
+
+// Lables
+
+l\u0061bel1: 
+    while (false)
+    {  
+       while(false)
+           continue label1;  // it will go to next iteration of outer loop 
+    } 
+
+label2: 
+    while (false)
+    {  
+       while(false)
+           continue l\u0061bel2;  // it will go to next iteration of outer loop 
+    } 
+
+label3: 
+    while (false)
+    {  
+       while(false)
+           continue label3;  // it will go to next iteration of outer loop 
+    } 
+
+l\u0061bel4: 
+    while (false)
+    {  
+       while(false)
+           continue l\u0061bel4;  // it will go to next iteration of outer loop 
+    } 

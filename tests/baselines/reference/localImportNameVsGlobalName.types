@@ -1,29 +1,47 @@
 === tests/cases/compiler/localImportNameVsGlobalName.ts ===
-Line 0 col 7 IdentifierName "Keyboard" = Keyboard
-Line 1 col 14 IdentifierName "Key" = Key
-Line 1 col 20 IdentifierName "UP" = Key
-Line 1 col 24 IdentifierName "DOWN" = Key
-Line 1 col 30 IdentifierName "LEFT" = Key
-Line 1 col 36 IdentifierName "RIGHT" = Key
-Line 4 col 7 IdentifierName "App" = App
-Line 5 col 9 IdentifierName "Key" = Key
-Line 5 col 15 IdentifierName "Keyboard" = Keyboard
-Line 5 col 24 IdentifierName "Key" = Keyboard.Key
-Line 7 col 18 IdentifierName "foo" = typeof foo
-Line 7 col 22 IdentifierName "key" = Keyboard.Key
-Line 7 col 27 IdentifierName "Key" = Key
-Line 8 col 0 InvocationExpression "foo(Key.UP)" = void
-Line 8 col 0 IdentifierName "foo" = typeof foo
-Line 9 col 6 MemberAccessExpression "Key.UP" = Keyboard.Key
-Line 9 col 6 IdentifierName "Key" = typeof Keyboard.Key
-Line 9 col 10 IdentifierName "UP" = Keyboard.Key
-Line 10 col 0 InvocationExpression "foo(Key.DOWN)" = void
-Line 10 col 0 IdentifierName "foo" = typeof foo
-Line 10 col 6 MemberAccessExpression "Key.DOWN" = Keyboard.Key
-Line 10 col 6 IdentifierName "Key" = typeof Keyboard.Key
-Line 10 col 10 IdentifierName "DOWN" = Keyboard.Key
-Line 11 col 0 InvocationExpression "foo(Key.LEFT)" = void
-Line 11 col 0 IdentifierName "foo" = typeof foo
-Line 11 col 6 MemberAccessExpression "Key.LEFT" = Keyboard.Key
-Line 11 col 6 IdentifierName "Key" = typeof Keyboard.Key
-Line 11 col 10 IdentifierName "LEFT" = Keyboard.Key
+module Keyboard {
+>Keyboard : Keyboard
+
+  export enum Key { UP, DOWN, LEFT, RIGHT }
+>Key : Key
+>UP : Key
+>DOWN : Key
+>LEFT : Key
+>RIGHT : Key
+}
+
+module App {
+>App : App
+
+  import Key = Keyboard.Key;
+>Key : Key
+>Keyboard : Keyboard
+>Key : Keyboard.Key
+
+  export function foo(key: Key): void {}
+>foo : typeof foo
+>key : Keyboard.Key
+>Key : Key
+
+>foo(Key.UP) : void
+>foo : typeof foo
+
+  foo(Key.UP);
+>Key.UP : Keyboard.Key
+>Key : typeof Keyboard.Key
+>UP : Keyboard.Key
+
+  foo(Key.DOWN);
+>foo(Key.DOWN) : void
+>foo : typeof foo
+>Key.DOWN : Keyboard.Key
+>Key : typeof Keyboard.Key
+>DOWN : Keyboard.Key
+
+  foo(Key.LEFT);
+>foo(Key.LEFT) : void
+>foo : typeof foo
+>Key.LEFT : Keyboard.Key
+>Key : typeof Keyboard.Key
+>LEFT : Keyboard.Key
+}

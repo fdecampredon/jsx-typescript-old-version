@@ -1,3 +1,12 @@
+//// [declFileModuleWithPropertyOfTypeModule.ts]
+
+module m {
+    export class c {
+    }
+
+    export var a = m;
+}
+
 //// [declFileModuleWithPropertyOfTypeModule.js]
 var m;
 (function (m) {

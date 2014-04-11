@@ -1,3 +1,8 @@
+//// [recursiveExportAssignmentAndFindAliasedType6_moduleA.ts]
+import moduleC = require("recursiveExportAssignmentAndFindAliasedType6_moduleC");
+import ClassB = require("recursiveExportAssignmentAndFindAliasedType6_moduleB");
+export var b: ClassB; // This should result in type ClassB
+
 //// [recursiveExportAssignmentAndFindAliasedType6_moduleE.js]
 define(["require", "exports", "recursiveExportAssignmentAndFindAliasedType6_moduleC"], function(require, exports, self) {
     

@@ -1,3 +1,4 @@
+//// [propertyOrdering2.js]
 var Foo = (function () {
     function Foo(x, y) {
         this.x = x;

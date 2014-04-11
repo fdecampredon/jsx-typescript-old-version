@@ -1,3 +1,4 @@
+//// [assignmentCompatWithOverloads.js]
 function f1(x) {
     return null;
 }

@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndLocalVarInAccessors.js]
 var class1 = (function () {
     function class1() {
     }

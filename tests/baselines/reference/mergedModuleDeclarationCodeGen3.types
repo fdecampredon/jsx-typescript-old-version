@@ -1,12 +1,23 @@
 === tests/cases/compiler/mergedModuleDeclarationCodeGen3.ts ===
-Line 0 col 7 IdentifierName "my" = my
-Line 0 col 10 IdentifierName "data" = my.data
-Line 1 col 20 IdentifierName "buz" = typeof buz
-Line 3 col 7 IdentifierName "my" = my
-Line 3 col 10 IdentifierName "data" = my.data
-Line 3 col 15 IdentifierName "foo" = my.data.foo
-Line 4 col 13 IdentifierName "data" = typeof data
-Line 4 col 18 IdentifierName "my" = any
-Line 4 col 22 IdentifierName "foo" = any
-Line 5 col 0 InvocationExpression "buz()" = void
-Line 5 col 0 IdentifierName "buz" = typeof buz
+module my.data {
+>my : my
+>data : my.data
+
+    export function buz() { }
+>buz : typeof buz
+}
+module my.data.foo {
+>my : my
+>data : my.data
+>foo : my.data.foo
+
+    function data(my, foo) {
+>data : typeof data
+>my : any
+>foo : any
+
+        buz();
+>buz() : void
+>buz : typeof buz
+    }
+}

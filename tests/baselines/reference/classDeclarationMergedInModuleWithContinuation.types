@@ -1,9 +1,24 @@
 === tests/cases/compiler/classDeclarationMergedInModuleWithContinuation.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 17 IdentifierName "N" = N
-Line 2 col 18 IdentifierName "N" = N
-Line 3 col 19 IdentifierName "v" = number
-Line 7 col 7 IdentifierName "M" = M
-Line 8 col 17 IdentifierName "O" = O
-Line 8 col 27 IdentifierName "M" = M
-Line 8 col 29 IdentifierName "N" = N
+module M {
+>M : M
+
+    export class N { }
+>N : N
+
+    export module N {
+>N : N
+
+        export var v = 0;
+>v : number
+    }
+}
+
+module M {
+>M : M
+
+    export class O extends M.N {
+>O : O
+>M : M
+>N : N
+    }
+}

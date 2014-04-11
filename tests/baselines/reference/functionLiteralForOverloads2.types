@@ -1,34 +1,78 @@
 === tests/cases/compiler/functionLiteralForOverloads2.ts ===
-Line 2 col 6 IdentifierName "C" = C
-Line 3 col 16 IdentifierName "x" = string
-Line 4 col 16 IdentifierName "x" = number
-Line 5 col 16 IdentifierName "x" = any
-Line 8 col 6 IdentifierName "D" = D<T>
-Line 8 col 8 IdentifierName "T" = T
-Line 9 col 16 IdentifierName "x" = string
-Line 10 col 16 IdentifierName "x" = number
-Line 11 col 16 IdentifierName "x" = any
-Line 14 col 4 IdentifierName "f" = { new(x: string): C; new(x: number): C; }
-Line 15 col 8 IdentifierName "x" = string
-Line 15 col 20 IdentifierName "C" = C
-Line 16 col 8 IdentifierName "x" = number
-Line 16 col 20 IdentifierName "C" = C
-Line 17 col 4 IdentifierName "C" = typeof C
-Line 19 col 4 IdentifierName "f2" = { new<T>(x: string): C; new<T>(x: number): C; }
-Line 20 col 8 IdentifierName "T" = T
-Line 20 col 11 IdentifierName "x" = string
-Line 20 col 23 IdentifierName "C" = C
-Line 21 col 8 IdentifierName "T" = T
-Line 21 col 11 IdentifierName "x" = number
-Line 21 col 23 IdentifierName "C" = C
-Line 22 col 4 IdentifierName "C" = typeof C
-Line 24 col 4 IdentifierName "f3" = { new<T>(x: string): D<T>; new<T>(x: number): D<T>; }
-Line 25 col 8 IdentifierName "T" = T
-Line 25 col 11 IdentifierName "x" = string
-Line 25 col 23 IdentifierName "D" = D<T>
-Line 25 col 25 IdentifierName "T" = T
-Line 26 col 8 IdentifierName "T" = T
-Line 26 col 11 IdentifierName "x" = number
-Line 26 col 23 IdentifierName "D" = D<T>
-Line 26 col 25 IdentifierName "T" = T
-Line 27 col 4 IdentifierName "D" = typeof D
+// basic uses of function literals with constructor overloads
+
+class C {
+>C : C
+
+    constructor(x: string);
+>x : string
+
+    constructor(x: number);
+>x : number
+
+    constructor(x) { }
+>x : any
+}
+
+class D<T> {
+>D : D<T>
+>T : T
+
+    constructor(x: string);
+>x : string
+
+    constructor(x: number);
+>x : number
+
+    constructor(x) { }
+>x : any
+}
+
+var f: {
+>f : { new(x: string): C; new(x: number): C; }
+
+    new(x: string): C;
+>x : string
+>C : C
+
+    new(x: number): C;
+>x : number
+>C : C
+
+} = C;
+>C : typeof C
+
+var f2: {
+>f2 : { new<T>(x: string): C; new<T>(x: number): C; }
+
+    new<T>(x: string): C;
+>T : T
+>x : string
+>C : C
+
+    new<T>(x: number): C;
+>T : T
+>x : number
+>C : C
+
+} = C;
+>C : typeof C
+
+var f3: {
+>f3 : { new<T>(x: string): D<T>; new<T>(x: number): D<T>; }
+
+    new<T>(x: string): D<T>;
+>T : T
+>x : string
+>D : D<T>
+>T : T
+
+    new<T>(x: number): D<T>;
+>T : T
+>x : number
+>D : D<T>
+>T : T
+
+} = D;
+>D : typeof D
+

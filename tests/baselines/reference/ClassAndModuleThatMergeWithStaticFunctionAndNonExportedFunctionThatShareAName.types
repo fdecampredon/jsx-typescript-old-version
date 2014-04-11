@@ -1,22 +1,49 @@
 === tests/cases/compiler/ClassAndModuleThatMergeWithStaticFunctionAndNonExportedFunctionThatShareAName.ts ===
-Line 0 col 6 IdentifierName "Point" = Point
-Line 1 col 23 IdentifierName "x" = number
-Line 1 col 41 IdentifierName "y" = number
-Line 3 col 11 IdentifierName "Origin" = () => Point
-Line 3 col 21 IdentifierName "Point" = Point
-Line 3 col 36 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 3 col 38 IdentifierName "x" = number
-Line 3 col 44 IdentifierName "y" = number
-Line 6 col 7 IdentifierName "Point" = Point
-Line 7 col 13 IdentifierName "Origin" = () => string
-Line 11 col 7 IdentifierName "A" = A
-Line 12 col 17 IdentifierName "Point" = Point
-Line 13 col 27 IdentifierName "x" = number
-Line 13 col 45 IdentifierName "y" = number
-Line 15 col 15 IdentifierName "Origin" = () => Point
-Line 15 col 25 IdentifierName "Point" = Point
-Line 15 col 40 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 15 col 42 IdentifierName "x" = number
-Line 15 col 48 IdentifierName "y" = number
-Line 18 col 18 IdentifierName "Point" = Point
-Line 19 col 17 IdentifierName "Origin" = () => string
+class Point {
+>Point : Point
+
+    constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+
+    static Origin(): Point { return { x: 0, y: 0 }; }
+>Origin : () => Point
+>Point : Point
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+}
+
+module Point {
+>Point : Point
+
+    function Origin() { return ""; }// not an error, since not exported
+>Origin : () => string
+}
+
+
+module A {
+>A : A
+
+    export class Point {
+>Point : Point
+
+        constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+
+        static Origin(): Point { return { x: 0, y: 0 }; }
+>Origin : () => Point
+>Point : Point
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+    }
+
+    export module Point {
+>Point : Point
+
+        function Origin() { return ""; }// not an error since not exported
+>Origin : () => string
+    }
+}

@@ -1,3 +1,4 @@
+//// [genericChainedCalls.js]
 var r1 = v1.func(function (num) {
     return num.toString();
 }).func(function (str) {

@@ -1,3 +1,4 @@
+//// [undeclaredMethod.js]
 var M;
 (function (M) {
     var C = (function () {

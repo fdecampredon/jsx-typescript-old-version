@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndLocalVarInLambda.js]
 var _this = this;
 var x = {
     doStuff: function (callback) {

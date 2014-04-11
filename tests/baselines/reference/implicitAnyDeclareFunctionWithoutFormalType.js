@@ -1,3 +1,4 @@
+//// [implicitAnyDeclareFunctionWithoutFormalType.js]
 // these should be errors
 function foo(x) {
 }

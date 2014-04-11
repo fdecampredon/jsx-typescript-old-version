@@ -1,3 +1,13 @@
 === tests/cases/compiler/commentBeforeStaticMethod1.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 4 col 16 IdentifierName "foo" = () => string
+class C {
+>C : C
+
+  /**
+   * Returns bar
+   */
+  public static foo(): string {
+>foo : () => string
+
+    return "bar";
+  }
+}

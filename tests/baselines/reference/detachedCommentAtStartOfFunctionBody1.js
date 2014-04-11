@@ -1,3 +1,4 @@
+//// [detachedCommentAtStartOfFunctionBody1.js]
 var TestFile = (function () {
     function TestFile() {
     }

@@ -1,36 +1,65 @@
 === tests/cases/compiler/parametersWithNoAnnotationAreAny.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "x" = any
-Line 0 col 25 IdentifierName "x" = any
-Line 1 col 4 IdentifierName "f" = (x: any) => any
-Line 1 col 8 FunctionExpression "function foo(x) { return x; }" = (x: any) => any
-Line 1 col 17 IdentifierName "foo" = (x: any) => any
-Line 1 col 21 IdentifierName "x" = any
-Line 1 col 33 IdentifierName "x" = any
-Line 2 col 4 IdentifierName "f2" = (x: any) => any
-Line 2 col 9 ParenthesizedArrowFunctionExpression "(x) => x" = (x: any) => any
-Line 2 col 10 IdentifierName "x" = any
-Line 2 col 16 IdentifierName "x" = any
-Line 3 col 4 IdentifierName "f3" = <T>(x: any) => any
-Line 3 col 9 ParenthesizedArrowFunctionExpression "<T>(x) => x" = <T>(x: any) => any
-Line 3 col 10 IdentifierName "T" = T
-Line 3 col 13 IdentifierName "x" = any
-Line 3 col 19 IdentifierName "x" = any
-Line 5 col 6 IdentifierName "C" = C
-Line 6 col 0 IdentifierName "foo" = (x: any) => any
-Line 6 col 8 IdentifierName "x" = any
-Line 7 col 15 IdentifierName "x" = any
-Line 11 col 10 IdentifierName "I" = I
-Line 12 col 0 IdentifierName "foo" = (x: any) => any
-Line 12 col 8 IdentifierName "x" = any
-Line 13 col 0 IdentifierName "foo2" = (x: any, y: any) => any
-Line 13 col 9 IdentifierName "x" = any
-Line 13 col 12 IdentifierName "y" = any
-Line 16 col 4 IdentifierName "a" = { foo(x: any): any; }
-Line 17 col 0 IdentifierName "foo" = (x: any) => any
-Line 17 col 8 IdentifierName "x" = any
-Line 20 col 4 IdentifierName "b" = { foo(x: any): any; a: (x: any) => any; b: (x: any) => any; }
-Line 20 col 8 ObjectLiteralExpression "{
+function foo(x) { return x; }
+>foo : typeof foo
+>x : any
+>x : any
+
+var f = function foo(x) { return x; }
+>f : (x: any) => any
+>function foo(x) { return x; } : (x: any) => any
+>foo : (x: any) => any
+>x : any
+>x : any
+
+var f2 = (x) => x;
+>f2 : (x: any) => any
+>(x) => x : (x: any) => any
+>x : any
+>x : any
+
+var f3 = <T>(x) => x;
+>f3 : <T>(x: any) => any
+><T>(x) => x : <T>(x: any) => any
+>T : T
+>x : any
+>x : any
+
+class C {
+>C : C
+
+    foo(x) {
+>foo : (x: any) => any
+>x : any
+
+        return x;
+>x : any
+    }
+}
+
+interface I {
+>I : I
+
+    foo(x);
+>foo : (x: any) => any
+>x : any
+
+    foo2(x, y);
+>foo2 : (x: any, y: any) => any
+>x : any
+>y : any
+}
+
+var a: {
+>a : { foo(x: any): any; }
+
+    foo(x);
+>foo : (x: any) => any
+>x : any
+}
+
+var b = {
+>b : { foo(x: any): any; a: (x: any) => any; b: (x: any) => any; }
+>{
     foo(x) {
         return x;
     },
@@ -38,18 +67,31 @@ Line 20 col 8 ObjectLiteralExpression "{
         return x;
     },
     b: (x) => x
-}" = { foo(x: any): any; a: (x: any) => any; b: (x: any) => any; }
-Line 21 col 0 IdentifierName "foo" = (x: any) => any
-Line 21 col 8 IdentifierName "x" = any
-Line 22 col 15 IdentifierName "x" = any
-Line 24 col 0 IdentifierName "a" = (x: any) => any
-Line 24 col 7 FunctionExpression "function foo(x) {
+} : { foo(x: any): any; a: (x: any) => any; b: (x: any) => any; }
+
+    foo(x) {
+>foo : (x: any) => any
+>x : any
+
         return x;
-    }" = (x: any) => any
-Line 24 col 16 IdentifierName "foo" = (x: any) => any
-Line 24 col 20 IdentifierName "x" = any
-Line 25 col 15 IdentifierName "x" = any
-Line 27 col 0 IdentifierName "b" = (x: any) => any
-Line 27 col 7 ParenthesizedArrowFunctionExpression "(x) => x" = (x: any) => any
-Line 27 col 8 IdentifierName "x" = any
-Line 27 col 14 IdentifierName "x" = any
+>x : any
+
+    },
+    a: function foo(x) {
+>a : (x: any) => any
+>function foo(x) {
+        return x;
+    } : (x: any) => any
+>foo : (x: any) => any
+>x : any
+
+        return x;
+>x : any
+
+    },
+    b: (x) => x
+>b : (x: any) => any
+>(x) => x : (x: any) => any
+>x : any
+>x : any
+}

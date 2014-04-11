@@ -1,3 +1,7 @@
+//// [declFileExportImportChain_d.ts]
+import c = require("declFileExportImportChain_c");
+export var x: c.b1.a.m2.c1;
+
 //// [declFileExportImportChain_a.js]
 define(["require", "exports"], function(require, exports) {
     var m1;

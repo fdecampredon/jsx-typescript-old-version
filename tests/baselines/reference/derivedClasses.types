@@ -1,50 +1,92 @@
 === tests/cases/compiler/derivedClasses.ts ===
-Line 0 col 6 IdentifierName "Red" = Red
-Line 0 col 18 IdentifierName "Color" = Color
-Line 1 col 11 IdentifierName "shade" = () => string
-Line 2 col 9 IdentifierName "getHue" = () => string
-Line 2 col 18 ParenthesizedArrowFunctionExpression "() => { return this.hue(); }" = () => string
-Line 2 col 33 InvocationExpression "this.hue()" = string
-Line 2 col 33 MemberAccessExpression "this.hue" = () => string
-Line 2 col 33 ThisKeyword "this" = Red
-Line 2 col 38 IdentifierName "hue" = () => string
-Line 3 col 12 AddExpression "getHue() + " red"" = string
-Line 3 col 12 InvocationExpression "getHue()" = string
-Line 3 col 12 IdentifierName "getHue" = () => string
-Line 7 col 6 IdentifierName "Color" = Color
-Line 8 col 11 IdentifierName "shade" = () => string
-Line 9 col 11 IdentifierName "hue" = () => string
-Line 12 col 6 IdentifierName "Blue" = Blue
-Line 12 col 19 IdentifierName "Color" = Color
-Line 14 col 11 IdentifierName "shade" = () => string
-Line 15 col 9 IdentifierName "getHue" = () => string
-Line 15 col 18 ParenthesizedArrowFunctionExpression "() => { return this.hue(); }" = () => string
-Line 15 col 33 InvocationExpression "this.hue()" = string
-Line 15 col 33 MemberAccessExpression "this.hue" = () => string
-Line 15 col 33 ThisKeyword "this" = Blue
-Line 15 col 38 IdentifierName "hue" = () => string
-Line 16 col 12 AddExpression "getHue() + " blue"" = string
-Line 16 col 12 InvocationExpression "getHue()" = string
-Line 16 col 12 IdentifierName "getHue" = () => string
-Line 20 col 4 IdentifierName "r" = Red
-Line 20 col 8 ObjectCreationExpression "new Red()" = Red
-Line 20 col 12 IdentifierName "Red" = typeof Red
-Line 21 col 4 IdentifierName "b" = Blue
-Line 21 col 8 ObjectCreationExpression "new Blue()" = Blue
-Line 21 col 12 IdentifierName "Blue" = typeof Blue
-Line 22 col 0 InvocationExpression "r.shade()" = string
-Line 22 col 0 MemberAccessExpression "r.shade" = () => string
-Line 22 col 0 IdentifierName "r" = Red
-Line 23 col 2 IdentifierName "shade" = () => string
-Line 24 col 0 InvocationExpression "r.hue()" = string
-Line 24 col 0 MemberAccessExpression "r.hue" = () => string
-Line 24 col 0 IdentifierName "r" = Red
-Line 24 col 2 IdentifierName "hue" = () => string
-Line 25 col 0 InvocationExpression "b.shade()" = string
-Line 25 col 0 MemberAccessExpression "b.shade" = () => string
-Line 25 col 0 IdentifierName "b" = Blue
-Line 25 col 2 IdentifierName "shade" = () => string
-Line 26 col 0 InvocationExpression "b.hue()" = string
-Line 26 col 0 MemberAccessExpression "b.hue" = () => string
-Line 26 col 0 IdentifierName "b" = Blue
-Line 26 col 2 IdentifierName "hue" = () => string
+class Red extends Color {
+>Red : Red
+>Color : Color
+
+    public shade() { 
+>shade : () => string
+
+    	var getHue = () => { return this.hue(); };
+>getHue : () => string
+>() => { return this.hue(); } : () => string
+>this.hue() : string
+>this.hue : () => string
+>this : Red
+>hue : () => string
+
+    	return getHue() + " red"; 
+>getHue() + " red" : string
+>getHue() : string
+>getHue : () => string
+    }
+}
+
+class Color {
+>Color : Color
+
+    public shade() { return "some shade"; }
+>shade : () => string
+
+    public hue() { return "some hue"; }
+>hue : () => string
+}
+
+class Blue extends Color {
+>Blue : Blue
+>Color : Color
+    
+    public shade() { 
+>shade : () => string
+
+    	var getHue = () => { return this.hue(); };
+>getHue : () => string
+>() => { return this.hue(); } : () => string
+>this.hue() : string
+>this.hue : () => string
+>this : Blue
+>hue : () => string
+
+    	return getHue() + " blue"; 
+>getHue() + " blue" : string
+>getHue() : string
+>getHue : () => string
+    }
+}
+
+var r = new Red();
+>r : Red
+>new Red() : Red
+>Red : typeof Red
+
+var b = new Blue();
+>b : Blue
+>new Blue() : Blue
+>Blue : typeof Blue
+
+>r.shade() : string
+>r.shade : () => string
+>r : Red
+
+r.shade();
+>shade : () => string
+
+r.hue();
+>r.hue() : string
+>r.hue : () => string
+>r : Red
+>hue : () => string
+
+b.shade();
+>b.shade() : string
+>b.shade : () => string
+>b : Blue
+>shade : () => string
+
+b.hue();
+>b.hue() : string
+>b.hue : () => string
+>b : Blue
+>hue : () => string
+
+
+

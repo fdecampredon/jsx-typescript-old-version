@@ -1,43 +1,58 @@
 === tests/cases/compiler/promiseChaining.ts ===
-Line 0 col 6 IdentifierName "Chain" = Chain<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 23 IdentifierName "value" = T
-Line 1 col 30 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "then" = <S>(cb: (x: T) => S) => Chain<S>
-Line 2 col 9 IdentifierName "S" = S
-Line 2 col 12 IdentifierName "cb" = (x: T) => S
-Line 2 col 17 IdentifierName "x" = T
-Line 2 col 20 IdentifierName "T" = T
-Line 2 col 26 IdentifierName "S" = S
-Line 2 col 30 IdentifierName "Chain" = Chain<T>
-Line 2 col 36 IdentifierName "S" = S
-Line 3 col 12 IdentifierName "result" = S
-Line 3 col 21 InvocationExpression "cb(this.value)" = S
-Line 3 col 21 IdentifierName "cb" = (x: T) => S
-Line 3 col 24 MemberAccessExpression "this.value" = T
-Line 3 col 24 ThisKeyword "this" = Chain<T>
-Line 3 col 29 IdentifierName "value" = T
-Line 5 col 12 IdentifierName "z" = Chain<number>
-Line 5 col 16 InvocationExpression "this.then(x => result)/*S*/.then(x => "abc")/*string*/.then(x => x.length)/*number*/" = Chain<number>
-Line 5 col 16 MemberAccessExpression "this.then(x => result)/*S*/.then(x => "abc")/*string*/.then" = <S>(cb: (x: string) => S) => Chain<S>
-Line 5 col 16 InvocationExpression "this.then(x => result)/*S*/.then(x => "abc")/*string*/" = Chain<string>
-Line 5 col 16 MemberAccessExpression "this.then(x => result)/*S*/.then" = <S>(cb: (x: S) => S) => Chain<S>
-Line 5 col 16 InvocationExpression "this.then(x => result)/*S*/" = Chain<S>
-Line 5 col 16 MemberAccessExpression "this.then" = <S>(cb: (x: T) => S) => Chain<S>
-Line 5 col 16 ThisKeyword "this" = Chain<T>
-Line 5 col 21 IdentifierName "then" = <S>(cb: (x: T) => S) => Chain<S>
-Line 5 col 26 SimpleArrowFunctionExpression "x => result" = (x: T) => S
-Line 5 col 26 IdentifierName "x" = T
-Line 5 col 31 IdentifierName "result" = S
-Line 5 col 44 IdentifierName "then" = <S>(cb: (x: S) => S) => Chain<S>
-Line 5 col 49 SimpleArrowFunctionExpression "x => "abc"" = (x: S) => string
-Line 5 col 49 IdentifierName "x" = S
-Line 5 col 71 IdentifierName "then" = <S>(cb: (x: string) => S) => Chain<S>
-Line 5 col 76 SimpleArrowFunctionExpression "x => x.length" = (x: string) => number
-Line 5 col 76 IdentifierName "x" = string
-Line 5 col 81 MemberAccessExpression "x.length" = number
-Line 5 col 81 IdentifierName "x" = string
-Line 5 col 83 IdentifierName "length" = number
-Line 6 col 15 ObjectCreationExpression "new Chain(result)" = Chain<S>
-Line 6 col 19 IdentifierName "Chain" = typeof Chain
-Line 6 col 25 IdentifierName "result" = S
+class Chain<T> {
+>Chain : Chain<T>
+>T : T
+
+    constructor(public value: T) { }
+>value : T
+>T : T
+
+    then<S>(cb: (x: T) => S): Chain<S> {
+>then : <S>(cb: (x: T) => S) => Chain<S>
+>S : S
+>cb : (x: T) => S
+>x : T
+>T : T
+>S : S
+>Chain : Chain<T>
+>S : S
+
+        var result = cb(this.value);
+>result : S
+>cb(this.value) : S
+>cb : (x: T) => S
+>this.value : T
+>this : Chain<T>
+>value : T
+
+        // should get a fresh type parameter which each then call
+        var z = this.then(x => result)/*S*/.then(x => "abc")/*string*/.then(x => x.length)/*number*/; // No error
+>z : Chain<number>
+>this.then(x => result)/*S*/.then(x => "abc")/*string*/.then(x => x.length)/*number*/ : Chain<number>
+>this.then(x => result)/*S*/.then(x => "abc")/*string*/.then : <S>(cb: (x: string) => S) => Chain<S>
+>this.then(x => result)/*S*/.then(x => "abc")/*string*/ : Chain<string>
+>this.then(x => result)/*S*/.then : <S>(cb: (x: S) => S) => Chain<S>
+>this.then(x => result)/*S*/ : Chain<S>
+>this.then : <S>(cb: (x: T) => S) => Chain<S>
+>this : Chain<T>
+>then : <S>(cb: (x: T) => S) => Chain<S>
+>x => result : (x: T) => S
+>x : T
+>result : S
+>then : <S>(cb: (x: S) => S) => Chain<S>
+>x => "abc" : (x: S) => string
+>x : S
+>then : <S>(cb: (x: string) => S) => Chain<S>
+>x => x.length : (x: string) => number
+>x : string
+>x.length : number
+>x : string
+>length : number
+
+        return new Chain(result);
+>new Chain(result) : Chain<S>
+>Chain : typeof Chain
+>result : S
+    }
+}
+

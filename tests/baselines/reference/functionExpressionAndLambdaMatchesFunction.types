@@ -1,12 +1,23 @@
 === tests/cases/compiler/functionExpressionAndLambdaMatchesFunction.ts ===
-Line 0 col 6 IdentifierName "CDoc" = CDoc
-Line 2 col 17 IdentifierName "doSomething" = (a: Function) => void
-Line 2 col 29 IdentifierName "a" = Function
-Line 2 col 32 IdentifierName "Function" = Function
-Line 4 col 0 InvocationExpression "doSomething(() => undefined)" = void
-Line 4 col 0 IdentifierName "doSomething" = (a: Function) => void
-Line 4 col 20 ParenthesizedArrowFunctionExpression "() => undefined" = () => any
-Line 4 col 26 IdentifierName "undefined" = any
-Line 5 col 0 InvocationExpression "doSomething(function () { })" = void
-Line 5 col 0 IdentifierName "doSomething" = (a: Function) => void
-Line 5 col 20 FunctionExpression "function () { }" = () => void
+class CDoc {
+>CDoc : CDoc
+
+        constructor() {
+        function doSomething(a: Function) {
+>doSomething : (a: Function) => void
+>a : Function
+>Function : Function
+        }
+        doSomething(() => undefined);
+>doSomething(() => undefined) : void
+>doSomething : (a: Function) => void
+>() => undefined : () => any
+>undefined : any
+
+        doSomething(function () { });
+>doSomething(function () { }) : void
+>doSomething : (a: Function) => void
+>function () { } : () => void
+    }
+}
+

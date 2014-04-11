@@ -1,3 +1,8 @@
 === tests/cases/compiler/moduleRedifinitionErrors.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 2 col 7 IdentifierName "A" = A
+class A {
+>A : A
+}
+module A {
+>A : A
+}
+

@@ -1,3 +1,4 @@
+//// [typeArgumentInferenceConstructSignatures.js]
 var noParams;
 new noParams();
 new noParams();

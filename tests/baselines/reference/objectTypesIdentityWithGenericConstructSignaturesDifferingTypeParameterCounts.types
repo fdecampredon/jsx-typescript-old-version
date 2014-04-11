@@ -1,172 +1,276 @@
 === tests/cases/compiler/objectTypesIdentityWithGenericConstructSignaturesDifferingTypeParameterCounts.ts ===
-Line 2 col 6 IdentifierName "B" = B<U, V>
-Line 2 col 8 IdentifierName "U" = U
-Line 2 col 11 IdentifierName "V" = V
-Line 3 col 16 IdentifierName "x" = U
-Line 3 col 19 IdentifierName "U" = U
-Line 6 col 6 IdentifierName "C" = C<V, W, X>
-Line 6 col 8 IdentifierName "V" = V
-Line 6 col 11 IdentifierName "W" = W
-Line 6 col 14 IdentifierName "X" = X
-Line 7 col 16 IdentifierName "x" = V
-Line 7 col 19 IdentifierName "V" = V
-Line 10 col 10 IdentifierName "I" = I<X, Y, Z, A>
-Line 10 col 12 IdentifierName "X" = X
-Line 10 col 15 IdentifierName "Y" = Y
-Line 10 col 18 IdentifierName "Z" = Z
-Line 10 col 21 IdentifierName "A" = A
-Line 11 col 8 IdentifierName "x" = X
-Line 11 col 11 IdentifierName "X" = X
-Line 11 col 15 IdentifierName "B" = B<U, V>
-Line 11 col 17 IdentifierName "X" = X
-Line 11 col 19 IdentifierName "Y" = Y
-Line 14 col 10 IdentifierName "I2" = I2
-Line 15 col 9 IdentifierName "Y" = Y
-Line 15 col 12 IdentifierName "Z" = Z
-Line 15 col 15 IdentifierName "A" = A
-Line 15 col 18 IdentifierName "B" = B
-Line 15 col 21 IdentifierName "x" = Y
-Line 15 col 24 IdentifierName "Y" = Y
-Line 15 col 28 IdentifierName "C" = C<V, W, X>
-Line 15 col 30 IdentifierName "Y" = Y
-Line 15 col 33 IdentifierName "Z" = Z
-Line 15 col 36 IdentifierName "A" = A
-Line 18 col 4 IdentifierName "a" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 18 col 14 IdentifierName "Z" = Z
-Line 18 col 17 IdentifierName "A" = A
-Line 18 col 20 IdentifierName "B" = B
-Line 18 col 23 IdentifierName "CC" = CC
-Line 18 col 27 IdentifierName "D" = D
-Line 18 col 30 IdentifierName "x" = Z
-Line 18 col 33 IdentifierName "Z" = Z
-Line 18 col 37 IdentifierName "C" = C<V, W, X>
-Line 18 col 39 IdentifierName "Z" = Z
-Line 18 col 42 IdentifierName "A" = A
-Line 18 col 45 IdentifierName "B" = B
-Line 19 col 4 IdentifierName "b" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 19 col 8 ObjectLiteralExpression "{ new<A, B, C, D, E, F>(x: A) { return x; } }" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 19 col 10 IdentifierName "new" = <A, B, C, D, E, F>(x: A) => A
-Line 19 col 14 IdentifierName "A" = A
-Line 19 col 17 IdentifierName "B" = B
-Line 19 col 20 IdentifierName "C" = C
-Line 19 col 23 IdentifierName "D" = D
-Line 19 col 26 IdentifierName "E" = E
-Line 19 col 29 IdentifierName "F" = F
-Line 19 col 32 IdentifierName "x" = A
-Line 19 col 35 IdentifierName "A" = A
-Line 19 col 47 IdentifierName "x" = A
-Line 21 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 21 col 15 IdentifierName "x" = B<string, string>
-Line 21 col 18 IdentifierName "B" = B<U, V>
-Line 22 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 22 col 15 IdentifierName "x" = B<string, string>
-Line 22 col 18 IdentifierName "B" = B<U, V>
-Line 23 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 23 col 15 IdentifierName "x" = any
-Line 25 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 25 col 15 IdentifierName "x" = C<string, number, boolean>
-Line 25 col 18 IdentifierName "C" = C<V, W, X>
-Line 26 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 26 col 15 IdentifierName "x" = C<string, number, boolean>
-Line 26 col 18 IdentifierName "C" = C<V, W, X>
-Line 27 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 27 col 15 IdentifierName "x" = any
-Line 29 col 9 IdentifierName "foo2" = typeof foo2
-Line 29 col 14 IdentifierName "x" = I<string, boolean, number, string>
-Line 29 col 17 IdentifierName "I" = I<X, Y, Z, A>
-Line 30 col 9 IdentifierName "foo2" = typeof foo2
-Line 30 col 14 IdentifierName "x" = I<string, boolean, number, string>
-Line 30 col 17 IdentifierName "I" = I<X, Y, Z, A>
-Line 31 col 9 IdentifierName "foo2" = typeof foo2
-Line 31 col 14 IdentifierName "x" = any
-Line 33 col 9 IdentifierName "foo3" = typeof foo3
-Line 33 col 14 IdentifierName "x" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 33 col 24 IdentifierName "a" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 34 col 9 IdentifierName "foo3" = typeof foo3
-Line 34 col 14 IdentifierName "x" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 34 col 24 IdentifierName "a" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 35 col 9 IdentifierName "foo3" = typeof foo3
-Line 35 col 14 IdentifierName "x" = any
-Line 37 col 9 IdentifierName "foo4" = typeof foo4
-Line 37 col 14 IdentifierName "x" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 37 col 24 IdentifierName "b" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 38 col 9 IdentifierName "foo4" = typeof foo4
-Line 38 col 14 IdentifierName "x" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 38 col 24 IdentifierName "b" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 39 col 9 IdentifierName "foo4" = typeof foo4
-Line 39 col 14 IdentifierName "x" = any
-Line 41 col 9 IdentifierName "foo8" = typeof foo8
-Line 41 col 14 IdentifierName "x" = B<string, string>
-Line 41 col 17 IdentifierName "B" = B<U, V>
-Line 42 col 9 IdentifierName "foo8" = typeof foo8
-Line 42 col 14 IdentifierName "x" = I<string, string, boolean, Date>
-Line 42 col 17 IdentifierName "I" = I<X, Y, Z, A>
-Line 42 col 44 IdentifierName "Date" = Date
-Line 43 col 9 IdentifierName "foo8" = typeof foo8
-Line 43 col 14 IdentifierName "x" = any
-Line 45 col 9 IdentifierName "foo9" = typeof foo9
-Line 45 col 14 IdentifierName "x" = B<string, number>
-Line 45 col 17 IdentifierName "B" = B<U, V>
-Line 46 col 9 IdentifierName "foo9" = typeof foo9
-Line 46 col 14 IdentifierName "x" = C<string, number, B<string, string>>
-Line 46 col 17 IdentifierName "C" = C<V, W, X>
-Line 46 col 35 IdentifierName "B" = B<U, V>
-Line 47 col 9 IdentifierName "foo9" = typeof foo9
-Line 47 col 14 IdentifierName "x" = any
-Line 49 col 9 IdentifierName "foo10" = typeof foo10
-Line 49 col 15 IdentifierName "x" = B<string, boolean>
-Line 49 col 18 IdentifierName "B" = B<U, V>
-Line 50 col 9 IdentifierName "foo10" = typeof foo10
-Line 50 col 15 IdentifierName "x" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 50 col 25 IdentifierName "a" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 51 col 9 IdentifierName "foo10" = typeof foo10
-Line 51 col 15 IdentifierName "x" = any
-Line 53 col 9 IdentifierName "foo11" = typeof foo11
-Line 53 col 15 IdentifierName "x" = B<string, boolean>
-Line 53 col 18 IdentifierName "B" = B<U, V>
-Line 54 col 9 IdentifierName "foo11" = typeof foo11
-Line 54 col 15 IdentifierName "x" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 54 col 25 IdentifierName "b" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 55 col 9 IdentifierName "foo11" = typeof foo11
-Line 55 col 15 IdentifierName "x" = any
-Line 57 col 9 IdentifierName "foo12" = typeof foo12
-Line 57 col 15 IdentifierName "x" = I<B<string, number>, number, Date, string>
-Line 57 col 18 IdentifierName "I" = I<X, Y, Z, A>
-Line 57 col 20 IdentifierName "B" = B<U, V>
-Line 57 col 47 IdentifierName "Date" = Date
-Line 58 col 9 IdentifierName "foo12" = typeof foo12
-Line 58 col 15 IdentifierName "x" = C<B<string, number>, number, Date>
-Line 58 col 18 IdentifierName "C" = C<V, W, X>
-Line 58 col 20 IdentifierName "B" = B<U, V>
-Line 58 col 47 IdentifierName "Date" = Date
-Line 59 col 9 IdentifierName "foo12" = typeof foo12
-Line 59 col 15 IdentifierName "x" = any
-Line 61 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 61 col 16 IdentifierName "x" = I2
-Line 61 col 19 IdentifierName "I2" = I2
-Line 62 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 62 col 16 IdentifierName "x" = C<string, string, boolean>
-Line 62 col 19 IdentifierName "C" = C<V, W, X>
-Line 63 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 63 col 16 IdentifierName "x" = any
-Line 65 col 9 IdentifierName "foo13" = typeof foo13
-Line 65 col 15 IdentifierName "x" = I<string, Date, RegExp, Date>
-Line 65 col 18 IdentifierName "I" = I<X, Y, Z, A>
-Line 65 col 28 IdentifierName "Date" = Date
-Line 65 col 34 IdentifierName "RegExp" = RegExp
-Line 65 col 42 IdentifierName "Date" = Date
-Line 66 col 9 IdentifierName "foo13" = typeof foo13
-Line 66 col 15 IdentifierName "x" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 66 col 25 IdentifierName "a" = new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
-Line 67 col 9 IdentifierName "foo13" = typeof foo13
-Line 67 col 15 IdentifierName "x" = any
-Line 69 col 9 IdentifierName "foo14" = typeof foo14
-Line 69 col 15 IdentifierName "x" = I<string, Date, RegExp, boolean>
-Line 69 col 18 IdentifierName "I" = I<X, Y, Z, A>
-Line 69 col 28 IdentifierName "Date" = Date
-Line 69 col 34 IdentifierName "RegExp" = RegExp
-Line 70 col 9 IdentifierName "foo14" = typeof foo14
-Line 70 col 15 IdentifierName "x" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 70 col 25 IdentifierName "b" = { new<A, B, C, D, E, F>(x: A): A; }
-Line 71 col 9 IdentifierName "foo14" = typeof foo14
-Line 71 col 15 IdentifierName "x" = any
+// object types are identical structurally
+
+class B<U, V> {
+>B : B<U, V>
+>U : U
+>V : V
+
+    constructor(x: U) { return null; }
+>x : U
+>U : U
+}
+
+class C<V, W, X> {
+>C : C<V, W, X>
+>V : V
+>W : W
+>X : X
+
+    constructor(x: V) { return null; }
+>x : V
+>V : V
+}
+
+interface I<X, Y, Z, A> {
+>I : I<X, Y, Z, A>
+>X : X
+>Y : Y
+>Z : Z
+>A : A
+
+    new(x: X): B<X,Y>;
+>x : X
+>X : X
+>B : B<U, V>
+>X : X
+>Y : Y
+}
+
+interface I2 {
+>I2 : I2
+
+    new <Y, Z, A, B>(x: Y): C<Y, Z, A>;
+>Y : Y
+>Z : Z
+>A : A
+>B : B
+>x : Y
+>Y : Y
+>C : C<V, W, X>
+>Y : Y
+>Z : Z
+>A : A
+}
+
+var a: { new <Z, A, B, CC, D>(x: Z): C<Z, A, B>; }
+>a : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+>Z : Z
+>A : A
+>B : B
+>CC : CC
+>D : D
+>x : Z
+>Z : Z
+>C : C<V, W, X>
+>Z : Z
+>A : A
+>B : B
+
+var b = { new<A, B, C, D, E, F>(x: A) { return x; } };
+>b : { new<A, B, C, D, E, F>(x: A): A; }
+>{ new<A, B, C, D, E, F>(x: A) { return x; } } : { new<A, B, C, D, E, F>(x: A): A; }
+>new : <A, B, C, D, E, F>(x: A) => A
+>A : A
+>B : B
+>C : C
+>D : D
+>E : E
+>F : F
+>x : A
+>A : A
+>x : A
+
+function foo1b(x: B<string, string>);
+>foo1b : typeof foo1b
+>x : B<string, string>
+>B : B<U, V>
+
+function foo1b(x: B<string, string>); // error
+>foo1b : typeof foo1b
+>x : B<string, string>
+>B : B<U, V>
+
+function foo1b(x: any) { }
+>foo1b : typeof foo1b
+>x : any
+
+function foo1c(x: C<string, number, boolean>);
+>foo1c : typeof foo1c
+>x : C<string, number, boolean>
+>C : C<V, W, X>
+
+function foo1c(x: C<string, number, boolean>); // error
+>foo1c : typeof foo1c
+>x : C<string, number, boolean>
+>C : C<V, W, X>
+
+function foo1c(x: any) { }
+>foo1c : typeof foo1c
+>x : any
+
+function foo2(x: I<string, boolean, number, string>);
+>foo2 : typeof foo2
+>x : I<string, boolean, number, string>
+>I : I<X, Y, Z, A>
+
+function foo2(x: I<string, boolean, number, string>); // error
+>foo2 : typeof foo2
+>x : I<string, boolean, number, string>
+>I : I<X, Y, Z, A>
+
+function foo2(x: any) { }
+>foo2 : typeof foo2
+>x : any
+
+function foo3(x: typeof a);
+>foo3 : typeof foo3
+>x : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+>a : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+
+function foo3(x: typeof a); // error
+>foo3 : typeof foo3
+>x : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+>a : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+
+function foo3(x: any) { }
+>foo3 : typeof foo3
+>x : any
+
+function foo4(x: typeof b);
+>foo4 : typeof foo4
+>x : { new<A, B, C, D, E, F>(x: A): A; }
+>b : { new<A, B, C, D, E, F>(x: A): A; }
+
+function foo4(x: typeof b); // error
+>foo4 : typeof foo4
+>x : { new<A, B, C, D, E, F>(x: A): A; }
+>b : { new<A, B, C, D, E, F>(x: A): A; }
+
+function foo4(x: any) { }
+>foo4 : typeof foo4
+>x : any
+
+function foo8(x: B<string, string>);
+>foo8 : typeof foo8
+>x : B<string, string>
+>B : B<U, V>
+
+function foo8(x: I<string, string, boolean, Date>); // BUG 832086
+>foo8 : typeof foo8
+>x : I<string, string, boolean, Date>
+>I : I<X, Y, Z, A>
+>Date : Date
+
+function foo8(x: any) { }
+>foo8 : typeof foo8
+>x : any
+
+function foo9(x: B<string, number>);
+>foo9 : typeof foo9
+>x : B<string, number>
+>B : B<U, V>
+
+function foo9(x: C<string, number, B<string, string>>); // error
+>foo9 : typeof foo9
+>x : C<string, number, B<string, string>>
+>C : C<V, W, X>
+>B : B<U, V>
+
+function foo9(x: any) { }
+>foo9 : typeof foo9
+>x : any
+
+function foo10(x: B<string, boolean>);
+>foo10 : typeof foo10
+>x : B<string, boolean>
+>B : B<U, V>
+
+function foo10(x: typeof a); // ok
+>foo10 : typeof foo10
+>x : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+>a : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+
+function foo10(x: any) { }
+>foo10 : typeof foo10
+>x : any
+
+function foo11(x: B<string, boolean>);
+>foo11 : typeof foo11
+>x : B<string, boolean>
+>B : B<U, V>
+
+function foo11(x: typeof b); // ok
+>foo11 : typeof foo11
+>x : { new<A, B, C, D, E, F>(x: A): A; }
+>b : { new<A, B, C, D, E, F>(x: A): A; }
+
+function foo11(x: any) { }
+>foo11 : typeof foo11
+>x : any
+
+function foo12(x: I<B<string, number>, number, Date, string>);
+>foo12 : typeof foo12
+>x : I<B<string, number>, number, Date, string>
+>I : I<X, Y, Z, A>
+>B : B<U, V>
+>Date : Date
+
+function foo12(x: C<B<string, number>, number, Date>); // ok
+>foo12 : typeof foo12
+>x : C<B<string, number>, number, Date>
+>C : C<V, W, X>
+>B : B<U, V>
+>Date : Date
+
+function foo12(x: any) { }
+>foo12 : typeof foo12
+>x : any
+
+function foo12b(x: I2);
+>foo12b : typeof foo12b
+>x : I2
+>I2 : I2
+
+function foo12b(x: C<string, string, boolean>); // BUG 832086
+>foo12b : typeof foo12b
+>x : C<string, string, boolean>
+>C : C<V, W, X>
+
+function foo12b(x: any) { }
+>foo12b : typeof foo12b
+>x : any
+
+function foo13(x: I<string, Date, RegExp, Date>);
+>foo13 : typeof foo13
+>x : I<string, Date, RegExp, Date>
+>I : I<X, Y, Z, A>
+>Date : Date
+>RegExp : RegExp
+>Date : Date
+
+function foo13(x: typeof a); // ok
+>foo13 : typeof foo13
+>x : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+>a : new<Z, A, B, CC, D>(x: Z) => C<Z, A, B>
+
+function foo13(x: any) { }
+>foo13 : typeof foo13
+>x : any
+
+function foo14(x: I<string, Date, RegExp, boolean>);
+>foo14 : typeof foo14
+>x : I<string, Date, RegExp, boolean>
+>I : I<X, Y, Z, A>
+>Date : Date
+>RegExp : RegExp
+
+function foo14(x: typeof b); // ok
+>foo14 : typeof foo14
+>x : { new<A, B, C, D, E, F>(x: A): A; }
+>b : { new<A, B, C, D, E, F>(x: A): A; }
+
+function foo14(x: any) { }
+>foo14 : typeof foo14
+>x : any
+

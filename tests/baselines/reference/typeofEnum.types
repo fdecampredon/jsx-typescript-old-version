@@ -1,9 +1,20 @@
 === tests/cases/compiler/typeofEnum.ts ===
-Line 0 col 5 IdentifierName "E" = E
-Line 1 col 0 IdentifierName "e1" = E
-Line 2 col 0 IdentifierName "e2" = E
-Line 5 col 4 IdentifierName "e1" = typeof E
-Line 5 col 15 IdentifierName "E" = typeof E
-Line 6 col 0 MemberAccessExpression "e1.e1" = E
-Line 6 col 0 IdentifierName "e1" = typeof E
-Line 6 col 3 IdentifierName "e1" = E
+enum E {
+>E : E
+
+    e1,
+>e1 : E
+
+    e2
+>e2 : E
+}
+
+var e1: typeof E;
+>e1 : typeof E
+>E : typeof E
+
+e1.e1;
+>e1.e1 : E
+>e1 : typeof E
+>e1 : E
+

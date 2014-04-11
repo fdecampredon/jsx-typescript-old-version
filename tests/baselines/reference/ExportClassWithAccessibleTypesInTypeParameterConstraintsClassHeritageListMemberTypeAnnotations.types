@@ -1,26 +1,50 @@
 === tests/cases/compiler/ExportClassWithAccessibleTypesInTypeParameterConstraintsClassHeritageListMemberTypeAnnotations.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 2 col 17 IdentifierName "Point" = Point
-Line 3 col 0 IdentifierName "x" = number
-Line 4 col 0 IdentifierName "y" = number
-Line 7 col 15 IdentifierName "Origin" = Point
-Line 7 col 23 IdentifierName "Point" = Point
-Line 7 col 31 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 7 col 33 IdentifierName "x" = number
-Line 7 col 39 IdentifierName "y" = number
-Line 9 col 17 IdentifierName "Point3d" = Point3d
-Line 9 col 33 IdentifierName "Point" = Point
-Line 10 col 0 IdentifierName "z" = number
-Line 13 col 15 IdentifierName "Origin3d" = Point3d
-Line 13 col 25 IdentifierName "Point3d" = Point3d
-Line 13 col 35 ObjectLiteralExpression "{ x: 0, y: 0, z: 0 }" = { x: number; y: number; z: number; }
-Line 13 col 37 IdentifierName "x" = number
-Line 13 col 43 IdentifierName "y" = number
-Line 13 col 49 IdentifierName "z" = number
-Line 15 col 17 IdentifierName "Line" = Line<TPoint>
-Line 15 col 22 IdentifierName "TPoint" = TPoint
-Line 15 col 37 IdentifierName "Point" = Point
-Line 16 col 27 IdentifierName "start" = TPoint
-Line 16 col 34 IdentifierName "TPoint" = TPoint
-Line 16 col 49 IdentifierName "end" = TPoint
-Line 16 col 54 IdentifierName "TPoint" = TPoint
+module A {
+>A : A
+
+    export class Point {
+>Point : Point
+
+        x: number;
+>x : number
+
+        y: number;
+>y : number
+    }
+
+    export var Origin: Point = { x: 0, y: 0 };
+>Origin : Point
+>Point : Point
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+
+    export class Point3d extends Point {
+>Point3d : Point3d
+>Point : Point
+
+        z: number;
+>z : number
+    }
+
+    export var Origin3d: Point3d = { x: 0, y: 0, z: 0 };
+>Origin3d : Point3d
+>Point3d : Point3d
+>{ x: 0, y: 0, z: 0 } : { x: number; y: number; z: number; }
+>x : number
+>y : number
+>z : number
+
+    export class Line<TPoint extends Point>{
+>Line : Line<TPoint>
+>TPoint : TPoint
+>Point : Point
+
+        constructor(public start: TPoint, public end: TPoint) { }
+>start : TPoint
+>TPoint : TPoint
+>end : TPoint
+>TPoint : TPoint
+    }
+}
+

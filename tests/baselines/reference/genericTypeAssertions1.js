@@ -1,3 +1,4 @@
+//// [genericTypeAssertions1.js]
 var A = (function () {
     function A() {
     }

@@ -1,14 +1,31 @@
 === tests/cases/compiler/augmentedTypesClass3.ts ===
-Line 1 col 6 IdentifierName "c5" = c5
-Line 1 col 18 IdentifierName "foo" = () => void
-Line 2 col 7 IdentifierName "c5" = c5
-Line 4 col 6 IdentifierName "c5a" = c5a
-Line 4 col 19 IdentifierName "foo" = () => void
-Line 5 col 7 IdentifierName "c5a" = c5a
-Line 5 col 17 IdentifierName "y" = number
-Line 7 col 6 IdentifierName "c5b" = c5b
-Line 7 col 19 IdentifierName "foo" = () => void
-Line 8 col 7 IdentifierName "c5b" = c5b
-Line 8 col 24 IdentifierName "y" = number
-Line 11 col 6 IdentifierName "c5c" = c5c
-Line 11 col 19 IdentifierName "foo" = () => void
+// class then module
+class c5 { public foo() { } }
+>c5 : c5
+>foo : () => void
+
+module c5 { } // should be ok
+>c5 : c5
+
+class c5a { public foo() { } }
+>c5a : c5a
+>foo : () => void
+
+module c5a { var y = 2; } // should be ok
+>c5a : c5a
+>y : number
+
+class c5b { public foo() { } }
+>c5b : c5b
+>foo : () => void
+
+module c5b { export var y = 2; } // should be ok
+>c5b : c5b
+>y : number
+
+//// class then import
+class c5c { public foo() { } }
+>c5c : c5c
+>foo : () => void
+
+//import c5c = require('');

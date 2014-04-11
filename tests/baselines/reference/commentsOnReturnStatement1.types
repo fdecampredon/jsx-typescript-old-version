@@ -1,4 +1,15 @@
 === tests/cases/compiler/commentsOnReturnStatement1.ts ===
-Line 0 col 6 IdentifierName "DebugClass" = DebugClass
-Line 1 col 18 IdentifierName "debugFunc" = () => boolean
-Line 3 col 12 IdentifierName "i" = number
+class DebugClass {
+>DebugClass : DebugClass
+
+    public static debugFunc() {
+>debugFunc : () => boolean
+
+        // Start Debugger Test Code
+        var i = 0;
+>i : number
+
+        // End Debugger Test Code
+        return true;
+    }
+}

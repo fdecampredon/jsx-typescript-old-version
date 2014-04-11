@@ -1,3 +1,4 @@
+//// [chainedCallsWithTypeParameterConstrainedToOtherTypeParameter2.js]
 var Chain = (function () {
     function Chain(value) {
         this.value = value;

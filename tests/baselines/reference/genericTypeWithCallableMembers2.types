@@ -1,13 +1,22 @@
 === tests/cases/compiler/genericTypeWithCallableMembers2.ts ===
-Line 0 col 9 IdentifierName "foo1" = typeof foo1
-Line 0 col 14 IdentifierName "T" = T
-Line 0 col 41 IdentifierName "f" = T
-Line 0 col 44 IdentifierName "T" = T
-Line 1 col 11 InvocationExpression "f()" = string
-Line 1 col 11 IdentifierName "f" = T
-Line 4 col 9 IdentifierName "foo2" = typeof foo2
-Line 4 col 14 IdentifierName "T" = T
-Line 4 col 45 IdentifierName "f" = T
-Line 4 col 48 IdentifierName "T" = T
-Line 5 col 11 ObjectCreationExpression "new f()" = string
-Line 5 col 15 IdentifierName "f" = T
+function foo1<T extends { (): string; }>(f: T) {
+>foo1 : typeof foo1
+>T : T
+>f : T
+>T : T
+
+    return f(); // should return 'string', once returned 'any'
+>f() : string
+>f : T
+}
+ 
+function foo2<T extends { new (): string; }>(f: T) {
+>foo2 : typeof foo2
+>T : T
+>f : T
+>T : T
+
+    return new f(); // should be legal, once was an error
+>new f() : string
+>f : T
+}

@@ -1,3 +1,36 @@
+//// [derivedClasses.ts]
+class Red extends Color {
+    public shade() { 
+    	var getHue = () => { return this.hue(); };
+    	return getHue() + " red"; 
+    }
+}
+
+class Color {
+    public shade() { return "some shade"; }
+    public hue() { return "some hue"; }
+}
+
+class Blue extends Color {
+    
+    public shade() { 
+    	var getHue = () => { return this.hue(); };
+    	return getHue() + " blue"; 
+    }
+}
+
+var r = new Red();
+var b = new Blue();
+
+r.shade();
+r.hue();
+b.shade();
+b.hue();
+
+
+
+
+//// [derivedClasses.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

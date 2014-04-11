@@ -1,6 +1,10 @@
 === tests/cases/compiler/functionAssignmentError.ts ===
-Line 0 col 4 IdentifierName "func" = () => string
-Line 0 col 11 FunctionExpression "function (){return "ONE";}" = () => string
-Line 1 col 0 AssignmentExpression "func = function (){return "ONE";}" = () => string
-Line 1 col 0 IdentifierName "func" = () => string
-Line 1 col 7 FunctionExpression "function (){return "ONE";}" = () => string
+var func = function (){return "ONE";};
+>func : () => string
+>function (){return "ONE";} : () => string
+
+func = function (){return "ONE";};
+>func = function (){return "ONE";} : () => string
+>func : () => string
+>function (){return "ONE";} : () => string
+

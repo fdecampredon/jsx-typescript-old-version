@@ -1,3 +1,10 @@
+//// [B.ts]
+import a = require('A');
+
+import A = a.A;
+
+export = A;
+
 //// [A.js]
 define(["require", "exports"], function(require, exports) {
     var A = (function () {

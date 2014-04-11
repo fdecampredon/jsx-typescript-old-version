@@ -1,6 +1,8 @@
 === tests/cases/compiler/commentsOnObjectLiteral3.ts ===
-Line 1 col 4 IdentifierName "v" = { prop: number; func: () => void; func1(): void; a: any; }
-Line 1 col 8 ObjectLiteralExpression "{
+
+var v = {
+>v : { prop: number; func: () => void; func1(): void; a: any; }
+>{
  //property
  prop: 1,
  //property
@@ -16,23 +18,48 @@ Line 1 col 8 ObjectLiteralExpression "{
  set a(value) {
   this.prop = value;
  }
-}" = { prop: number; func: () => void; func1(): void; a: any; }
-Line 2 col 0 IdentifierName "//property
- prop" = number
-Line 4 col 0 IdentifierName "//property
- func" = () => void
-Line 5 col 7 FunctionExpression "function () {
- }" = () => void
-Line 7 col 0 IdentifierName "//PropertyName + CallSignature
- func1" = () => void
-Line 10 col 5 IdentifierName "a" = any
-Line 11 col 9 MemberAccessExpression "this.prop" = any
-Line 11 col 9 ThisKeyword "this" = any
-Line 11 col 14 IdentifierName "prop" = any
-Line 14 col 5 IdentifierName "a" = any
-Line 14 col 7 IdentifierName "value" = any
-Line 15 col 0 AssignmentExpression "this.prop = value" = any
-Line 15 col 0 MemberAccessExpression "this.prop" = any
-Line 15 col 0 ThisKeyword "this" = any
-Line 15 col 7 IdentifierName "prop" = any
-Line 15 col 14 IdentifierName "value" = any
+} : { prop: number; func: () => void; func1(): void; a: any; }
+
+ //property
+>//property
+ prop : number
+
+ prop: 1,
+ //property
+>//property
+ func : () => void
+
+ func: function () {
+>function () {
+ } : () => void
+
+ },
+ //PropertyName + CallSignature
+>//PropertyName + CallSignature
+ func1 : () => void
+
+ func1() { },
+ //getter
+ get a() {
+>a : any
+
+  return this.prop;
+>this.prop : any
+>this : any
+>prop : any
+
+ },
+ //setter
+ set a(value) {
+>a : any
+>value : any
+
+  this.prop = value;
+>this.prop = value : any
+>this.prop : any
+>this : any
+>prop : any
+>value : any
+ }
+};
+

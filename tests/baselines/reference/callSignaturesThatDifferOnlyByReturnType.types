@@ -1,36 +1,76 @@
 === tests/cases/compiler/callSignaturesThatDifferOnlyByReturnType.ts ===
-Line 2 col 10 IdentifierName "I" = I
-Line 3 col 5 IdentifierName "x" = any
-Line 4 col 5 IdentifierName "x" = any
-Line 5 col 5 IdentifierName "T" = T
-Line 5 col 8 IdentifierName "x" = T
-Line 5 col 11 IdentifierName "T" = T
-Line 6 col 5 IdentifierName "T" = T
-Line 6 col 8 IdentifierName "x" = T
-Line 6 col 11 IdentifierName "T" = T
-Line 9 col 10 IdentifierName "I2" = I2
-Line 10 col 5 IdentifierName "T" = T
-Line 10 col 8 IdentifierName "x" = T
-Line 10 col 11 IdentifierName "T" = T
-Line 11 col 5 IdentifierName "T" = T
-Line 11 col 8 IdentifierName "x" = T
-Line 11 col 11 IdentifierName "T" = T
-Line 14 col 10 IdentifierName "I3" = I3<T>
-Line 14 col 13 IdentifierName "T" = T
-Line 15 col 5 IdentifierName "x" = T
-Line 15 col 8 IdentifierName "T" = T
-Line 16 col 5 IdentifierName "x" = T
-Line 16 col 8 IdentifierName "T" = T
-Line 19 col 4 IdentifierName "a" = { (x: any, y: any): Object; (x: any, y: any): any; }
-Line 20 col 5 IdentifierName "x" = any
-Line 20 col 8 IdentifierName "y" = any
-Line 20 col 12 IdentifierName "Object" = Object
-Line 21 col 5 IdentifierName "x" = any
-Line 21 col 8 IdentifierName "y" = any
-Line 24 col 4 IdentifierName "a2" = { <T>(x: T): number; <T>(x: T): string; }
-Line 25 col 5 IdentifierName "T" = T
-Line 25 col 8 IdentifierName "x" = T
-Line 25 col 11 IdentifierName "T" = T
-Line 26 col 5 IdentifierName "T" = T
-Line 26 col 8 IdentifierName "x" = T
-Line 26 col 11 IdentifierName "T" = T
+// Each pair of signatures in these types has a signature that should cause an error. 
+// Overloads, generic or not, that differ only by return type are an error.
+interface I {
+>I : I
+
+    (x): number;
+>x : any
+
+    (x): void; // error
+>x : any
+
+    <T>(x: T): number;
+>T : T
+>x : T
+>T : T
+
+    <T>(x: T): string; // error
+>T : T
+>x : T
+>T : T
+}
+
+interface I2 {
+>I2 : I2
+
+    <T>(x: T): number;
+>T : T
+>x : T
+>T : T
+
+    <T>(x: T): string; // error
+>T : T
+>x : T
+>T : T
+}
+
+interface I3<T> {
+>I3 : I3<T>
+>T : T
+
+    (x: T): number;
+>x : T
+>T : T
+
+    (x: T): string; // error
+>x : T
+>T : T
+}
+
+var a: {
+>a : { (x: any, y: any): Object; (x: any, y: any): any; }
+
+    (x, y): Object;
+>x : any
+>y : any
+>Object : Object
+
+    (x, y): any; // error
+>x : any
+>y : any
+}
+
+var a2: {
+>a2 : { <T>(x: T): number; <T>(x: T): string; }
+
+    <T>(x: T): number;
+>T : T
+>x : T
+>T : T
+
+    <T>(x: T): string; // error
+>T : T
+>x : T
+>T : T
+}

@@ -1,3 +1,18 @@
+//// [es3-declaration-amd.ts]
+
+class A
+{
+    constructor ()
+    {
+
+    }
+
+    public B()
+    {
+        return 42;
+    }
+}
+
 //// [es3-declaration-amd.js]
 var A = (function () {
     function A() {

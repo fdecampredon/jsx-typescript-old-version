@@ -1,17 +1,44 @@
 === tests/cases/compiler/collisionCodeGenModuleWithFunctionChildren.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 15 IdentifierName "x" = number
-Line 2 col 13 IdentifierName "fn" = typeof fn
-Line 2 col 16 IdentifierName "M" = any
-Line 2 col 19 IdentifierName "p" = number
-Line 2 col 23 IdentifierName "x" = number
-Line 5 col 7 IdentifierName "M" = M
-Line 6 col 13 IdentifierName "fn2" = typeof fn2
-Line 7 col 12 IdentifierName "M" = any
-Line 8 col 12 IdentifierName "p" = number
-Line 8 col 16 IdentifierName "x" = number
-Line 12 col 7 IdentifierName "M" = M
-Line 13 col 13 IdentifierName "fn3" = typeof fn3
-Line 14 col 17 IdentifierName "M" = () => void
-Line 15 col 16 IdentifierName "p" = number
-Line 15 col 20 IdentifierName "x" = number
+module M {
+>M : M
+
+    export var x = 3;
+>x : number
+
+    function fn(M, p = x) { }
+>fn : typeof fn
+>M : any
+>p : number
+>x : number
+}
+
+module M {
+>M : M
+
+    function fn2() {
+>fn2 : typeof fn2
+
+        var M;
+>M : any
+
+        var p = x;
+>p : number
+>x : number
+    }
+}
+
+module M {
+>M : M
+
+    function fn3() {
+>fn3 : typeof fn3
+
+        function M() {
+>M : () => void
+
+            var p = x;
+>p : number
+>x : number
+        }
+    }
+}

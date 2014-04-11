@@ -1,28 +1,38 @@
 === tests/cases/compiler/enumIndexer.ts ===
-Line 0 col 5 IdentifierName "MyEnumType" = MyEnumType
-Line 1 col 0 IdentifierName "foo" = MyEnumType
-Line 1 col 9 IdentifierName "bar" = MyEnumType
-Line 3 col 4 IdentifierName "_arr" = { key: string; }[]
-Line 3 col 11 ArrayLiteralExpression "[{ key: 'foo' }, { key: 'bar' }]" = { key: string; }[]
-Line 3 col 12 ObjectLiteralExpression "{ key: 'foo' }" = { key: string; }
-Line 3 col 14 IdentifierName "key" = string
-Line 3 col 28 ObjectLiteralExpression "{ key: 'bar' }" = { key: string; }
-Line 3 col 30 IdentifierName "key" = string
-Line 4 col 4 IdentifierName "enumValue" = MyEnumType
-Line 4 col 16 MemberAccessExpression "MyEnumType.foo" = MyEnumType
-Line 4 col 16 IdentifierName "MyEnumType" = typeof MyEnumType
-Line 4 col 27 IdentifierName "foo" = MyEnumType
-Line 5 col 4 IdentifierName "x" = boolean[]
-Line 5 col 8 InvocationExpression "_arr.map(o => MyEnumType[o.key] === enumValue)" = boolean[]
-Line 5 col 8 MemberAccessExpression "_arr.map" = <U>(callbackfn: (value: { key: string; }, index: number, array: { key: string; }[]) => U, thisArg?: any) => U[]
-Line 5 col 8 IdentifierName "_arr" = { key: string; }[]
-Line 5 col 13 IdentifierName "map" = <U>(callbackfn: (value: { key: string; }, index: number, array: { key: string; }[]) => U, thisArg?: any) => U[]
-Line 5 col 17 SimpleArrowFunctionExpression "o => MyEnumType[o.key] === enumValue" = (o: { key: string; }) => boolean
-Line 5 col 17 IdentifierName "o" = { key: string; }
-Line 5 col 22 EqualsExpression "MyEnumType[o.key] === enumValue" = boolean
-Line 5 col 22 ElementAccessExpression "MyEnumType[o.key]" = any
-Line 5 col 22 IdentifierName "MyEnumType" = typeof MyEnumType
-Line 5 col 33 MemberAccessExpression "o.key" = string
-Line 5 col 33 IdentifierName "o" = { key: string; }
-Line 5 col 35 IdentifierName "key" = string
-Line 5 col 44 IdentifierName "enumValue" = MyEnumType
+enum MyEnumType {
+>MyEnumType : MyEnumType
+
+    foo, bar
+>foo : MyEnumType
+>bar : MyEnumType
+}
+var _arr = [{ key: 'foo' }, { key: 'bar' }]
+>_arr : { key: string; }[]
+>[{ key: 'foo' }, { key: 'bar' }] : { key: string; }[]
+>{ key: 'foo' } : { key: string; }
+>key : string
+>{ key: 'bar' } : { key: string; }
+>key : string
+
+var enumValue = MyEnumType.foo;
+>enumValue : MyEnumType
+>MyEnumType.foo : MyEnumType
+>MyEnumType : typeof MyEnumType
+>foo : MyEnumType
+
+var x = _arr.map(o => MyEnumType[o.key] === enumValue); // these are not same type
+>x : boolean[]
+>_arr.map(o => MyEnumType[o.key] === enumValue) : boolean[]
+>_arr.map : <U>(callbackfn: (value: { key: string; }, index: number, array: { key: string; }[]) => U, thisArg?: any) => U[]
+>_arr : { key: string; }[]
+>map : <U>(callbackfn: (value: { key: string; }, index: number, array: { key: string; }[]) => U, thisArg?: any) => U[]
+>o => MyEnumType[o.key] === enumValue : (o: { key: string; }) => boolean
+>o : { key: string; }
+>MyEnumType[o.key] === enumValue : boolean
+>MyEnumType[o.key] : any
+>MyEnumType : typeof MyEnumType
+>o.key : string
+>o : { key: string; }
+>key : string
+>enumValue : MyEnumType
+

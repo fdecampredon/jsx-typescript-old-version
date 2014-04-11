@@ -1,3 +1,11 @@
+//// [foo_1.ts]
+import foo = require("./foo_0");
+var color: foo;
+if(color === foo.green){
+	color = foo.answer;
+}
+
+
 //// [foo_0.js]
 define(["require", "exports"], function(require, exports) {
     var foo;

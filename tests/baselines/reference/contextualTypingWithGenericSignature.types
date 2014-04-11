@@ -1,15 +1,26 @@
 === tests/cases/compiler/contextualTypingWithGenericSignature.ts ===
-Line 2 col 4 IdentifierName "f2" = <T, U>(x: T, y: U) => T
-Line 3 col 5 IdentifierName "T" = T
-Line 3 col 8 IdentifierName "U" = U
-Line 3 col 11 IdentifierName "x" = T
-Line 3 col 14 IdentifierName "T" = T
-Line 3 col 17 IdentifierName "y" = U
-Line 3 col 20 IdentifierName "U" = U
-Line 3 col 24 IdentifierName "T" = T
-Line 5 col 0 AssignmentExpression "f2 = (x, y) => { return x }" = (x: any, y: any) => any
-Line 5 col 0 IdentifierName "f2" = <T, U>(x: T, y: U) => T
-Line 6 col 5 ParenthesizedArrowFunctionExpression "(x, y) => { return x }" = (x: any, y: any) => any
-Line 6 col 6 IdentifierName "x" = any
-Line 6 col 9 IdentifierName "y" = any
-Line 6 col 24 IdentifierName "x" = any
+// If e is a FunctionExpression or ArrowFunctionExpression with no type parameters and no parameter or return type annotations, and T is a function type with EXACTLY ONE non - generic call signature, then any inferences made for type parameters referenced by the parameters of T’s call signature are fixed(section 4.12.2) and e is processed with the contextual type T, as described in section 4.9.3.
+
+var f2: {
+>f2 : <T, U>(x: T, y: U) => T
+
+    <T, U>(x: T, y: U): T
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+>T : T
+
+};
+
+>f2 = (x, y) => { return x } : (x: any, y: any) => any
+>f2 : <T, U>(x: T, y: U) => T
+
+f2 = (x, y) => { return x }
+>(x, y) => { return x } : (x: any, y: any) => any
+>x : any
+>y : any
+>x : any
+

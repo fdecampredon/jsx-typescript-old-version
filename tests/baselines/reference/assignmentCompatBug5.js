@@ -1,3 +1,4 @@
+//// [assignmentCompatBug5.js]
 function foo1(x) {
 }
 foo1({ b: 5 });

@@ -1,14 +1,25 @@
 === tests/cases/compiler/declFileForExportedImport_1.ts ===
-Line 1 col 14 IdentifierName "a" = a
-Line 2 col 4 IdentifierName "y" = number
-Line 2 col 8 MemberAccessExpression "a.x" = number
-Line 2 col 8 IdentifierName "a" = typeof a
-Line 2 col 10 IdentifierName "x" = number
-Line 4 col 14 IdentifierName "b" = b
-Line 4 col 18 IdentifierName "a" = a
-Line 5 col 4 IdentifierName "z" = number
-Line 5 col 8 MemberAccessExpression "b.x" = number
-Line 5 col 8 IdentifierName "b" = typeof a
-Line 5 col 10 IdentifierName "x" = number
+///<reference path='declFileForExportedImport_0.ts'/>
+export import a = require('declFileForExportedImport_0');
+>a : a
+
+var y = a.x;
+>y : number
+>a.x : number
+>a : typeof a
+>x : number
+
+export import b = a;
+>b : b
+>a : a
+
+var z = b.x;
+>z : number
+>b.x : number
+>b : typeof a
+>x : number
+
 === tests/cases/compiler/declFileForExportedImport_0.ts ===
-Line 0 col 11 IdentifierName "x" = number
+export var x: number;
+>x : number
+

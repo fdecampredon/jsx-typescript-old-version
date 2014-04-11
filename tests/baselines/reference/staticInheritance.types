@@ -1,23 +1,39 @@
 === tests/cases/compiler/staticInheritance.ts ===
-Line 0 col 9 IdentifierName "doThing" = typeof doThing
-Line 0 col 17 IdentifierName "x" = { n: string; }
-Line 0 col 22 IdentifierName "n" = string
-Line 1 col 6 IdentifierName "A" = A
-Line 2 col 11 IdentifierName "n" = string
-Line 3 col 0 IdentifierName "p" = void
-Line 3 col 8 InvocationExpression "doThing(A)" = void
-Line 3 col 8 IdentifierName "doThing" = typeof doThing
-Line 3 col 16 IdentifierName "A" = typeof A
-Line 5 col 6 IdentifierName "B" = B
-Line 5 col 16 IdentifierName "A" = A
-Line 6 col 0 IdentifierName "p1" = void
-Line 6 col 9 InvocationExpression "doThing(A)" = void
-Line 6 col 9 IdentifierName "doThing" = typeof doThing
-Line 6 col 17 IdentifierName "A" = typeof A
-Line 7 col 0 IdentifierName "p2" = void
-Line 7 col 9 InvocationExpression "doThing(B)" = void
-Line 7 col 9 IdentifierName "doThing" = typeof doThing
-Line 7 col 17 IdentifierName "B" = typeof B
-Line 9 col 0 InvocationExpression "doThing(B)" = void
-Line 9 col 0 IdentifierName "doThing" = typeof doThing
-Line 9 col 8 IdentifierName "B" = typeof B
+function doThing(x: { n: string }) { }
+>doThing : typeof doThing
+>x : { n: string; }
+>n : string
+
+class A {
+>A : A
+
+    static n: string;
+>n : string
+
+    p = doThing(A); // OK
+>p : void
+>doThing(A) : void
+>doThing : typeof doThing
+>A : typeof A
+}
+class B extends A {
+>B : B
+>A : A
+
+    p1 = doThing(A); // OK
+>p1 : void
+>doThing(A) : void
+>doThing : typeof doThing
+>A : typeof A
+
+    p2 = doThing(B); // OK
+>p2 : void
+>doThing(B) : void
+>doThing : typeof doThing
+>B : typeof B
+}
+doThing(B); //OK
+>doThing(B) : void
+>doThing : typeof doThing
+>B : typeof B
+

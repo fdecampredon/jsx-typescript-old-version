@@ -1,68 +1,127 @@
 === tests/cases/compiler/derivedClassIncludesInheritedMembers.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 0 IdentifierName "a" = string
-Line 2 col 0 IdentifierName "b" = () => void
-Line 3 col 8 IdentifierName "c" = string
-Line 4 col 8 IdentifierName "c" = string
-Line 4 col 10 IdentifierName "v" = string
-Line 6 col 11 IdentifierName "r" = string
-Line 7 col 11 IdentifierName "s" = () => void
-Line 8 col 15 IdentifierName "t" = string
-Line 9 col 15 IdentifierName "t" = string
-Line 9 col 17 IdentifierName "v" = string
-Line 11 col 16 IdentifierName "x" = any
-Line 14 col 6 IdentifierName "Derived" = Derived
-Line 14 col 22 IdentifierName "Base" = Base
-Line 17 col 4 IdentifierName "d" = Derived
-Line 17 col 7 IdentifierName "Derived" = Derived
-Line 17 col 17 ObjectCreationExpression "new Derived(1)" = Derived
-Line 17 col 21 IdentifierName "Derived" = typeof Derived
-Line 18 col 4 IdentifierName "r1" = string
-Line 18 col 9 MemberAccessExpression "d.a" = string
-Line 18 col 9 IdentifierName "d" = Derived
-Line 18 col 11 IdentifierName "a" = string
-Line 19 col 4 IdentifierName "r2" = void
-Line 19 col 9 InvocationExpression "d.b()" = void
-Line 19 col 9 MemberAccessExpression "d.b" = () => void
-Line 19 col 9 IdentifierName "d" = Derived
-Line 19 col 11 IdentifierName "b" = () => void
-Line 20 col 4 IdentifierName "r3" = string
-Line 20 col 9 MemberAccessExpression "d.c" = string
-Line 20 col 9 IdentifierName "d" = Derived
-Line 20 col 11 IdentifierName "c" = string
-Line 21 col 0 AssignmentExpression "d.c = ''" = string
-Line 21 col 0 MemberAccessExpression "d.c" = string
-Line 21 col 0 IdentifierName "d" = Derived
-Line 21 col 2 IdentifierName "c" = string
-Line 22 col 4 IdentifierName "r4" = string
-Line 22 col 9 MemberAccessExpression "Derived.r" = string
-Line 22 col 9 IdentifierName "Derived" = typeof Derived
-Line 22 col 17 IdentifierName "r" = string
-Line 23 col 4 IdentifierName "r5" = void
-Line 23 col 9 InvocationExpression "Derived.s()" = void
-Line 23 col 9 MemberAccessExpression "Derived.s" = () => void
-Line 23 col 9 IdentifierName "Derived" = typeof Derived
-Line 23 col 17 IdentifierName "s" = () => void
-Line 24 col 4 IdentifierName "r6" = string
-Line 24 col 9 MemberAccessExpression "Derived.t" = string
-Line 24 col 9 IdentifierName "Derived" = typeof Derived
-Line 24 col 17 IdentifierName "t" = string
-Line 25 col 0 AssignmentExpression "Derived.t = ''" = string
-Line 25 col 0 MemberAccessExpression "Derived.t" = string
-Line 25 col 0 IdentifierName "Derived" = typeof Derived
-Line 25 col 8 IdentifierName "t" = string
-Line 27 col 6 IdentifierName "Base2" = Base2
-Line 28 col 5 IdentifierName "x" = string
-Line 28 col 17 IdentifierName "Object" = Object
-Line 29 col 5 IdentifierName "x" = number
-Line 29 col 17 IdentifierName "Date" = Date
-Line 32 col 6 IdentifierName "Derived2" = Derived2
-Line 32 col 23 IdentifierName "Base2" = Base2
-Line 35 col 4 IdentifierName "d2" = Derived2
-Line 35 col 8 IdentifierName "Derived2" = Derived2
-Line 36 col 4 IdentifierName "r7" = Object
-Line 36 col 9 ElementAccessExpression "d2['']" = Object
-Line 36 col 9 IdentifierName "d2" = Derived2
-Line 37 col 4 IdentifierName "r8" = Date
-Line 37 col 9 ElementAccessExpression "d2[1]" = Date
-Line 37 col 9 IdentifierName "d2" = Derived2
+class Base {
+>Base : Base
+
+    a: string;
+>a : string
+
+    b() { }
+>b : () => void
+
+    get c() { return ''; }
+>c : string
+
+    set c(v) { }
+>c : string
+>v : string
+
+    static r: string;
+>r : string
+
+    static s() { }
+>s : () => void
+
+    static get t() { return ''; }
+>t : string
+
+    static set t(v) { }
+>t : string
+>v : string
+
+    constructor(x) { }
+>x : any
+}
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+}
+
+var d: Derived = new Derived(1);
+>d : Derived
+>Derived : Derived
+>new Derived(1) : Derived
+>Derived : typeof Derived
+
+var r1 = d.a;
+>r1 : string
+>d.a : string
+>d : Derived
+>a : string
+
+var r2 = d.b();
+>r2 : void
+>d.b() : void
+>d.b : () => void
+>d : Derived
+>b : () => void
+
+var r3 = d.c;
+>r3 : string
+>d.c : string
+>d : Derived
+>c : string
+
+d.c = '';
+>d.c = '' : string
+>d.c : string
+>d : Derived
+>c : string
+
+var r4 = Derived.r;
+>r4 : string
+>Derived.r : string
+>Derived : typeof Derived
+>r : string
+
+var r5 = Derived.s();
+>r5 : void
+>Derived.s() : void
+>Derived.s : () => void
+>Derived : typeof Derived
+>s : () => void
+
+var r6 = Derived.t;
+>r6 : string
+>Derived.t : string
+>Derived : typeof Derived
+>t : string
+
+Derived.t = '';
+>Derived.t = '' : string
+>Derived.t : string
+>Derived : typeof Derived
+>t : string
+
+class Base2 {
+>Base2 : Base2
+
+    [x: string]: Object;
+>x : string
+>Object : Object
+
+    [x: number]: Date;
+>x : number
+>Date : Date
+}
+
+class Derived2 extends Base2 {
+>Derived2 : Derived2
+>Base2 : Base2
+}
+
+var d2: Derived2;
+>d2 : Derived2
+>Derived2 : Derived2
+
+var r7 = d2[''];
+>r7 : Object
+>d2[''] : Object
+>d2 : Derived2
+
+var r8 = d2[1];
+>r8 : Date
+>d2[1] : Date
+>d2 : Derived2
+
+

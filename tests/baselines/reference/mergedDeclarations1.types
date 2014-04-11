@@ -1,51 +1,76 @@
 === tests/cases/compiler/mergedDeclarations1.ts ===
-Line 0 col 10 IdentifierName "Point" = Point
-Line 1 col 0 IdentifierName "x" = number
-Line 2 col 0 IdentifierName "y" = number
-Line 4 col 9 IdentifierName "point" = typeof point
-Line 4 col 15 IdentifierName "x" = number
-Line 4 col 26 IdentifierName "y" = number
-Line 4 col 38 IdentifierName "Point" = Point
-Line 5 col 11 ObjectLiteralExpression "{ x: x, y: y }" = { x: number; y: number; }
-Line 5 col 13 IdentifierName "x" = number
-Line 5 col 16 IdentifierName "x" = number
-Line 5 col 19 IdentifierName "y" = number
-Line 5 col 22 IdentifierName "y" = number
-Line 7 col 7 IdentifierName "point" = point
-Line 8 col 15 IdentifierName "origin" = Point
-Line 8 col 24 InvocationExpression "point(0, 0)" = Point
-Line 8 col 24 IdentifierName "point" = typeof point
-Line 9 col 20 IdentifierName "equals" = (p1: Point, p2: Point) => boolean
-Line 9 col 27 IdentifierName "p1" = Point
-Line 9 col 31 IdentifierName "Point" = Point
-Line 9 col 38 IdentifierName "p2" = Point
-Line 9 col 42 IdentifierName "Point" = Point
-Line 10 col 15 LogicalAndExpression "p1.x == p2.x && p1.y == p2.y" = boolean
-Line 10 col 15 EqualsWithTypeConversionExpression "p1.x == p2.x" = boolean
-Line 10 col 15 MemberAccessExpression "p1.x" = number
-Line 10 col 15 IdentifierName "p1" = Point
-Line 10 col 18 IdentifierName "x" = number
-Line 10 col 23 MemberAccessExpression "p2.x" = number
-Line 10 col 23 IdentifierName "p2" = Point
-Line 10 col 26 IdentifierName "x" = number
-Line 10 col 31 EqualsWithTypeConversionExpression "p1.y == p2.y" = boolean
-Line 10 col 31 MemberAccessExpression "p1.y" = number
-Line 10 col 31 IdentifierName "p1" = Point
-Line 10 col 34 IdentifierName "y" = number
-Line 10 col 39 MemberAccessExpression "p2.y" = number
-Line 10 col 39 IdentifierName "p2" = Point
-Line 10 col 42 IdentifierName "y" = number
-Line 13 col 4 IdentifierName "p1" = Point
-Line 13 col 9 InvocationExpression "point(0, 0)" = Point
-Line 13 col 9 IdentifierName "point" = typeof point
-Line 14 col 4 IdentifierName "p2" = Point
-Line 14 col 9 MemberAccessExpression "point.origin" = Point
-Line 14 col 9 IdentifierName "point" = typeof point
-Line 14 col 15 IdentifierName "origin" = Point
-Line 15 col 4 IdentifierName "b" = boolean
-Line 15 col 8 InvocationExpression "point.equals(p1, p2)" = boolean
-Line 15 col 8 MemberAccessExpression "point.equals" = (p1: Point, p2: Point) => boolean
-Line 15 col 8 IdentifierName "point" = typeof point
-Line 15 col 14 IdentifierName "equals" = (p1: Point, p2: Point) => boolean
-Line 15 col 21 IdentifierName "p1" = Point
-Line 15 col 25 IdentifierName "p2" = Point
+interface Point {
+>Point : Point
+
+    x: number;
+>x : number
+
+    y: number;
+>y : number
+}
+function point(x: number, y: number): Point {
+>point : typeof point
+>x : number
+>y : number
+>Point : Point
+
+    return { x: x, y: y };
+>{ x: x, y: y } : { x: number; y: number; }
+>x : number
+>x : number
+>y : number
+>y : number
+}
+module point {
+>point : point
+
+    export var origin = point(0, 0);
+>origin : Point
+>point(0, 0) : Point
+>point : typeof point
+
+    export function equals(p1: Point, p2: Point) {
+>equals : (p1: Point, p2: Point) => boolean
+>p1 : Point
+>Point : Point
+>p2 : Point
+>Point : Point
+
+        return p1.x == p2.x && p1.y == p2.y;
+>p1.x == p2.x && p1.y == p2.y : boolean
+>p1.x == p2.x : boolean
+>p1.x : number
+>p1 : Point
+>x : number
+>p2.x : number
+>p2 : Point
+>x : number
+>p1.y == p2.y : boolean
+>p1.y : number
+>p1 : Point
+>y : number
+>p2.y : number
+>p2 : Point
+>y : number
+    }
+}
+var p1 = point(0, 0);
+>p1 : Point
+>point(0, 0) : Point
+>point : typeof point
+
+var p2 = point.origin;
+>p2 : Point
+>point.origin : Point
+>point : typeof point
+>origin : Point
+
+var b = point.equals(p1, p2);
+>b : boolean
+>point.equals(p1, p2) : boolean
+>point.equals : (p1: Point, p2: Point) => boolean
+>point : typeof point
+>equals : (p1: Point, p2: Point) => boolean
+>p1 : Point
+>p2 : Point
+

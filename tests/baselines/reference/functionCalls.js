@@ -1,3 +1,4 @@
+//// [functionCalls.js]
 // Invoke function call on value of type 'any' with no type arguments
 var anyVar;
 anyVar(0);

@@ -1,3 +1,4 @@
+//// [compoundAdditionAssignmentLHSCannotBeAssigned.js]
 // string can add every type, and result string cannot be assigned to below types
 var E;
 (function (E) {

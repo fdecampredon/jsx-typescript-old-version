@@ -1,3 +1,4 @@
+//// [genericCallWithConstraintsTypeArgumentInference2.js]
 // Generic call with parameters of T and U, U extends T, no parameter of type U
 function foo(t) {
     var u;

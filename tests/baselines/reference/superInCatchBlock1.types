@@ -1,10 +1,27 @@
 === tests/cases/compiler/superInCatchBlock1.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 1 col 0 IdentifierName "m" = () => void
-Line 3 col 6 IdentifierName "B" = B
-Line 3 col 16 IdentifierName "A" = A
-Line 4 col 0 IdentifierName "m" = () => void
-Line 7 col 9 IdentifierName "e" = any
-Line 8 col 0 InvocationExpression "super.m()" = void
-Line 8 col 0 MemberAccessExpression "super.m" = () => void
-Line 8 col 9 IdentifierName "m" = () => void
+class A {
+>A : A
+
+ m(): void { }
+>m : () => void
+}
+class B extends A {
+>B : B
+>A : A
+
+ m() {
+>m : () => void
+
+  try {
+  }
+  catch (e) {
+>e : any
+
+   super.m();
+>super.m() : void
+>super.m : () => void
+>m : () => void
+  }
+ }
+}
+

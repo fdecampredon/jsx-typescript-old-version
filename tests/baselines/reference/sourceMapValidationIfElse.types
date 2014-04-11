@@ -1,20 +1,44 @@
 === tests/cases/compiler/sourceMapValidationIfElse.ts ===
-Line 0 col 4 IdentifierName "i" = number
-Line 1 col 4 EqualsWithTypeConversionExpression "i == 10" = boolean
-Line 1 col 4 IdentifierName "i" = number
-Line 2 col 0 PostIncrementExpression "i++" = number
-Line 2 col 0 IdentifierName "i" = number
-Line 6 col 4 EqualsWithTypeConversionExpression "i == 10" = boolean
-Line 6 col 4 IdentifierName "i" = number
-Line 8 col 0 PostIncrementExpression "i++" = number
-Line 8 col 0 IdentifierName "i" = number
-Line 10 col 9 EqualsWithTypeConversionExpression "i == 20" = boolean
-Line 10 col 9 IdentifierName "i" = number
-Line 11 col 0 PostDecrementExpression "i--" = number
-Line 11 col 0 IdentifierName "i" = number
-Line 12 col 11 EqualsWithTypeConversionExpression "i == 30" = boolean
-Line 12 col 11 IdentifierName "i" = number
-Line 13 col 0 AddAssignmentExpression "i += 70" = number
-Line 13 col 0 IdentifierName "i" = number
-Line 15 col 0 PostDecrementExpression "i--" = number
-Line 15 col 0 IdentifierName "i" = number
+var i = 10;
+>i : number
+
+if (i == 10) {
+>i == 10 : boolean
+>i : number
+
+    i++;
+>i++ : number
+>i : number
+
+} else
+{
+}
+if (i == 10)
+>i == 10 : boolean
+>i : number
+{
+    i++;
+>i++ : number
+>i : number
+}
+else if (i == 20) {
+>i == 20 : boolean
+>i : number
+
+    i--;
+>i-- : number
+>i : number
+
+} else if (i == 30) {
+>i == 30 : boolean
+>i : number
+
+    i += 70;
+>i += 70 : number
+>i : number
+
+} else {
+    i--;
+>i-- : number
+>i : number
+}

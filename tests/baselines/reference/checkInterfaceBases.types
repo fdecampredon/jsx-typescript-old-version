@@ -1,11 +1,27 @@
 === tests/cases/compiler/app.ts ===
-Line 1 col 10 IdentifierName "SecondEvent" = SecondEvent
-Line 2 col 0 IdentifierName "data" = any
-Line 4 col 10 IdentifierName "Third" = Third
-Line 4 col 24 IdentifierName "JQueryEventObjectTest" = JQueryEventObjectTest
-Line 4 col 47 IdentifierName "SecondEvent" = SecondEvent
+///<reference path='jquery.d.ts' />
+interface SecondEvent {
+>SecondEvent : SecondEvent
+
+    data: any;
+>data : any
+}
+interface Third extends JQueryEventObjectTest, SecondEvent {}
+>Third : Third
+>JQueryEventObjectTest : JQueryEventObjectTest
+>SecondEvent : SecondEvent
+
 === tests/cases/compiler/jquery.d.ts ===
-Line 0 col 10 IdentifierName "JQueryEventObjectTest" = JQueryEventObjectTest
-Line 1 col 0 IdentifierName "data" = any
-Line 2 col 0 IdentifierName "which" = number
-Line 3 col 0 IdentifierName "metaKey" = any
+interface JQueryEventObjectTest {
+>JQueryEventObjectTest : JQueryEventObjectTest
+
+    data: any;
+>data : any
+
+    which: number;
+>which : number
+
+    metaKey: any;
+>metaKey : any
+}
+

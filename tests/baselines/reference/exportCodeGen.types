@@ -1,35 +1,111 @@
 === tests/cases/compiler/exportCodeGen.ts ===
-Line 3 col 7 IdentifierName "A" = A
-Line 4 col 15 IdentifierName "x" = number
-Line 5 col 13 IdentifierName "lt12" = typeof lt12
-Line 6 col 15 LessThanExpression "x < 12" = boolean
-Line 6 col 15 IdentifierName "x" = number
-Line 11 col 7 IdentifierName "B" = B
-Line 12 col 8 IdentifierName "x" = number
-Line 13 col 13 IdentifierName "lt12" = typeof lt12
-Line 14 col 15 LessThanExpression "x < 12" = boolean
-Line 14 col 15 IdentifierName "x" = number
-Line 19 col 7 IdentifierName "C" = C
-Line 20 col 13 IdentifierName "no" = typeof no
-Line 26 col 7 IdentifierName "D" = D
-Line 27 col 20 IdentifierName "yes" = typeof yes
-Line 33 col 7 IdentifierName "E" = E
-Line 34 col 16 IdentifierName "Color" = Color
-Line 34 col 24 IdentifierName "Red" = Color
-Line 35 col 20 IdentifierName "fn" = typeof fn
-Line 36 col 21 IdentifierName "I" = I
-Line 36 col 25 IdentifierName "id" = number
-Line 37 col 17 IdentifierName "C" = C
-Line 37 col 21 IdentifierName "name" = string
-Line 38 col 18 IdentifierName "M" = M
-Line 39 col 19 IdentifierName "x" = number
-Line 45 col 7 IdentifierName "F" = F
-Line 46 col 9 IdentifierName "Color" = Color
-Line 46 col 17 IdentifierName "Red" = Color
-Line 47 col 13 IdentifierName "fn" = typeof fn
-Line 48 col 14 IdentifierName "I" = I
-Line 48 col 18 IdentifierName "id" = number
-Line 49 col 10 IdentifierName "C" = C
-Line 49 col 14 IdentifierName "name" = string
-Line 50 col 11 IdentifierName "M" = M
-Line 51 col 12 IdentifierName "x" = number
+
+// should replace all refs to 'x' in the body,
+// with fully qualified
+module A {
+>A : A
+
+    export var x = 12;
+>x : number
+
+    function lt12() {
+>lt12 : typeof lt12
+
+        return x < 12;
+>x < 12 : boolean
+>x : number
+    }
+} 
+
+// should not fully qualify 'x'
+module B {
+>B : B
+
+    var x = 12;
+>x : number
+
+    function lt12() {
+>lt12 : typeof lt12
+
+        return x < 12;
+>x < 12 : boolean
+>x : number
+    }
+}
+
+// not copied, since not exported
+module C {
+>C : C
+
+    function no() {
+>no : typeof no
+
+        return false;
+    }
+}
+
+// copies, since exported
+module D {
+>D : D
+
+    export function yes() {
+>yes : typeof yes
+
+        return true;
+    }
+}
+
+// validate all exportable statements
+module E {
+>E : E
+
+    export enum Color { Red }
+>Color : Color
+>Red : Color
+
+    export function fn() { }
+>fn : typeof fn
+
+    export interface I { id: number }
+>I : I
+>id : number
+
+    export class C { name: string }
+>C : C
+>name : string
+
+    export module M {
+>M : M
+
+        export var x = 42;
+>x : number
+    }
+}
+
+// validate all exportable statements,
+// which are not exported
+module F {
+>F : F
+
+    enum Color { Red }
+>Color : Color
+>Red : Color
+
+    function fn() { }
+>fn : typeof fn
+
+    interface I { id: number }
+>I : I
+>id : number
+
+    class C { name: string }
+>C : C
+>name : string
+
+    module M {
+>M : M
+
+        var x = 42;
+>x : number
+    }
+}

@@ -1,3 +1,4 @@
+//// [ifElseWithStatements1.js]
 if (true)
     f();
 else

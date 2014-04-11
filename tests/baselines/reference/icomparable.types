@@ -1,20 +1,34 @@
 === tests/cases/compiler/icomparable.ts ===
-Line 0 col 14 IdentifierName "IComparable" = IComparable<T>
-Line 0 col 26 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "compareTo" = (other: T) => any
-Line 1 col 17 IdentifierName "other" = T
-Line 1 col 24 IdentifierName "T" = T
-Line 4 col 21 IdentifierName "sort" = typeof sort
-Line 4 col 26 IdentifierName "U" = U
-Line 4 col 36 IdentifierName "IComparable" = IComparable<T>
-Line 4 col 54 IdentifierName "items" = U[]
-Line 4 col 61 IdentifierName "U" = U
-Line 4 col 67 IdentifierName "U" = U
-Line 6 col 14 IdentifierName "StringComparable" = StringComparable
-Line 6 col 39 IdentifierName "IComparable" = IComparable<T>
-Line 9 col 8 IdentifierName "sc" = StringComparable[]
-Line 9 col 12 IdentifierName "StringComparable" = StringComparable
-Line 11 col 8 IdentifierName "x" = StringComparable[]
-Line 11 col 12 InvocationExpression "sort(sc)" = StringComparable[]
-Line 11 col 12 IdentifierName "sort" = typeof sort
-Line 11 col 17 IdentifierName "sc" = StringComparable[]
+    interface IComparable<T> {
+>IComparable : IComparable<T>
+>T : T
+
+       compareTo(other: T);
+>compareTo : (other: T) => any
+>other : T
+>T : T
+    }
+
+    declare function sort<U extends IComparable<any>>(items: U[]): U[];
+>sort : typeof sort
+>U : U
+>IComparable : IComparable<T>
+>items : U[]
+>U : U
+>U : U
+
+    interface StringComparable extends IComparable<string> {
+>StringComparable : StringComparable
+>IComparable : IComparable<T>
+    }
+
+    var sc: StringComparable[];
+>sc : StringComparable[]
+>StringComparable : StringComparable
+
+    var x = sort(sc);
+>x : StringComparable[]
+>sort(sc) : StringComparable[]
+>sort : typeof sort
+>sc : StringComparable[]
+

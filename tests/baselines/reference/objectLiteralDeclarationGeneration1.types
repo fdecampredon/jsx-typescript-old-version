@@ -1,3 +1,5 @@
 === tests/cases/compiler/objectLiteralDeclarationGeneration1.ts ===
-Line 0 col 6 IdentifierName "y" = y<T>
-Line 0 col 8 IdentifierName "T" = T
+class y<T extends {}>{ }
+>y : y<T>
+>T : T
+

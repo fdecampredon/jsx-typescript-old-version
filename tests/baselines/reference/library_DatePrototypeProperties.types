@@ -1,270 +1,364 @@
 === tests/cases/compiler/library_DatePrototypeProperties.ts ===
-Line 0 col 0 MemberAccessExpression "// Properties of the Date prototype object as per ES5 spec
+// Properties of the Date prototype object as per ES5 spec
+>// Properties of the Date prototype object as per ES5 spec
 // http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.5
-Date.prototype.constructor" = Function
-Line 0 col 0 MemberAccessExpression "// Properties of the Date prototype object as per ES5 spec
+Date.prototype.constructor : Function
+>// Properties of the Date prototype object as per ES5 spec
 // http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.5
-Date.prototype" = Date
-Line 0 col 0 IdentifierName "// Properties of the Date prototype object as per ES5 spec
+Date.prototype : Date
+>// Properties of the Date prototype object as per ES5 spec
 // http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.5
-Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 2 col 5 IdentifierName "prototype" = Date
-Line 2 col 15 IdentifierName "constructor" = Function
-Line 3 col 0 InvocationExpression "Date.prototype.toString()" = string
-Line 3 col 0 MemberAccessExpression "Date.prototype.toString" = () => string
-Line 3 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 3 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 3 col 5 IdentifierName "prototype" = Date
-Line 3 col 15 IdentifierName "toString" = () => string
-Line 4 col 0 InvocationExpression "Date.prototype.toDateString()" = string
-Line 4 col 0 MemberAccessExpression "Date.prototype.toDateString" = () => string
-Line 4 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 4 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 4 col 5 IdentifierName "prototype" = Date
-Line 4 col 15 IdentifierName "toDateString" = () => string
-Line 5 col 0 InvocationExpression "Date.prototype.toTimeString()" = string
-Line 5 col 0 MemberAccessExpression "Date.prototype.toTimeString" = () => string
-Line 5 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 5 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 5 col 5 IdentifierName "prototype" = Date
-Line 5 col 15 IdentifierName "toTimeString" = () => string
-Line 6 col 0 InvocationExpression "Date.prototype.toLocaleString()" = string
-Line 6 col 0 MemberAccessExpression "Date.prototype.toLocaleString" = () => string
-Line 6 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 6 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 6 col 5 IdentifierName "prototype" = Date
-Line 6 col 15 IdentifierName "toLocaleString" = () => string
-Line 7 col 0 InvocationExpression "Date.prototype.toLocaleDateString()" = string
-Line 7 col 0 MemberAccessExpression "Date.prototype.toLocaleDateString" = () => string
-Line 7 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 7 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 7 col 5 IdentifierName "prototype" = Date
-Line 7 col 15 IdentifierName "toLocaleDateString" = () => string
-Line 8 col 0 InvocationExpression "Date.prototype.toLocaleTimeString()" = string
-Line 8 col 0 MemberAccessExpression "Date.prototype.toLocaleTimeString" = () => string
-Line 8 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 8 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 8 col 5 IdentifierName "prototype" = Date
-Line 8 col 15 IdentifierName "toLocaleTimeString" = () => string
-Line 9 col 0 InvocationExpression "Date.prototype.valueOf()" = number
-Line 9 col 0 MemberAccessExpression "Date.prototype.valueOf" = () => number
-Line 9 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 9 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 9 col 5 IdentifierName "prototype" = Date
-Line 9 col 15 IdentifierName "valueOf" = () => number
-Line 10 col 0 InvocationExpression "Date.prototype.getTime()" = number
-Line 10 col 0 MemberAccessExpression "Date.prototype.getTime" = () => number
-Line 10 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 10 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 11 col 5 IdentifierName "prototype" = Date
-Line 11 col 15 IdentifierName "getTime" = () => number
-Line 12 col 0 InvocationExpression "Date.prototype.getFullYear()" = number
-Line 12 col 0 MemberAccessExpression "Date.prototype.getFullYear" = () => number
-Line 12 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 12 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 12 col 5 IdentifierName "prototype" = Date
-Line 12 col 15 IdentifierName "getFullYear" = () => number
-Line 13 col 0 InvocationExpression "Date.prototype.getUTCFullYear()" = number
-Line 13 col 0 MemberAccessExpression "Date.prototype.getUTCFullYear" = () => number
-Line 13 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 13 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 13 col 5 IdentifierName "prototype" = Date
-Line 13 col 15 IdentifierName "getUTCFullYear" = () => number
-Line 14 col 0 InvocationExpression "Date.prototype.getMonth()" = number
-Line 14 col 0 MemberAccessExpression "Date.prototype.getMonth" = () => number
-Line 14 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 14 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 14 col 5 IdentifierName "prototype" = Date
-Line 14 col 15 IdentifierName "getMonth" = () => number
-Line 15 col 0 InvocationExpression "Date.prototype.getUTCMonth()" = number
-Line 15 col 0 MemberAccessExpression "Date.prototype.getUTCMonth" = () => number
-Line 15 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 15 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 15 col 5 IdentifierName "prototype" = Date
-Line 15 col 15 IdentifierName "getUTCMonth" = () => number
-Line 16 col 0 InvocationExpression "Date.prototype.getDate()" = number
-Line 16 col 0 MemberAccessExpression "Date.prototype.getDate" = () => number
-Line 16 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 16 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 16 col 5 IdentifierName "prototype" = Date
-Line 16 col 15 IdentifierName "getDate" = () => number
-Line 17 col 0 InvocationExpression "Date.prototype.getUTCDate()" = number
-Line 17 col 0 MemberAccessExpression "Date.prototype.getUTCDate" = () => number
-Line 17 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 17 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 17 col 5 IdentifierName "prototype" = Date
-Line 17 col 15 IdentifierName "getUTCDate" = () => number
-Line 18 col 0 InvocationExpression "Date.prototype.getDay()" = number
-Line 18 col 0 MemberAccessExpression "Date.prototype.getDay" = () => number
-Line 18 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 18 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 18 col 5 IdentifierName "prototype" = Date
-Line 18 col 15 IdentifierName "getDay" = () => number
-Line 19 col 0 InvocationExpression "Date.prototype.getUTCDay()" = number
-Line 19 col 0 MemberAccessExpression "Date.prototype.getUTCDay" = () => number
-Line 19 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 19 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 19 col 5 IdentifierName "prototype" = Date
-Line 19 col 15 IdentifierName "getUTCDay" = () => number
-Line 20 col 0 InvocationExpression "Date.prototype.getHours()" = number
-Line 20 col 0 MemberAccessExpression "Date.prototype.getHours" = () => number
-Line 20 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 20 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 20 col 5 IdentifierName "prototype" = Date
-Line 20 col 15 IdentifierName "getHours" = () => number
-Line 21 col 0 InvocationExpression "Date.prototype.getUTCHours()" = number
-Line 21 col 0 MemberAccessExpression "Date.prototype.getUTCHours" = () => number
-Line 21 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 21 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 21 col 5 IdentifierName "prototype" = Date
-Line 21 col 15 IdentifierName "getUTCHours" = () => number
-Line 22 col 0 InvocationExpression "Date.prototype.getMinutes()" = number
-Line 22 col 0 MemberAccessExpression "Date.prototype.getMinutes" = () => number
-Line 22 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 22 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 22 col 5 IdentifierName "prototype" = Date
-Line 22 col 15 IdentifierName "getMinutes" = () => number
-Line 23 col 0 InvocationExpression "Date.prototype.getUTCMinutes()" = number
-Line 23 col 0 MemberAccessExpression "Date.prototype.getUTCMinutes" = () => number
-Line 23 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 23 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 23 col 5 IdentifierName "prototype" = Date
-Line 23 col 15 IdentifierName "getUTCMinutes" = () => number
-Line 24 col 0 InvocationExpression "Date.prototype.getSeconds()" = number
-Line 24 col 0 MemberAccessExpression "Date.prototype.getSeconds" = () => number
-Line 24 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 24 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 24 col 5 IdentifierName "prototype" = Date
-Line 24 col 15 IdentifierName "getSeconds" = () => number
-Line 25 col 0 InvocationExpression "Date.prototype.getUTCSeconds()" = number
-Line 25 col 0 MemberAccessExpression "Date.prototype.getUTCSeconds" = () => number
-Line 25 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 25 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 25 col 5 IdentifierName "prototype" = Date
-Line 25 col 15 IdentifierName "getUTCSeconds" = () => number
-Line 26 col 0 InvocationExpression "Date.prototype.getMilliseconds()" = number
-Line 26 col 0 MemberAccessExpression "Date.prototype.getMilliseconds" = () => number
-Line 26 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 26 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 26 col 5 IdentifierName "prototype" = Date
-Line 26 col 15 IdentifierName "getMilliseconds" = () => number
-Line 27 col 0 InvocationExpression "Date.prototype.getUTCMilliseconds()" = number
-Line 27 col 0 MemberAccessExpression "Date.prototype.getUTCMilliseconds" = () => number
-Line 27 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 27 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 27 col 5 IdentifierName "prototype" = Date
-Line 27 col 15 IdentifierName "getUTCMilliseconds" = () => number
-Line 28 col 0 InvocationExpression "Date.prototype.getTimezoneOffset()" = number
-Line 28 col 0 MemberAccessExpression "Date.prototype.getTimezoneOffset" = () => number
-Line 28 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 28 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 28 col 5 IdentifierName "prototype" = Date
-Line 28 col 15 IdentifierName "getTimezoneOffset" = () => number
-Line 29 col 0 InvocationExpression "Date.prototype.setTime(0)" = number
-Line 29 col 0 MemberAccessExpression "Date.prototype.setTime" = (time: number) => number
-Line 29 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 29 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 30 col 5 IdentifierName "prototype" = Date
-Line 30 col 15 IdentifierName "setTime" = (time: number) => number
-Line 31 col 0 InvocationExpression "Date.prototype.setMilliseconds(0)" = number
-Line 31 col 0 MemberAccessExpression "Date.prototype.setMilliseconds" = (ms: number) => number
-Line 31 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 31 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 31 col 5 IdentifierName "prototype" = Date
-Line 31 col 15 IdentifierName "setMilliseconds" = (ms: number) => number
-Line 32 col 0 InvocationExpression "Date.prototype.setUTCMilliseconds(0)" = number
-Line 32 col 0 MemberAccessExpression "Date.prototype.setUTCMilliseconds" = (ms: number) => number
-Line 32 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 32 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 32 col 5 IdentifierName "prototype" = Date
-Line 32 col 15 IdentifierName "setUTCMilliseconds" = (ms: number) => number
-Line 33 col 0 InvocationExpression "Date.prototype.setSeconds(0)" = number
-Line 33 col 0 MemberAccessExpression "Date.prototype.setSeconds" = (sec: number, ms?: number) => number
-Line 33 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 33 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 33 col 5 IdentifierName "prototype" = Date
-Line 33 col 15 IdentifierName "setSeconds" = (sec: number, ms?: number) => number
-Line 34 col 0 InvocationExpression "Date.prototype.setUTCSeconds(0)" = number
-Line 34 col 0 MemberAccessExpression "Date.prototype.setUTCSeconds" = (sec: number, ms?: number) => number
-Line 34 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 34 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 34 col 5 IdentifierName "prototype" = Date
-Line 34 col 15 IdentifierName "setUTCSeconds" = (sec: number, ms?: number) => number
-Line 35 col 0 InvocationExpression "Date.prototype.setMinutes(0)" = number
-Line 35 col 0 MemberAccessExpression "Date.prototype.setMinutes" = (min: number, sec?: number, ms?: number) => number
-Line 35 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 35 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 35 col 5 IdentifierName "prototype" = Date
-Line 35 col 15 IdentifierName "setMinutes" = (min: number, sec?: number, ms?: number) => number
-Line 36 col 0 InvocationExpression "Date.prototype.setUTCMinutes(0)" = number
-Line 36 col 0 MemberAccessExpression "Date.prototype.setUTCMinutes" = (min: number, sec?: number, ms?: number) => number
-Line 36 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 36 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 36 col 5 IdentifierName "prototype" = Date
-Line 36 col 15 IdentifierName "setUTCMinutes" = (min: number, sec?: number, ms?: number) => number
-Line 37 col 0 InvocationExpression "Date.prototype.setHours(0)" = number
-Line 37 col 0 MemberAccessExpression "Date.prototype.setHours" = (hours: number, min?: number, sec?: number, ms?: number) => number
-Line 37 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 37 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 37 col 5 IdentifierName "prototype" = Date
-Line 37 col 15 IdentifierName "setHours" = (hours: number, min?: number, sec?: number, ms?: number) => number
-Line 38 col 0 InvocationExpression "Date.prototype.setUTCHours(0)" = number
-Line 38 col 0 MemberAccessExpression "Date.prototype.setUTCHours" = (hours: number, min?: number, sec?: number, ms?: number) => number
-Line 38 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 38 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 38 col 5 IdentifierName "prototype" = Date
-Line 38 col 15 IdentifierName "setUTCHours" = (hours: number, min?: number, sec?: number, ms?: number) => number
-Line 39 col 0 InvocationExpression "Date.prototype.setDate(0)" = number
-Line 39 col 0 MemberAccessExpression "Date.prototype.setDate" = (date: number) => number
-Line 39 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 39 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 39 col 5 IdentifierName "prototype" = Date
-Line 39 col 15 IdentifierName "setDate" = (date: number) => number
-Line 40 col 0 InvocationExpression "Date.prototype.setUTCDate(0)" = number
-Line 40 col 0 MemberAccessExpression "Date.prototype.setUTCDate" = (date: number) => number
-Line 40 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 40 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 40 col 5 IdentifierName "prototype" = Date
-Line 40 col 15 IdentifierName "setUTCDate" = (date: number) => number
-Line 41 col 0 InvocationExpression "Date.prototype.setMonth(0)" = number
-Line 41 col 0 MemberAccessExpression "Date.prototype.setMonth" = (month: number, date?: number) => number
-Line 41 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 41 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 41 col 5 IdentifierName "prototype" = Date
-Line 41 col 15 IdentifierName "setMonth" = (month: number, date?: number) => number
-Line 42 col 0 InvocationExpression "Date.prototype.setUTCMonth(0)" = number
-Line 42 col 0 MemberAccessExpression "Date.prototype.setUTCMonth" = (month: number, date?: number) => number
-Line 42 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 42 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 42 col 5 IdentifierName "prototype" = Date
-Line 42 col 15 IdentifierName "setUTCMonth" = (month: number, date?: number) => number
-Line 43 col 0 InvocationExpression "Date.prototype.setFullYear(0)" = number
-Line 43 col 0 MemberAccessExpression "Date.prototype.setFullYear" = (year: number, month?: number, date?: number) => number
-Line 43 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 43 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 43 col 5 IdentifierName "prototype" = Date
-Line 43 col 15 IdentifierName "setFullYear" = (year: number, month?: number, date?: number) => number
-Line 44 col 0 InvocationExpression "Date.prototype.setUTCFullYear(0)" = number
-Line 44 col 0 MemberAccessExpression "Date.prototype.setUTCFullYear" = (year: number, month?: number, date?: number) => number
-Line 44 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 44 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 44 col 5 IdentifierName "prototype" = Date
-Line 44 col 15 IdentifierName "setUTCFullYear" = (year: number, month?: number, date?: number) => number
-Line 45 col 0 InvocationExpression "Date.prototype.toUTCString()" = string
-Line 45 col 0 MemberAccessExpression "Date.prototype.toUTCString" = () => string
-Line 45 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 45 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 46 col 5 IdentifierName "prototype" = Date
-Line 46 col 15 IdentifierName "toUTCString" = () => string
-Line 47 col 0 InvocationExpression "Date.prototype.toISOString()" = string
-Line 47 col 0 MemberAccessExpression "Date.prototype.toISOString" = () => string
-Line 47 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 47 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 47 col 5 IdentifierName "prototype" = Date
-Line 47 col 15 IdentifierName "toISOString" = () => string
-Line 48 col 0 InvocationExpression "Date.prototype.toJSON(null)" = string
-Line 48 col 0 MemberAccessExpression "Date.prototype.toJSON" = (key?: any) => string
-Line 48 col 0 MemberAccessExpression "Date.prototype" = Date
-Line 48 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 48 col 5 IdentifierName "prototype" = Date
-Line 48 col 15 IdentifierName "toJSON" = (key?: any) => string
+Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+// http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.5
+Date.prototype.constructor;
+>prototype : Date
+>constructor : Function
+
+Date.prototype.toString();
+>Date.prototype.toString() : string
+>Date.prototype.toString : () => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>toString : () => string
+
+Date.prototype.toDateString();
+>Date.prototype.toDateString() : string
+>Date.prototype.toDateString : () => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>toDateString : () => string
+
+Date.prototype.toTimeString();
+>Date.prototype.toTimeString() : string
+>Date.prototype.toTimeString : () => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>toTimeString : () => string
+
+Date.prototype.toLocaleString();
+>Date.prototype.toLocaleString() : string
+>Date.prototype.toLocaleString : () => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>toLocaleString : () => string
+
+Date.prototype.toLocaleDateString();
+>Date.prototype.toLocaleDateString() : string
+>Date.prototype.toLocaleDateString : () => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>toLocaleDateString : () => string
+
+Date.prototype.toLocaleTimeString();
+>Date.prototype.toLocaleTimeString() : string
+>Date.prototype.toLocaleTimeString : () => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>toLocaleTimeString : () => string
+
+Date.prototype.valueOf();
+>Date.prototype.valueOf() : number
+>Date.prototype.valueOf : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>valueOf : () => number
+
+>Date.prototype.getTime() : number
+>Date.prototype.getTime : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+Date.prototype.getTime();
+>prototype : Date
+>getTime : () => number
+
+Date.prototype.getFullYear();
+>Date.prototype.getFullYear() : number
+>Date.prototype.getFullYear : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getFullYear : () => number
+
+Date.prototype.getUTCFullYear();
+>Date.prototype.getUTCFullYear() : number
+>Date.prototype.getUTCFullYear : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getUTCFullYear : () => number
+
+Date.prototype.getMonth();
+>Date.prototype.getMonth() : number
+>Date.prototype.getMonth : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getMonth : () => number
+
+Date.prototype.getUTCMonth();
+>Date.prototype.getUTCMonth() : number
+>Date.prototype.getUTCMonth : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getUTCMonth : () => number
+
+Date.prototype.getDate();
+>Date.prototype.getDate() : number
+>Date.prototype.getDate : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getDate : () => number
+
+Date.prototype.getUTCDate();
+>Date.prototype.getUTCDate() : number
+>Date.prototype.getUTCDate : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getUTCDate : () => number
+
+Date.prototype.getDay();
+>Date.prototype.getDay() : number
+>Date.prototype.getDay : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getDay : () => number
+
+Date.prototype.getUTCDay();
+>Date.prototype.getUTCDay() : number
+>Date.prototype.getUTCDay : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getUTCDay : () => number
+
+Date.prototype.getHours();
+>Date.prototype.getHours() : number
+>Date.prototype.getHours : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getHours : () => number
+
+Date.prototype.getUTCHours();
+>Date.prototype.getUTCHours() : number
+>Date.prototype.getUTCHours : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getUTCHours : () => number
+
+Date.prototype.getMinutes();
+>Date.prototype.getMinutes() : number
+>Date.prototype.getMinutes : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getMinutes : () => number
+
+Date.prototype.getUTCMinutes();
+>Date.prototype.getUTCMinutes() : number
+>Date.prototype.getUTCMinutes : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getUTCMinutes : () => number
+
+Date.prototype.getSeconds();
+>Date.prototype.getSeconds() : number
+>Date.prototype.getSeconds : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getSeconds : () => number
+
+Date.prototype.getUTCSeconds();
+>Date.prototype.getUTCSeconds() : number
+>Date.prototype.getUTCSeconds : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getUTCSeconds : () => number
+
+Date.prototype.getMilliseconds();
+>Date.prototype.getMilliseconds() : number
+>Date.prototype.getMilliseconds : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getMilliseconds : () => number
+
+Date.prototype.getUTCMilliseconds();
+>Date.prototype.getUTCMilliseconds() : number
+>Date.prototype.getUTCMilliseconds : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getUTCMilliseconds : () => number
+
+Date.prototype.getTimezoneOffset();
+>Date.prototype.getTimezoneOffset() : number
+>Date.prototype.getTimezoneOffset : () => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>getTimezoneOffset : () => number
+
+>Date.prototype.setTime(0) : number
+>Date.prototype.setTime : (time: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+Date.prototype.setTime(0);
+>prototype : Date
+>setTime : (time: number) => number
+
+Date.prototype.setMilliseconds(0);
+>Date.prototype.setMilliseconds(0) : number
+>Date.prototype.setMilliseconds : (ms: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setMilliseconds : (ms: number) => number
+
+Date.prototype.setUTCMilliseconds(0);
+>Date.prototype.setUTCMilliseconds(0) : number
+>Date.prototype.setUTCMilliseconds : (ms: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setUTCMilliseconds : (ms: number) => number
+
+Date.prototype.setSeconds(0);
+>Date.prototype.setSeconds(0) : number
+>Date.prototype.setSeconds : (sec: number, ms?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setSeconds : (sec: number, ms?: number) => number
+
+Date.prototype.setUTCSeconds(0);
+>Date.prototype.setUTCSeconds(0) : number
+>Date.prototype.setUTCSeconds : (sec: number, ms?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setUTCSeconds : (sec: number, ms?: number) => number
+
+Date.prototype.setMinutes(0);
+>Date.prototype.setMinutes(0) : number
+>Date.prototype.setMinutes : (min: number, sec?: number, ms?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setMinutes : (min: number, sec?: number, ms?: number) => number
+
+Date.prototype.setUTCMinutes(0);
+>Date.prototype.setUTCMinutes(0) : number
+>Date.prototype.setUTCMinutes : (min: number, sec?: number, ms?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setUTCMinutes : (min: number, sec?: number, ms?: number) => number
+
+Date.prototype.setHours(0);
+>Date.prototype.setHours(0) : number
+>Date.prototype.setHours : (hours: number, min?: number, sec?: number, ms?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setHours : (hours: number, min?: number, sec?: number, ms?: number) => number
+
+Date.prototype.setUTCHours(0);
+>Date.prototype.setUTCHours(0) : number
+>Date.prototype.setUTCHours : (hours: number, min?: number, sec?: number, ms?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setUTCHours : (hours: number, min?: number, sec?: number, ms?: number) => number
+
+Date.prototype.setDate(0);
+>Date.prototype.setDate(0) : number
+>Date.prototype.setDate : (date: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setDate : (date: number) => number
+
+Date.prototype.setUTCDate(0);
+>Date.prototype.setUTCDate(0) : number
+>Date.prototype.setUTCDate : (date: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setUTCDate : (date: number) => number
+
+Date.prototype.setMonth(0);
+>Date.prototype.setMonth(0) : number
+>Date.prototype.setMonth : (month: number, date?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setMonth : (month: number, date?: number) => number
+
+Date.prototype.setUTCMonth(0);
+>Date.prototype.setUTCMonth(0) : number
+>Date.prototype.setUTCMonth : (month: number, date?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setUTCMonth : (month: number, date?: number) => number
+
+Date.prototype.setFullYear(0);
+>Date.prototype.setFullYear(0) : number
+>Date.prototype.setFullYear : (year: number, month?: number, date?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setFullYear : (year: number, month?: number, date?: number) => number
+
+Date.prototype.setUTCFullYear(0);
+>Date.prototype.setUTCFullYear(0) : number
+>Date.prototype.setUTCFullYear : (year: number, month?: number, date?: number) => number
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>setUTCFullYear : (year: number, month?: number, date?: number) => number
+
+>Date.prototype.toUTCString() : string
+>Date.prototype.toUTCString : () => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+Date.prototype.toUTCString();
+>prototype : Date
+>toUTCString : () => string
+
+Date.prototype.toISOString();
+>Date.prototype.toISOString() : string
+>Date.prototype.toISOString : () => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>toISOString : () => string
+
+Date.prototype.toJSON(null);
+>Date.prototype.toJSON(null) : string
+>Date.prototype.toJSON : (key?: any) => string
+>Date.prototype : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>prototype : Date
+>toJSON : (key?: any) => string
+

@@ -1,14 +1,34 @@
 === tests/cases/compiler/interMixingModulesInterfaces5.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 2 col 14 IdentifierName "B" = B
-Line 3 col 0 IdentifierName "name" = string
-Line 4 col 0 IdentifierName "value" = number
-Line 7 col 18 IdentifierName "B" = B
-Line 8 col 24 IdentifierName "createB" = typeof createB
-Line 14 col 4 IdentifierName "x" = number
-Line 14 col 16 InvocationExpression "A.B.createB()" = number
-Line 14 col 16 MemberAccessExpression "A.B.createB" = typeof A.B.createB
-Line 14 col 16 MemberAccessExpression "A.B" = typeof A.B
-Line 14 col 16 IdentifierName "A" = typeof A
-Line 14 col 18 IdentifierName "B" = typeof A.B
-Line 14 col 20 IdentifierName "createB" = typeof A.B.createB
+module A {
+>A : A
+
+    interface B {
+>B : B
+
+        name: string;
+>name : string
+
+        value: number;
+>value : number
+    }
+
+    export module B {
+>B : B
+
+        export function createB(): number {
+>createB : typeof createB
+
+            return null;
+        }
+    }
+}
+
+var x: number = A.B.createB();
+>x : number
+>A.B.createB() : number
+>A.B.createB : typeof A.B.createB
+>A.B : typeof A.B
+>A : typeof A
+>B : typeof A.B
+>createB : typeof A.B.createB
+

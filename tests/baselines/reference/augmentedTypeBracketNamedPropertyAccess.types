@@ -1,21 +1,41 @@
 === tests/cases/compiler/augmentedTypeBracketNamedPropertyAccess.ts ===
-Line 0 col 10 IdentifierName "Object" = Object
-Line 1 col 0 IdentifierName "data" = number
-Line 3 col 10 IdentifierName "Function" = Function
-Line 4 col 0 IdentifierName "functionData" = string
-Line 6 col 4 IdentifierName "o" = {}
-Line 6 col 8 ObjectLiteralExpression "{}" = {}
-Line 7 col 4 IdentifierName "f" = () => void
-Line 7 col 8 FunctionExpression "function () { }" = () => void
-Line 9 col 4 IdentifierName "r1" = number
-Line 9 col 9 ElementAccessExpression "o['data']" = number
-Line 9 col 9 IdentifierName "o" = {}
-Line 10 col 4 IdentifierName "r2" = any
-Line 10 col 9 ElementAccessExpression "o['functionData']" = any
-Line 10 col 9 IdentifierName "o" = {}
-Line 11 col 4 IdentifierName "r3" = string
-Line 11 col 9 ElementAccessExpression "f['functionData']" = string
-Line 11 col 9 IdentifierName "f" = () => void
-Line 12 col 4 IdentifierName "r4" = number
-Line 12 col 9 ElementAccessExpression "f['data']" = number
-Line 12 col 9 IdentifierName "f" = () => void
+interface Object {
+>Object : Object
+
+    data: number;
+>data : number
+}
+interface Function {
+>Function : Function
+
+    functionData: string;
+>functionData : string
+}
+var o = {};
+>o : {}
+>{} : {}
+
+var f = function () { };
+>f : () => void
+>function () { } : () => void
+
+var r1 = o['data']; // Should be number
+>r1 : number
+>o['data'] : number
+>o : {}
+
+var r2 = o['functionData']; // Should be any (no property found)
+>r2 : any
+>o['functionData'] : any
+>o : {}
+
+var r3 = f['functionData']; // Should be string
+>r3 : string
+>f['functionData'] : string
+>f : () => void
+
+var r4 = f['data']; // Should be number
+>r4 : number
+>f['data'] : number
+>f : () => void
+

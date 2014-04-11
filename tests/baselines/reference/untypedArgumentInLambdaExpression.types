@@ -1,14 +1,23 @@
 === tests/cases/compiler/untypedArgumentInLambdaExpression.ts ===
-Line 0 col 17 IdentifierName "f" = typeof f
-Line 0 col 19 IdentifierName "fn" = (a: string) => string
-Line 0 col 24 IdentifierName "a" = string
-Line 1 col 0 InvocationExpression "f((input): string => {
+declare function f(fn: (a: string) => string);
+>f : typeof f
+>fn : (a: string) => string
+>a : string
+ 
+>f((input): string => {
     return "." + input;
-})" = any
-Line 1 col 0 IdentifierName "f" = typeof f
-Line 2 col 2 ParenthesizedArrowFunctionExpression "(input): string => {
+}) : any
+>f : typeof f
+
+f((input): string => {
+>(input): string => {
     return "." + input;
-}" = (input: any) => string
-Line 2 col 3 IdentifierName "input" = any
-Line 3 col 11 AddExpression ""." + input" = string
-Line 3 col 17 IdentifierName "input" = any
+} : (input: any) => string
+>input : any
+
+    return "." + input;
+>"." + input : string
+>input : any
+
+});
+ 

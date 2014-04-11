@@ -1,95 +1,142 @@
 === tests/cases/compiler/propertyAccessOnTypeParameterWithConstraints.ts ===
-Line 3 col 6 IdentifierName "C" = C<T>
-Line 3 col 8 IdentifierName "T" = T
-Line 3 col 18 IdentifierName "Date" = Date
-Line 4 col 0 IdentifierName "f" = () => number
-Line 5 col 12 IdentifierName "x" = T
-Line 5 col 15 IdentifierName "T" = T
-Line 6 col 12 IdentifierName "a" = number
-Line 6 col 16 InvocationExpression "x['getDate']()" = number
-Line 6 col 16 ElementAccessExpression "x['getDate']" = () => number
-Line 6 col 16 IdentifierName "x" = T
-Line 7 col 15 AddExpression "a + x.getDate()" = number
-Line 7 col 15 IdentifierName "a" = number
-Line 7 col 19 InvocationExpression "x.getDate()" = number
-Line 7 col 19 MemberAccessExpression "x.getDate" = () => number
-Line 7 col 19 IdentifierName "x" = T
-Line 7 col 21 IdentifierName "getDate" = () => number
-Line 11 col 4 IdentifierName "r" = number
-Line 11 col 8 InvocationExpression "(new C<Date>()).f()" = number
-Line 11 col 8 MemberAccessExpression "(new C<Date>()).f" = () => number
-Line 11 col 8 ParenthesizedExpression "(new C<Date>())" = C<Date>
-Line 11 col 9 ObjectCreationExpression "new C<Date>()" = C<Date>
-Line 11 col 13 IdentifierName "C" = typeof C
-Line 11 col 15 IdentifierName "Date" = Date
-Line 11 col 24 IdentifierName "f" = () => number
-Line 13 col 10 IdentifierName "I" = I<T>
-Line 13 col 12 IdentifierName "T" = T
-Line 13 col 22 IdentifierName "Date" = Date
-Line 14 col 0 IdentifierName "foo" = T
-Line 14 col 9 IdentifierName "T" = T
-Line 16 col 4 IdentifierName "i" = I<Date>
-Line 16 col 7 IdentifierName "I" = I<T>
-Line 16 col 9 IdentifierName "Date" = Date
-Line 17 col 4 IdentifierName "r2" = number
-Line 17 col 9 InvocationExpression "i.foo.getDate()" = number
-Line 17 col 9 MemberAccessExpression "i.foo.getDate" = () => number
-Line 17 col 9 MemberAccessExpression "i.foo" = Date
-Line 17 col 9 IdentifierName "i" = I<Date>
-Line 17 col 11 IdentifierName "foo" = Date
-Line 17 col 15 IdentifierName "getDate" = () => number
-Line 18 col 4 IdentifierName "r2b" = number
-Line 18 col 10 InvocationExpression "i.foo['getDate']()" = number
-Line 18 col 10 ElementAccessExpression "i.foo['getDate']" = () => number
-Line 18 col 10 MemberAccessExpression "i.foo" = Date
-Line 18 col 10 IdentifierName "i" = I<Date>
-Line 18 col 12 IdentifierName "foo" = Date
-Line 20 col 4 IdentifierName "a" = <T extends Date>() => T
-Line 21 col 5 IdentifierName "T" = T
-Line 21 col 15 IdentifierName "Date" = Date
-Line 21 col 24 IdentifierName "T" = T
-Line 23 col 4 IdentifierName "r3" = number
-Line 23 col 9 InvocationExpression "a<Date>().getDate()" = number
-Line 23 col 9 MemberAccessExpression "a<Date>().getDate" = () => number
-Line 23 col 9 InvocationExpression "a<Date>()" = Date
-Line 23 col 9 IdentifierName "a" = <T extends Date>() => T
-Line 23 col 11 IdentifierName "Date" = Date
-Line 23 col 19 IdentifierName "getDate" = () => number
-Line 24 col 4 IdentifierName "r3b" = number
-Line 24 col 10 InvocationExpression "a()['getDate']()" = number
-Line 24 col 10 ElementAccessExpression "a()['getDate']" = () => number
-Line 24 col 10 InvocationExpression "a()" = Date
-Line 24 col 10 IdentifierName "a" = <T extends Date>() => T
-Line 26 col 4 IdentifierName "b" = { foo: <T extends Date>(x: T) => number; }
-Line 26 col 8 ObjectLiteralExpression "{
+// generic types should behave as if they have properties of their constraint type
+// no errors expected 
+
+class C<T extends Date> {
+>C : C<T>
+>T : T
+>Date : Date
+
+    f() {
+>f : () => number
+
+        var x: T;
+>x : T
+>T : T
+
+        var a = x['getDate'](); // number
+>a : number
+>x['getDate']() : number
+>x['getDate'] : () => number
+>x : T
+
+        return a + x.getDate();
+>a + x.getDate() : number
+>a : number
+>x.getDate() : number
+>x.getDate : () => number
+>x : T
+>getDate : () => number
+    }
+}
+
+var r = (new C<Date>()).f();
+>r : number
+>(new C<Date>()).f() : number
+>(new C<Date>()).f : () => number
+>(new C<Date>()) : C<Date>
+>new C<Date>() : C<Date>
+>C : typeof C
+>Date : Date
+>f : () => number
+
+interface I<T extends Date> {
+>I : I<T>
+>T : T
+>Date : Date
+
+    foo: T;
+>foo : T
+>T : T
+}
+var i: I<Date>;
+>i : I<Date>
+>I : I<T>
+>Date : Date
+
+var r2 = i.foo.getDate();
+>r2 : number
+>i.foo.getDate() : number
+>i.foo.getDate : () => number
+>i.foo : Date
+>i : I<Date>
+>foo : Date
+>getDate : () => number
+
+var r2b = i.foo['getDate']();
+>r2b : number
+>i.foo['getDate']() : number
+>i.foo['getDate'] : () => number
+>i.foo : Date
+>i : I<Date>
+>foo : Date
+
+var a: {
+>a : <T extends Date>() => T
+
+    <T extends Date>(): T;
+>T : T
+>Date : Date
+>T : T
+}
+var r3 = a<Date>().getDate();
+>r3 : number
+>a<Date>().getDate() : number
+>a<Date>().getDate : () => number
+>a<Date>() : Date
+>a : <T extends Date>() => T
+>Date : Date
+>getDate : () => number
+
+var r3b = a()['getDate']();
+>r3b : number
+>a()['getDate']() : number
+>a()['getDate'] : () => number
+>a() : Date
+>a : <T extends Date>() => T
+
+var b = {
+>b : { foo: <T extends Date>(x: T) => number; }
+>{
     foo: <T extends Date>(x: T) => {
         var a = x['getDate'](); // number
         return a + x.getDate();
     }
-}" = { foo: <T extends Date>(x: T) => number; }
-Line 27 col 0 IdentifierName "foo" = <T extends Date>(x: T) => number
-Line 27 col 9 ParenthesizedArrowFunctionExpression "<T extends Date>(x: T) => {
+} : { foo: <T extends Date>(x: T) => number; }
+
+    foo: <T extends Date>(x: T) => {
+>foo : <T extends Date>(x: T) => number
+><T extends Date>(x: T) => {
         var a = x['getDate'](); // number
         return a + x.getDate();
-    }" = <T extends Date>(x: T) => number
-Line 27 col 10 IdentifierName "T" = T
-Line 27 col 20 IdentifierName "Date" = Date
-Line 27 col 26 IdentifierName "x" = T
-Line 27 col 29 IdentifierName "T" = T
-Line 28 col 12 IdentifierName "a" = number
-Line 28 col 16 InvocationExpression "x['getDate']()" = number
-Line 28 col 16 ElementAccessExpression "x['getDate']" = () => number
-Line 28 col 16 IdentifierName "x" = T
-Line 29 col 15 AddExpression "a + x.getDate()" = number
-Line 29 col 15 IdentifierName "a" = number
-Line 29 col 19 InvocationExpression "x.getDate()" = number
-Line 29 col 19 MemberAccessExpression "x.getDate" = () => number
-Line 29 col 19 IdentifierName "x" = T
-Line 29 col 21 IdentifierName "getDate" = () => number
-Line 33 col 4 IdentifierName "r4" = number
-Line 33 col 9 InvocationExpression "b.foo(new Date())" = number
-Line 33 col 9 MemberAccessExpression "b.foo" = <T extends Date>(x: T) => number
-Line 33 col 9 IdentifierName "b" = { foo: <T extends Date>(x: T) => number; }
-Line 33 col 11 IdentifierName "foo" = <T extends Date>(x: T) => number
-Line 33 col 15 ObjectCreationExpression "new Date()" = Date
-Line 33 col 19 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+    } : <T extends Date>(x: T) => number
+>T : T
+>Date : Date
+>x : T
+>T : T
+
+        var a = x['getDate'](); // number
+>a : number
+>x['getDate']() : number
+>x['getDate'] : () => number
+>x : T
+
+        return a + x.getDate();
+>a + x.getDate() : number
+>a : number
+>x.getDate() : number
+>x.getDate : () => number
+>x : T
+>getDate : () => number
+    }
+}
+
+var r4 = b.foo(new Date());
+>r4 : number
+>b.foo(new Date()) : number
+>b.foo : <T extends Date>(x: T) => number
+>b : { foo: <T extends Date>(x: T) => number; }
+>foo : <T extends Date>(x: T) => number
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+

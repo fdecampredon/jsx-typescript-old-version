@@ -1,3 +1,4 @@
+//// [classAndInterfaceWithSameName.js]
 var C = (function () {
     function C() {
     }

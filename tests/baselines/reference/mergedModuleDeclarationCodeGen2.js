@@ -1,3 +1,14 @@
+//// [mergedModuleDeclarationCodeGen2.ts]
+module my.data.foo {
+    export function buz() { }
+}
+module my.data {
+    function data(my) {
+        foo.buz();
+    }
+}
+
+//// [mergedModuleDeclarationCodeGen2.js]
 var my;
 (function (my) {
     (function (data) {

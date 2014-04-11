@@ -1,104 +1,257 @@
 === tests/cases/compiler/vardecl.ts ===
-Line 0 col 4 IdentifierName "simpleVar" = any
-Line 2 col 4 IdentifierName "anotherVar" = any
-Line 3 col 4 IdentifierName "varWithSimpleType" = number
-Line 4 col 4 IdentifierName "varWithArrayType" = number[]
-Line 6 col 4 IdentifierName "varWithInitialValue" = number
-Line 8 col 4 IdentifierName "withComplicatedValue" = { x: number; y: number; desc: string; }
-Line 8 col 27 ObjectLiteralExpression "{ x: 30, y: 70, desc: "position" }" = { x: number; y: number; desc: string; }
-Line 8 col 29 IdentifierName "x" = number
-Line 8 col 36 IdentifierName "y" = number
-Line 8 col 43 IdentifierName "desc" = string
-Line 10 col 12 IdentifierName "declaredVar" = any
-Line 11 col 12 IdentifierName "declareVar2" = any
-Line 13 col 12 IdentifierName "declaredVar3" = any
-Line 14 col 12 IdentifierName "deckareVarWithType" = number
-Line 16 col 4 IdentifierName "arrayVar" = string[]
-Line 16 col 25 ArrayLiteralExpression "['a', 'b']" = string[]
-Line 18 col 4 IdentifierName "complicatedArrayVar" = { x: number; y: string; }[]
-Line 18 col 27 IdentifierName "x" = number
-Line 18 col 38 IdentifierName "y" = string
-Line 19 col 0 InvocationExpression "complicatedArrayVar.push({ x: 30, y : 'hello world' })" = number
-Line 19 col 0 MemberAccessExpression "complicatedArrayVar.push" = (...items: { x: number; y: string; }[]) => number
-Line 19 col 0 IdentifierName "complicatedArrayVar" = { x: number; y: string; }[]
-Line 19 col 20 IdentifierName "push" = (...items: { x: number; y: string; }[]) => number
-Line 19 col 25 ObjectLiteralExpression "{ x: 30, y : 'hello world' }" = { x: number; y: string; }
-Line 19 col 27 IdentifierName "x" = number
-Line 19 col 34 IdentifierName "y" = string
-Line 21 col 4 IdentifierName "n1" = { [s: string]: number; }
-Line 21 col 11 IdentifierName "s" = string
-Line 23 col 4 IdentifierName "c" = { new?(): any; }
-Line 24 col 0 IdentifierName "new" = () => any
-Line 27 col 4 IdentifierName "d" = { foo?(): { x: number; }; }
-Line 28 col 0 IdentifierName "foo" = () => { x: number; }
-Line 29 col 0 IdentifierName "x" = number
-Line 33 col 4 IdentifierName "d3" = { foo(): { x: number; y: number; }; }
-Line 34 col 0 IdentifierName "foo" = () => { x: number; y: number; }
-Line 35 col 0 IdentifierName "x" = number
-Line 36 col 0 IdentifierName "y" = number
-Line 40 col 4 IdentifierName "d2" = { foo(): { x: number; }; }
-Line 41 col 0 IdentifierName "foo" = () => { x: number; }
-Line 42 col 0 IdentifierName "x" = number
-Line 46 col 4 IdentifierName "n2" = () => void
-Line 49 col 4 IdentifierName "n4" = { (): void; }[]
-Line 53 col 4 IdentifierName "d4" = { foo(n: string, x: { x: number; y: number; }): { x: number; y: number; }; }
-Line 54 col 0 IdentifierName "foo" = (n: string, x: { x: number; y: number; }) => { x: number; y: number; }
-Line 54 col 8 IdentifierName "n" = string
-Line 54 col 19 IdentifierName "x" = { x: number; y: number; }
-Line 54 col 24 IdentifierName "x" = number
-Line 54 col 35 IdentifierName "y" = number
-Line 55 col 0 IdentifierName "x" = number
-Line 56 col 0 IdentifierName "y" = number
-Line 60 col 7 IdentifierName "m2" = m2
-Line 62 col 15 IdentifierName "a" = any
-Line 62 col 18 IdentifierName "b2" = number
-Line 62 col 35 IdentifierName "b" = any
-Line 63 col 8 IdentifierName "m1" = any
-Line 64 col 8 IdentifierName "a2" = any
-Line 64 col 12 IdentifierName "b22" = number
-Line 64 col 30 IdentifierName "b222" = any
-Line 65 col 8 IdentifierName "m3" = any
-Line 67 col 10 IdentifierName "C" = C
-Line 68 col 28 IdentifierName "b" = any
-Line 72 col 17 IdentifierName "C2" = C2
-Line 73 col 28 IdentifierName "b" = any
-Line 76 col 8 IdentifierName "m" = any
-Line 77 col 16 IdentifierName "d1" = any
-Line 77 col 20 IdentifierName "d2" = any
-Line 78 col 8 IdentifierName "b23" = any
-Line 79 col 16 IdentifierName "v1" = any
-Line 80 col 15 IdentifierName "mE" = any
-Line 81 col 23 IdentifierName "d1E" = any
-Line 81 col 28 IdentifierName "d2E" = any
-Line 82 col 15 IdentifierName "b2E" = any
-Line 83 col 23 IdentifierName "v1E" = any
-Line 86 col 4 IdentifierName "a22" = any
-Line 86 col 9 IdentifierName "b22" = number
-Line 86 col 19 IdentifierName "c22" = number
-Line 87 col 4 IdentifierName "nn" = any
-Line 89 col 12 IdentifierName "da1" = any
-Line 89 col 17 IdentifierName "da2" = any
-Line 90 col 4 IdentifierName "normalVar" = any
-Line 91 col 12 IdentifierName "dv1" = any
-Line 92 col 4 IdentifierName "xl" = any
-Line 93 col 4 IdentifierName "x" = any
-Line 94 col 4 IdentifierName "z" = any
-Line 96 col 9 IdentifierName "foo" = typeof foo
-Line 96 col 13 IdentifierName "a2" = any
-Line 97 col 8 IdentifierName "a" = number
-Line 100 col 9 IdentifierName "i" = number
-Line 100 col 16 IdentifierName "j" = number
-Line 100 col 23 LessThanExpression "i < 10" = boolean
-Line 100 col 23 IdentifierName "i" = number
-Line 100 col 31 PostIncrementExpression "i++" = number
-Line 100 col 31 IdentifierName "i" = number
-Line 101 col 0 PostIncrementExpression "j++" = number
-Line 101 col 0 IdentifierName "j" = number
-Line 105 col 9 IdentifierName "k" = number
-Line 105 col 16 LessThanExpression "k < 30" = boolean
-Line 105 col 16 IdentifierName "k" = number
-Line 105 col 24 PostIncrementExpression "k++" = number
-Line 105 col 24 IdentifierName "k" = number
-Line 106 col 0 PostIncrementExpression "k++" = number
-Line 106 col 0 IdentifierName "k" = number
-Line 108 col 4 IdentifierName "b" = number
+var simpleVar;
+>simpleVar : any
+
+var anotherVar: any;
+>anotherVar : any
+
+var varWithSimpleType: number;
+>varWithSimpleType : number
+
+var varWithArrayType: number[];
+>varWithArrayType : number[]
+
+var varWithInitialValue = 30;
+>varWithInitialValue : number
+
+var withComplicatedValue = { x: 30, y: 70, desc: "position" };
+>withComplicatedValue : { x: number; y: number; desc: string; }
+>{ x: 30, y: 70, desc: "position" } : { x: number; y: number; desc: string; }
+>x : number
+>y : number
+>desc : string
+
+declare var declaredVar;
+>declaredVar : any
+
+declare var declareVar2
+>declareVar2 : any
+
+declare var declaredVar3;
+>declaredVar3 : any
+
+declare var deckareVarWithType: number;
+>deckareVarWithType : number
+
+var arrayVar: string[] = ['a', 'b'];
+>arrayVar : string[]
+>['a', 'b'] : string[]
+
+var complicatedArrayVar: { x: number; y: string; }[] ;
+>complicatedArrayVar : { x: number; y: string; }[]
+>x : number
+>y : string
+
+complicatedArrayVar.push({ x: 30, y : 'hello world' });
+>complicatedArrayVar.push({ x: 30, y : 'hello world' }) : number
+>complicatedArrayVar.push : (...items: { x: number; y: string; }[]) => number
+>complicatedArrayVar : { x: number; y: string; }[]
+>push : (...items: { x: number; y: string; }[]) => number
+>{ x: 30, y : 'hello world' } : { x: number; y: string; }
+>x : number
+>y : string
+
+var n1: { [s: string]: number; };
+>n1 : { [s: string]: number; }
+>s : string
+
+var c : {
+>c : { new?(): any; }
+
+        new? (): any;
+>new : () => any
+    }
+
+var d: {
+>d : { foo?(): { x: number; }; }
+
+    foo? (): {
+>foo : () => { x: number; }
+
+        x: number;
+>x : number
+
+    };
+}
+
+var d3: {
+>d3 : { foo(): { x: number; y: number; }; }
+
+    foo(): {
+>foo : () => { x: number; y: number; }
+
+        x: number;
+>x : number
+
+        y: number;
+>y : number
+
+    };
+}
+
+var d2: {
+>d2 : { foo(): { x: number; }; }
+
+    foo (): {
+>foo : () => { x: number; }
+
+        x: number;
+>x : number
+
+    };
+}
+
+var n2: {
+>n2 : () => void
+
+    (): void;
+}
+var n4: {
+>n4 : { (): void; }[]
+
+    (): void;
+}[];
+
+var d4: {
+>d4 : { foo(n: string, x: { x: number; y: number; }): { x: number; y: number; }; }
+
+    foo(n: string, x: { x: number; y: number; }): {
+>foo : (n: string, x: { x: number; y: number; }) => { x: number; y: number; }
+>n : string
+>x : { x: number; y: number; }
+>x : number
+>y : number
+
+        x: number;
+>x : number
+
+        y: number;
+>y : number
+
+    };
+}
+
+module m2 {
+>m2 : m2
+
+    export var a, b2: number = 10, b;
+>a : any
+>b2 : number
+>b : any
+
+    var m1;
+>m1 : any
+
+    var a2, b22: number = 10, b222;
+>a2 : any
+>b22 : number
+>b222 : any
+
+    var m3;
+>m3 : any
+
+    class C {
+>C : C
+
+        constructor (public b) {
+>b : any
+        }
+    }
+
+    export class C2 {
+>C2 : C2
+
+        constructor (public b) {
+>b : any
+        }
+    }
+    var m;
+>m : any
+
+    declare var d1, d2;
+>d1 : any
+>d2 : any
+
+    var b23;
+>b23 : any
+
+    declare var v1;
+>v1 : any
+
+    export var mE;
+>mE : any
+
+    export declare var d1E, d2E;
+>d1E : any
+>d2E : any
+
+    export var b2E;
+>b2E : any
+
+    export declare var v1E;
+>v1E : any
+}
+
+var a22, b22 = 10, c22 = 30;
+>a22 : any
+>b22 : number
+>c22 : number
+
+var nn;
+>nn : any
+
+declare var da1, da2;
+>da1 : any
+>da2 : any
+
+var normalVar;
+>normalVar : any
+
+declare var dv1;
+>dv1 : any
+
+var xl;
+>xl : any
+
+var x;
+>x : any
+
+var z;
+>z : any
+
+function foo(a2) {
+>foo : typeof foo
+>a2 : any
+
+    var a = 10;
+>a : number
+}
+
+for (var i = 0, j = 0; i < 10; i++) {
+>i : number
+>j : number
+>i < 10 : boolean
+>i : number
+>i++ : number
+>i : number
+
+    j++;
+>j++ : number
+>j : number
+}
+
+
+for (var k = 0; k < 30; k++) {
+>k : number
+>k < 30 : boolean
+>k : number
+>k++ : number
+>k : number
+
+    k++;
+>k++ : number
+>k : number
+}
+var b = 10;
+>b : number
+

@@ -1,4 +1,10 @@
 === tests/cases/compiler/initializersWidened.ts ===
-Line 2 col 4 IdentifierName "x" = any
-Line 3 col 4 IdentifierName "y" = any
-Line 3 col 8 IdentifierName "undefined" = any
+// these are widened to any at the point of assignment
+
+var x = null;
+>x : any
+
+var y = undefined;
+>y : any
+>undefined : any
+

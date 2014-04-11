@@ -1,13 +1,22 @@
 === tests/cases/compiler/additionOperatorWithOnlyNullValueOrUndefinedValue.ts ===
-Line 1 col 4 IdentifierName "r1" = any
-Line 1 col 9 AddExpression "null + null" = any
-Line 2 col 4 IdentifierName "r2" = any
-Line 2 col 9 AddExpression "null + undefined" = any
-Line 2 col 16 IdentifierName "undefined" = any
-Line 3 col 4 IdentifierName "r3" = any
-Line 3 col 9 AddExpression "undefined + null" = any
-Line 3 col 9 IdentifierName "undefined" = any
-Line 4 col 4 IdentifierName "r4" = any
-Line 4 col 9 AddExpression "undefined + undefined" = any
-Line 4 col 9 IdentifierName "undefined" = any
-Line 4 col 21 IdentifierName "undefined" = any
+// bug 819721
+var r1 = null + null;
+>r1 : any
+>null + null : any
+
+var r2 = null + undefined;
+>r2 : any
+>null + undefined : any
+>undefined : any
+
+var r3 = undefined + null;
+>r3 : any
+>undefined + null : any
+>undefined : any
+
+var r4 = undefined + undefined;
+>r4 : any
+>undefined + undefined : any
+>undefined : any
+>undefined : any
+

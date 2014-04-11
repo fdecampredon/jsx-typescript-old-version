@@ -1,21 +1,38 @@
 === tests/cases/compiler/genericTypeWithCallableMembers.ts ===
-Line 0 col 10 IdentifierName "Constructable" = Constructable
-Line 1 col 12 IdentifierName "Constructable" = Constructable
-Line 4 col 6 IdentifierName "C" = C<T>
-Line 4 col 8 IdentifierName "T" = T
-Line 4 col 18 IdentifierName "Constructable" = Constructable
-Line 5 col 23 IdentifierName "data" = T
-Line 5 col 29 IdentifierName "T" = T
-Line 5 col 39 IdentifierName "data2" = Constructable
-Line 5 col 46 IdentifierName "Constructable" = Constructable
-Line 6 col 0 IdentifierName "create" = () => void
-Line 7 col 12 IdentifierName "x" = Constructable
-Line 7 col 16 ObjectCreationExpression "new this.data()" = Constructable
-Line 7 col 20 MemberAccessExpression "this.data" = T
-Line 7 col 20 ThisKeyword "this" = C<T>
-Line 7 col 25 IdentifierName "data" = T
-Line 8 col 12 IdentifierName "x2" = Constructable
-Line 8 col 17 ObjectCreationExpression "new this.data2()" = Constructable
-Line 8 col 21 MemberAccessExpression "this.data2" = Constructable
-Line 8 col 21 ThisKeyword "this" = C<T>
-Line 8 col 26 IdentifierName "data2" = Constructable
+interface Constructable {
+>Constructable : Constructable
+
+    new (): Constructable;
+>Constructable : Constructable
+}
+ 
+class C<T extends Constructable> {
+>C : C<T>
+>T : T
+>Constructable : Constructable
+
+    constructor(public data: T, public data2: Constructable) { }
+>data : T
+>T : T
+>data2 : Constructable
+>Constructable : Constructable
+
+    create() {
+>create : () => void
+
+        var x = new this.data(); // error
+>x : Constructable
+>new this.data() : Constructable
+>this.data : T
+>this : C<T>
+>data : T
+
+        var x2 = new this.data2(); // was error, shouldn't be
+>x2 : Constructable
+>new this.data2() : Constructable
+>this.data2 : Constructable
+>this : C<T>
+>data2 : Constructable
+    }
+}
+

@@ -1,3 +1,4 @@
+//// [typeParameterAssignmentWithConstraints.js]
 function f() {
     var a;
     var b;

@@ -1,20 +1,38 @@
 === tests/cases/compiler/sourceMapValidationFunctions.ts ===
-Line 0 col 4 IdentifierName "greetings" = number
-Line 1 col 9 IdentifierName "greet" = typeof greet
-Line 1 col 15 IdentifierName "greeting" = string
-Line 2 col 0 PostIncrementExpression "greetings++" = number
-Line 2 col 0 IdentifierName "greetings" = number
-Line 3 col 11 IdentifierName "greetings" = number
-Line 5 col 9 IdentifierName "greet2" = typeof greet2
-Line 5 col 16 IdentifierName "greeting" = string
-Line 5 col 34 IdentifierName "n" = number
-Line 5 col 42 IdentifierName "x" = string
-Line 5 col 57 IdentifierName "restParams" = string[]
-Line 6 col 0 PostIncrementExpression "greetings++" = number
-Line 6 col 0 IdentifierName "greetings" = number
-Line 7 col 11 IdentifierName "greetings" = number
-Line 9 col 9 IdentifierName "foo" = typeof foo
-Line 9 col 13 IdentifierName "greeting" = string
-Line 9 col 31 IdentifierName "n" = number
-Line 9 col 39 IdentifierName "x" = string
-Line 9 col 54 IdentifierName "restParams" = string[]
+var greetings = 0;
+>greetings : number
+
+function greet(greeting: string): number {
+>greet : typeof greet
+>greeting : string
+
+    greetings++;
+>greetings++ : number
+>greetings : number
+
+    return greetings;
+>greetings : number
+}
+function greet2(greeting: string, n = 10, x?: string, ...restParams: string[]): number {
+>greet2 : typeof greet2
+>greeting : string
+>n : number
+>x : string
+>restParams : string[]
+
+    greetings++;
+>greetings++ : number
+>greetings : number
+
+    return greetings;
+>greetings : number
+}
+function foo(greeting: string, n = 10, x?: string, ...restParams: string[])
+>foo : typeof foo
+>greeting : string
+>n : number
+>x : string
+>restParams : string[]
+{
+    return;
+}

@@ -1,3 +1,4 @@
+//// [assignmentCompatability16.js]
 var __test1__;
 (function (__test1__) {
     ;

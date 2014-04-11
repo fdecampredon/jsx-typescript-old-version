@@ -1,18 +1,37 @@
 === tests/cases/compiler/staticFactory1.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 0 IdentifierName "foo" = () => number
-Line 2 col 11 IdentifierName "create" = () => Base
-Line 3 col 15 ObjectCreationExpression "new this()" = Base
-Line 3 col 19 ThisKeyword "this" = typeof Base
-Line 7 col 6 IdentifierName "Derived" = Derived
-Line 7 col 22 IdentifierName "Base" = Base
-Line 8 col 0 IdentifierName "foo" = () => number
-Line 10 col 4 IdentifierName "d" = Base
-Line 10 col 8 InvocationExpression "Derived.create()" = Base
-Line 10 col 8 MemberAccessExpression "Derived.create" = () => Base
-Line 10 col 8 IdentifierName "Derived" = typeof Derived
-Line 10 col 16 IdentifierName "create" = () => Base
-Line 11 col 0 InvocationExpression "d.foo()" = number
-Line 11 col 0 MemberAccessExpression "d.foo" = () => number
-Line 11 col 0 IdentifierName "d" = Base
-Line 12 col 2 IdentifierName "foo" = () => number
+class Base {
+>Base : Base
+
+    foo() { return 1; }
+>foo : () => number
+
+    static create() {
+>create : () => Base
+
+        return new this();
+>new this() : Base
+>this : typeof Base
+    }
+}
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    foo() { return 2; }
+>foo : () => number
+}
+var d = Derived.create(); 
+>d : Base
+>Derived.create() : Base
+>Derived.create : () => Base
+>Derived : typeof Derived
+>create : () => Base
+
+>d.foo() : number
+>d.foo : () => number
+>d : Base
+
+d.foo();  
+>foo : () => number
+

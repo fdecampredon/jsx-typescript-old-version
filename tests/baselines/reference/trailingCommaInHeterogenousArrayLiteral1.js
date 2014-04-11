@@ -1,3 +1,4 @@
+//// [trailingCommaInHeterogenousArrayLiteral1.js]
 var arrTest = (function () {
     function arrTest() {
     }

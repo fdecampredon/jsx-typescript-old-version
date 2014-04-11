@@ -1,20 +1,48 @@
 === tests/cases/compiler/null.ts ===
-Line 0 col 4 IdentifierName "x" = any
-Line 1 col 4 IdentifierName "y" = any
-Line 1 col 6 AddExpression "3+x" = any
-Line 1 col 8 IdentifierName "x" = any
-Line 2 col 4 IdentifierName "z" = number
-Line 2 col 6 AddExpression "3+null" = number
-Line 3 col 6 IdentifierName "C" = C
-Line 5 col 9 IdentifierName "f" = typeof f
-Line 7 col 11 ObjectCreationExpression "new C()" = C
-Line 7 col 15 IdentifierName "C" = typeof C
-Line 9 col 9 IdentifierName "g" = typeof g
-Line 13 col 10 IdentifierName "I" = I
-Line 14 col 0 IdentifierName "x" = any
-Line 15 col 0 IdentifierName "y" = number
-Line 17 col 4 IdentifierName "w" = I
-Line 17 col 6 IdentifierName "I" = I
-Line 17 col 8 ObjectLiteralExpression "{x:null,y:3}" = { x: any; y: number; }
-Line 17 col 9 IdentifierName "x" = any
-Line 17 col 16 IdentifierName "y" = number
+var x=null; 
+>x : any
+
+var y=3+x;  
+>y : any
+>3+x : any
+>x : any
+
+var z=3+null; 
+>z : number
+>3+null : number
+
+class C {
+>C : C
+}
+function f() {
+>f : typeof f
+
+    return null;
+    return new C();
+>new C() : C
+>C : typeof C
+}
+function g() {
+>g : typeof g
+
+    return null;
+    return 3;
+}
+interface I {
+>I : I
+
+    x:any;
+>x : any
+
+    y:number;
+>y : number
+}
+var w:I={x:null,y:3};
+>w : I
+>I : I
+>{x:null,y:3} : { x: any; y: number; }
+>x : any
+>y : number
+
+
+

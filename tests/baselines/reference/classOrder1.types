@@ -1,10 +1,24 @@
 === tests/cases/compiler/classOrder1.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 1 col 11 IdentifierName "foo" = () => void
-Line 6 col 4 IdentifierName "a" = A
-Line 6 col 8 ObjectCreationExpression "new A()" = A
-Line 6 col 12 IdentifierName "A" = typeof A
-Line 7 col 0 InvocationExpression "a.foo()" = void
-Line 7 col 0 MemberAccessExpression "a.foo" = () => void
-Line 7 col 0 IdentifierName "a" = A
-Line 7 col 2 IdentifierName "foo" = () => void
+class A {
+>A : A
+
+    public foo() {
+>foo : () => void
+
+        /*WScript.Echo("Here!");*/
+    }
+}
+
+var a = new A();
+>a : A
+>new A() : A
+>A : typeof A
+
+a.foo();
+>a.foo() : void
+>a.foo : () => void
+>a : A
+>foo : () => void
+
+
+

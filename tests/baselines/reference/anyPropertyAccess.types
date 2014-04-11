@@ -1,29 +1,43 @@
 === tests/cases/compiler/anyPropertyAccess.ts ===
-Line 0 col 4 IdentifierName "x" = any
-Line 1 col 4 IdentifierName "a" = any
-Line 1 col 8 MemberAccessExpression "x.foo" = any
-Line 1 col 8 IdentifierName "x" = any
-Line 1 col 10 IdentifierName "foo" = any
-Line 2 col 4 IdentifierName "b" = any
-Line 2 col 8 ElementAccessExpression "x['foo']" = any
-Line 2 col 8 IdentifierName "x" = any
-Line 3 col 4 IdentifierName "c" = any
-Line 3 col 8 InvocationExpression "x['fn']()" = any
-Line 3 col 8 ElementAccessExpression "x['fn']" = any
-Line 3 col 8 IdentifierName "x" = any
-Line 4 col 4 IdentifierName "d" = any
-Line 4 col 8 MemberAccessExpression "x.bar.baz" = any
-Line 4 col 8 MemberAccessExpression "x.bar" = any
-Line 4 col 8 IdentifierName "x" = any
-Line 4 col 10 IdentifierName "bar" = any
-Line 4 col 14 IdentifierName "baz" = any
-Line 5 col 4 IdentifierName "e" = any
-Line 5 col 8 MemberAccessExpression "x[0].foo" = any
-Line 5 col 8 ElementAccessExpression "x[0]" = any
-Line 5 col 8 IdentifierName "x" = any
-Line 5 col 13 IdentifierName "foo" = any
-Line 6 col 4 IdentifierName "f" = any
-Line 6 col 8 MemberAccessExpression "x['0'].bar" = any
-Line 6 col 8 ElementAccessExpression "x['0']" = any
-Line 6 col 8 IdentifierName "x" = any
-Line 6 col 15 IdentifierName "bar" = any
+var x: any;
+>x : any
+
+var a = x.foo;
+>a : any
+>x.foo : any
+>x : any
+>foo : any
+
+var b = x['foo'];
+>b : any
+>x['foo'] : any
+>x : any
+
+var c = x['fn']();
+>c : any
+>x['fn']() : any
+>x['fn'] : any
+>x : any
+
+var d = x.bar.baz;
+>d : any
+>x.bar.baz : any
+>x.bar : any
+>x : any
+>bar : any
+>baz : any
+
+var e = x[0].foo;
+>e : any
+>x[0].foo : any
+>x[0] : any
+>x : any
+>foo : any
+
+var f = x['0'].bar;
+>f : any
+>x['0'].bar : any
+>x['0'] : any
+>x : any
+>bar : any
+

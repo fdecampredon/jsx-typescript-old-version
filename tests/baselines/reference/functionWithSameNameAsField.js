@@ -1,3 +1,4 @@
+//// [functionWithSameNameAsField.js]
 var TestProgressBar = (function () {
     function TestProgressBar() {
     }

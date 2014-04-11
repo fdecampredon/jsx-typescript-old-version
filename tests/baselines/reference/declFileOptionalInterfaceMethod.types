@@ -1,4 +1,9 @@
 === tests/cases/compiler/declFileOptionalInterfaceMethod.ts ===
-Line 0 col 10 IdentifierName "X" = X
-Line 1 col 0 IdentifierName "f" = <T>() => any
-Line 1 col 8 IdentifierName "T" = T
+interface X {
+>X : X
+
+    f? <T>();
+>f : <T>() => any
+>T : T
+}
+

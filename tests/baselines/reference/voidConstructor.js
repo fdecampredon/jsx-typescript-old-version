@@ -1,1 +1,2 @@
+//// [voidConstructor.js]
 var foo;

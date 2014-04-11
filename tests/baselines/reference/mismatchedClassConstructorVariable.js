@@ -1,3 +1,4 @@
+//// [mismatchedClassConstructorVariable.js]
 var baz;
 var baz = (function () {
     function baz() {

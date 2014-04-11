@@ -1,3 +1,4 @@
+//// [overloadOnConstNoStringImplementation.js]
 function x2(a, cb) {
     cb('hi');
     cb('bye');

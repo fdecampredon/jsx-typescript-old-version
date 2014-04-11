@@ -1,27 +1,52 @@
 === tests/cases/compiler/sourceMapValidationClass.ts ===
-Line 0 col 6 IdentifierName "Greeter" = Greeter
-Line 1 col 23 IdentifierName "greeting" = string
-Line 1 col 44 IdentifierName "b" = string[]
-Line 3 col 0 IdentifierName "greet" = () => string
-Line 4 col 15 AddExpression ""<h1>" + this.greeting + "</h1>"" = string
-Line 4 col 15 AddExpression ""<h1>" + this.greeting" = string
-Line 4 col 24 MemberAccessExpression "this.greeting" = string
-Line 4 col 24 ThisKeyword "this" = Greeter
-Line 4 col 29 IdentifierName "greeting" = string
-Line 6 col 12 IdentifierName "x" = string
-Line 7 col 12 IdentifierName "x1" = number
-Line 8 col 12 IdentifierName "fn" = () => string
-Line 9 col 15 MemberAccessExpression "this.greeting" = string
-Line 9 col 15 ThisKeyword "this" = Greeter
-Line 9 col 20 IdentifierName "greeting" = string
-Line 11 col 8 IdentifierName "greetings" = string
-Line 12 col 15 MemberAccessExpression "this.greeting" = string
-Line 12 col 15 ThisKeyword "this" = Greeter
-Line 12 col 20 IdentifierName "greeting" = string
-Line 14 col 8 IdentifierName "greetings" = string
-Line 14 col 18 IdentifierName "greetings" = string
-Line 15 col 0 AssignmentExpression "this.greeting = greetings" = string
-Line 15 col 0 MemberAccessExpression "this.greeting" = string
-Line 15 col 0 ThisKeyword "this" = Greeter
-Line 15 col 13 IdentifierName "greeting" = string
-Line 15 col 24 IdentifierName "greetings" = string
+class Greeter {
+>Greeter : Greeter
+
+    constructor(public greeting: string, ...b: string[]) {
+>greeting : string
+>b : string[]
+    }
+    greet() {
+>greet : () => string
+
+        return "<h1>" + this.greeting + "</h1>";
+>"<h1>" + this.greeting + "</h1>" : string
+>"<h1>" + this.greeting : string
+>this.greeting : string
+>this : Greeter
+>greeting : string
+    }
+    private x: string;
+>x : string
+
+    private x1: number = 10;
+>x1 : number
+
+    private fn() {
+>fn : () => string
+
+        return this.greeting;
+>this.greeting : string
+>this : Greeter
+>greeting : string
+    }
+    get greetings() {
+>greetings : string
+
+        return this.greeting;
+>this.greeting : string
+>this : Greeter
+>greeting : string
+    }
+    set greetings(greetings: string) {
+>greetings : string
+>greetings : string
+
+        this.greeting = greetings;
+>this.greeting = greetings : string
+>this.greeting : string
+>this : Greeter
+>greeting : string
+>greetings : string
+    }
+}

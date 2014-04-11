@@ -1,7 +1,12 @@
 === tests/cases/compiler/declFileForVarList.ts ===
-Line 1 col 4 IdentifierName "x" = any
-Line 1 col 7 IdentifierName "y" = any
-Line 1 col 10 IdentifierName "z" = number
-Line 2 col 4 IdentifierName "x1" = number
-Line 2 col 12 IdentifierName "y2" = number
-Line 2 col 20 IdentifierName "z2" = number
+
+var x, y, z = 1;
+>x : any
+>y : any
+>z : number
+
+var x1 = 1, y2 = 2, z2 = 3;
+>x1 : number
+>y2 : number
+>z2 : number
+

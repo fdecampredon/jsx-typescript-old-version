@@ -1,3 +1,13 @@
+//// [namespaces2.ts]
+module A {
+    export module B {
+        export class C { }
+    }
+}
+
+var c: A.B.C = new A.B.C();
+
+//// [namespaces2.js]
 var A;
 (function (A) {
     (function (B) {

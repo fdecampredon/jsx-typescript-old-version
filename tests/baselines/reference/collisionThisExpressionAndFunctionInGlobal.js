@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndFunctionInGlobal.js]
 var _this = this;
 function _this() {
     return 10;

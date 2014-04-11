@@ -1,15 +1,28 @@
 === tests/cases/compiler/privacyCheckOnTypeParameterReferenceInConstructorParameter.ts ===
-Line 0 col 13 IdentifierName "A" = A<T1>
-Line 0 col 15 IdentifierName "T1" = T1
-Line 1 col 16 IdentifierName "callback" = (self: A<T1>) => void
-Line 1 col 27 IdentifierName "self" = A<T1>
-Line 1 col 33 IdentifierName "A" = A<T1>
-Line 1 col 35 IdentifierName "T1" = T1
-Line 2 col 12 IdentifierName "child" = B<A<T1>>
-Line 2 col 20 ObjectCreationExpression "new B(this)" = B<A<T1>>
-Line 2 col 24 IdentifierName "B" = typeof B
-Line 2 col 26 ThisKeyword "this" = A<T1>
-Line 6 col 13 IdentifierName "B" = B<T2>
-Line 6 col 15 IdentifierName "T2" = T2
-Line 7 col 16 IdentifierName "parent" = T2
-Line 7 col 24 IdentifierName "T2" = T2
+export class A<T1>{
+>A : A<T1>
+>T1 : T1
+
+    constructor(callback: (self: A<T1>) => void) {
+>callback : (self: A<T1>) => void
+>self : A<T1>
+>A : A<T1>
+>T1 : T1
+
+        var child = new B(this);
+>child : B<A<T1>>
+>new B(this) : B<A<T1>>
+>B : typeof B
+>this : A<T1>
+    }
+}
+
+export class B<T2> {
+>B : B<T2>
+>T2 : T2
+
+    constructor(parent: T2) { }
+>parent : T2
+>T2 : T2
+}
+

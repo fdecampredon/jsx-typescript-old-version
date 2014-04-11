@@ -1,170 +1,288 @@
 === tests/cases/compiler/arrowFunctionExpressions.ts ===
-Line 1 col 4 IdentifierName "a" = (p: string) => number
-Line 1 col 8 ParenthesizedArrowFunctionExpression "(p: string) => p.length" = (p: string) => number
-Line 1 col 9 IdentifierName "p" = string
-Line 1 col 23 MemberAccessExpression "p.length" = number
-Line 1 col 23 IdentifierName "p" = string
-Line 1 col 25 IdentifierName "length" = number
-Line 2 col 4 IdentifierName "a" = (p: string) => number
-Line 2 col 8 ParenthesizedArrowFunctionExpression "(p: string) => { return p.length; }" = (p: string) => number
-Line 2 col 9 IdentifierName "p" = string
-Line 2 col 32 MemberAccessExpression "p.length" = number
-Line 2 col 32 IdentifierName "p" = string
-Line 2 col 34 IdentifierName "length" = number
-Line 5 col 4 IdentifierName "b" = (j: any) => number
-Line 5 col 8 SimpleArrowFunctionExpression "j => { return 0; }" = (j: any) => number
-Line 5 col 8 IdentifierName "j" = any
-Line 6 col 4 IdentifierName "b" = (j: any) => number
-Line 6 col 8 ParenthesizedArrowFunctionExpression "(j) => { return 0; }" = (j: any) => number
-Line 6 col 9 IdentifierName "j" = any
-Line 9 col 4 IdentifierName "c" = number
-Line 10 col 4 IdentifierName "d" = (n: any) => any
-Line 10 col 8 SimpleArrowFunctionExpression "n => c = n" = (n: any) => any
-Line 10 col 8 IdentifierName "n" = any
-Line 10 col 13 AssignmentExpression "c = n" = any
-Line 10 col 13 IdentifierName "c" = number
-Line 10 col 17 IdentifierName "n" = any
-Line 11 col 4 IdentifierName "d" = (n: any) => any
-Line 11 col 8 ParenthesizedArrowFunctionExpression "(n) => c = n" = (n: any) => any
-Line 11 col 9 IdentifierName "n" = any
-Line 11 col 15 AssignmentExpression "c = n" = any
-Line 11 col 15 IdentifierName "c" = number
-Line 11 col 19 IdentifierName "n" = any
-Line 12 col 4 IdentifierName "d" = (n: any) => any
-Line 12 col 8 IdentifierName "n" = any
-Line 17 col 6 IdentifierName "MyClass" = MyClass
-Line 18 col 0 IdentifierName "m" = (n: any) => any
-Line 18 col 8 ParenthesizedArrowFunctionExpression "(n) => n + 1" = (n: any) => any
-Line 18 col 9 IdentifierName "n" = any
-Line 18 col 15 AddExpression "n + 1" = any
-Line 18 col 15 IdentifierName "n" = any
-Line 19 col 0 IdentifierName "p" = (n: any) => MyClass
-Line 19 col 8 ParenthesizedArrowFunctionExpression "(n) => n && this" = (n: any) => MyClass
-Line 19 col 9 IdentifierName "n" = any
-Line 19 col 15 LogicalAndExpression "n && this" = MyClass
-Line 19 col 15 IdentifierName "n" = any
-Line 19 col 20 ThisKeyword "this" = MyClass
-Line 20 col 0 IdentifierName "fn" = () => void
-Line 22 col 12 IdentifierName "m" = (n: any) => any
-Line 22 col 16 ParenthesizedArrowFunctionExpression "(n) => n + 1" = (n: any) => any
-Line 22 col 17 IdentifierName "n" = any
-Line 22 col 23 AddExpression "n + 1" = any
-Line 22 col 23 IdentifierName "n" = any
-Line 23 col 12 IdentifierName "p" = (n: any) => MyClass
-Line 23 col 16 ParenthesizedArrowFunctionExpression "(n) => n && this" = (n: any) => MyClass
-Line 23 col 17 IdentifierName "n" = any
-Line 23 col 23 LogicalAndExpression "n && this" = MyClass
-Line 23 col 23 IdentifierName "n" = any
-Line 23 col 28 ThisKeyword "this" = MyClass
-Line 28 col 4 IdentifierName "arrrr" = () => (m: number) => () => (n: number) => number
-Line 28 col 12 ParenthesizedArrowFunctionExpression "() => (m: number) => () => (n: number) => m + n" = () => (m: number) => () => (n: number) => number
-Line 28 col 18 ParenthesizedArrowFunctionExpression "(m: number) => () => (n: number) => m + n" = (m: number) => () => (n: number) => number
-Line 28 col 19 IdentifierName "m" = number
-Line 28 col 33 ParenthesizedArrowFunctionExpression "() => (n: number) => m + n" = () => (n: number) => number
-Line 28 col 39 ParenthesizedArrowFunctionExpression "(n: number) => m + n" = (n: number) => number
-Line 28 col 40 IdentifierName "n" = number
-Line 28 col 54 AddExpression "m + n" = number
-Line 28 col 54 IdentifierName "m" = number
-Line 28 col 58 IdentifierName "n" = number
-Line 29 col 4 IdentifierName "e" = number
-Line 29 col 8 InvocationExpression "arrrr()(3)()(4)" = number
-Line 29 col 8 InvocationExpression "arrrr()(3)()" = (n: number) => number
-Line 29 col 8 InvocationExpression "arrrr()(3)" = () => (n: number) => number
-Line 29 col 8 InvocationExpression "arrrr()" = (m: number) => () => (n: number) => number
-Line 29 col 8 IdentifierName "arrrr" = () => (m: number) => () => (n: number) => number
-Line 30 col 4 IdentifierName "e" = number
-Line 33 col 9 IdentifierName "someFn" = typeof someFn
-Line 34 col 8 IdentifierName "arr" = (n: number) => (p: number) => number
-Line 34 col 14 ParenthesizedArrowFunctionExpression "(n: number) => (p: number) => p * n" = (n: number) => (p: number) => number
-Line 34 col 15 IdentifierName "n" = number
-Line 34 col 29 ParenthesizedArrowFunctionExpression "(p: number) => p * n" = (p: number) => number
-Line 34 col 30 IdentifierName "p" = number
-Line 34 col 44 MultiplyExpression "p * n" = number
-Line 34 col 44 IdentifierName "p" = number
-Line 34 col 48 IdentifierName "n" = number
-Line 35 col 0 InvocationExpression "arr(3)(4).toExponential()" = string
-Line 35 col 0 MemberAccessExpression "arr(3)(4).toExponential" = (fractionDigits?: number) => string
-Line 35 col 0 InvocationExpression "arr(3)(4)" = number
-Line 35 col 0 InvocationExpression "arr(3)" = (p: number) => number
-Line 35 col 0 IdentifierName "arr" = (n: number) => (p: number) => number
-Line 35 col 14 IdentifierName "toExponential" = (fractionDigits?: number) => string
-Line 39 col 9 IdentifierName "someOtherFn" = typeof someOtherFn
-Line 40 col 8 IdentifierName "arr" = (n: number) => string
-Line 40 col 14 ParenthesizedArrowFunctionExpression "(n: number) => '' + n" = (n: number) => string
-Line 40 col 15 IdentifierName "n" = number
-Line 40 col 29 AddExpression "'' + n" = string
-Line 40 col 34 IdentifierName "n" = number
-Line 41 col 0 InvocationExpression "arr(4).charAt(0)" = string
-Line 41 col 0 MemberAccessExpression "arr(4).charAt" = (pos: number) => string
-Line 41 col 0 InvocationExpression "arr(4)" = string
-Line 41 col 0 IdentifierName "arr" = (n: number) => string
-Line 41 col 11 IdentifierName "charAt" = (pos: number) => string
-Line 45 col 9 IdentifierName "outerFn" = typeof outerFn
-Line 46 col 13 IdentifierName "innerFn" = () => void
-Line 47 col 12 IdentifierName "arrowFn" = () => void
-Line 47 col 22 ParenthesizedArrowFunctionExpression "() => { }" = () => void
-Line 48 col 12 IdentifierName "p" = void
-Line 48 col 16 InvocationExpression "arrowFn()" = void
-Line 48 col 16 IdentifierName "arrowFn" = () => void
-Line 49 col 12 IdentifierName "p" = void
-Line 54 col 4 IdentifierName "f" = (n: string) => () => string
-Line 54 col 8 ParenthesizedArrowFunctionExpression "(n: string) => {
+// ArrowFormalParameters => AssignmentExpression is equivalent to ArrowFormalParameters => { return AssignmentExpression; }
+var a = (p: string) => p.length;
+>a : (p: string) => number
+>(p: string) => p.length : (p: string) => number
+>p : string
+>p.length : number
+>p : string
+>length : number
+
+var a = (p: string) => { return p.length; }
+>a : (p: string) => number
+>(p: string) => { return p.length; } : (p: string) => number
+>p : string
+>p.length : number
+>p : string
+>length : number
+
+// Identifier => Block is equivalent to(Identifier) => Block
+var b = j => { return 0; }
+>b : (j: any) => number
+>j => { return 0; } : (j: any) => number
+>j : any
+
+var b = (j) => { return 0; }
+>b : (j: any) => number
+>(j) => { return 0; } : (j: any) => number
+>j : any
+
+// Identifier => AssignmentExpression is equivalent to(Identifier) => AssignmentExpression
+var c: number;
+>c : number
+
+var d = n => c = n;
+>d : (n: any) => any
+>n => c = n : (n: any) => any
+>n : any
+>c = n : any
+>c : number
+>n : any
+
+var d = (n) => c = n;
+>d : (n: any) => any
+>(n) => c = n : (n: any) => any
+>n : any
+>c = n : any
+>c : number
+>n : any
+
+var d: (n: any) => any;
+>d : (n: any) => any
+>n : any
+
+
+// Arrow function used in class member initializer
+// Arrow function used in class member function
+class MyClass {
+>MyClass : MyClass
+
+    m = (n) => n + 1;
+>m : (n: any) => any
+>(n) => n + 1 : (n: any) => any
+>n : any
+>n + 1 : any
+>n : any
+
+    p = (n) => n && this;
+>p : (n: any) => MyClass
+>(n) => n && this : (n: any) => MyClass
+>n : any
+>n && this : MyClass
+>n : any
+>this : MyClass
+
+>fn : () => void
+
+    fn() {
+        var m = (n) => n + 1;
+>m : (n: any) => any
+>(n) => n + 1 : (n: any) => any
+>n : any
+>n + 1 : any
+>n : any
+
+        var p = (n) => n && this;
+>p : (n: any) => MyClass
+>(n) => n && this : (n: any) => MyClass
+>n : any
+>n && this : MyClass
+>n : any
+>this : MyClass
+    }
+}
+
+// Arrow function used in arrow function
+var arrrr = () => (m: number) => () => (n: number) => m + n;
+>arrrr : () => (m: number) => () => (n: number) => number
+>() => (m: number) => () => (n: number) => m + n : () => (m: number) => () => (n: number) => number
+>(m: number) => () => (n: number) => m + n : (m: number) => () => (n: number) => number
+>m : number
+>() => (n: number) => m + n : () => (n: number) => number
+>(n: number) => m + n : (n: number) => number
+>n : number
+>m + n : number
+>m : number
+>n : number
+
+var e = arrrr()(3)()(4);
+>e : number
+>arrrr()(3)()(4) : number
+>arrrr()(3)() : (n: number) => number
+>arrrr()(3) : () => (n: number) => number
+>arrrr() : (m: number) => () => (n: number) => number
+>arrrr : () => (m: number) => () => (n: number) => number
+
+var e: number;
+>e : number
+
+// Arrow function used in arrow function used in function
+function someFn() {
+>someFn : typeof someFn
+
+    var arr = (n: number) => (p: number) => p * n;
+>arr : (n: number) => (p: number) => number
+>(n: number) => (p: number) => p * n : (n: number) => (p: number) => number
+>n : number
+>(p: number) => p * n : (p: number) => number
+>p : number
+>p * n : number
+>p : number
+>n : number
+
+    arr(3)(4).toExponential();
+>arr(3)(4).toExponential() : string
+>arr(3)(4).toExponential : (fractionDigits?: number) => string
+>arr(3)(4) : number
+>arr(3) : (p: number) => number
+>arr : (n: number) => (p: number) => number
+>toExponential : (fractionDigits?: number) => string
+}
+
+// Arrow function used in function
+function someOtherFn() {
+>someOtherFn : typeof someOtherFn
+
+    var arr = (n: number) => '' + n;
+>arr : (n: number) => string
+>(n: number) => '' + n : (n: number) => string
+>n : number
+>'' + n : string
+>n : number
+
+    arr(4).charAt(0);
+>arr(4).charAt(0) : string
+>arr(4).charAt : (pos: number) => string
+>arr(4) : string
+>arr : (n: number) => string
+>charAt : (pos: number) => string
+}
+
+// Arrow function used in nested function in function
+function outerFn() {
+>outerFn : typeof outerFn
+
+    function innerFn() {
+>innerFn : () => void
+
+        var arrowFn = () => { };
+>arrowFn : () => void
+>() => { } : () => void
+
+        var p = arrowFn();
+>p : void
+>arrowFn() : void
+>arrowFn : () => void
+
+        var p: void;
+>p : void
+    }
+}
+
+// Arrow function used in nested function in arrow function
+var f = (n: string) => {
+>f : (n: string) => () => string
+>(n: string) => {
     function fn(x: number) {
         return () => n + x;
     }
     return fn(4);
-}" = (n: string) => () => string
-Line 54 col 9 IdentifierName "n" = string
-Line 55 col 13 IdentifierName "fn" = (x: number) => () => string
-Line 55 col 16 IdentifierName "x" = number
-Line 56 col 15 ParenthesizedArrowFunctionExpression "() => n + x" = () => string
-Line 56 col 21 AddExpression "n + x" = string
-Line 56 col 21 IdentifierName "n" = string
-Line 56 col 25 IdentifierName "x" = number
-Line 58 col 11 InvocationExpression "fn(4)" = () => string
-Line 58 col 11 IdentifierName "fn" = (x: number) => () => string
-Line 60 col 4 IdentifierName "g" = string
-Line 60 col 8 InvocationExpression "f('')()" = string
-Line 60 col 8 InvocationExpression "f('')" = () => string
-Line 60 col 8 IdentifierName "f" = (n: string) => () => string
-Line 61 col 4 IdentifierName "g" = string
-Line 65 col 9 IdentifierName "someOuterFn" = typeof someOuterFn
-Line 66 col 8 IdentifierName "arr" = (n: string) => () => () => number
-Line 66 col 14 ParenthesizedArrowFunctionExpression "(n: string) => {
+} : (n: string) => () => string
+>n : string
+
+    function fn(x: number) {
+>fn : (x: number) => () => string
+>x : number
+
+        return () => n + x;
+>() => n + x : () => string
+>n + x : string
+>n : string
+>x : number
+    }
+    return fn(4);
+>fn(4) : () => string
+>fn : (x: number) => () => string
+}
+var g = f('')();
+>g : string
+>f('')() : string
+>f('') : () => string
+>f : (n: string) => () => string
+
+var g: string;
+>g : string
+
+
+// Arrow function used in nested function in arrow function in nested function
+function someOuterFn() {
+>someOuterFn : typeof someOuterFn
+
+    var arr = (n: string) => {
+>arr : (n: string) => () => () => number
+>(n: string) => {
         function innerFn() {
             return () => n.length;
         }
         return innerFn;
-    }" = (n: string) => () => () => number
-Line 66 col 15 IdentifierName "n" = string
-Line 67 col 17 IdentifierName "innerFn" = () => () => number
-Line 68 col 19 ParenthesizedArrowFunctionExpression "() => n.length" = () => number
-Line 68 col 25 MemberAccessExpression "n.length" = number
-Line 68 col 25 IdentifierName "n" = string
-Line 68 col 27 IdentifierName "length" = number
-Line 70 col 15 IdentifierName "innerFn" = () => () => number
-Line 72 col 11 IdentifierName "arr" = (n: string) => () => () => number
-Line 74 col 4 IdentifierName "h" = number
-Line 74 col 8 InvocationExpression "someOuterFn()('')()()" = number
-Line 74 col 8 InvocationExpression "someOuterFn()('')()" = () => number
-Line 74 col 8 InvocationExpression "someOuterFn()('')" = () => () => number
-Line 74 col 8 InvocationExpression "someOuterFn()" = (n: string) => () => () => number
-Line 74 col 8 IdentifierName "someOuterFn" = typeof someOuterFn
-Line 75 col 0 InvocationExpression "h.toExponential()" = string
-Line 75 col 0 MemberAccessExpression "h.toExponential" = (fractionDigits?: number) => string
-Line 75 col 0 IdentifierName "h" = number
-Line 75 col 2 IdentifierName "toExponential" = (fractionDigits?: number) => string
-Line 78 col 9 IdentifierName "tryCatchFn" = typeof tryCatchFn
-Line 80 col 12 IdentifierName "x" = () => any
-Line 80 col 16 ParenthesizedArrowFunctionExpression "() => this" = () => any
-Line 80 col 22 ThisKeyword "this" = any
-Line 81 col 13 IdentifierName "e" = any
-Line 82 col 12 IdentifierName "t" = () => any
-Line 82 col 16 ParenthesizedArrowFunctionExpression "() => e + this" = () => any
-Line 82 col 22 AddExpression "e + this" = any
-Line 82 col 22 IdentifierName "e" = any
-Line 82 col 26 ThisKeyword "this" = any
-Line 84 col 12 IdentifierName "m" = () => string
-Line 84 col 16 ParenthesizedArrowFunctionExpression "() => this + ''" = () => string
-Line 84 col 22 AddExpression "this + ''" = string
-Line 84 col 22 ThisKeyword "this" = any
+    } : (n: string) => () => () => number
+>n : string
+
+        function innerFn() {
+>innerFn : () => () => number
+
+            return () => n.length;
+>() => n.length : () => number
+>n.length : number
+>n : string
+>length : number
+        }
+        return innerFn;
+>innerFn : () => () => number
+    }
+    return arr;
+>arr : (n: string) => () => () => number
+}
+var h = someOuterFn()('')()();
+>h : number
+>someOuterFn()('')()() : number
+>someOuterFn()('')() : () => number
+>someOuterFn()('') : () => () => number
+>someOuterFn() : (n: string) => () => () => number
+>someOuterFn : typeof someOuterFn
+
+h.toExponential();
+>h.toExponential() : string
+>h.toExponential : (fractionDigits?: number) => string
+>h : number
+>toExponential : (fractionDigits?: number) => string
+
+// Arrow function used in try/catch/finally in function
+function tryCatchFn() {
+>tryCatchFn : typeof tryCatchFn
+
+    try {
+        var x = () => this;
+>x : () => any
+>() => this : () => any
+>this : any
+
+    } catch (e) {
+>e : any
+
+        var t = () => e + this;
+>t : () => any
+>() => e + this : () => any
+>e + this : any
+>e : any
+>this : any
+
+    } finally {
+        var m = () => this + '';
+>m : () => string
+>() => this + '' : () => string
+>this + '' : string
+>this : any
+    }
+}
+

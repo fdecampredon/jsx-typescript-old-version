@@ -1,38 +1,62 @@
 === tests/cases/compiler/specializedInheritedConstructors1.ts ===
-Line 0 col 10 IdentifierName "ViewOptions" = ViewOptions<TModel>
-Line 0 col 22 IdentifierName "TModel" = TModel
-Line 1 col 0 IdentifierName "model" = TModel
-Line 1 col 11 IdentifierName "TModel" = TModel
-Line 4 col 6 IdentifierName "View" = View<TModel>
-Line 4 col 11 IdentifierName "TModel" = TModel
-Line 5 col 16 IdentifierName "options" = ViewOptions<TModel>
-Line 5 col 25 IdentifierName "ViewOptions" = ViewOptions<TModel>
-Line 5 col 37 IdentifierName "TModel" = TModel
-Line 6 col 0 IdentifierName "model" = TModel
-Line 6 col 11 IdentifierName "TModel" = TModel
-Line 9 col 6 IdentifierName "Model" = Model
-Line 10 col 6 IdentifierName "MyView" = MyView
-Line 10 col 21 IdentifierName "View" = View<TModel>
-Line 10 col 26 IdentifierName "Model" = Model
-Line 12 col 4 IdentifierName "m" = ViewOptions<Model>
-Line 12 col 7 IdentifierName "ViewOptions" = ViewOptions<TModel>
-Line 12 col 19 IdentifierName "Model" = Model
-Line 12 col 28 ObjectLiteralExpression "{ model: new Model() }" = { model: Model; }
-Line 12 col 30 IdentifierName "model" = Model
-Line 12 col 37 ObjectCreationExpression "new Model()" = Model
-Line 12 col 41 IdentifierName "Model" = typeof Model
-Line 13 col 4 IdentifierName "aView" = View<Model>
-Line 13 col 12 ObjectCreationExpression "new View({ model: new Model() })" = View<Model>
-Line 13 col 16 IdentifierName "View" = typeof View
-Line 13 col 21 ObjectLiteralExpression "{ model: new Model() }" = { model: Model; }
-Line 13 col 23 IdentifierName "model" = Model
-Line 13 col 30 ObjectCreationExpression "new Model()" = Model
-Line 13 col 34 IdentifierName "Model" = typeof Model
-Line 14 col 4 IdentifierName "aView2" = View<Model>
-Line 14 col 13 ObjectCreationExpression "new View(m)" = View<Model>
-Line 14 col 17 IdentifierName "View" = typeof View
-Line 14 col 22 IdentifierName "m" = ViewOptions<Model>
-Line 15 col 4 IdentifierName "myView" = MyView
-Line 15 col 13 ObjectCreationExpression "new MyView(m)" = MyView
-Line 15 col 17 IdentifierName "MyView" = typeof MyView
-Line 15 col 24 IdentifierName "m" = ViewOptions<Model>
+interface ViewOptions<TModel> {
+>ViewOptions : ViewOptions<TModel>
+>TModel : TModel
+
+    model: TModel;
+>model : TModel
+>TModel : TModel
+}
+
+class View<TModel> {
+>View : View<TModel>
+>TModel : TModel
+
+    constructor(options: ViewOptions<TModel>) { }
+>options : ViewOptions<TModel>
+>ViewOptions : ViewOptions<TModel>
+>TModel : TModel
+
+    model: TModel;
+>model : TModel
+>TModel : TModel
+}
+
+class Model { }
+>Model : Model
+
+class MyView extends View<Model> { }
+>MyView : MyView
+>View : View<TModel>
+>Model : Model
+
+var m: ViewOptions<Model> = { model: new Model() };
+>m : ViewOptions<Model>
+>ViewOptions : ViewOptions<TModel>
+>Model : Model
+>{ model: new Model() } : { model: Model; }
+>model : Model
+>new Model() : Model
+>Model : typeof Model
+
+var aView = new View({ model: new Model() }); 
+>aView : View<Model>
+>new View({ model: new Model() }) : View<Model>
+>View : typeof View
+>{ model: new Model() } : { model: Model; }
+>model : Model
+>new Model() : Model
+>Model : typeof Model
+
+var aView2 = new View(m); 
+>aView2 : View<Model>
+>new View(m) : View<Model>
+>View : typeof View
+>m : ViewOptions<Model>
+
+var myView = new MyView(m); // was error
+>myView : MyView
+>new MyView(m) : MyView
+>MyView : typeof MyView
+>m : ViewOptions<Model>
+

@@ -1,3 +1,4 @@
+//// [augmentedTypesFunction.js]
 // function then var
 function y1() {
 }

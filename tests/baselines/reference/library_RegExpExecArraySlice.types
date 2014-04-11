@@ -1,15 +1,24 @@
 === tests/cases/compiler/library_RegExpExecArraySlice.ts ===
-Line 1 col 4 IdentifierName "regExpExecArrayValue" = RegExpExecArray
-Line 1 col 26 IdentifierName "RegExpExecArray" = RegExpExecArray
-Line 2 col 0 InvocationExpression "regExpExecArrayValue.slice()" = string[]
-Line 2 col 0 MemberAccessExpression "regExpExecArrayValue.slice" = (start?: number, end?: number) => string[]
-Line 2 col 0 IdentifierName "regExpExecArrayValue" = RegExpExecArray
-Line 2 col 21 IdentifierName "slice" = (start?: number, end?: number) => string[]
-Line 3 col 0 InvocationExpression "regExpExecArrayValue.slice(0)" = string[]
-Line 3 col 0 MemberAccessExpression "regExpExecArrayValue.slice" = (start?: number, end?: number) => string[]
-Line 3 col 0 IdentifierName "regExpExecArrayValue" = RegExpExecArray
-Line 3 col 21 IdentifierName "slice" = (start?: number, end?: number) => string[]
-Line 4 col 0 InvocationExpression "regExpExecArrayValue.slice(0,1)" = string[]
-Line 4 col 0 MemberAccessExpression "regExpExecArrayValue.slice" = (start?: number, end?: number) => string[]
-Line 4 col 0 IdentifierName "regExpExecArrayValue" = RegExpExecArray
-Line 4 col 21 IdentifierName "slice" = (start?: number, end?: number) => string[]
+// RegExpExecArray.slice can have zero, one, or two arguments
+var regExpExecArrayValue: RegExpExecArray;
+>regExpExecArrayValue : RegExpExecArray
+>RegExpExecArray : RegExpExecArray
+
+regExpExecArrayValue.slice();
+>regExpExecArrayValue.slice() : string[]
+>regExpExecArrayValue.slice : (start?: number, end?: number) => string[]
+>regExpExecArrayValue : RegExpExecArray
+>slice : (start?: number, end?: number) => string[]
+
+regExpExecArrayValue.slice(0);
+>regExpExecArrayValue.slice(0) : string[]
+>regExpExecArrayValue.slice : (start?: number, end?: number) => string[]
+>regExpExecArrayValue : RegExpExecArray
+>slice : (start?: number, end?: number) => string[]
+
+regExpExecArrayValue.slice(0,1);
+>regExpExecArrayValue.slice(0,1) : string[]
+>regExpExecArrayValue.slice : (start?: number, end?: number) => string[]
+>regExpExecArrayValue : RegExpExecArray
+>slice : (start?: number, end?: number) => string[]
+

@@ -1,23 +1,46 @@
 === tests/cases/compiler/moduleVariables.ts ===
-Line 0 col 12 IdentifierName "console" = any
-Line 2 col 4 IdentifierName "x" = number
-Line 3 col 7 IdentifierName "M" = M
-Line 4 col 15 IdentifierName "x" = number
-Line 5 col 0 InvocationExpression "console.log(x)" = any
-Line 5 col 0 MemberAccessExpression "console.log" = any
-Line 5 col 0 IdentifierName "console" = any
-Line 5 col 12 IdentifierName "log" = any
-Line 5 col 16 IdentifierName "x" = number
-Line 8 col 7 IdentifierName "M" = M
-Line 9 col 0 InvocationExpression "console.log(x)" = any
-Line 9 col 0 MemberAccessExpression "console.log" = any
-Line 9 col 0 IdentifierName "console" = any
-Line 9 col 12 IdentifierName "log" = any
-Line 9 col 16 IdentifierName "x" = number
-Line 12 col 7 IdentifierName "M" = M
-Line 13 col 8 IdentifierName "x" = number
-Line 14 col 0 InvocationExpression "console.log(x)" = any
-Line 14 col 0 MemberAccessExpression "console.log" = any
-Line 14 col 0 IdentifierName "console" = any
-Line 14 col 12 IdentifierName "log" = any
-Line 14 col 16 IdentifierName "x" = number
+declare var console: any;
+>console : any
+ 
+var x = 1;
+>x : number
+
+module M {
+>M : M
+
+    export var x = 2;
+>x : number
+
+    console.log(x); // 2
+>console.log(x) : any
+>console.log : any
+>console : any
+>log : any
+>x : number
+}
+ 
+module M {
+>M : M
+
+    console.log(x); // 2
+>console.log(x) : any
+>console.log : any
+>console : any
+>log : any
+>x : number
+}
+ 
+module M {
+>M : M
+
+    var x = 3;
+>x : number
+
+    console.log(x); // 3
+>console.log(x) : any
+>console.log : any
+>console : any
+>log : any
+>x : number
+}
+

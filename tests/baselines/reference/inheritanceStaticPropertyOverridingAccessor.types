@@ -1,8 +1,22 @@
 === tests/cases/compiler/inheritanceStaticPropertyOverridingAccessor.ts ===
-Line 0 col 6 IdentifierName "a" = a
-Line 1 col 15 IdentifierName "x" = () => string
-Line 4 col 15 IdentifierName "x" = () => string
-Line 4 col 17 IdentifierName "aValue" = () => string
-Line 8 col 6 IdentifierName "b" = b
-Line 8 col 16 IdentifierName "a" = a
-Line 9 col 11 IdentifierName "x" = () => string
+class a {
+>a : a
+
+    static get x(): () => string {
+>x : () => string
+
+        return null;;
+    }
+    static set x(aValue: () => string) {
+>x : () => string
+>aValue : () => string
+    }
+}
+
+class b extends a {
+>b : b
+>a : a
+
+    static x: () => string;
+>x : () => string
+}

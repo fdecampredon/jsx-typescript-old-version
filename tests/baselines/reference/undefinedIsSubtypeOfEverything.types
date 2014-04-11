@@ -1,99 +1,249 @@
 === tests/cases/compiler/undefinedIsSubtypeOfEverything.ts ===
-Line 2 col 6 IdentifierName "Base" = Base
-Line 3 col 0 IdentifierName "foo" = any
-Line 3 col 16 IdentifierName "undefined" = any
-Line 6 col 6 IdentifierName "D0" = D0
-Line 6 col 17 IdentifierName "Base" = Base
-Line 7 col 0 IdentifierName "foo" = any
-Line 10 col 6 IdentifierName "DA" = DA
-Line 10 col 17 IdentifierName "Base" = Base
-Line 11 col 0 IdentifierName "foo" = any
-Line 11 col 16 IdentifierName "undefined" = any
-Line 14 col 6 IdentifierName "D1" = D1
-Line 14 col 17 IdentifierName "Base" = Base
-Line 15 col 0 IdentifierName "foo" = string
-Line 18 col 6 IdentifierName "D1A" = D1A
-Line 18 col 18 IdentifierName "Base" = Base
-Line 19 col 0 IdentifierName "foo" = String
-Line 19 col 9 IdentifierName "String" = String
-Line 23 col 6 IdentifierName "D2" = D2
-Line 23 col 17 IdentifierName "Base" = Base
-Line 24 col 0 IdentifierName "foo" = number
-Line 27 col 6 IdentifierName "D2A" = D2A
-Line 27 col 18 IdentifierName "Base" = Base
-Line 28 col 0 IdentifierName "foo" = Number
-Line 28 col 9 IdentifierName "Number" = Number
-Line 32 col 6 IdentifierName "D3" = D3
-Line 32 col 17 IdentifierName "Base" = Base
-Line 33 col 0 IdentifierName "foo" = boolean
-Line 36 col 6 IdentifierName "D3A" = D3A
-Line 36 col 18 IdentifierName "Base" = Base
-Line 37 col 0 IdentifierName "foo" = Boolean
-Line 37 col 9 IdentifierName "Boolean" = Boolean
-Line 41 col 6 IdentifierName "D4" = D4
-Line 41 col 17 IdentifierName "Base" = Base
-Line 42 col 0 IdentifierName "foo" = RegExp
-Line 42 col 9 IdentifierName "RegExp" = RegExp
-Line 45 col 6 IdentifierName "D5" = D5
-Line 45 col 17 IdentifierName "Base" = Base
-Line 46 col 0 IdentifierName "foo" = Date
-Line 46 col 9 IdentifierName "Date" = Date
-Line 50 col 6 IdentifierName "D6" = D6
-Line 50 col 17 IdentifierName "Base" = Base
-Line 51 col 0 IdentifierName "foo" = number[]
-Line 54 col 6 IdentifierName "D7" = D7
-Line 54 col 17 IdentifierName "Base" = Base
-Line 55 col 0 IdentifierName "foo" = { bar: number; }
-Line 55 col 11 IdentifierName "bar" = number
-Line 59 col 6 IdentifierName "D8" = D8
-Line 59 col 17 IdentifierName "Base" = Base
-Line 60 col 0 IdentifierName "foo" = D7
-Line 60 col 9 IdentifierName "D7" = D7
-Line 63 col 10 IdentifierName "I1" = I1
-Line 64 col 0 IdentifierName "bar" = string
-Line 66 col 6 IdentifierName "D9" = D9
-Line 66 col 17 IdentifierName "Base" = Base
-Line 67 col 0 IdentifierName "foo" = I1
-Line 67 col 9 IdentifierName "I1" = I1
-Line 71 col 6 IdentifierName "D10" = D10
-Line 71 col 18 IdentifierName "Base" = Base
-Line 72 col 0 IdentifierName "foo" = () => number
-Line 75 col 5 IdentifierName "E" = E
-Line 75 col 9 IdentifierName "A" = E
-Line 76 col 6 IdentifierName "D11" = D11
-Line 76 col 18 IdentifierName "Base" = Base
-Line 77 col 0 IdentifierName "foo" = E
-Line 77 col 9 IdentifierName "E" = E
-Line 80 col 9 IdentifierName "f" = typeof f
-Line 81 col 7 IdentifierName "f" = f
-Line 82 col 15 IdentifierName "bar" = number
-Line 84 col 6 IdentifierName "D12" = D12
-Line 84 col 18 IdentifierName "Base" = Base
-Line 85 col 0 IdentifierName "foo" = typeof f
-Line 85 col 16 IdentifierName "f" = typeof f
-Line 89 col 6 IdentifierName "c" = c
-Line 89 col 10 IdentifierName "baz" = string
-Line 90 col 7 IdentifierName "c" = c
-Line 91 col 15 IdentifierName "bar" = number
-Line 93 col 6 IdentifierName "D13" = D13
-Line 93 col 18 IdentifierName "Base" = Base
-Line 94 col 0 IdentifierName "foo" = typeof c
-Line 94 col 16 IdentifierName "c" = typeof c
-Line 98 col 6 IdentifierName "D14" = D14<T>
-Line 98 col 10 IdentifierName "T" = T
-Line 98 col 21 IdentifierName "Base" = Base
-Line 99 col 0 IdentifierName "foo" = T
-Line 99 col 9 IdentifierName "T" = T
-Line 103 col 6 IdentifierName "D15" = D15<T, U>
-Line 103 col 10 IdentifierName "T" = T
-Line 103 col 13 IdentifierName "U" = U
-Line 103 col 24 IdentifierName "Base" = Base
-Line 104 col 0 IdentifierName "foo" = U
-Line 104 col 9 IdentifierName "U" = U
-Line 112 col 6 IdentifierName "D16" = D16
-Line 112 col 18 IdentifierName "Base" = Base
-Line 113 col 0 IdentifierName "foo" = Object
-Line 113 col 9 IdentifierName "Object" = Object
-Line 117 col 6 IdentifierName "D17" = D17
-Line 117 col 18 IdentifierName "Base" = Base
-Line 118 col 0 IdentifierName "foo" = {}
+// undefined is a subtype of every other types, no errors expected below
+
+class Base {
+>Base : Base
+
+    foo: typeof undefined;
+>foo : any
+>undefined : any
+} 
+
+class D0 extends Base {
+>D0 : D0
+>Base : Base
+
+    foo: any;
+>foo : any
+}
+
+class DA extends Base {
+>DA : DA
+>Base : Base
+
+    foo: typeof undefined; 
+>foo : any
+>undefined : any
+}
+
+class D1 extends Base {
+>D1 : D1
+>Base : Base
+
+    foo: string;
+>foo : string
+}
+
+class D1A extends Base {
+>D1A : D1A
+>Base : Base
+
+    foo: String;
+>foo : String
+>String : String
+}
+
+
+class D2 extends Base {
+>D2 : D2
+>Base : Base
+
+    foo: number;
+>foo : number
+}
+
+class D2A extends Base {
+>D2A : D2A
+>Base : Base
+
+    foo: Number;
+>foo : Number
+>Number : Number
+}
+
+
+class D3 extends Base {
+>D3 : D3
+>Base : Base
+
+    foo: boolean;
+>foo : boolean
+}
+
+class D3A extends Base {
+>D3A : D3A
+>Base : Base
+
+    foo: Boolean;
+>foo : Boolean
+>Boolean : Boolean
+}
+
+
+class D4 extends Base {
+>D4 : D4
+>Base : Base
+
+    foo: RegExp;
+>foo : RegExp
+>RegExp : RegExp
+}
+
+class D5 extends Base {
+>D5 : D5
+>Base : Base
+
+    foo: Date;
+>foo : Date
+>Date : Date
+}
+
+
+class D6 extends Base {
+>D6 : D6
+>Base : Base
+
+    foo: number[];
+>foo : number[]
+}
+
+class D7 extends Base {
+>D7 : D7
+>Base : Base
+
+    foo: { bar: number };
+>foo : { bar: number; }
+>bar : number
+}
+
+
+class D8 extends Base {
+>D8 : D8
+>Base : Base
+
+    foo: D7;
+>foo : D7
+>D7 : D7
+}
+
+interface I1 {
+>I1 : I1
+
+    bar: string;
+>bar : string
+}
+class D9 extends Base {
+>D9 : D9
+>Base : Base
+
+    foo: I1;
+>foo : I1
+>I1 : I1
+}
+
+
+class D10 extends Base {
+>D10 : D10
+>Base : Base
+
+    foo: () => number;
+>foo : () => number
+}
+
+enum E { A }
+>E : E
+>A : E
+
+class D11 extends Base {
+>D11 : D11
+>Base : Base
+
+    foo: E;
+>foo : E
+>E : E
+}
+
+function f() { }
+>f : typeof f
+
+module f {
+>f : f
+
+    export var bar = 1;
+>bar : number
+}
+class D12 extends Base {
+>D12 : D12
+>Base : Base
+
+    foo: typeof f;
+>foo : typeof f
+>f : typeof f
+}
+
+
+class c { baz: string }
+>c : c
+>baz : string
+
+module c {
+>c : c
+
+    export var bar = 1;
+>bar : number
+}
+class D13 extends Base {
+>D13 : D13
+>Base : Base
+
+    foo: typeof c;
+>foo : typeof c
+>c : typeof c
+}
+
+
+class D14<T> extends Base {
+>D14 : D14<T>
+>T : T
+>Base : Base
+
+    foo: T;
+>foo : T
+>T : T
+}
+
+
+class D15<T, U> extends Base {
+>D15 : D15<T, U>
+>T : T
+>U : U
+>Base : Base
+
+    foo: U;
+>foo : U
+>U : U
+}
+
+//class D15<T, U extends T> extends Base {
+//    foo: U;
+//}
+
+
+class D16 extends Base {
+>D16 : D16
+>Base : Base
+
+    foo: Object;
+>foo : Object
+>Object : Object
+}
+
+
+class D17 extends Base {
+>D17 : D17
+>Base : Base
+
+    foo: {};
+>foo : {}
+}
+

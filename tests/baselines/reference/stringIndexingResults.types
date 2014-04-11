@@ -1,54 +1,105 @@
 === tests/cases/compiler/stringIndexingResults.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 5 IdentifierName "x" = string
-Line 2 col 0 IdentifierName "y" = string
-Line 5 col 4 IdentifierName "c" = C
-Line 5 col 7 IdentifierName "C" = C
-Line 6 col 4 IdentifierName "r1" = string
-Line 6 col 9 ElementAccessExpression "c['y']" = string
-Line 6 col 9 IdentifierName "c" = C
-Line 7 col 4 IdentifierName "r2" = string
-Line 7 col 9 ElementAccessExpression "c['a']" = string
-Line 7 col 9 IdentifierName "c" = C
-Line 8 col 4 IdentifierName "r3" = string
-Line 8 col 9 ElementAccessExpression "c[1]" = string
-Line 8 col 9 IdentifierName "c" = C
-Line 10 col 10 IdentifierName "I" = I
-Line 11 col 5 IdentifierName "x" = string
-Line 12 col 0 IdentifierName "y" = string
-Line 15 col 4 IdentifierName "i" = I
-Line 15 col 7 IdentifierName "I" = I
-Line 16 col 4 IdentifierName "r4" = string
-Line 16 col 9 ElementAccessExpression "i['y']" = string
-Line 16 col 9 IdentifierName "i" = I
-Line 17 col 4 IdentifierName "r5" = string
-Line 17 col 9 ElementAccessExpression "i['a']" = string
-Line 17 col 9 IdentifierName "i" = I
-Line 18 col 4 IdentifierName "r6" = string
-Line 18 col 9 ElementAccessExpression "i[1]" = string
-Line 18 col 9 IdentifierName "i" = I
-Line 20 col 4 IdentifierName "a" = { y: string; [x: string]: string; }
-Line 21 col 5 IdentifierName "x" = string
-Line 22 col 0 IdentifierName "y" = string
-Line 25 col 4 IdentifierName "r7" = string
-Line 25 col 9 ElementAccessExpression "a['y']" = string
-Line 25 col 9 IdentifierName "a" = { y: string; [x: string]: string; }
-Line 26 col 4 IdentifierName "r8" = string
-Line 26 col 9 ElementAccessExpression "a['a']" = string
-Line 26 col 9 IdentifierName "a" = { y: string; [x: string]: string; }
-Line 27 col 4 IdentifierName "r9" = string
-Line 27 col 9 ElementAccessExpression "a[1]" = string
-Line 27 col 9 IdentifierName "a" = { y: string; [x: string]: string; }
-Line 29 col 4 IdentifierName "b" = { [x: string]: string; }
-Line 29 col 10 IdentifierName "x" = string
-Line 29 col 33 ObjectLiteralExpression "{ y: '' }" = { y: string; [x: string]: string; }
-Line 29 col 35 IdentifierName "y" = string
-Line 31 col 4 IdentifierName "r10" = string
-Line 31 col 10 ElementAccessExpression "b['y']" = string
-Line 31 col 10 IdentifierName "b" = { [x: string]: string; }
-Line 32 col 4 IdentifierName "r11" = string
-Line 32 col 10 ElementAccessExpression "b['a']" = string
-Line 32 col 10 IdentifierName "b" = { [x: string]: string; }
-Line 33 col 4 IdentifierName "r12" = string
-Line 33 col 10 ElementAccessExpression "b[1]" = string
-Line 33 col 10 IdentifierName "b" = { [x: string]: string; }
+class C {
+>C : C
+
+    [x: string]: string;
+>x : string
+
+    y = '';
+>y : string
+}
+
+var c: C;
+>c : C
+>C : C
+
+var r1 = c['y']; 
+>r1 : string
+>c['y'] : string
+>c : C
+
+var r2 = c['a'];
+>r2 : string
+>c['a'] : string
+>c : C
+
+var r3 = c[1]; 
+>r3 : string
+>c[1] : string
+>c : C
+
+interface I {
+>I : I
+
+    [x: string]: string;
+>x : string
+
+    y: string;
+>y : string
+}
+
+var i: I
+>i : I
+>I : I
+
+var r4 = i['y'];
+>r4 : string
+>i['y'] : string
+>i : I
+
+var r5 = i['a'];
+>r5 : string
+>i['a'] : string
+>i : I
+
+var r6 = i[1]; 
+>r6 : string
+>i[1] : string
+>i : I
+
+var a: {
+>a : { y: string; [x: string]: string; }
+
+    [x: string]: string;
+>x : string
+
+    y: string;
+>y : string
+}
+
+var r7 = a['y'];
+>r7 : string
+>a['y'] : string
+>a : { y: string; [x: string]: string; }
+
+var r8 = a['a'];
+>r8 : string
+>a['a'] : string
+>a : { y: string; [x: string]: string; }
+
+var r9 = a[1];
+>r9 : string
+>a[1] : string
+>a : { y: string; [x: string]: string; }
+
+var b: { [x: string]: string } = { y: '' }
+>b : { [x: string]: string; }
+>x : string
+>{ y: '' } : { y: string; [x: string]: string; }
+>y : string
+
+var r10 = b['y'];
+>r10 : string
+>b['y'] : string
+>b : { [x: string]: string; }
+
+var r11 = b['a'];
+>r11 : string
+>b['a'] : string
+>b : { [x: string]: string; }
+
+var r12 = b[1];
+>r12 : string
+>b[1] : string
+>b : { [x: string]: string; }
+

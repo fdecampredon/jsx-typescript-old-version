@@ -1,18 +1,36 @@
 === tests/cases/compiler/instantiateGenericClassWithZeroTypeArguments.ts ===
-Line 2 col 6 IdentifierName "C" = C<T>
-Line 2 col 8 IdentifierName "T" = T
-Line 3 col 0 IdentifierName "x" = T
-Line 3 col 7 IdentifierName "T" = T
-Line 6 col 4 IdentifierName "c" = C<{}>
-Line 6 col 8 ObjectCreationExpression "new C()" = C<{}>
-Line 6 col 12 IdentifierName "C" = typeof C
-Line 8 col 6 IdentifierName "D" = D<T, U>
-Line 8 col 8 IdentifierName "T" = T
-Line 8 col 11 IdentifierName "U" = U
-Line 9 col 0 IdentifierName "x" = T
-Line 9 col 7 IdentifierName "T" = T
-Line 10 col 0 IdentifierName "y" = U
-Line 10 col 7 IdentifierName "U" = U
-Line 13 col 4 IdentifierName "d" = D<{}, {}>
-Line 13 col 8 ObjectCreationExpression "new D()" = D<{}, {}>
-Line 13 col 12 IdentifierName "D" = typeof D
+// no errors expected when instantiating a generic type with no type arguments provided
+
+class C<T> {
+>C : C<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+}
+
+var c = new C();
+>c : C<{}>
+>new C() : C<{}>
+>C : typeof C
+
+class D<T, U> {
+>D : D<T, U>
+>T : T
+>U : U
+
+    x: T
+>x : T
+>T : T
+
+    y: U
+>y : U
+>U : U
+}
+
+var d = new D();
+>d : D<{}, {}>
+>new D() : D<{}, {}>
+>D : typeof D
+

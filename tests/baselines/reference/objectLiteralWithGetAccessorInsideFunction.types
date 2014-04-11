@@ -1,12 +1,25 @@
 === tests/cases/compiler/objectLiteralWithGetAccessorInsideFunction.ts ===
-Line 0 col 9 IdentifierName "bar" = typeof bar
-Line 1 col 8 IdentifierName "x" = { _extraOccluded: number; }
-Line 1 col 12 ObjectLiteralExpression "{
+function bar() {
+>bar : typeof bar
+
+    var x = {
+>x : { _extraOccluded: number; }
+>{
         get _extraOccluded() {
             var occluded = 0;
             return occluded;
         },
-    }" = { _extraOccluded: number; }
-Line 2 col 12 IdentifierName "_extraOccluded" = number
-Line 3 col 16 IdentifierName "occluded" = number
-Line 4 col 19 IdentifierName "occluded" = number
+    } : { _extraOccluded: number; }
+
+        get _extraOccluded() {
+>_extraOccluded : number
+
+            var occluded = 0;
+>occluded : number
+
+            return occluded;
+>occluded : number
+
+        },
+    }
+}

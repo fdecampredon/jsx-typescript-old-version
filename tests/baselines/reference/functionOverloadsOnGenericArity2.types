@@ -1,12 +1,20 @@
 === tests/cases/compiler/functionOverloadsOnGenericArity2.ts ===
-Line 0 col 10 IdentifierName "I" = I
-Line 1 col 0 IdentifierName "then" = { (p: string): string; <U>(p: string): string; <U, T>(p: string): Date; }
-Line 1 col 9 IdentifierName "p" = string
-Line 2 col 0 IdentifierName "then" = { (p: string): string; <U>(p: string): string; <U, T>(p: string): Date; }
-Line 2 col 9 IdentifierName "U" = U
-Line 2 col 12 IdentifierName "p" = string
-Line 3 col 0 IdentifierName "then" = { (p: string): string; <U>(p: string): string; <U, T>(p: string): Date; }
-Line 3 col 9 IdentifierName "U" = U
-Line 3 col 12 IdentifierName "T" = T
-Line 3 col 15 IdentifierName "p" = string
-Line 3 col 27 IdentifierName "Date" = Date
+interface I {
+>I : I
+
+    then(p: string): string;
+>then : { (p: string): string; <U>(p: string): string; <U, T>(p: string): Date; }
+>p : string
+
+    then<U>(p: string): string;
+>then : { (p: string): string; <U>(p: string): string; <U, T>(p: string): Date; }
+>U : U
+>p : string
+
+    then<U, T>(p: string): Date;
+>then : { (p: string): string; <U>(p: string): string; <U, T>(p: string): Date; }
+>U : U
+>T : T
+>p : string
+>Date : Date
+}

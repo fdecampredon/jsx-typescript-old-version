@@ -1,3 +1,4 @@
+//// [typeArgumentsOnFunctionsWithNoTypeParameters.js]
 function foo(f) {
     var r1 = f(1);
     var r2 = f(1);

@@ -1,3 +1,4 @@
+//// [typeParametersInStaticAccessors.js]
 var foo = (function () {
     function foo() {
     }

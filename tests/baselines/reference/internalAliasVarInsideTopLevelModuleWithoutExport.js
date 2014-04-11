@@ -1,3 +1,13 @@
+//// [internalAliasVarInsideTopLevelModuleWithoutExport.ts]
+export module a {
+    export var x = 10;
+}
+
+import b = a.x;
+export var bVal = b;
+
+
+
 //// [internalAliasVarInsideTopLevelModuleWithoutExport.js]
 (function (a) {
     a.x = 10;

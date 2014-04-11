@@ -1,3 +1,4 @@
+//// [genericFunctionsWithOptionalParameters2.js]
 var utils;
 
 utils.fold(); // error

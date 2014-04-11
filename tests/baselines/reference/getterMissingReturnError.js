@@ -1,3 +1,4 @@
+//// [getterMissingReturnError.js]
 var test = (function () {
     function test() {
     }

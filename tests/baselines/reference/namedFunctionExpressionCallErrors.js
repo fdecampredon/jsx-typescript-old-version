@@ -1,3 +1,4 @@
+//// [namedFunctionExpressionCallErrors.js]
 var recurser = function foo() {
 };
 

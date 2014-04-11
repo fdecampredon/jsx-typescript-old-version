@@ -1,18 +1,29 @@
 === tests/cases/compiler/getsetReturnTypes.ts ===
-Line 0 col 9 IdentifierName "makePoint" = typeof makePoint
-Line 0 col 19 IdentifierName "x" = number
-Line 1 col 8 ObjectLiteralExpression "{ 
+function makePoint(x: number) { 
+>makePoint : typeof makePoint
+>x : number
+
+ return { 
+>{ 
   get x() { return x; } 
- }" = { x: number; }
-Line 2 col 6 IdentifierName "x" = number
-Line 2 col 19 IdentifierName "x" = number
-Line 5 col 4 IdentifierName "x" = number
-Line 5 col 8 MemberAccessExpression "makePoint(2).x" = number
-Line 5 col 8 InvocationExpression "makePoint(2)" = { x: number; }
-Line 5 col 8 IdentifierName "makePoint" = typeof makePoint
-Line 5 col 21 IdentifierName "x" = number
-Line 6 col 4 IdentifierName "y" = number
-Line 6 col 16 MemberAccessExpression "makePoint(2).x" = number
-Line 6 col 16 InvocationExpression "makePoint(2)" = { x: number; }
-Line 6 col 16 IdentifierName "makePoint" = typeof makePoint
-Line 6 col 29 IdentifierName "x" = number
+ } : { x: number; }
+
+  get x() { return x; } 
+>x : number
+>x : number
+ } 
+}; 
+var x = makePoint(2).x;
+>x : number
+>makePoint(2).x : number
+>makePoint(2) : { x: number; }
+>makePoint : typeof makePoint
+>x : number
+
+var y: number = makePoint(2).x;
+>y : number
+>makePoint(2).x : number
+>makePoint(2) : { x: number; }
+>makePoint : typeof makePoint
+>x : number
+

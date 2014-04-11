@@ -1,9 +1,22 @@
 === tests/cases/compiler/interfaceThatHidesBaseProperty.ts ===
-Line 0 col 10 IdentifierName "Base" = Base
-Line 1 col 0 IdentifierName "x" = { a: number; }
-Line 1 col 9 IdentifierName "a" = number
-Line 4 col 10 IdentifierName "Derived" = Derived
-Line 4 col 26 IdentifierName "Base" = Base
-Line 5 col 0 IdentifierName "x" = { a: number; b: number; }
-Line 6 col 0 IdentifierName "a" = number
-Line 6 col 19 IdentifierName "b" = number
+interface Base {
+>Base : Base
+
+    x: { a: number };
+>x : { a: number; }
+>a : number
+}
+
+interface Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    x: {
+>x : { a: number; b: number; }
+
+        a: number; b: number;
+>a : number
+>b : number
+
+    };
+}

@@ -1,3 +1,28 @@
+//// [asiInES6Classes.ts]
+class Foo {
+
+ 
+
+    defaults = {
+
+        done: false
+
+    }
+
+ 
+
+    bar() {
+
+        return 3;
+
+    }
+
+ 
+
+}
+
+
+//// [asiInES6Classes.js]
 var Foo = (function () {
     function Foo() {
         this.defaults = {

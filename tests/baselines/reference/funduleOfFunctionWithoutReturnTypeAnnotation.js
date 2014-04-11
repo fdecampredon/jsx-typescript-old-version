@@ -1,3 +1,13 @@
+//// [funduleOfFunctionWithoutReturnTypeAnnotation.ts]
+function fn() {
+    return fn.n;
+}
+module fn {
+    export var n = 1;
+}
+
+
+//// [funduleOfFunctionWithoutReturnTypeAnnotation.js]
 function fn() {
     return fn.n;
 }

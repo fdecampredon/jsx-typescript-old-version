@@ -1,149 +1,255 @@
 === tests/cases/compiler/genericClassPropertyInheritanceSpecialization.ts ===
-Line 0 col 10 IdentifierName "KnockoutObservableBase" = KnockoutObservableBase<T>
-Line 0 col 33 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "peek" = () => T
-Line 1 col 12 IdentifierName "T" = T
-Line 2 col 8 IdentifierName "T" = T
-Line 3 col 5 IdentifierName "value" = T
-Line 3 col 12 IdentifierName "T" = T
-Line 6 col 10 IdentifierName "KnockoutObservable" = KnockoutObservable<T>
-Line 6 col 29 IdentifierName "T" = T
-Line 6 col 40 IdentifierName "KnockoutObservableBase" = KnockoutObservableBase<T>
-Line 6 col 63 IdentifierName "T" = T
-Line 7 col 0 IdentifierName "equalityComparer" = (a: T, b: T) => boolean
-Line 7 col 21 IdentifierName "a" = T
-Line 7 col 24 IdentifierName "T" = T
-Line 7 col 27 IdentifierName "b" = T
-Line 7 col 30 IdentifierName "T" = T
-Line 8 col 0 IdentifierName "valueHasMutated" = () => void
-Line 9 col 0 IdentifierName "valueWillMutate" = () => void
-Line 12 col 10 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
-Line 12 col 34 IdentifierName "T" = T
-Line 12 col 45 IdentifierName "KnockoutObservable" = KnockoutObservable<T>
-Line 12 col 64 IdentifierName "T" = T
-Line 13 col 0 IdentifierName "indexOf" = (searchElement: T, fromIndex?: number) => number
-Line 13 col 12 IdentifierName "searchElement" = T
-Line 13 col 27 IdentifierName "T" = T
-Line 13 col 30 IdentifierName "fromIndex" = number
-Line 14 col 0 IdentifierName "slice" = (start: number, end?: number) => T[]
-Line 14 col 10 IdentifierName "start" = number
-Line 14 col 25 IdentifierName "end" = number
-Line 14 col 40 IdentifierName "T" = T
-Line 15 col 0 IdentifierName "splice" = (start: number, deleteCount?: number, ...items: T[]) => T[]
-Line 15 col 11 IdentifierName "start" = number
-Line 15 col 26 IdentifierName "deleteCount" = number
-Line 15 col 51 IdentifierName "items" = T[]
-Line 15 col 58 IdentifierName "T" = T
-Line 15 col 64 IdentifierName "T" = T
-Line 16 col 0 IdentifierName "pop" = () => T
-Line 16 col 11 IdentifierName "T" = T
-Line 17 col 0 IdentifierName "push" = (...items: T[]) => void
-Line 17 col 12 IdentifierName "items" = T[]
-Line 17 col 19 IdentifierName "T" = T
-Line 18 col 0 IdentifierName "shift" = () => T
-Line 18 col 13 IdentifierName "T" = T
-Line 19 col 0 IdentifierName "unshift" = (...items: T[]) => number
-Line 19 col 15 IdentifierName "items" = T[]
-Line 19 col 22 IdentifierName "T" = T
-Line 20 col 0 IdentifierName "reverse" = () => T[]
-Line 20 col 15 IdentifierName "T" = T
-Line 21 col 0 IdentifierName "sort" = (compareFunction?: (a: T, b: T) => number) => void
-Line 21 col 9 IdentifierName "compareFunction" = (a: T, b: T) => number
-Line 21 col 28 IdentifierName "a" = T
-Line 21 col 31 IdentifierName "T" = T
-Line 21 col 34 IdentifierName "b" = T
-Line 21 col 37 IdentifierName "T" = T
-Line 22 col 0 IdentifierName "replace" = (oldItem: T, newItem: T) => void
-Line 22 col 12 IdentifierName "oldItem" = T
-Line 22 col 21 IdentifierName "T" = T
-Line 22 col 24 IdentifierName "newItem" = T
-Line 22 col 33 IdentifierName "T" = T
-Line 23 col 0 IdentifierName "remove" = (item: T) => T[]
-Line 23 col 11 IdentifierName "item" = T
-Line 23 col 17 IdentifierName "T" = T
-Line 23 col 21 IdentifierName "T" = T
-Line 24 col 0 IdentifierName "removeAll" = (items?: T[]) => T[]
-Line 24 col 14 IdentifierName "items" = T[]
-Line 24 col 22 IdentifierName "T" = T
-Line 24 col 28 IdentifierName "T" = T
-Line 25 col 0 IdentifierName "destroy" = (item: T) => void
-Line 25 col 12 IdentifierName "item" = T
-Line 25 col 18 IdentifierName "T" = T
-Line 26 col 0 IdentifierName "destroyAll" = (items?: T[]) => void
-Line 26 col 15 IdentifierName "items" = T[]
-Line 26 col 23 IdentifierName "T" = T
-Line 29 col 10 IdentifierName "KnockoutObservableArrayStatic" = KnockoutObservableArrayStatic
-Line 30 col 0 IdentifierName "fn" = KnockoutObservableArray<any>
-Line 30 col 8 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
-Line 32 col 5 IdentifierName "T" = T
-Line 32 col 8 IdentifierName "value" = T[]
-Line 32 col 16 IdentifierName "T" = T
-Line 32 col 22 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
-Line 32 col 46 IdentifierName "T" = T
-Line 35 col 15 IdentifierName "ko" = ko
-Line 36 col 15 IdentifierName "observableArray" = KnockoutObservableArrayStatic
-Line 36 col 32 IdentifierName "KnockoutObservableArrayStatic" = KnockoutObservableArrayStatic
-Line 39 col 7 IdentifierName "Portal" = Portal
-Line 39 col 14 IdentifierName "Controls" = Portal.Controls
-Line 39 col 23 IdentifierName "Validators" = Portal.Controls.Validators
-Line 41 col 17 IdentifierName "Validator" = Validator<TValue>
-Line 41 col 27 IdentifierName "TValue" = TValue
-Line 42 col 16 IdentifierName "_subscription" = any
-Line 43 col 15 IdentifierName "message" = KnockoutObservable<string>
-Line 43 col 24 IdentifierName "KnockoutObservable" = KnockoutObservable<T>
-Line 44 col 15 IdentifierName "validationState" = KnockoutObservable<number>
-Line 44 col 32 IdentifierName "KnockoutObservable" = KnockoutObservable<T>
-Line 45 col 15 IdentifierName "validate" = KnockoutObservable<TValue>
-Line 45 col 25 IdentifierName "KnockoutObservable" = KnockoutObservable<T>
-Line 45 col 44 IdentifierName "TValue" = TValue
-Line 46 col 20 IdentifierName "message" = string
-Line 47 col 15 IdentifierName "destroy" = () => void
-Line 48 col 15 IdentifierName "_validate" = (value: TValue) => number
-Line 48 col 25 IdentifierName "value" = TValue
-Line 48 col 32 IdentifierName "TValue" = TValue
-Line 52 col 7 IdentifierName "PortalFx" = PortalFx
-Line 52 col 16 IdentifierName "ViewModels" = PortalFx.ViewModels
-Line 52 col 27 IdentifierName "Controls" = PortalFx.ViewModels.Controls
-Line 52 col 36 IdentifierName "Validators" = PortalFx.ViewModels.Controls.Validators
-Line 54 col 17 IdentifierName "Validator" = Validator<TValue>
-Line 54 col 27 IdentifierName "TValue" = TValue
-Line 54 col 43 IdentifierName "Portal" = Portal
-Line 54 col 50 IdentifierName "Controls" = Portal.Controls
-Line 54 col 59 IdentifierName "Validators" = Portal.Controls.Validators
-Line 54 col 70 IdentifierName "Validator" = Portal.Controls.Validators.Validator<TValue>
-Line 54 col 80 IdentifierName "TValue" = TValue
-Line 56 col 20 IdentifierName "message" = string
-Line 57 col 0 InvocationExpression "super(message)" = void
-Line 57 col 18 IdentifierName "message" = string
-Line 63 col 10 IdentifierName "Contract" = Contract<TValue>
-Line 63 col 19 IdentifierName "TValue" = TValue
-Line 64 col 0 IdentifierName "validators" = KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
-Line 65 col 16 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
-Line 65 col 40 IdentifierName "PortalFx" = PortalFx
-Line 65 col 49 IdentifierName "ViewModels" = PortalFx.ViewModels
-Line 65 col 60 IdentifierName "Controls" = PortalFx.ViewModels.Controls
-Line 65 col 69 IdentifierName "Validators" = PortalFx.ViewModels.Controls.Validators
-Line 65 col 80 IdentifierName "Validator" = PortalFx.ViewModels.Controls.Validators.Validator<TValue>
-Line 65 col 90 IdentifierName "TValue" = TValue
-Line 69 col 6 IdentifierName "ViewModel" = ViewModel<TValue>
-Line 69 col 16 IdentifierName "TValue" = TValue
-Line 69 col 35 IdentifierName "Contract" = Contract<TValue>
-Line 69 col 44 IdentifierName "TValue" = TValue
-Line 71 col 11 IdentifierName "validators" = KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
-Line 71 col 23 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
-Line 71 col 47 IdentifierName "PortalFx" = PortalFx
-Line 71 col 56 IdentifierName "ViewModels" = PortalFx.ViewModels
-Line 71 col 67 IdentifierName "Controls" = PortalFx.ViewModels.Controls
-Line 71 col 76 IdentifierName "Validators" = PortalFx.ViewModels.Controls.Validators
-Line 71 col 87 IdentifierName "Validator" = PortalFx.ViewModels.Controls.Validators.Validator<TValue>
-Line 71 col 97 IdentifierName "TValue" = TValue
-Line 71 col 108 InvocationExpression "ko.observableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>()" = KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
-Line 71 col 108 MemberAccessExpression "ko.observableArray" = KnockoutObservableArrayStatic
-Line 71 col 108 IdentifierName "ko" = typeof ko
-Line 71 col 111 IdentifierName "observableArray" = KnockoutObservableArrayStatic
-Line 71 col 127 IdentifierName "PortalFx" = PortalFx
-Line 71 col 136 IdentifierName "ViewModels" = PortalFx.ViewModels
-Line 71 col 147 IdentifierName "Controls" = PortalFx.ViewModels.Controls
-Line 71 col 156 IdentifierName "Validators" = PortalFx.ViewModels.Controls.Validators
-Line 71 col 167 IdentifierName "Validator" = PortalFx.ViewModels.Controls.Validators.Validator<TValue>
-Line 71 col 177 IdentifierName "TValue" = TValue
+interface KnockoutObservableBase<T> {
+>KnockoutObservableBase : KnockoutObservableBase<T>
+>T : T
+
+    peek(): T;
+>peek : () => T
+>T : T
+
+    (): T;
+>T : T
+
+    (value: T): void;
+>value : T
+>T : T
+}
+
+interface KnockoutObservable<T> extends KnockoutObservableBase<T> {
+>KnockoutObservable : KnockoutObservable<T>
+>T : T
+>KnockoutObservableBase : KnockoutObservableBase<T>
+>T : T
+
+    equalityComparer(a: T, b: T): boolean;
+>equalityComparer : (a: T, b: T) => boolean
+>a : T
+>T : T
+>b : T
+>T : T
+
+    valueHasMutated(): void;
+>valueHasMutated : () => void
+
+    valueWillMutate(): void;
+>valueWillMutate : () => void
+}
+
+interface KnockoutObservableArray<T> extends KnockoutObservable<T[]> {
+>KnockoutObservableArray : KnockoutObservableArray<T>
+>T : T
+>KnockoutObservable : KnockoutObservable<T>
+>T : T
+
+    indexOf(searchElement: T, fromIndex?: number): number;
+>indexOf : (searchElement: T, fromIndex?: number) => number
+>searchElement : T
+>T : T
+>fromIndex : number
+
+    slice(start: number, end?: number): T[];
+>slice : (start: number, end?: number) => T[]
+>start : number
+>end : number
+>T : T
+
+    splice(start: number, deleteCount?: number, ...items: T[]): T[];
+>splice : (start: number, deleteCount?: number, ...items: T[]) => T[]
+>start : number
+>deleteCount : number
+>items : T[]
+>T : T
+>T : T
+
+    pop(): T;
+>pop : () => T
+>T : T
+
+    push(...items: T[]): void;
+>push : (...items: T[]) => void
+>items : T[]
+>T : T
+
+    shift(): T;
+>shift : () => T
+>T : T
+
+    unshift(...items: T[]): number;
+>unshift : (...items: T[]) => number
+>items : T[]
+>T : T
+
+    reverse(): T[];
+>reverse : () => T[]
+>T : T
+
+    sort(compareFunction?: (a: T, b: T) => number): void;
+>sort : (compareFunction?: (a: T, b: T) => number) => void
+>compareFunction : (a: T, b: T) => number
+>a : T
+>T : T
+>b : T
+>T : T
+
+    replace(oldItem: T, newItem: T): void;
+>replace : (oldItem: T, newItem: T) => void
+>oldItem : T
+>T : T
+>newItem : T
+>T : T
+
+    remove(item: T): T[];
+>remove : (item: T) => T[]
+>item : T
+>T : T
+>T : T
+
+    removeAll(items?: T[]): T[];
+>removeAll : (items?: T[]) => T[]
+>items : T[]
+>T : T
+>T : T
+
+    destroy(item: T): void;
+>destroy : (item: T) => void
+>item : T
+>T : T
+
+    destroyAll(items?: T[]): void;
+>destroyAll : (items?: T[]) => void
+>items : T[]
+>T : T
+}
+
+interface KnockoutObservableArrayStatic {
+>KnockoutObservableArrayStatic : KnockoutObservableArrayStatic
+
+    fn: KnockoutObservableArray<any>;
+>fn : KnockoutObservableArray<any>
+>KnockoutObservableArray : KnockoutObservableArray<T>
+
+    <T>(value?: T[]): KnockoutObservableArray<T>;
+>T : T
+>value : T[]
+>T : T
+>KnockoutObservableArray : KnockoutObservableArray<T>
+>T : T
+}
+
+declare module ko {
+>ko : ko
+
+    export var observableArray: KnockoutObservableArrayStatic;
+>observableArray : KnockoutObservableArrayStatic
+>KnockoutObservableArrayStatic : KnockoutObservableArrayStatic
+}
+
+module Portal.Controls.Validators {
+>Portal : Portal
+>Controls : Portal.Controls
+>Validators : Portal.Controls.Validators
+
+    export class Validator<TValue> {
+>Validator : Validator<TValue>
+>TValue : TValue
+
+        private _subscription;
+>_subscription : any
+
+        public message: KnockoutObservable<string>;
+>message : KnockoutObservable<string>
+>KnockoutObservable : KnockoutObservable<T>
+
+        public validationState: KnockoutObservable<number>;
+>validationState : KnockoutObservable<number>
+>KnockoutObservable : KnockoutObservable<T>
+
+        public validate: KnockoutObservable<TValue>;
+>validate : KnockoutObservable<TValue>
+>KnockoutObservable : KnockoutObservable<T>
+>TValue : TValue
+
+        constructor(message?: string) { }
+>message : string
+
+        public destroy(): void { }
+>destroy : () => void
+
+        public _validate(value: TValue): number {return 0 }
+>_validate : (value: TValue) => number
+>value : TValue
+>TValue : TValue
+    }
+}
+
+module PortalFx.ViewModels.Controls.Validators {
+>PortalFx : PortalFx
+>ViewModels : PortalFx.ViewModels
+>Controls : PortalFx.ViewModels.Controls
+>Validators : PortalFx.ViewModels.Controls.Validators
+
+    export class Validator<TValue> extends Portal.Controls.Validators.Validator<TValue> {
+>Validator : Validator<TValue>
+>TValue : TValue
+>Portal : Portal
+>Controls : Portal.Controls
+>Validators : Portal.Controls.Validators
+>Validator : Portal.Controls.Validators.Validator<TValue>
+>TValue : TValue
+
+        constructor(message?: string) {
+>message : string
+
+            super(message);
+>super(message) : void
+>message : string
+        }
+    }
+
+}
+
+interface Contract<TValue> {
+>Contract : Contract<TValue>
+>TValue : TValue
+
+>validators : KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
+
+    validators: KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>;
+>KnockoutObservableArray : KnockoutObservableArray<T>
+>PortalFx : PortalFx
+>ViewModels : PortalFx.ViewModels
+>Controls : PortalFx.ViewModels.Controls
+>Validators : PortalFx.ViewModels.Controls.Validators
+>Validator : PortalFx.ViewModels.Controls.Validators.Validator<TValue>
+>TValue : TValue
+}
+
+
+class ViewModel<TValue> implements Contract<TValue> {
+>ViewModel : ViewModel<TValue>
+>TValue : TValue
+>Contract : Contract<TValue>
+>TValue : TValue
+
+    public validators: KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>> = ko.observableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>();
+>validators : KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
+>KnockoutObservableArray : KnockoutObservableArray<T>
+>PortalFx : PortalFx
+>ViewModels : PortalFx.ViewModels
+>Controls : PortalFx.ViewModels.Controls
+>Validators : PortalFx.ViewModels.Controls.Validators
+>Validator : PortalFx.ViewModels.Controls.Validators.Validator<TValue>
+>TValue : TValue
+>ko.observableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>() : KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
+>ko.observableArray : KnockoutObservableArrayStatic
+>ko : typeof ko
+>observableArray : KnockoutObservableArrayStatic
+>PortalFx : PortalFx
+>ViewModels : PortalFx.ViewModels
+>Controls : PortalFx.ViewModels.Controls
+>Validators : PortalFx.ViewModels.Controls.Validators
+>Validator : PortalFx.ViewModels.Controls.Validators.Validator<TValue>
+>TValue : TValue
+}
+
+

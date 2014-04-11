@@ -1,3 +1,4 @@
+//// [copyrightWithNewLine1.js]
 /*****************************
 * (c) Copyright - Important
 ****************************/

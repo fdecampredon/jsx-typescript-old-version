@@ -1,7 +1,12 @@
 === tests/cases/compiler/ternaryExpressionSourceMap.ts ===
-Line 1 col 4 IdentifierName "x" = number
-Line 2 col 4 IdentifierName "foo" = () => number
-Line 2 col 10 ConditionalExpression "x ? () => 0 : () => 0" = () => number
-Line 2 col 10 IdentifierName "x" = number
-Line 2 col 14 ParenthesizedArrowFunctionExpression "() => 0" = () => number
-Line 2 col 24 ParenthesizedArrowFunctionExpression "() => 0" = () => number
+
+var x = 1;
+>x : number
+
+var foo = x ? () => 0 : () => 0;
+>foo : () => number
+>x ? () => 0 : () => 0 : () => number
+>x : number
+>() => 0 : () => number
+>() => 0 : () => number
+

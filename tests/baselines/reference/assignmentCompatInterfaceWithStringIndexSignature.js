@@ -1,3 +1,4 @@
+//// [assignmentCompatInterfaceWithStringIndexSignature.js]
 var Foo = (function () {
     function Foo() {
     }

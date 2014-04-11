@@ -1,20 +1,42 @@
 === tests/cases/compiler/overload2.ts ===
-Line 0 col 5 IdentifierName "A" = A
-Line 1 col 5 IdentifierName "B" = B
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 IdentifierName "a" = A
-Line 3 col 16 IdentifierName "A" = A
-Line 4 col 9 IdentifierName "foo" = typeof foo
-Line 4 col 13 IdentifierName "b" = B
-Line 4 col 16 IdentifierName "B" = B
-Line 6 col 9 IdentifierName "foo" = typeof foo
-Line 6 col 13 IdentifierName "x" = number
-Line 9 col 6 IdentifierName "C" = C
-Line 10 col 9 IdentifierName "foo1" = typeof foo1
-Line 10 col 14 IdentifierName "a" = A
-Line 10 col 17 IdentifierName "A" = A
-Line 11 col 9 IdentifierName "foo1" = typeof foo1
-Line 11 col 14 IdentifierName "c" = C
-Line 11 col 17 IdentifierName "C" = C
-Line 13 col 9 IdentifierName "foo1" = typeof foo1
-Line 13 col 14 IdentifierName "x" = number
+enum A { }
+>A : A
+
+enum B { }
+>B : B
+    
+function foo(a: A);
+>foo : typeof foo
+>a : A
+>A : A
+
+function foo(b: B);
+>foo : typeof foo
+>b : B
+>B : B
+
+// should be ok
+function foo(x: number) { 
+>foo : typeof foo
+>x : number
+}
+
+class C { }
+>C : C
+
+function foo1(a: A);
+>foo1 : typeof foo1
+>a : A
+>A : A
+
+function foo1(c: C);
+>foo1 : typeof foo1
+>c : C
+>C : C
+
+// should be ok
+function foo1(x: number) { 
+>foo1 : typeof foo1
+>x : number
+}
+

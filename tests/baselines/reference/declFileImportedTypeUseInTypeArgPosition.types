@@ -1,9 +1,24 @@
 === tests/cases/compiler/declFileImportedTypeUseInTypeArgPosition.ts ===
-Line 0 col 6 IdentifierName "List" = List<T>
-Line 0 col 11 IdentifierName "T" = T
-Line 2 col 10 IdentifierName "Foo" = Foo
-Line 7 col 11 IdentifierName "x" = x
-Line 8 col 15 IdentifierName "p" = List<x.Foo>
-Line 8 col 18 IdentifierName "List" = List<T>
-Line 8 col 23 IdentifierName "x" = x
-Line 8 col 25 IdentifierName "Foo" = x.Foo
+class List<T> { }
+>List : List<T>
+>T : T
+
+declare module 'mod1' {
+    class Foo {
+>Foo : Foo
+    }
+}
+
+declare module 'moo' {
+    import x = require('mod1');
+>x : x
+
+    export var p: List<x.Foo>;
+>p : List<x.Foo>
+>List : List<T>
+>x : x
+>Foo : x.Foo
+}
+
+
+

@@ -1,37 +1,78 @@
 === tests/cases/compiler/ambiguousCallsWhereReturnTypesAgree.ts ===
-Line 0 col 6 IdentifierName "TestClass" = TestClass
-Line 1 col 11 IdentifierName "bar" = { (x: string): void; (x: string[]): void; }
-Line 1 col 15 IdentifierName "x" = string
-Line 2 col 11 IdentifierName "bar" = { (x: string): void; (x: string[]): void; }
-Line 2 col 15 IdentifierName "x" = string[]
-Line 3 col 11 IdentifierName "bar" = { (x: string): void; (x: string[]): void; }
-Line 3 col 15 IdentifierName "x" = any
-Line 7 col 11 IdentifierName "foo" = { (x: string): void; (x: string[]): void; }
-Line 7 col 15 IdentifierName "x" = string
-Line 8 col 11 IdentifierName "foo" = { (x: string): void; (x: string[]): void; }
-Line 8 col 15 IdentifierName "x" = string[]
-Line 9 col 11 IdentifierName "foo" = { (x: string): void; (x: string[]): void; }
-Line 9 col 15 IdentifierName "x" = any
-Line 10 col 0 InvocationExpression "this.bar(x)" = void
-Line 10 col 0 MemberAccessExpression "this.bar" = { (x: string): void; (x: string[]): void; }
-Line 10 col 0 ThisKeyword "this" = TestClass
-Line 10 col 13 IdentifierName "bar" = { (x: string): void; (x: string[]): void; }
-Line 10 col 17 IdentifierName "x" = any
-Line 14 col 6 IdentifierName "TestClass2" = TestClass2
-Line 15 col 11 IdentifierName "bar" = { (x: string): number; (x: string[]): number; }
-Line 15 col 15 IdentifierName "x" = string
-Line 16 col 11 IdentifierName "bar" = { (x: string): number; (x: string[]): number; }
-Line 16 col 15 IdentifierName "x" = string[]
-Line 17 col 11 IdentifierName "bar" = { (x: string): number; (x: string[]): number; }
-Line 17 col 15 IdentifierName "x" = any
-Line 21 col 11 IdentifierName "foo" = { (x: string): number; (x: string[]): number; }
-Line 21 col 15 IdentifierName "x" = string
-Line 22 col 11 IdentifierName "foo" = { (x: string): number; (x: string[]): number; }
-Line 22 col 15 IdentifierName "x" = string[]
-Line 23 col 11 IdentifierName "foo" = { (x: string): number; (x: string[]): number; }
-Line 23 col 15 IdentifierName "x" = any
-Line 24 col 15 InvocationExpression "this.bar(x)" = number
-Line 24 col 15 MemberAccessExpression "this.bar" = { (x: string): number; (x: string[]): number; }
-Line 24 col 15 ThisKeyword "this" = TestClass2
-Line 24 col 20 IdentifierName "bar" = { (x: string): number; (x: string[]): number; }
-Line 24 col 24 IdentifierName "x" = any
+class TestClass {
+>TestClass : TestClass
+
+    public bar(x: string): void;
+>bar : { (x: string): void; (x: string[]): void; }
+>x : string
+
+    public bar(x: string[]): void;
+>bar : { (x: string): void; (x: string[]): void; }
+>x : string[]
+
+    public bar(x: any): void {
+>bar : { (x: string): void; (x: string[]): void; }
+>x : any
+        
+    }
+ 
+    public foo(x: string): void;
+>foo : { (x: string): void; (x: string[]): void; }
+>x : string
+
+    public foo(x: string[]): void;
+>foo : { (x: string): void; (x: string[]): void; }
+>x : string[]
+
+    public foo(x: any): void {
+>foo : { (x: string): void; (x: string[]): void; }
+>x : any
+
+        this.bar(x); // should not error
+>this.bar(x) : void
+>this.bar : { (x: string): void; (x: string[]): void; }
+>this : TestClass
+>bar : { (x: string): void; (x: string[]): void; }
+>x : any
+    }
+}
+
+class TestClass2 {
+>TestClass2 : TestClass2
+
+    public bar(x: string): number;
+>bar : { (x: string): number; (x: string[]): number; }
+>x : string
+
+    public bar(x: string[]): number;
+>bar : { (x: string): number; (x: string[]): number; }
+>x : string[]
+
+    public bar(x: any): number {
+>bar : { (x: string): number; (x: string[]): number; }
+>x : any
+
+        return 0;
+    }
+ 
+    public foo(x: string): number;
+>foo : { (x: string): number; (x: string[]): number; }
+>x : string
+
+    public foo(x: string[]): number;
+>foo : { (x: string): number; (x: string[]): number; }
+>x : string[]
+
+    public foo(x: any): number {
+>foo : { (x: string): number; (x: string[]): number; }
+>x : any
+
+        return this.bar(x); // should not error
+>this.bar(x) : number
+>this.bar : { (x: string): number; (x: string[]): number; }
+>this : TestClass2
+>bar : { (x: string): number; (x: string[]): number; }
+>x : any
+    }
+}
+

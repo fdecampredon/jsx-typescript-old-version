@@ -1,23 +1,41 @@
 === tests/cases/compiler/anonterface.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 17 IdentifierName "C" = C
-Line 2 col 0 IdentifierName "m" = (fn: (n: number) => string, n2: number) => string
-Line 2 col 10 IdentifierName "fn" = (n: number) => string
-Line 2 col 16 IdentifierName "n" = number
-Line 2 col 36 IdentifierName "n2" = number
-Line 3 col 19 InvocationExpression "fn(n2)" = string
-Line 3 col 19 IdentifierName "fn" = (n: number) => string
-Line 3 col 22 IdentifierName "n2" = number
-Line 8 col 4 IdentifierName "c" = M.C
-Line 8 col 6 ObjectCreationExpression "new M.C()" = M.C
-Line 8 col 10 MemberAccessExpression "M.C" = typeof M.C
-Line 8 col 10 IdentifierName "M" = typeof M
-Line 8 col 12 IdentifierName "C" = typeof M.C
-Line 9 col 0 InvocationExpression "c.m(function(n) { return "hello: "+n; },18)" = string
-Line 9 col 0 MemberAccessExpression "c.m" = (fn: (n: number) => string, n2: number) => string
-Line 9 col 0 IdentifierName "c" = M.C
-Line 9 col 2 IdentifierName "m" = (fn: (n: number) => string, n2: number) => string
-Line 9 col 4 FunctionExpression "function(n) { return "hello: "+n; }" = (n: number) => string
-Line 9 col 13 IdentifierName "n" = number
-Line 9 col 25 AddExpression ""hello: "+n" = string
-Line 9 col 35 IdentifierName "n" = number
+module M {
+>M : M
+
+    export class C {
+>C : C
+
+        m(fn:{ (n:number):string; },n2:number):string {
+>m : (fn: (n: number) => string, n2: number) => string
+>fn : (n: number) => string
+>n : number
+>n2 : number
+
+            return fn(n2);
+>fn(n2) : string
+>fn : (n: number) => string
+>n2 : number
+        }
+    }
+}
+
+var c=new M.C();
+>c : M.C
+>new M.C() : M.C
+>M.C : typeof M.C
+>M : typeof M
+>C : typeof M.C
+
+c.m(function(n) { return "hello: "+n; },18);
+>c.m(function(n) { return "hello: "+n; },18) : string
+>c.m : (fn: (n: number) => string, n2: number) => string
+>c : M.C
+>m : (fn: (n: number) => string, n2: number) => string
+>function(n) { return "hello: "+n; } : (n: number) => string
+>n : number
+>"hello: "+n : string
+>n : number
+
+
+
+

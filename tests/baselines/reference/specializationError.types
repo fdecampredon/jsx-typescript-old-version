@@ -1,22 +1,36 @@
 === tests/cases/compiler/specializationError.ts ===
-Line 0 col 10 IdentifierName "Promise" = Promise<T>
-Line 0 col 18 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "then" = <U>(value: T) => void
-Line 1 col 9 IdentifierName "U" = U
-Line 1 col 12 IdentifierName "value" = T
-Line 1 col 19 IdentifierName "T" = T
-Line 4 col 10 IdentifierName "Bar" = Bar
-Line 5 col 0 IdentifierName "bar" = { (value: "Menu"): Promise<string>; <T>(value: string, element: string): Promise<T>; <T>(value: string): Promise<T>; }
-Line 5 col 8 IdentifierName "value" = "Menu"
-Line 5 col 24 IdentifierName "Promise" = Promise<T>
-Line 6 col 0 IdentifierName "bar" = { (value: "Menu"): Promise<string>; <T>(value: string, element: string): Promise<T>; <T>(value: string): Promise<T>; }
-Line 6 col 8 IdentifierName "T" = T
-Line 6 col 11 IdentifierName "value" = string
-Line 6 col 26 IdentifierName "element" = string
-Line 6 col 44 IdentifierName "Promise" = Promise<T>
-Line 6 col 52 IdentifierName "T" = T
-Line 7 col 0 IdentifierName "bar" = { (value: "Menu"): Promise<string>; <T>(value: string, element: string): Promise<T>; <T>(value: string): Promise<T>; }
-Line 7 col 8 IdentifierName "T" = T
-Line 7 col 11 IdentifierName "value" = string
-Line 7 col 27 IdentifierName "Promise" = Promise<T>
-Line 7 col 35 IdentifierName "T" = T
+interface Promise<T> {
+>Promise : Promise<T>
+>T : T
+
+    then<U>(value: T): void;
+>then : <U>(value: T) => void
+>U : U
+>value : T
+>T : T
+}
+
+interface Bar {
+>Bar : Bar
+
+    bar(value: "Menu"): Promise<string>;
+>bar : { (value: "Menu"): Promise<string>; <T>(value: string, element: string): Promise<T>; <T>(value: string): Promise<T>; }
+>value : "Menu"
+>Promise : Promise<T>
+
+    bar<T>(value: string, element: string): Promise<T>;
+>bar : { (value: "Menu"): Promise<string>; <T>(value: string, element: string): Promise<T>; <T>(value: string): Promise<T>; }
+>T : T
+>value : string
+>element : string
+>Promise : Promise<T>
+>T : T
+
+    bar<T>(value: string): Promise<T>;
+>bar : { (value: "Menu"): Promise<string>; <T>(value: string, element: string): Promise<T>; <T>(value: string): Promise<T>; }
+>T : T
+>value : string
+>Promise : Promise<T>
+>T : T
+}
+

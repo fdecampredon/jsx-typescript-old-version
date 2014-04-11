@@ -1,6 +1,21 @@
 === tests/cases/compiler/inheritanceMemberFuncOverridingMethod.ts ===
-Line 0 col 6 IdentifierName "a" = a
-Line 1 col 0 IdentifierName "x" = () => string
-Line 6 col 6 IdentifierName "b" = b
-Line 6 col 16 IdentifierName "a" = a
-Line 7 col 0 IdentifierName "x" = () => string
+class a {
+>a : a
+
+    x() {
+>x : () => string
+
+        return "10";
+    }
+}
+
+class b extends a {
+>b : b
+>a : a
+
+    x() {
+>x : () => string
+
+        return "20";
+    }
+}

@@ -1,20 +1,28 @@
 === tests/cases/compiler/compositeGenericFunction.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 0 col 11 IdentifierName "T" = T
-Line 0 col 14 IdentifierName "value" = T
-Line 0 col 21 IdentifierName "T" = T
-Line 0 col 33 IdentifierName "value" = T
-Line 2 col 9 IdentifierName "h" = typeof h
-Line 2 col 11 IdentifierName "R" = R
-Line 2 col 14 IdentifierName "func" = (x: number) => R
-Line 2 col 21 IdentifierName "x" = number
-Line 2 col 35 IdentifierName "R" = R
-Line 2 col 39 IdentifierName "R" = R
-Line 4 col 4 IdentifierName "z" = number
-Line 4 col 16 InvocationExpression "h<number>(f)" = number
-Line 4 col 16 IdentifierName "h" = typeof h
-Line 4 col 26 IdentifierName "f" = typeof f
-Line 5 col 4 IdentifierName "z" = number
-Line 5 col 16 InvocationExpression "h(f)" = number
-Line 5 col 16 IdentifierName "h" = typeof h
-Line 5 col 18 IdentifierName "f" = typeof f
+function f<T>(value: T) { return value; };
+>f : typeof f
+>T : T
+>value : T
+>T : T
+>value : T
+
+function h<R>(func: (x: number) => R): R { return null; }
+>h : typeof h
+>R : R
+>func : (x: number) => R
+>x : number
+>R : R
+>R : R
+
+var z: number = h<number>(f);
+>z : number
+>h<number>(f) : number
+>h : typeof h
+>f : typeof f
+
+var z: number = h(f);
+>z : number
+>h(f) : number
+>h : typeof h
+>f : typeof f
+

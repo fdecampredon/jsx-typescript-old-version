@@ -1,3 +1,4 @@
+//// [moduleAssignmentCompat2.js]
 var A;
 (function (A) {
     var C = (function () {

@@ -2745,9 +2745,58 @@ module TypeScript {
         }
 
         public emitParenthesizedExpression(parenthesizedExpression: ParenthesizedExpressionSyntax): void {
-            if (parenthesizedExpression.expression.kind() === SyntaxKind.CastExpression && ASTHelpers.convertTokenTrailingComments(parenthesizedExpression.openParenToken) === null) {
+            var omitParentheses = false;
+
+            if (parenthesizedExpression.expression.kind() === SyntaxKind.CastExpression && !parenthesizedExpression.openParenToken.hasTrailingComment()) {
+                var castedExpression = (<CastExpressionSyntax>parenthesizedExpression.expression).expression;
+
+                // Make sure we consider all nested cast expressions, e.g.:
+                // (<any><number><any>-A).x; 
+                while (castedExpression.kind() == SyntaxKind.CastExpression) {
+                    castedExpression = (<CastExpressionSyntax>castedExpression).expression;
+                }
+
                 // We have an expression of the form: (<Type>SubExpr)
                 // Emitting this as (SubExpr) is really not desirable.  Just emit the subexpr as is.
+                // We cannot generalize this rule however, as omitting the parentheses could cause change in the semantics of the generated
+                // code if the casted expression has a lower precedence than the rest of the expression, e.g.: 
+                //      (<any>new A).foo should be emitted as (new A).foo and not new A.foo
+                //      (<any>typeof A).toString() should be emitted as (typeof A).toString() and not typeof A.toString()
+                //      (<any>function foo() { })() should be emitted as an IIF (function foo(){})() and not declaration function foo(){} ()
+                // Parenthesis can be safelly removed from:
+                //      Literals
+                //      MemberAccessExpressions
+                //      ElementAccessExpressions
+                //      InvocationExpression, only if they are not part of an object creation (new) expression; e.g.:
+                //          new (<any>A()) removing the parentheses would result in calling A as a constructor, instead of calling the 
+                //          result of the function invocation A() as a constructor
+                switch (castedExpression.kind()) {
+                    case SyntaxKind.ParenthesizedExpression:
+                    case SyntaxKind.IdentifierName:
+                    case SyntaxKind.NullKeyword:
+                    case SyntaxKind.ThisKeyword:
+                    case SyntaxKind.StringLiteral:
+                    case SyntaxKind.NumericLiteral:
+                    case SyntaxKind.RegularExpressionLiteral:
+                    case SyntaxKind.TrueKeyword:
+                    case SyntaxKind.FalseKeyword:
+                    case SyntaxKind.ArrayLiteralExpression:
+                    case SyntaxKind.ObjectLiteralExpression:
+                    case SyntaxKind.MemberAccessExpression:
+                    case SyntaxKind.ElementAccessExpression:
+                        omitParentheses = true;
+                        break;
+
+                    case SyntaxKind.InvocationExpression:
+                        if (parenthesizedExpression.parent.kind() !== SyntaxKind.ObjectCreationExpression) {
+                            omitParentheses = true;
+                        }
+
+                        break;
+                }
+            }
+
+            if (omitParentheses) {
                 this.emit(parenthesizedExpression.expression);
             }
             else {

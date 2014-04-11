@@ -1,21 +1,42 @@
 === tests/cases/compiler/interfaceWithSpecializedCallAndConstructSignatures.ts ===
-Line 0 col 10 IdentifierName "Foo" = Foo
-Line 1 col 5 IdentifierName "x" = 'a'
-Line 2 col 5 IdentifierName "x" = string
-Line 4 col 9 IdentifierName "x" = 'a'
-Line 5 col 9 IdentifierName "x" = string
-Line 5 col 21 IdentifierName "Object" = Object
-Line 8 col 4 IdentifierName "f" = Foo
-Line 8 col 7 IdentifierName "Foo" = Foo
-Line 9 col 4 IdentifierName "r" = number
-Line 9 col 8 InvocationExpression "f('a')" = number
-Line 9 col 8 IdentifierName "f" = Foo
-Line 10 col 4 IdentifierName "r2" = any
-Line 10 col 9 InvocationExpression "f('A')" = any
-Line 10 col 9 IdentifierName "f" = Foo
-Line 11 col 4 IdentifierName "r3" = any
-Line 11 col 9 ObjectCreationExpression "new f('a')" = any
-Line 11 col 13 IdentifierName "f" = Foo
-Line 12 col 4 IdentifierName "r4" = Object
-Line 12 col 9 ObjectCreationExpression "new f('A')" = Object
-Line 12 col 13 IdentifierName "f" = Foo
+interface Foo {
+>Foo : Foo
+
+    (x: 'a'): number;
+>x : 'a'
+
+    (x: string): any;
+>x : string
+
+    new (x: 'a'): any;
+>x : 'a'
+
+    new (x: string): Object;
+>x : string
+>Object : Object
+}
+
+var f: Foo;
+>f : Foo
+>Foo : Foo
+
+var r = f('a');
+>r : number
+>f('a') : number
+>f : Foo
+
+var r2 = f('A');
+>r2 : any
+>f('A') : any
+>f : Foo
+
+var r3 = new f('a');
+>r3 : any
+>new f('a') : any
+>f : Foo
+
+var r4 = new f('A');
+>r4 : Object
+>new f('A') : Object
+>f : Foo
+

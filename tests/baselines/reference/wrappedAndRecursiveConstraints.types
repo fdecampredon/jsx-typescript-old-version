@@ -1,27 +1,50 @@
 === tests/cases/compiler/wrappedAndRecursiveConstraints.ts ===
-Line 2 col 6 IdentifierName "C" = C<T>
-Line 2 col 8 IdentifierName "T" = T
-Line 2 col 18 IdentifierName "Date" = Date
-Line 3 col 23 IdentifierName "data" = T
-Line 3 col 29 IdentifierName "T" = T
-Line 4 col 0 IdentifierName "foo" = <U extends T>(x: U) => U
-Line 4 col 8 IdentifierName "U" = U
-Line 4 col 18 IdentifierName "T" = T
-Line 4 col 21 IdentifierName "x" = U
-Line 4 col 24 IdentifierName "U" = U
-Line 5 col 15 IdentifierName "x" = U
-Line 9 col 10 IdentifierName "Foo" = Foo
-Line 9 col 22 IdentifierName "Date" = Date
-Line 10 col 0 IdentifierName "foo" = string
-Line 13 col 4 IdentifierName "y" = Foo
-Line 13 col 7 IdentifierName "Foo" = Foo
-Line 14 col 4 IdentifierName "c" = C<Foo>
-Line 14 col 8 ObjectCreationExpression "new C(y)" = C<Foo>
-Line 14 col 12 IdentifierName "C" = typeof C
-Line 14 col 14 IdentifierName "y" = Foo
-Line 15 col 4 IdentifierName "r" = Foo
-Line 15 col 8 InvocationExpression "c.foo(y)" = Foo
-Line 15 col 8 MemberAccessExpression "c.foo" = <U extends Foo>(x: U) => U
-Line 15 col 8 IdentifierName "c" = C<Foo>
-Line 15 col 10 IdentifierName "foo" = <U extends Foo>(x: U) => U
-Line 15 col 14 IdentifierName "y" = Foo
+// no errors expected
+
+class C<T extends Date> {
+>C : C<T>
+>T : T
+>Date : Date
+
+    constructor(public data: T) { }
+>data : T
+>T : T
+
+    foo<U extends T>(x: U) {
+>foo : <U extends T>(x: U) => U
+>U : U
+>T : T
+>x : U
+>U : U
+
+        return x;
+>x : U
+    }
+}
+
+interface Foo extends Date {
+>Foo : Foo
+>Date : Date
+
+    foo: string;
+>foo : string
+}
+
+var y: Foo = null;
+>y : Foo
+>Foo : Foo
+
+var c = new C(y);
+>c : C<Foo>
+>new C(y) : C<Foo>
+>C : typeof C
+>y : Foo
+
+var r = c.foo(y);
+>r : Foo
+>c.foo(y) : Foo
+>c.foo : <U extends Foo>(x: U) => U
+>c : C<Foo>
+>foo : <U extends Foo>(x: U) => U
+>y : Foo
+

@@ -1,3 +1,4 @@
+//// [privacyGetter.js]
 define(["require", "exports"], function(require, exports) {
     (function (m1) {
         var C1_public = (function () {

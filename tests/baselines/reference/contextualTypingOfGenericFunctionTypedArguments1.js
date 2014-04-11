@@ -1,3 +1,4 @@
+//// [contextualTypingOfGenericFunctionTypedArguments1.js]
 var c2;
 var _;
 

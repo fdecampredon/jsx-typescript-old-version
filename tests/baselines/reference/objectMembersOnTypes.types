@@ -1,21 +1,37 @@
 === tests/cases/compiler/objectMembersOnTypes.ts ===
-Line 0 col 10 IdentifierName "I" = I
-Line 1 col 6 IdentifierName "AAA" = AAA
-Line 1 col 21 IdentifierName "I" = I
-Line 2 col 4 IdentifierName "x" = number
-Line 3 col 0 InvocationExpression "x.toString()" = string
-Line 3 col 0 MemberAccessExpression "x.toString" = (radix?: number) => string
-Line 3 col 0 IdentifierName "x" = number
-Line 3 col 2 IdentifierName "toString" = (radix?: number) => string
-Line 4 col 4 IdentifierName "i" = I
-Line 4 col 7 IdentifierName "I" = I
-Line 5 col 0 InvocationExpression "i.toString()" = string
-Line 5 col 0 MemberAccessExpression "i.toString" = () => string
-Line 5 col 0 IdentifierName "i" = I
-Line 5 col 2 IdentifierName "toString" = () => string
-Line 6 col 4 IdentifierName "c" = AAA
-Line 6 col 7 IdentifierName "AAA" = AAA
-Line 7 col 0 InvocationExpression "c.toString()" = string
-Line 7 col 0 MemberAccessExpression "c.toString" = () => string
-Line 7 col 0 IdentifierName "c" = AAA
-Line 7 col 2 IdentifierName "toString" = () => string
+interface I {}
+>I : I
+
+class AAA implements I { }
+>AAA : AAA
+>I : I
+
+var x: number;
+>x : number
+
+x.toString();
+>x.toString() : string
+>x.toString : (radix?: number) => string
+>x : number
+>toString : (radix?: number) => string
+
+var i: I;
+>i : I
+>I : I
+
+i.toString(); // used to be an error
+>i.toString() : string
+>i.toString : () => string
+>i : I
+>toString : () => string
+
+var c: AAA;
+>c : AAA
+>AAA : AAA
+
+c.toString(); // used to be an error
+>c.toString() : string
+>c.toString : () => string
+>c : AAA
+>toString : () => string
+

@@ -1,21 +1,40 @@
 === tests/cases/compiler/genericStaticAnyTypeFunction.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 2 col 11 IdentifierName "one" = <T>(source: T, value: number) => T
-Line 2 col 15 IdentifierName "T" = T
-Line 2 col 18 IdentifierName "source" = T
-Line 2 col 26 IdentifierName "T" = T
-Line 2 col 29 IdentifierName "value" = number
-Line 2 col 45 IdentifierName "T" = T
-Line 4 col 15 IdentifierName "source" = T
-Line 7 col 11 IdentifierName "goo" = () => number
-Line 9 col 11 IdentifierName "two" = <T>(source: T) => T
-Line 9 col 15 IdentifierName "T" = T
-Line 9 col 18 IdentifierName "source" = T
-Line 9 col 26 IdentifierName "T" = T
-Line 9 col 30 IdentifierName "T" = T
-Line 10 col 15 InvocationExpression "this.one<T>(source, 42)" = T
-Line 10 col 15 MemberAccessExpression "this.one" = <T>(source: T, value: number) => T
-Line 10 col 15 ThisKeyword "this" = typeof A
-Line 10 col 20 IdentifierName "one" = <T>(source: T, value: number) => T
-Line 10 col 24 IdentifierName "T" = T
-Line 10 col 27 IdentifierName "source" = T
+class A {
+>A : A
+
+    static one<T>(source: T, value: number): T {
+>one : <T>(source: T, value: number) => T
+>T : T
+>source : T
+>T : T
+>value : number
+>T : T
+
+        return source;
+>source : T
+
+    }
+    static goo() { return 0; }
+>goo : () => number
+
+    static two<T>(source: T): T {
+>two : <T>(source: T) => T
+>T : T
+>source : T
+>T : T
+>T : T
+
+        return this.one<T>(source, 42); // should not error
+>this.one<T>(source, 42) : T
+>this.one : <T>(source: T, value: number) => T
+>this : typeof A
+>one : <T>(source: T, value: number) => T
+>T : T
+>source : T
+
+    }
+
+}
+
+
+

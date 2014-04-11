@@ -1,45 +1,78 @@
 === tests/cases/compiler/assignmentLHSIsReference.ts ===
-Line 0 col 4 IdentifierName "value" = any
-Line 3 col 4 IdentifierName "x1" = number
-Line 4 col 0 AssignmentExpression "x1 = value" = any
-Line 4 col 0 IdentifierName "x1" = number
-Line 4 col 5 IdentifierName "value" = any
-Line 6 col 9 IdentifierName "fn1" = typeof fn1
-Line 6 col 13 IdentifierName "x2" = number
-Line 7 col 0 AssignmentExpression "x2 = value" = any
-Line 7 col 0 IdentifierName "x2" = number
-Line 7 col 9 IdentifierName "value" = any
-Line 11 col 4 IdentifierName "x3" = { a: string; }
-Line 11 col 10 IdentifierName "a" = string
-Line 12 col 0 AssignmentExpression "x3.a = value" = any
-Line 12 col 0 MemberAccessExpression "x3.a" = string
-Line 12 col 0 IdentifierName "x3" = { a: string; }
-Line 12 col 3 IdentifierName "a" = string
-Line 12 col 7 IdentifierName "value" = any
-Line 13 col 0 AssignmentExpression "x3['a'] = value" = any
-Line 13 col 0 ElementAccessExpression "x3['a']" = string
-Line 13 col 0 IdentifierName "x3" = { a: string; }
-Line 13 col 10 IdentifierName "value" = any
-Line 14 col 0 AssignmentExpression "// parentheses, the contained expression is reference
-(x1) = value" = any
-Line 14 col 0 ParenthesizedExpression "// parentheses, the contained expression is reference
-(x1)" = number
-Line 16 col 1 IdentifierName "x1" = number
-Line 16 col 7 IdentifierName "value" = any
-Line 18 col 9 IdentifierName "fn2" = typeof fn2
-Line 18 col 13 IdentifierName "x4" = number
-Line 19 col 0 AssignmentExpression "(x4) = value" = any
-Line 19 col 0 ParenthesizedExpression "(x4)" = number
-Line 19 col 5 IdentifierName "x4" = number
-Line 19 col 11 IdentifierName "value" = any
-Line 21 col 0 AssignmentExpression "(x3.a) = value" = any
-Line 21 col 0 ParenthesizedExpression "(x3.a)" = string
-Line 22 col 1 MemberAccessExpression "x3.a" = string
-Line 22 col 1 IdentifierName "x3" = { a: string; }
-Line 22 col 4 IdentifierName "a" = string
-Line 22 col 9 IdentifierName "value" = any
-Line 23 col 0 AssignmentExpression "(x3['a']) = value" = any
-Line 23 col 0 ParenthesizedExpression "(x3['a'])" = string
-Line 23 col 1 ElementAccessExpression "x3['a']" = string
-Line 23 col 1 IdentifierName "x3" = { a: string; }
-Line 23 col 12 IdentifierName "value" = any
+var value;
+>value : any
+
+// identifiers: variable and parameter
+var x1: number;
+>x1 : number
+
+x1 = value;
+>x1 = value : any
+>x1 : number
+>value : any
+
+function fn1(x2: number) {
+>fn1 : typeof fn1
+>x2 : number
+
+    x2 = value;
+>x2 = value : any
+>x2 : number
+>value : any
+}
+
+// property accesses
+var x3: { a: string  };
+>x3 : { a: string; }
+>a : string
+
+x3.a = value;
+>x3.a = value : any
+>x3.a : string
+>x3 : { a: string; }
+>a : string
+>value : any
+
+x3['a'] = value;
+>x3['a'] = value : any
+>x3['a'] : string
+>x3 : { a: string; }
+>value : any
+
+>// parentheses, the contained expression is reference
+(x1) = value : any
+>// parentheses, the contained expression is reference
+(x1) : number
+
+// parentheses, the contained expression is reference
+(x1) = value;
+>x1 : number
+>value : any
+
+function fn2(x4: number) {
+>fn2 : typeof fn2
+>x4 : number
+
+    (x4) = value;
+>(x4) = value : any
+>(x4) : number
+>x4 : number
+>value : any
+}
+
+>(x3.a) = value : any
+>(x3.a) : string
+
+(x3.a) = value;
+>x3.a : string
+>x3 : { a: string; }
+>a : string
+>value : any
+
+(x3['a']) = value;
+>(x3['a']) = value : any
+>(x3['a']) : string
+>x3['a'] : string
+>x3 : { a: string; }
+>value : any
+

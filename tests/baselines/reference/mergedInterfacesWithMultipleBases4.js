@@ -1,3 +1,4 @@
+//// [mergedInterfacesWithMultipleBases4.js]
 // merged interfaces behave as if all extends clauses from each declaration are merged together
 var C = (function () {
     function C() {

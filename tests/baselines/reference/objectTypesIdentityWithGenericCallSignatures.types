@@ -1,196 +1,341 @@
 === tests/cases/compiler/objectTypesIdentityWithGenericCallSignatures.ts ===
-Line 2 col 6 IdentifierName "A" = A
-Line 3 col 0 IdentifierName "foo" = <T>(x: T) => T
-Line 3 col 8 IdentifierName "T" = T
-Line 3 col 11 IdentifierName "x" = T
-Line 3 col 14 IdentifierName "T" = T
-Line 3 col 18 IdentifierName "T" = T
-Line 6 col 6 IdentifierName "B" = B<T>
-Line 6 col 8 IdentifierName "T" = T
-Line 7 col 0 IdentifierName "foo" = (x: T) => T
-Line 7 col 8 IdentifierName "x" = T
-Line 7 col 11 IdentifierName "T" = T
-Line 7 col 15 IdentifierName "T" = T
-Line 10 col 6 IdentifierName "C" = C<T>
-Line 10 col 8 IdentifierName "T" = T
-Line 11 col 0 IdentifierName "foo" = (x: T) => T
-Line 11 col 8 IdentifierName "x" = T
-Line 11 col 11 IdentifierName "T" = T
-Line 11 col 15 IdentifierName "T" = T
-Line 14 col 10 IdentifierName "I" = I<T>
-Line 14 col 12 IdentifierName "T" = T
-Line 15 col 0 IdentifierName "foo" = (x: T) => T
-Line 15 col 8 IdentifierName "x" = T
-Line 15 col 11 IdentifierName "T" = T
-Line 15 col 15 IdentifierName "T" = T
-Line 18 col 10 IdentifierName "I2" = I2
-Line 19 col 0 IdentifierName "foo" = <T>(x: T) => T
-Line 19 col 8 IdentifierName "T" = T
-Line 19 col 11 IdentifierName "x" = T
-Line 19 col 14 IdentifierName "T" = T
-Line 19 col 18 IdentifierName "T" = T
-Line 22 col 4 IdentifierName "a" = { foo<T>(x: T): T; }
-Line 22 col 9 IdentifierName "foo" = <T>(x: T) => T
-Line 22 col 13 IdentifierName "T" = T
-Line 22 col 16 IdentifierName "x" = T
-Line 22 col 19 IdentifierName "T" = T
-Line 22 col 23 IdentifierName "T" = T
-Line 23 col 4 IdentifierName "b" = { foo<T>(x: T): T; }
-Line 23 col 8 ObjectLiteralExpression "{ foo<T>(x: T) { return x; } }" = { foo<T>(x: T): T; }
-Line 23 col 10 IdentifierName "foo" = <T>(x: T) => T
-Line 23 col 14 IdentifierName "T" = T
-Line 23 col 17 IdentifierName "x" = T
-Line 23 col 20 IdentifierName "T" = T
-Line 23 col 32 IdentifierName "x" = T
-Line 25 col 9 IdentifierName "foo1" = typeof foo1
-Line 25 col 14 IdentifierName "x" = A
-Line 25 col 17 IdentifierName "A" = A
-Line 26 col 9 IdentifierName "foo1" = typeof foo1
-Line 26 col 14 IdentifierName "x" = A
-Line 26 col 17 IdentifierName "A" = A
-Line 27 col 9 IdentifierName "foo1" = typeof foo1
-Line 27 col 14 IdentifierName "x" = any
-Line 29 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 29 col 15 IdentifierName "x" = B<string>
-Line 29 col 18 IdentifierName "B" = B<T>
-Line 30 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 30 col 15 IdentifierName "x" = B<string>
-Line 30 col 18 IdentifierName "B" = B<T>
-Line 31 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 31 col 15 IdentifierName "x" = any
-Line 33 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 33 col 15 IdentifierName "x" = C<string>
-Line 33 col 18 IdentifierName "C" = C<T>
-Line 34 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 34 col 15 IdentifierName "x" = C<string>
-Line 34 col 18 IdentifierName "C" = C<T>
-Line 35 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 35 col 15 IdentifierName "x" = any
-Line 37 col 9 IdentifierName "foo2" = typeof foo2
-Line 37 col 14 IdentifierName "x" = I<string>
-Line 37 col 17 IdentifierName "I" = I<T>
-Line 38 col 9 IdentifierName "foo2" = typeof foo2
-Line 38 col 14 IdentifierName "x" = I<string>
-Line 38 col 17 IdentifierName "I" = I<T>
-Line 39 col 9 IdentifierName "foo2" = typeof foo2
-Line 39 col 14 IdentifierName "x" = any
-Line 41 col 9 IdentifierName "foo3" = typeof foo3
-Line 41 col 14 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 41 col 24 IdentifierName "a" = { foo<T>(x: T): T; }
-Line 42 col 9 IdentifierName "foo3" = typeof foo3
-Line 42 col 14 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 42 col 24 IdentifierName "a" = { foo<T>(x: T): T; }
-Line 43 col 9 IdentifierName "foo3" = typeof foo3
-Line 43 col 14 IdentifierName "x" = any
-Line 45 col 9 IdentifierName "foo4" = typeof foo4
-Line 45 col 14 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 45 col 24 IdentifierName "b" = { foo<T>(x: T): T; }
-Line 46 col 9 IdentifierName "foo4" = typeof foo4
-Line 46 col 14 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 46 col 24 IdentifierName "b" = { foo<T>(x: T): T; }
-Line 47 col 9 IdentifierName "foo4" = typeof foo4
-Line 47 col 14 IdentifierName "x" = any
-Line 49 col 9 IdentifierName "foo5" = typeof foo5
-Line 49 col 14 IdentifierName "x" = A
-Line 49 col 17 IdentifierName "A" = A
-Line 50 col 9 IdentifierName "foo5" = typeof foo5
-Line 50 col 14 IdentifierName "x" = B<string>
-Line 50 col 17 IdentifierName "B" = B<T>
-Line 51 col 9 IdentifierName "foo5" = typeof foo5
-Line 51 col 14 IdentifierName "x" = any
-Line 53 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 53 col 15 IdentifierName "x" = A
-Line 53 col 18 IdentifierName "A" = A
-Line 54 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 54 col 15 IdentifierName "x" = C<string>
-Line 54 col 18 IdentifierName "C" = C<T>
-Line 55 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 55 col 15 IdentifierName "x" = any
-Line 57 col 9 IdentifierName "foo6" = typeof foo6
-Line 57 col 14 IdentifierName "x" = A
-Line 57 col 17 IdentifierName "A" = A
-Line 58 col 9 IdentifierName "foo6" = typeof foo6
-Line 58 col 14 IdentifierName "x" = I<string>
-Line 58 col 17 IdentifierName "I" = I<T>
-Line 59 col 9 IdentifierName "foo6" = typeof foo6
-Line 59 col 14 IdentifierName "x" = any
-Line 61 col 9 IdentifierName "foo7" = typeof foo7
-Line 61 col 14 IdentifierName "x" = A
-Line 61 col 17 IdentifierName "A" = A
-Line 62 col 9 IdentifierName "foo7" = typeof foo7
-Line 62 col 14 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 62 col 24 IdentifierName "a" = { foo<T>(x: T): T; }
-Line 63 col 9 IdentifierName "foo7" = typeof foo7
-Line 63 col 14 IdentifierName "x" = any
-Line 65 col 9 IdentifierName "foo8" = typeof foo8
-Line 65 col 14 IdentifierName "x" = B<string>
-Line 65 col 17 IdentifierName "B" = B<T>
-Line 66 col 9 IdentifierName "foo8" = typeof foo8
-Line 66 col 14 IdentifierName "x" = I<string>
-Line 66 col 17 IdentifierName "I" = I<T>
-Line 67 col 9 IdentifierName "foo8" = typeof foo8
-Line 67 col 14 IdentifierName "x" = any
-Line 69 col 9 IdentifierName "foo9" = typeof foo9
-Line 69 col 14 IdentifierName "x" = B<string>
-Line 69 col 17 IdentifierName "B" = B<T>
-Line 70 col 9 IdentifierName "foo9" = typeof foo9
-Line 70 col 14 IdentifierName "x" = C<string>
-Line 70 col 17 IdentifierName "C" = C<T>
-Line 71 col 9 IdentifierName "foo9" = typeof foo9
-Line 71 col 14 IdentifierName "x" = any
-Line 73 col 9 IdentifierName "foo10" = typeof foo10
-Line 73 col 15 IdentifierName "x" = B<string>
-Line 73 col 18 IdentifierName "B" = B<T>
-Line 74 col 9 IdentifierName "foo10" = typeof foo10
-Line 74 col 15 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 74 col 25 IdentifierName "a" = { foo<T>(x: T): T; }
-Line 75 col 9 IdentifierName "foo10" = typeof foo10
-Line 75 col 15 IdentifierName "x" = any
-Line 77 col 9 IdentifierName "foo11" = typeof foo11
-Line 77 col 15 IdentifierName "x" = B<string>
-Line 77 col 18 IdentifierName "B" = B<T>
-Line 78 col 9 IdentifierName "foo11" = typeof foo11
-Line 78 col 15 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 78 col 25 IdentifierName "b" = { foo<T>(x: T): T; }
-Line 79 col 9 IdentifierName "foo11" = typeof foo11
-Line 79 col 15 IdentifierName "x" = any
-Line 81 col 9 IdentifierName "foo12" = typeof foo12
-Line 81 col 15 IdentifierName "x" = I<string>
-Line 81 col 18 IdentifierName "I" = I<T>
-Line 82 col 9 IdentifierName "foo12" = typeof foo12
-Line 82 col 15 IdentifierName "x" = C<string>
-Line 82 col 18 IdentifierName "C" = C<T>
-Line 83 col 9 IdentifierName "foo12" = typeof foo12
-Line 83 col 15 IdentifierName "x" = any
-Line 85 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 85 col 16 IdentifierName "x" = I2
-Line 85 col 19 IdentifierName "I2" = I2
-Line 86 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 86 col 16 IdentifierName "x" = C<string>
-Line 86 col 19 IdentifierName "C" = C<T>
-Line 87 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 87 col 16 IdentifierName "x" = any
-Line 89 col 9 IdentifierName "foo13" = typeof foo13
-Line 89 col 15 IdentifierName "x" = I<string>
-Line 89 col 18 IdentifierName "I" = I<T>
-Line 90 col 9 IdentifierName "foo13" = typeof foo13
-Line 90 col 15 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 90 col 25 IdentifierName "a" = { foo<T>(x: T): T; }
-Line 91 col 9 IdentifierName "foo13" = typeof foo13
-Line 91 col 15 IdentifierName "x" = any
-Line 93 col 9 IdentifierName "foo14" = typeof foo14
-Line 93 col 15 IdentifierName "x" = I<string>
-Line 93 col 18 IdentifierName "I" = I<T>
-Line 94 col 9 IdentifierName "foo14" = typeof foo14
-Line 94 col 15 IdentifierName "x" = { foo<T>(x: T): T; }
-Line 94 col 25 IdentifierName "b" = { foo<T>(x: T): T; }
-Line 95 col 9 IdentifierName "foo14" = typeof foo14
-Line 95 col 15 IdentifierName "x" = any
-Line 97 col 9 IdentifierName "foo15" = typeof foo15
-Line 97 col 15 IdentifierName "x" = I2
-Line 97 col 18 IdentifierName "I2" = I2
-Line 98 col 9 IdentifierName "foo15" = typeof foo15
-Line 98 col 15 IdentifierName "x" = C<number>
-Line 98 col 18 IdentifierName "C" = C<T>
-Line 99 col 9 IdentifierName "foo15" = typeof foo15
-Line 99 col 15 IdentifierName "x" = any
+// object types are identical structurally
+
+class A {
+>A : A
+
+    foo<T>(x: T): T { return null; }
+>foo : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+}
+
+class B<T> {
+>B : B<T>
+>T : T
+
+    foo(x: T): T { return null; }
+>foo : (x: T) => T
+>x : T
+>T : T
+>T : T
+}
+
+class C<T> {
+>C : C<T>
+>T : T
+
+    foo(x: T): T { return null; }
+>foo : (x: T) => T
+>x : T
+>T : T
+>T : T
+}
+
+interface I<T> {
+>I : I<T>
+>T : T
+
+    foo(x: T): T;
+>foo : (x: T) => T
+>x : T
+>T : T
+>T : T
+}
+
+interface I2 {
+>I2 : I2
+
+    foo<T>(x: T): T;
+>foo : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+}
+
+var a: { foo<T>(x: T): T }
+>a : { foo<T>(x: T): T; }
+>foo : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+var b = { foo<T>(x: T) { return x; } };
+>b : { foo<T>(x: T): T; }
+>{ foo<T>(x: T) { return x; } } : { foo<T>(x: T): T; }
+>foo : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>x : T
+
+function foo1(x: A);
+>foo1 : typeof foo1
+>x : A
+>A : A
+
+function foo1(x: A); // error
+>foo1 : typeof foo1
+>x : A
+>A : A
+
+function foo1(x: any) { }
+>foo1 : typeof foo1
+>x : any
+
+function foo1b(x: B<string>);
+>foo1b : typeof foo1b
+>x : B<string>
+>B : B<T>
+
+function foo1b(x: B<string>); // error
+>foo1b : typeof foo1b
+>x : B<string>
+>B : B<T>
+
+function foo1b(x: any) { }
+>foo1b : typeof foo1b
+>x : any
+
+function foo1c(x: C<string>);
+>foo1c : typeof foo1c
+>x : C<string>
+>C : C<T>
+
+function foo1c(x: C<string>); // error
+>foo1c : typeof foo1c
+>x : C<string>
+>C : C<T>
+
+function foo1c(x: any) { }
+>foo1c : typeof foo1c
+>x : any
+
+function foo2(x: I<string>);
+>foo2 : typeof foo2
+>x : I<string>
+>I : I<T>
+
+function foo2(x: I<string>); // error
+>foo2 : typeof foo2
+>x : I<string>
+>I : I<T>
+
+function foo2(x: any) { }
+>foo2 : typeof foo2
+>x : any
+
+function foo3(x: typeof a);
+>foo3 : typeof foo3
+>x : { foo<T>(x: T): T; }
+>a : { foo<T>(x: T): T; }
+
+function foo3(x: typeof a); // error
+>foo3 : typeof foo3
+>x : { foo<T>(x: T): T; }
+>a : { foo<T>(x: T): T; }
+
+function foo3(x: any) { }
+>foo3 : typeof foo3
+>x : any
+
+function foo4(x: typeof b);
+>foo4 : typeof foo4
+>x : { foo<T>(x: T): T; }
+>b : { foo<T>(x: T): T; }
+
+function foo4(x: typeof b); // error
+>foo4 : typeof foo4
+>x : { foo<T>(x: T): T; }
+>b : { foo<T>(x: T): T; }
+
+function foo4(x: any) { }
+>foo4 : typeof foo4
+>x : any
+
+function foo5(x: A);
+>foo5 : typeof foo5
+>x : A
+>A : A
+
+function foo5(x: B<string>); // ok
+>foo5 : typeof foo5
+>x : B<string>
+>B : B<T>
+
+function foo5(x: any) { }
+>foo5 : typeof foo5
+>x : any
+
+function foo5b(x: A);
+>foo5b : typeof foo5b
+>x : A
+>A : A
+
+function foo5b(x: C<string>); // ok
+>foo5b : typeof foo5b
+>x : C<string>
+>C : C<T>
+
+function foo5b(x: any) { }
+>foo5b : typeof foo5b
+>x : any
+
+function foo6(x: A);
+>foo6 : typeof foo6
+>x : A
+>A : A
+
+function foo6(x: I<string>); // ok
+>foo6 : typeof foo6
+>x : I<string>
+>I : I<T>
+
+function foo6(x: any) { }
+>foo6 : typeof foo6
+>x : any
+
+function foo7(x: A);
+>foo7 : typeof foo7
+>x : A
+>A : A
+
+function foo7(x: typeof a); // error
+>foo7 : typeof foo7
+>x : { foo<T>(x: T): T; }
+>a : { foo<T>(x: T): T; }
+
+function foo7(x: any) { }
+>foo7 : typeof foo7
+>x : any
+
+function foo8(x: B<string>);
+>foo8 : typeof foo8
+>x : B<string>
+>B : B<T>
+
+function foo8(x: I<string>); // error
+>foo8 : typeof foo8
+>x : I<string>
+>I : I<T>
+
+function foo8(x: any) { }
+>foo8 : typeof foo8
+>x : any
+
+function foo9(x: B<string>);
+>foo9 : typeof foo9
+>x : B<string>
+>B : B<T>
+
+function foo9(x: C<string>); // error
+>foo9 : typeof foo9
+>x : C<string>
+>C : C<T>
+
+function foo9(x: any) { }
+>foo9 : typeof foo9
+>x : any
+
+function foo10(x: B<string>);
+>foo10 : typeof foo10
+>x : B<string>
+>B : B<T>
+
+function foo10(x: typeof a); // ok
+>foo10 : typeof foo10
+>x : { foo<T>(x: T): T; }
+>a : { foo<T>(x: T): T; }
+
+function foo10(x: any) { }
+>foo10 : typeof foo10
+>x : any
+
+function foo11(x: B<string>);
+>foo11 : typeof foo11
+>x : B<string>
+>B : B<T>
+
+function foo11(x: typeof b); // ok
+>foo11 : typeof foo11
+>x : { foo<T>(x: T): T; }
+>b : { foo<T>(x: T): T; }
+
+function foo11(x: any) { }
+>foo11 : typeof foo11
+>x : any
+
+function foo12(x: I<string>);
+>foo12 : typeof foo12
+>x : I<string>
+>I : I<T>
+
+function foo12(x: C<string>); // error
+>foo12 : typeof foo12
+>x : C<string>
+>C : C<T>
+
+function foo12(x: any) { }
+>foo12 : typeof foo12
+>x : any
+
+function foo12b(x: I2);
+>foo12b : typeof foo12b
+>x : I2
+>I2 : I2
+
+function foo12b(x: C<string>); // ok
+>foo12b : typeof foo12b
+>x : C<string>
+>C : C<T>
+
+function foo12b(x: any) { }
+>foo12b : typeof foo12b
+>x : any
+
+function foo13(x: I<string>);
+>foo13 : typeof foo13
+>x : I<string>
+>I : I<T>
+
+function foo13(x: typeof a); // ok
+>foo13 : typeof foo13
+>x : { foo<T>(x: T): T; }
+>a : { foo<T>(x: T): T; }
+
+function foo13(x: any) { }
+>foo13 : typeof foo13
+>x : any
+
+function foo14(x: I<string>);
+>foo14 : typeof foo14
+>x : I<string>
+>I : I<T>
+
+function foo14(x: typeof b); // ok
+>foo14 : typeof foo14
+>x : { foo<T>(x: T): T; }
+>b : { foo<T>(x: T): T; }
+
+function foo14(x: any) { }
+>foo14 : typeof foo14
+>x : any
+
+function foo15(x: I2);
+>foo15 : typeof foo15
+>x : I2
+>I2 : I2
+
+function foo15(x: C<number>); // ok
+>foo15 : typeof foo15
+>x : C<number>
+>C : C<T>
+
+function foo15(x: any) { }
+>foo15 : typeof foo15
+>x : any
+

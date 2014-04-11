@@ -1,14 +1,30 @@
 === tests/cases/compiler/internalAliasEnumInsideTopLevelModuleWithoutExport.ts ===
-Line 0 col 14 IdentifierName "a" = a
-Line 1 col 16 IdentifierName "weekend" = weekend
-Line 2 col 0 IdentifierName "Friday" = weekend
-Line 3 col 0 IdentifierName "Saturday" = weekend
-Line 4 col 0 IdentifierName "Sunday" = weekend
-Line 8 col 7 IdentifierName "b" = b
-Line 8 col 11 IdentifierName "a" = a
-Line 8 col 13 IdentifierName "weekend" = a.weekend
-Line 9 col 11 IdentifierName "bVal" = a.weekend
-Line 9 col 17 IdentifierName "b" = b
-Line 9 col 21 MemberAccessExpression "b.Sunday" = a.weekend
-Line 9 col 21 IdentifierName "b" = typeof a.weekend
-Line 9 col 23 IdentifierName "Sunday" = a.weekend
+export module a {
+>a : a
+
+    export enum weekend {
+>weekend : weekend
+
+        Friday,
+>Friday : weekend
+
+        Saturday,
+>Saturday : weekend
+
+        Sunday
+>Sunday : weekend
+    }
+}
+
+import b = a.weekend;
+>b : b
+>a : a
+>weekend : a.weekend
+
+export var bVal: b = b.Sunday;
+>bVal : a.weekend
+>b : b
+>b.Sunday : a.weekend
+>b : typeof a.weekend
+>Sunday : a.weekend
+

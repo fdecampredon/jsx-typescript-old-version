@@ -1,79 +1,156 @@
 === tests/cases/compiler/arrayLiteralTypeInference.ts ===
-Line 0 col 6 IdentifierName "Action" = Action
-Line 1 col 0 IdentifierName "id" = number
-Line 4 col 6 IdentifierName "ActionA" = ActionA
-Line 4 col 22 IdentifierName "Action" = Action
-Line 5 col 0 IdentifierName "value" = string
-Line 8 col 6 IdentifierName "ActionB" = ActionB
-Line 8 col 22 IdentifierName "Action" = Action
-Line 9 col 0 IdentifierName "trueNess" = boolean
-Line 12 col 4 IdentifierName "x1" = Action[]
-Line 12 col 8 IdentifierName "Action" = Action
-Line 12 col 19 ArrayLiteralExpression "[
+class Action {
+>Action : Action
+
+    id: number;
+>id : number
+}
+
+class ActionA extends Action {
+>ActionA : ActionA
+>Action : Action
+
+    value: string;
+>value : string
+}
+
+class ActionB extends Action {
+>ActionB : ActionB
+>Action : Action
+
+    trueNess: boolean;
+>trueNess : boolean
+}
+
+var x1: Action[] = [
+>x1 : Action[]
+>Action : Action
+>[
     { id: 2, trueness: false },
     { id: 3, name: "three" }
-]" = Action[]
-Line 13 col 0 ObjectLiteralExpression "{ id: 2, trueness: false }" = { id: number; trueness: boolean; }
-Line 13 col 6 IdentifierName "id" = number
-Line 13 col 13 IdentifierName "trueness" = boolean
-Line 14 col 0 ObjectLiteralExpression "{ id: 3, name: "three" }" = { id: number; name: string; }
-Line 14 col 6 IdentifierName "id" = number
-Line 14 col 13 IdentifierName "name" = string
-Line 17 col 4 IdentifierName "x2" = Action[]
-Line 17 col 8 IdentifierName "Action" = Action
-Line 17 col 19 ArrayLiteralExpression "[
+] : Action[]
+
+    { id: 2, trueness: false },
+>{ id: 2, trueness: false } : { id: number; trueness: boolean; }
+>id : number
+>trueness : boolean
+
+    { id: 3, name: "three" }
+>{ id: 3, name: "three" } : { id: number; name: string; }
+>id : number
+>name : string
+
+]
+
+var x2: Action[] = [
+>x2 : Action[]
+>Action : Action
+>[
     new ActionA(),
     new ActionB()
-]" = Action[]
-Line 18 col 0 ObjectCreationExpression "new ActionA()" = ActionA
-Line 18 col 8 IdentifierName "ActionA" = typeof ActionA
-Line 19 col 0 ObjectCreationExpression "new ActionB()" = ActionB
-Line 19 col 8 IdentifierName "ActionB" = typeof ActionB
-Line 22 col 4 IdentifierName "x3" = Action[]
-Line 22 col 8 IdentifierName "Action" = Action
-Line 22 col 19 ArrayLiteralExpression "[
+] : Action[]
+
+    new ActionA(),
+>new ActionA() : ActionA
+>ActionA : typeof ActionA
+
+    new ActionB()
+>new ActionB() : ActionB
+>ActionB : typeof ActionB
+
+]
+
+var x3: Action[] = [
+>x3 : Action[]
+>Action : Action
+>[
     new Action(),
     new ActionA(),
     new ActionB()
-]" = Action[]
-Line 23 col 0 ObjectCreationExpression "new Action()" = Action
-Line 23 col 8 IdentifierName "Action" = typeof Action
-Line 24 col 0 ObjectCreationExpression "new ActionA()" = ActionA
-Line 24 col 8 IdentifierName "ActionA" = typeof ActionA
-Line 25 col 0 ObjectCreationExpression "new ActionB()" = ActionB
-Line 25 col 8 IdentifierName "ActionB" = typeof ActionB
-Line 28 col 4 IdentifierName "z1" = { id: number; }[]
-Line 28 col 10 IdentifierName "id" = number
-Line 29 col 0 ArrayLiteralExpression "[
+] : Action[]
+
+    new Action(),
+>new Action() : Action
+>Action : typeof Action
+
+    new ActionA(),
+>new ActionA() : ActionA
+>ActionA : typeof ActionA
+
+    new ActionB()
+>new ActionB() : ActionB
+>ActionB : typeof ActionB
+
+]
+
+var z1: { id: number }[] =
+>z1 : { id: number; }[]
+>id : number
+
+    [
+>[
         { id: 2, trueness: false },
         { id: 3, name: "three" }
-    ]" = { id: number; }[]
-Line 30 col 0 ObjectLiteralExpression "{ id: 2, trueness: false }" = { id: number; trueness: boolean; }
-Line 30 col 10 IdentifierName "id" = number
-Line 30 col 17 IdentifierName "trueness" = boolean
-Line 31 col 0 ObjectLiteralExpression "{ id: 3, name: "three" }" = { id: number; name: string; }
-Line 31 col 10 IdentifierName "id" = number
-Line 31 col 17 IdentifierName "name" = string
-Line 34 col 4 IdentifierName "z2" = { id: number; }[]
-Line 34 col 10 IdentifierName "id" = number
-Line 35 col 0 ArrayLiteralExpression "[
+    ] : { id: number; }[]
+
+        { id: 2, trueness: false },
+>{ id: 2, trueness: false } : { id: number; trueness: boolean; }
+>id : number
+>trueness : boolean
+
+        { id: 3, name: "three" }
+>{ id: 3, name: "three" } : { id: number; name: string; }
+>id : number
+>name : string
+
+    ]
+
+var z2: { id: number }[] =
+>z2 : { id: number; }[]
+>id : number
+
+    [
+>[
         new ActionA(),
         new ActionB()
-    ]" = { id: number; }[]
-Line 36 col 0 ObjectCreationExpression "new ActionA()" = ActionA
-Line 36 col 12 IdentifierName "ActionA" = typeof ActionA
-Line 37 col 0 ObjectCreationExpression "new ActionB()" = ActionB
-Line 37 col 12 IdentifierName "ActionB" = typeof ActionB
-Line 40 col 4 IdentifierName "z3" = { id: number; }[]
-Line 40 col 10 IdentifierName "id" = number
-Line 41 col 0 ArrayLiteralExpression "[
+    ] : { id: number; }[]
+
+        new ActionA(),
+>new ActionA() : ActionA
+>ActionA : typeof ActionA
+
+        new ActionB()
+>new ActionB() : ActionB
+>ActionB : typeof ActionB
+
+    ]
+
+var z3: { id: number }[] =
+>z3 : { id: number; }[]
+>id : number
+
+    [
+>[
         new Action(),
         new ActionA(),
         new ActionB()
-    ]" = { id: number; }[]
-Line 42 col 0 ObjectCreationExpression "new Action()" = Action
-Line 42 col 12 IdentifierName "Action" = typeof Action
-Line 43 col 0 ObjectCreationExpression "new ActionA()" = ActionA
-Line 43 col 12 IdentifierName "ActionA" = typeof ActionA
-Line 44 col 0 ObjectCreationExpression "new ActionB()" = ActionB
-Line 44 col 12 IdentifierName "ActionB" = typeof ActionB
+    ] : { id: number; }[]
+
+        new Action(),
+>new Action() : Action
+>Action : typeof Action
+
+        new ActionA(),
+>new ActionA() : ActionA
+>ActionA : typeof ActionA
+
+        new ActionB()
+>new ActionB() : ActionB
+>ActionB : typeof ActionB
+
+    ]
+
+
+
+
+

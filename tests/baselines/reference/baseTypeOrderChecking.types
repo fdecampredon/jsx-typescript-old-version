@@ -1,15 +1,51 @@
 === tests/cases/compiler/baseTypeOrderChecking.ts ===
-Line 0 col 4 IdentifierName "someVariable" = Class4<Class2>
-Line 0 col 18 IdentifierName "Class4" = Class4<T>
-Line 0 col 25 IdentifierName "Class2" = Class2
-Line 4 col 6 IdentifierName "Class1" = Class1
-Line 12 col 6 IdentifierName "Class2" = Class2
-Line 12 col 21 IdentifierName "Class1" = Class1
-Line 20 col 6 IdentifierName "Class3" = Class3<T>
-Line 20 col 13 IdentifierName "T" = T
-Line 24 col 22 IdentifierName "memberVariable" = Class2
-Line 24 col 38 IdentifierName "Class2" = Class2
-Line 30 col 6 IdentifierName "Class4" = Class4<T>
-Line 30 col 13 IdentifierName "T" = T
-Line 30 col 24 IdentifierName "Class3" = Class3<T>
-Line 30 col 31 IdentifierName "T" = T
+var someVariable: Class4<Class2>;
+>someVariable : Class4<Class2>
+>Class4 : Class4<T>
+>Class2 : Class2
+
+ 
+
+class Class1
+>Class1 : Class1
+
+{
+
+}
+
+ 
+
+class Class2 extends Class1
+>Class2 : Class2
+>Class1 : Class1
+
+{
+
+}
+
+ 
+
+class Class3<T>
+>Class3 : Class3<T>
+>T : T
+
+{
+
+               public memberVariable: Class2;
+>memberVariable : Class2
+>Class2 : Class2
+
+}
+
+ 
+
+class Class4<T> extends Class3<T>
+>Class4 : Class4<T>
+>T : T
+>Class3 : Class3<T>
+>T : T
+
+{
+
+}
+

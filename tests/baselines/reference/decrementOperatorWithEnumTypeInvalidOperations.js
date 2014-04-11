@@ -1,3 +1,4 @@
+//// [decrementOperatorWithEnumTypeInvalidOperations.js]
 // -- operator on enum type
 var ENUM;
 (function (ENUM) {

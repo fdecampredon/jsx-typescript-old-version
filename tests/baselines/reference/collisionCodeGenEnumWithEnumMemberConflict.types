@@ -1,5 +1,11 @@
 === tests/cases/compiler/collisionCodeGenEnumWithEnumMemberConflict.ts ===
-Line 0 col 5 IdentifierName "Color" = Color
-Line 1 col 0 IdentifierName "Color" = Color
-Line 2 col 0 IdentifierName "Thing" = Color
-Line 2 col 12 IdentifierName "Color" = Color
+enum Color {
+>Color : Color
+
+    Color,
+>Color : Color
+
+    Thing = Color
+>Thing : Color
+>Color : Color
+}

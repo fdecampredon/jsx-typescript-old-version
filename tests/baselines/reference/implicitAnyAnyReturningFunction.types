@@ -1,14 +1,41 @@
 === tests/cases/compiler/implicitAnyAnyReturningFunction.ts ===
-Line 0 col 9 IdentifierName "A" = typeof A
-Line 1 col 11 CastExpression "<any>""" = any
-Line 4 col 9 IdentifierName "B" = typeof B
-Line 5 col 8 IdentifierName "someLocal" = any
-Line 5 col 25 ObjectLiteralExpression "{}" = {}
-Line 6 col 11 IdentifierName "someLocal" = any
-Line 9 col 6 IdentifierName "C" = C
-Line 10 col 11 IdentifierName "A" = () => any
-Line 11 col 15 CastExpression "<any>""" = any
-Line 14 col 11 IdentifierName "B" = () => any
-Line 15 col 12 IdentifierName "someLocal" = any
-Line 15 col 29 ObjectLiteralExpression "{}" = {}
-Line 16 col 15 IdentifierName "someLocal" = any
+function A() {
+>A : typeof A
+
+    return <any>"";
+><any>"" : any
+}
+
+function B() {
+>B : typeof B
+
+    var someLocal: any = {};
+>someLocal : any
+>{} : {}
+
+    return someLocal;
+>someLocal : any
+}
+
+class C {
+>C : C
+
+    public A() {
+>A : () => any
+
+        return <any>"";
+><any>"" : any
+    }
+
+    public B() {
+>B : () => any
+
+        var someLocal: any = {};
+>someLocal : any
+>{} : {}
+
+        return someLocal;
+>someLocal : any
+    }
+}
+

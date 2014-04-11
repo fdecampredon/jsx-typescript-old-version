@@ -1,3 +1,9 @@
+//// [exportAssignmentClass_B.ts]
+import D = require("exportAssignmentClass_A");
+
+var d = new D();
+var x = d.p;
+
 //// [exportAssignmentClass_A.js]
 define(["require", "exports"], function(require, exports) {
     var C = (function () {

@@ -1,62 +1,108 @@
 === tests/cases/compiler/genericCallWithObjectTypeArgsAndConstraints.ts ===
-Line 3 col 6 IdentifierName "C" = C
-Line 4 col 0 IdentifierName "x" = string
-Line 7 col 6 IdentifierName "D" = D
-Line 8 col 0 IdentifierName "x" = string
-Line 9 col 0 IdentifierName "y" = string
-Line 12 col 6 IdentifierName "X" = X<T>
-Line 12 col 8 IdentifierName "T" = T
-Line 13 col 0 IdentifierName "x" = T
-Line 13 col 7 IdentifierName "T" = T
-Line 16 col 9 IdentifierName "foo" = typeof foo
-Line 16 col 13 IdentifierName "T" = T
-Line 16 col 25 IdentifierName "x" = string
-Line 16 col 38 IdentifierName "t" = X<T>
-Line 16 col 41 IdentifierName "X" = X<T>
-Line 16 col 43 IdentifierName "T" = T
-Line 16 col 47 IdentifierName "t2" = X<T>
-Line 16 col 51 IdentifierName "X" = X<T>
-Line 16 col 53 IdentifierName "T" = T
-Line 17 col 8 IdentifierName "x" = T
-Line 17 col 11 IdentifierName "T" = T
-Line 18 col 11 IdentifierName "x" = T
-Line 21 col 4 IdentifierName "c1" = X<C>
-Line 21 col 9 ObjectCreationExpression "new X<C>()" = X<C>
-Line 21 col 13 IdentifierName "X" = typeof X
-Line 21 col 15 IdentifierName "C" = C
-Line 22 col 4 IdentifierName "d1" = X<D>
-Line 22 col 9 ObjectCreationExpression "new X<D>()" = X<D>
-Line 22 col 13 IdentifierName "X" = typeof X
-Line 22 col 15 IdentifierName "D" = D
-Line 23 col 4 IdentifierName "r" = C
-Line 23 col 8 InvocationExpression "foo(c1, d1)" = C
-Line 23 col 8 IdentifierName "foo" = typeof foo
-Line 23 col 12 IdentifierName "c1" = X<C>
-Line 23 col 16 IdentifierName "d1" = X<D>
-Line 24 col 4 IdentifierName "r2" = C
-Line 24 col 9 InvocationExpression "foo(c1, c1)" = C
-Line 24 col 9 IdentifierName "foo" = typeof foo
-Line 24 col 13 IdentifierName "c1" = X<C>
-Line 24 col 17 IdentifierName "c1" = X<C>
-Line 26 col 9 IdentifierName "foo2" = typeof foo2
-Line 26 col 14 IdentifierName "T" = T
-Line 26 col 24 IdentifierName "C" = C
-Line 26 col 27 IdentifierName "t" = X<T>
-Line 26 col 30 IdentifierName "X" = X<T>
-Line 26 col 32 IdentifierName "T" = T
-Line 26 col 36 IdentifierName "t2" = X<T>
-Line 26 col 40 IdentifierName "X" = X<T>
-Line 26 col 42 IdentifierName "T" = T
-Line 27 col 8 IdentifierName "x" = T
-Line 27 col 11 IdentifierName "T" = T
-Line 28 col 11 IdentifierName "x" = T
-Line 31 col 4 IdentifierName "r" = C
-Line 31 col 8 InvocationExpression "foo2(c1, d1)" = C
-Line 31 col 8 IdentifierName "foo2" = typeof foo2
-Line 31 col 13 IdentifierName "c1" = X<C>
-Line 31 col 17 IdentifierName "d1" = X<D>
-Line 32 col 4 IdentifierName "r2" = C
-Line 32 col 9 InvocationExpression "foo2(c1, c1)" = C
-Line 32 col 9 IdentifierName "foo2" = typeof foo2
-Line 32 col 14 IdentifierName "c1" = X<C>
-Line 32 col 18 IdentifierName "c1" = X<C>
+// Generic call with constraints infering type parameter from object member properties
+// No errors expected
+
+class C {
+>C : C
+
+    x: string;
+>x : string
+}
+
+class D {
+>D : D
+
+    x: string;
+>x : string
+
+    y: string;
+>y : string
+}
+
+class X<T> {
+>X : X<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+}
+
+function foo<T extends { x: string }>(t: X<T>, t2: X<T>) {
+>foo : typeof foo
+>T : T
+>x : string
+>t : X<T>
+>X : X<T>
+>T : T
+>t2 : X<T>
+>X : X<T>
+>T : T
+
+    var x: T;
+>x : T
+>T : T
+
+    return x;
+>x : T
+}
+
+var c1 = new X<C>();
+>c1 : X<C>
+>new X<C>() : X<C>
+>X : typeof X
+>C : C
+
+var d1 = new X<D>();
+>d1 : X<D>
+>new X<D>() : X<D>
+>X : typeof X
+>D : D
+
+var r = foo(c1, d1); 
+>r : C
+>foo(c1, d1) : C
+>foo : typeof foo
+>c1 : X<C>
+>d1 : X<D>
+
+var r2 = foo(c1, c1);
+>r2 : C
+>foo(c1, c1) : C
+>foo : typeof foo
+>c1 : X<C>
+>c1 : X<C>
+
+function foo2<T extends C>(t: X<T>, t2: X<T>) {
+>foo2 : typeof foo2
+>T : T
+>C : C
+>t : X<T>
+>X : X<T>
+>T : T
+>t2 : X<T>
+>X : X<T>
+>T : T
+
+    var x: T;
+>x : T
+>T : T
+
+    return x;
+>x : T
+}
+
+var r = foo2(c1, d1); 
+>r : C
+>foo2(c1, d1) : C
+>foo2 : typeof foo2
+>c1 : X<C>
+>d1 : X<D>
+
+var r2 = foo2(c1, c1);
+>r2 : C
+>foo2(c1, c1) : C
+>foo2 : typeof foo2
+>c1 : X<C>
+>c1 : X<C>
+

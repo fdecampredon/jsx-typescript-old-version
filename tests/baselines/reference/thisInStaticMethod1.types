@@ -1,12 +1,23 @@
 === tests/cases/compiler/thisInStaticMethod1.ts ===
-Line 0 col 6 IdentifierName "foo" = foo
-Line 1 col 8 IdentifierName "x" = number
-Line 2 col 8 IdentifierName "bar" = () => number
-Line 3 col 9 MemberAccessExpression "this.x" = number
-Line 3 col 9 ThisKeyword "this" = typeof foo
-Line 3 col 14 IdentifierName "x" = number
-Line 6 col 4 IdentifierName "x" = number
-Line 6 col 8 InvocationExpression "foo.bar()" = number
-Line 6 col 8 MemberAccessExpression "foo.bar" = () => number
-Line 6 col 8 IdentifierName "foo" = typeof foo
-Line 6 col 12 IdentifierName "bar" = () => number
+class foo {
+>foo : foo
+
+ static x = 3;
+>x : number
+
+ static bar() {
+>bar : () => number
+
+  return this.x;
+>this.x : number
+>this : typeof foo
+>x : number
+ } 
+} 
+var x = foo.bar();
+>x : number
+>foo.bar() : number
+>foo.bar : () => number
+>foo : typeof foo
+>bar : () => number
+

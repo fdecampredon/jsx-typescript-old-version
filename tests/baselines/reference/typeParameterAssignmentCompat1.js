@@ -1,3 +1,4 @@
+//// [typeParameterAssignmentCompat1.js]
 function f() {
     var x;
     var y;

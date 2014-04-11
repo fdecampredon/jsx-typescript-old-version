@@ -1,3 +1,21 @@
+//// [superAccessInFatArrow1.ts]
+module test {
+    export class A {
+        foo() {
+        }
+    }
+    export class B extends A {
+        bar(callback: () => void ) {
+        }
+        runme() {
+            this.bar(() => {
+                super.foo();
+            });
+        }
+    }
+}
+
+//// [superAccessInFatArrow1.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

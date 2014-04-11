@@ -1,43 +1,74 @@
 === tests/cases/compiler/typeParameterCompatibilityAccrossDeclarations.ts ===
-Line 0 col 4 IdentifierName "a" = { x: <T>(y: T) => T; }
-Line 0 col 8 ObjectLiteralExpression "{
+var a = {
+>a : { x: <T>(y: T) => T; }
+>{
    x: function <T>(y: T): T { return null; }
-}" = { x: <T>(y: T) => T; }
-Line 1 col 0 IdentifierName "x" = <T>(y: T) => T
-Line 1 col 6 FunctionExpression "function <T>(y: T): T { return null; }" = <T>(y: T) => T
-Line 1 col 16 IdentifierName "T" = T
-Line 1 col 19 IdentifierName "y" = T
-Line 1 col 22 IdentifierName "T" = T
-Line 1 col 26 IdentifierName "T" = T
-Line 3 col 4 IdentifierName "a2" = { x: (y: any) => any; }
-Line 3 col 9 ObjectLiteralExpression "{
+} : { x: <T>(y: T) => T; }
+
+   x: function <T>(y: T): T { return null; }
+>x : <T>(y: T) => T
+>function <T>(y: T): T { return null; } : <T>(y: T) => T
+>T : T
+>y : T
+>T : T
+>T : T
+}
+var a2 = {
+>a2 : { x: (y: any) => any; }
+>{
    x: function (y: any): any { return null; }
-}" = { x: (y: any) => any; }
-Line 4 col 0 IdentifierName "x" = (y: any) => any
-Line 4 col 6 FunctionExpression "function (y: any): any { return null; }" = (y: any) => any
-Line 4 col 16 IdentifierName "y" = any
-Line 6 col 17 IdentifierName "I" = I
-Line 7 col 0 IdentifierName "x" = <T>(y: T) => T
-Line 7 col 5 IdentifierName "T" = T
-Line 7 col 8 IdentifierName "y" = T
-Line 7 col 11 IdentifierName "T" = T
-Line 7 col 15 IdentifierName "T" = T
-Line 9 col 17 IdentifierName "I2" = I2
-Line 10 col 0 IdentifierName "x" = (y: any) => any
-Line 10 col 5 IdentifierName "y" = any
-Line 13 col 4 IdentifierName "i" = I
-Line 13 col 7 IdentifierName "I" = I
-Line 14 col 4 IdentifierName "i2" = I2
-Line 14 col 8 IdentifierName "I2" = I2
-Line 15 col 0 AssignmentExpression "a = i" = I
-Line 15 col 0 IdentifierName "a" = { x: <T>(y: T) => T; }
-Line 16 col 4 IdentifierName "i" = I
-Line 17 col 0 AssignmentExpression "i = a" = { x: <T>(y: T) => T; }
-Line 17 col 0 IdentifierName "i" = I
-Line 17 col 4 IdentifierName "a" = { x: <T>(y: T) => T; }
-Line 18 col 0 AssignmentExpression "a2 = i2" = I2
-Line 18 col 0 IdentifierName "a2" = { x: (y: any) => any; }
-Line 19 col 5 IdentifierName "i2" = I2
-Line 20 col 0 AssignmentExpression "i2 = a2" = { x: (y: any) => any; }
-Line 20 col 0 IdentifierName "i2" = I2
-Line 20 col 5 IdentifierName "a2" = { x: (y: any) => any; }
+} : { x: (y: any) => any; }
+
+   x: function (y: any): any { return null; }
+>x : (y: any) => any
+>function (y: any): any { return null; } : (y: any) => any
+>y : any
+}
+export interface I {
+>I : I
+
+   x<T>(y: T): T;
+>x : <T>(y: T) => T
+>T : T
+>y : T
+>T : T
+>T : T
+}
+export interface I2 {
+>I2 : I2
+
+   x(y: any): any;
+>x : (y: any) => any
+>y : any
+}
+ 
+var i: I;
+>i : I
+>I : I
+
+var i2: I2;
+>i2 : I2
+>I2 : I2
+ 
+>a = i : I
+>a : { x: <T>(y: T) => T; }
+
+a = i; // error
+>i : I
+
+i = a; // error
+>i = a : { x: <T>(y: T) => T; }
+>i : I
+>a : { x: <T>(y: T) => T; }
+ 
+>a2 = i2 : I2
+>a2 : { x: (y: any) => any; }
+
+a2 = i2; // no error
+>i2 : I2
+
+i2 = a2; // no error
+>i2 = a2 : { x: (y: any) => any; }
+>i2 : I2
+>a2 : { x: (y: any) => any; }
+

@@ -1,75 +1,125 @@
 === tests/cases/compiler/part1.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 1 col 21 IdentifierName "Point" = Point
-Line 2 col 0 IdentifierName "x" = number
-Line 3 col 0 IdentifierName "y" = number
-Line 6 col 18 IdentifierName "Utils" = Utils
-Line 7 col 24 IdentifierName "mirror" = typeof mirror
-Line 7 col 31 IdentifierName "T" = T
-Line 7 col 41 IdentifierName "Point" = Point
-Line 7 col 48 IdentifierName "p" = T
-Line 7 col 51 IdentifierName "T" = T
-Line 8 col 19 ObjectLiteralExpression "{ x: p.y, y: p.x }" = { x: number; y: number; }
-Line 8 col 21 IdentifierName "x" = number
-Line 8 col 24 MemberAccessExpression "p.y" = number
-Line 8 col 24 IdentifierName "p" = T
-Line 8 col 26 IdentifierName "y" = number
-Line 8 col 29 IdentifierName "y" = number
-Line 8 col 32 MemberAccessExpression "p.x" = number
-Line 8 col 32 IdentifierName "p" = T
-Line 8 col 34 IdentifierName "x" = number
-Line 11 col 15 IdentifierName "Origin" = Point
-Line 11 col 23 IdentifierName "Point" = Point
-Line 11 col 31 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 11 col 33 IdentifierName "x" = number
-Line 11 col 39 IdentifierName "y" = number
+module A {
+>A : A
+
+    export interface Point {
+>Point : Point
+
+        x: number;
+>x : number
+
+        y: number;
+>y : number
+    }
+
+    export module Utils {
+>Utils : Utils
+
+        export function mirror<T extends Point>(p: T) {
+>mirror : typeof mirror
+>T : T
+>Point : Point
+>p : T
+>T : T
+
+            return { x: p.y, y: p.x };
+>{ x: p.y, y: p.x } : { x: number; y: number; }
+>x : number
+>p.y : number
+>p : T
+>y : number
+>y : number
+>p.x : number
+>p : T
+>x : number
+        }
+    }
+    export var Origin: Point = { x: 0, y: 0 };
+>Origin : Point
+>Point : Point
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+}
+
 === tests/cases/compiler/part2.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 2 col 8 IdentifierName "Origin" = string
-Line 4 col 18 IdentifierName "Utils" = Utils
-Line 5 col 21 IdentifierName "Plane" = Plane
-Line 6 col 31 IdentifierName "tl" = Point
-Line 6 col 35 IdentifierName "Point" = Point
-Line 6 col 49 IdentifierName "br" = Point
-Line 6 col 53 IdentifierName "Point" = Point
+module A {
+>A : A
+
+    // not a collision, since we don't export
+    var Origin: string = "0,0";
+>Origin : string
+
+    export module Utils {
+>Utils : Utils
+
+        export class Plane {
+>Plane : Plane
+
+            constructor(public tl: Point, public br: Point) { }
+>tl : Point
+>Point : Point
+>br : Point
+>Point : Point
+        }
+    }
+}
+
 === tests/cases/compiler/part3.ts ===
-Line 2 col 4 IdentifierName "o" = { x: number; y: number; }
-Line 2 col 9 IdentifierName "x" = number
-Line 2 col 20 IdentifierName "y" = number
-Line 3 col 4 IdentifierName "o" = A.Point
-Line 3 col 7 IdentifierName "A" = A
-Line 3 col 9 IdentifierName "Point" = A.Point
-Line 4 col 4 IdentifierName "o" = A.Point
-Line 4 col 8 MemberAccessExpression "A.Origin" = A.Point
-Line 4 col 8 IdentifierName "A" = typeof A
-Line 4 col 10 IdentifierName "Origin" = A.Point
-Line 5 col 4 IdentifierName "o" = { x: number; y: number; }
-Line 5 col 8 InvocationExpression "A.Utils.mirror(o)" = { x: number; y: number; }
-Line 5 col 8 MemberAccessExpression "A.Utils.mirror" = typeof A.Utils.mirror
-Line 5 col 8 MemberAccessExpression "A.Utils" = typeof A.Utils
-Line 5 col 8 IdentifierName "A" = typeof A
-Line 5 col 10 IdentifierName "Utils" = typeof A.Utils
-Line 5 col 16 IdentifierName "mirror" = typeof A.Utils.mirror
-Line 5 col 23 IdentifierName "o" = { x: number; y: number; }
-Line 7 col 4 IdentifierName "p" = { tl: A.Point; br: A.Point; }
-Line 7 col 9 IdentifierName "tl" = A.Point
-Line 7 col 13 IdentifierName "A" = A
-Line 7 col 15 IdentifierName "Point" = A.Point
-Line 7 col 22 IdentifierName "br" = A.Point
-Line 7 col 26 IdentifierName "A" = A
-Line 7 col 28 IdentifierName "Point" = A.Point
-Line 8 col 4 IdentifierName "p" = A.Utils.Plane
-Line 8 col 7 IdentifierName "A" = A
-Line 8 col 9 IdentifierName "Utils" = A.Utils
-Line 8 col 15 IdentifierName "Plane" = A.Utils.Plane
-Line 9 col 4 IdentifierName "p" = A.Utils.Plane
-Line 9 col 8 ObjectCreationExpression "new A.Utils.Plane(o, { x: 1, y: 1 })" = A.Utils.Plane
-Line 9 col 12 MemberAccessExpression "A.Utils.Plane" = typeof A.Utils.Plane
-Line 9 col 12 MemberAccessExpression "A.Utils" = typeof A.Utils
-Line 9 col 12 IdentifierName "A" = typeof A
-Line 9 col 14 IdentifierName "Utils" = typeof A.Utils
-Line 9 col 20 IdentifierName "Plane" = typeof A.Utils.Plane
-Line 9 col 26 IdentifierName "o" = { x: number; y: number; }
-Line 9 col 29 ObjectLiteralExpression "{ x: 1, y: 1 }" = { x: number; y: number; }
-Line 9 col 31 IdentifierName "x" = number
-Line 9 col 37 IdentifierName "y" = number
+// test the merging actually worked
+
+var o: { x: number; y: number };
+>o : { x: number; y: number; }
+>x : number
+>y : number
+
+var o: A.Point;
+>o : A.Point
+>A : A
+>Point : A.Point
+
+var o = A.Origin;
+>o : A.Point
+>A.Origin : A.Point
+>A : typeof A
+>Origin : A.Point
+
+var o = A.Utils.mirror(o);
+>o : { x: number; y: number; }
+>A.Utils.mirror(o) : { x: number; y: number; }
+>A.Utils.mirror : typeof A.Utils.mirror
+>A.Utils : typeof A.Utils
+>A : typeof A
+>Utils : typeof A.Utils
+>mirror : typeof A.Utils.mirror
+>o : { x: number; y: number; }
+
+var p: { tl: A.Point; br: A.Point };
+>p : { tl: A.Point; br: A.Point; }
+>tl : A.Point
+>A : A
+>Point : A.Point
+>br : A.Point
+>A : A
+>Point : A.Point
+
+var p: A.Utils.Plane;
+>p : A.Utils.Plane
+>A : A
+>Utils : A.Utils
+>Plane : A.Utils.Plane
+
+var p = new A.Utils.Plane(o, { x: 1, y: 1 });
+>p : A.Utils.Plane
+>new A.Utils.Plane(o, { x: 1, y: 1 }) : A.Utils.Plane
+>A.Utils.Plane : typeof A.Utils.Plane
+>A.Utils : typeof A.Utils
+>A : typeof A
+>Utils : typeof A.Utils
+>Plane : typeof A.Utils.Plane
+>o : { x: number; y: number; }
+>{ x: 1, y: 1 } : { x: number; y: number; }
+>x : number
+>y : number
+
+

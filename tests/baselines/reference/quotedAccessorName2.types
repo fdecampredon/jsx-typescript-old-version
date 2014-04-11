@@ -1,2 +1,6 @@
 === tests/cases/compiler/quotedAccessorName2.ts ===
-Line 0 col 6 IdentifierName "C" = C
+class C {
+>C : C
+
+    static get "foo"() { return 0; }
+}

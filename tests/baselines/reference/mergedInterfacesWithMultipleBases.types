@@ -1,49 +1,121 @@
 === tests/cases/compiler/mergedInterfacesWithMultipleBases.ts ===
-Line 3 col 6 IdentifierName "C" = C
-Line 4 col 0 IdentifierName "a" = number
-Line 7 col 6 IdentifierName "C2" = C2
-Line 8 col 0 IdentifierName "b" = number
-Line 11 col 10 IdentifierName "A" = A
-Line 11 col 20 IdentifierName "C" = C
-Line 12 col 0 IdentifierName "y" = string
-Line 15 col 10 IdentifierName "A" = A
-Line 15 col 20 IdentifierName "C2" = C2
-Line 16 col 0 IdentifierName "z" = string
-Line 19 col 6 IdentifierName "D" = D
-Line 19 col 19 IdentifierName "A" = A
-Line 20 col 0 IdentifierName "a" = number
-Line 21 col 0 IdentifierName "b" = number
-Line 22 col 0 IdentifierName "y" = string
-Line 23 col 0 IdentifierName "z" = string
-Line 26 col 4 IdentifierName "a" = A
-Line 26 col 7 IdentifierName "A" = A
-Line 27 col 4 IdentifierName "r" = number
-Line 27 col 8 MemberAccessExpression "a.a" = number
-Line 27 col 8 IdentifierName "a" = A
-Line 27 col 10 IdentifierName "a" = number
-Line 30 col 7 IdentifierName "M" = M
-Line 31 col 10 IdentifierName "C" = C<T>
-Line 31 col 12 IdentifierName "T" = T
-Line 32 col 0 IdentifierName "a" = T
-Line 32 col 11 IdentifierName "T" = T
-Line 35 col 10 IdentifierName "C2" = C2<T>
-Line 35 col 13 IdentifierName "T" = T
-Line 36 col 0 IdentifierName "b" = T
-Line 36 col 11 IdentifierName "T" = T
-Line 39 col 14 IdentifierName "A" = A<T>
-Line 39 col 16 IdentifierName "T" = T
-Line 39 col 27 IdentifierName "C" = C<T>
-Line 39 col 29 IdentifierName "T" = T
-Line 40 col 0 IdentifierName "y" = T
-Line 40 col 11 IdentifierName "T" = T
-Line 43 col 14 IdentifierName "A" = A<T>
-Line 43 col 16 IdentifierName "T" = T
-Line 43 col 27 IdentifierName "C2" = C2<T>
-Line 44 col 0 IdentifierName "z" = T
-Line 44 col 11 IdentifierName "T" = T
-Line 47 col 10 IdentifierName "D" = D
-Line 47 col 23 IdentifierName "A" = A<T>
-Line 48 col 0 IdentifierName "a" = boolean
-Line 49 col 0 IdentifierName "b" = string
-Line 50 col 0 IdentifierName "y" = boolean
-Line 51 col 0 IdentifierName "z" = boolean
+// merged interfaces behave as if all extends clauses from each declaration are merged together
+// no errors expected
+
+class C {
+>C : C
+
+    a: number;
+>a : number
+}
+
+class C2 {
+>C2 : C2
+
+    b: number;
+>b : number
+}
+
+interface A extends C {
+>A : A
+>C : C
+
+    y: string;
+>y : string
+}
+
+interface A extends C2 {
+>A : A
+>C2 : C2
+
+    z: string;
+>z : string
+}
+
+class D implements A {
+>D : D
+>A : A
+
+    a: number;
+>a : number
+
+    b: number;
+>b : number
+
+    y: string;
+>y : string
+
+    z: string;
+>z : string
+}
+
+var a: A;
+>a : A
+>A : A
+
+var r = a.a;
+>r : number
+>a.a : number
+>a : A
+>a : number
+
+// generic interfaces in a module
+module M {
+>M : M
+
+    class C<T> {
+>C : C<T>
+>T : T
+
+        a: T;
+>a : T
+>T : T
+    }
+
+    class C2<T> {
+>C2 : C2<T>
+>T : T
+
+        b: T;
+>b : T
+>T : T
+    }
+
+    interface A<T> extends C<T> {
+>A : A<T>
+>T : T
+>C : C<T>
+>T : T
+
+        y: T;
+>y : T
+>T : T
+    }
+
+    interface A<T> extends C2<string> {
+>A : A<T>
+>T : T
+>C2 : C2<T>
+
+        z: T;
+>z : T
+>T : T
+    }
+
+    class D implements A<boolean> {
+>D : D
+>A : A<T>
+
+        a: boolean;
+>a : boolean
+
+        b: string;
+>b : string
+
+        y: boolean;
+>y : boolean
+
+        z: boolean;
+>z : boolean
+    }
+}

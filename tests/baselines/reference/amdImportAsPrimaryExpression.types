@@ -1,13 +1,25 @@
 === tests/cases/compiler/foo_1.ts ===
-Line 0 col 7 IdentifierName "foo" = foo
-Line 1 col 3 EqualsExpression "foo.E1.A === 0" = boolean
-Line 1 col 3 MemberAccessExpression "foo.E1.A" = foo.E1
-Line 1 col 3 MemberAccessExpression "foo.E1" = typeof foo.E1
-Line 1 col 3 IdentifierName "foo" = typeof foo
-Line 1 col 7 IdentifierName "E1" = typeof foo.E1
-Line 1 col 10 IdentifierName "A" = foo.E1
+import foo = require("./foo_0");
+>foo : foo
+
+if(foo.E1.A === 0){
+>foo.E1.A === 0 : boolean
+>foo.E1.A : foo.E1
+>foo.E1 : typeof foo.E1
+>foo : typeof foo
+>E1 : typeof foo.E1
+>A : foo.E1
+
+	// Should cause runtime import - interesting optimization possibility, as gets inlined to 0.
+}
+
 === tests/cases/compiler/foo_0.ts ===
-Line 0 col 12 IdentifierName "E1" = E1
-Line 1 col 0 IdentifierName "A" = E1
-Line 1 col 3 IdentifierName "B" = E1
-Line 1 col 5 IdentifierName "C" = E1
+export enum E1 {
+>E1 : E1
+
+	A,B,C
+>A : E1
+>B : E1
+>C : E1
+}
+

@@ -1,3 +1,4 @@
+//// [comparisonOperatorWithTypeParameter.js]
 var a;
 var b;
 

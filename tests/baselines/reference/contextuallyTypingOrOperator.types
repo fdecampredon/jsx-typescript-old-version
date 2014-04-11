@@ -1,46 +1,54 @@
 === tests/cases/compiler/contextuallyTypingOrOperator.ts ===
-Line 0 col 4 IdentifierName "v" = { a: (_: string) => number; }
-Line 0 col 9 IdentifierName "a" = (_: string) => number
-Line 0 col 13 IdentifierName "_" = string
-Line 0 col 38 LogicalOrExpression "{ a: s => s.length } || { a: s => 1 }" = { a: (_: string) => number; }
-Line 0 col 38 ObjectLiteralExpression "{ a: s => s.length }" = { a: (s: string) => number; }
-Line 0 col 40 IdentifierName "a" = (s: string) => number
-Line 0 col 43 SimpleArrowFunctionExpression "s => s.length" = (s: string) => number
-Line 0 col 43 IdentifierName "s" = string
-Line 0 col 48 MemberAccessExpression "s.length" = number
-Line 0 col 48 IdentifierName "s" = string
-Line 0 col 50 IdentifierName "length" = number
-Line 0 col 62 ObjectLiteralExpression "{ a: s => 1 }" = { a: (s: string) => number; }
-Line 0 col 64 IdentifierName "a" = (s: string) => number
-Line 0 col 67 SimpleArrowFunctionExpression "s => 1" = (s: string) => number
-Line 0 col 67 IdentifierName "s" = string
-Line 2 col 4 IdentifierName "v2" = (s: string) => {}
-Line 2 col 9 ParenthesizedArrowFunctionExpression "(s: string) => s.length || function (s) { s.length }" = (s: string) => {}
-Line 2 col 10 IdentifierName "s" = string
-Line 2 col 24 LogicalOrExpression "s.length || function (s) { s.length }" = {}
-Line 2 col 24 MemberAccessExpression "s.length" = number
-Line 2 col 24 IdentifierName "s" = string
-Line 2 col 26 IdentifierName "length" = number
-Line 2 col 36 FunctionExpression "function (s) { s.length }" = (s: any) => void
-Line 2 col 46 IdentifierName "s" = any
-Line 2 col 51 MemberAccessExpression "s.length" = any
-Line 2 col 51 IdentifierName "s" = any
-Line 2 col 53 IdentifierName "length" = any
-Line 4 col 4 IdentifierName "v3" = (s: string) => {}
-Line 4 col 9 ParenthesizedArrowFunctionExpression "(s: string) => s.length || function (s: number) { return 1 }" = (s: string) => {}
-Line 4 col 10 IdentifierName "s" = string
-Line 4 col 24 LogicalOrExpression "s.length || function (s: number) { return 1 }" = {}
-Line 4 col 24 MemberAccessExpression "s.length" = number
-Line 4 col 24 IdentifierName "s" = string
-Line 4 col 26 IdentifierName "length" = number
-Line 4 col 36 FunctionExpression "function (s: number) { return 1 }" = (s: number) => number
-Line 4 col 46 IdentifierName "s" = number
-Line 5 col 4 IdentifierName "v4" = (s: number) => {}
-Line 5 col 9 ParenthesizedArrowFunctionExpression "(s: number) => 1 || function (s: string) { return s.length }" = (s: number) => {}
-Line 5 col 10 IdentifierName "s" = number
-Line 5 col 24 LogicalOrExpression "1 || function (s: string) { return s.length }" = {}
-Line 5 col 29 FunctionExpression "function (s: string) { return s.length }" = (s: string) => number
-Line 5 col 39 IdentifierName "s" = string
-Line 5 col 59 MemberAccessExpression "s.length" = number
-Line 5 col 59 IdentifierName "s" = string
-Line 5 col 61 IdentifierName "length" = number
+var v: { a: (_: string) => number } = { a: s => s.length } || { a: s => 1 };
+>v : { a: (_: string) => number; }
+>a : (_: string) => number
+>_ : string
+>{ a: s => s.length } || { a: s => 1 } : { a: (_: string) => number; }
+>{ a: s => s.length } : { a: (s: string) => number; }
+>a : (s: string) => number
+>s => s.length : (s: string) => number
+>s : string
+>s.length : number
+>s : string
+>length : number
+>{ a: s => 1 } : { a: (s: string) => number; }
+>a : (s: string) => number
+>s => 1 : (s: string) => number
+>s : string
+
+var v2 = (s: string) => s.length || function (s) { s.length };
+>v2 : (s: string) => {}
+>(s: string) => s.length || function (s) { s.length } : (s: string) => {}
+>s : string
+>s.length || function (s) { s.length } : {}
+>s.length : number
+>s : string
+>length : number
+>function (s) { s.length } : (s: any) => void
+>s : any
+>s.length : any
+>s : any
+>length : any
+
+var v3 = (s: string) => s.length || function (s: number) { return 1 };
+>v3 : (s: string) => {}
+>(s: string) => s.length || function (s: number) { return 1 } : (s: string) => {}
+>s : string
+>s.length || function (s: number) { return 1 } : {}
+>s.length : number
+>s : string
+>length : number
+>function (s: number) { return 1 } : (s: number) => number
+>s : number
+
+var v4 = (s: number) => 1 || function (s: string) { return s.length };
+>v4 : (s: number) => {}
+>(s: number) => 1 || function (s: string) { return s.length } : (s: number) => {}
+>s : number
+>1 || function (s: string) { return s.length } : {}
+>function (s: string) { return s.length } : (s: string) => number
+>s : string
+>s.length : number
+>s : string
+>length : number
+

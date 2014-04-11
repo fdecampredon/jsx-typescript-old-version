@@ -1,6 +1,8 @@
 === tests/cases/compiler/topLevelLambda3.ts ===
-Line 0 col 4 IdentifierName "f" = () => void
-Line 0 col 8 ParenthesizedArrowFunctionExpression "() => {this.window;}" = () => void
-Line 0 col 15 MemberAccessExpression "this.window" = any
-Line 0 col 15 ThisKeyword "this" = any
-Line 0 col 20 IdentifierName "window" = any
+var f = () => {this.window;}
+>f : () => void
+>() => {this.window;} : () => void
+>this.window : any
+>this : any
+>window : any
+

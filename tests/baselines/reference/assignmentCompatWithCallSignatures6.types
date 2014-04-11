@@ -1,198 +1,273 @@
 === tests/cases/compiler/assignmentCompatWithCallSignatures6.ts ===
-Line 2 col 6 IdentifierName "Base" = Base
-Line 2 col 13 IdentifierName "foo" = string
-Line 3 col 6 IdentifierName "Derived" = Derived
-Line 3 col 22 IdentifierName "Base" = Base
-Line 3 col 29 IdentifierName "bar" = string
-Line 4 col 6 IdentifierName "Derived2" = Derived2
-Line 4 col 23 IdentifierName "Derived" = Derived
-Line 4 col 33 IdentifierName "baz" = string
-Line 5 col 6 IdentifierName "OtherDerived" = OtherDerived
-Line 5 col 27 IdentifierName "Base" = Base
-Line 5 col 34 IdentifierName "bing" = string
-Line 7 col 10 IdentifierName "A" = A
-Line 8 col 0 IdentifierName "a" = <T>(x: T) => T[]
-Line 8 col 8 IdentifierName "T" = T
-Line 8 col 11 IdentifierName "x" = T
-Line 8 col 14 IdentifierName "T" = T
-Line 8 col 20 IdentifierName "T" = T
-Line 9 col 0 IdentifierName "a2" = <T>(x: T) => string[]
-Line 9 col 9 IdentifierName "T" = T
-Line 9 col 12 IdentifierName "x" = T
-Line 9 col 15 IdentifierName "T" = T
-Line 10 col 0 IdentifierName "a3" = <T>(x: T) => void
-Line 10 col 9 IdentifierName "T" = T
-Line 10 col 12 IdentifierName "x" = T
-Line 10 col 15 IdentifierName "T" = T
-Line 11 col 0 IdentifierName "a4" = <T, U>(x: T, y: U) => string
-Line 11 col 9 IdentifierName "T" = T
-Line 11 col 11 IdentifierName "U" = U
-Line 11 col 14 IdentifierName "x" = T
-Line 11 col 17 IdentifierName "T" = T
-Line 11 col 20 IdentifierName "y" = U
-Line 11 col 23 IdentifierName "U" = U
-Line 12 col 0 IdentifierName "a5" = <T, U>(x: (arg: T) => U) => T
-Line 12 col 9 IdentifierName "T" = T
-Line 12 col 11 IdentifierName "U" = U
-Line 12 col 14 IdentifierName "x" = (arg: T) => U
-Line 12 col 18 IdentifierName "arg" = T
-Line 12 col 23 IdentifierName "T" = T
-Line 12 col 29 IdentifierName "U" = U
-Line 12 col 35 IdentifierName "T" = T
-Line 13 col 0 IdentifierName "a6" = <T extends Base>(x: (arg: T) => Derived) => T
-Line 13 col 9 IdentifierName "T" = T
-Line 13 col 19 IdentifierName "Base" = Base
-Line 13 col 25 IdentifierName "x" = (arg: T) => Derived
-Line 13 col 29 IdentifierName "arg" = T
-Line 13 col 34 IdentifierName "T" = T
-Line 13 col 40 IdentifierName "Derived" = Derived
-Line 13 col 52 IdentifierName "T" = T
-Line 14 col 0 IdentifierName "a11" = <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
-Line 14 col 10 IdentifierName "T" = T
-Line 14 col 13 IdentifierName "x" = { foo: T; }
-Line 14 col 18 IdentifierName "foo" = T
-Line 14 col 23 IdentifierName "T" = T
-Line 14 col 28 IdentifierName "y" = { foo: T; bar: T; }
-Line 14 col 33 IdentifierName "foo" = T
-Line 14 col 38 IdentifierName "T" = T
-Line 14 col 41 IdentifierName "bar" = T
-Line 14 col 46 IdentifierName "T" = T
-Line 14 col 54 IdentifierName "Base" = Base
-Line 15 col 0 IdentifierName "a15" = <T>(x: { a: T; b: T; }) => T[]
-Line 15 col 10 IdentifierName "T" = T
-Line 15 col 13 IdentifierName "x" = { a: T; b: T; }
-Line 15 col 18 IdentifierName "a" = T
-Line 15 col 21 IdentifierName "T" = T
-Line 15 col 24 IdentifierName "b" = T
-Line 15 col 27 IdentifierName "T" = T
-Line 15 col 35 IdentifierName "T" = T
-Line 16 col 0 IdentifierName "a16" = <T extends Base>(x: { a: T; b: T; }) => T[]
-Line 16 col 10 IdentifierName "T" = T
-Line 16 col 20 IdentifierName "Base" = Base
-Line 16 col 26 IdentifierName "x" = { a: T; b: T; }
-Line 16 col 31 IdentifierName "a" = T
-Line 16 col 34 IdentifierName "T" = T
-Line 16 col 37 IdentifierName "b" = T
-Line 16 col 40 IdentifierName "T" = T
-Line 16 col 48 IdentifierName "T" = T
-Line 19 col 4 IdentifierName "x" = A
-Line 19 col 7 IdentifierName "A" = A
-Line 21 col 4 IdentifierName "b" = <T>(x: T) => T[]
-Line 21 col 8 IdentifierName "T" = T
-Line 21 col 11 IdentifierName "x" = T
-Line 21 col 14 IdentifierName "T" = T
-Line 21 col 20 IdentifierName "T" = T
-Line 22 col 0 AssignmentExpression "x.a = b" = <T>(x: T) => T[]
-Line 22 col 0 MemberAccessExpression "x.a" = <T>(x: T) => T[]
-Line 22 col 0 IdentifierName "x" = A
-Line 22 col 2 IdentifierName "a" = <T>(x: T) => T[]
-Line 22 col 6 IdentifierName "b" = <T>(x: T) => T[]
-Line 23 col 0 AssignmentExpression "b = x.a" = <T>(x: T) => T[]
-Line 23 col 0 IdentifierName "b" = <T>(x: T) => T[]
-Line 23 col 4 MemberAccessExpression "x.a" = <T>(x: T) => T[]
-Line 23 col 4 IdentifierName "x" = A
-Line 23 col 6 IdentifierName "a" = <T>(x: T) => T[]
-Line 24 col 4 IdentifierName "b2" = <T>(x: T) => string[]
-Line 24 col 9 IdentifierName "T" = T
-Line 24 col 12 IdentifierName "x" = T
-Line 24 col 15 IdentifierName "T" = T
-Line 25 col 0 AssignmentExpression "x.a2 = b2" = <T>(x: T) => string[]
-Line 25 col 0 MemberAccessExpression "x.a2" = <T>(x: T) => string[]
-Line 25 col 0 IdentifierName "x" = A
-Line 25 col 2 IdentifierName "a2" = <T>(x: T) => string[]
-Line 25 col 7 IdentifierName "b2" = <T>(x: T) => string[]
-Line 26 col 0 AssignmentExpression "b2 = x.a2" = <T>(x: T) => string[]
-Line 26 col 0 IdentifierName "b2" = <T>(x: T) => string[]
-Line 26 col 5 MemberAccessExpression "x.a2" = <T>(x: T) => string[]
-Line 26 col 5 IdentifierName "x" = A
-Line 26 col 7 IdentifierName "a2" = <T>(x: T) => string[]
-Line 27 col 4 IdentifierName "b3" = <T>(x: T) => T
-Line 27 col 9 IdentifierName "T" = T
-Line 27 col 12 IdentifierName "x" = T
-Line 27 col 15 IdentifierName "T" = T
-Line 27 col 21 IdentifierName "T" = T
-Line 28 col 0 AssignmentExpression "x.a3 = b3" = <T>(x: T) => T
-Line 28 col 0 MemberAccessExpression "x.a3" = <T>(x: T) => void
-Line 28 col 0 IdentifierName "x" = A
-Line 28 col 2 IdentifierName "a3" = <T>(x: T) => void
-Line 28 col 7 IdentifierName "b3" = <T>(x: T) => T
-Line 29 col 0 AssignmentExpression "b3 = x.a3" = <T>(x: T) => void
-Line 29 col 0 IdentifierName "b3" = <T>(x: T) => T
-Line 29 col 5 MemberAccessExpression "x.a3" = <T>(x: T) => void
-Line 29 col 5 IdentifierName "x" = A
-Line 29 col 7 IdentifierName "a3" = <T>(x: T) => void
-Line 30 col 4 IdentifierName "b4" = <T, U>(x: T, y: U) => string
-Line 30 col 9 IdentifierName "T" = T
-Line 30 col 12 IdentifierName "U" = U
-Line 30 col 15 IdentifierName "x" = T
-Line 30 col 18 IdentifierName "T" = T
-Line 30 col 21 IdentifierName "y" = U
-Line 30 col 24 IdentifierName "U" = U
-Line 31 col 0 AssignmentExpression "x.a4 = b4" = <T, U>(x: T, y: U) => string
-Line 31 col 0 MemberAccessExpression "x.a4" = <T, U>(x: T, y: U) => string
-Line 31 col 0 IdentifierName "x" = A
-Line 31 col 2 IdentifierName "a4" = <T, U>(x: T, y: U) => string
-Line 31 col 7 IdentifierName "b4" = <T, U>(x: T, y: U) => string
-Line 32 col 0 AssignmentExpression "b4 = x.a4" = <T, U>(x: T, y: U) => string
-Line 32 col 0 IdentifierName "b4" = <T, U>(x: T, y: U) => string
-Line 32 col 5 MemberAccessExpression "x.a4" = <T, U>(x: T, y: U) => string
-Line 32 col 5 IdentifierName "x" = A
-Line 32 col 7 IdentifierName "a4" = <T, U>(x: T, y: U) => string
-Line 33 col 4 IdentifierName "b5" = <T, U>(x: (arg: T) => U) => T
-Line 33 col 9 IdentifierName "T" = T
-Line 33 col 12 IdentifierName "U" = U
-Line 33 col 15 IdentifierName "x" = (arg: T) => U
-Line 33 col 19 IdentifierName "arg" = T
-Line 33 col 24 IdentifierName "T" = T
-Line 33 col 30 IdentifierName "U" = U
-Line 33 col 36 IdentifierName "T" = T
-Line 34 col 0 AssignmentExpression "x.a5 = b5" = <T, U>(x: (arg: T) => U) => T
-Line 34 col 0 MemberAccessExpression "x.a5" = <T, U>(x: (arg: T) => U) => T
-Line 34 col 0 IdentifierName "x" = A
-Line 34 col 2 IdentifierName "a5" = <T, U>(x: (arg: T) => U) => T
-Line 34 col 7 IdentifierName "b5" = <T, U>(x: (arg: T) => U) => T
-Line 35 col 0 AssignmentExpression "b5 = x.a5" = <T, U>(x: (arg: T) => U) => T
-Line 35 col 0 IdentifierName "b5" = <T, U>(x: (arg: T) => U) => T
-Line 35 col 5 MemberAccessExpression "x.a5" = <T, U>(x: (arg: T) => U) => T
-Line 35 col 5 IdentifierName "x" = A
-Line 35 col 7 IdentifierName "a5" = <T, U>(x: (arg: T) => U) => T
-Line 36 col 4 IdentifierName "b11" = <T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
-Line 36 col 10 IdentifierName "T" = T
-Line 36 col 13 IdentifierName "U" = U
-Line 36 col 16 IdentifierName "x" = { foo: T; }
-Line 36 col 21 IdentifierName "foo" = T
-Line 36 col 26 IdentifierName "T" = T
-Line 36 col 31 IdentifierName "y" = { foo: U; bar: U; }
-Line 36 col 36 IdentifierName "foo" = U
-Line 36 col 41 IdentifierName "U" = U
-Line 36 col 44 IdentifierName "bar" = U
-Line 36 col 49 IdentifierName "U" = U
-Line 36 col 57 IdentifierName "Base" = Base
-Line 37 col 0 AssignmentExpression "x.a11 = b11" = <T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
-Line 37 col 0 MemberAccessExpression "x.a11" = <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
-Line 37 col 0 IdentifierName "x" = A
-Line 37 col 2 IdentifierName "a11" = <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
-Line 37 col 8 IdentifierName "b11" = <T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
-Line 38 col 0 AssignmentExpression "b11 = x.a11" = <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
-Line 38 col 0 IdentifierName "b11" = <T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
-Line 38 col 6 MemberAccessExpression "x.a11" = <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
-Line 38 col 6 IdentifierName "x" = A
-Line 38 col 8 IdentifierName "a11" = <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
-Line 39 col 4 IdentifierName "b16" = <T>(x: { a: T; b: T; }) => T[]
-Line 39 col 10 IdentifierName "T" = T
-Line 39 col 13 IdentifierName "x" = { a: T; b: T; }
-Line 39 col 18 IdentifierName "a" = T
-Line 39 col 21 IdentifierName "T" = T
-Line 39 col 24 IdentifierName "b" = T
-Line 39 col 27 IdentifierName "T" = T
-Line 39 col 35 IdentifierName "T" = T
-Line 40 col 0 AssignmentExpression "x.a16 = b16" = <T>(x: { a: T; b: T; }) => T[]
-Line 40 col 0 MemberAccessExpression "x.a16" = <T extends Base>(x: { a: T; b: T; }) => T[]
-Line 40 col 0 IdentifierName "x" = A
-Line 40 col 2 IdentifierName "a16" = <T extends Base>(x: { a: T; b: T; }) => T[]
-Line 40 col 8 IdentifierName "b16" = <T>(x: { a: T; b: T; }) => T[]
-Line 41 col 0 AssignmentExpression "b16 = x.a16" = <T extends Base>(x: { a: T; b: T; }) => T[]
-Line 41 col 0 IdentifierName "b16" = <T>(x: { a: T; b: T; }) => T[]
-Line 41 col 6 MemberAccessExpression "x.a16" = <T extends Base>(x: { a: T; b: T; }) => T[]
-Line 41 col 6 IdentifierName "x" = A
-Line 41 col 8 IdentifierName "a16" = <T extends Base>(x: { a: T; b: T; }) => T[]
+// checking assignment compatibility relations for function types. All valid
+
+class Base { foo: string; }
+>Base : Base
+>foo : string
+
+class Derived extends Base { bar: string; }
+>Derived : Derived
+>Base : Base
+>bar : string
+
+class Derived2 extends Derived { baz: string; }
+>Derived2 : Derived2
+>Derived : Derived
+>baz : string
+
+class OtherDerived extends Base { bing: string; }
+>OtherDerived : OtherDerived
+>Base : Base
+>bing : string
+
+interface A {
+>A : A
+
+    a: <T>(x: T) => T[];
+>a : <T>(x: T) => T[]
+>T : T
+>x : T
+>T : T
+>T : T
+
+    a2: <T>(x: T) => string[];
+>a2 : <T>(x: T) => string[]
+>T : T
+>x : T
+>T : T
+
+    a3: <T>(x: T) => void;
+>a3 : <T>(x: T) => void
+>T : T
+>x : T
+>T : T
+
+    a4: <T,U>(x: T, y: U) => string;
+>a4 : <T, U>(x: T, y: U) => string
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+
+    a5: <T,U>(x: (arg: T) => U) => T;
+>a5 : <T, U>(x: (arg: T) => U) => T
+>T : T
+>U : U
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>T : T
+
+    a6: <T extends Base>(x: (arg: T) => Derived) => T;
+>a6 : <T extends Base>(x: (arg: T) => Derived) => T
+>T : T
+>Base : Base
+>x : (arg: T) => Derived
+>arg : T
+>T : T
+>Derived : Derived
+>T : T
+
+    a11: <T>(x: { foo: T }, y: { foo: T; bar: T }) => Base;
+>a11 : <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+>T : T
+>x : { foo: T; }
+>foo : T
+>T : T
+>y : { foo: T; bar: T; }
+>foo : T
+>T : T
+>bar : T
+>T : T
+>Base : Base
+
+    a15: <T>(x: { a: T; b: T }) => T[];
+>a15 : <T>(x: { a: T; b: T; }) => T[]
+>T : T
+>x : { a: T; b: T; }
+>a : T
+>T : T
+>b : T
+>T : T
+>T : T
+
+    a16: <T extends Base>(x: { a: T; b: T }) => T[];
+>a16 : <T extends Base>(x: { a: T; b: T; }) => T[]
+>T : T
+>Base : Base
+>x : { a: T; b: T; }
+>a : T
+>T : T
+>b : T
+>T : T
+>T : T
+}
+
+var x: A;
+>x : A
+>A : A
+
+var b: <T>(x: T) => T[]; 
+>b : <T>(x: T) => T[]
+>T : T
+>x : T
+>T : T
+>T : T
+
+x.a = b;
+>x.a = b : <T>(x: T) => T[]
+>x.a : <T>(x: T) => T[]
+>x : A
+>a : <T>(x: T) => T[]
+>b : <T>(x: T) => T[]
+
+b = x.a;
+>b = x.a : <T>(x: T) => T[]
+>b : <T>(x: T) => T[]
+>x.a : <T>(x: T) => T[]
+>x : A
+>a : <T>(x: T) => T[]
+
+var b2: <T>(x: T) => string[]; 
+>b2 : <T>(x: T) => string[]
+>T : T
+>x : T
+>T : T
+
+x.a2 = b2;
+>x.a2 = b2 : <T>(x: T) => string[]
+>x.a2 : <T>(x: T) => string[]
+>x : A
+>a2 : <T>(x: T) => string[]
+>b2 : <T>(x: T) => string[]
+
+b2 = x.a2;
+>b2 = x.a2 : <T>(x: T) => string[]
+>b2 : <T>(x: T) => string[]
+>x.a2 : <T>(x: T) => string[]
+>x : A
+>a2 : <T>(x: T) => string[]
+
+var b3: <T>(x: T) => T;
+>b3 : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+x.a3 = b3;
+>x.a3 = b3 : <T>(x: T) => T
+>x.a3 : <T>(x: T) => void
+>x : A
+>a3 : <T>(x: T) => void
+>b3 : <T>(x: T) => T
+
+b3 = x.a3;
+>b3 = x.a3 : <T>(x: T) => void
+>b3 : <T>(x: T) => T
+>x.a3 : <T>(x: T) => void
+>x : A
+>a3 : <T>(x: T) => void
+
+var b4: <T, U>(x: T, y: U) => string; 
+>b4 : <T, U>(x: T, y: U) => string
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+
+x.a4 = b4;
+>x.a4 = b4 : <T, U>(x: T, y: U) => string
+>x.a4 : <T, U>(x: T, y: U) => string
+>x : A
+>a4 : <T, U>(x: T, y: U) => string
+>b4 : <T, U>(x: T, y: U) => string
+
+b4 = x.a4;
+>b4 = x.a4 : <T, U>(x: T, y: U) => string
+>b4 : <T, U>(x: T, y: U) => string
+>x.a4 : <T, U>(x: T, y: U) => string
+>x : A
+>a4 : <T, U>(x: T, y: U) => string
+
+var b5: <T, U>(x: (arg: T) => U) => T; 
+>b5 : <T, U>(x: (arg: T) => U) => T
+>T : T
+>U : U
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>T : T
+
+x.a5 = b5;
+>x.a5 = b5 : <T, U>(x: (arg: T) => U) => T
+>x.a5 : <T, U>(x: (arg: T) => U) => T
+>x : A
+>a5 : <T, U>(x: (arg: T) => U) => T
+>b5 : <T, U>(x: (arg: T) => U) => T
+
+b5 = x.a5;
+>b5 = x.a5 : <T, U>(x: (arg: T) => U) => T
+>b5 : <T, U>(x: (arg: T) => U) => T
+>x.a5 : <T, U>(x: (arg: T) => U) => T
+>x : A
+>a5 : <T, U>(x: (arg: T) => U) => T
+
+var b11: <T, U>(x: { foo: T }, y: { foo: U; bar: U }) => Base; 
+>b11 : <T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+>T : T
+>U : U
+>x : { foo: T; }
+>foo : T
+>T : T
+>y : { foo: U; bar: U; }
+>foo : U
+>U : U
+>bar : U
+>U : U
+>Base : Base
+
+x.a11 = b11;
+>x.a11 = b11 : <T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+>x.a11 : <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+>x : A
+>a11 : <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+>b11 : <T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+
+b11 = x.a11;
+>b11 = x.a11 : <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+>b11 : <T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+>x.a11 : <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+>x : A
+>a11 : <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+
+var b16: <T>(x: { a: T; b: T }) => T[]; 
+>b16 : <T>(x: { a: T; b: T; }) => T[]
+>T : T
+>x : { a: T; b: T; }
+>a : T
+>T : T
+>b : T
+>T : T
+>T : T
+
+x.a16 = b16;
+>x.a16 = b16 : <T>(x: { a: T; b: T; }) => T[]
+>x.a16 : <T extends Base>(x: { a: T; b: T; }) => T[]
+>x : A
+>a16 : <T extends Base>(x: { a: T; b: T; }) => T[]
+>b16 : <T>(x: { a: T; b: T; }) => T[]
+
+b16 = x.a16;
+>b16 = x.a16 : <T extends Base>(x: { a: T; b: T; }) => T[]
+>b16 : <T>(x: { a: T; b: T; }) => T[]
+>x.a16 : <T extends Base>(x: { a: T; b: T; }) => T[]
+>x : A
+>a16 : <T extends Base>(x: { a: T; b: T; }) => T[]
+

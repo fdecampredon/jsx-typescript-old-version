@@ -1,3 +1,5 @@
 === tests/cases/compiler/binaryArithmatic1.ts ===
-Line 0 col 4 IdentifierName "v" = number
-Line 0 col 8 BitwiseOrExpression "4 | null" = number
+var v = 4 | null;
+>v : number
+>4 | null : number
+

@@ -1,13 +1,23 @@
 === tests/cases/compiler/thisReferencedInFunctionInsideArrowFunction1.ts ===
-Line 0 col 4 IdentifierName "foo" = (dummy: any) => void
-Line 0 col 10 ParenthesizedArrowFunctionExpression "(dummy) => { }" = (dummy: any) => void
-Line 0 col 11 IdentifierName "dummy" = any
-Line 1 col 9 IdentifierName "test" = typeof test
-Line 3 col 0 InvocationExpression "foo(() =>
+var foo = (dummy) => { };
+>foo : (dummy: any) => void
+>(dummy) => { } : (dummy: any) => void
+>dummy : any
+
+function test()
+>test : typeof test
+{
+    foo(() =>
+>foo(() =>
         function () { return this; }
-    )" = void
-Line 3 col 0 IdentifierName "foo" = (dummy: any) => void
-Line 3 col 8 ParenthesizedArrowFunctionExpression "() =>
-        function () { return this; }" = () => () => any
-Line 4 col 0 FunctionExpression "function () { return this; }" = () => any
-Line 4 col 29 ThisKeyword "this" = any
+    ) : void
+>foo : (dummy: any) => void
+>() =>
+        function () { return this; } : () => () => any
+
+        function () { return this; }
+>function () { return this; } : () => any
+>this : any
+
+    );
+}

@@ -1,21 +1,45 @@
 === tests/cases/compiler/innerAliases2.ts ===
-Line 0 col 7 IdentifierName "_provider" = _provider
-Line 1 col 29 IdentifierName "UsefulClass" = UsefulClass
-Line 2 col 39 IdentifierName "foo" = () => void
-Line 7 col 7 IdentifierName "consumer" = consumer
-Line 8 col 23 IdentifierName "provider" = provider
-Line 8 col 34 IdentifierName "_provider" = _provider
-Line 10 col 20 IdentifierName "g" = _provider.UsefulClass
-Line 10 col 22 IdentifierName "provider" = provider
-Line 10 col 31 IdentifierName "UsefulClass" = _provider.UsefulClass
-Line 12 col 25 IdentifierName "use" = typeof use
-Line 12 col 31 IdentifierName "provider" = provider
-Line 12 col 40 IdentifierName "UsefulClass" = _provider.UsefulClass
-Line 13 col 36 IdentifierName "p2" = _provider.UsefulClass
-Line 13 col 39 IdentifierName "provider" = provider
-Line 13 col 48 IdentifierName "UsefulClass" = _provider.UsefulClass
-Line 13 col 61 ObjectCreationExpression "new provider.UsefulClass()" = _provider.UsefulClass
-Line 13 col 65 MemberAccessExpression "provider.UsefulClass" = typeof _provider.UsefulClass
-Line 13 col 65 IdentifierName "provider" = typeof _provider
-Line 13 col 74 IdentifierName "UsefulClass" = typeof _provider.UsefulClass
-Line 14 col 39 IdentifierName "p2" = _provider.UsefulClass
+module _provider {
+>_provider : _provider
+
+                export class UsefulClass {
+>UsefulClass : UsefulClass
+
+                                public foo() {
+>foo : () => void
+                                }
+                }
+}
+
+module consumer {
+>consumer : consumer
+
+                import provider = _provider;
+>provider : provider
+>_provider : _provider
+                
+                var g:provider.UsefulClass= null;
+>g : _provider.UsefulClass
+>provider : provider
+>UsefulClass : _provider.UsefulClass
+                
+                function use():provider.UsefulClass { 
+>use : typeof use
+>provider : provider
+>UsefulClass : _provider.UsefulClass
+
+                                var p2:provider.UsefulClass= new provider.UsefulClass();
+>p2 : _provider.UsefulClass
+>provider : provider
+>UsefulClass : _provider.UsefulClass
+>new provider.UsefulClass() : _provider.UsefulClass
+>provider.UsefulClass : typeof _provider.UsefulClass
+>provider : typeof _provider
+>UsefulClass : typeof _provider.UsefulClass
+
+                                return p2; 
+>p2 : _provider.UsefulClass
+                }
+}
+
+

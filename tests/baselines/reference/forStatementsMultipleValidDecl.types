@@ -1,73 +1,126 @@
 === tests/cases/compiler/forStatementsMultipleValidDecl.ts ===
-Line 2 col 9 IdentifierName "x" = number
-Line 3 col 9 IdentifierName "x" = number
-Line 5 col 9 IdentifierName "x" = number
-Line 5 col 13 CastExpression "<number>undefined" = number
-Line 5 col 21 IdentifierName "undefined" = any
-Line 7 col 9 IdentifierName "declSpace" = typeof declSpace
-Line 8 col 13 IdentifierName "x" = string
-Line 10 col 10 IdentifierName "Point" = Point
-Line 10 col 18 IdentifierName "x" = number
-Line 10 col 29 IdentifierName "y" = number
-Line 12 col 9 IdentifierName "p" = Point
-Line 12 col 12 IdentifierName "Point" = Point
-Line 13 col 9 IdentifierName "p" = { x: number; y: number; }
-Line 13 col 13 ObjectLiteralExpression "{ x: 1, y: 2 }" = { x: number; y: number; }
-Line 13 col 15 IdentifierName "x" = number
-Line 13 col 21 IdentifierName "y" = number
-Line 14 col 9 IdentifierName "p" = Point
-Line 14 col 12 IdentifierName "Point" = Point
-Line 14 col 20 ObjectLiteralExpression "{ x: 0, y: undefined }" = { x: number; y: any; }
-Line 14 col 22 IdentifierName "x" = number
-Line 14 col 28 IdentifierName "y" = any
-Line 14 col 31 IdentifierName "undefined" = any
-Line 15 col 9 IdentifierName "p" = { x: number; y: number; }
-Line 15 col 13 ObjectLiteralExpression "{ x: 1, y: <number>undefined }" = { x: number; y: number; }
-Line 15 col 15 IdentifierName "x" = number
-Line 15 col 21 IdentifierName "y" = number
-Line 15 col 24 CastExpression "<number>undefined" = number
-Line 15 col 32 IdentifierName "undefined" = any
-Line 16 col 9 IdentifierName "p" = { x: number; y: number; }
-Line 16 col 14 IdentifierName "x" = number
-Line 16 col 25 IdentifierName "y" = number
-Line 16 col 40 ObjectLiteralExpression "{ x: 1, y: 2 }" = { x: number; y: number; }
-Line 16 col 42 IdentifierName "x" = number
-Line 16 col 48 IdentifierName "y" = number
-Line 17 col 9 IdentifierName "p" = { x: number; y: number; }
-Line 17 col 13 CastExpression "<{ x: number; y: number; }>{ x: 0, y: undefined }" = { x: number; y: number; }
-Line 17 col 16 IdentifierName "x" = number
-Line 17 col 27 IdentifierName "y" = number
-Line 17 col 40 ObjectLiteralExpression "{ x: 0, y: undefined }" = { x: number; y: any; }
-Line 17 col 42 IdentifierName "x" = number
-Line 17 col 48 IdentifierName "y" = any
-Line 17 col 51 IdentifierName "undefined" = any
-Line 18 col 9 IdentifierName "p" = Point
-Line 18 col 19 IdentifierName "p" = Point
-Line 20 col 9 IdentifierName "fn" = (s: string) => number
-Line 20 col 14 FunctionExpression "function (s: string) { return 42; }" = (s: string) => number
-Line 20 col 24 IdentifierName "s" = string
-Line 21 col 9 IdentifierName "fn" = (s: string) => number
-Line 21 col 14 ParenthesizedArrowFunctionExpression "(s: string) => 3" = (s: string) => number
-Line 21 col 15 IdentifierName "s" = string
-Line 22 col 9 IdentifierName "fn" = (s: string) => number
-Line 22 col 14 IdentifierName "s" = string
-Line 23 col 9 IdentifierName "fn" = (s: string) => number
-Line 23 col 16 IdentifierName "s" = string
-Line 24 col 9 IdentifierName "fn" = (s: string) => number
-Line 24 col 14 CastExpression "<(s: string) => number> null" = (s: string) => number
-Line 24 col 16 IdentifierName "s" = string
-Line 25 col 9 IdentifierName "fn" = (s: string) => number
-Line 25 col 20 IdentifierName "fn" = (s: string) => number
-Line 27 col 9 IdentifierName "a" = string[]
-Line 28 col 9 IdentifierName "a" = string[]
-Line 28 col 13 ArrayLiteralExpression "['a', 'b']" = string[]
-Line 29 col 9 IdentifierName "a" = string[]
-Line 29 col 13 CastExpression "<string[]>[]" = string[]
-Line 29 col 23 ArrayLiteralExpression "[]" = string[]
-Line 30 col 9 IdentifierName "a" = string[]
-Line 30 col 23 ArrayLiteralExpression "[]" = string[]
-Line 31 col 9 IdentifierName "a" = string[]
-Line 31 col 13 ObjectCreationExpression "new Array<string>()" = string[]
-Line 31 col 17 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
-Line 32 col 9 IdentifierName "a" = string[]
-Line 32 col 19 IdentifierName "a" = string[]
+// all expected to be valid
+
+for (var x: number; ;) { }
+>x : number
+
+for (var x = 2; ;) { }
+>x : number
+
+for (var x = <number>undefined; ;) { }
+>x : number
+><number>undefined : number
+>undefined : any
+
+// new declaration space, making redeclaring x as a string valid
+function declSpace() {
+>declSpace : typeof declSpace
+
+    for (var x = 'this is a string'; ;) { }
+>x : string
+}
+interface Point { x: number; y: number; }
+>Point : Point
+>x : number
+>y : number
+
+for (var p: Point; ;) { }
+>p : Point
+>Point : Point
+
+for (var p = { x: 1, y: 2 }; ;) { }
+>p : { x: number; y: number; }
+>{ x: 1, y: 2 } : { x: number; y: number; }
+>x : number
+>y : number
+
+for (var p: Point = { x: 0, y: undefined }; ;) { }
+>p : Point
+>Point : Point
+>{ x: 0, y: undefined } : { x: number; y: any; }
+>x : number
+>y : any
+>undefined : any
+
+for (var p = { x: 1, y: <number>undefined }; ;) { }
+>p : { x: number; y: number; }
+>{ x: 1, y: <number>undefined } : { x: number; y: number; }
+>x : number
+>y : number
+><number>undefined : number
+>undefined : any
+
+for (var p: { x: number; y: number; } = { x: 1, y: 2 }; ;) { }
+>p : { x: number; y: number; }
+>x : number
+>y : number
+>{ x: 1, y: 2 } : { x: number; y: number; }
+>x : number
+>y : number
+
+for (var p = <{ x: number; y: number; }>{ x: 0, y: undefined }; ;) { }
+>p : { x: number; y: number; }
+><{ x: number; y: number; }>{ x: 0, y: undefined } : { x: number; y: number; }
+>x : number
+>y : number
+>{ x: 0, y: undefined } : { x: number; y: any; }
+>x : number
+>y : any
+>undefined : any
+
+for (var p: typeof p; ;) { }
+>p : Point
+>p : Point
+
+for (var fn = function (s: string) { return 42; }; ;) { }
+>fn : (s: string) => number
+>function (s: string) { return 42; } : (s: string) => number
+>s : string
+
+for (var fn = (s: string) => 3; ;) { }
+>fn : (s: string) => number
+>(s: string) => 3 : (s: string) => number
+>s : string
+
+for (var fn: (s: string) => number; ;) { }
+>fn : (s: string) => number
+>s : string
+
+for (var fn: { (s: string): number }; ;) { }
+>fn : (s: string) => number
+>s : string
+
+for (var fn = <(s: string) => number> null; ;) { }
+>fn : (s: string) => number
+><(s: string) => number> null : (s: string) => number
+>s : string
+
+for (var fn: typeof fn; ;) { }
+>fn : (s: string) => number
+>fn : (s: string) => number
+
+for (var a: string[]; ;) { }
+>a : string[]
+
+for (var a = ['a', 'b']; ;) { }
+>a : string[]
+>['a', 'b'] : string[]
+
+for (var a = <string[]>[]; ;) { }
+>a : string[]
+><string[]>[] : string[]
+>[] : string[]
+
+for (var a: string[] = []; ;) { }
+>a : string[]
+>[] : string[]
+
+for (var a = new Array<string>(); ;) { }
+>a : string[]
+>new Array<string>() : string[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+
+for (var a: typeof a; ;) { }
+>a : string[]
+>a : string[]
+

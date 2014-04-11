@@ -1,3 +1,7 @@
 === tests/cases/compiler/separate1-2.ts ===
-Line 0 col 7 IdentifierName "X" = X
-Line 1 col 20 IdentifierName "f" = typeof f
+module X {
+>X : X
+
+    export function f() { }
+>f : typeof f
+}

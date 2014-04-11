@@ -1,3 +1,20 @@
+//// [arrayOfExportedClass_1.ts]
+///<reference path='arrayOfExportedClass_0.ts'/>
+import Car = require('arrayOfExportedClass_0');
+
+class Road {
+
+    public cars: Car[];
+
+    public AddCars(cars: Car[]) {
+
+        this.cars = cars;
+    }
+}
+
+export = Road;
+
+
 //// [arrayOfExportedClass_0.js]
 var Car = (function () {
     function Car() {

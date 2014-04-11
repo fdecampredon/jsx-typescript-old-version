@@ -1,9 +1,13 @@
 === tests/cases/compiler/indexer3.ts ===
-Line 0 col 4 IdentifierName "dateMap" = { [x: string]: Date; }
-Line 0 col 16 IdentifierName "x" = string
-Line 0 col 28 IdentifierName "Date" = Date
-Line 0 col 38 ObjectLiteralExpression "{}" = { [x: string]: Date; }
-Line 1 col 4 IdentifierName "r" = Date
-Line 1 col 7 IdentifierName "Date" = Date
-Line 1 col 14 ElementAccessExpression "dateMap["hello"] // result type includes indexer using BCT" = Date
-Line 1 col 14 IdentifierName "dateMap" = { [x: string]: Date; }
+var dateMap: { [x: string]: Date; } = {}
+>dateMap : { [x: string]: Date; }
+>x : string
+>Date : Date
+>{} : { [x: string]: Date; }
+
+var r: Date = dateMap["hello"] // result type includes indexer using BCT
+>r : Date
+>Date : Date
+>dateMap["hello"] // result type includes indexer using BCT : Date
+>dateMap : { [x: string]: Date; }
+

@@ -1,3 +1,21 @@
+//// [interMixingModulesInterfaces1.ts]
+module A {
+
+    export interface B {
+        name: string;
+        value: number;
+    }
+
+    export module B {
+        export function createB(): B {
+            return null;
+        }
+    }
+}
+
+var x: A.B = A.B.createB();
+
+//// [interMixingModulesInterfaces1.js]
 var A;
 (function (A) {
     (function (B) {

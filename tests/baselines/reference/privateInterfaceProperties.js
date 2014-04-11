@@ -1,3 +1,4 @@
+//// [privateInterfaceProperties.js]
 // should be an error
 var c1 = (function () {
     function c1() {

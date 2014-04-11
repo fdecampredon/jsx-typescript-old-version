@@ -1,63 +1,139 @@
 === tests/cases/compiler/typeofAnExportedType.ts ===
-Line 0 col 11 IdentifierName "x" = number
-Line 1 col 11 IdentifierName "r1" = number
-Line 1 col 22 IdentifierName "x" = number
-Line 2 col 11 IdentifierName "y" = { foo: string; }
-Line 2 col 15 ObjectLiteralExpression "{ foo: '' }" = { foo: string; }
-Line 2 col 17 IdentifierName "foo" = string
-Line 3 col 11 IdentifierName "r2" = { foo: string; }
-Line 3 col 22 IdentifierName "y" = { foo: string; }
-Line 4 col 13 IdentifierName "C" = C
-Line 5 col 0 IdentifierName "foo" = string
-Line 7 col 11 IdentifierName "c" = C
-Line 7 col 14 IdentifierName "C" = C
-Line 8 col 4 IdentifierName "c2" = C
-Line 8 col 8 IdentifierName "C" = C
-Line 10 col 11 IdentifierName "r3" = typeof C
-Line 10 col 22 IdentifierName "C" = typeof C
-Line 11 col 11 IdentifierName "r4" = C
-Line 11 col 22 IdentifierName "c" = C
-Line 12 col 11 IdentifierName "r4b" = C
-Line 12 col 23 IdentifierName "c2" = C
-Line 14 col 17 IdentifierName "I" = I
-Line 15 col 0 IdentifierName "foo" = string
-Line 17 col 11 IdentifierName "i" = I
-Line 17 col 14 IdentifierName "I" = I
-Line 18 col 4 IdentifierName "i2" = I
-Line 18 col 8 IdentifierName "I" = I
-Line 19 col 11 IdentifierName "r5" = I
-Line 19 col 22 IdentifierName "i" = I
-Line 20 col 11 IdentifierName "r5" = I
-Line 20 col 22 IdentifierName "i2" = I
-Line 22 col 14 IdentifierName "M" = Z
-Line 23 col 15 IdentifierName "foo" = string
-Line 24 col 17 IdentifierName "C" = C
-Line 25 col 0 IdentifierName "foo" = string
-Line 28 col 11 IdentifierName "r6" = typeof Z
-Line 28 col 22 IdentifierName "M" = typeof Z
-Line 29 col 11 IdentifierName "r7" = string
-Line 29 col 22 IdentifierName "M" = typeof Z
-Line 29 col 24 IdentifierName "foo" = string
-Line 31 col 14 IdentifierName "Z" = Z
-Line 31 col 18 IdentifierName "M" = Z
-Line 32 col 11 IdentifierName "r8" = typeof Z
-Line 32 col 22 IdentifierName "Z" = typeof Z
-Line 33 col 11 IdentifierName "r9" = string
-Line 33 col 22 IdentifierName "Z" = typeof Z
-Line 33 col 24 IdentifierName "foo" = string
-Line 35 col 12 IdentifierName "E" = E
-Line 36 col 0 IdentifierName "A" = E
-Line 38 col 11 IdentifierName "r10" = typeof E
-Line 38 col 23 IdentifierName "E" = typeof E
-Line 39 col 11 IdentifierName "r11" = E
-Line 39 col 23 IdentifierName "E" = typeof E
-Line 39 col 25 IdentifierName "A" = E
-Line 41 col 11 IdentifierName "r12" = any
-Line 41 col 23 IdentifierName "r12" = any
-Line 43 col 16 IdentifierName "foo" = typeof foo
-Line 44 col 14 IdentifierName "foo" = foo
-Line 45 col 15 IdentifierName "y" = number
-Line 46 col 17 IdentifierName "C" = C
-Line 47 col 0 IdentifierName "foo" = string
-Line 50 col 11 IdentifierName "r13" = typeof foo
-Line 50 col 23 IdentifierName "foo" = typeof foo
+export var x = 1;
+>x : number
+
+export var r1: typeof x;
+>r1 : number
+>x : number
+
+export var y = { foo: '' };
+>y : { foo: string; }
+>{ foo: '' } : { foo: string; }
+>foo : string
+
+export var r2: typeof y;
+>r2 : { foo: string; }
+>y : { foo: string; }
+
+export class C {
+>C : C
+
+    foo: string;
+>foo : string
+}
+export var c: C;
+>c : C
+>C : C
+
+var c2: C;
+>c2 : C
+>C : C
+
+export var r3: typeof C;
+>r3 : typeof C
+>C : typeof C
+
+export var r4: typeof c;
+>r4 : C
+>c : C
+
+export var r4b: typeof c2;
+>r4b : C
+>c2 : C
+
+export interface I {
+>I : I
+
+    foo: string;
+>foo : string
+}
+export var i: I;
+>i : I
+>I : I
+
+var i2: I;
+>i2 : I
+>I : I
+
+export var r5: typeof i;
+>r5 : I
+>i : I
+
+export var r5: typeof i2;
+>r5 : I
+>i2 : I
+
+export module M {
+>M : Z
+
+    export var foo = '';
+>foo : string
+
+    export class C {
+>C : C
+
+        foo: string;
+>foo : string
+    }
+}
+export var r6: typeof M;
+>r6 : typeof Z
+>M : typeof Z
+
+export var r7: typeof M.foo;
+>r7 : string
+>M : typeof Z
+>foo : string
+
+export import Z = M;
+>Z : Z
+>M : Z
+
+export var r8: typeof Z;
+>r8 : typeof Z
+>Z : typeof Z
+
+export var r9: typeof Z.foo;
+>r9 : string
+>Z : typeof Z
+>foo : string
+
+export enum E {
+>E : E
+
+    A
+>A : E
+}
+export var r10: typeof E;
+>r10 : typeof E
+>E : typeof E
+
+export var r11: typeof E.A;
+>r11 : E
+>E : typeof E
+>A : E
+
+export var r12: typeof r12;
+>r12 : any
+>r12 : any
+
+export function foo() { }
+>foo : typeof foo
+
+export module foo {
+>foo : foo
+
+    export var y = 1;
+>y : number
+
+    export class C {
+>C : C
+
+        foo: string;
+>foo : string
+    }
+}
+export var r13: typeof foo;
+>r13 : typeof foo
+>foo : typeof foo
+

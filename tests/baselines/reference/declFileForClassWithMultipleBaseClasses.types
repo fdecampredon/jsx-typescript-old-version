@@ -1,19 +1,54 @@
 === tests/cases/compiler/declFileForClassWithMultipleBaseClasses.ts ===
-Line 1 col 6 IdentifierName "A" = A
-Line 2 col 0 IdentifierName "foo" = () => void
-Line 5 col 6 IdentifierName "B" = B
-Line 6 col 0 IdentifierName "bar" = () => void
-Line 9 col 10 IdentifierName "I" = I
-Line 10 col 0 IdentifierName "baz" = () => any
-Line 13 col 10 IdentifierName "J" = J
-Line 14 col 0 IdentifierName "bat" = () => any
-Line 18 col 6 IdentifierName "D" = D
-Line 18 col 19 IdentifierName "I" = I
-Line 18 col 22 IdentifierName "J" = J
-Line 19 col 0 IdentifierName "baz" = () => void
-Line 20 col 0 IdentifierName "bat" = () => void
-Line 21 col 0 IdentifierName "foo" = () => void
-Line 22 col 0 IdentifierName "bar" = () => void
-Line 25 col 10 IdentifierName "I" = I
-Line 25 col 20 IdentifierName "A" = A
-Line 25 col 23 IdentifierName "B" = B
+
+class A {
+>A : A
+
+    foo() { }
+>foo : () => void
+}
+
+class B {
+>B : B
+
+    bar() { }
+>bar : () => void
+}
+
+interface I {
+>I : I
+
+    baz();
+>baz : () => any
+}
+
+interface J {
+>J : J
+
+    bat();
+>bat : () => any
+}
+
+
+class D implements I, J {
+>D : D
+>I : I
+>J : J
+
+    baz() { }
+>baz : () => void
+
+    bat() { }
+>bat : () => void
+
+    foo() { }
+>foo : () => void
+
+    bar() { }
+>bar : () => void
+}
+
+interface I extends A, B {
+>I : I
+>A : A
+>B : B
+}

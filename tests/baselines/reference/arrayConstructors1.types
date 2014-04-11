@@ -1,27 +1,43 @@
 === tests/cases/compiler/arrayConstructors1.ts ===
-Line 0 col 4 IdentifierName "x" = string[]
-Line 1 col 0 AssignmentExpression "x = new Array(1)" = any[]
-Line 1 col 0 IdentifierName "x" = string[]
-Line 1 col 4 ObjectCreationExpression "new Array(1)" = any[]
-Line 1 col 8 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
-Line 2 col 0 AssignmentExpression "x = new Array('hi', 'bye')" = string[]
-Line 2 col 0 IdentifierName "x" = string[]
-Line 2 col 4 ObjectCreationExpression "new Array('hi', 'bye')" = string[]
-Line 2 col 8 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
-Line 3 col 0 AssignmentExpression "x = new Array<string>('hi', 'bye')" = string[]
-Line 3 col 0 IdentifierName "x" = string[]
-Line 3 col 4 ObjectCreationExpression "new Array<string>('hi', 'bye')" = string[]
-Line 3 col 8 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
-Line 5 col 4 IdentifierName "y" = number[]
-Line 6 col 0 AssignmentExpression "y = new Array(1)" = any[]
-Line 6 col 0 IdentifierName "y" = number[]
-Line 6 col 4 ObjectCreationExpression "new Array(1)" = any[]
-Line 6 col 8 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
-Line 7 col 0 AssignmentExpression "y = new Array(1,2)" = number[]
-Line 7 col 0 IdentifierName "y" = number[]
-Line 7 col 4 ObjectCreationExpression "new Array(1,2)" = number[]
-Line 7 col 8 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
-Line 8 col 0 AssignmentExpression "y = new Array<number>(1, 2)" = number[]
-Line 8 col 0 IdentifierName "y" = number[]
-Line 8 col 4 ObjectCreationExpression "new Array<number>(1, 2)" = number[]
-Line 8 col 8 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+var x: string[];
+>x : string[]
+
+x = new Array(1);
+>x = new Array(1) : any[]
+>x : string[]
+>new Array(1) : any[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+
+x = new Array('hi', 'bye'); 
+>x = new Array('hi', 'bye') : string[]
+>x : string[]
+>new Array('hi', 'bye') : string[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+
+x = new Array<string>('hi', 'bye');
+>x = new Array<string>('hi', 'bye') : string[]
+>x : string[]
+>new Array<string>('hi', 'bye') : string[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+
+var y: number[];
+>y : number[]
+
+y = new Array(1);
+>y = new Array(1) : any[]
+>y : number[]
+>new Array(1) : any[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+
+y = new Array(1,2);
+>y = new Array(1,2) : number[]
+>y : number[]
+>new Array(1,2) : number[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+
+y = new Array<number>(1, 2);
+>y = new Array<number>(1, 2) : number[]
+>y : number[]
+>new Array<number>(1, 2) : number[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+

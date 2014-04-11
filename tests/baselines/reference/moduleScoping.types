@@ -1,28 +1,50 @@
 === tests/cases/compiler/file1.ts ===
-Line 0 col 4 IdentifierName "v1" = string
+var v1 = "sausages"; // Global scope
+>v1 : string
+
 === tests/cases/compiler/file2.ts ===
-Line 0 col 4 IdentifierName "v2" = number
-Line 1 col 4 IdentifierName "v4" = () => number
-Line 1 col 9 ParenthesizedArrowFunctionExpression "() => 5" = () => number
+var v2 = 42; // Global scope
+>v2 : number
+
+var v4 = () => 5;
+>v4 : () => number
+>() => 5 : () => number
+
 === tests/cases/compiler/file3.ts ===
-Line 0 col 11 IdentifierName "v3" = boolean
-Line 1 col 4 IdentifierName "v2" = number[]
-Line 1 col 9 ArrayLiteralExpression "[1,2,3]" = number[]
+export var v3 = true;
+>v3 : boolean
+
+var v2 = [1,2,3]; // Module scope. Should not appear in global scope
+>v2 : number[]
+>[1,2,3] : number[]
+
 === tests/cases/compiler/file4.ts ===
-Line 0 col 7 IdentifierName "file3" = file3
-Line 1 col 4 IdentifierName "t1" = string
-Line 1 col 9 IdentifierName "v1" = string
-Line 2 col 4 IdentifierName "t2" = number
-Line 2 col 9 IdentifierName "v2" = number
-Line 3 col 4 IdentifierName "t3" = boolean
-Line 3 col 9 MemberAccessExpression "file3.v3" = boolean
-Line 3 col 9 IdentifierName "file3" = typeof file3
-Line 3 col 15 IdentifierName "v3" = boolean
-Line 4 col 4 IdentifierName "v4" = { a: boolean; b: number; }
-Line 4 col 9 ObjectLiteralExpression "{a: true, b: NaN}" = { a: boolean; b: number; }
-Line 4 col 10 IdentifierName "a" = boolean
-Line 4 col 19 IdentifierName "b" = number
-Line 4 col 22 IdentifierName "NaN" = number
+import file3 = require('./file3');
+>file3 : file3
+
+var t1 = v1;
+>t1 : string
+>v1 : string
+
+var t2 = v2;
+>t2 : number
+>v2 : number
+
+var t3 = file3.v3;
+>t3 : boolean
+>file3.v3 : boolean
+>file3 : typeof file3
+>v3 : boolean
+
+var v4 = {a: true, b: NaN};  // Should shadow global v2 in this module
+>v4 : { a: boolean; b: number; }
+>{a: true, b: NaN} : { a: boolean; b: number; }
+>a : boolean
+>b : number
+>NaN : number
+
 === tests/cases/compiler/file5.ts ===
-Line 0 col 4 IdentifierName "x" = number
-Line 0 col 8 IdentifierName "v2" = number
+var x = v2; // Should be global v2 of type number again
+>x : number
+>v2 : number
+

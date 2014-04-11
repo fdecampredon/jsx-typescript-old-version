@@ -1,3 +1,15 @@
+//// [getterThatThrowsShouldNotNeedReturn.ts]
+class Greeter {
+ public get greet(): string {
+  throw ''; // should not raise an error
+ }
+ public greeting(): string {
+  throw ''; // should not raise an error
+ }
+}
+
+
+//// [getterThatThrowsShouldNotNeedReturn.js]
 var Greeter = (function () {
     function Greeter() {
     }

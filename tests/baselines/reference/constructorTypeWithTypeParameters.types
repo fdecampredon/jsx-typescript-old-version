@@ -1,6 +1,16 @@
 === tests/cases/compiler/constructorTypeWithTypeParameters.ts ===
-Line 0 col 12 IdentifierName "X" = new<T>() => number
-Line 1 col 9 IdentifierName "T" = T
-Line 3 col 12 IdentifierName "Y" = new() => number
-Line 6 col 4 IdentifierName "anotherVar" = new<T>() => number
-Line 6 col 21 IdentifierName "T" = T
+declare var X: {
+>X : new<T>() => number
+
+    new <T>(): number;
+>T : T
+}
+declare var Y: {
+>Y : new() => number
+
+    new (): number;
+}
+var anotherVar: new <T>() => number;
+>anotherVar : new<T>() => number
+>T : T
+

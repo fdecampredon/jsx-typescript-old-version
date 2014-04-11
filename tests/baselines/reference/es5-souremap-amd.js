@@ -1,3 +1,19 @@
+//// [es5-souremap-amd.ts]
+
+class A
+{
+    constructor ()
+    {
+
+    }
+
+    public B()
+    {
+        return 42;
+    }
+}
+
+//// [es5-souremap-amd.js]
 var A = (function () {
     function A() {
     }

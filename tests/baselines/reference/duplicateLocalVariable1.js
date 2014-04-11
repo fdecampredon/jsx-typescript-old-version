@@ -1,3 +1,4 @@
+//// [duplicateLocalVariable1.js]
 //import FileManager = require('filemanager');
 //import App = require('app');
 

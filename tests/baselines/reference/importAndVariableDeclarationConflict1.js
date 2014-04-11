@@ -1,3 +1,4 @@
+//// [importAndVariableDeclarationConflict1.js]
 var m;
 (function (_m) {
     _m.m = '';

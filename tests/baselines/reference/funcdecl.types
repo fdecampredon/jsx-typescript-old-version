@@ -1,87 +1,172 @@
 === tests/cases/compiler/funcdecl.ts ===
-Line 0 col 9 IdentifierName "simpleFunc" = typeof simpleFunc
-Line 3 col 4 IdentifierName "simpleFuncVar" = typeof simpleFunc
-Line 3 col 20 IdentifierName "simpleFunc" = typeof simpleFunc
-Line 5 col 9 IdentifierName "anotherFuncNoReturn" = typeof anotherFuncNoReturn
-Line 7 col 4 IdentifierName "anotherFuncNoReturnVar" = typeof anotherFuncNoReturn
-Line 7 col 29 IdentifierName "anotherFuncNoReturn" = typeof anotherFuncNoReturn
-Line 9 col 9 IdentifierName "withReturn" = typeof withReturn
-Line 12 col 4 IdentifierName "withReturnVar" = typeof withReturn
-Line 12 col 20 IdentifierName "withReturn" = typeof withReturn
-Line 14 col 9 IdentifierName "withParams" = typeof withParams
-Line 14 col 20 IdentifierName "a" = string
-Line 15 col 11 IdentifierName "a" = string
-Line 17 col 4 IdentifierName "withparamsVar" = typeof withParams
-Line 17 col 20 IdentifierName "withParams" = typeof withParams
-Line 19 col 9 IdentifierName "withMultiParams" = typeof withMultiParams
-Line 19 col 25 IdentifierName "a" = number
-Line 19 col 37 IdentifierName "b" = any
-Line 19 col 40 IdentifierName "c" = Object
-Line 19 col 43 IdentifierName "Object" = Object
-Line 20 col 11 IdentifierName "a" = number
-Line 22 col 4 IdentifierName "withMultiParamsVar" = typeof withMultiParams
-Line 22 col 25 IdentifierName "withMultiParams" = typeof withMultiParams
-Line 24 col 9 IdentifierName "withOptionalParams" = typeof withOptionalParams
-Line 24 col 28 IdentifierName "a" = string
-Line 26 col 4 IdentifierName "withOptionalParamsVar" = typeof withOptionalParams
-Line 26 col 28 IdentifierName "withOptionalParams" = typeof withOptionalParams
-Line 28 col 9 IdentifierName "withInitializedParams" = typeof withInitializedParams
-Line 28 col 31 IdentifierName "a" = string
-Line 28 col 42 IdentifierName "b0" = any
-Line 28 col 46 IdentifierName "b" = number
-Line 28 col 54 IdentifierName "c" = string
-Line 30 col 4 IdentifierName "withInitializedParamsVar" = typeof withInitializedParams
-Line 30 col 31 IdentifierName "withInitializedParams" = typeof withInitializedParams
-Line 32 col 9 IdentifierName "withOptionalInitializedParams" = typeof withOptionalInitializedParams
-Line 32 col 39 IdentifierName "a" = string
-Line 32 col 50 IdentifierName "c" = string
-Line 34 col 4 IdentifierName "withOptionalInitializedParamsVar" = typeof withOptionalInitializedParams
-Line 34 col 39 IdentifierName "withOptionalInitializedParams" = typeof withOptionalInitializedParams
-Line 36 col 9 IdentifierName "withRestParams" = typeof withRestParams
-Line 36 col 24 IdentifierName "a" = string
-Line 36 col 39 IdentifierName "myRestParameter" = number[]
-Line 37 col 11 IdentifierName "myRestParameter" = number[]
-Line 39 col 4 IdentifierName "withRestParamsVar" = typeof withRestParams
-Line 39 col 24 IdentifierName "withRestParams" = typeof withRestParams
-Line 41 col 9 IdentifierName "overload1" = typeof overload1
-Line 41 col 19 IdentifierName "n" = number
-Line 42 col 9 IdentifierName "overload1" = typeof overload1
-Line 42 col 19 IdentifierName "s" = string
-Line 43 col 9 IdentifierName "overload1" = typeof overload1
-Line 43 col 19 IdentifierName "ns" = any
-Line 44 col 11 InvocationExpression "ns.toString()" = any
-Line 44 col 11 MemberAccessExpression "ns.toString" = any
-Line 44 col 11 IdentifierName "ns" = any
-Line 44 col 14 IdentifierName "toString" = any
-Line 46 col 4 IdentifierName "withOverloadSignature" = typeof overload1
-Line 46 col 28 IdentifierName "overload1" = typeof overload1
-Line 48 col 9 IdentifierName "f" = typeof f
-Line 48 col 11 IdentifierName "n" = () => void
-Line 50 col 7 IdentifierName "m2" = m2
-Line 51 col 20 IdentifierName "foo" = typeof foo
-Line 51 col 24 IdentifierName "n" = () => void
-Line 55 col 0 InvocationExpression "m2.foo(() =>  {
+function simpleFunc() {
+>simpleFunc : typeof simpleFunc
+
+    return "this is my simple func";
+}
+var simpleFuncVar = simpleFunc;
+>simpleFuncVar : typeof simpleFunc
+>simpleFunc : typeof simpleFunc
+
+function anotherFuncNoReturn() {
+>anotherFuncNoReturn : typeof anotherFuncNoReturn
+}
+var anotherFuncNoReturnVar = anotherFuncNoReturn;
+>anotherFuncNoReturnVar : typeof anotherFuncNoReturn
+>anotherFuncNoReturn : typeof anotherFuncNoReturn
+
+function withReturn() : string{
+>withReturn : typeof withReturn
+
+    return "Hello";
+}
+var withReturnVar = withReturn;
+>withReturnVar : typeof withReturn
+>withReturn : typeof withReturn
+
+function withParams(a : string) : string{
+>withParams : typeof withParams
+>a : string
+
+    return a;
+>a : string
+}
+var withparamsVar = withParams;
+>withparamsVar : typeof withParams
+>withParams : typeof withParams
+
+function withMultiParams(a : number, b, c: Object) {
+>withMultiParams : typeof withMultiParams
+>a : number
+>b : any
+>c : Object
+>Object : Object
+
+    return a;
+>a : number
+}
+var withMultiParamsVar = withMultiParams;
+>withMultiParamsVar : typeof withMultiParams
+>withMultiParams : typeof withMultiParams
+
+function withOptionalParams(a?: string) {
+>withOptionalParams : typeof withOptionalParams
+>a : string
+}
+var withOptionalParamsVar = withOptionalParams;
+>withOptionalParamsVar : typeof withOptionalParams
+>withOptionalParams : typeof withOptionalParams
+
+function withInitializedParams(a: string, b0, b = 30, c = "string value") {
+>withInitializedParams : typeof withInitializedParams
+>a : string
+>b0 : any
+>b : number
+>c : string
+}
+var withInitializedParamsVar = withInitializedParams;
+>withInitializedParamsVar : typeof withInitializedParams
+>withInitializedParams : typeof withInitializedParams
+
+function withOptionalInitializedParams(a: string, c: string = "hello string") {
+>withOptionalInitializedParams : typeof withOptionalInitializedParams
+>a : string
+>c : string
+}
+var withOptionalInitializedParamsVar = withOptionalInitializedParams;
+>withOptionalInitializedParamsVar : typeof withOptionalInitializedParams
+>withOptionalInitializedParams : typeof withOptionalInitializedParams
+
+function withRestParams(a: string, ... myRestParameter : number[]) {
+>withRestParams : typeof withRestParams
+>a : string
+>myRestParameter : number[]
+
+    return myRestParameter;
+>myRestParameter : number[]
+}
+var withRestParamsVar = withRestParams;
+>withRestParamsVar : typeof withRestParams
+>withRestParams : typeof withRestParams
+
+function overload1(n: number) : string;
+>overload1 : typeof overload1
+>n : number
+
+function overload1(s: string) : string;
+>overload1 : typeof overload1
+>s : string
+
+function overload1(ns: any) {
+>overload1 : typeof overload1
+>ns : any
+
+    return ns.toString();
+>ns.toString() : any
+>ns.toString : any
+>ns : any
+>toString : any
+}
+var withOverloadSignature = overload1;
+>withOverloadSignature : typeof overload1
+>overload1 : typeof overload1
+
+function f(n: () => void) { }
+>f : typeof f
+>n : () => void
+
+module m2 {
+>m2 : m2
+
+    export function foo(n: () => void ) {
+>foo : typeof foo
+>n : () => void
+    }
+
+}
+
+>m2.foo(() =>  {
 
     var b = 30;
     return b;
-})" = void
-Line 55 col 0 MemberAccessExpression "m2.foo" = typeof m2.foo
-Line 55 col 0 IdentifierName "m2" = typeof m2
-Line 56 col 3 IdentifierName "foo" = typeof m2.foo
-Line 56 col 7 ParenthesizedArrowFunctionExpression "() =>  {
+}) : void
+>m2.foo : typeof m2.foo
+>m2 : typeof m2
+
+m2.foo(() =>  {
+>foo : typeof m2.foo
+>() =>  {
 
     var b = 30;
     return b;
-}" = () => number
-Line 58 col 8 IdentifierName "b" = number
-Line 59 col 11 IdentifierName "b" = number
-Line 63 col 17 IdentifierName "fooAmbient" = typeof fooAmbient
-Line 63 col 28 IdentifierName "n" = number
-Line 65 col 17 IdentifierName "overloadAmbient" = typeof overloadAmbient
-Line 65 col 33 IdentifierName "n" = number
-Line 66 col 17 IdentifierName "overloadAmbient" = typeof overloadAmbient
-Line 66 col 33 IdentifierName "s" = string
-Line 68 col 4 IdentifierName "f2" = () => string
-Line 68 col 9 ParenthesizedArrowFunctionExpression "() => {
+} : () => number
+
+    var b = 30;
+>b : number
+
+    return b;
+>b : number
+
+});
+
+
+declare function fooAmbient(n: number): string;
+>fooAmbient : typeof fooAmbient
+>n : number
+
+declare function overloadAmbient(n: number): string;
+>overloadAmbient : typeof overloadAmbient
+>n : number
+
+declare function overloadAmbient(s: string): string;
+>overloadAmbient : typeof overloadAmbient
+>s : string
+
+var f2 = () => {
+>f2 : () => string
+>() => {
     return "string";
-}" = () => string
+} : () => string
+
+    return "string";
+}

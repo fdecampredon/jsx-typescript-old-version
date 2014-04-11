@@ -1,3 +1,4 @@
+//// [withStatementNestedScope.js]
 var x = 1;
 with (x) {
     function f(a) {

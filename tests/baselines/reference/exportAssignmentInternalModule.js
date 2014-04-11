@@ -1,3 +1,8 @@
+//// [exportAssignmentInternalModule_B.ts]
+import modM = require("exportAssignmentInternalModule_A");
+
+var n: number = modM.x;
+
 //// [exportAssignmentInternalModule_A.js]
 define(["require", "exports"], function(require, exports) {
     var M;

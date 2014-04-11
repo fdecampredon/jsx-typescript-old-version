@@ -1,3 +1,4 @@
+//// [assignmentCompatability_checking-apply-member-off-of-function-interface.js]
 // 3.8.4 Assignment Compatibility
 
 var x;

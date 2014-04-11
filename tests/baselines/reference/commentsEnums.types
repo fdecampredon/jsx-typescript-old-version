@@ -1,15 +1,31 @@
 === tests/cases/compiler/commentsEnums.ts ===
-Line 2 col 5 IdentifierName "Colors" = Colors
-Line 3 col 0 IdentifierName "/** Fancy name for 'blue'*/
-    Cornflower /* blue */" = Colors
-Line 5 col 0 IdentifierName "/** Fancy name for 'pink'*/
-    FancyPink" = Colors
-Line 8 col 4 IdentifierName "x" = Colors
-Line 8 col 8 MemberAccessExpression "Colors.Cornflower" = Colors
-Line 8 col 8 IdentifierName "Colors" = typeof Colors
-Line 8 col 15 IdentifierName "Cornflower" = Colors
-Line 9 col 0 AssignmentExpression "x = Colors.FancyPink" = Colors
-Line 9 col 0 IdentifierName "x" = Colors
-Line 9 col 4 MemberAccessExpression "Colors.FancyPink" = Colors
-Line 9 col 4 IdentifierName "Colors" = typeof Colors
-Line 9 col 11 IdentifierName "FancyPink" = Colors
+
+/** Enum of colors*/
+enum Colors {
+>Colors : Colors
+
+    /** Fancy name for 'blue'*/
+>/** Fancy name for 'blue'*/
+    Cornflower /* blue */ : Colors
+
+    Cornflower /* blue */,
+    /** Fancy name for 'pink'*/
+>/** Fancy name for 'pink'*/
+    FancyPink : Colors
+
+    FancyPink
+}
+var x = Colors.Cornflower;
+>x : Colors
+>Colors.Cornflower : Colors
+>Colors : typeof Colors
+>Cornflower : Colors
+
+x = Colors.FancyPink;
+>x = Colors.FancyPink : Colors
+>x : Colors
+>Colors.FancyPink : Colors
+>Colors : typeof Colors
+>FancyPink : Colors
+
+

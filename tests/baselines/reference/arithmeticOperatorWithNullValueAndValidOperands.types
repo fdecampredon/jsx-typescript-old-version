@@ -1,266 +1,450 @@
 === tests/cases/compiler/arithmeticOperatorWithNullValueAndValidOperands.ts ===
-Line 3 col 5 IdentifierName "E" = E
-Line 4 col 0 IdentifierName "a" = E
-Line 5 col 0 IdentifierName "b" = E
-Line 8 col 4 IdentifierName "a" = any
-Line 9 col 4 IdentifierName "b" = number
-Line 12 col 4 IdentifierName "ra1" = number
-Line 12 col 10 MultiplyExpression "null * a" = number
-Line 12 col 17 IdentifierName "a" = any
-Line 13 col 4 IdentifierName "ra2" = number
-Line 13 col 10 MultiplyExpression "null * b" = number
-Line 13 col 17 IdentifierName "b" = number
-Line 14 col 4 IdentifierName "ra3" = number
-Line 14 col 10 MultiplyExpression "null * 1" = number
-Line 15 col 4 IdentifierName "ra4" = number
-Line 15 col 10 MultiplyExpression "null * E.a" = number
-Line 15 col 17 MemberAccessExpression "E.a" = E
-Line 15 col 17 IdentifierName "E" = typeof E
-Line 15 col 19 IdentifierName "a" = E
-Line 16 col 4 IdentifierName "ra5" = number
-Line 16 col 10 MultiplyExpression "a * null" = number
-Line 16 col 10 IdentifierName "a" = any
-Line 17 col 4 IdentifierName "ra6" = number
-Line 17 col 10 MultiplyExpression "b * null" = number
-Line 17 col 10 IdentifierName "b" = number
-Line 18 col 4 IdentifierName "ra7" = number
-Line 18 col 10 MultiplyExpression "0 * null" = number
-Line 19 col 4 IdentifierName "ra8" = number
-Line 19 col 10 MultiplyExpression "E.b * null" = number
-Line 19 col 10 MemberAccessExpression "E.b" = E
-Line 19 col 10 IdentifierName "E" = typeof E
-Line 19 col 12 IdentifierName "b" = E
-Line 22 col 4 IdentifierName "rb1" = number
-Line 22 col 10 DivideExpression "null / a" = number
-Line 22 col 17 IdentifierName "a" = any
-Line 23 col 4 IdentifierName "rb2" = number
-Line 23 col 10 DivideExpression "null / b" = number
-Line 23 col 17 IdentifierName "b" = number
-Line 24 col 4 IdentifierName "rb3" = number
-Line 24 col 10 DivideExpression "null / 1" = number
-Line 25 col 4 IdentifierName "rb4" = number
-Line 25 col 10 DivideExpression "null / E.a" = number
-Line 25 col 17 MemberAccessExpression "E.a" = E
-Line 25 col 17 IdentifierName "E" = typeof E
-Line 25 col 19 IdentifierName "a" = E
-Line 26 col 4 IdentifierName "rb5" = number
-Line 26 col 10 DivideExpression "a / null" = number
-Line 26 col 10 IdentifierName "a" = any
-Line 27 col 4 IdentifierName "rb6" = number
-Line 27 col 10 DivideExpression "b / null" = number
-Line 27 col 10 IdentifierName "b" = number
-Line 28 col 4 IdentifierName "rb7" = number
-Line 28 col 10 DivideExpression "0 / null" = number
-Line 29 col 4 IdentifierName "rb8" = number
-Line 29 col 10 DivideExpression "E.b / null" = number
-Line 29 col 10 MemberAccessExpression "E.b" = E
-Line 29 col 10 IdentifierName "E" = typeof E
-Line 29 col 12 IdentifierName "b" = E
-Line 32 col 4 IdentifierName "rc1" = number
-Line 32 col 10 ModuloExpression "null % a" = number
-Line 32 col 17 IdentifierName "a" = any
-Line 33 col 4 IdentifierName "rc2" = number
-Line 33 col 10 ModuloExpression "null % b" = number
-Line 33 col 17 IdentifierName "b" = number
-Line 34 col 4 IdentifierName "rc3" = number
-Line 34 col 10 ModuloExpression "null % 1" = number
-Line 35 col 4 IdentifierName "rc4" = number
-Line 35 col 10 ModuloExpression "null % E.a" = number
-Line 35 col 17 MemberAccessExpression "E.a" = E
-Line 35 col 17 IdentifierName "E" = typeof E
-Line 35 col 19 IdentifierName "a" = E
-Line 36 col 4 IdentifierName "rc5" = number
-Line 36 col 10 ModuloExpression "a % null" = number
-Line 36 col 10 IdentifierName "a" = any
-Line 37 col 4 IdentifierName "rc6" = number
-Line 37 col 10 ModuloExpression "b % null" = number
-Line 37 col 10 IdentifierName "b" = number
-Line 38 col 4 IdentifierName "rc7" = number
-Line 38 col 10 ModuloExpression "0 % null" = number
-Line 39 col 4 IdentifierName "rc8" = number
-Line 39 col 10 ModuloExpression "E.b % null" = number
-Line 39 col 10 MemberAccessExpression "E.b" = E
-Line 39 col 10 IdentifierName "E" = typeof E
-Line 39 col 12 IdentifierName "b" = E
-Line 42 col 4 IdentifierName "rd1" = number
-Line 42 col 10 SubtractExpression "null - a" = number
-Line 42 col 17 IdentifierName "a" = any
-Line 43 col 4 IdentifierName "rd2" = number
-Line 43 col 10 SubtractExpression "null - b" = number
-Line 43 col 17 IdentifierName "b" = number
-Line 44 col 4 IdentifierName "rd3" = number
-Line 44 col 10 SubtractExpression "null - 1" = number
-Line 45 col 4 IdentifierName "rd4" = number
-Line 45 col 10 SubtractExpression "null - E.a" = number
-Line 45 col 17 MemberAccessExpression "E.a" = E
-Line 45 col 17 IdentifierName "E" = typeof E
-Line 45 col 19 IdentifierName "a" = E
-Line 46 col 4 IdentifierName "rd5" = number
-Line 46 col 10 SubtractExpression "a - null" = number
-Line 46 col 10 IdentifierName "a" = any
-Line 47 col 4 IdentifierName "rd6" = number
-Line 47 col 10 SubtractExpression "b - null" = number
-Line 47 col 10 IdentifierName "b" = number
-Line 48 col 4 IdentifierName "rd7" = number
-Line 48 col 10 SubtractExpression "0 - null" = number
-Line 49 col 4 IdentifierName "rd8" = number
-Line 49 col 10 SubtractExpression "E.b - null" = number
-Line 49 col 10 MemberAccessExpression "E.b" = E
-Line 49 col 10 IdentifierName "E" = typeof E
-Line 49 col 12 IdentifierName "b" = E
-Line 52 col 4 IdentifierName "re1" = number
-Line 52 col 10 LeftShiftExpression "null << a" = number
-Line 52 col 18 IdentifierName "a" = any
-Line 53 col 4 IdentifierName "re2" = number
-Line 53 col 10 LeftShiftExpression "null << b" = number
-Line 53 col 18 IdentifierName "b" = number
-Line 54 col 4 IdentifierName "re3" = number
-Line 54 col 10 LeftShiftExpression "null << 1" = number
-Line 55 col 4 IdentifierName "re4" = number
-Line 55 col 10 LeftShiftExpression "null << E.a" = number
-Line 55 col 18 MemberAccessExpression "E.a" = E
-Line 55 col 18 IdentifierName "E" = typeof E
-Line 55 col 20 IdentifierName "a" = E
-Line 56 col 4 IdentifierName "re5" = number
-Line 56 col 10 LeftShiftExpression "a << null" = number
-Line 56 col 10 IdentifierName "a" = any
-Line 57 col 4 IdentifierName "re6" = number
-Line 57 col 10 LeftShiftExpression "b << null" = number
-Line 57 col 10 IdentifierName "b" = number
-Line 58 col 4 IdentifierName "re7" = number
-Line 58 col 10 LeftShiftExpression "0 << null" = number
-Line 59 col 4 IdentifierName "re8" = number
-Line 59 col 10 LeftShiftExpression "E.b << null" = number
-Line 59 col 10 MemberAccessExpression "E.b" = E
-Line 59 col 10 IdentifierName "E" = typeof E
-Line 59 col 12 IdentifierName "b" = E
-Line 62 col 4 IdentifierName "rf1" = number
-Line 62 col 10 SignedRightShiftExpression "null >> a" = number
-Line 62 col 18 IdentifierName "a" = any
-Line 63 col 4 IdentifierName "rf2" = number
-Line 63 col 10 SignedRightShiftExpression "null >> b" = number
-Line 63 col 18 IdentifierName "b" = number
-Line 64 col 4 IdentifierName "rf3" = number
-Line 64 col 10 SignedRightShiftExpression "null >> 1" = number
-Line 65 col 4 IdentifierName "rf4" = number
-Line 65 col 10 SignedRightShiftExpression "null >> E.a" = number
-Line 65 col 18 MemberAccessExpression "E.a" = E
-Line 65 col 18 IdentifierName "E" = typeof E
-Line 65 col 20 IdentifierName "a" = E
-Line 66 col 4 IdentifierName "rf5" = number
-Line 66 col 10 SignedRightShiftExpression "a >> null" = number
-Line 66 col 10 IdentifierName "a" = any
-Line 67 col 4 IdentifierName "rf6" = number
-Line 67 col 10 SignedRightShiftExpression "b >> null" = number
-Line 67 col 10 IdentifierName "b" = number
-Line 68 col 4 IdentifierName "rf7" = number
-Line 68 col 10 SignedRightShiftExpression "0 >> null" = number
-Line 69 col 4 IdentifierName "rf8" = number
-Line 69 col 10 SignedRightShiftExpression "E.b >> null" = number
-Line 69 col 10 MemberAccessExpression "E.b" = E
-Line 69 col 10 IdentifierName "E" = typeof E
-Line 69 col 12 IdentifierName "b" = E
-Line 72 col 4 IdentifierName "rg1" = number
-Line 72 col 10 UnsignedRightShiftExpression "null >>> a" = number
-Line 72 col 19 IdentifierName "a" = any
-Line 73 col 4 IdentifierName "rg2" = number
-Line 73 col 10 UnsignedRightShiftExpression "null >>> b" = number
-Line 73 col 19 IdentifierName "b" = number
-Line 74 col 4 IdentifierName "rg3" = number
-Line 74 col 10 UnsignedRightShiftExpression "null >>> 1" = number
-Line 75 col 4 IdentifierName "rg4" = number
-Line 75 col 10 UnsignedRightShiftExpression "null >>> E.a" = number
-Line 75 col 19 MemberAccessExpression "E.a" = E
-Line 75 col 19 IdentifierName "E" = typeof E
-Line 75 col 21 IdentifierName "a" = E
-Line 76 col 4 IdentifierName "rg5" = number
-Line 76 col 10 UnsignedRightShiftExpression "a >>> null" = number
-Line 76 col 10 IdentifierName "a" = any
-Line 77 col 4 IdentifierName "rg6" = number
-Line 77 col 10 UnsignedRightShiftExpression "b >>> null" = number
-Line 77 col 10 IdentifierName "b" = number
-Line 78 col 4 IdentifierName "rg7" = number
-Line 78 col 10 UnsignedRightShiftExpression "0 >>> null" = number
-Line 79 col 4 IdentifierName "rg8" = number
-Line 79 col 10 UnsignedRightShiftExpression "E.b >>> null" = number
-Line 79 col 10 MemberAccessExpression "E.b" = E
-Line 79 col 10 IdentifierName "E" = typeof E
-Line 79 col 12 IdentifierName "b" = E
-Line 82 col 4 IdentifierName "rh1" = number
-Line 82 col 10 BitwiseAndExpression "null & a" = number
-Line 82 col 17 IdentifierName "a" = any
-Line 83 col 4 IdentifierName "rh2" = number
-Line 83 col 10 BitwiseAndExpression "null & b" = number
-Line 83 col 17 IdentifierName "b" = number
-Line 84 col 4 IdentifierName "rh3" = number
-Line 84 col 10 BitwiseAndExpression "null & 1" = number
-Line 85 col 4 IdentifierName "rh4" = number
-Line 85 col 10 BitwiseAndExpression "null & E.a" = number
-Line 85 col 17 MemberAccessExpression "E.a" = E
-Line 85 col 17 IdentifierName "E" = typeof E
-Line 85 col 19 IdentifierName "a" = E
-Line 86 col 4 IdentifierName "rh5" = number
-Line 86 col 10 BitwiseAndExpression "a & null" = number
-Line 86 col 10 IdentifierName "a" = any
-Line 87 col 4 IdentifierName "rh6" = number
-Line 87 col 10 BitwiseAndExpression "b & null" = number
-Line 87 col 10 IdentifierName "b" = number
-Line 88 col 4 IdentifierName "rh7" = number
-Line 88 col 10 BitwiseAndExpression "0 & null" = number
-Line 89 col 4 IdentifierName "rh8" = number
-Line 89 col 10 BitwiseAndExpression "E.b & null" = number
-Line 89 col 10 MemberAccessExpression "E.b" = E
-Line 89 col 10 IdentifierName "E" = typeof E
-Line 89 col 12 IdentifierName "b" = E
-Line 92 col 4 IdentifierName "ri1" = number
-Line 92 col 10 BitwiseExclusiveOrExpression "null ^ a" = number
-Line 92 col 17 IdentifierName "a" = any
-Line 93 col 4 IdentifierName "ri2" = number
-Line 93 col 10 BitwiseExclusiveOrExpression "null ^ b" = number
-Line 93 col 17 IdentifierName "b" = number
-Line 94 col 4 IdentifierName "ri3" = number
-Line 94 col 10 BitwiseExclusiveOrExpression "null ^ 1" = number
-Line 95 col 4 IdentifierName "ri4" = number
-Line 95 col 10 BitwiseExclusiveOrExpression "null ^ E.a" = number
-Line 95 col 17 MemberAccessExpression "E.a" = E
-Line 95 col 17 IdentifierName "E" = typeof E
-Line 95 col 19 IdentifierName "a" = E
-Line 96 col 4 IdentifierName "ri5" = number
-Line 96 col 10 BitwiseExclusiveOrExpression "a ^ null" = number
-Line 96 col 10 IdentifierName "a" = any
-Line 97 col 4 IdentifierName "ri6" = number
-Line 97 col 10 BitwiseExclusiveOrExpression "b ^ null" = number
-Line 97 col 10 IdentifierName "b" = number
-Line 98 col 4 IdentifierName "ri7" = number
-Line 98 col 10 BitwiseExclusiveOrExpression "0 ^ null" = number
-Line 99 col 4 IdentifierName "ri8" = number
-Line 99 col 10 BitwiseExclusiveOrExpression "E.b ^ null" = number
-Line 99 col 10 MemberAccessExpression "E.b" = E
-Line 99 col 10 IdentifierName "E" = typeof E
-Line 99 col 12 IdentifierName "b" = E
-Line 102 col 4 IdentifierName "rj1" = number
-Line 102 col 10 BitwiseOrExpression "null | a" = number
-Line 102 col 17 IdentifierName "a" = any
-Line 103 col 4 IdentifierName "rj2" = number
-Line 103 col 10 BitwiseOrExpression "null | b" = number
-Line 103 col 17 IdentifierName "b" = number
-Line 104 col 4 IdentifierName "rj3" = number
-Line 104 col 10 BitwiseOrExpression "null | 1" = number
-Line 105 col 4 IdentifierName "rj4" = number
-Line 105 col 10 BitwiseOrExpression "null | E.a" = number
-Line 105 col 17 MemberAccessExpression "E.a" = E
-Line 105 col 17 IdentifierName "E" = typeof E
-Line 105 col 19 IdentifierName "a" = E
-Line 106 col 4 IdentifierName "rj5" = number
-Line 106 col 10 BitwiseOrExpression "a | null" = number
-Line 106 col 10 IdentifierName "a" = any
-Line 107 col 4 IdentifierName "rj6" = number
-Line 107 col 10 BitwiseOrExpression "b | null" = number
-Line 107 col 10 IdentifierName "b" = number
-Line 108 col 4 IdentifierName "rj7" = number
-Line 108 col 10 BitwiseOrExpression "0 | null" = number
-Line 109 col 4 IdentifierName "rj8" = number
-Line 109 col 10 BitwiseOrExpression "E.b | null" = number
-Line 109 col 10 MemberAccessExpression "E.b" = E
-Line 109 col 10 IdentifierName "E" = typeof E
-Line 109 col 12 IdentifierName "b" = E
+// If one operand is the null or undefined value, it is treated as having the type of the
+// other operand.
+
+enum E {
+>E : E
+
+    a,
+>a : E
+
+    b
+>b : E
+}
+
+var a: any;
+>a : any
+
+var b: number;
+>b : number
+
+// operator *
+var ra1 = null * a;
+>ra1 : number
+>null * a : number
+>a : any
+
+var ra2 = null * b;
+>ra2 : number
+>null * b : number
+>b : number
+
+var ra3 = null * 1;
+>ra3 : number
+>null * 1 : number
+
+var ra4 = null * E.a;
+>ra4 : number
+>null * E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var ra5 = a * null;
+>ra5 : number
+>a * null : number
+>a : any
+
+var ra6 = b * null;
+>ra6 : number
+>b * null : number
+>b : number
+
+var ra7 = 0 * null;
+>ra7 : number
+>0 * null : number
+
+var ra8 = E.b * null;
+>ra8 : number
+>E.b * null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator /
+var rb1 = null / a;
+>rb1 : number
+>null / a : number
+>a : any
+
+var rb2 = null / b;
+>rb2 : number
+>null / b : number
+>b : number
+
+var rb3 = null / 1;
+>rb3 : number
+>null / 1 : number
+
+var rb4 = null / E.a;
+>rb4 : number
+>null / E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var rb5 = a / null;
+>rb5 : number
+>a / null : number
+>a : any
+
+var rb6 = b / null;
+>rb6 : number
+>b / null : number
+>b : number
+
+var rb7 = 0 / null;
+>rb7 : number
+>0 / null : number
+
+var rb8 = E.b / null;
+>rb8 : number
+>E.b / null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator %
+var rc1 = null % a;
+>rc1 : number
+>null % a : number
+>a : any
+
+var rc2 = null % b;
+>rc2 : number
+>null % b : number
+>b : number
+
+var rc3 = null % 1;
+>rc3 : number
+>null % 1 : number
+
+var rc4 = null % E.a;
+>rc4 : number
+>null % E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var rc5 = a % null;
+>rc5 : number
+>a % null : number
+>a : any
+
+var rc6 = b % null;
+>rc6 : number
+>b % null : number
+>b : number
+
+var rc7 = 0 % null;
+>rc7 : number
+>0 % null : number
+
+var rc8 = E.b % null;
+>rc8 : number
+>E.b % null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator -
+var rd1 = null - a;
+>rd1 : number
+>null - a : number
+>a : any
+
+var rd2 = null - b;
+>rd2 : number
+>null - b : number
+>b : number
+
+var rd3 = null - 1;
+>rd3 : number
+>null - 1 : number
+
+var rd4 = null - E.a;
+>rd4 : number
+>null - E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var rd5 = a - null;
+>rd5 : number
+>a - null : number
+>a : any
+
+var rd6 = b - null;
+>rd6 : number
+>b - null : number
+>b : number
+
+var rd7 = 0 - null;
+>rd7 : number
+>0 - null : number
+
+var rd8 = E.b - null;
+>rd8 : number
+>E.b - null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator <<
+var re1 = null << a;
+>re1 : number
+>null << a : number
+>a : any
+
+var re2 = null << b;
+>re2 : number
+>null << b : number
+>b : number
+
+var re3 = null << 1;
+>re3 : number
+>null << 1 : number
+
+var re4 = null << E.a;
+>re4 : number
+>null << E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var re5 = a << null;
+>re5 : number
+>a << null : number
+>a : any
+
+var re6 = b << null;
+>re6 : number
+>b << null : number
+>b : number
+
+var re7 = 0 << null;
+>re7 : number
+>0 << null : number
+
+var re8 = E.b << null;
+>re8 : number
+>E.b << null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator >>
+var rf1 = null >> a;
+>rf1 : number
+>null >> a : number
+>a : any
+
+var rf2 = null >> b;
+>rf2 : number
+>null >> b : number
+>b : number
+
+var rf3 = null >> 1;
+>rf3 : number
+>null >> 1 : number
+
+var rf4 = null >> E.a;
+>rf4 : number
+>null >> E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var rf5 = a >> null;
+>rf5 : number
+>a >> null : number
+>a : any
+
+var rf6 = b >> null;
+>rf6 : number
+>b >> null : number
+>b : number
+
+var rf7 = 0 >> null;
+>rf7 : number
+>0 >> null : number
+
+var rf8 = E.b >> null;
+>rf8 : number
+>E.b >> null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator >>>
+var rg1 = null >>> a;
+>rg1 : number
+>null >>> a : number
+>a : any
+
+var rg2 = null >>> b;
+>rg2 : number
+>null >>> b : number
+>b : number
+
+var rg3 = null >>> 1;
+>rg3 : number
+>null >>> 1 : number
+
+var rg4 = null >>> E.a;
+>rg4 : number
+>null >>> E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var rg5 = a >>> null;
+>rg5 : number
+>a >>> null : number
+>a : any
+
+var rg6 = b >>> null;
+>rg6 : number
+>b >>> null : number
+>b : number
+
+var rg7 = 0 >>> null;
+>rg7 : number
+>0 >>> null : number
+
+var rg8 = E.b >>> null;
+>rg8 : number
+>E.b >>> null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator &
+var rh1 = null & a;
+>rh1 : number
+>null & a : number
+>a : any
+
+var rh2 = null & b;
+>rh2 : number
+>null & b : number
+>b : number
+
+var rh3 = null & 1;
+>rh3 : number
+>null & 1 : number
+
+var rh4 = null & E.a;
+>rh4 : number
+>null & E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var rh5 = a & null;
+>rh5 : number
+>a & null : number
+>a : any
+
+var rh6 = b & null;
+>rh6 : number
+>b & null : number
+>b : number
+
+var rh7 = 0 & null;
+>rh7 : number
+>0 & null : number
+
+var rh8 = E.b & null;
+>rh8 : number
+>E.b & null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator ^
+var ri1 = null ^ a;
+>ri1 : number
+>null ^ a : number
+>a : any
+
+var ri2 = null ^ b;
+>ri2 : number
+>null ^ b : number
+>b : number
+
+var ri3 = null ^ 1;
+>ri3 : number
+>null ^ 1 : number
+
+var ri4 = null ^ E.a;
+>ri4 : number
+>null ^ E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var ri5 = a ^ null;
+>ri5 : number
+>a ^ null : number
+>a : any
+
+var ri6 = b ^ null;
+>ri6 : number
+>b ^ null : number
+>b : number
+
+var ri7 = 0 ^ null;
+>ri7 : number
+>0 ^ null : number
+
+var ri8 = E.b ^ null;
+>ri8 : number
+>E.b ^ null : number
+>E.b : E
+>E : typeof E
+>b : E
+
+// operator |
+var rj1 = null | a;
+>rj1 : number
+>null | a : number
+>a : any
+
+var rj2 = null | b;
+>rj2 : number
+>null | b : number
+>b : number
+
+var rj3 = null | 1;
+>rj3 : number
+>null | 1 : number
+
+var rj4 = null | E.a;
+>rj4 : number
+>null | E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var rj5 = a | null;
+>rj5 : number
+>a | null : number
+>a : any
+
+var rj6 = b | null;
+>rj6 : number
+>b | null : number
+>b : number
+
+var rj7 = 0 | null;
+>rj7 : number
+>0 | null : number
+
+var rj8 = E.b | null;
+>rj8 : number
+>E.b | null : number
+>E.b : E
+>E : typeof E
+>b : E
+

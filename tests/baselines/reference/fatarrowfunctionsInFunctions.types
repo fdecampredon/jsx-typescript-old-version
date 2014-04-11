@@ -1,10 +1,13 @@
 === tests/cases/compiler/fatarrowfunctionsInFunctions.ts ===
-Line 0 col 17 IdentifierName "setTimeout" = typeof setTimeout
-Line 0 col 28 IdentifierName "expression" = any
-Line 0 col 45 IdentifierName "msec" = number
-Line 0 col 60 IdentifierName "language" = any
-Line 2 col 4 IdentifierName "messenger" = { message: string; start: () => void; }
-Line 2 col 16 ObjectLiteralExpression "{
+declare function setTimeout(expression: any, msec?: number, language?: any): number;
+>setTimeout : typeof setTimeout
+>expression : any
+>msec : number
+>language : any
+
+var messenger = {
+>messenger : { message: string; start: () => void; }
+>{
     message: "Hello World",
     start: function() {
         var _self = this;
@@ -12,31 +15,47 @@ Line 2 col 16 ObjectLiteralExpression "{
             _self.message.toString(); 
         }, 3000); 
     }
-}" = { message: string; start: () => void; }
-Line 3 col 0 IdentifierName "message" = string
-Line 4 col 0 IdentifierName "start" = () => void
-Line 4 col 11 FunctionExpression "function() {
+} : { message: string; start: () => void; }
+
+    message: "Hello World",
+>message : string
+
+    start: function() {
+>start : () => void
+>function() {
         var _self = this;
         setTimeout(function() {
             _self.message.toString(); 
         }, 3000); 
-    }" = () => void
-Line 5 col 12 IdentifierName "_self" = any
-Line 5 col 20 ThisKeyword "this" = any
-Line 6 col 0 InvocationExpression "setTimeout(function() {
+    } : () => void
+
+        var _self = this;
+>_self : any
+>this : any
+
+        setTimeout(function() {
+>setTimeout(function() {
             _self.message.toString(); 
-        }, 3000)" = number
-Line 6 col 0 IdentifierName "setTimeout" = typeof setTimeout
-Line 6 col 19 FunctionExpression "function() {
+        }, 3000) : number
+>setTimeout : typeof setTimeout
+>function() {
             _self.message.toString(); 
-        }" = () => void
-Line 7 col 0 InvocationExpression "_self.message.toString()" = any
-Line 7 col 0 MemberAccessExpression "_self.message.toString" = any
-Line 7 col 0 MemberAccessExpression "_self.message" = any
-Line 7 col 0 IdentifierName "_self" = any
-Line 7 col 18 IdentifierName "message" = any
-Line 7 col 26 IdentifierName "toString" = any
-Line 11 col 0 InvocationExpression "messenger.start()" = void
-Line 11 col 0 MemberAccessExpression "messenger.start" = () => void
-Line 11 col 0 IdentifierName "messenger" = { message: string; start: () => void; }
-Line 11 col 10 IdentifierName "start" = () => void
+        } : () => void
+
+            _self.message.toString(); 
+>_self.message.toString() : any
+>_self.message.toString : any
+>_self.message : any
+>_self : any
+>message : any
+>toString : any
+
+        }, 3000); 
+    }
+}; 
+messenger.start(); 
+>messenger.start() : void
+>messenger.start : () => void
+>messenger : { message: string; start: () => void; }
+>start : () => void
+

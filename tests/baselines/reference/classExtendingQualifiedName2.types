@@ -1,6 +1,14 @@
 === tests/cases/compiler/classExtendingQualifiedName2.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 17 IdentifierName "C" = C
-Line 4 col 10 IdentifierName "D" = D
-Line 4 col 20 IdentifierName "M" = M
-Line 4 col 22 IdentifierName "C" = C
+module M {
+>M : M
+
+    export class C {
+>C : C
+    }
+
+    class D extends M.C {
+>D : D
+>M : M
+>C : C
+    }
+}

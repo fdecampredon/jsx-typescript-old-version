@@ -1,3 +1,12 @@
+//// [aliasUsageInVarAssignment_main.ts]
+import Backbone = require("aliasUsageInVarAssignment_backbone");
+import moduleA = require("aliasUsageInVarAssignment_moduleA");
+interface IHasVisualizationModel {
+    VisualizationModel: typeof Backbone.Model;
+}
+var i: IHasVisualizationModel;
+var m: typeof moduleA = i;
+
 //// [aliasUsageInVarAssignment_backbone.js]
 var Model = (function () {
     function Model() {

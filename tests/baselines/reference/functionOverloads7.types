@@ -1,19 +1,35 @@
 === tests/cases/compiler/functionOverloads7.ts ===
-Line 0 col 6 IdentifierName "foo" = foo
-Line 1 col 11 IdentifierName "bar" = { (): any; (foo: string): any; }
-Line 2 col 11 IdentifierName "bar" = { (): any; (foo: string): any; }
-Line 2 col 15 IdentifierName "foo" = string
-Line 3 col 11 IdentifierName "bar" = { (): any; (foo: string): any; }
-Line 3 col 15 IdentifierName "foo" = any
-Line 4 col 10 IdentifierName "n" = () => void
-Line 5 col 9 IdentifierName "foo" = any
-Line 5 col 15 InvocationExpression "this.bar()" = any
-Line 5 col 15 MemberAccessExpression "this.bar" = { (): any; (foo: string): any; }
-Line 5 col 15 ThisKeyword "this" = foo
-Line 5 col 20 IdentifierName "bar" = { (): any; (foo: string): any; }
-Line 6 col 0 AssignmentExpression "foo = this.bar("test")" = any
-Line 6 col 0 IdentifierName "foo" = any
-Line 6 col 11 InvocationExpression "this.bar("test")" = any
-Line 6 col 11 MemberAccessExpression "this.bar" = { (): any; (foo: string): any; }
-Line 6 col 11 ThisKeyword "this" = foo
-Line 6 col 16 IdentifierName "bar" = { (): any; (foo: string): any; }
+class foo { 
+>foo : foo
+
+   private bar();
+>bar : { (): any; (foo: string): any; }
+
+   private bar(foo: string);
+>bar : { (): any; (foo: string): any; }
+>foo : string
+
+   private bar(foo?: any){ return "foo" }
+>bar : { (): any; (foo: string): any; }
+>foo : any
+
+   public n() {
+>n : () => void
+
+     var foo = this.bar();
+>foo : any
+>this.bar() : any
+>this.bar : { (): any; (foo: string): any; }
+>this : foo
+>bar : { (): any; (foo: string): any; }
+
+     foo = this.bar("test");
+>foo = this.bar("test") : any
+>foo : any
+>this.bar("test") : any
+>this.bar : { (): any; (foo: string): any; }
+>this : foo
+>bar : { (): any; (foo: string): any; }
+   }
+}
+

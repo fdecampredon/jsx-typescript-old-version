@@ -1,3 +1,10 @@
 === tests/cases/compiler/constructorStaticParamName.ts ===
-Line 2 col 6 IdentifierName "test" = test
-Line 3 col 17 IdentifierName "static" = any
+// static as constructor parameter name should only give error if 'use strict'
+
+class test {
+>test : test
+
+    constructor (static) { }
+>static : any
+}
+

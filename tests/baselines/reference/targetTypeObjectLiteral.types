@@ -1,9 +1,10 @@
 === tests/cases/compiler/targetTypeObjectLiteral.ts ===
-Line 0 col 4 IdentifierName "z" = { x: number; y: (w: string) => number; }
-Line 0 col 9 IdentifierName "x" = number
-Line 0 col 20 IdentifierName "y" = (w: string) => number
-Line 0 col 24 IdentifierName "w" = string
-Line 0 col 46 ObjectLiteralExpression "{
+var z: { x: number; y: (w:string)=>number;} = {
+>z : { x: number; y: (w: string) => number; }
+>x : number
+>y : (w: string) => number
+>w : string
+>{
 
     x: 12,
 
@@ -13,12 +14,24 @@ Line 0 col 46 ObjectLiteralExpression "{
 
     }
 
-}" = { x: number; y: (w: string) => number; }
-Line 1 col 0 IdentifierName "x" = number
-Line 3 col 0 IdentifierName "y" = (w: string) => number
-Line 4 col 7 FunctionExpression "function(w) {
+} : { x: number; y: (w: string) => number; }
+
+>x : number
+
+    x: 12,
+
+>y : (w: string) => number
+
+    y: function(w) {
+>function(w) {
 
         return 0;
 
-    }" = (w: string) => number
-Line 4 col 16 IdentifierName "w" = string
+    } : (w: string) => number
+>w : string
+
+        return 0;
+
+    }
+
+}

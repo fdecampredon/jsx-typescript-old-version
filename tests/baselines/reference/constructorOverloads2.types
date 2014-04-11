@@ -1,37 +1,74 @@
 === tests/cases/compiler/constructorOverloads2.ts ===
-Line 0 col 6 IdentifierName "FooBase" = FooBase
-Line 1 col 16 IdentifierName "s" = string
-Line 2 col 16 IdentifierName "n" = number
-Line 3 col 16 IdentifierName "x" = any
-Line 5 col 0 IdentifierName "bar1" = () => void
-Line 8 col 6 IdentifierName "Foo" = Foo
-Line 8 col 18 IdentifierName "FooBase" = FooBase
-Line 9 col 16 IdentifierName "s" = string
-Line 10 col 16 IdentifierName "n" = number
-Line 11 col 16 IdentifierName "a" = any
-Line 12 col 16 IdentifierName "x" = any
-Line 12 col 24 IdentifierName "y" = any
-Line 13 col 0 InvocationExpression "super(x)" = void
-Line 13 col 14 IdentifierName "x" = any
-Line 15 col 0 IdentifierName "bar1" = () => void
-Line 18 col 4 IdentifierName "f1" = Foo
-Line 18 col 9 ObjectCreationExpression "new Foo("hey")" = Foo
-Line 18 col 13 IdentifierName "Foo" = typeof Foo
-Line 19 col 4 IdentifierName "f2" = Foo
-Line 19 col 9 ObjectCreationExpression "new Foo(0)" = Foo
-Line 19 col 13 IdentifierName "Foo" = typeof Foo
-Line 20 col 4 IdentifierName "f3" = Foo
-Line 20 col 9 ObjectCreationExpression "new Foo(f1)" = Foo
-Line 20 col 13 IdentifierName "Foo" = typeof Foo
-Line 20 col 17 IdentifierName "f1" = Foo
-Line 21 col 4 IdentifierName "f4" = Foo
-Line 21 col 9 ObjectCreationExpression "new Foo([f1,f2,f3])" = Foo
-Line 21 col 13 IdentifierName "Foo" = typeof Foo
-Line 21 col 17 ArrayLiteralExpression "[f1,f2,f3]" = Foo[]
-Line 21 col 18 IdentifierName "f1" = Foo
-Line 21 col 21 IdentifierName "f2" = Foo
-Line 21 col 24 IdentifierName "f3" = Foo
-Line 22 col 0 InvocationExpression "f1.bar1()" = void
-Line 22 col 0 MemberAccessExpression "f1.bar1" = () => void
-Line 22 col 0 IdentifierName "f1" = Foo
-Line 23 col 3 IdentifierName "bar1" = () => void
+class FooBase {
+>FooBase : FooBase
+
+    constructor(s: string);
+>s : string
+
+    constructor(n: number);
+>n : number
+
+    constructor(x: any) {
+>x : any
+    }
+    bar1() {  /*WScript.Echo("base bar1");*/ }
+>bar1 : () => void
+}
+
+class Foo extends FooBase {
+>Foo : Foo
+>FooBase : FooBase
+
+    constructor(s: string);
+>s : string
+
+    constructor(n: number);
+>n : number
+
+    constructor(a:any);
+>a : any
+
+    constructor(x: any, y?: any) {
+>x : any
+>y : any
+
+        super(x);
+>super(x) : void
+>x : any
+    }
+    bar1() {  /*WScript.Echo("bar1");*/ }
+>bar1 : () => void
+}
+
+var f1 = new Foo("hey");
+>f1 : Foo
+>new Foo("hey") : Foo
+>Foo : typeof Foo
+
+var f2 = new Foo(0);
+>f2 : Foo
+>new Foo(0) : Foo
+>Foo : typeof Foo
+
+var f3 = new Foo(f1);
+>f3 : Foo
+>new Foo(f1) : Foo
+>Foo : typeof Foo
+>f1 : Foo
+
+var f4 = new Foo([f1,f2,f3]);
+>f4 : Foo
+>new Foo([f1,f2,f3]) : Foo
+>Foo : typeof Foo
+>[f1,f2,f3] : Foo[]
+>f1 : Foo
+>f2 : Foo
+>f3 : Foo
+
+>f1.bar1() : void
+>f1.bar1 : () => void
+>f1 : Foo
+
+f1.bar1();
+>bar1 : () => void
+

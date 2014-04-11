@@ -1,29 +1,50 @@
 === tests/cases/compiler/genericOfACloduleType2.ts ===
-Line 0 col 6 IdentifierName "G" = G<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 0 col 12 IdentifierName "bar" = (x: T) => T
-Line 0 col 16 IdentifierName "x" = T
-Line 0 col 19 IdentifierName "T" = T
-Line 0 col 31 IdentifierName "x" = T
-Line 1 col 7 IdentifierName "M" = M
-Line 2 col 17 IdentifierName "C" = C
-Line 2 col 21 IdentifierName "foo" = () => void
-Line 3 col 18 IdentifierName "C" = C
-Line 4 col 21 IdentifierName "X" = X
-Line 8 col 8 IdentifierName "g1" = G<C>
-Line 8 col 13 ObjectCreationExpression "new G<C>()" = G<C>
-Line 8 col 17 IdentifierName "G" = typeof G
-Line 8 col 19 IdentifierName "C" = C
-Line 9 col 0 InvocationExpression "g1.bar(null).foo()" = void
-Line 9 col 0 MemberAccessExpression "g1.bar(null).foo" = () => void
-Line 9 col 0 InvocationExpression "g1.bar(null)" = C
-Line 9 col 0 MemberAccessExpression "g1.bar" = (x: C) => C
-Line 9 col 0 IdentifierName "g1" = G<C>
-Line 9 col 7 IdentifierName "bar" = (x: C) => C
-Line 9 col 17 IdentifierName "foo" = () => void
-Line 12 col 7 IdentifierName "N" = N
-Line 13 col 8 IdentifierName "g2" = G<M.C>
-Line 13 col 13 ObjectCreationExpression "new G<M.C>()" = G<M.C>
-Line 13 col 17 IdentifierName "G" = typeof G
-Line 13 col 19 IdentifierName "M" = M
-Line 13 col 21 IdentifierName "C" = M.C
+class G<T>{ bar(x: T) { return x; } }
+>G : G<T>
+>T : T
+>bar : (x: T) => T
+>x : T
+>T : T
+>x : T
+
+module M {
+>M : M
+
+    export class C { foo() { } }
+>C : C
+>foo : () => void
+
+    export module C {
+>C : C
+
+        export class X {
+>X : X
+        }
+    }
+
+    var g1 = new G<C>();
+>g1 : G<C>
+>new G<C>() : G<C>
+>G : typeof G
+>C : C
+
+    g1.bar(null).foo(); // no error
+>g1.bar(null).foo() : void
+>g1.bar(null).foo : () => void
+>g1.bar(null) : C
+>g1.bar : (x: C) => C
+>g1 : G<C>
+>bar : (x: C) => C
+>foo : () => void
+}
+
+module N {
+>N : N
+
+    var g2 = new G<M.C>()
+>g2 : G<M.C>
+>new G<M.C>() : G<M.C>
+>G : typeof G
+>M : M
+>C : M.C
+}

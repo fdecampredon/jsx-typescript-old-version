@@ -1,3 +1,4 @@
+//// [genericLambaArgWithoutTypeArguments.js]
 function foo(a) {
     return null;
 }

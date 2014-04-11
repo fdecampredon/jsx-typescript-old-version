@@ -1,3 +1,4 @@
+//// [functionCall10.js]
 function foo() {
     var a = [];
     for (var _i = 0; _i < (arguments.length - 0); _i++) {

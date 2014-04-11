@@ -1,3 +1,4 @@
+//// [overloadResolutionOverCTLambda.js]
 function foo(b) {
 }
 foo(function (a) {

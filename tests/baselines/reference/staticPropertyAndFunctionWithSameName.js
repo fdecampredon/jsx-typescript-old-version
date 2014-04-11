@@ -1,3 +1,15 @@
+//// [staticPropertyAndFunctionWithSameName.ts]
+class C {
+    static f: number;
+    f: number;
+}
+
+class D {
+    static f: number;
+    f() { }
+}
+
+//// [staticPropertyAndFunctionWithSameName.js]
 var C = (function () {
     function C() {
     }

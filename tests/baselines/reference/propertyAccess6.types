@@ -1,6 +1,10 @@
 === tests/cases/compiler/propertyAccess6.ts ===
-Line 0 col 4 IdentifierName "foo" = any
-Line 1 col 0 AssignmentExpression "foo.bar = 4" = number
-Line 1 col 0 MemberAccessExpression "foo.bar" = any
-Line 1 col 0 IdentifierName "foo" = any
-Line 1 col 4 IdentifierName "bar" = any
+var foo: any;
+>foo : any
+
+foo.bar = 4;
+>foo.bar = 4 : number
+>foo.bar : any
+>foo : any
+>bar : any
+

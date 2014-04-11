@@ -1,3 +1,21 @@
+//// [mergedModuleDeclarationCodeGen.ts]
+export module X {
+    export module Y {
+        class A {
+            constructor(Y: any) {
+                new B();
+            }
+        }
+    }
+}
+export module X {
+    export module Y {
+        export class B {
+        }
+    }
+}
+
+//// [mergedModuleDeclarationCodeGen.js]
 (function (X) {
     (function (_Y) {
         var A = (function () {

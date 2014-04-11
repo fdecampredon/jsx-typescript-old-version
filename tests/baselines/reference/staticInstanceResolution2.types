@@ -1,11 +1,24 @@
 === tests/cases/compiler/staticInstanceResolution2.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 1 col 0 InvocationExpression "A.hasOwnProperty('foo')" = boolean
-Line 1 col 0 MemberAccessExpression "A.hasOwnProperty" = (v: string) => boolean
-Line 1 col 0 IdentifierName "A" = typeof A
-Line 1 col 2 IdentifierName "hasOwnProperty" = (v: string) => boolean
-Line 3 col 6 IdentifierName "B" = B
-Line 6 col 0 InvocationExpression "B.hasOwnProperty('foo')" = boolean
-Line 6 col 0 MemberAccessExpression "B.hasOwnProperty" = (v: string) => boolean
-Line 6 col 0 IdentifierName "B" = typeof B
-Line 6 col 2 IdentifierName "hasOwnProperty" = (v: string) => boolean
+class A { }
+>A : A
+
+A.hasOwnProperty('foo');
+>A.hasOwnProperty('foo') : boolean
+>A.hasOwnProperty : (v: string) => boolean
+>A : typeof A
+>hasOwnProperty : (v: string) => boolean
+
+class B {
+>B : B
+
+    constructor() { }
+}
+B.hasOwnProperty('foo');
+>B.hasOwnProperty('foo') : boolean
+>B.hasOwnProperty : (v: string) => boolean
+>B : typeof B
+>hasOwnProperty : (v: string) => boolean
+
+
+
+

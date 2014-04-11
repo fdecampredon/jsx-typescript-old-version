@@ -1,3 +1,4 @@
+//// [privacyCheckTypeOfFunction.js]
 function foo() {
 }
 exports.x;

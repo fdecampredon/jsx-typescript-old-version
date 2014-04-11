@@ -1,3 +1,4 @@
+//// [genericCloneReturnTypes.js]
 var Bar = (function () {
     function Bar(x) {
         this.size = x;

@@ -1,16 +1,32 @@
 === tests/cases/compiler/recursiveTypeIdentity.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 1 col 5 IdentifierName "T" = T
-Line 1 col 15 IdentifierName "A" = A
-Line 1 col 18 IdentifierName "x" = T
-Line 1 col 21 IdentifierName "T" = T
-Line 4 col 10 IdentifierName "B" = B
-Line 5 col 5 IdentifierName "T" = T
-Line 5 col 15 IdentifierName "B" = B
-Line 5 col 18 IdentifierName "x" = T
-Line 5 col 21 IdentifierName "T" = T
-Line 8 col 10 IdentifierName "C" = C
-Line 9 col 5 IdentifierName "x" = A
-Line 9 col 8 IdentifierName "A" = A
-Line 10 col 5 IdentifierName "x" = B
-Line 10 col 8 IdentifierName "B" = B
+interface A {
+>A : A
+
+    <T extends A>(x: T): void;
+>T : T
+>A : A
+>x : T
+>T : T
+}
+
+interface B {
+>B : B
+
+    <T extends B>(x: T): void;
+>T : T
+>B : B
+>x : T
+>T : T
+}
+
+interface C {
+>C : C
+
+    (x: A): void;
+>x : A
+>A : A
+
+    (x: B): void;
+>x : B
+>B : B
+}

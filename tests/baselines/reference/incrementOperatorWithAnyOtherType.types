@@ -1,117 +1,193 @@
 === tests/cases/compiler/incrementOperatorWithAnyOtherType.ts ===
-Line 2 col 4 IdentifierName "ANY" = any
-Line 3 col 4 IdentifierName "ANY1" = any
-Line 4 col 4 IdentifierName "ANY2" = any[]
-Line 4 col 18 ArrayLiteralExpression "["", ""]" = any[]
-Line 5 col 4 IdentifierName "obj" = { x: number; y: any; }
-Line 5 col 10 ObjectLiteralExpression "{x:1,y:null}" = { x: number; y: any; }
-Line 5 col 11 IdentifierName "x" = number
-Line 5 col 15 IdentifierName "y" = any
-Line 6 col 6 IdentifierName "A" = A
-Line 7 col 11 IdentifierName "a" = any
-Line 9 col 7 IdentifierName "M" = M
-Line 10 col 15 IdentifierName "n" = any
-Line 12 col 4 IdentifierName "objA" = A
-Line 12 col 11 ObjectCreationExpression "new A()" = A
-Line 12 col 15 IdentifierName "A" = typeof A
-Line 15 col 4 IdentifierName "ResultIsNumber1" = number
-Line 15 col 22 PreIncrementExpression "++ANY" = number
-Line 15 col 24 IdentifierName "ANY" = any
-Line 16 col 4 IdentifierName "ResultIsNumber2" = number
-Line 16 col 22 PreIncrementExpression "++ANY1" = number
-Line 16 col 24 IdentifierName "ANY1" = any
-Line 18 col 4 IdentifierName "ResultIsNumber3" = number
-Line 18 col 22 PostIncrementExpression "ANY1++" = number
-Line 18 col 22 IdentifierName "ANY1" = any
-Line 19 col 4 IdentifierName "ResultIsNumber4" = number
-Line 19 col 22 PostIncrementExpression "ANY1++" = number
-Line 19 col 22 IdentifierName "ANY1" = any
-Line 22 col 4 IdentifierName "ResultIsNumber5" = number
-Line 22 col 22 PreIncrementExpression "++ANY2[0]" = number
-Line 22 col 24 ElementAccessExpression "ANY2[0]" = any
-Line 22 col 24 IdentifierName "ANY2" = any[]
-Line 23 col 4 IdentifierName "ResultIsNumber6" = number
-Line 23 col 22 PreIncrementExpression "++obj.x" = number
-Line 23 col 24 MemberAccessExpression "obj.x" = number
-Line 23 col 24 IdentifierName "obj" = { x: number; y: any; }
-Line 23 col 28 IdentifierName "x" = number
-Line 24 col 4 IdentifierName "ResultIsNumber7" = number
-Line 24 col 22 PreIncrementExpression "++obj.y" = number
-Line 24 col 24 MemberAccessExpression "obj.y" = any
-Line 24 col 24 IdentifierName "obj" = { x: number; y: any; }
-Line 24 col 28 IdentifierName "y" = any
-Line 25 col 4 IdentifierName "ResultIsNumber8" = number
-Line 25 col 22 PreIncrementExpression "++objA.a" = number
-Line 25 col 24 MemberAccessExpression "objA.a" = any
-Line 25 col 24 IdentifierName "objA" = A
-Line 25 col 29 IdentifierName "a" = any
-Line 26 col 4 IdentifierName "ResultIsNumber" = number
-Line 26 col 21 PreIncrementExpression "++M.n" = number
-Line 26 col 23 MemberAccessExpression "M.n" = any
-Line 26 col 23 IdentifierName "M" = typeof M
-Line 26 col 25 IdentifierName "n" = any
-Line 28 col 4 IdentifierName "ResultIsNumber9" = number
-Line 28 col 22 PostIncrementExpression "ANY2[0]++" = number
-Line 28 col 22 ElementAccessExpression "ANY2[0]" = any
-Line 28 col 22 IdentifierName "ANY2" = any[]
-Line 29 col 4 IdentifierName "ResultIsNumber10" = number
-Line 29 col 23 PostIncrementExpression "obj.x++" = number
-Line 29 col 23 MemberAccessExpression "obj.x" = number
-Line 29 col 23 IdentifierName "obj" = { x: number; y: any; }
-Line 29 col 27 IdentifierName "x" = number
-Line 30 col 4 IdentifierName "ResultIsNumber11" = number
-Line 30 col 23 PostIncrementExpression "obj.y++" = number
-Line 30 col 23 MemberAccessExpression "obj.y" = any
-Line 30 col 23 IdentifierName "obj" = { x: number; y: any; }
-Line 30 col 27 IdentifierName "y" = any
-Line 31 col 4 IdentifierName "ResultIsNumber12" = number
-Line 31 col 23 PostIncrementExpression "objA.a++" = number
-Line 31 col 23 MemberAccessExpression "objA.a" = any
-Line 31 col 23 IdentifierName "objA" = A
-Line 31 col 28 IdentifierName "a" = any
-Line 32 col 4 IdentifierName "ResultIsNumber13" = number
-Line 32 col 23 PostIncrementExpression "M.n++" = number
-Line 32 col 23 MemberAccessExpression "M.n" = any
-Line 32 col 23 IdentifierName "M" = typeof M
-Line 32 col 25 IdentifierName "n" = any
-Line 33 col 0 PreIncrementExpression "// miss assignment opertors
-++ANY" = number
-Line 35 col 2 IdentifierName "ANY" = any
-Line 36 col 0 PreIncrementExpression "++ANY1" = number
-Line 36 col 2 IdentifierName "ANY1" = any
-Line 37 col 0 PreIncrementExpression "++ANY2[0]" = number
-Line 37 col 2 ElementAccessExpression "ANY2[0]" = any
-Line 37 col 2 IdentifierName "ANY2" = any[]
-Line 38 col 0 CommaExpression "++ANY, ++ANY1" = number
-Line 38 col 0 PreIncrementExpression "++ANY" = number
-Line 38 col 2 IdentifierName "ANY" = any
-Line 38 col 7 PreIncrementExpression "++ANY1" = number
-Line 38 col 9 IdentifierName "ANY1" = any
-Line 39 col 0 PreIncrementExpression "++objA.a" = number
-Line 39 col 2 MemberAccessExpression "objA.a" = any
-Line 39 col 2 IdentifierName "objA" = A
-Line 39 col 7 IdentifierName "a" = any
-Line 40 col 0 PreIncrementExpression "++M.n" = number
-Line 40 col 2 MemberAccessExpression "M.n" = any
-Line 40 col 2 IdentifierName "M" = typeof M
-Line 40 col 4 IdentifierName "n" = any
-Line 41 col 0 PostIncrementExpression "ANY++" = number
-Line 41 col 0 IdentifierName "ANY" = any
-Line 43 col 0 PostIncrementExpression "ANY1++" = number
-Line 43 col 0 IdentifierName "ANY1" = any
-Line 44 col 0 PostIncrementExpression "ANY2[0]++" = number
-Line 44 col 0 ElementAccessExpression "ANY2[0]" = any
-Line 44 col 0 IdentifierName "ANY2" = any[]
-Line 45 col 0 CommaExpression "ANY++, ANY1++" = number
-Line 45 col 0 PostIncrementExpression "ANY++" = number
-Line 45 col 0 IdentifierName "ANY" = any
-Line 45 col 7 PostIncrementExpression "ANY1++" = number
-Line 45 col 7 IdentifierName "ANY1" = any
-Line 46 col 0 PostIncrementExpression "objA.a++" = number
-Line 46 col 0 MemberAccessExpression "objA.a" = any
-Line 46 col 0 IdentifierName "objA" = A
-Line 46 col 5 IdentifierName "a" = any
-Line 47 col 0 PostIncrementExpression "M.n++" = number
-Line 47 col 0 MemberAccessExpression "M.n" = any
-Line 47 col 0 IdentifierName "M" = typeof M
-Line 47 col 2 IdentifierName "n" = any
+// ++ operator on any type
+
+var ANY: any;
+>ANY : any
+
+var ANY1;
+>ANY1 : any
+
+var ANY2: any[] = ["", ""];
+>ANY2 : any[]
+>["", ""] : any[]
+
+var obj = {x:1,y:null};
+>obj : { x: number; y: any; }
+>{x:1,y:null} : { x: number; y: any; }
+>x : number
+>y : any
+
+class A {
+>A : A
+
+    public a: any;
+>a : any
+}
+module M {
+>M : M
+
+    export var n: any;
+>n : any
+}
+var objA = new A();
+>objA : A
+>new A() : A
+>A : typeof A
+
+// any type var
+var ResultIsNumber1 = ++ANY;
+>ResultIsNumber1 : number
+>++ANY : number
+>ANY : any
+
+var ResultIsNumber2 = ++ANY1;
+>ResultIsNumber2 : number
+>++ANY1 : number
+>ANY1 : any
+
+var ResultIsNumber3 = ANY1++;
+>ResultIsNumber3 : number
+>ANY1++ : number
+>ANY1 : any
+
+var ResultIsNumber4 = ANY1++;
+>ResultIsNumber4 : number
+>ANY1++ : number
+>ANY1 : any
+
+// expressions
+var ResultIsNumber5 = ++ANY2[0];
+>ResultIsNumber5 : number
+>++ANY2[0] : number
+>ANY2[0] : any
+>ANY2 : any[]
+
+var ResultIsNumber6 = ++obj.x;
+>ResultIsNumber6 : number
+>++obj.x : number
+>obj.x : number
+>obj : { x: number; y: any; }
+>x : number
+
+var ResultIsNumber7 = ++obj.y;
+>ResultIsNumber7 : number
+>++obj.y : number
+>obj.y : any
+>obj : { x: number; y: any; }
+>y : any
+
+var ResultIsNumber8 = ++objA.a;
+>ResultIsNumber8 : number
+>++objA.a : number
+>objA.a : any
+>objA : A
+>a : any
+
+var ResultIsNumber = ++M.n;
+>ResultIsNumber : number
+>++M.n : number
+>M.n : any
+>M : typeof M
+>n : any
+
+var ResultIsNumber9 = ANY2[0]++;
+>ResultIsNumber9 : number
+>ANY2[0]++ : number
+>ANY2[0] : any
+>ANY2 : any[]
+
+var ResultIsNumber10 = obj.x++;
+>ResultIsNumber10 : number
+>obj.x++ : number
+>obj.x : number
+>obj : { x: number; y: any; }
+>x : number
+
+var ResultIsNumber11 = obj.y++;
+>ResultIsNumber11 : number
+>obj.y++ : number
+>obj.y : any
+>obj : { x: number; y: any; }
+>y : any
+
+var ResultIsNumber12 = objA.a++;
+>ResultIsNumber12 : number
+>objA.a++ : number
+>objA.a : any
+>objA : A
+>a : any
+
+var ResultIsNumber13 = M.n++;
+>ResultIsNumber13 : number
+>M.n++ : number
+>M.n : any
+>M : typeof M
+>n : any
+
+>// miss assignment opertors
+++ANY : number
+
+// miss assignment opertors
+++ANY;
+>ANY : any
+
+++ANY1;
+>++ANY1 : number
+>ANY1 : any
+
+++ANY2[0];
+>++ANY2[0] : number
+>ANY2[0] : any
+>ANY2 : any[]
+
+++ANY, ++ANY1;
+>++ANY, ++ANY1 : number
+>++ANY : number
+>ANY : any
+>++ANY1 : number
+>ANY1 : any
+
+++objA.a;
+>++objA.a : number
+>objA.a : any
+>objA : A
+>a : any
+
+++M.n;
+>++M.n : number
+>M.n : any
+>M : typeof M
+>n : any
+
+>ANY++ : number
+>ANY : any
+
+ANY++;
+ANY1++;
+>ANY1++ : number
+>ANY1 : any
+
+ANY2[0]++;
+>ANY2[0]++ : number
+>ANY2[0] : any
+>ANY2 : any[]
+
+ANY++, ANY1++;
+>ANY++, ANY1++ : number
+>ANY++ : number
+>ANY : any
+>ANY1++ : number
+>ANY1 : any
+
+objA.a++;
+>objA.a++ : number
+>objA.a : any
+>objA : A
+>a : any
+
+M.n++;
+>M.n++ : number
+>M.n : any
+>M : typeof M
+>n : any
+

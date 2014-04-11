@@ -1,8 +1,15 @@
 === tests/cases/compiler/commentInMethodCall.ts ===
-Line 1 col 4 IdentifierName "s" = string[]
-Line 2 col 0 InvocationExpression "s.map(// do something
-    function () { })" = void[]
-Line 2 col 0 MemberAccessExpression "s.map" = <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
-Line 2 col 0 IdentifierName "s" = string[]
-Line 2 col 2 IdentifierName "map" = <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
-Line 3 col 0 FunctionExpression "function () { }" = () => void
+//commment here
+var s: string[];
+>s : string[]
+
+s.map(// do something
+>s.map(// do something
+    function () { }) : void[]
+>s.map : <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
+>s : string[]
+>map : <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
+
+    function () { });
+>function () { } : () => void
+

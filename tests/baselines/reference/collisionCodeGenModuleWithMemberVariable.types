@@ -1,9 +1,17 @@
 === tests/cases/compiler/collisionCodeGenModuleWithMemberVariable.ts ===
-Line 0 col 7 IdentifierName "m1" = m1
-Line 1 col 15 IdentifierName "m1" = number
-Line 2 col 8 IdentifierName "b" = number
-Line 2 col 12 IdentifierName "m1" = number
-Line 4 col 4 IdentifierName "foo" = number
-Line 4 col 10 MemberAccessExpression "m1.m1" = number
-Line 4 col 10 IdentifierName "m1" = typeof m1
-Line 4 col 13 IdentifierName "m1" = number
+module m1 {
+>m1 : m1
+
+    export var m1 = 10;
+>m1 : number
+
+    var b = m1;
+>b : number
+>m1 : number
+}
+var foo = m1.m1;
+>foo : number
+>m1.m1 : number
+>m1 : typeof m1
+>m1 : number
+

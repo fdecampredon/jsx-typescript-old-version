@@ -1,3 +1,4 @@
+//// [stringLiteralTypeIsSubtypeOfString.js]
 // string literal types are subtypes of string, any
 
 function f1(x) {

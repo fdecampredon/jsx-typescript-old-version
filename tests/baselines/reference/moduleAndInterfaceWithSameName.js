@@ -1,3 +1,4 @@
+//// [moduleAndInterfaceWithSameName.js]
 var Foo1;
 (function (Foo1) {
     (function (Bar) {

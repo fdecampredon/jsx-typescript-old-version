@@ -1,31 +1,61 @@
 === tests/cases/compiler/identicalCallSignatures.ts ===
-Line 2 col 10 IdentifierName "I" = I
-Line 3 col 5 IdentifierName "x" = any
-Line 4 col 5 IdentifierName "x" = any
-Line 5 col 5 IdentifierName "T" = T
-Line 5 col 8 IdentifierName "x" = T
-Line 5 col 11 IdentifierName "T" = T
-Line 5 col 15 IdentifierName "T" = T
-Line 6 col 5 IdentifierName "U" = U
-Line 6 col 8 IdentifierName "x" = U
-Line 6 col 11 IdentifierName "U" = U
-Line 6 col 15 IdentifierName "U" = U
-Line 9 col 10 IdentifierName "I2" = I2<T>
-Line 9 col 13 IdentifierName "T" = T
-Line 10 col 5 IdentifierName "x" = T
-Line 10 col 8 IdentifierName "T" = T
-Line 10 col 12 IdentifierName "T" = T
-Line 11 col 5 IdentifierName "x" = T
-Line 11 col 8 IdentifierName "T" = T
-Line 11 col 12 IdentifierName "T" = T
-Line 14 col 4 IdentifierName "a" = { (x: any): number; (x: any): number; <T>(x: T): T; <T>(x: T): T; }
-Line 15 col 5 IdentifierName "x" = any
-Line 16 col 5 IdentifierName "x" = any
-Line 17 col 5 IdentifierName "T" = T
-Line 17 col 8 IdentifierName "x" = T
-Line 17 col 11 IdentifierName "T" = T
-Line 17 col 15 IdentifierName "T" = T
-Line 18 col 5 IdentifierName "T" = T
-Line 18 col 8 IdentifierName "x" = T
-Line 18 col 11 IdentifierName "T" = T
-Line 18 col 15 IdentifierName "T" = T
+// Each pair of call signatures in these types have a duplicate signature error.
+// Identical call signatures should generate an error.
+interface I {
+>I : I
+
+    (x): number;
+>x : any
+
+    (x: any): number;
+>x : any
+
+    <T>(x: T): T;
+>T : T
+>x : T
+>T : T
+>T : T
+
+    <U>(x: U): U; // error
+>U : U
+>x : U
+>U : U
+>U : U
+}
+
+interface I2<T> {
+>I2 : I2<T>
+>T : T
+
+    (x: T): T;
+>x : T
+>T : T
+>T : T
+
+    (x: T): T; // error
+>x : T
+>T : T
+>T : T
+}
+
+var a: {
+>a : { (x: any): number; (x: any): number; <T>(x: T): T; <T>(x: T): T; }
+
+    (x): number;
+>x : any
+
+    (x: any): number;
+>x : any
+
+    <T>(x: T): T;
+>T : T
+>x : T
+>T : T
+>T : T
+
+    <T>(x: T): T; // error
+>T : T
+>x : T
+>T : T
+>T : T
+}

@@ -1,401 +1,684 @@
 === tests/cases/compiler/comparisonOperatorWithOneOperandIsNull.ts ===
-Line 0 col 5 IdentifierName "E" = E
-Line 0 col 9 IdentifierName "a" = E
-Line 0 col 12 IdentifierName "b" = E
-Line 0 col 15 IdentifierName "c" = E
-Line 2 col 9 IdentifierName "foo" = typeof foo
-Line 2 col 13 IdentifierName "T" = T
-Line 2 col 16 IdentifierName "t" = T
-Line 2 col 19 IdentifierName "T" = T
-Line 3 col 8 IdentifierName "foo_r1" = boolean
-Line 3 col 17 LessThanExpression "t < null" = boolean
-Line 3 col 17 IdentifierName "t" = T
-Line 4 col 8 IdentifierName "foo_r2" = boolean
-Line 4 col 17 GreaterThanExpression "t > null" = boolean
-Line 4 col 17 IdentifierName "t" = T
-Line 5 col 8 IdentifierName "foo_r3" = boolean
-Line 5 col 17 LessThanOrEqualExpression "t <= null" = boolean
-Line 5 col 17 IdentifierName "t" = T
-Line 6 col 8 IdentifierName "foo_r4" = boolean
-Line 6 col 17 GreaterThanOrEqualExpression "t >= null" = boolean
-Line 6 col 17 IdentifierName "t" = T
-Line 7 col 8 IdentifierName "foo_r5" = boolean
-Line 7 col 17 EqualsWithTypeConversionExpression "t == null" = boolean
-Line 7 col 17 IdentifierName "t" = T
-Line 8 col 8 IdentifierName "foo_r6" = boolean
-Line 8 col 17 NotEqualsWithTypeConversionExpression "t != null" = boolean
-Line 8 col 17 IdentifierName "t" = T
-Line 9 col 8 IdentifierName "foo_r7" = boolean
-Line 9 col 17 EqualsExpression "t === null" = boolean
-Line 9 col 17 IdentifierName "t" = T
-Line 10 col 8 IdentifierName "foo_r8" = boolean
-Line 10 col 17 NotEqualsExpression "t !== null" = boolean
-Line 10 col 17 IdentifierName "t" = T
-Line 12 col 8 IdentifierName "foo_r1" = boolean
-Line 12 col 17 LessThanExpression "null < t" = boolean
-Line 12 col 24 IdentifierName "t" = T
-Line 13 col 8 IdentifierName "foo_r2" = boolean
-Line 13 col 17 GreaterThanExpression "null > t" = boolean
-Line 13 col 24 IdentifierName "t" = T
-Line 14 col 8 IdentifierName "foo_r3" = boolean
-Line 14 col 17 LessThanOrEqualExpression "null <= t" = boolean
-Line 14 col 25 IdentifierName "t" = T
-Line 15 col 8 IdentifierName "foo_r4" = boolean
-Line 15 col 17 GreaterThanOrEqualExpression "null >= t" = boolean
-Line 15 col 25 IdentifierName "t" = T
-Line 16 col 8 IdentifierName "foo_r5" = boolean
-Line 16 col 17 EqualsWithTypeConversionExpression "null == t" = boolean
-Line 16 col 25 IdentifierName "t" = T
-Line 17 col 8 IdentifierName "foo_r6" = boolean
-Line 17 col 17 NotEqualsWithTypeConversionExpression "null != t" = boolean
-Line 17 col 25 IdentifierName "t" = T
-Line 18 col 8 IdentifierName "foo_r7" = boolean
-Line 18 col 17 EqualsExpression "null === t" = boolean
-Line 18 col 26 IdentifierName "t" = T
-Line 19 col 8 IdentifierName "foo_r8" = boolean
-Line 19 col 17 NotEqualsExpression "null !== t" = boolean
-Line 19 col 26 IdentifierName "t" = T
-Line 22 col 4 IdentifierName "a" = boolean
-Line 23 col 4 IdentifierName "b" = number
-Line 24 col 4 IdentifierName "c" = string
-Line 25 col 4 IdentifierName "d" = void
-Line 26 col 4 IdentifierName "e" = E
-Line 26 col 7 IdentifierName "E" = E
-Line 27 col 4 IdentifierName "f" = {}
-Line 28 col 4 IdentifierName "g" = string[]
-Line 31 col 4 IdentifierName "r1a1" = boolean
-Line 31 col 11 LessThanExpression "null < a" = boolean
-Line 31 col 18 IdentifierName "a" = boolean
-Line 32 col 4 IdentifierName "r1a2" = boolean
-Line 32 col 11 LessThanExpression "null < b" = boolean
-Line 32 col 18 IdentifierName "b" = number
-Line 33 col 4 IdentifierName "r1a3" = boolean
-Line 33 col 11 LessThanExpression "null < c" = boolean
-Line 33 col 18 IdentifierName "c" = string
-Line 34 col 4 IdentifierName "r1a4" = boolean
-Line 34 col 11 LessThanExpression "null < d" = boolean
-Line 34 col 18 IdentifierName "d" = void
-Line 35 col 4 IdentifierName "r1a5" = boolean
-Line 35 col 11 LessThanExpression "null < e" = boolean
-Line 35 col 18 IdentifierName "e" = E
-Line 36 col 4 IdentifierName "r1a6" = boolean
-Line 36 col 11 LessThanExpression "null < f" = boolean
-Line 36 col 18 IdentifierName "f" = {}
-Line 37 col 4 IdentifierName "r1a7" = boolean
-Line 37 col 11 LessThanExpression "null < g" = boolean
-Line 37 col 18 IdentifierName "g" = string[]
-Line 39 col 4 IdentifierName "r1b1" = boolean
-Line 39 col 11 LessThanExpression "a < null" = boolean
-Line 39 col 11 IdentifierName "a" = boolean
-Line 40 col 4 IdentifierName "r1b2" = boolean
-Line 40 col 11 LessThanExpression "b < null" = boolean
-Line 40 col 11 IdentifierName "b" = number
-Line 41 col 4 IdentifierName "r1b3" = boolean
-Line 41 col 11 LessThanExpression "c < null" = boolean
-Line 41 col 11 IdentifierName "c" = string
-Line 42 col 4 IdentifierName "r1b4" = boolean
-Line 42 col 11 LessThanExpression "d < null" = boolean
-Line 42 col 11 IdentifierName "d" = void
-Line 43 col 4 IdentifierName "r1b5" = boolean
-Line 43 col 11 LessThanExpression "e < null" = boolean
-Line 43 col 11 IdentifierName "e" = E
-Line 44 col 4 IdentifierName "r1b6" = boolean
-Line 44 col 11 LessThanExpression "f < null" = boolean
-Line 44 col 11 IdentifierName "f" = {}
-Line 45 col 4 IdentifierName "r1b7" = boolean
-Line 45 col 11 LessThanExpression "g < null" = boolean
-Line 45 col 11 IdentifierName "g" = string[]
-Line 48 col 4 IdentifierName "r2a1" = boolean
-Line 48 col 11 GreaterThanExpression "null > a" = boolean
-Line 48 col 18 IdentifierName "a" = boolean
-Line 49 col 4 IdentifierName "r2a2" = boolean
-Line 49 col 11 GreaterThanExpression "null > b" = boolean
-Line 49 col 18 IdentifierName "b" = number
-Line 50 col 4 IdentifierName "r2a3" = boolean
-Line 50 col 11 GreaterThanExpression "null > c" = boolean
-Line 50 col 18 IdentifierName "c" = string
-Line 51 col 4 IdentifierName "r2a4" = boolean
-Line 51 col 11 GreaterThanExpression "null > d" = boolean
-Line 51 col 18 IdentifierName "d" = void
-Line 52 col 4 IdentifierName "r2a5" = boolean
-Line 52 col 11 GreaterThanExpression "null > e" = boolean
-Line 52 col 18 IdentifierName "e" = E
-Line 53 col 4 IdentifierName "r2a6" = boolean
-Line 53 col 11 GreaterThanExpression "null > f" = boolean
-Line 53 col 18 IdentifierName "f" = {}
-Line 54 col 4 IdentifierName "r2a7" = boolean
-Line 54 col 11 GreaterThanExpression "null > g" = boolean
-Line 54 col 18 IdentifierName "g" = string[]
-Line 56 col 4 IdentifierName "r2b1" = boolean
-Line 56 col 11 GreaterThanExpression "a > null" = boolean
-Line 56 col 11 IdentifierName "a" = boolean
-Line 57 col 4 IdentifierName "r2b2" = boolean
-Line 57 col 11 GreaterThanExpression "b > null" = boolean
-Line 57 col 11 IdentifierName "b" = number
-Line 58 col 4 IdentifierName "r2b3" = boolean
-Line 58 col 11 GreaterThanExpression "c > null" = boolean
-Line 58 col 11 IdentifierName "c" = string
-Line 59 col 4 IdentifierName "r2b4" = boolean
-Line 59 col 11 GreaterThanExpression "d > null" = boolean
-Line 59 col 11 IdentifierName "d" = void
-Line 60 col 4 IdentifierName "r2b5" = boolean
-Line 60 col 11 GreaterThanExpression "e > null" = boolean
-Line 60 col 11 IdentifierName "e" = E
-Line 61 col 4 IdentifierName "r2b6" = boolean
-Line 61 col 11 GreaterThanExpression "f > null" = boolean
-Line 61 col 11 IdentifierName "f" = {}
-Line 62 col 4 IdentifierName "r2b7" = boolean
-Line 62 col 11 GreaterThanExpression "g > null" = boolean
-Line 62 col 11 IdentifierName "g" = string[]
-Line 65 col 4 IdentifierName "r3a1" = boolean
-Line 65 col 11 LessThanOrEqualExpression "null <= a" = boolean
-Line 65 col 19 IdentifierName "a" = boolean
-Line 66 col 4 IdentifierName "r3a2" = boolean
-Line 66 col 11 LessThanOrEqualExpression "null <= b" = boolean
-Line 66 col 19 IdentifierName "b" = number
-Line 67 col 4 IdentifierName "r3a3" = boolean
-Line 67 col 11 LessThanOrEqualExpression "null <= c" = boolean
-Line 67 col 19 IdentifierName "c" = string
-Line 68 col 4 IdentifierName "r3a4" = boolean
-Line 68 col 11 LessThanOrEqualExpression "null <= d" = boolean
-Line 68 col 19 IdentifierName "d" = void
-Line 69 col 4 IdentifierName "r3a5" = boolean
-Line 69 col 11 LessThanOrEqualExpression "null <= e" = boolean
-Line 69 col 19 IdentifierName "e" = E
-Line 70 col 4 IdentifierName "r3a6" = boolean
-Line 70 col 11 LessThanOrEqualExpression "null <= f" = boolean
-Line 70 col 19 IdentifierName "f" = {}
-Line 71 col 4 IdentifierName "r3a7" = boolean
-Line 71 col 11 LessThanOrEqualExpression "null <= g" = boolean
-Line 71 col 19 IdentifierName "g" = string[]
-Line 73 col 4 IdentifierName "r3b1" = boolean
-Line 73 col 11 LessThanOrEqualExpression "a <= null" = boolean
-Line 73 col 11 IdentifierName "a" = boolean
-Line 74 col 4 IdentifierName "r3b2" = boolean
-Line 74 col 11 LessThanOrEqualExpression "b <= null" = boolean
-Line 74 col 11 IdentifierName "b" = number
-Line 75 col 4 IdentifierName "r3b3" = boolean
-Line 75 col 11 LessThanOrEqualExpression "c <= null" = boolean
-Line 75 col 11 IdentifierName "c" = string
-Line 76 col 4 IdentifierName "r3b4" = boolean
-Line 76 col 11 LessThanOrEqualExpression "d <= null" = boolean
-Line 76 col 11 IdentifierName "d" = void
-Line 77 col 4 IdentifierName "r3b5" = boolean
-Line 77 col 11 LessThanOrEqualExpression "e <= null" = boolean
-Line 77 col 11 IdentifierName "e" = E
-Line 78 col 4 IdentifierName "r3b6" = boolean
-Line 78 col 11 LessThanOrEqualExpression "f <= null" = boolean
-Line 78 col 11 IdentifierName "f" = {}
-Line 79 col 4 IdentifierName "r3b7" = boolean
-Line 79 col 11 LessThanOrEqualExpression "g <= null" = boolean
-Line 79 col 11 IdentifierName "g" = string[]
-Line 82 col 4 IdentifierName "r4a1" = boolean
-Line 82 col 11 GreaterThanOrEqualExpression "null >= a" = boolean
-Line 82 col 19 IdentifierName "a" = boolean
-Line 83 col 4 IdentifierName "r4a2" = boolean
-Line 83 col 11 GreaterThanOrEqualExpression "null >= b" = boolean
-Line 83 col 19 IdentifierName "b" = number
-Line 84 col 4 IdentifierName "r4a3" = boolean
-Line 84 col 11 GreaterThanOrEqualExpression "null >= c" = boolean
-Line 84 col 19 IdentifierName "c" = string
-Line 85 col 4 IdentifierName "r4a4" = boolean
-Line 85 col 11 GreaterThanOrEqualExpression "null >= d" = boolean
-Line 85 col 19 IdentifierName "d" = void
-Line 86 col 4 IdentifierName "r4a5" = boolean
-Line 86 col 11 GreaterThanOrEqualExpression "null >= e" = boolean
-Line 86 col 19 IdentifierName "e" = E
-Line 87 col 4 IdentifierName "r4a6" = boolean
-Line 87 col 11 GreaterThanOrEqualExpression "null >= f" = boolean
-Line 87 col 19 IdentifierName "f" = {}
-Line 88 col 4 IdentifierName "r4a7" = boolean
-Line 88 col 11 GreaterThanOrEqualExpression "null >= g" = boolean
-Line 88 col 19 IdentifierName "g" = string[]
-Line 90 col 4 IdentifierName "r4b1" = boolean
-Line 90 col 11 GreaterThanOrEqualExpression "a >= null" = boolean
-Line 90 col 11 IdentifierName "a" = boolean
-Line 91 col 4 IdentifierName "r4b2" = boolean
-Line 91 col 11 GreaterThanOrEqualExpression "b >= null" = boolean
-Line 91 col 11 IdentifierName "b" = number
-Line 92 col 4 IdentifierName "r4b3" = boolean
-Line 92 col 11 GreaterThanOrEqualExpression "c >= null" = boolean
-Line 92 col 11 IdentifierName "c" = string
-Line 93 col 4 IdentifierName "r4b4" = boolean
-Line 93 col 11 GreaterThanOrEqualExpression "d >= null" = boolean
-Line 93 col 11 IdentifierName "d" = void
-Line 94 col 4 IdentifierName "r4b5" = boolean
-Line 94 col 11 GreaterThanOrEqualExpression "e >= null" = boolean
-Line 94 col 11 IdentifierName "e" = E
-Line 95 col 4 IdentifierName "r4b6" = boolean
-Line 95 col 11 GreaterThanOrEqualExpression "f >= null" = boolean
-Line 95 col 11 IdentifierName "f" = {}
-Line 96 col 4 IdentifierName "r4b7" = boolean
-Line 96 col 11 GreaterThanOrEqualExpression "g >= null" = boolean
-Line 96 col 11 IdentifierName "g" = string[]
-Line 99 col 4 IdentifierName "r5a1" = boolean
-Line 99 col 11 EqualsWithTypeConversionExpression "null == a" = boolean
-Line 99 col 19 IdentifierName "a" = boolean
-Line 100 col 4 IdentifierName "r5a2" = boolean
-Line 100 col 11 EqualsWithTypeConversionExpression "null == b" = boolean
-Line 100 col 19 IdentifierName "b" = number
-Line 101 col 4 IdentifierName "r5a3" = boolean
-Line 101 col 11 EqualsWithTypeConversionExpression "null == c" = boolean
-Line 101 col 19 IdentifierName "c" = string
-Line 102 col 4 IdentifierName "r5a4" = boolean
-Line 102 col 11 EqualsWithTypeConversionExpression "null == d" = boolean
-Line 102 col 19 IdentifierName "d" = void
-Line 103 col 4 IdentifierName "r5a5" = boolean
-Line 103 col 11 EqualsWithTypeConversionExpression "null == e" = boolean
-Line 103 col 19 IdentifierName "e" = E
-Line 104 col 4 IdentifierName "r5a6" = boolean
-Line 104 col 11 EqualsWithTypeConversionExpression "null == f" = boolean
-Line 104 col 19 IdentifierName "f" = {}
-Line 105 col 4 IdentifierName "r5a7" = boolean
-Line 105 col 11 EqualsWithTypeConversionExpression "null == g" = boolean
-Line 105 col 19 IdentifierName "g" = string[]
-Line 107 col 4 IdentifierName "r5b1" = boolean
-Line 107 col 11 EqualsWithTypeConversionExpression "a == null" = boolean
-Line 107 col 11 IdentifierName "a" = boolean
-Line 108 col 4 IdentifierName "r5b2" = boolean
-Line 108 col 11 EqualsWithTypeConversionExpression "b == null" = boolean
-Line 108 col 11 IdentifierName "b" = number
-Line 109 col 4 IdentifierName "r5b3" = boolean
-Line 109 col 11 EqualsWithTypeConversionExpression "c == null" = boolean
-Line 109 col 11 IdentifierName "c" = string
-Line 110 col 4 IdentifierName "r5b4" = boolean
-Line 110 col 11 EqualsWithTypeConversionExpression "d == null" = boolean
-Line 110 col 11 IdentifierName "d" = void
-Line 111 col 4 IdentifierName "r5b5" = boolean
-Line 111 col 11 EqualsWithTypeConversionExpression "e == null" = boolean
-Line 111 col 11 IdentifierName "e" = E
-Line 112 col 4 IdentifierName "r5b6" = boolean
-Line 112 col 11 EqualsWithTypeConversionExpression "f == null" = boolean
-Line 112 col 11 IdentifierName "f" = {}
-Line 113 col 4 IdentifierName "r5b7" = boolean
-Line 113 col 11 EqualsWithTypeConversionExpression "g == null" = boolean
-Line 113 col 11 IdentifierName "g" = string[]
-Line 116 col 4 IdentifierName "r6a1" = boolean
-Line 116 col 11 NotEqualsWithTypeConversionExpression "null != a" = boolean
-Line 116 col 19 IdentifierName "a" = boolean
-Line 117 col 4 IdentifierName "r6a2" = boolean
-Line 117 col 11 NotEqualsWithTypeConversionExpression "null != b" = boolean
-Line 117 col 19 IdentifierName "b" = number
-Line 118 col 4 IdentifierName "r6a3" = boolean
-Line 118 col 11 NotEqualsWithTypeConversionExpression "null != c" = boolean
-Line 118 col 19 IdentifierName "c" = string
-Line 119 col 4 IdentifierName "r6a4" = boolean
-Line 119 col 11 NotEqualsWithTypeConversionExpression "null != d" = boolean
-Line 119 col 19 IdentifierName "d" = void
-Line 120 col 4 IdentifierName "r6a5" = boolean
-Line 120 col 11 NotEqualsWithTypeConversionExpression "null != e" = boolean
-Line 120 col 19 IdentifierName "e" = E
-Line 121 col 4 IdentifierName "r6a6" = boolean
-Line 121 col 11 NotEqualsWithTypeConversionExpression "null != f" = boolean
-Line 121 col 19 IdentifierName "f" = {}
-Line 122 col 4 IdentifierName "r6a7" = boolean
-Line 122 col 11 NotEqualsWithTypeConversionExpression "null != g" = boolean
-Line 122 col 19 IdentifierName "g" = string[]
-Line 124 col 4 IdentifierName "r6b1" = boolean
-Line 124 col 11 NotEqualsWithTypeConversionExpression "a != null" = boolean
-Line 124 col 11 IdentifierName "a" = boolean
-Line 125 col 4 IdentifierName "r6b2" = boolean
-Line 125 col 11 NotEqualsWithTypeConversionExpression "b != null" = boolean
-Line 125 col 11 IdentifierName "b" = number
-Line 126 col 4 IdentifierName "r6b3" = boolean
-Line 126 col 11 NotEqualsWithTypeConversionExpression "c != null" = boolean
-Line 126 col 11 IdentifierName "c" = string
-Line 127 col 4 IdentifierName "r6b4" = boolean
-Line 127 col 11 NotEqualsWithTypeConversionExpression "d != null" = boolean
-Line 127 col 11 IdentifierName "d" = void
-Line 128 col 4 IdentifierName "r6b5" = boolean
-Line 128 col 11 NotEqualsWithTypeConversionExpression "e != null" = boolean
-Line 128 col 11 IdentifierName "e" = E
-Line 129 col 4 IdentifierName "r6b6" = boolean
-Line 129 col 11 NotEqualsWithTypeConversionExpression "f != null" = boolean
-Line 129 col 11 IdentifierName "f" = {}
-Line 130 col 4 IdentifierName "r6b7" = boolean
-Line 130 col 11 NotEqualsWithTypeConversionExpression "g != null" = boolean
-Line 130 col 11 IdentifierName "g" = string[]
-Line 133 col 4 IdentifierName "r7a1" = boolean
-Line 133 col 11 EqualsExpression "null === a" = boolean
-Line 133 col 20 IdentifierName "a" = boolean
-Line 134 col 4 IdentifierName "r7a2" = boolean
-Line 134 col 11 EqualsExpression "null === b" = boolean
-Line 134 col 20 IdentifierName "b" = number
-Line 135 col 4 IdentifierName "r7a3" = boolean
-Line 135 col 11 EqualsExpression "null === c" = boolean
-Line 135 col 20 IdentifierName "c" = string
-Line 136 col 4 IdentifierName "r7a4" = boolean
-Line 136 col 11 EqualsExpression "null === d" = boolean
-Line 136 col 20 IdentifierName "d" = void
-Line 137 col 4 IdentifierName "r7a5" = boolean
-Line 137 col 11 EqualsExpression "null === e" = boolean
-Line 137 col 20 IdentifierName "e" = E
-Line 138 col 4 IdentifierName "r7a6" = boolean
-Line 138 col 11 EqualsExpression "null === f" = boolean
-Line 138 col 20 IdentifierName "f" = {}
-Line 139 col 4 IdentifierName "r7a7" = boolean
-Line 139 col 11 EqualsExpression "null === g" = boolean
-Line 139 col 20 IdentifierName "g" = string[]
-Line 141 col 4 IdentifierName "r7b1" = boolean
-Line 141 col 11 EqualsExpression "a === null" = boolean
-Line 141 col 11 IdentifierName "a" = boolean
-Line 142 col 4 IdentifierName "r7b2" = boolean
-Line 142 col 11 EqualsExpression "b === null" = boolean
-Line 142 col 11 IdentifierName "b" = number
-Line 143 col 4 IdentifierName "r7b3" = boolean
-Line 143 col 11 EqualsExpression "c === null" = boolean
-Line 143 col 11 IdentifierName "c" = string
-Line 144 col 4 IdentifierName "r7b4" = boolean
-Line 144 col 11 EqualsExpression "d === null" = boolean
-Line 144 col 11 IdentifierName "d" = void
-Line 145 col 4 IdentifierName "r7b5" = boolean
-Line 145 col 11 EqualsExpression "e === null" = boolean
-Line 145 col 11 IdentifierName "e" = E
-Line 146 col 4 IdentifierName "r7b6" = boolean
-Line 146 col 11 EqualsExpression "f === null" = boolean
-Line 146 col 11 IdentifierName "f" = {}
-Line 147 col 4 IdentifierName "r7b7" = boolean
-Line 147 col 11 EqualsExpression "g === null" = boolean
-Line 147 col 11 IdentifierName "g" = string[]
-Line 150 col 4 IdentifierName "r8a1" = boolean
-Line 150 col 11 NotEqualsExpression "null !== a" = boolean
-Line 150 col 20 IdentifierName "a" = boolean
-Line 151 col 4 IdentifierName "r8a2" = boolean
-Line 151 col 11 NotEqualsExpression "null !== b" = boolean
-Line 151 col 20 IdentifierName "b" = number
-Line 152 col 4 IdentifierName "r8a3" = boolean
-Line 152 col 11 NotEqualsExpression "null !== c" = boolean
-Line 152 col 20 IdentifierName "c" = string
-Line 153 col 4 IdentifierName "r8a4" = boolean
-Line 153 col 11 NotEqualsExpression "null !== d" = boolean
-Line 153 col 20 IdentifierName "d" = void
-Line 154 col 4 IdentifierName "r8a5" = boolean
-Line 154 col 11 NotEqualsExpression "null !== e" = boolean
-Line 154 col 20 IdentifierName "e" = E
-Line 155 col 4 IdentifierName "r8a6" = boolean
-Line 155 col 11 NotEqualsExpression "null !== f" = boolean
-Line 155 col 20 IdentifierName "f" = {}
-Line 156 col 4 IdentifierName "r8a7" = boolean
-Line 156 col 11 NotEqualsExpression "null !== g" = boolean
-Line 156 col 20 IdentifierName "g" = string[]
-Line 158 col 4 IdentifierName "r8b1" = boolean
-Line 158 col 11 NotEqualsExpression "a !== null" = boolean
-Line 158 col 11 IdentifierName "a" = boolean
-Line 159 col 4 IdentifierName "r8b2" = boolean
-Line 159 col 11 NotEqualsExpression "b !== null" = boolean
-Line 159 col 11 IdentifierName "b" = number
-Line 160 col 4 IdentifierName "r8b3" = boolean
-Line 160 col 11 NotEqualsExpression "c !== null" = boolean
-Line 160 col 11 IdentifierName "c" = string
-Line 161 col 4 IdentifierName "r8b4" = boolean
-Line 161 col 11 NotEqualsExpression "d !== null" = boolean
-Line 161 col 11 IdentifierName "d" = void
-Line 162 col 4 IdentifierName "r8b5" = boolean
-Line 162 col 11 NotEqualsExpression "e !== null" = boolean
-Line 162 col 11 IdentifierName "e" = E
-Line 163 col 4 IdentifierName "r8b6" = boolean
-Line 163 col 11 NotEqualsExpression "f !== null" = boolean
-Line 163 col 11 IdentifierName "f" = {}
-Line 164 col 4 IdentifierName "r8b7" = boolean
-Line 164 col 11 NotEqualsExpression "g !== null" = boolean
-Line 164 col 11 IdentifierName "g" = string[]
+enum E { a, b, c }
+>E : E
+>a : E
+>b : E
+>c : E
+
+function foo<T>(t: T) {
+>foo : typeof foo
+>T : T
+>t : T
+>T : T
+
+    var foo_r1 = t < null;
+>foo_r1 : boolean
+>t < null : boolean
+>t : T
+
+    var foo_r2 = t > null;
+>foo_r2 : boolean
+>t > null : boolean
+>t : T
+
+    var foo_r3 = t <= null;
+>foo_r3 : boolean
+>t <= null : boolean
+>t : T
+
+    var foo_r4 = t >= null;
+>foo_r4 : boolean
+>t >= null : boolean
+>t : T
+
+    var foo_r5 = t == null;
+>foo_r5 : boolean
+>t == null : boolean
+>t : T
+
+    var foo_r6 = t != null;
+>foo_r6 : boolean
+>t != null : boolean
+>t : T
+
+    var foo_r7 = t === null;
+>foo_r7 : boolean
+>t === null : boolean
+>t : T
+
+    var foo_r8 = t !== null;
+>foo_r8 : boolean
+>t !== null : boolean
+>t : T
+
+    var foo_r1 = null < t;
+>foo_r1 : boolean
+>null < t : boolean
+>t : T
+
+    var foo_r2 = null > t;
+>foo_r2 : boolean
+>null > t : boolean
+>t : T
+
+    var foo_r3 = null <= t;
+>foo_r3 : boolean
+>null <= t : boolean
+>t : T
+
+    var foo_r4 = null >= t;
+>foo_r4 : boolean
+>null >= t : boolean
+>t : T
+
+    var foo_r5 = null == t;
+>foo_r5 : boolean
+>null == t : boolean
+>t : T
+
+    var foo_r6 = null != t;
+>foo_r6 : boolean
+>null != t : boolean
+>t : T
+
+    var foo_r7 = null === t;
+>foo_r7 : boolean
+>null === t : boolean
+>t : T
+
+    var foo_r8 = null !== t;
+>foo_r8 : boolean
+>null !== t : boolean
+>t : T
+}
+
+var a: boolean;
+>a : boolean
+
+var b: number;
+>b : number
+
+var c: string;
+>c : string
+
+var d: void;
+>d : void
+
+var e: E;
+>e : E
+>E : E
+
+var f: {};
+>f : {}
+
+var g: string[];
+>g : string[]
+
+// operator <
+var r1a1 = null < a;
+>r1a1 : boolean
+>null < a : boolean
+>a : boolean
+
+var r1a2 = null < b;
+>r1a2 : boolean
+>null < b : boolean
+>b : number
+
+var r1a3 = null < c;
+>r1a3 : boolean
+>null < c : boolean
+>c : string
+
+var r1a4 = null < d;
+>r1a4 : boolean
+>null < d : boolean
+>d : void
+
+var r1a5 = null < e;
+>r1a5 : boolean
+>null < e : boolean
+>e : E
+
+var r1a6 = null < f;
+>r1a6 : boolean
+>null < f : boolean
+>f : {}
+
+var r1a7 = null < g;
+>r1a7 : boolean
+>null < g : boolean
+>g : string[]
+
+var r1b1 = a < null;
+>r1b1 : boolean
+>a < null : boolean
+>a : boolean
+
+var r1b2 = b < null;
+>r1b2 : boolean
+>b < null : boolean
+>b : number
+
+var r1b3 = c < null;
+>r1b3 : boolean
+>c < null : boolean
+>c : string
+
+var r1b4 = d < null;
+>r1b4 : boolean
+>d < null : boolean
+>d : void
+
+var r1b5 = e < null;
+>r1b5 : boolean
+>e < null : boolean
+>e : E
+
+var r1b6 = f < null;
+>r1b6 : boolean
+>f < null : boolean
+>f : {}
+
+var r1b7 = g < null;
+>r1b7 : boolean
+>g < null : boolean
+>g : string[]
+
+// operator >
+var r2a1 = null > a;
+>r2a1 : boolean
+>null > a : boolean
+>a : boolean
+
+var r2a2 = null > b;
+>r2a2 : boolean
+>null > b : boolean
+>b : number
+
+var r2a3 = null > c;
+>r2a3 : boolean
+>null > c : boolean
+>c : string
+
+var r2a4 = null > d;
+>r2a4 : boolean
+>null > d : boolean
+>d : void
+
+var r2a5 = null > e;
+>r2a5 : boolean
+>null > e : boolean
+>e : E
+
+var r2a6 = null > f;
+>r2a6 : boolean
+>null > f : boolean
+>f : {}
+
+var r2a7 = null > g;
+>r2a7 : boolean
+>null > g : boolean
+>g : string[]
+
+var r2b1 = a > null;
+>r2b1 : boolean
+>a > null : boolean
+>a : boolean
+
+var r2b2 = b > null;
+>r2b2 : boolean
+>b > null : boolean
+>b : number
+
+var r2b3 = c > null;
+>r2b3 : boolean
+>c > null : boolean
+>c : string
+
+var r2b4 = d > null;
+>r2b4 : boolean
+>d > null : boolean
+>d : void
+
+var r2b5 = e > null;
+>r2b5 : boolean
+>e > null : boolean
+>e : E
+
+var r2b6 = f > null;
+>r2b6 : boolean
+>f > null : boolean
+>f : {}
+
+var r2b7 = g > null;
+>r2b7 : boolean
+>g > null : boolean
+>g : string[]
+
+// operator <=
+var r3a1 = null <= a;
+>r3a1 : boolean
+>null <= a : boolean
+>a : boolean
+
+var r3a2 = null <= b;
+>r3a2 : boolean
+>null <= b : boolean
+>b : number
+
+var r3a3 = null <= c;
+>r3a3 : boolean
+>null <= c : boolean
+>c : string
+
+var r3a4 = null <= d;
+>r3a4 : boolean
+>null <= d : boolean
+>d : void
+
+var r3a5 = null <= e;
+>r3a5 : boolean
+>null <= e : boolean
+>e : E
+
+var r3a6 = null <= f;
+>r3a6 : boolean
+>null <= f : boolean
+>f : {}
+
+var r3a7 = null <= g;
+>r3a7 : boolean
+>null <= g : boolean
+>g : string[]
+
+var r3b1 = a <= null;
+>r3b1 : boolean
+>a <= null : boolean
+>a : boolean
+
+var r3b2 = b <= null;
+>r3b2 : boolean
+>b <= null : boolean
+>b : number
+
+var r3b3 = c <= null;
+>r3b3 : boolean
+>c <= null : boolean
+>c : string
+
+var r3b4 = d <= null;
+>r3b4 : boolean
+>d <= null : boolean
+>d : void
+
+var r3b5 = e <= null;
+>r3b5 : boolean
+>e <= null : boolean
+>e : E
+
+var r3b6 = f <= null;
+>r3b6 : boolean
+>f <= null : boolean
+>f : {}
+
+var r3b7 = g <= null;
+>r3b7 : boolean
+>g <= null : boolean
+>g : string[]
+
+// operator >=
+var r4a1 = null >= a;
+>r4a1 : boolean
+>null >= a : boolean
+>a : boolean
+
+var r4a2 = null >= b;
+>r4a2 : boolean
+>null >= b : boolean
+>b : number
+
+var r4a3 = null >= c;
+>r4a3 : boolean
+>null >= c : boolean
+>c : string
+
+var r4a4 = null >= d;
+>r4a4 : boolean
+>null >= d : boolean
+>d : void
+
+var r4a5 = null >= e;
+>r4a5 : boolean
+>null >= e : boolean
+>e : E
+
+var r4a6 = null >= f;
+>r4a6 : boolean
+>null >= f : boolean
+>f : {}
+
+var r4a7 = null >= g;
+>r4a7 : boolean
+>null >= g : boolean
+>g : string[]
+
+var r4b1 = a >= null;
+>r4b1 : boolean
+>a >= null : boolean
+>a : boolean
+
+var r4b2 = b >= null;
+>r4b2 : boolean
+>b >= null : boolean
+>b : number
+
+var r4b3 = c >= null;
+>r4b3 : boolean
+>c >= null : boolean
+>c : string
+
+var r4b4 = d >= null;
+>r4b4 : boolean
+>d >= null : boolean
+>d : void
+
+var r4b5 = e >= null;
+>r4b5 : boolean
+>e >= null : boolean
+>e : E
+
+var r4b6 = f >= null;
+>r4b6 : boolean
+>f >= null : boolean
+>f : {}
+
+var r4b7 = g >= null;
+>r4b7 : boolean
+>g >= null : boolean
+>g : string[]
+
+// operator ==
+var r5a1 = null == a;
+>r5a1 : boolean
+>null == a : boolean
+>a : boolean
+
+var r5a2 = null == b;
+>r5a2 : boolean
+>null == b : boolean
+>b : number
+
+var r5a3 = null == c;
+>r5a3 : boolean
+>null == c : boolean
+>c : string
+
+var r5a4 = null == d;
+>r5a4 : boolean
+>null == d : boolean
+>d : void
+
+var r5a5 = null == e;
+>r5a5 : boolean
+>null == e : boolean
+>e : E
+
+var r5a6 = null == f;
+>r5a6 : boolean
+>null == f : boolean
+>f : {}
+
+var r5a7 = null == g;
+>r5a7 : boolean
+>null == g : boolean
+>g : string[]
+
+var r5b1 = a == null;
+>r5b1 : boolean
+>a == null : boolean
+>a : boolean
+
+var r5b2 = b == null;
+>r5b2 : boolean
+>b == null : boolean
+>b : number
+
+var r5b3 = c == null;
+>r5b3 : boolean
+>c == null : boolean
+>c : string
+
+var r5b4 = d == null;
+>r5b4 : boolean
+>d == null : boolean
+>d : void
+
+var r5b5 = e == null;
+>r5b5 : boolean
+>e == null : boolean
+>e : E
+
+var r5b6 = f == null;
+>r5b6 : boolean
+>f == null : boolean
+>f : {}
+
+var r5b7 = g == null;
+>r5b7 : boolean
+>g == null : boolean
+>g : string[]
+
+// operator !=
+var r6a1 = null != a;
+>r6a1 : boolean
+>null != a : boolean
+>a : boolean
+
+var r6a2 = null != b;
+>r6a2 : boolean
+>null != b : boolean
+>b : number
+
+var r6a3 = null != c;
+>r6a3 : boolean
+>null != c : boolean
+>c : string
+
+var r6a4 = null != d;
+>r6a4 : boolean
+>null != d : boolean
+>d : void
+
+var r6a5 = null != e;
+>r6a5 : boolean
+>null != e : boolean
+>e : E
+
+var r6a6 = null != f;
+>r6a6 : boolean
+>null != f : boolean
+>f : {}
+
+var r6a7 = null != g;
+>r6a7 : boolean
+>null != g : boolean
+>g : string[]
+
+var r6b1 = a != null;
+>r6b1 : boolean
+>a != null : boolean
+>a : boolean
+
+var r6b2 = b != null;
+>r6b2 : boolean
+>b != null : boolean
+>b : number
+
+var r6b3 = c != null;
+>r6b3 : boolean
+>c != null : boolean
+>c : string
+
+var r6b4 = d != null;
+>r6b4 : boolean
+>d != null : boolean
+>d : void
+
+var r6b5 = e != null;
+>r6b5 : boolean
+>e != null : boolean
+>e : E
+
+var r6b6 = f != null;
+>r6b6 : boolean
+>f != null : boolean
+>f : {}
+
+var r6b7 = g != null;
+>r6b7 : boolean
+>g != null : boolean
+>g : string[]
+
+// operator ===
+var r7a1 = null === a;
+>r7a1 : boolean
+>null === a : boolean
+>a : boolean
+
+var r7a2 = null === b;
+>r7a2 : boolean
+>null === b : boolean
+>b : number
+
+var r7a3 = null === c;
+>r7a3 : boolean
+>null === c : boolean
+>c : string
+
+var r7a4 = null === d;
+>r7a4 : boolean
+>null === d : boolean
+>d : void
+
+var r7a5 = null === e;
+>r7a5 : boolean
+>null === e : boolean
+>e : E
+
+var r7a6 = null === f;
+>r7a6 : boolean
+>null === f : boolean
+>f : {}
+
+var r7a7 = null === g;
+>r7a7 : boolean
+>null === g : boolean
+>g : string[]
+
+var r7b1 = a === null;
+>r7b1 : boolean
+>a === null : boolean
+>a : boolean
+
+var r7b2 = b === null;
+>r7b2 : boolean
+>b === null : boolean
+>b : number
+
+var r7b3 = c === null;
+>r7b3 : boolean
+>c === null : boolean
+>c : string
+
+var r7b4 = d === null;
+>r7b4 : boolean
+>d === null : boolean
+>d : void
+
+var r7b5 = e === null;
+>r7b5 : boolean
+>e === null : boolean
+>e : E
+
+var r7b6 = f === null;
+>r7b6 : boolean
+>f === null : boolean
+>f : {}
+
+var r7b7 = g === null;
+>r7b7 : boolean
+>g === null : boolean
+>g : string[]
+
+// operator !==
+var r8a1 = null !== a;
+>r8a1 : boolean
+>null !== a : boolean
+>a : boolean
+
+var r8a2 = null !== b;
+>r8a2 : boolean
+>null !== b : boolean
+>b : number
+
+var r8a3 = null !== c;
+>r8a3 : boolean
+>null !== c : boolean
+>c : string
+
+var r8a4 = null !== d;
+>r8a4 : boolean
+>null !== d : boolean
+>d : void
+
+var r8a5 = null !== e;
+>r8a5 : boolean
+>null !== e : boolean
+>e : E
+
+var r8a6 = null !== f;
+>r8a6 : boolean
+>null !== f : boolean
+>f : {}
+
+var r8a7 = null !== g;
+>r8a7 : boolean
+>null !== g : boolean
+>g : string[]
+
+var r8b1 = a !== null;
+>r8b1 : boolean
+>a !== null : boolean
+>a : boolean
+
+var r8b2 = b !== null;
+>r8b2 : boolean
+>b !== null : boolean
+>b : number
+
+var r8b3 = c !== null;
+>r8b3 : boolean
+>c !== null : boolean
+>c : string
+
+var r8b4 = d !== null;
+>r8b4 : boolean
+>d !== null : boolean
+>d : void
+
+var r8b5 = e !== null;
+>r8b5 : boolean
+>e !== null : boolean
+>e : E
+
+var r8b6 = f !== null;
+>r8b6 : boolean
+>f !== null : boolean
+>f : {}
+
+var r8b7 = g !== null;
+>r8b7 : boolean
+>g !== null : boolean
+>g : string[]
+

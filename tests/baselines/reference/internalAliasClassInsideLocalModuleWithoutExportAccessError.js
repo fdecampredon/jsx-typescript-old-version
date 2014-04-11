@@ -1,3 +1,4 @@
+//// [internalAliasClassInsideLocalModuleWithoutExportAccessError.js]
 (function (x) {
     var c = (function () {
         function c() {

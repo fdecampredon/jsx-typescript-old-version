@@ -1,3 +1,4 @@
+//// [autolift3.js]
 var B = (function () {
     function B() {
         function foo() {

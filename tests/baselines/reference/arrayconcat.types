@@ -1,18 +1,42 @@
 === tests/cases/compiler/arrayconcat.ts ===
-Line 0 col 10 IdentifierName "IOptions" = IOptions
-Line 1 col 0 IdentifierName "name" = string
-Line 2 col 0 IdentifierName "flag" = boolean
-Line 3 col 0 IdentifierName "short" = string
-Line 4 col 0 IdentifierName "usage" = string
-Line 5 col 0 IdentifierName "set" = (s: string) => void
-Line 5 col 11 IdentifierName "s" = string
-Line 6 col 0 IdentifierName "type" = string
-Line 7 col 0 IdentifierName "experimental" = boolean
-Line 10 col 6 IdentifierName "parser" = parser
-Line 11 col 8 IdentifierName "options" = IOptions[]
-Line 11 col 17 IdentifierName "IOptions" = IOptions
-Line 13 col 8 IdentifierName "m" = () => void
-Line 14 col 0 AssignmentExpression "this.options = this.options.sort(function(a, b) {
+interface IOptions {
+>IOptions : IOptions
+
+    name?: string;
+>name : string
+
+    flag?: boolean;
+>flag : boolean
+
+    short?: string;
+>short : string
+
+    usage?: string;
+>usage : string
+
+    set?: (s: string) => void;
+>set : (s: string) => void
+>s : string
+
+    type?: string;
+>type : string
+
+    experimental?: boolean;
+>experimental : boolean
+}
+
+class parser {
+>parser : parser
+
+	public options: IOptions[];
+>options : IOptions[]
+>IOptions : IOptions
+
+	public m() {
+>m : () => void
+
+		this.options = this.options.sort(function(a, b) {
+>this.options = this.options.sort(function(a, b) {
             var aName = a.name.toLowerCase();
             var bName = b.name.toLowerCase();
 
@@ -23,11 +47,11 @@ Line 14 col 0 AssignmentExpression "this.options = this.options.sort(function(a,
             } else {
                 return 0;
             }
-        })" = IOptions[]
-Line 14 col 0 MemberAccessExpression "this.options" = IOptions[]
-Line 14 col 0 ThisKeyword "this" = parser
-Line 14 col 7 IdentifierName "options" = IOptions[]
-Line 14 col 17 InvocationExpression "this.options.sort(function(a, b) {
+        }) : IOptions[]
+>this.options : IOptions[]
+>this : parser
+>options : IOptions[]
+>this.options.sort(function(a, b) {
             var aName = a.name.toLowerCase();
             var bName = b.name.toLowerCase();
 
@@ -38,13 +62,13 @@ Line 14 col 17 InvocationExpression "this.options.sort(function(a, b) {
             } else {
                 return 0;
             }
-        })" = IOptions[]
-Line 14 col 17 MemberAccessExpression "this.options.sort" = (compareFn?: (a: IOptions, b: IOptions) => number) => IOptions[]
-Line 14 col 17 MemberAccessExpression "this.options" = IOptions[]
-Line 14 col 17 ThisKeyword "this" = parser
-Line 14 col 22 IdentifierName "options" = IOptions[]
-Line 14 col 30 IdentifierName "sort" = (compareFn?: (a: IOptions, b: IOptions) => number) => IOptions[]
-Line 14 col 35 FunctionExpression "function(a, b) {
+        }) : IOptions[]
+>this.options.sort : (compareFn?: (a: IOptions, b: IOptions) => number) => IOptions[]
+>this.options : IOptions[]
+>this : parser
+>options : IOptions[]
+>sort : (compareFn?: (a: IOptions, b: IOptions) => number) => IOptions[]
+>function(a, b) {
             var aName = a.name.toLowerCase();
             var bName = b.name.toLowerCase();
 
@@ -55,27 +79,45 @@ Line 14 col 35 FunctionExpression "function(a, b) {
             } else {
                 return 0;
             }
-        }" = (a: IOptions, b: IOptions) => number
-Line 14 col 44 IdentifierName "a" = IOptions
-Line 14 col 47 IdentifierName "b" = IOptions
-Line 15 col 16 IdentifierName "aName" = string
-Line 15 col 24 InvocationExpression "a.name.toLowerCase()" = string
-Line 15 col 24 MemberAccessExpression "a.name.toLowerCase" = () => string
-Line 15 col 24 MemberAccessExpression "a.name" = string
-Line 15 col 24 IdentifierName "a" = IOptions
-Line 15 col 26 IdentifierName "name" = string
-Line 15 col 31 IdentifierName "toLowerCase" = () => string
-Line 16 col 16 IdentifierName "bName" = string
-Line 16 col 24 InvocationExpression "b.name.toLowerCase()" = string
-Line 16 col 24 MemberAccessExpression "b.name.toLowerCase" = () => string
-Line 16 col 24 MemberAccessExpression "b.name" = string
-Line 16 col 24 IdentifierName "b" = IOptions
-Line 16 col 26 IdentifierName "name" = string
-Line 16 col 31 IdentifierName "toLowerCase" = () => string
-Line 18 col 16 GreaterThanExpression "aName > bName" = boolean
-Line 18 col 16 IdentifierName "aName" = string
-Line 18 col 24 IdentifierName "bName" = string
-Line 20 col 23 LessThanExpression "aName < bName" = boolean
-Line 20 col 23 IdentifierName "aName" = string
-Line 20 col 31 IdentifierName "bName" = string
-Line 21 col 23 NegateExpression "-1" = number
+        } : (a: IOptions, b: IOptions) => number
+>a : IOptions
+>b : IOptions
+
+            var aName = a.name.toLowerCase();
+>aName : string
+>a.name.toLowerCase() : string
+>a.name.toLowerCase : () => string
+>a.name : string
+>a : IOptions
+>name : string
+>toLowerCase : () => string
+
+            var bName = b.name.toLowerCase();
+>bName : string
+>b.name.toLowerCase() : string
+>b.name.toLowerCase : () => string
+>b.name : string
+>b : IOptions
+>name : string
+>toLowerCase : () => string
+
+            if (aName > bName) {
+>aName > bName : boolean
+>aName : string
+>bName : string
+
+                return 1;
+            } else if (aName < bName) {
+>aName < bName : boolean
+>aName : string
+>bName : string
+
+                return -1;
+>-1 : number
+
+            } else {
+                return 0;
+            }
+        });
+	}
+}

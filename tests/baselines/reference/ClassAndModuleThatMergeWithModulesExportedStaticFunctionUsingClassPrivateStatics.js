@@ -1,3 +1,4 @@
+//// [ClassAndModuleThatMergeWithModulesExportedStaticFunctionUsingClassPrivateStatics.js]
 var clodule = (function () {
     function clodule() {
     }

@@ -1,3 +1,10 @@
 === tests/cases/compiler/commentOnInterface1.ts ===
-Line 1 col 10 IdentifierName "I" = I
-Line 5 col 10 IdentifierName "I2" = I2
+/*! Keep this pinned comment */
+interface I {
+>I : I
+}
+
+// Don't keep this comment.
+interface I2 {
+>I2 : I2
+}

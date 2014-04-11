@@ -1,13 +1,26 @@
 === tests/cases/compiler/exportImportNonInstantiatedModule.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 1 col 21 IdentifierName "I" = I
-Line 1 col 25 IdentifierName "x" = number
-Line 4 col 7 IdentifierName "B" = B
-Line 5 col 18 IdentifierName "A1" = A1
-Line 5 col 23 IdentifierName "A" = A1
-Line 9 col 4 IdentifierName "x" = A.I
-Line 9 col 7 IdentifierName "B" = B
-Line 9 col 9 IdentifierName "A1" = B.A1
-Line 9 col 12 IdentifierName "I" = A.I
-Line 9 col 16 ObjectLiteralExpression "{ x: 1 }" = { x: number; }
-Line 9 col 18 IdentifierName "x" = number
+module A {
+>A : A
+
+    export interface I { x: number }
+>I : I
+>x : number
+}
+
+module B {
+>B : B
+
+    export import A1 = A
+>A1 : A1
+>A : A1
+    
+}
+
+var x: B.A1.I = { x: 1 };
+>x : A.I
+>B : B
+>A1 : B.A1
+>I : A.I
+>{ x: 1 } : { x: number; }
+>x : number
+

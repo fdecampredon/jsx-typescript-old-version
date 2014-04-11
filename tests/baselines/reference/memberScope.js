@@ -1,3 +1,4 @@
+//// [memberScope.js]
 var Salt;
 (function (Salt) {
     var Pepper = (function () {

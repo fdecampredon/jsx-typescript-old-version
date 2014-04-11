@@ -1,3 +1,4 @@
+//// [chainedAssignment1.js]
 var X = (function () {
     function X(z) {
         this.z = z;

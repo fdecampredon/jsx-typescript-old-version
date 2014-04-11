@@ -1,67 +1,115 @@
 === tests/cases/compiler/objectTypeWithCallSignatureHidingMembersOfExtendedFunction.ts ===
-Line 3 col 10 IdentifierName "Function" = Function
-Line 4 col 0 IdentifierName "data" = number
-Line 5 col 5 IdentifierName "x" = string
-Line 5 col 17 IdentifierName "Object" = Object
-Line 8 col 10 IdentifierName "I" = I
-Line 10 col 0 IdentifierName "apply" = (a: any, b?: any) => void
-Line 10 col 10 IdentifierName "a" = any
-Line 10 col 18 IdentifierName "b" = any
-Line 11 col 0 IdentifierName "call" = (thisArg: number, ...argArray: number[]) => any
-Line 11 col 9 IdentifierName "thisArg" = number
-Line 11 col 29 IdentifierName "argArray" = number[]
-Line 14 col 4 IdentifierName "i" = I
-Line 14 col 7 IdentifierName "I" = I
-Line 15 col 4 IdentifierName "r1" = (a: any, b?: any) => void
-Line 15 col 9 IdentifierName "a" = any
-Line 15 col 17 IdentifierName "b" = any
-Line 15 col 36 MemberAccessExpression "i.apply" = (a: any, b?: any) => void
-Line 15 col 36 IdentifierName "i" = I
-Line 15 col 38 IdentifierName "apply" = (a: any, b?: any) => void
-Line 16 col 4 IdentifierName "r1b" = (thisArg: number, ...argArray: number[]) => void
-Line 16 col 10 IdentifierName "thisArg" = number
-Line 16 col 30 IdentifierName "argArray" = number[]
-Line 16 col 60 MemberAccessExpression "i.call" = (thisArg: number, ...argArray: number[]) => any
-Line 16 col 60 IdentifierName "i" = I
-Line 16 col 62 IdentifierName "call" = (thisArg: number, ...argArray: number[]) => any
-Line 17 col 4 IdentifierName "r1c" = any
-Line 17 col 10 MemberAccessExpression "i.arguments" = any
-Line 17 col 10 IdentifierName "i" = I
-Line 17 col 12 IdentifierName "arguments" = any
-Line 18 col 4 IdentifierName "r1d" = number
-Line 18 col 10 MemberAccessExpression "i.data" = number
-Line 18 col 10 IdentifierName "i" = I
-Line 18 col 12 IdentifierName "data" = number
-Line 19 col 4 IdentifierName "r1e" = Object
-Line 19 col 10 ElementAccessExpression "i['hm']" = Object
-Line 19 col 10 IdentifierName "i" = I
-Line 21 col 4 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
-Line 23 col 0 IdentifierName "apply" = (a: any, b?: any) => void
-Line 23 col 10 IdentifierName "a" = any
-Line 23 col 18 IdentifierName "b" = any
-Line 24 col 0 IdentifierName "call" = (thisArg: number, ...argArray: number[]) => any
-Line 24 col 9 IdentifierName "thisArg" = number
-Line 24 col 29 IdentifierName "argArray" = number[]
-Line 27 col 4 IdentifierName "r2" = (a: any, b?: any) => void
-Line 27 col 9 IdentifierName "a" = any
-Line 27 col 17 IdentifierName "b" = any
-Line 27 col 36 MemberAccessExpression "x.apply" = (a: any, b?: any) => void
-Line 27 col 36 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
-Line 27 col 38 IdentifierName "apply" = (a: any, b?: any) => void
-Line 28 col 4 IdentifierName "r2b" = (thisArg: number, ...argArray: number[]) => void
-Line 28 col 10 IdentifierName "thisArg" = number
-Line 28 col 30 IdentifierName "argArray" = number[]
-Line 28 col 60 MemberAccessExpression "x.call" = (thisArg: number, ...argArray: number[]) => any
-Line 28 col 60 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
-Line 28 col 62 IdentifierName "call" = (thisArg: number, ...argArray: number[]) => any
-Line 29 col 4 IdentifierName "r2c" = any
-Line 29 col 10 MemberAccessExpression "x.arguments" = any
-Line 29 col 10 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
-Line 29 col 12 IdentifierName "arguments" = any
-Line 30 col 4 IdentifierName "r2d" = number
-Line 30 col 10 MemberAccessExpression "x.data" = number
-Line 30 col 10 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
-Line 30 col 12 IdentifierName "data" = number
-Line 31 col 4 IdentifierName "r2e" = Object
-Line 31 col 10 ElementAccessExpression "x['hm']" = Object
-Line 31 col 10 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
+// object types with call signatures can override members of Function
+// no errors expected below 
+
+interface Function {
+>Function : Function
+
+    data: number;
+>data : number
+
+    [x: string]: Object;
+>x : string
+>Object : Object
+}
+
+interface I {
+>I : I
+
+    (): void;
+    apply(a: any, b?: any): void;
+>apply : (a: any, b?: any) => void
+>a : any
+>b : any
+
+    call(thisArg: number, ...argArray: number[]): any;
+>call : (thisArg: number, ...argArray: number[]) => any
+>thisArg : number
+>argArray : number[]
+}
+
+var i: I;
+>i : I
+>I : I
+
+var r1: (a: any, b?: any) => void = i.apply;
+>r1 : (a: any, b?: any) => void
+>a : any
+>b : any
+>i.apply : (a: any, b?: any) => void
+>i : I
+>apply : (a: any, b?: any) => void
+
+var r1b: (thisArg: number, ...argArray: number[]) => void = i.call;
+>r1b : (thisArg: number, ...argArray: number[]) => void
+>thisArg : number
+>argArray : number[]
+>i.call : (thisArg: number, ...argArray: number[]) => any
+>i : I
+>call : (thisArg: number, ...argArray: number[]) => any
+
+var r1c = i.arguments;
+>r1c : any
+>i.arguments : any
+>i : I
+>arguments : any
+
+var r1d = i.data;
+>r1d : number
+>i.data : number
+>i : I
+>data : number
+
+var r1e = i['hm']; // should be Object
+>r1e : Object
+>i['hm'] : Object
+>i : I
+
+var x: {
+>x : { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
+
+    (): void;
+    apply(a: any, b?: any): void;
+>apply : (a: any, b?: any) => void
+>a : any
+>b : any
+
+    call(thisArg: number, ...argArray: number[]): any;
+>call : (thisArg: number, ...argArray: number[]) => any
+>thisArg : number
+>argArray : number[]
+}
+
+var r2: (a: any, b?: any) => void = x.apply;
+>r2 : (a: any, b?: any) => void
+>a : any
+>b : any
+>x.apply : (a: any, b?: any) => void
+>x : { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
+>apply : (a: any, b?: any) => void
+
+var r2b: (thisArg: number, ...argArray: number[]) => void = x.call;
+>r2b : (thisArg: number, ...argArray: number[]) => void
+>thisArg : number
+>argArray : number[]
+>x.call : (thisArg: number, ...argArray: number[]) => any
+>x : { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
+>call : (thisArg: number, ...argArray: number[]) => any
+
+var r2c = x.arguments;
+>r2c : any
+>x.arguments : any
+>x : { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
+>arguments : any
+
+var r2d = x.data;
+>r2d : number
+>x.data : number
+>x : { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
+>data : number
+
+var r2e = x['hm']; // should be Object
+>r2e : Object
+>x['hm'] : Object
+>x : { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; (): void; }
+

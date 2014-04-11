@@ -1,3 +1,4 @@
+//// [typeParameterAsBaseType.js]
 // type parameters cannot be used as base types
 // these are all errors
 var __extends = this.__extends || function (d, b) {

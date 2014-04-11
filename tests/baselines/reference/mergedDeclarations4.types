@@ -1,35 +1,64 @@
 === tests/cases/compiler/mergedDeclarations4.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 20 IdentifierName "f" = typeof f
-Line 2 col 0 InvocationExpression "f()" = void
-Line 2 col 0 IdentifierName "f" = typeof f
-Line 3 col 0 InvocationExpression "M.f()" = void
-Line 3 col 0 MemberAccessExpression "M.f" = typeof f
-Line 3 col 0 IdentifierName "M" = typeof M
-Line 3 col 6 IdentifierName "f" = typeof f
-Line 4 col 8 IdentifierName "r" = number
-Line 4 col 12 MemberAccessExpression "f.hello" = number
-Line 4 col 12 IdentifierName "f" = typeof f
-Line 4 col 14 IdentifierName "hello" = number
-Line 7 col 7 IdentifierName "M" = M
-Line 8 col 18 IdentifierName "f" = f
-Line 9 col 19 IdentifierName "hello" = number
-Line 11 col 0 InvocationExpression "f()" = void
-Line 11 col 0 IdentifierName "f" = typeof f
-Line 12 col 0 InvocationExpression "M.f()" = void
-Line 12 col 0 MemberAccessExpression "M.f" = typeof f
-Line 12 col 0 IdentifierName "M" = typeof M
-Line 12 col 6 IdentifierName "f" = typeof f
-Line 13 col 8 IdentifierName "r" = number
-Line 13 col 12 MemberAccessExpression "f.hello" = number
-Line 13 col 12 IdentifierName "f" = typeof f
-Line 13 col 14 IdentifierName "hello" = number
-Line 15 col 0 InvocationExpression "M.f()" = void
-Line 15 col 0 MemberAccessExpression "M.f" = typeof M.f
-Line 15 col 0 IdentifierName "M" = typeof M
-Line 16 col 2 IdentifierName "f" = typeof M.f
-Line 17 col 0 MemberAccessExpression "M.f.hello" = number
-Line 17 col 0 MemberAccessExpression "M.f" = typeof M.f
-Line 17 col 0 IdentifierName "M" = typeof M
-Line 17 col 2 IdentifierName "f" = typeof M.f
-Line 17 col 4 IdentifierName "hello" = number
+module M {
+>M : M
+
+    export function f() { }
+>f : typeof f
+
+    f();
+>f() : void
+>f : typeof f
+
+    M.f();    
+>M.f() : void
+>M.f : typeof f
+>M : typeof M
+>f : typeof f
+
+    var r = f.hello;
+>r : number
+>f.hello : number
+>f : typeof f
+>hello : number
+}
+ 
+module M {
+>M : M
+
+    export module f {
+>f : f
+
+        export var hello = 1;
+>hello : number
+    }
+    f();
+>f() : void
+>f : typeof f
+
+    M.f();
+>M.f() : void
+>M.f : typeof f
+>M : typeof M
+>f : typeof f
+
+    var r = f.hello;
+>r : number
+>f.hello : number
+>f : typeof f
+>hello : number
+}
+ 
+>M.f() : void
+>M.f : typeof M.f
+>M : typeof M
+
+M.f();
+>f : typeof M.f
+
+M.f.hello;
+>M.f.hello : number
+>M.f : typeof M.f
+>M : typeof M
+>f : typeof M.f
+>hello : number
+

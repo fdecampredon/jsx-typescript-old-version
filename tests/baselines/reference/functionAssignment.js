@@ -1,3 +1,4 @@
+//// [functionAssignment.js]
 function f(n) {
 }
 f(function () {

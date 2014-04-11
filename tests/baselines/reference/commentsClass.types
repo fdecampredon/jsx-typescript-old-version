@@ -1,47 +1,131 @@
 === tests/cases/compiler/commentsClass.ts ===
-Line 2 col 6 IdentifierName "c2" = c2
-Line 4 col 4 IdentifierName "i2" = c2
-Line 4 col 9 ObjectCreationExpression "new c2()" = c2
-Line 4 col 13 IdentifierName "c2" = typeof c2
-Line 5 col 4 IdentifierName "i2_c" = typeof c2
-Line 5 col 11 IdentifierName "c2" = typeof c2
-Line 6 col 6 IdentifierName "c3" = c3
-Line 11 col 4 IdentifierName "i3" = c3
-Line 11 col 9 ObjectCreationExpression "new c3()" = c3
-Line 11 col 13 IdentifierName "c3" = typeof c3
-Line 12 col 4 IdentifierName "i3_c" = typeof c3
-Line 12 col 11 IdentifierName "c3" = typeof c3
-Line 14 col 6 IdentifierName "c4" = c4
-Line 19 col 4 IdentifierName "i4" = c4
-Line 19 col 9 ObjectCreationExpression "new c4()" = c4
-Line 19 col 13 IdentifierName "c4" = typeof c4
-Line 20 col 4 IdentifierName "i4_c" = typeof c4
-Line 20 col 11 IdentifierName "c4" = typeof c4
-Line 22 col 6 IdentifierName "c5" = c5
-Line 23 col 11 IdentifierName "s1" = number
-Line 25 col 4 IdentifierName "i5" = c5
-Line 25 col 9 ObjectCreationExpression "new c5()" = c5
-Line 25 col 13 IdentifierName "c5" = typeof c5
-Line 26 col 4 IdentifierName "i5_c" = typeof c5
-Line 26 col 11 IdentifierName "c5" = typeof c5
-Line 29 col 6 IdentifierName "c6" = c6
-Line 31 col 11 IdentifierName "s1" = number
-Line 36 col 4 IdentifierName "i6" = c6
-Line 36 col 9 ObjectCreationExpression "new c6()" = c6
-Line 36 col 13 IdentifierName "c6" = typeof c6
-Line 37 col 4 IdentifierName "i6_c" = typeof c6
-Line 37 col 11 IdentifierName "c6" = typeof c6
-Line 40 col 6 IdentifierName "c7" = c7
-Line 42 col 11 IdentifierName "s1" = number
-Line 47 col 4 IdentifierName "i7" = c7
-Line 47 col 9 ObjectCreationExpression "new c7()" = c7
-Line 47 col 13 IdentifierName "c7" = typeof c7
-Line 48 col 4 IdentifierName "i7_c" = typeof c7
-Line 48 col 11 IdentifierName "c7" = typeof c7
-Line 52 col 6 IdentifierName "c8" = c8
-Line 54 col 11 IdentifierName "s1" = number
-Line 62 col 4 IdentifierName "i8" = c8
-Line 62 col 9 ObjectCreationExpression "new c8()" = c8
-Line 62 col 13 IdentifierName "c8" = typeof c8
-Line 63 col 4 IdentifierName "i8_c" = typeof c8
-Line 63 col 11 IdentifierName "c8" = typeof c8
+
+/** This is class c2 without constuctor*/
+class c2 {
+>c2 : c2
+}
+var i2 = new c2();
+>i2 : c2
+>new c2() : c2
+>c2 : typeof c2
+
+var i2_c = c2;
+>i2_c : typeof c2
+>c2 : typeof c2
+
+class c3 {
+>c3 : c3
+
+    /** Constructor comment*/
+    constructor() {
+    }
+}
+var i3 = new c3();
+>i3 : c3
+>new c3() : c3
+>c3 : typeof c3
+
+var i3_c = c3;
+>i3_c : typeof c3
+>c3 : typeof c3
+
+/** Class comment*/
+class c4 {
+>c4 : c4
+
+    /** Constructor comment*/
+    constructor() {
+    }
+}
+var i4 = new c4();
+>i4 : c4
+>new c4() : c4
+>c4 : typeof c4
+
+var i4_c = c4;
+>i4_c : typeof c4
+>c4 : typeof c4
+
+/** Class with statics*/
+class c5 {
+>c5 : c5
+
+    static s1: number;
+>s1 : number
+}
+var i5 = new c5();
+>i5 : c5
+>new c5() : c5
+>c5 : typeof c5
+
+var i5_c = c5;
+>i5_c : typeof c5
+>c5 : typeof c5
+
+/// class with statics and constructor
+class c6 { /// class with statics and constructor2
+>c6 : c6
+
+    /// s1 comment
+    static s1: number; /// s1 comment2
+>s1 : number
+
+    /// constructor comment
+    constructor() { /// constructor comment2
+    }
+}
+var i6 = new c6();
+>i6 : c6
+>new c6() : c6
+>c6 : typeof c6
+
+var i6_c = c6;
+>i6_c : typeof c6
+>c6 : typeof c6
+
+// class with statics and constructor
+class c7 {
+>c7 : c7
+
+    // s1 comment
+    static s1: number;
+>s1 : number
+
+    // constructor comment
+    constructor() {
+    }
+}
+var i7 = new c7();
+>i7 : c7
+>new c7() : c7
+>c7 : typeof c7
+
+var i7_c = c7;
+>i7_c : typeof c7
+>c7 : typeof c7
+
+/** class with statics and constructor
+ */
+class c8 {
+>c8 : c8
+
+    /** s1 comment */
+    static s1: number; /** s1 comment2 */
+>s1 : number
+
+    /** constructor comment 
+    */
+    constructor() {
+        /** constructor comment2 
+        */
+    }
+}
+var i8 = new c8();
+>i8 : c8
+>new c8() : c8
+>c8 : typeof c8
+
+var i8_c = c8;
+>i8_c : typeof c8
+>c8 : typeof c8
+

@@ -1,3 +1,16 @@
+//// [recursiveCloduleReference.ts]
+module M
+{
+  export class C {
+  }
+  export module C {
+    export var C = M.C
+  };
+};
+ 
+
+
+//// [recursiveCloduleReference.js]
 var M;
 (function (M) {
     var C = (function () {

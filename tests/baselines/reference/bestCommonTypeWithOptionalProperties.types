@@ -1,45 +1,70 @@
 === tests/cases/compiler/bestCommonTypeWithOptionalProperties.ts ===
-Line 0 col 10 IdentifierName "X" = X
-Line 0 col 14 IdentifierName "foo" = string
-Line 1 col 10 IdentifierName "Y" = Y
-Line 1 col 20 IdentifierName "X" = X
-Line 1 col 24 IdentifierName "bar" = number
-Line 2 col 10 IdentifierName "Z" = Z
-Line 2 col 20 IdentifierName "X" = X
-Line 2 col 24 IdentifierName "bar" = string
-Line 4 col 4 IdentifierName "x" = X
-Line 4 col 7 IdentifierName "X" = X
-Line 5 col 4 IdentifierName "y" = Y
-Line 5 col 7 IdentifierName "Y" = Y
-Line 6 col 4 IdentifierName "z" = Z
-Line 6 col 7 IdentifierName "Z" = Z
-Line 9 col 4 IdentifierName "b1" = X[]
-Line 9 col 9 ArrayLiteralExpression "[x, y, z]" = X[]
-Line 9 col 10 IdentifierName "x" = X
-Line 9 col 13 IdentifierName "y" = Y
-Line 9 col 16 IdentifierName "z" = Z
-Line 10 col 4 IdentifierName "b2" = X[]
-Line 10 col 9 ArrayLiteralExpression "[x, z, y]" = X[]
-Line 10 col 10 IdentifierName "x" = X
-Line 10 col 13 IdentifierName "z" = Z
-Line 10 col 16 IdentifierName "y" = Y
-Line 11 col 4 IdentifierName "b3" = X[]
-Line 11 col 9 ArrayLiteralExpression "[y, x, z]" = X[]
-Line 11 col 10 IdentifierName "y" = Y
-Line 11 col 13 IdentifierName "x" = X
-Line 11 col 16 IdentifierName "z" = Z
-Line 12 col 4 IdentifierName "b4" = X[]
-Line 12 col 9 ArrayLiteralExpression "[y, z, x]" = X[]
-Line 12 col 10 IdentifierName "y" = Y
-Line 12 col 13 IdentifierName "z" = Z
-Line 12 col 16 IdentifierName "x" = X
-Line 13 col 4 IdentifierName "b5" = X[]
-Line 13 col 9 ArrayLiteralExpression "[z, x, y]" = X[]
-Line 13 col 10 IdentifierName "z" = Z
-Line 13 col 13 IdentifierName "x" = X
-Line 13 col 16 IdentifierName "y" = Y
-Line 14 col 4 IdentifierName "b6" = X[]
-Line 14 col 9 ArrayLiteralExpression "[z, y, x]" = X[]
-Line 14 col 10 IdentifierName "z" = Z
-Line 14 col 13 IdentifierName "y" = Y
-Line 14 col 16 IdentifierName "x" = X
+interface X { foo: string }
+>X : X
+>foo : string
+
+interface Y extends X { bar?: number }
+>Y : Y
+>X : X
+>bar : number
+
+interface Z extends X { bar: string }
+>Z : Z
+>X : X
+>bar : string
+
+var x: X;
+>x : X
+>X : X
+
+var y: Y;
+>y : Y
+>Y : Y
+
+var z: Z;
+>z : Z
+>Z : Z
+
+// All these arrays should be X[]
+var b1 = [x, y, z];
+>b1 : X[]
+>[x, y, z] : X[]
+>x : X
+>y : Y
+>z : Z
+
+var b2 = [x, z, y];
+>b2 : X[]
+>[x, z, y] : X[]
+>x : X
+>z : Z
+>y : Y
+
+var b3 = [y, x, z];
+>b3 : X[]
+>[y, x, z] : X[]
+>y : Y
+>x : X
+>z : Z
+
+var b4 = [y, z, x];
+>b4 : X[]
+>[y, z, x] : X[]
+>y : Y
+>z : Z
+>x : X
+
+var b5 = [z, x, y];
+>b5 : X[]
+>[z, x, y] : X[]
+>z : Z
+>x : X
+>y : Y
+
+var b6 = [z, y, x];
+>b6 : X[]
+>[z, y, x] : X[]
+>z : Z
+>y : Y
+>x : X
+

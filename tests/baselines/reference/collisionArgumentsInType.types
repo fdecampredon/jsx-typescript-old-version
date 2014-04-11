@@ -1,29 +1,53 @@
 === tests/cases/compiler/collisionArgumentsInType.ts ===
-Line 0 col 4 IdentifierName "v1" = (i: number, ...arguments: any[]) => void
-Line 0 col 9 IdentifierName "i" = number
-Line 0 col 23 IdentifierName "arguments" = any[]
-Line 1 col 4 IdentifierName "v12" = (arguments: number, ...restParameters: any[]) => void
-Line 1 col 10 IdentifierName "arguments" = number
-Line 1 col 32 IdentifierName "restParameters" = any[]
-Line 2 col 4 IdentifierName "v2" = { foo(arguments: number, ...restParameters: any[]): any; prop: (arguments: number, ...restParameters: any[]) => void; (arguments: number, ...restParameters: any[]): any; new(arguments: number, ...restParameters: any[]): any; }
-Line 3 col 5 IdentifierName "arguments" = number
-Line 3 col 27 IdentifierName "restParameters" = any[]
-Line 4 col 9 IdentifierName "arguments" = number
-Line 4 col 31 IdentifierName "restParameters" = any[]
-Line 5 col 0 IdentifierName "foo" = (arguments: number, ...restParameters: any[]) => any
-Line 5 col 8 IdentifierName "arguments" = number
-Line 5 col 30 IdentifierName "restParameters" = any[]
-Line 6 col 0 IdentifierName "prop" = (arguments: number, ...restParameters: any[]) => void
-Line 6 col 11 IdentifierName "arguments" = number
-Line 6 col 33 IdentifierName "restParameters" = any[]
-Line 8 col 4 IdentifierName "v21" = { foo(i: number, ...arguments: any[]): any; prop: (i: number, ...arguments: any[]) => void; (i: number, ...arguments: any[]): any; new(i: number, ...arguments: any[]): any; }
-Line 9 col 5 IdentifierName "i" = number
-Line 9 col 19 IdentifierName "arguments" = any[]
-Line 10 col 9 IdentifierName "i" = number
-Line 10 col 23 IdentifierName "arguments" = any[]
-Line 11 col 0 IdentifierName "foo" = (i: number, ...arguments: any[]) => any
-Line 11 col 8 IdentifierName "i" = number
-Line 11 col 22 IdentifierName "arguments" = any[]
-Line 12 col 0 IdentifierName "prop" = (i: number, ...arguments: any[]) => void
-Line 12 col 11 IdentifierName "i" = number
-Line 12 col 25 IdentifierName "arguments" = any[]
+var v1: (i: number, ...arguments) => void; // no error - no code gen
+>v1 : (i: number, ...arguments: any[]) => void
+>i : number
+>arguments : any[]
+
+var v12: (arguments: number, ...restParameters) => void; // no error - no code gen
+>v12 : (arguments: number, ...restParameters: any[]) => void
+>arguments : number
+>restParameters : any[]
+
+var v2: {
+>v2 : { foo(arguments: number, ...restParameters: any[]): any; prop: (arguments: number, ...restParameters: any[]) => void; (arguments: number, ...restParameters: any[]): any; new(arguments: number, ...restParameters: any[]): any; }
+
+    (arguments: number, ...restParameters); // no error - no code gen
+>arguments : number
+>restParameters : any[]
+
+    new (arguments: number, ...restParameters); // no error - no code gen
+>arguments : number
+>restParameters : any[]
+
+    foo(arguments: number, ...restParameters); // no error - no code gen
+>foo : (arguments: number, ...restParameters: any[]) => any
+>arguments : number
+>restParameters : any[]
+
+    prop: (arguments: number, ...restParameters) => void; // no error - no code gen
+>prop : (arguments: number, ...restParameters: any[]) => void
+>arguments : number
+>restParameters : any[]
+}
+var v21: {
+>v21 : { foo(i: number, ...arguments: any[]): any; prop: (i: number, ...arguments: any[]) => void; (i: number, ...arguments: any[]): any; new(i: number, ...arguments: any[]): any; }
+
+    (i: number, ...arguments); // no error - no code gen
+>i : number
+>arguments : any[]
+
+    new (i: number, ...arguments); // no error - no code gen
+>i : number
+>arguments : any[]
+
+    foo(i: number, ...arguments); // no error - no code gen
+>foo : (i: number, ...arguments: any[]) => any
+>i : number
+>arguments : any[]
+
+    prop: (i: number, ...arguments) => void; // no error - no code gen
+>prop : (i: number, ...arguments: any[]) => void
+>i : number
+>arguments : any[]
+}

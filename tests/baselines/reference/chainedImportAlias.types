@@ -1,15 +1,31 @@
 === tests/cases/compiler/chainedImportAlias_file1.ts ===
-Line 0 col 7 IdentifierName "x" = x
-Line 1 col 7 IdentifierName "y" = y
-Line 1 col 11 IdentifierName "x" = x
-Line 2 col 12 IdentifierName "console" = { log(message?: any): any; }
-Line 3 col 0 IdentifierName "log" = (message?: any) => any
-Line 3 col 8 IdentifierName "message" = any
-Line 5 col 0 InvocationExpression "console.log(y)" = any
-Line 5 col 0 MemberAccessExpression "console.log" = (message?: any) => any
-Line 5 col 0 IdentifierName "console" = { log(message?: any): any; }
-Line 5 col 8 IdentifierName "log" = (message?: any) => any
-Line 5 col 12 IdentifierName "y" = typeof x
+import x = require('chainedImportAlias_file1');
+>x : x
+
+import y = x;
+>y : y
+>x : x
+
+declare var console: {
+>console : { log(message?: any): any; }
+
+    log(message?: any);
+>log : (message?: any) => any
+>message : any
+
+};
+console.log(y);
+>console.log(y) : any
+>console.log : (message?: any) => any
+>console : { log(message?: any): any; }
+>log : (message?: any) => any
+>y : typeof x
+
 === tests/cases/compiler/chainedImportAlias_file0.ts ===
-Line 0 col 14 IdentifierName "m" = m
-Line 1 col 20 IdentifierName "foo" = typeof foo
+export module m {
+>m : m
+
+    export function foo() { }
+>foo : typeof foo
+}
+

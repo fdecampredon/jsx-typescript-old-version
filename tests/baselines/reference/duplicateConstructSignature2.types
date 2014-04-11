@@ -1,7 +1,13 @@
 === tests/cases/compiler/duplicateConstructSignature2.ts ===
-Line 0 col 10 IdentifierName "I" = I<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 5 IdentifierName "x" = T
-Line 1 col 8 IdentifierName "T" = T
-Line 2 col 5 IdentifierName "x" = T
-Line 2 col 8 IdentifierName "T" = T
+interface I<T> {
+>I : I<T>
+>T : T
+
+    (x: T): number;
+>x : T
+>T : T
+
+    (x: T): string;
+>x : T
+>T : T
+}

@@ -1,13 +1,28 @@
 === tests/cases/compiler/a.ts ===
-Line 1 col 7 IdentifierName "ITest" = ITest
-Line 2 col 4 IdentifierName "testData" = ITest[]
-Line 2 col 14 IdentifierName "ITest" = ITest
-Line 3 col 4 IdentifierName "p" = string
-Line 3 col 8 MemberAccessExpression "testData[0].name" = string
-Line 3 col 8 ElementAccessExpression "testData[0]" = ITest
-Line 3 col 8 IdentifierName "testData" = ITest[]
-Line 3 col 20 IdentifierName "name" = string
+/// <reference path="b.ts" />
+import ITest = require('ITest');
+>ITest : ITest
+
+var testData: ITest[];
+>testData : ITest[]
+>ITest : ITest
+
+var p = testData[0].name;
+>p : string
+>testData[0].name : string
+>testData[0] : ITest
+>testData : ITest[]
+>name : string
+ 
 === tests/cases/compiler/b.ts ===
-Line 1 col 14 IdentifierName "Name" = Name
-Line 2 col 0 IdentifierName "name" = string
-Line 4 col 13 IdentifierName "Name" = any
+declare module "ITest" {
+    interface Name {
+>Name : Name
+
+        name: string;
+>name : string
+    }
+    export = Name;
+>Name : any
+}
+

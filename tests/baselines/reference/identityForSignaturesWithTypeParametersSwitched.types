@@ -1,17 +1,21 @@
 === tests/cases/compiler/identityForSignaturesWithTypeParametersSwitched.ts ===
-Line 0 col 4 IdentifierName "f" = <T, U>(x: T, y: U) => T
-Line 0 col 8 IdentifierName "T" = T
-Line 0 col 11 IdentifierName "U" = U
-Line 0 col 14 IdentifierName "x" = T
-Line 0 col 17 IdentifierName "T" = T
-Line 0 col 20 IdentifierName "y" = U
-Line 0 col 23 IdentifierName "U" = U
-Line 0 col 29 IdentifierName "T" = T
-Line 1 col 4 IdentifierName "f" = <T, U>(x: U, y: T) => U
-Line 1 col 8 IdentifierName "T" = T
-Line 1 col 11 IdentifierName "U" = U
-Line 1 col 14 IdentifierName "x" = U
-Line 1 col 17 IdentifierName "U" = U
-Line 1 col 20 IdentifierName "y" = T
-Line 1 col 23 IdentifierName "T" = T
-Line 1 col 29 IdentifierName "U" = U
+var f: <T, U>(x: T, y: U) => T;
+>f : <T, U>(x: T, y: U) => T
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+>T : T
+
+var f: <T, U>(x: U, y: T) => U;
+>f : <T, U>(x: U, y: T) => U
+>T : T
+>U : U
+>x : U
+>U : U
+>y : T
+>T : T
+>U : U
+

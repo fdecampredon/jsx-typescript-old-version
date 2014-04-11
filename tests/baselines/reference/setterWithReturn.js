@@ -1,3 +1,4 @@
+//// [setterWithReturn.js]
 var C234 = (function () {
     function C234() {
     }

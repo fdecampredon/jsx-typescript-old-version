@@ -1,9 +1,16 @@
 === tests/cases/compiler/moduleVariableArrayIndexer.ts ===
-Line 0 col 7 IdentifierName "Bar" = Bar
-Line 1 col 15 IdentifierName "a" = number
-Line 2 col 8 IdentifierName "t" = any
-Line 2 col 12 ElementAccessExpression "undefined[a][a]" = any
-Line 2 col 12 ElementAccessExpression "undefined[a]" = any
-Line 2 col 12 IdentifierName "undefined" = any
-Line 2 col 22 IdentifierName "a" = number
-Line 2 col 25 IdentifierName "a" = number
+module Bar {
+>Bar : Bar
+
+    export var a = 1;
+>a : number
+
+    var t = undefined[a][a]; // CG: var t = undefined[Bar.a][a];
+>t : any
+>undefined[a][a] : any
+>undefined[a] : any
+>undefined : any
+>a : number
+>a : number
+}
+

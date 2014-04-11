@@ -1,3 +1,4 @@
+//// [unqualifiedCallToClassStatic1.js]
 var Vector = (function () {
     function Vector() {
     }

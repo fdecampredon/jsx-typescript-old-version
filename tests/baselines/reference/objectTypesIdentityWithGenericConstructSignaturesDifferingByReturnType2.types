@@ -1,166 +1,278 @@
 === tests/cases/compiler/objectTypesIdentityWithGenericConstructSignaturesDifferingByReturnType2.ts ===
-Line 4 col 6 IdentifierName "B" = B<T>
-Line 4 col 8 IdentifierName "T" = T
-Line 4 col 18 IdentifierName "Date" = Date
-Line 5 col 16 IdentifierName "x" = T
-Line 5 col 19 IdentifierName "T" = T
-Line 8 col 6 IdentifierName "C" = C<T>
-Line 8 col 8 IdentifierName "T" = T
-Line 8 col 18 IdentifierName "Date" = Date
-Line 9 col 16 IdentifierName "x" = T
-Line 9 col 19 IdentifierName "T" = T
-Line 12 col 10 IdentifierName "I" = I<T>
-Line 12 col 12 IdentifierName "T" = T
-Line 12 col 22 IdentifierName "Date" = Date
-Line 13 col 8 IdentifierName "x" = T
-Line 13 col 11 IdentifierName "T" = T
-Line 13 col 15 IdentifierName "Date" = Date
-Line 16 col 10 IdentifierName "I2" = I2
-Line 17 col 8 IdentifierName "T" = T
-Line 17 col 18 IdentifierName "Date" = Date
-Line 17 col 24 IdentifierName "x" = T
-Line 17 col 27 IdentifierName "T" = T
-Line 17 col 31 IdentifierName "RegExp" = RegExp
-Line 20 col 4 IdentifierName "a" = new<T extends Date>(x: T) => T
-Line 20 col 13 IdentifierName "T" = T
-Line 20 col 23 IdentifierName "Date" = Date
-Line 20 col 29 IdentifierName "x" = T
-Line 20 col 32 IdentifierName "T" = T
-Line 20 col 36 IdentifierName "T" = T
-Line 21 col 4 IdentifierName "b" = { new<T extends Date>(x: T): any; }
-Line 21 col 8 ObjectLiteralExpression "{ new<T extends Date>(x: T) { return null; } }" = { new<T extends Date>(x: T): any; }
-Line 21 col 10 IdentifierName "new" = <T extends Date>(x: T) => any
-Line 21 col 14 IdentifierName "T" = T
-Line 21 col 24 IdentifierName "Date" = Date
-Line 21 col 30 IdentifierName "x" = T
-Line 21 col 33 IdentifierName "T" = T
-Line 23 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 23 col 15 IdentifierName "x" = B<Date>
-Line 23 col 18 IdentifierName "B" = B<T>
-Line 23 col 20 IdentifierName "Date" = Date
-Line 24 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 24 col 15 IdentifierName "x" = B<Date>
-Line 24 col 18 IdentifierName "B" = B<T>
-Line 24 col 20 IdentifierName "Date" = Date
-Line 25 col 9 IdentifierName "foo1b" = typeof foo1b
-Line 25 col 15 IdentifierName "x" = any
-Line 27 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 27 col 15 IdentifierName "x" = C<Date>
-Line 27 col 18 IdentifierName "C" = C<T>
-Line 27 col 20 IdentifierName "Date" = Date
-Line 28 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 28 col 15 IdentifierName "x" = C<Date>
-Line 28 col 18 IdentifierName "C" = C<T>
-Line 28 col 20 IdentifierName "Date" = Date
-Line 29 col 9 IdentifierName "foo1c" = typeof foo1c
-Line 29 col 15 IdentifierName "x" = any
-Line 31 col 9 IdentifierName "foo2" = typeof foo2
-Line 31 col 14 IdentifierName "x" = I<Date>
-Line 31 col 17 IdentifierName "I" = I<T>
-Line 31 col 19 IdentifierName "Date" = Date
-Line 32 col 9 IdentifierName "foo2" = typeof foo2
-Line 32 col 14 IdentifierName "x" = I<Date>
-Line 32 col 17 IdentifierName "I" = I<T>
-Line 32 col 19 IdentifierName "Date" = Date
-Line 33 col 9 IdentifierName "foo2" = typeof foo2
-Line 33 col 14 IdentifierName "x" = any
-Line 35 col 9 IdentifierName "foo3" = typeof foo3
-Line 35 col 14 IdentifierName "x" = new<T extends Date>(x: T) => T
-Line 35 col 24 IdentifierName "a" = new<T extends Date>(x: T) => T
-Line 36 col 9 IdentifierName "foo3" = typeof foo3
-Line 36 col 14 IdentifierName "x" = new<T extends Date>(x: T) => T
-Line 36 col 24 IdentifierName "a" = new<T extends Date>(x: T) => T
-Line 37 col 9 IdentifierName "foo3" = typeof foo3
-Line 37 col 14 IdentifierName "x" = any
-Line 39 col 9 IdentifierName "foo4" = typeof foo4
-Line 39 col 14 IdentifierName "x" = { new<T extends Date>(x: T): any; }
-Line 39 col 24 IdentifierName "b" = { new<T extends Date>(x: T): any; }
-Line 40 col 9 IdentifierName "foo4" = typeof foo4
-Line 40 col 14 IdentifierName "x" = { new<T extends Date>(x: T): any; }
-Line 40 col 24 IdentifierName "b" = { new<T extends Date>(x: T): any; }
-Line 41 col 9 IdentifierName "foo4" = typeof foo4
-Line 41 col 14 IdentifierName "x" = any
-Line 43 col 9 IdentifierName "foo8" = typeof foo8
-Line 43 col 14 IdentifierName "x" = B<Date>
-Line 43 col 17 IdentifierName "B" = B<T>
-Line 43 col 19 IdentifierName "Date" = Date
-Line 44 col 9 IdentifierName "foo8" = typeof foo8
-Line 44 col 14 IdentifierName "x" = I<Date>
-Line 44 col 17 IdentifierName "I" = I<T>
-Line 44 col 19 IdentifierName "Date" = Date
-Line 45 col 9 IdentifierName "foo8" = typeof foo8
-Line 45 col 14 IdentifierName "x" = any
-Line 47 col 9 IdentifierName "foo9" = typeof foo9
-Line 47 col 14 IdentifierName "x" = B<Date>
-Line 47 col 17 IdentifierName "B" = B<T>
-Line 47 col 19 IdentifierName "Date" = Date
-Line 48 col 9 IdentifierName "foo9" = typeof foo9
-Line 48 col 14 IdentifierName "x" = C<Date>
-Line 48 col 17 IdentifierName "C" = C<T>
-Line 48 col 19 IdentifierName "Date" = Date
-Line 49 col 9 IdentifierName "foo9" = typeof foo9
-Line 49 col 14 IdentifierName "x" = any
-Line 51 col 9 IdentifierName "foo10" = typeof foo10
-Line 51 col 15 IdentifierName "x" = B<Date>
-Line 51 col 18 IdentifierName "B" = B<T>
-Line 51 col 20 IdentifierName "Date" = Date
-Line 52 col 9 IdentifierName "foo10" = typeof foo10
-Line 52 col 15 IdentifierName "x" = new<T extends Date>(x: T) => T
-Line 52 col 25 IdentifierName "a" = new<T extends Date>(x: T) => T
-Line 53 col 9 IdentifierName "foo10" = typeof foo10
-Line 53 col 15 IdentifierName "x" = any
-Line 55 col 9 IdentifierName "foo11" = typeof foo11
-Line 55 col 15 IdentifierName "x" = B<Date>
-Line 55 col 18 IdentifierName "B" = B<T>
-Line 55 col 20 IdentifierName "Date" = Date
-Line 56 col 9 IdentifierName "foo11" = typeof foo11
-Line 56 col 15 IdentifierName "x" = { new<T extends Date>(x: T): any; }
-Line 56 col 25 IdentifierName "b" = { new<T extends Date>(x: T): any; }
-Line 57 col 9 IdentifierName "foo11" = typeof foo11
-Line 57 col 15 IdentifierName "x" = any
-Line 59 col 9 IdentifierName "foo12" = typeof foo12
-Line 59 col 15 IdentifierName "x" = I<Date>
-Line 59 col 18 IdentifierName "I" = I<T>
-Line 59 col 20 IdentifierName "Date" = Date
-Line 60 col 9 IdentifierName "foo12" = typeof foo12
-Line 60 col 15 IdentifierName "x" = C<Date>
-Line 60 col 18 IdentifierName "C" = C<T>
-Line 60 col 20 IdentifierName "Date" = Date
-Line 61 col 9 IdentifierName "foo12" = typeof foo12
-Line 61 col 15 IdentifierName "x" = any
-Line 63 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 63 col 16 IdentifierName "x" = I2
-Line 63 col 19 IdentifierName "I2" = I2
-Line 64 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 64 col 16 IdentifierName "x" = C<Date>
-Line 64 col 19 IdentifierName "C" = C<T>
-Line 64 col 21 IdentifierName "Date" = Date
-Line 65 col 9 IdentifierName "foo12b" = typeof foo12b
-Line 65 col 16 IdentifierName "x" = any
-Line 67 col 9 IdentifierName "foo13" = typeof foo13
-Line 67 col 15 IdentifierName "x" = I<Date>
-Line 67 col 18 IdentifierName "I" = I<T>
-Line 67 col 20 IdentifierName "Date" = Date
-Line 68 col 9 IdentifierName "foo13" = typeof foo13
-Line 68 col 15 IdentifierName "x" = new<T extends Date>(x: T) => T
-Line 68 col 25 IdentifierName "a" = new<T extends Date>(x: T) => T
-Line 69 col 9 IdentifierName "foo13" = typeof foo13
-Line 69 col 15 IdentifierName "x" = any
-Line 71 col 9 IdentifierName "foo14" = typeof foo14
-Line 71 col 15 IdentifierName "x" = I<Date>
-Line 71 col 18 IdentifierName "I" = I<T>
-Line 71 col 20 IdentifierName "Date" = Date
-Line 72 col 9 IdentifierName "foo14" = typeof foo14
-Line 72 col 15 IdentifierName "x" = { new<T extends Date>(x: T): any; }
-Line 72 col 25 IdentifierName "b" = { new<T extends Date>(x: T): any; }
-Line 73 col 9 IdentifierName "foo14" = typeof foo14
-Line 73 col 15 IdentifierName "x" = any
-Line 75 col 9 IdentifierName "foo15" = typeof foo15
-Line 75 col 15 IdentifierName "x" = I2
-Line 75 col 18 IdentifierName "I2" = I2
-Line 76 col 9 IdentifierName "foo15" = typeof foo15
-Line 76 col 15 IdentifierName "x" = C<Date>
-Line 76 col 18 IdentifierName "C" = C<T>
-Line 76 col 20 IdentifierName "Date" = Date
-Line 77 col 9 IdentifierName "foo15" = typeof foo15
-Line 77 col 15 IdentifierName "x" = any
+// Two call or construct signatures are considered identical when they have the same number of type parameters and, considering those 
+// parameters pairwise identical, have identical type parameter constraints, identical number of parameters with identical kind(required, 
+// optional or rest) and types, and identical return types.
+
+class B<T extends Date> {
+>B : B<T>
+>T : T
+>Date : Date
+
+    constructor(x: T) { return null; }
+>x : T
+>T : T
+}
+
+class C<T extends Date> {
+>C : C<T>
+>T : T
+>Date : Date
+
+    constructor(x: T) { return null; }
+>x : T
+>T : T
+}
+
+interface I<T extends Date> {
+>I : I<T>
+>T : T
+>Date : Date
+
+    new(x: T): Date;
+>x : T
+>T : T
+>Date : Date
+}
+
+interface I2 {
+>I2 : I2
+
+    new<T extends Date>(x: T): RegExp;
+>T : T
+>Date : Date
+>x : T
+>T : T
+>RegExp : RegExp
+}
+
+var a: { new<T extends Date>(x: T): T }
+>a : new<T extends Date>(x: T) => T
+>T : T
+>Date : Date
+>x : T
+>T : T
+>T : T
+
+var b = { new<T extends Date>(x: T) { return null; } }; // not a construct signature, function called new
+>b : { new<T extends Date>(x: T): any; }
+>{ new<T extends Date>(x: T) { return null; } } : { new<T extends Date>(x: T): any; }
+>new : <T extends Date>(x: T) => any
+>T : T
+>Date : Date
+>x : T
+>T : T
+
+function foo1b(x: B<Date>);
+>foo1b : typeof foo1b
+>x : B<Date>
+>B : B<T>
+>Date : Date
+
+function foo1b(x: B<Date>); // error
+>foo1b : typeof foo1b
+>x : B<Date>
+>B : B<T>
+>Date : Date
+
+function foo1b(x: any) { }
+>foo1b : typeof foo1b
+>x : any
+
+function foo1c(x: C<Date>);
+>foo1c : typeof foo1c
+>x : C<Date>
+>C : C<T>
+>Date : Date
+
+function foo1c(x: C<Date>); // error
+>foo1c : typeof foo1c
+>x : C<Date>
+>C : C<T>
+>Date : Date
+
+function foo1c(x: any) { }
+>foo1c : typeof foo1c
+>x : any
+
+function foo2(x: I<Date>);
+>foo2 : typeof foo2
+>x : I<Date>
+>I : I<T>
+>Date : Date
+
+function foo2(x: I<Date>); // error
+>foo2 : typeof foo2
+>x : I<Date>
+>I : I<T>
+>Date : Date
+
+function foo2(x: any) { }
+>foo2 : typeof foo2
+>x : any
+
+function foo3(x: typeof a);
+>foo3 : typeof foo3
+>x : new<T extends Date>(x: T) => T
+>a : new<T extends Date>(x: T) => T
+
+function foo3(x: typeof a); // error
+>foo3 : typeof foo3
+>x : new<T extends Date>(x: T) => T
+>a : new<T extends Date>(x: T) => T
+
+function foo3(x: any) { }
+>foo3 : typeof foo3
+>x : any
+
+function foo4(x: typeof b);
+>foo4 : typeof foo4
+>x : { new<T extends Date>(x: T): any; }
+>b : { new<T extends Date>(x: T): any; }
+
+function foo4(x: typeof b); // error
+>foo4 : typeof foo4
+>x : { new<T extends Date>(x: T): any; }
+>b : { new<T extends Date>(x: T): any; }
+
+function foo4(x: any) { }
+>foo4 : typeof foo4
+>x : any
+
+function foo8(x: B<Date>);
+>foo8 : typeof foo8
+>x : B<Date>
+>B : B<T>
+>Date : Date
+
+function foo8(x: I<Date>); // ok
+>foo8 : typeof foo8
+>x : I<Date>
+>I : I<T>
+>Date : Date
+
+function foo8(x: any) { }
+>foo8 : typeof foo8
+>x : any
+
+function foo9(x: B<Date>);
+>foo9 : typeof foo9
+>x : B<Date>
+>B : B<T>
+>Date : Date
+
+function foo9(x: C<Date>); // error since types are structurally equal
+>foo9 : typeof foo9
+>x : C<Date>
+>C : C<T>
+>Date : Date
+
+function foo9(x: any) { }
+>foo9 : typeof foo9
+>x : any
+
+function foo10(x: B<Date>);
+>foo10 : typeof foo10
+>x : B<Date>
+>B : B<T>
+>Date : Date
+
+function foo10(x: typeof a); // ok
+>foo10 : typeof foo10
+>x : new<T extends Date>(x: T) => T
+>a : new<T extends Date>(x: T) => T
+
+function foo10(x: any) { }
+>foo10 : typeof foo10
+>x : any
+
+function foo11(x: B<Date>);
+>foo11 : typeof foo11
+>x : B<Date>
+>B : B<T>
+>Date : Date
+
+function foo11(x: typeof b); // ok
+>foo11 : typeof foo11
+>x : { new<T extends Date>(x: T): any; }
+>b : { new<T extends Date>(x: T): any; }
+
+function foo11(x: any) { }
+>foo11 : typeof foo11
+>x : any
+
+function foo12(x: I<Date>);
+>foo12 : typeof foo12
+>x : I<Date>
+>I : I<T>
+>Date : Date
+
+function foo12(x: C<Date>); // ok
+>foo12 : typeof foo12
+>x : C<Date>
+>C : C<T>
+>Date : Date
+
+function foo12(x: any) { }
+>foo12 : typeof foo12
+>x : any
+
+function foo12b(x: I2);
+>foo12b : typeof foo12b
+>x : I2
+>I2 : I2
+
+function foo12b(x: C<Date>); // ok
+>foo12b : typeof foo12b
+>x : C<Date>
+>C : C<T>
+>Date : Date
+
+function foo12b(x: any) { }
+>foo12b : typeof foo12b
+>x : any
+
+function foo13(x: I<Date>);
+>foo13 : typeof foo13
+>x : I<Date>
+>I : I<T>
+>Date : Date
+
+function foo13(x: typeof a); // ok
+>foo13 : typeof foo13
+>x : new<T extends Date>(x: T) => T
+>a : new<T extends Date>(x: T) => T
+
+function foo13(x: any) { }
+>foo13 : typeof foo13
+>x : any
+
+function foo14(x: I<Date>);
+>foo14 : typeof foo14
+>x : I<Date>
+>I : I<T>
+>Date : Date
+
+function foo14(x: typeof b); // ok
+>foo14 : typeof foo14
+>x : { new<T extends Date>(x: T): any; }
+>b : { new<T extends Date>(x: T): any; }
+
+function foo14(x: any) { }
+>foo14 : typeof foo14
+>x : any
+
+function foo15(x: I2);
+>foo15 : typeof foo15
+>x : I2
+>I2 : I2
+
+function foo15(x: C<Date>); // ok
+>foo15 : typeof foo15
+>x : C<Date>
+>C : C<T>
+>Date : Date
+
+function foo15(x: any) { }
+>foo15 : typeof foo15
+>x : any
+

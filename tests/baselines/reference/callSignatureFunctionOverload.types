@@ -1,11 +1,33 @@
 === tests/cases/compiler/callSignatureFunctionOverload.ts ===
-Line 0 col 4 IdentifierName "foo" = { (name: string): string; (name: 'order'): string; (name: 'content'): string; (name: 'done'): string; }
-Line 1 col 5 IdentifierName "name" = string
-Line 2 col 5 IdentifierName "name" = 'order'
-Line 3 col 5 IdentifierName "name" = 'content'
-Line 4 col 5 IdentifierName "name" = 'done'
-Line 7 col 4 IdentifierName "foo2" = { (name: string): string; (name: 'order'): string; (name: 'order'): string; (name: 'done'): string; }
-Line 8 col 5 IdentifierName "name" = string
-Line 9 col 5 IdentifierName "name" = 'order'
-Line 10 col 5 IdentifierName "name" = 'order'
-Line 11 col 5 IdentifierName "name" = 'done'
+var foo: {
+>foo : { (name: string): string; (name: 'order'): string; (name: 'content'): string; (name: 'done'): string; }
+
+    (name: string): string;
+>name : string
+
+    (name: 'order'): string;
+>name : 'order'
+
+    (name: 'content'): string;
+>name : 'content'
+
+    (name: 'done'): string;
+>name : 'done'
+}
+
+var foo2: {
+>foo2 : { (name: string): string; (name: 'order'): string; (name: 'order'): string; (name: 'done'): string; }
+
+    (name: string): string;
+>name : string
+
+    (name: 'order'): string;
+>name : 'order'
+
+    (name: 'order'): string;
+>name : 'order'
+
+    (name: 'done'): string;
+>name : 'done'
+}
+

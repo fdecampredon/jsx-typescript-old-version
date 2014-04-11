@@ -1,3 +1,32 @@
+//// [declFileForClassWithMultipleBaseClasses.ts]
+
+class A {
+    foo() { }
+}
+
+class B {
+    bar() { }
+}
+
+interface I {
+    baz();
+}
+
+interface J {
+    bat();
+}
+
+
+class D implements I, J {
+    baz() { }
+    bat() { }
+    foo() { }
+    bar() { }
+}
+
+interface I extends A, B {
+}
+
 //// [declFileForClassWithMultipleBaseClasses.js]
 var A = (function () {
     function A() {

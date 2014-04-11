@@ -1,6 +1,16 @@
 === tests/cases/compiler/staticAndNonStaticPropertiesSameName.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "x" = number
-Line 2 col 11 IdentifierName "x" = number
-Line 3 col 0 IdentifierName "f" = () => void
-Line 5 col 11 IdentifierName "f" = () => void
+class C {
+>C : C
+
+    x: number;
+>x : number
+
+    static x: number;
+>x : number
+
+>f : () => void
+
+    f() { }
+    static f() { }
+>f : () => void
+}

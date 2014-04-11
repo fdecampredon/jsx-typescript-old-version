@@ -1,9 +1,17 @@
 === tests/cases/compiler/specializationOfExportedClass.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 2 col 13 IdentifierName "C" = C<T>
-Line 2 col 15 IdentifierName "T" = T
-Line 6 col 4 IdentifierName "x" = M.C<string>
-Line 6 col 8 ObjectCreationExpression "new M.C<string>()" = M.C<string>
-Line 6 col 12 MemberAccessExpression "M.C" = typeof M.C
-Line 6 col 12 IdentifierName "M" = typeof M
-Line 6 col 14 IdentifierName "C" = typeof M.C
+module M {
+>M : M
+
+export class C<T> { }
+>C : C<T>
+>T : T
+
+}
+ 
+var x = new M.C<string>();
+>x : M.C<string>
+>new M.C<string>() : M.C<string>
+>M.C : typeof M.C
+>M : typeof M
+>C : typeof M.C
+

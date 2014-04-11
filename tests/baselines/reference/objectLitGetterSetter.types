@@ -1,51 +1,65 @@
 === tests/cases/compiler/objectLitGetterSetter.ts ===
-Line 0 col 16 IdentifierName "obj" = {}
-Line 0 col 22 ObjectLiteralExpression "{}" = {}
-Line 1 col 0 InvocationExpression "Object.defineProperty(obj, "accProperty", <PropertyDescriptor>({
+            var obj = {};
+>obj : {}
+>{} : {}
+
+            Object.defineProperty(obj, "accProperty", <PropertyDescriptor>({
+>Object.defineProperty(obj, "accProperty", <PropertyDescriptor>({
                 get: function () {
                     eval("public = 1;");
                     return 11;
                 },
                 set: function (v) {
                 }
-            }))" = any
-Line 1 col 0 MemberAccessExpression "Object.defineProperty" = (o: any, p: string, attributes: PropertyDescriptor) => any
-Line 1 col 0 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
-Line 1 col 19 IdentifierName "defineProperty" = (o: any, p: string, attributes: PropertyDescriptor) => any
-Line 1 col 34 IdentifierName "obj" = {}
-Line 1 col 54 CastExpression "<PropertyDescriptor>({
+            })) : any
+>Object.defineProperty : (o: any, p: string, attributes: PropertyDescriptor) => any
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+>defineProperty : (o: any, p: string, attributes: PropertyDescriptor) => any
+>obj : {}
+><PropertyDescriptor>({
                 get: function () {
                     eval("public = 1;");
                     return 11;
                 },
                 set: function (v) {
                 }
-            })" = PropertyDescriptor
-Line 1 col 55 IdentifierName "PropertyDescriptor" = PropertyDescriptor
-Line 1 col 74 ParenthesizedExpression "({
+            }) : PropertyDescriptor
+>PropertyDescriptor : PropertyDescriptor
+>({
                 get: function () {
                     eval("public = 1;");
                     return 11;
                 },
                 set: function (v) {
                 }
-            })" = { get: () => number; set: (v: any) => void; }
-Line 1 col 75 ObjectLiteralExpression "{
+            }) : { get: () => number; set: (v: any) => void; }
+>{
                 get: function () {
                     eval("public = 1;");
                     return 11;
                 },
                 set: function (v) {
                 }
-            }" = { get: () => number; set: (v: any) => void; }
-Line 2 col 0 IdentifierName "get" = () => number
-Line 2 col 21 FunctionExpression "function () {
+            } : { get: () => number; set: (v: any) => void; }
+
+                get: function () {
+>get : () => number
+>function () {
                     eval("public = 1;");
                     return 11;
-                }" = () => number
-Line 3 col 0 InvocationExpression "eval("public = 1;")" = any
-Line 3 col 0 IdentifierName "eval" = typeof eval
-Line 6 col 0 IdentifierName "set" = (v: any) => void
-Line 6 col 21 FunctionExpression "function (v) {
-                }" = (v: any) => void
-Line 6 col 31 IdentifierName "v" = any
+                } : () => number
+
+                    eval("public = 1;");
+>eval("public = 1;") : any
+>eval : typeof eval
+
+                    return 11;
+                },
+                set: function (v) {
+>set : (v: any) => void
+>function (v) {
+                } : (v: any) => void
+>v : any
+                }
+            }))
+

@@ -1,6 +1,12 @@
 === tests/cases/compiler/indexIntoEnum.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 2 col 9 IdentifierName "E" = E
-Line 4 col 8 IdentifierName "x" = string
-Line 4 col 12 ElementAccessExpression "E[0]" = string
-Line 4 col 12 IdentifierName "E" = typeof E
+module M {
+>M : M
+
+    enum E { }
+>E : E
+
+    var x = E[0];
+>x : string
+>E[0] : string
+>E : typeof E
+}

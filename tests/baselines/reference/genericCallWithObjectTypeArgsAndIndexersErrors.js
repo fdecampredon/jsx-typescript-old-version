@@ -1,3 +1,4 @@
+//// [genericCallWithObjectTypeArgsAndIndexersErrors.js]
 // Type inference infers from indexers in target type, error cases
 function foo(x) {
     return x;

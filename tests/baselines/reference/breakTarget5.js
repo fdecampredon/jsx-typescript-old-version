@@ -1,3 +1,4 @@
+//// [breakTarget5.js]
 target:
 while (true) {
     function f() {

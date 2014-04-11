@@ -1,14 +1,29 @@
 === tests/cases/compiler/innerOverloads.ts ===
-Line 1 col 9 IdentifierName "outer" = typeof outer
-Line 2 col 13 IdentifierName "inner" = { (x: number): any; (x: string): any; }
-Line 2 col 19 IdentifierName "x" = number
-Line 3 col 13 IdentifierName "inner" = { (x: number): any; (x: string): any; }
-Line 3 col 19 IdentifierName "x" = string
-Line 4 col 13 IdentifierName "inner" = { (x: number): any; (x: string): any; }
-Line 4 col 19 IdentifierName "a" = any
-Line 4 col 35 IdentifierName "a" = any
-Line 6 col 11 InvocationExpression "inner(0)" = any
-Line 6 col 11 IdentifierName "inner" = { (x: number): any; (x: string): any; }
-Line 9 col 4 IdentifierName "x" = any
-Line 9 col 8 InvocationExpression "outer()" = any
-Line 9 col 8 IdentifierName "outer" = typeof outer
+
+function outer() {
+>outer : typeof outer
+
+    function inner(x:number); // should work
+>inner : { (x: number): any; (x: string): any; }
+>x : number
+
+    function inner(x:string);
+>inner : { (x: number): any; (x: string): any; }
+>x : string
+
+    function inner(a:any) { return a; }
+>inner : { (x: number): any; (x: string): any; }
+>a : any
+>a : any
+
+    return inner(0);
+>inner(0) : any
+>inner : { (x: number): any; (x: string): any; }
+}
+
+var x = outer(); // should work
+>x : any
+>outer() : any
+>outer : typeof outer
+
+

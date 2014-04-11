@@ -1,3 +1,15 @@
+//// [recursiveClassInstantiationsWithDefaultConstructors.ts]
+var a = new TypeScript2.MemberNameArray()
+module TypeScript2 {
+export class MemberName {
+public prefix: string = "";
+}
+export class MemberNameArray extends MemberName {
+}
+}
+
+
+//// [recursiveClassInstantiationsWithDefaultConstructors.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

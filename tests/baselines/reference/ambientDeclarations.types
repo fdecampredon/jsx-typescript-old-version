@@ -1,68 +1,168 @@
 === tests/cases/compiler/ambientDeclarations.ts ===
-Line 1 col 12 IdentifierName "n" = any
-Line 4 col 12 IdentifierName "m" = string
-Line 7 col 17 IdentifierName "fn1" = typeof fn1
-Line 10 col 17 IdentifierName "fn2" = typeof fn2
-Line 10 col 21 IdentifierName "n" = string
-Line 13 col 17 IdentifierName "fn3" = typeof fn3
-Line 13 col 21 IdentifierName "n" = string
-Line 14 col 17 IdentifierName "fn4" = typeof fn4
-Line 14 col 21 IdentifierName "n" = number
-Line 14 col 32 IdentifierName "y" = number
-Line 17 col 17 IdentifierName "fn5" = typeof fn5
-Line 17 col 21 IdentifierName "x" = any
-Line 17 col 24 IdentifierName "y" = any
-Line 18 col 17 IdentifierName "fn6" = typeof fn6
-Line 18 col 21 IdentifierName "e" = any
-Line 19 col 17 IdentifierName "fn7" = typeof fn7
-Line 19 col 21 IdentifierName "x" = any
-Line 19 col 24 IdentifierName "y" = any
-Line 19 col 31 IdentifierName "z" = any[]
-Line 20 col 17 IdentifierName "fn8" = typeof fn8
-Line 20 col 21 IdentifierName "y" = any
-Line 20 col 28 IdentifierName "z" = number[]
-Line 21 col 17 IdentifierName "fn9" = typeof fn9
-Line 21 col 24 IdentifierName "q" = {}[]
-Line 22 col 17 IdentifierName "fn10" = typeof fn10
-Line 22 col 22 IdentifierName "T" = T
-Line 22 col 28 IdentifierName "q" = T[]
-Line 22 col 31 IdentifierName "T" = T
-Line 25 col 14 IdentifierName "cls" = cls
-Line 27 col 0 IdentifierName "method" = () => cls
-Line 27 col 14 IdentifierName "cls" = cls
-Line 28 col 11 IdentifierName "static" = (p: any) => number
-Line 28 col 18 IdentifierName "p" = any
-Line 29 col 11 IdentifierName "q" = any
-Line 30 col 12 IdentifierName "fn" = () => any
-Line 31 col 19 IdentifierName "fns" = () => any
-Line 35 col 13 IdentifierName "E1" = E1
-Line 36 col 0 IdentifierName "x" = E1
-Line 37 col 0 IdentifierName "y" = E1
-Line 38 col 0 IdentifierName "z" = E1
-Line 42 col 13 IdentifierName "E2" = E2
-Line 43 col 0 IdentifierName "q" = E2
-Line 44 col 0 IdentifierName "a" = E2
-Line 45 col 0 IdentifierName "b" = E2
-Line 46 col 0 IdentifierName "c" = E2
-Line 47 col 0 IdentifierName "d" = E2
-Line 51 col 13 IdentifierName "E3" = E3
-Line 52 col 0 IdentifierName "A" = E3
-Line 54 col 15 IdentifierName "E3" = E3
-Line 55 col 8 IdentifierName "B" = any
-Line 57 col 4 IdentifierName "x" = any
-Line 57 col 8 MemberAccessExpression "E3.B" = any
-Line 57 col 8 IdentifierName "E3" = typeof E3
-Line 57 col 11 IdentifierName "B" = any
-Line 60 col 15 IdentifierName "M1" = M1
-Line 61 col 8 IdentifierName "x" = any
-Line 62 col 13 IdentifierName "fn" = typeof fn
-Line 66 col 4 IdentifierName "p" = any
-Line 66 col 8 MemberAccessExpression "M1.x" = any
-Line 66 col 8 IdentifierName "M1" = typeof M1
-Line 66 col 11 IdentifierName "x" = any
-Line 67 col 4 IdentifierName "q" = number
-Line 67 col 8 InvocationExpression "M1.fn()" = number
-Line 67 col 8 MemberAccessExpression "M1.fn" = typeof M1.fn
-Line 67 col 8 IdentifierName "M1" = typeof M1
-Line 67 col 11 IdentifierName "fn" = typeof M1.fn
-Line 72 col 8 IdentifierName "q" = any
+// Ambient variable without type annotation
+declare var n;
+>n : any
+
+// Ambient variable with type annotation
+declare var m: string;
+>m : string
+
+// Ambient function with no type annotations
+declare function fn1();
+>fn1 : typeof fn1
+
+// Ambient function with type annotations
+declare function fn2(n: string): number;
+>fn2 : typeof fn2
+>n : string
+
+// Ambient function with valid overloads
+declare function fn3(n: string): number;
+>fn3 : typeof fn3
+>n : string
+
+declare function fn4(n: number, y: number): string;
+>fn4 : typeof fn4
+>n : number
+>y : number
+
+// Ambient function with optional parameters
+declare function fn5(x, y?);
+>fn5 : typeof fn5
+>x : any
+>y : any
+
+declare function fn6(e?);
+>fn6 : typeof fn6
+>e : any
+
+declare function fn7(x, y?, ...z);
+>fn7 : typeof fn7
+>x : any
+>y : any
+>z : any[]
+
+declare function fn8(y?, ...z: number[]);
+>fn8 : typeof fn8
+>y : any
+>z : number[]
+
+declare function fn9(...q: {}[]);
+>fn9 : typeof fn9
+>q : {}[]
+
+declare function fn10<T>(...q: T[]);
+>fn10 : typeof fn10
+>T : T
+>q : T[]
+>T : T
+
+// Ambient class
+declare class cls {
+>cls : cls
+
+    constructor();
+    method(): cls;
+>method : () => cls
+>cls : cls
+
+    static static(p): number;
+>static : (p: any) => number
+>p : any
+
+    static q;
+>q : any
+
+    private fn();
+>fn : () => any
+
+    private static fns();
+>fns : () => any
+}
+
+// Ambient enum
+declare enum E1 {
+>E1 : E1
+
+    x,
+>x : E1
+
+    y,
+>y : E1
+
+    z
+>z : E1
+}
+
+// Ambient enum with integer literal initializer
+declare enum E2 {
+>E2 : E2
+
+    q,
+>q : E2
+
+    a = 1,
+>a : E2
+
+    b,
+>b : E2
+
+    c = 2,
+>c : E2
+
+    d
+>d : E2
+}
+
+// Ambient enum members are always exported with or without export keyword
+declare enum E3 {
+>E3 : E3
+
+    A
+>A : E3
+}
+declare module E3 {
+>E3 : E3
+
+    var B;
+>B : any
+}
+var x = E3.B;
+>x : any
+>E3.B : any
+>E3 : typeof E3
+>B : any
+
+// Ambient module
+declare module M1 {
+>M1 : M1
+
+    var x;
+>x : any
+
+    function fn(): number;
+>fn : typeof fn
+}
+
+// Ambient module members are always exported with or without export keyword
+var p = M1.x;
+>p : any
+>M1.x : any
+>M1 : typeof M1
+>x : any
+
+var q = M1.fn();
+>q : number
+>M1.fn() : number
+>M1.fn : typeof M1.fn
+>M1 : typeof M1
+>fn : typeof M1.fn
+
+// Ambient external module in the global module
+// Ambient external module with a string literal name that is a top level external module name
+declare module 'external1' {
+    var q;
+>q : any
+}
+
+

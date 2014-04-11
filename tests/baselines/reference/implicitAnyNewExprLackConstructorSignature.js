@@ -1,3 +1,4 @@
+//// [implicitAnyNewExprLackConstructorSignature.js]
 function Point() {
     this.x = 3;
 }

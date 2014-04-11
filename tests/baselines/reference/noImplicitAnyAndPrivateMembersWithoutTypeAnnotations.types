@@ -1,8 +1,18 @@
 === tests/cases/compiler/app.ts ===
-Line 1 col 4 IdentifierName "x" = Something
-Line 1 col 8 ObjectCreationExpression "new Something()" = Something
-Line 1 col 12 IdentifierName "Something" = typeof Something
+/// <reference path="test.d.ts" />
+var x = new Something();
+>x : Something
+>new Something() : Something
+>Something : typeof Something
+
 === tests/cases/compiler/test.d.ts ===
-Line 0 col 14 IdentifierName "Something" = Something
-Line 2 col 19 IdentifierName "someStaticVar" = any
-Line 3 col 12 IdentifierName "someVar" = any
+declare class Something
+>Something : Something
+{
+    private static someStaticVar;
+>someStaticVar : any
+
+    private someVar;
+>someVar : any
+}
+

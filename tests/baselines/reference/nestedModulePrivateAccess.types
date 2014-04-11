@@ -1,6 +1,15 @@
 === tests/cases/compiler/nestedModulePrivateAccess.ts ===
-Line 0 col 7 IdentifierName "a" = a
-Line 1 col 11 IdentifierName "x" = number
-Line 2 col 14 IdentifierName "b" = b
-Line 3 col 19 IdentifierName "y" = number
-Line 3 col 23 IdentifierName "x" = number
+module a{
+>a : a
+
+       var x:number;
+>x : number
+
+       module b{
+>b : b
+
+               var y = x; // should not be an error
+>y : number
+>x : number
+       }
+}

@@ -1,3 +1,4 @@
+//// [ModuleWithExportedAndNonExportedVariables.js]
 var A;
 (function (A) {
     A.x = 'hello world';

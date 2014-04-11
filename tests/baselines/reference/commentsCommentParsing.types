@@ -1,93 +1,256 @@
 === tests/cases/compiler/commentsCommentParsing.ts ===
-Line 2 col 9 IdentifierName "simple" = typeof simple
-Line 4 col 0 InvocationExpression "simple()" = void
-Line 4 col 0 IdentifierName "simple" = typeof simple
-Line 10 col 9 IdentifierName "multiLine" = typeof multiLine
-Line 12 col 0 InvocationExpression "multiLine()" = void
-Line 12 col 0 IdentifierName "multiLine" = typeof multiLine
-Line 15 col 9 IdentifierName "jsDocSingleLine" = typeof jsDocSingleLine
-Line 17 col 0 InvocationExpression "jsDocSingleLine()" = void
-Line 17 col 0 IdentifierName "jsDocSingleLine" = typeof jsDocSingleLine
-Line 23 col 9 IdentifierName "jsDocMultiLine" = typeof jsDocMultiLine
-Line 25 col 0 InvocationExpression "jsDocMultiLine()" = void
-Line 25 col 0 IdentifierName "jsDocMultiLine" = typeof jsDocMultiLine
-Line 32 col 9 IdentifierName "jsDocMultiLineMerge" = typeof jsDocMultiLineMerge
-Line 34 col 0 InvocationExpression "jsDocMultiLineMerge()" = void
-Line 34 col 0 IdentifierName "jsDocMultiLineMerge" = typeof jsDocMultiLineMerge
-Line 39 col 9 IdentifierName "jsDocMixedComments1" = typeof jsDocMixedComments1
-Line 41 col 0 InvocationExpression "jsDocMixedComments1()" = void
-Line 41 col 0 IdentifierName "jsDocMixedComments1" = typeof jsDocMixedComments1
-Line 45 col 9 IdentifierName "jsDocMixedComments2" = typeof jsDocMixedComments2
-Line 47 col 0 InvocationExpression "jsDocMixedComments2()" = void
-Line 47 col 0 IdentifierName "jsDocMixedComments2" = typeof jsDocMixedComments2
-Line 51 col 9 IdentifierName "jsDocMixedComments3" = typeof jsDocMixedComments3
-Line 53 col 0 InvocationExpression "jsDocMixedComments3()" = void
-Line 53 col 0 IdentifierName "jsDocMixedComments3" = typeof jsDocMixedComments3
-Line 58 col 9 IdentifierName "jsDocMixedComments4" = typeof jsDocMixedComments4
-Line 60 col 0 InvocationExpression "jsDocMixedComments4()" = void
-Line 60 col 0 IdentifierName "jsDocMixedComments4" = typeof jsDocMixedComments4
-Line 66 col 9 IdentifierName "jsDocMixedComments5" = typeof jsDocMixedComments5
-Line 68 col 0 InvocationExpression "jsDocMixedComments5()" = void
-Line 68 col 0 IdentifierName "jsDocMixedComments5" = typeof jsDocMixedComments5
-Line 75 col 9 IdentifierName "jsDocMixedComments6" = typeof jsDocMixedComments6
-Line 77 col 0 InvocationExpression "jsDocMixedComments6()" = void
-Line 77 col 0 IdentifierName "jsDocMixedComments6" = typeof jsDocMixedComments6
-Line 80 col 9 IdentifierName "noHelpComment1" = typeof noHelpComment1
-Line 82 col 0 InvocationExpression "noHelpComment1()" = void
-Line 82 col 0 IdentifierName "noHelpComment1" = typeof noHelpComment1
-Line 85 col 9 IdentifierName "noHelpComment2" = typeof noHelpComment2
-Line 87 col 0 InvocationExpression "noHelpComment2()" = void
-Line 87 col 0 IdentifierName "noHelpComment2" = typeof noHelpComment2
-Line 89 col 9 IdentifierName "noHelpComment3" = typeof noHelpComment3
-Line 91 col 0 InvocationExpression "noHelpComment3()" = void
-Line 91 col 0 IdentifierName "noHelpComment3" = typeof noHelpComment3
-Line 96 col 9 IdentifierName "sum" = typeof sum
-Line 96 col 13 IdentifierName "a" = number
-Line 96 col 24 IdentifierName "b" = number
-Line 97 col 11 AddExpression "a + b" = number
-Line 97 col 11 IdentifierName "a" = number
-Line 97 col 15 IdentifierName "b" = number
-Line 99 col 0 InvocationExpression "sum(10, 20)" = number
-Line 99 col 0 IdentifierName "sum" = typeof sum
-Line 107 col 9 IdentifierName "multiply" = typeof multiply
-Line 107 col 18 IdentifierName "a" = number
-Line 107 col 29 IdentifierName "b" = number
-Line 107 col 40 IdentifierName "c" = number
-Line 107 col 52 IdentifierName "d" = any
-Line 107 col 56 IdentifierName "e" = any
-Line 112 col 9 IdentifierName "f1" = typeof f1
-Line 112 col 12 IdentifierName "a" = number
-Line 113 col 9 IdentifierName "f1" = typeof f1
-Line 113 col 12 IdentifierName "b" = string
-Line 115 col 9 IdentifierName "f1" = typeof f1
-Line 115 col 12 IdentifierName "aOrb" = any
-Line 115 col 18 IdentifierName "opt" = any
-Line 116 col 11 IdentifierName "aOrb" = any
-Line 126 col 9 IdentifierName "subtract" = typeof subtract
-Line 126 col 18 IdentifierName "a" = number
-Line 126 col 29 IdentifierName "b" = number
-Line 126 col 40 IdentifierName "c" = () => string
-Line 126 col 58 IdentifierName "d" = () => string
-Line 126 col 76 IdentifierName "e" = () => string
-Line 126 col 94 IdentifierName "f" = () => string
-Line 133 col 9 IdentifierName "square" = typeof square
-Line 133 col 16 IdentifierName "a" = number
-Line 134 col 11 MultiplyExpression "a * a" = number
-Line 134 col 11 IdentifierName "a" = number
-Line 134 col 15 IdentifierName "a" = number
-Line 141 col 9 IdentifierName "divide" = typeof divide
-Line 141 col 16 IdentifierName "a" = number
-Line 141 col 27 IdentifierName "b" = number
-Line 147 col 9 IdentifierName "jsDocParamTest" = typeof jsDocParamTest
-Line 147 col 59 IdentifierName "a" = number
-Line 147 col 105 IdentifierName "b" = number
-Line 147 col 116 IdentifierName "c" = number
-Line 147 col 127 IdentifierName "d" = number
-Line 148 col 11 AddExpression "a + b + c + d" = number
-Line 148 col 11 AddExpression "a + b + c" = number
-Line 148 col 11 AddExpression "a + b" = number
-Line 148 col 11 IdentifierName "a" = number
-Line 148 col 15 IdentifierName "b" = number
-Line 148 col 19 IdentifierName "c" = number
-Line 148 col 23 IdentifierName "d" = number
-Line 152 col 6 IdentifierName "NoQuickInfoClass" = NoQuickInfoClass
+
+/// This is simple /// comments
+function simple() {
+>simple : typeof simple
+}
+
+>simple() : void
+>simple : typeof simple
+
+simple();
+
+/// multiLine /// Comments
+/// This is example of multiline /// comments
+/// Another multiLine
+function multiLine() {
+>multiLine : typeof multiLine
+}
+multiLine();
+>multiLine() : void
+>multiLine : typeof multiLine
+
+/** this is eg of single line jsdoc style comment */
+function jsDocSingleLine() {
+>jsDocSingleLine : typeof jsDocSingleLine
+}
+jsDocSingleLine();
+>jsDocSingleLine() : void
+>jsDocSingleLine : typeof jsDocSingleLine
+
+
+/** this is multiple line jsdoc stule comment
+*New line1
+*New Line2*/
+function jsDocMultiLine() {
+>jsDocMultiLine : typeof jsDocMultiLine
+}
+jsDocMultiLine();
+>jsDocMultiLine() : void
+>jsDocMultiLine : typeof jsDocMultiLine
+
+/** this is multiple line jsdoc stule comment
+*New line1
+*New Line2*/
+/** Shoul mege this line as well
+* and this too*/ /** Another this one too*/
+function jsDocMultiLineMerge() {
+>jsDocMultiLineMerge : typeof jsDocMultiLineMerge
+}
+jsDocMultiLineMerge();
+>jsDocMultiLineMerge() : void
+>jsDocMultiLineMerge : typeof jsDocMultiLineMerge
+
+
+/// Triple slash comment
+/** jsdoc comment */
+function jsDocMixedComments1() {
+>jsDocMixedComments1 : typeof jsDocMixedComments1
+}
+jsDocMixedComments1();
+>jsDocMixedComments1() : void
+>jsDocMixedComments1 : typeof jsDocMixedComments1
+
+/// Triple slash comment
+/** jsdoc comment */ /*** another jsDocComment*/
+function jsDocMixedComments2() {
+>jsDocMixedComments2 : typeof jsDocMixedComments2
+}
+jsDocMixedComments2();
+>jsDocMixedComments2() : void
+>jsDocMixedComments2 : typeof jsDocMixedComments2
+
+/** jsdoc comment */ /*** another jsDocComment*/
+/// Triple slash comment
+function jsDocMixedComments3() {
+>jsDocMixedComments3 : typeof jsDocMixedComments3
+}
+jsDocMixedComments3();
+>jsDocMixedComments3() : void
+>jsDocMixedComments3 : typeof jsDocMixedComments3
+
+/** jsdoc comment */ /*** another jsDocComment*/
+/// Triple slash comment
+/// Triple slash comment 2
+function jsDocMixedComments4() {
+>jsDocMixedComments4 : typeof jsDocMixedComments4
+}
+jsDocMixedComments4();
+>jsDocMixedComments4() : void
+>jsDocMixedComments4 : typeof jsDocMixedComments4
+
+/// Triple slash comment 1
+/** jsdoc comment */ /*** another jsDocComment*/
+/// Triple slash comment
+/// Triple slash comment 2
+function jsDocMixedComments5() {
+>jsDocMixedComments5 : typeof jsDocMixedComments5
+}
+jsDocMixedComments5();
+>jsDocMixedComments5() : void
+>jsDocMixedComments5 : typeof jsDocMixedComments5
+
+/*** another jsDocComment*/
+/// Triple slash comment 1
+/// Triple slash comment
+/// Triple slash comment 2
+/** jsdoc comment */
+function jsDocMixedComments6() {
+>jsDocMixedComments6 : typeof jsDocMixedComments6
+}
+jsDocMixedComments6();
+>jsDocMixedComments6() : void
+>jsDocMixedComments6 : typeof jsDocMixedComments6
+
+// This shoulnot be help comment
+function noHelpComment1() {
+>noHelpComment1 : typeof noHelpComment1
+}
+noHelpComment1();
+>noHelpComment1() : void
+>noHelpComment1 : typeof noHelpComment1
+
+/* This shoulnot be help comment */
+function noHelpComment2() {
+>noHelpComment2 : typeof noHelpComment2
+}
+noHelpComment2();
+>noHelpComment2() : void
+>noHelpComment2 : typeof noHelpComment2
+
+function noHelpComment3() {
+>noHelpComment3 : typeof noHelpComment3
+}
+noHelpComment3();
+>noHelpComment3() : void
+>noHelpComment3 : typeof noHelpComment3
+
+/** Adds two integers and returns the result
+  * @param {number} a first number
+  * @param b second number
+  */
+function sum(a: number, b: number) {
+>sum : typeof sum
+>a : number
+>b : number
+
+    return a + b;
+>a + b : number
+>a : number
+>b : number
+}
+sum(10, 20);
+>sum(10, 20) : number
+>sum : typeof sum
+
+/** This is multiplication function*/
+/** @param */
+/** @param a first number*/
+/** @param b */
+/** @param c {
+ @param d @anotherTag*/
+/** @param e LastParam @anotherTag*/
+function multiply(a: number, b: number, c?: number, d?, e?) {
+>multiply : typeof multiply
+>a : number
+>b : number
+>c : number
+>d : any
+>e : any
+}
+/** fn f1 with number
+* @param { string} b about b
+*/
+function f1(a: number);
+>f1 : typeof f1
+>a : number
+
+function f1(b: string);
+>f1 : typeof f1
+>b : string
+
+/**@param opt optional parameter*/
+function f1(aOrb, opt?) {
+>f1 : typeof f1
+>aOrb : any
+>opt : any
+
+    return aOrb;
+>aOrb : any
+}
+/** This is subtract function
+@param { a
+*@param { number | } b this is about b
+@param { { () => string; } } c this is optional param c
+@param { { () => string; } d this is optional param d
+@param { { () => string; } } e this is optional param e
+@param { { { () => string; } } f this is optional param f
+*/
+function subtract(a: number, b: number, c?: () => string, d?: () => string, e?: () => string, f?: () => string) {
+>subtract : typeof subtract
+>a : number
+>b : number
+>c : () => string
+>d : () => string
+>e : () => string
+>f : () => string
+}
+/** this is square function
+@paramTag { number } a this is input number of paramTag
+@param { number } a this is input number
+@returnType { number } it is return type
+*/
+function square(a: number) {
+>square : typeof square
+>a : number
+
+    return a * a;
+>a * a : number
+>a : number
+>a : number
+}
+/** this is divide function
+@param { number} a this is a
+@paramTag { number } g this is optional param g
+@param { number} b this is b
+*/
+function divide(a: number, b: number) {
+>divide : typeof divide
+>a : number
+>b : number
+}
+/** this is jsdoc style function with param tag as well as inline parameter help
+*@param a it is first parameter
+*@param c it is third parameter
+*/
+function jsDocParamTest(/** this is inline comment for a */a: number, /** this is inline comment for b*/ b: number, c: number, d: number) {
+>jsDocParamTest : typeof jsDocParamTest
+>a : number
+>b : number
+>c : number
+>d : number
+
+    return a + b + c + d;
+>a + b + c + d : number
+>a + b + c : number
+>a + b : number
+>a : number
+>b : number
+>c : number
+>d : number
+}
+
+/**/
+class NoQuickInfoClass {
+>NoQuickInfoClass : NoQuickInfoClass
+}

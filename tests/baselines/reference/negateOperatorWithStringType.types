@@ -1,87 +1,145 @@
 === tests/cases/compiler/negateOperatorWithStringType.ts ===
-Line 1 col 4 IdentifierName "STRING" = string
-Line 2 col 4 IdentifierName "STRING1" = string[]
-Line 2 col 24 ArrayLiteralExpression "["", "abc"]" = string[]
-Line 4 col 9 IdentifierName "foo" = typeof foo
-Line 6 col 6 IdentifierName "A" = A
-Line 7 col 11 IdentifierName "a" = string
-Line 8 col 11 IdentifierName "foo" = () => string
-Line 10 col 7 IdentifierName "M" = M
-Line 11 col 15 IdentifierName "n" = string
-Line 14 col 4 IdentifierName "objA" = A
-Line 14 col 11 ObjectCreationExpression "new A()" = A
-Line 14 col 15 IdentifierName "A" = typeof A
-Line 17 col 4 IdentifierName "ResultIsNumber1" = number
-Line 17 col 22 NegateExpression "-STRING" = number
-Line 17 col 23 IdentifierName "STRING" = string
-Line 18 col 4 IdentifierName "ResultIsNumber2" = number
-Line 18 col 22 NegateExpression "-STRING1" = number
-Line 18 col 23 IdentifierName "STRING1" = string[]
-Line 21 col 4 IdentifierName "ResultIsNumber3" = number
-Line 21 col 22 NegateExpression "-""" = number
-Line 22 col 4 IdentifierName "ResultIsNumber4" = number
-Line 22 col 22 NegateExpression "-{ x: "", y: "" }" = number
-Line 22 col 23 ObjectLiteralExpression "{ x: "", y: "" }" = { x: string; y: string; }
-Line 22 col 25 IdentifierName "x" = string
-Line 22 col 32 IdentifierName "y" = string
-Line 23 col 4 IdentifierName "ResultIsNumber5" = number
-Line 23 col 22 NegateExpression "-{ x: "", y: (s: string) => { return s; } }" = number
-Line 23 col 23 ObjectLiteralExpression "{ x: "", y: (s: string) => { return s; } }" = { x: string; y: (s: string) => string; }
-Line 23 col 25 IdentifierName "x" = string
-Line 23 col 32 IdentifierName "y" = (s: string) => string
-Line 23 col 35 ParenthesizedArrowFunctionExpression "(s: string) => { return s; }" = (s: string) => string
-Line 23 col 36 IdentifierName "s" = string
-Line 23 col 59 IdentifierName "s" = string
-Line 26 col 4 IdentifierName "ResultIsNumber6" = number
-Line 26 col 22 NegateExpression "-objA.a" = number
-Line 26 col 23 MemberAccessExpression "objA.a" = string
-Line 26 col 23 IdentifierName "objA" = A
-Line 26 col 28 IdentifierName "a" = string
-Line 27 col 4 IdentifierName "ResultIsNumber7" = number
-Line 27 col 22 NegateExpression "-M.n" = number
-Line 27 col 23 MemberAccessExpression "M.n" = string
-Line 27 col 23 IdentifierName "M" = typeof M
-Line 27 col 25 IdentifierName "n" = string
-Line 28 col 4 IdentifierName "ResultIsNumber8" = number
-Line 28 col 22 NegateExpression "-STRING1[0]" = number
-Line 28 col 23 ElementAccessExpression "STRING1[0]" = string
-Line 28 col 23 IdentifierName "STRING1" = string[]
-Line 29 col 4 IdentifierName "ResultIsNumber9" = number
-Line 29 col 22 NegateExpression "-foo()" = number
-Line 29 col 23 InvocationExpression "foo()" = string
-Line 29 col 23 IdentifierName "foo" = typeof foo
-Line 30 col 4 IdentifierName "ResultIsNumber10" = number
-Line 30 col 23 NegateExpression "-A.foo()" = number
-Line 30 col 24 InvocationExpression "A.foo()" = string
-Line 30 col 24 MemberAccessExpression "A.foo" = () => string
-Line 30 col 24 IdentifierName "A" = typeof A
-Line 30 col 26 IdentifierName "foo" = () => string
-Line 31 col 4 IdentifierName "ResultIsNumber11" = number
-Line 31 col 23 NegateExpression "-(STRING + STRING)" = number
-Line 31 col 24 ParenthesizedExpression "(STRING + STRING)" = string
-Line 31 col 25 AddExpression "STRING + STRING" = string
-Line 31 col 25 IdentifierName "STRING" = string
-Line 31 col 34 IdentifierName "STRING" = string
-Line 32 col 4 IdentifierName "ResultIsNumber12" = number
-Line 32 col 23 NegateExpression "-STRING.charAt(0)" = number
-Line 32 col 24 InvocationExpression "STRING.charAt(0)" = string
-Line 32 col 24 MemberAccessExpression "STRING.charAt" = (pos: number) => string
-Line 32 col 24 IdentifierName "STRING" = string
-Line 32 col 31 IdentifierName "charAt" = (pos: number) => string
-Line 33 col 0 NegateExpression "// miss assignment operators
--""" = number
-Line 36 col 0 NegateExpression "-STRING" = number
-Line 36 col 1 IdentifierName "STRING" = string
-Line 37 col 0 NegateExpression "-STRING1" = number
-Line 37 col 1 IdentifierName "STRING1" = string[]
-Line 38 col 0 NegateExpression "-foo()" = number
-Line 38 col 1 InvocationExpression "foo()" = string
-Line 38 col 1 IdentifierName "foo" = typeof foo
-Line 39 col 0 CommaExpression "-objA.a,M.n" = string
-Line 39 col 0 NegateExpression "-objA.a" = number
-Line 39 col 1 MemberAccessExpression "objA.a" = string
-Line 39 col 1 IdentifierName "objA" = A
-Line 39 col 6 IdentifierName "a" = string
-Line 39 col 8 MemberAccessExpression "M.n" = string
-Line 39 col 8 IdentifierName "M" = typeof M
-Line 39 col 10 IdentifierName "n" = string
+// - operator on string type
+var STRING: string;
+>STRING : string
+
+var STRING1: string[] = ["", "abc"];
+>STRING1 : string[]
+>["", "abc"] : string[]
+
+function foo(): string { return "abc"; }
+>foo : typeof foo
+
+class A {
+>A : A
+
+    public a: string;
+>a : string
+
+    static foo() { return ""; }
+>foo : () => string
+}
+module M {
+>M : M
+
+    export var n: string;
+>n : string
+}
+
+var objA = new A();
+>objA : A
+>new A() : A
+>A : typeof A
+
+// string type var
+var ResultIsNumber1 = -STRING;
+>ResultIsNumber1 : number
+>-STRING : number
+>STRING : string
+
+var ResultIsNumber2 = -STRING1;
+>ResultIsNumber2 : number
+>-STRING1 : number
+>STRING1 : string[]
+
+// string type literal
+var ResultIsNumber3 = -"";
+>ResultIsNumber3 : number
+>-"" : number
+
+var ResultIsNumber4 = -{ x: "", y: "" };
+>ResultIsNumber4 : number
+>-{ x: "", y: "" } : number
+>{ x: "", y: "" } : { x: string; y: string; }
+>x : string
+>y : string
+
+var ResultIsNumber5 = -{ x: "", y: (s: string) => { return s; } };
+>ResultIsNumber5 : number
+>-{ x: "", y: (s: string) => { return s; } } : number
+>{ x: "", y: (s: string) => { return s; } } : { x: string; y: (s: string) => string; }
+>x : string
+>y : (s: string) => string
+>(s: string) => { return s; } : (s: string) => string
+>s : string
+>s : string
+
+// string type expressions
+var ResultIsNumber6 = -objA.a;
+>ResultIsNumber6 : number
+>-objA.a : number
+>objA.a : string
+>objA : A
+>a : string
+
+var ResultIsNumber7 = -M.n;
+>ResultIsNumber7 : number
+>-M.n : number
+>M.n : string
+>M : typeof M
+>n : string
+
+var ResultIsNumber8 = -STRING1[0];
+>ResultIsNumber8 : number
+>-STRING1[0] : number
+>STRING1[0] : string
+>STRING1 : string[]
+
+var ResultIsNumber9 = -foo();
+>ResultIsNumber9 : number
+>-foo() : number
+>foo() : string
+>foo : typeof foo
+
+var ResultIsNumber10 = -A.foo();
+>ResultIsNumber10 : number
+>-A.foo() : number
+>A.foo() : string
+>A.foo : () => string
+>A : typeof A
+>foo : () => string
+
+var ResultIsNumber11 = -(STRING + STRING);
+>ResultIsNumber11 : number
+>-(STRING + STRING) : number
+>(STRING + STRING) : string
+>STRING + STRING : string
+>STRING : string
+>STRING : string
+
+var ResultIsNumber12 = -STRING.charAt(0);
+>ResultIsNumber12 : number
+>-STRING.charAt(0) : number
+>STRING.charAt(0) : string
+>STRING.charAt : (pos: number) => string
+>STRING : string
+>charAt : (pos: number) => string
+
+>// miss assignment operators
+-"" : number
+
+// miss assignment operators
+-"";
+-STRING;
+>-STRING : number
+>STRING : string
+
+-STRING1;
+>-STRING1 : number
+>STRING1 : string[]
+
+-foo();
+>-foo() : number
+>foo() : string
+>foo : typeof foo
+
+-objA.a,M.n;
+>-objA.a,M.n : string
+>-objA.a : number
+>objA.a : string
+>objA : A
+>a : string
+>M.n : string
+>M : typeof M
+>n : string
+

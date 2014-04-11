@@ -1,168 +1,256 @@
 === tests/cases/compiler/functionConstraintSatisfaction.ts ===
-Line 2 col 9 IdentifierName "foo" = typeof foo
-Line 2 col 13 IdentifierName "T" = T
-Line 2 col 23 IdentifierName "Function" = Function
-Line 2 col 33 IdentifierName "x" = T
-Line 2 col 36 IdentifierName "T" = T
-Line 2 col 40 IdentifierName "T" = T
-Line 2 col 51 IdentifierName "x" = T
-Line 4 col 10 IdentifierName "I" = I
-Line 7 col 4 IdentifierName "i" = I
-Line 7 col 7 IdentifierName "I" = I
-Line 9 col 6 IdentifierName "C" = C
-Line 10 col 0 IdentifierName "foo" = string
-Line 13 col 4 IdentifierName "a" = () => string
-Line 14 col 4 IdentifierName "b" = new() => string
-Line 15 col 4 IdentifierName "c" = { (): string; (x: any): string; }
-Line 15 col 22 IdentifierName "x" = any
-Line 17 col 4 IdentifierName "r" = Function
-Line 17 col 8 InvocationExpression "foo(new Function())" = Function
-Line 17 col 8 IdentifierName "foo" = typeof foo
-Line 17 col 12 ObjectCreationExpression "new Function()" = Function
-Line 17 col 16 IdentifierName "Function" = { prototype: Function; (...args: string[]): Function; new(...args: string[]): Function; }
-Line 18 col 4 IdentifierName "r1" = (x: any) => any
-Line 18 col 9 InvocationExpression "foo((x) => x)" = (x: any) => any
-Line 18 col 9 IdentifierName "foo" = typeof foo
-Line 18 col 13 ParenthesizedArrowFunctionExpression "(x) => x" = (x: any) => any
-Line 18 col 14 IdentifierName "x" = any
-Line 18 col 20 IdentifierName "x" = any
-Line 19 col 4 IdentifierName "r2" = (x: string[]) => string[]
-Line 19 col 9 InvocationExpression "foo((x: string[]) => x)" = (x: string[]) => string[]
-Line 19 col 9 IdentifierName "foo" = typeof foo
-Line 19 col 13 ParenthesizedArrowFunctionExpression "(x: string[]) => x" = (x: string[]) => string[]
-Line 19 col 14 IdentifierName "x" = string[]
-Line 19 col 30 IdentifierName "x" = string[]
-Line 20 col 4 IdentifierName "r3" = (x: any) => any
-Line 20 col 9 InvocationExpression "foo(function (x) { return x })" = (x: any) => any
-Line 20 col 9 IdentifierName "foo" = typeof foo
-Line 20 col 13 FunctionExpression "function (x) { return x }" = (x: any) => any
-Line 20 col 23 IdentifierName "x" = any
-Line 20 col 35 IdentifierName "x" = any
-Line 21 col 4 IdentifierName "r4" = (x: string[]) => string[]
-Line 21 col 9 InvocationExpression "foo(function (x: string[]) { return x })" = (x: string[]) => string[]
-Line 21 col 9 IdentifierName "foo" = typeof foo
-Line 21 col 13 FunctionExpression "function (x: string[]) { return x }" = (x: string[]) => string[]
-Line 21 col 23 IdentifierName "x" = string[]
-Line 21 col 45 IdentifierName "x" = string[]
-Line 22 col 4 IdentifierName "r5" = I
-Line 22 col 9 InvocationExpression "foo(i)" = I
-Line 22 col 9 IdentifierName "foo" = typeof foo
-Line 22 col 13 IdentifierName "i" = I
-Line 23 col 4 IdentifierName "r6" = typeof C
-Line 23 col 9 InvocationExpression "foo(C)" = typeof C
-Line 23 col 9 IdentifierName "foo" = typeof foo
-Line 23 col 13 IdentifierName "C" = typeof C
-Line 24 col 4 IdentifierName "r7" = new() => string
-Line 24 col 9 InvocationExpression "foo(b)" = new() => string
-Line 24 col 9 IdentifierName "foo" = typeof foo
-Line 24 col 13 IdentifierName "b" = new() => string
-Line 25 col 4 IdentifierName "r8" = { (): string; (x: any): string; }
-Line 25 col 9 InvocationExpression "foo(c)" = { (): string; (x: any): string; }
-Line 25 col 9 IdentifierName "foo" = typeof foo
-Line 25 col 13 IdentifierName "c" = { (): string; (x: any): string; }
-Line 27 col 10 IdentifierName "I2" = I2<T>
-Line 27 col 13 IdentifierName "T" = T
-Line 28 col 5 IdentifierName "x" = T
-Line 28 col 8 IdentifierName "T" = T
-Line 28 col 12 IdentifierName "T" = T
-Line 30 col 4 IdentifierName "i2" = I2<string>
-Line 30 col 8 IdentifierName "I2" = I2<T>
-Line 32 col 6 IdentifierName "C2" = C2<T>
-Line 32 col 9 IdentifierName "T" = T
-Line 33 col 0 IdentifierName "foo" = T
-Line 33 col 9 IdentifierName "T" = T
-Line 36 col 4 IdentifierName "a2" = <T>(x: T) => T
-Line 36 col 11 IdentifierName "T" = T
-Line 36 col 14 IdentifierName "x" = T
-Line 36 col 17 IdentifierName "T" = T
-Line 36 col 21 IdentifierName "T" = T
-Line 37 col 4 IdentifierName "b2" = new<T>(x: T) => T
-Line 37 col 15 IdentifierName "T" = T
-Line 37 col 18 IdentifierName "x" = T
-Line 37 col 21 IdentifierName "T" = T
-Line 37 col 25 IdentifierName "T" = T
-Line 38 col 4 IdentifierName "c2" = { <T>(x: T): T; <T>(x: T, y: T): T; }
-Line 38 col 11 IdentifierName "T" = T
-Line 38 col 14 IdentifierName "x" = T
-Line 38 col 17 IdentifierName "T" = T
-Line 38 col 21 IdentifierName "T" = T
-Line 38 col 25 IdentifierName "T" = T
-Line 38 col 28 IdentifierName "x" = T
-Line 38 col 31 IdentifierName "T" = T
-Line 38 col 34 IdentifierName "y" = T
-Line 38 col 37 IdentifierName "T" = T
-Line 38 col 41 IdentifierName "T" = T
-Line 40 col 4 IdentifierName "r9" = <U>(x: U) => U
-Line 40 col 9 InvocationExpression "foo(<U>(x: U) => x)" = <U>(x: U) => U
-Line 40 col 9 IdentifierName "foo" = typeof foo
-Line 40 col 13 ParenthesizedArrowFunctionExpression "<U>(x: U) => x" = <U>(x: U) => U
-Line 40 col 14 IdentifierName "U" = U
-Line 40 col 17 IdentifierName "x" = U
-Line 40 col 20 IdentifierName "U" = U
-Line 40 col 26 IdentifierName "x" = U
-Line 41 col 4 IdentifierName "r10" = <U>(x: U) => U
-Line 41 col 10 InvocationExpression "foo(function <U>(x: U) { return x; })" = <U>(x: U) => U
-Line 41 col 10 IdentifierName "foo" = typeof foo
-Line 41 col 14 FunctionExpression "function <U>(x: U) { return x; }" = <U>(x: U) => U
-Line 41 col 24 IdentifierName "U" = U
-Line 41 col 27 IdentifierName "x" = U
-Line 41 col 30 IdentifierName "U" = U
-Line 41 col 42 IdentifierName "x" = U
-Line 42 col 4 IdentifierName "r11" = <U extends Date>(x: U) => U
-Line 42 col 10 InvocationExpression "foo(<U extends Date>(x: U) => x)" = <U extends Date>(x: U) => U
-Line 42 col 10 IdentifierName "foo" = typeof foo
-Line 42 col 14 ParenthesizedArrowFunctionExpression "<U extends Date>(x: U) => x" = <U extends Date>(x: U) => U
-Line 42 col 15 IdentifierName "U" = U
-Line 42 col 25 IdentifierName "Date" = Date
-Line 42 col 31 IdentifierName "x" = U
-Line 42 col 34 IdentifierName "U" = U
-Line 42 col 40 IdentifierName "x" = U
-Line 43 col 4 IdentifierName "r12" = <U, V>(x: U, y: V) => U
-Line 43 col 10 InvocationExpression "foo(<U, V>(x: U, y: V) => x)" = <U, V>(x: U, y: V) => U
-Line 43 col 10 IdentifierName "foo" = typeof foo
-Line 43 col 14 ParenthesizedArrowFunctionExpression "<U, V>(x: U, y: V) => x" = <U, V>(x: U, y: V) => U
-Line 43 col 15 IdentifierName "U" = U
-Line 43 col 18 IdentifierName "V" = V
-Line 43 col 21 IdentifierName "x" = U
-Line 43 col 24 IdentifierName "U" = U
-Line 43 col 27 IdentifierName "y" = V
-Line 43 col 30 IdentifierName "V" = V
-Line 43 col 36 IdentifierName "x" = U
-Line 44 col 4 IdentifierName "r13" = I2<string>
-Line 44 col 10 InvocationExpression "foo(i2)" = I2<string>
-Line 44 col 10 IdentifierName "foo" = typeof foo
-Line 44 col 14 IdentifierName "i2" = I2<string>
-Line 45 col 4 IdentifierName "r14" = typeof C2
-Line 45 col 10 InvocationExpression "foo(C2)" = typeof C2
-Line 45 col 10 IdentifierName "foo" = typeof foo
-Line 45 col 14 IdentifierName "C2" = typeof C2
-Line 46 col 4 IdentifierName "r15" = new<T>(x: T) => T
-Line 46 col 10 InvocationExpression "foo(b2)" = new<T>(x: T) => T
-Line 46 col 10 IdentifierName "foo" = typeof foo
-Line 46 col 14 IdentifierName "b2" = new<T>(x: T) => T
-Line 47 col 4 IdentifierName "r16" = { <T>(x: T): T; <T>(x: T, y: T): T; }
-Line 47 col 10 InvocationExpression "foo(c2)" = { <T>(x: T): T; <T>(x: T, y: T): T; }
-Line 47 col 10 IdentifierName "foo" = typeof foo
-Line 47 col 14 IdentifierName "c2" = { <T>(x: T): T; <T>(x: T, y: T): T; }
-Line 49 col 10 IdentifierName "F2" = F2
-Line 49 col 21 IdentifierName "Function" = Function
-Line 49 col 32 IdentifierName "foo" = string
-Line 50 col 4 IdentifierName "f2" = F2
-Line 50 col 8 IdentifierName "F2" = F2
-Line 51 col 4 IdentifierName "r17" = F2
-Line 51 col 10 InvocationExpression "foo(f2)" = F2
-Line 51 col 10 IdentifierName "foo" = typeof foo
-Line 51 col 14 IdentifierName "f2" = F2
-Line 53 col 9 IdentifierName "foo2" = typeof foo2
-Line 53 col 14 IdentifierName "T" = T
-Line 53 col 38 IdentifierName "U" = U
-Line 53 col 62 IdentifierName "x" = T
-Line 53 col 65 IdentifierName "T" = T
-Line 53 col 68 IdentifierName "y" = U
-Line 53 col 71 IdentifierName "U" = U
-Line 54 col 0 InvocationExpression "foo(x)" = T
-Line 54 col 0 IdentifierName "foo" = typeof foo
-Line 54 col 8 IdentifierName "x" = T
-Line 55 col 0 InvocationExpression "foo(y)" = U
-Line 55 col 0 IdentifierName "foo" = typeof foo
-Line 55 col 8 IdentifierName "y" = U
+// satisfaction of a constraint to Function, no errors expected
+
+function foo<T extends Function>(x: T): T { return x; }
+>foo : typeof foo
+>T : T
+>Function : Function
+>x : T
+>T : T
+>T : T
+>x : T
+
+interface I {
+>I : I
+
+    (): string;
+}
+var i: I;
+>i : I
+>I : I
+
+class C {
+>C : C
+
+    foo: string;
+>foo : string
+}
+
+var a: { (): string };
+>a : () => string
+
+var b: { new (): string };
+>b : new() => string
+
+var c: { (): string; (x): string };
+>c : { (): string; (x: any): string; }
+>x : any
+
+var r = foo(new Function());
+>r : Function
+>foo(new Function()) : Function
+>foo : typeof foo
+>new Function() : Function
+>Function : { prototype: Function; (...args: string[]): Function; new(...args: string[]): Function; }
+
+var r1 = foo((x) => x);
+>r1 : (x: any) => any
+>foo((x) => x) : (x: any) => any
+>foo : typeof foo
+>(x) => x : (x: any) => any
+>x : any
+>x : any
+
+var r2 = foo((x: string[]) => x);
+>r2 : (x: string[]) => string[]
+>foo((x: string[]) => x) : (x: string[]) => string[]
+>foo : typeof foo
+>(x: string[]) => x : (x: string[]) => string[]
+>x : string[]
+>x : string[]
+
+var r3 = foo(function (x) { return x });
+>r3 : (x: any) => any
+>foo(function (x) { return x }) : (x: any) => any
+>foo : typeof foo
+>function (x) { return x } : (x: any) => any
+>x : any
+>x : any
+
+var r4 = foo(function (x: string[]) { return x });
+>r4 : (x: string[]) => string[]
+>foo(function (x: string[]) { return x }) : (x: string[]) => string[]
+>foo : typeof foo
+>function (x: string[]) { return x } : (x: string[]) => string[]
+>x : string[]
+>x : string[]
+
+var r5 = foo(i);
+>r5 : I
+>foo(i) : I
+>foo : typeof foo
+>i : I
+
+var r6 = foo(C);
+>r6 : typeof C
+>foo(C) : typeof C
+>foo : typeof foo
+>C : typeof C
+
+var r7 = foo(b);
+>r7 : new() => string
+>foo(b) : new() => string
+>foo : typeof foo
+>b : new() => string
+
+var r8 = foo(c);
+>r8 : { (): string; (x: any): string; }
+>foo(c) : { (): string; (x: any): string; }
+>foo : typeof foo
+>c : { (): string; (x: any): string; }
+
+interface I2<T> {
+>I2 : I2<T>
+>T : T
+
+    (x: T): T;
+>x : T
+>T : T
+>T : T
+}
+var i2: I2<string>;
+>i2 : I2<string>
+>I2 : I2<T>
+
+class C2<T> {
+>C2 : C2<T>
+>T : T
+
+    foo: T;
+>foo : T
+>T : T
+}
+
+var a2: { <T>(x: T): T };
+>a2 : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+var b2: { new <T>(x: T): T };
+>b2 : new<T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+var c2: { <T>(x: T): T; <T>(x: T, y: T): T };
+>c2 : { <T>(x: T): T; <T>(x: T, y: T): T; }
+>T : T
+>x : T
+>T : T
+>T : T
+>T : T
+>x : T
+>T : T
+>y : T
+>T : T
+>T : T
+
+var r9 = foo(<U>(x: U) => x);
+>r9 : <U>(x: U) => U
+>foo(<U>(x: U) => x) : <U>(x: U) => U
+>foo : typeof foo
+><U>(x: U) => x : <U>(x: U) => U
+>U : U
+>x : U
+>U : U
+>x : U
+
+var r10 = foo(function <U>(x: U) { return x; });
+>r10 : <U>(x: U) => U
+>foo(function <U>(x: U) { return x; }) : <U>(x: U) => U
+>foo : typeof foo
+>function <U>(x: U) { return x; } : <U>(x: U) => U
+>U : U
+>x : U
+>U : U
+>x : U
+
+var r11 = foo(<U extends Date>(x: U) => x);
+>r11 : <U extends Date>(x: U) => U
+>foo(<U extends Date>(x: U) => x) : <U extends Date>(x: U) => U
+>foo : typeof foo
+><U extends Date>(x: U) => x : <U extends Date>(x: U) => U
+>U : U
+>Date : Date
+>x : U
+>U : U
+>x : U
+
+var r12 = foo(<U, V>(x: U, y: V) => x);
+>r12 : <U, V>(x: U, y: V) => U
+>foo(<U, V>(x: U, y: V) => x) : <U, V>(x: U, y: V) => U
+>foo : typeof foo
+><U, V>(x: U, y: V) => x : <U, V>(x: U, y: V) => U
+>U : U
+>V : V
+>x : U
+>U : U
+>y : V
+>V : V
+>x : U
+
+var r13 = foo(i2);
+>r13 : I2<string>
+>foo(i2) : I2<string>
+>foo : typeof foo
+>i2 : I2<string>
+
+var r14 = foo(C2);
+>r14 : typeof C2
+>foo(C2) : typeof C2
+>foo : typeof foo
+>C2 : typeof C2
+
+var r15 = foo(b2);
+>r15 : new<T>(x: T) => T
+>foo(b2) : new<T>(x: T) => T
+>foo : typeof foo
+>b2 : new<T>(x: T) => T
+
+var r16 = foo(c2);
+>r16 : { <T>(x: T): T; <T>(x: T, y: T): T; }
+>foo(c2) : { <T>(x: T): T; <T>(x: T, y: T): T; }
+>foo : typeof foo
+>c2 : { <T>(x: T): T; <T>(x: T, y: T): T; }
+
+interface F2 extends Function { foo: string; }
+>F2 : F2
+>Function : Function
+>foo : string
+
+var f2: F2;
+>f2 : F2
+>F2 : F2
+
+var r17 = foo(f2);
+>r17 : F2
+>foo(f2) : F2
+>foo : typeof foo
+>f2 : F2
+
+function foo2<T extends { (): void }, U extends { (): void }>(x: T, y: U) {
+>foo2 : typeof foo2
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+
+    foo(x);
+>foo(x) : T
+>foo : typeof foo
+>x : T
+
+    foo(y);
+>foo(y) : U
+>foo : typeof foo
+>y : U
+}
+//function foo2<T extends { (): void }, U extends T>(x: T, y: U) {
+//    foo(x);
+//    foo(y);
+//}

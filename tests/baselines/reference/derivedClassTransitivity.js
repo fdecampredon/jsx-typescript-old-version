@@ -1,3 +1,4 @@
+//// [derivedClassTransitivity.js]
 // subclassing is not transitive when you can remove required parameters and add optional parameters
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

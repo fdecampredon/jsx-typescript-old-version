@@ -1,81 +1,110 @@
 === tests/cases/compiler/callbacksDontShareTypes.ts ===
-Line 0 col 10 IdentifierName "Collection" = Collection<T>
-Line 0 col 21 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "length" = number
-Line 2 col 0 IdentifierName "add" = (x: T) => void
-Line 2 col 8 IdentifierName "x" = T
-Line 2 col 11 IdentifierName "T" = T
-Line 3 col 0 IdentifierName "remove" = (x: T) => boolean
-Line 3 col 11 IdentifierName "x" = T
-Line 3 col 14 IdentifierName "T" = T
-Line 5 col 10 IdentifierName "Combinators" = Combinators
-Line 6 col 0 IdentifierName "map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 6 col 8 IdentifierName "T" = T
-Line 6 col 11 IdentifierName "U" = U
-Line 6 col 14 IdentifierName "c" = Collection<T>
-Line 6 col 17 IdentifierName "Collection" = Collection<T>
-Line 6 col 28 IdentifierName "T" = T
-Line 6 col 32 IdentifierName "f" = (x: T) => U
-Line 6 col 36 IdentifierName "x" = T
-Line 6 col 39 IdentifierName "T" = T
-Line 6 col 45 IdentifierName "U" = U
-Line 6 col 49 IdentifierName "Collection" = Collection<T>
-Line 6 col 60 IdentifierName "U" = U
-Line 7 col 0 IdentifierName "map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 7 col 8 IdentifierName "T" = T
-Line 7 col 11 IdentifierName "c" = Collection<T>
-Line 7 col 14 IdentifierName "Collection" = Collection<T>
-Line 7 col 25 IdentifierName "T" = T
-Line 7 col 29 IdentifierName "f" = (x: T) => any
-Line 7 col 33 IdentifierName "x" = T
-Line 7 col 36 IdentifierName "T" = T
-Line 7 col 48 IdentifierName "Collection" = Collection<T>
-Line 10 col 4 IdentifierName "_" = Combinators
-Line 10 col 7 IdentifierName "Combinators" = Combinators
-Line 11 col 4 IdentifierName "c2" = Collection<number>
-Line 11 col 8 IdentifierName "Collection" = Collection<T>
-Line 13 col 4 IdentifierName "rf1" = (x: number) => string
-Line 13 col 10 ParenthesizedArrowFunctionExpression "(x: number) => { return x.toFixed() }" = (x: number) => string
-Line 13 col 11 IdentifierName "x" = number
-Line 13 col 34 InvocationExpression "x.toFixed()" = string
-Line 13 col 34 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
-Line 13 col 34 IdentifierName "x" = number
-Line 13 col 36 IdentifierName "toFixed" = (fractionDigits?: number) => string
-Line 14 col 4 IdentifierName "r1a" = Collection<string>
-Line 14 col 10 InvocationExpression "_.map(c2, (x) => { return x.toFixed() })" = Collection<string>
-Line 14 col 10 MemberAccessExpression "_.map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 14 col 10 IdentifierName "_" = Combinators
-Line 14 col 12 IdentifierName "map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 14 col 16 IdentifierName "c2" = Collection<number>
-Line 14 col 20 ParenthesizedArrowFunctionExpression "(x) => { return x.toFixed() }" = (x: number) => string
-Line 14 col 21 IdentifierName "x" = number
-Line 14 col 36 InvocationExpression "x.toFixed()" = string
-Line 14 col 36 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
-Line 14 col 36 IdentifierName "x" = number
-Line 14 col 38 IdentifierName "toFixed" = (fractionDigits?: number) => string
-Line 15 col 4 IdentifierName "r1b" = Collection<string>
-Line 15 col 10 InvocationExpression "_.map(c2, rf1)" = Collection<string>
-Line 15 col 10 MemberAccessExpression "_.map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 15 col 10 IdentifierName "_" = Combinators
-Line 15 col 12 IdentifierName "map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 15 col 16 IdentifierName "c2" = Collection<number>
-Line 15 col 20 IdentifierName "rf1" = (x: number) => string
-Line 16 col 4 IdentifierName "r5a" = Collection<string>
-Line 16 col 10 InvocationExpression "_.map<number, string>(c2, (x) => { return x.toFixed() })" = Collection<string>
-Line 16 col 10 MemberAccessExpression "_.map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 16 col 10 IdentifierName "_" = Combinators
-Line 16 col 12 IdentifierName "map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 16 col 32 IdentifierName "c2" = Collection<number>
-Line 16 col 36 ParenthesizedArrowFunctionExpression "(x) => { return x.toFixed() }" = (x: number) => string
-Line 16 col 37 IdentifierName "x" = number
-Line 16 col 52 InvocationExpression "x.toFixed()" = string
-Line 16 col 52 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
-Line 16 col 52 IdentifierName "x" = number
-Line 16 col 54 IdentifierName "toFixed" = (fractionDigits?: number) => string
-Line 17 col 4 IdentifierName "r5b" = Collection<string>
-Line 17 col 10 InvocationExpression "_.map<number, string>(c2, rf1)" = Collection<string>
-Line 17 col 10 MemberAccessExpression "_.map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 17 col 10 IdentifierName "_" = Combinators
-Line 17 col 12 IdentifierName "map" = { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
-Line 17 col 32 IdentifierName "c2" = Collection<number>
-Line 17 col 36 IdentifierName "rf1" = (x: number) => string
+interface Collection<T> {
+>Collection : Collection<T>
+>T : T
+
+    length: number;
+>length : number
+
+    add(x: T): void;
+>add : (x: T) => void
+>x : T
+>T : T
+
+    remove(x: T): boolean;
+>remove : (x: T) => boolean
+>x : T
+>T : T
+}
+interface Combinators {
+>Combinators : Combinators
+
+    map<T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>;
+>map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>T : T
+>U : U
+>c : Collection<T>
+>Collection : Collection<T>
+>T : T
+>f : (x: T) => U
+>x : T
+>T : T
+>U : U
+>Collection : Collection<T>
+>U : U
+
+    map<T>(c: Collection<T>, f: (x: T) => any): Collection<any>;
+>map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>T : T
+>c : Collection<T>
+>Collection : Collection<T>
+>T : T
+>f : (x: T) => any
+>x : T
+>T : T
+>Collection : Collection<T>
+}
+
+var _: Combinators;
+>_ : Combinators
+>Combinators : Combinators
+
+var c2: Collection<number>;
+>c2 : Collection<number>
+>Collection : Collection<T>
+
+var rf1 = (x: number) => { return x.toFixed() };
+>rf1 : (x: number) => string
+>(x: number) => { return x.toFixed() } : (x: number) => string
+>x : number
+>x.toFixed() : string
+>x.toFixed : (fractionDigits?: number) => string
+>x : number
+>toFixed : (fractionDigits?: number) => string
+
+var r1a = _.map(c2, (x) => { return x.toFixed() });
+>r1a : Collection<string>
+>_.map(c2, (x) => { return x.toFixed() }) : Collection<string>
+>_.map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>_ : Combinators
+>map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>c2 : Collection<number>
+>(x) => { return x.toFixed() } : (x: number) => string
+>x : number
+>x.toFixed() : string
+>x.toFixed : (fractionDigits?: number) => string
+>x : number
+>toFixed : (fractionDigits?: number) => string
+
+var r1b = _.map(c2, rf1); // this line should not cause the following 2 to have errors 
+>r1b : Collection<string>
+>_.map(c2, rf1) : Collection<string>
+>_.map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>_ : Combinators
+>map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>c2 : Collection<number>
+>rf1 : (x: number) => string
+
+var r5a = _.map<number, string>(c2, (x) => { return x.toFixed() });
+>r5a : Collection<string>
+>_.map<number, string>(c2, (x) => { return x.toFixed() }) : Collection<string>
+>_.map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>_ : Combinators
+>map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>c2 : Collection<number>
+>(x) => { return x.toFixed() } : (x: number) => string
+>x : number
+>x.toFixed() : string
+>x.toFixed : (fractionDigits?: number) => string
+>x : number
+>toFixed : (fractionDigits?: number) => string
+
+var r5b = _.map<number, string>(c2, rf1);
+>r5b : Collection<string>
+>_.map<number, string>(c2, rf1) : Collection<string>
+>_.map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>_ : Combinators
+>map : { <T, U>(c: Collection<T>, f: (x: T) => U): Collection<U>; <T>(c: Collection<T>, f: (x: T) => any): Collection<any>; }
+>c2 : Collection<number>
+>rf1 : (x: number) => string
+

@@ -1,3 +1,10 @@
+//// [foo_1.ts]
+import foo = require("./foo_0");
+if(foo.E1.A === 0){
+	// Should cause runtime import - interesting optimization possibility, as gets inlined to 0.
+}
+
+
 //// [foo_0.js]
 define(["require", "exports"], function(require, exports) {
     (function (E1) {

@@ -1,3 +1,4 @@
+//// [duplicateLocalVariable3.js]
 var x = 1;
 var x = 2;
 

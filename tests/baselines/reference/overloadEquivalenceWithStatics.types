@@ -1,21 +1,33 @@
 === tests/cases/compiler/overloadEquivalenceWithStatics.ts ===
-Line 0 col 6 IdentifierName "A1" = A1<T>
-Line 0 col 9 IdentifierName "T" = T
-Line 1 col 7 IdentifierName "B" = { <S>(v: A1<S>): A1<S>; <S>(v: S): A1<S>; }
-Line 1 col 9 IdentifierName "S" = S
-Line 1 col 12 IdentifierName "v" = A1<S>
-Line 1 col 15 IdentifierName "A1" = A1<T>
-Line 1 col 18 IdentifierName "S" = S
-Line 1 col 23 IdentifierName "A1" = A1<T>
-Line 1 col 26 IdentifierName "S" = S
-Line 2 col 7 IdentifierName "B" = { <S>(v: A1<S>): A1<S>; <S>(v: S): A1<S>; }
-Line 2 col 9 IdentifierName "S" = S
-Line 2 col 12 IdentifierName "v" = S
-Line 2 col 15 IdentifierName "S" = S
-Line 2 col 19 IdentifierName "A1" = A1<T>
-Line 2 col 22 IdentifierName "S" = S
-Line 3 col 7 IdentifierName "B" = { <S>(v: A1<S>): A1<S>; <S>(v: S): A1<S>; }
-Line 3 col 9 IdentifierName "S" = S
-Line 3 col 12 IdentifierName "v" = any
-Line 3 col 21 IdentifierName "A1" = A1<T>
-Line 3 col 24 IdentifierName "S" = S
+class A1<T> {
+>A1 : A1<T>
+>T : T
+
+static B<S>(v: A1<S>): A1<S>; // 1 
+>B : { <S>(v: A1<S>): A1<S>; <S>(v: S): A1<S>; }
+>S : S
+>v : A1<S>
+>A1 : A1<T>
+>S : S
+>A1 : A1<T>
+>S : S
+
+static B<S>(v: S): A1<S>; // 2 : Error Duplicate signature
+>B : { <S>(v: A1<S>): A1<S>; <S>(v: S): A1<S>; }
+>S : S
+>v : S
+>S : S
+>A1 : A1<T>
+>S : S
+
+static B<S>(v: any): A1<S> {
+>B : { <S>(v: A1<S>): A1<S>; <S>(v: S): A1<S>; }
+>S : S
+>v : any
+>A1 : A1<T>
+>S : S
+
+return null;
+}
+}
+

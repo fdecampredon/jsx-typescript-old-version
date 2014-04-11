@@ -1,8 +1,16 @@
 === tests/cases/compiler/duplicateConstructorOverloadSignature2.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 16 IdentifierName "x" = T
-Line 1 col 19 IdentifierName "T" = T
-Line 2 col 16 IdentifierName "x" = T
-Line 2 col 19 IdentifierName "T" = T
-Line 3 col 16 IdentifierName "x" = any
+class C<T> {
+>C : C<T>
+>T : T
+
+    constructor(x: T);
+>x : T
+>T : T
+
+    constructor(x: T);
+>x : T
+>T : T
+
+    constructor(x: any) { }
+>x : any
+}

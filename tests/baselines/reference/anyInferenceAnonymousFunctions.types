@@ -1,73 +1,97 @@
 === tests/cases/compiler/anyInferenceAnonymousFunctions.ts ===
-Line 0 col 4 IdentifierName "paired" = any[]
-Line 1 col 0 InvocationExpression "paired.reduce(function (a1, a2) {
+var paired: any[];
+>paired : any[]
+
+>paired.reduce(function (a1, a2) {
 
     return a1.concat({});
 
-} , [])" = any
-Line 1 col 0 MemberAccessExpression "paired.reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
-Line 1 col 0 IdentifierName "paired" = any[]
-Line 2 col 7 IdentifierName "reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
-Line 2 col 14 FunctionExpression "function (a1, a2) {
+} , []) : any
+>paired.reduce : { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
+>paired : any[]
+
+paired.reduce(function (a1, a2) {
+>reduce : { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
+>function (a1, a2) {
 
     return a1.concat({});
 
-}" = (a1: any, a2: any) => any
-Line 2 col 24 IdentifierName "a1" = any
-Line 2 col 28 IdentifierName "a2" = any
-Line 4 col 11 InvocationExpression "a1.concat({})" = any
-Line 4 col 11 MemberAccessExpression "a1.concat" = any
-Line 4 col 11 IdentifierName "a1" = any
-Line 4 col 14 IdentifierName "concat" = any
-Line 4 col 21 ObjectLiteralExpression "{}" = {}
-Line 6 col 4 ArrayLiteralExpression "[]" = any[]
-Line 7 col 0 InvocationExpression "paired.reduce((b1, b2) => {
+} : (a1: any, a2: any) => any
+>a1 : any
+>a2 : any
+
+    return a1.concat({});
+>a1.concat({}) : any
+>a1.concat : any
+>a1 : any
+>concat : any
+>{} : {}
+
+} , []);
+>[] : any[]
+
+>paired.reduce((b1, b2) => {
 
     return b1.concat({});
-} , [])" = any
-Line 7 col 0 MemberAccessExpression "paired.reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
-Line 7 col 0 IdentifierName "paired" = any[]
-Line 8 col 7 IdentifierName "reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
-Line 8 col 14 ParenthesizedArrowFunctionExpression "(b1, b2) => {
+} , []) : any
+>paired.reduce : { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
+>paired : any[]
+
+paired.reduce((b1, b2) => {
+>reduce : { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
+>(b1, b2) => {
 
     return b1.concat({});
-}" = (b1: any, b2: any) => any
-Line 8 col 15 IdentifierName "b1" = any
-Line 8 col 19 IdentifierName "b2" = any
-Line 10 col 11 InvocationExpression "b1.concat({})" = any
-Line 10 col 11 MemberAccessExpression "b1.concat" = any
-Line 10 col 11 IdentifierName "b1" = any
-Line 10 col 14 IdentifierName "concat" = any
-Line 10 col 21 ObjectLiteralExpression "{}" = {}
-Line 11 col 4 ArrayLiteralExpression "[]" = any[]
-Line 12 col 0 InvocationExpression "paired.reduce((b3, b4) => b3.concat({}), [])" = any
-Line 12 col 0 MemberAccessExpression "paired.reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
-Line 12 col 0 IdentifierName "paired" = any[]
-Line 13 col 7 IdentifierName "reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
-Line 13 col 14 ParenthesizedArrowFunctionExpression "(b3, b4) => b3.concat({})" = (b3: any, b4: any) => any
-Line 13 col 15 IdentifierName "b3" = any
-Line 13 col 19 IdentifierName "b4" = any
-Line 13 col 26 InvocationExpression "b3.concat({})" = any
-Line 13 col 26 MemberAccessExpression "b3.concat" = any
-Line 13 col 26 IdentifierName "b3" = any
-Line 13 col 29 IdentifierName "concat" = any
-Line 13 col 36 ObjectLiteralExpression "{}" = {}
-Line 13 col 41 ArrayLiteralExpression "[]" = any[]
-Line 14 col 0 InvocationExpression "paired.map((c1) => c1.count)" = any[]
-Line 14 col 0 MemberAccessExpression "paired.map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
-Line 14 col 0 IdentifierName "paired" = any[]
-Line 15 col 7 IdentifierName "map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
-Line 15 col 11 ParenthesizedArrowFunctionExpression "(c1) => c1.count" = (c1: any) => any
-Line 15 col 12 IdentifierName "c1" = any
-Line 15 col 19 MemberAccessExpression "c1.count" = any
-Line 15 col 19 IdentifierName "c1" = any
-Line 15 col 22 IdentifierName "count" = any
-Line 16 col 0 InvocationExpression "paired.map(function (c2) { return c2.count; })" = any[]
-Line 16 col 0 MemberAccessExpression "paired.map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
-Line 16 col 0 IdentifierName "paired" = any[]
-Line 16 col 7 IdentifierName "map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
-Line 16 col 11 FunctionExpression "function (c2) { return c2.count; }" = (c2: any) => any
-Line 16 col 21 IdentifierName "c2" = any
-Line 16 col 34 MemberAccessExpression "c2.count" = any
-Line 16 col 34 IdentifierName "c2" = any
-Line 16 col 37 IdentifierName "count" = any
+} : (b1: any, b2: any) => any
+>b1 : any
+>b2 : any
+
+    return b1.concat({});
+>b1.concat({}) : any
+>b1.concat : any
+>b1 : any
+>concat : any
+>{} : {}
+
+} , []);
+>[] : any[]
+
+>paired.reduce((b3, b4) => b3.concat({}), []) : any
+>paired.reduce : { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
+>paired : any[]
+
+paired.reduce((b3, b4) => b3.concat({}), []);
+>reduce : { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
+>(b3, b4) => b3.concat({}) : (b3: any, b4: any) => any
+>b3 : any
+>b4 : any
+>b3.concat({}) : any
+>b3.concat : any
+>b3 : any
+>concat : any
+>{} : {}
+>[] : any[]
+
+>paired.map((c1) => c1.count) : any[]
+>paired.map : <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+>paired : any[]
+
+paired.map((c1) => c1.count);
+>map : <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+>(c1) => c1.count : (c1: any) => any
+>c1 : any
+>c1.count : any
+>c1 : any
+>count : any
+
+paired.map(function (c2) { return c2.count; });
+>paired.map(function (c2) { return c2.count; }) : any[]
+>paired.map : <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+>paired : any[]
+>map : <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+>function (c2) { return c2.count; } : (c2: any) => any
+>c2 : any
+>c2.count : any
+>c2 : any
+>count : any
+

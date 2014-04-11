@@ -1,47 +1,78 @@
 === tests/cases/compiler/deleteOperatorWithEnumType.ts ===
-Line 2 col 5 IdentifierName "ENUM" = ENUM
-Line 3 col 5 IdentifierName "ENUM1" = ENUM1
-Line 6 col 4 IdentifierName "ResultIsBoolean1" = boolean
-Line 6 col 23 DeleteExpression "delete ENUM" = boolean
-Line 6 col 30 IdentifierName "ENUM" = typeof ENUM
-Line 7 col 4 IdentifierName "ResultIsBoolean2" = boolean
-Line 7 col 23 DeleteExpression "delete ENUM1" = boolean
-Line 7 col 30 IdentifierName "ENUM1" = typeof ENUM1
-Line 10 col 4 IdentifierName "ResultIsBoolean3" = boolean
-Line 10 col 23 DeleteExpression "delete ENUM1[0]" = boolean
-Line 10 col 30 ElementAccessExpression "ENUM1[0]" = string
-Line 10 col 30 IdentifierName "ENUM1" = typeof ENUM1
-Line 11 col 4 IdentifierName "ResultIsBoolean4" = boolean
-Line 11 col 23 DeleteExpression "delete (ENUM[0] + ENUM1[1])" = boolean
-Line 11 col 30 ParenthesizedExpression "(ENUM[0] + ENUM1[1])" = string
-Line 11 col 31 AddExpression "ENUM[0] + ENUM1[1]" = string
-Line 11 col 31 ElementAccessExpression "ENUM[0]" = string
-Line 11 col 31 IdentifierName "ENUM" = typeof ENUM
-Line 11 col 41 ElementAccessExpression "ENUM1[1]" = ENUM1
-Line 11 col 41 IdentifierName "ENUM1" = typeof ENUM1
-Line 14 col 4 IdentifierName "ResultIsBoolean5" = boolean
-Line 14 col 23 DeleteExpression "delete delete ENUM" = boolean
-Line 14 col 30 DeleteExpression "delete ENUM" = boolean
-Line 14 col 37 IdentifierName "ENUM" = typeof ENUM
-Line 15 col 4 IdentifierName "ResultIsBoolean6" = boolean
-Line 15 col 23 DeleteExpression "delete delete delete (ENUM[0] + ENUM1[1])" = boolean
-Line 15 col 30 DeleteExpression "delete delete (ENUM[0] + ENUM1[1])" = boolean
-Line 15 col 37 DeleteExpression "delete (ENUM[0] + ENUM1[1])" = boolean
-Line 15 col 44 ParenthesizedExpression "(ENUM[0] + ENUM1[1])" = string
-Line 15 col 45 AddExpression "ENUM[0] + ENUM1[1]" = string
-Line 15 col 45 ElementAccessExpression "ENUM[0]" = string
-Line 15 col 45 IdentifierName "ENUM" = typeof ENUM
-Line 15 col 55 ElementAccessExpression "ENUM1[1]" = ENUM1
-Line 15 col 55 IdentifierName "ENUM1" = typeof ENUM1
-Line 16 col 0 DeleteExpression "// miss assignment operators
-delete ENUM" = boolean
-Line 18 col 7 IdentifierName "ENUM" = typeof ENUM
-Line 19 col 0 DeleteExpression "delete ENUM1" = boolean
-Line 19 col 7 IdentifierName "ENUM1" = typeof ENUM1
-Line 20 col 0 DeleteExpression "delete ENUM1[1]" = boolean
-Line 20 col 7 ElementAccessExpression "ENUM1[1]" = ENUM1
-Line 20 col 7 IdentifierName "ENUM1" = typeof ENUM1
-Line 21 col 0 CommaExpression "delete ENUM, ENUM1" = typeof ENUM1
-Line 21 col 0 DeleteExpression "delete ENUM" = boolean
-Line 21 col 7 IdentifierName "ENUM" = typeof ENUM
-Line 21 col 13 IdentifierName "ENUM1" = typeof ENUM1
+// delete  operator on enum type
+
+enum ENUM { };
+>ENUM : ENUM
+
+enum ENUM1 { 1, 2, "" };
+>ENUM1 : ENUM1
+
+// enum type var
+var ResultIsBoolean1 = delete ENUM;
+>ResultIsBoolean1 : boolean
+>delete ENUM : boolean
+>ENUM : typeof ENUM
+
+var ResultIsBoolean2 = delete ENUM1;
+>ResultIsBoolean2 : boolean
+>delete ENUM1 : boolean
+>ENUM1 : typeof ENUM1
+
+// enum type expressions
+var ResultIsBoolean3 = delete ENUM1[0];
+>ResultIsBoolean3 : boolean
+>delete ENUM1[0] : boolean
+>ENUM1[0] : string
+>ENUM1 : typeof ENUM1
+
+var ResultIsBoolean4 = delete (ENUM[0] + ENUM1[1]);
+>ResultIsBoolean4 : boolean
+>delete (ENUM[0] + ENUM1[1]) : boolean
+>(ENUM[0] + ENUM1[1]) : string
+>ENUM[0] + ENUM1[1] : string
+>ENUM[0] : string
+>ENUM : typeof ENUM
+>ENUM1[1] : ENUM1
+>ENUM1 : typeof ENUM1
+
+// multiple delete  operators
+var ResultIsBoolean5 = delete delete ENUM;
+>ResultIsBoolean5 : boolean
+>delete delete ENUM : boolean
+>delete ENUM : boolean
+>ENUM : typeof ENUM
+
+var ResultIsBoolean6 = delete delete delete (ENUM[0] + ENUM1[1]);
+>ResultIsBoolean6 : boolean
+>delete delete delete (ENUM[0] + ENUM1[1]) : boolean
+>delete delete (ENUM[0] + ENUM1[1]) : boolean
+>delete (ENUM[0] + ENUM1[1]) : boolean
+>(ENUM[0] + ENUM1[1]) : string
+>ENUM[0] + ENUM1[1] : string
+>ENUM[0] : string
+>ENUM : typeof ENUM
+>ENUM1[1] : ENUM1
+>ENUM1 : typeof ENUM1
+
+>// miss assignment operators
+delete ENUM : boolean
+
+// miss assignment operators
+delete ENUM;
+>ENUM : typeof ENUM
+
+delete ENUM1;
+>delete ENUM1 : boolean
+>ENUM1 : typeof ENUM1
+
+delete ENUM1[1];
+>delete ENUM1[1] : boolean
+>ENUM1[1] : ENUM1
+>ENUM1 : typeof ENUM1
+
+delete ENUM, ENUM1;
+>delete ENUM, ENUM1 : typeof ENUM1
+>delete ENUM : boolean
+>ENUM : typeof ENUM
+>ENUM1 : typeof ENUM1
+

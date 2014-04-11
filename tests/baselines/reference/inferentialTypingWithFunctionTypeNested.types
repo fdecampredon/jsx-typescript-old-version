@@ -1,24 +1,30 @@
 === tests/cases/compiler/inferentialTypingWithFunctionTypeNested.ts ===
-Line 0 col 17 IdentifierName "map" = typeof map
-Line 0 col 21 IdentifierName "T" = T
-Line 0 col 24 IdentifierName "U" = U
-Line 0 col 27 IdentifierName "x" = T
-Line 0 col 30 IdentifierName "T" = T
-Line 0 col 33 IdentifierName "f" = () => { x: (s: T) => U; }
-Line 0 col 44 IdentifierName "x" = (s: T) => U
-Line 0 col 48 IdentifierName "s" = T
-Line 0 col 51 IdentifierName "T" = T
-Line 0 col 57 IdentifierName "U" = U
-Line 0 col 63 IdentifierName "U" = U
-Line 1 col 17 IdentifierName "identity" = typeof identity
-Line 1 col 26 IdentifierName "V" = V
-Line 1 col 29 IdentifierName "y" = V
-Line 1 col 32 IdentifierName "V" = V
-Line 1 col 36 IdentifierName "V" = V
-Line 3 col 4 IdentifierName "s" = string
-Line 3 col 8 InvocationExpression "map("", () => { return { x: identity }; })" = string
-Line 3 col 8 IdentifierName "map" = typeof map
-Line 3 col 16 ParenthesizedArrowFunctionExpression "() => { return { x: identity }; }" = () => { x: typeof identity; }
-Line 3 col 31 ObjectLiteralExpression "{ x: identity }" = { x: typeof identity; }
-Line 3 col 33 IdentifierName "x" = typeof identity
-Line 3 col 36 IdentifierName "identity" = typeof identity
+declare function map<T, U>(x: T, f: () => { x: (s: T) => U }): U;
+>map : typeof map
+>T : T
+>U : U
+>x : T
+>T : T
+>f : () => { x: (s: T) => U; }
+>x : (s: T) => U
+>s : T
+>T : T
+>U : U
+>U : U
+
+declare function identity<V>(y: V): V;
+>identity : typeof identity
+>V : V
+>y : V
+>V : V
+>V : V
+
+var s = map("", () => { return { x: identity }; });
+>s : string
+>map("", () => { return { x: identity }; }) : string
+>map : typeof map
+>() => { return { x: identity }; } : () => { x: typeof identity; }
+>{ x: identity } : { x: typeof identity; }
+>x : typeof identity
+>identity : typeof identity
+

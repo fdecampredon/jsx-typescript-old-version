@@ -1,3 +1,11 @@
+//// [genericClassInheritsConstructorFromNonGenericClass.ts]
+class A extends B<string> { }
+class B<U> extends C { }
+class C {
+    constructor(p: string) { }
+}
+
+//// [genericClassInheritsConstructorFromNonGenericClass.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

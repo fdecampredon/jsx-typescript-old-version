@@ -1,3 +1,10 @@
+//// [sourceMapValidationClassWithDefaultConstructorAndCapturedThisStatement.ts]
+class Greeter {
+    public a = 10;
+    public returnA = () => this.a;
+}
+
+//// [sourceMapValidationClassWithDefaultConstructorAndCapturedThisStatement.js]
 var Greeter = (function () {
     function Greeter() {
         var _this = this;

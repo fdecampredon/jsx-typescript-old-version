@@ -1,3 +1,4 @@
+//// [genericSpecializations3.js]
 var iFoo;
 iFoo.foo(1);
 

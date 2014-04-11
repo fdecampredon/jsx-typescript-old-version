@@ -1,3 +1,4 @@
+//// [enumPropertyAccess.js]
 var Colors;
 (function (Colors) {
     Colors[Colors["Red"] = 0] = "Red";

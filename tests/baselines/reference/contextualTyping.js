@@ -1,3 +1,4 @@
+//// [contextualTyping.js]
 
 // CONTEXT: Class property declaration
 var C1T5 = (function () {

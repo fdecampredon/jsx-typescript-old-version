@@ -1,35 +1,48 @@
 === tests/cases/compiler/noCollisionThisExpressionAndLocalVarInLambda.ts ===
-Line 0 col 17 IdentifierName "alert" = typeof alert
-Line 0 col 23 IdentifierName "message" = any
-Line 1 col 4 IdentifierName "x" = { doStuff: (callback: any) => () => any; }
-Line 1 col 8 ObjectLiteralExpression "{
+declare function alert(message?: any): void;
+>alert : typeof alert
+>message : any
+
+var x = {
+>x : { doStuff: (callback: any) => () => any; }
+>{
     doStuff: (callback) => () => {
         var _this = 2;
         return callback(_this);
     }
-}" = { doStuff: (callback: any) => () => any; }
-Line 2 col 0 IdentifierName "doStuff" = (callback: any) => () => any
-Line 2 col 13 ParenthesizedArrowFunctionExpression "(callback) => () => {
+} : { doStuff: (callback: any) => () => any; }
+
+    doStuff: (callback) => () => {
+>doStuff : (callback: any) => () => any
+>(callback) => () => {
         var _this = 2;
         return callback(_this);
-    }" = (callback: any) => () => any
-Line 2 col 14 IdentifierName "callback" = any
-Line 2 col 27 ParenthesizedArrowFunctionExpression "() => {
+    } : (callback: any) => () => any
+>callback : any
+>() => {
         var _this = 2;
         return callback(_this);
-    }" = () => any
-Line 3 col 12 IdentifierName "_this" = number
-Line 4 col 15 InvocationExpression "callback(_this)" = any
-Line 4 col 15 IdentifierName "callback" = any
-Line 4 col 24 IdentifierName "_this" = number
-Line 7 col 0 InvocationExpression "alert(x.doStuff(x => alert(x)))" = void
-Line 7 col 0 IdentifierName "alert" = typeof alert
-Line 7 col 6 InvocationExpression "x.doStuff(x => alert(x))" = () => any
-Line 7 col 6 MemberAccessExpression "x.doStuff" = (callback: any) => () => any
-Line 7 col 6 IdentifierName "x" = { doStuff: (callback: any) => () => any; }
-Line 7 col 8 IdentifierName "doStuff" = (callback: any) => () => any
-Line 7 col 16 SimpleArrowFunctionExpression "x => alert(x)" = (x: any) => void
-Line 7 col 16 IdentifierName "x" = any
-Line 7 col 21 InvocationExpression "alert(x)" = void
-Line 7 col 21 IdentifierName "alert" = typeof alert
-Line 7 col 27 IdentifierName "x" = any
+    } : () => any
+
+        var _this = 2;
+>_this : number
+
+        return callback(_this);
+>callback(_this) : any
+>callback : any
+>_this : number
+    }
+}
+alert(x.doStuff(x => alert(x)));
+>alert(x.doStuff(x => alert(x))) : void
+>alert : typeof alert
+>x.doStuff(x => alert(x)) : () => any
+>x.doStuff : (callback: any) => () => any
+>x : { doStuff: (callback: any) => () => any; }
+>doStuff : (callback: any) => () => any
+>x => alert(x) : (x: any) => void
+>x : any
+>alert(x) : void
+>alert : typeof alert
+>x : any
+

@@ -1,3 +1,4 @@
+//// [noImplicitAnyWithOverloads.js]
 function callb(a) {
 }
 callb(function (a) {

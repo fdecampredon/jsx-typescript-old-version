@@ -1,133 +1,228 @@
 === tests/cases/compiler/voidOperatorWithAnyOtherType.ts ===
-Line 2 col 4 IdentifierName "ANY" = any
-Line 3 col 4 IdentifierName "ANY1" = any
-Line 4 col 4 IdentifierName "ANY2" = any[]
-Line 4 col 18 ArrayLiteralExpression "["", ""]" = any[]
-Line 5 col 4 IdentifierName "obj" = () => {}
-Line 6 col 4 IdentifierName "obj1" = { x: string; y: number; }
-Line 6 col 11 ObjectLiteralExpression "{x:"",y:1}" = { x: string; y: number; }
-Line 6 col 12 IdentifierName "x" = string
-Line 6 col 17 IdentifierName "y" = number
-Line 8 col 9 IdentifierName "foo" = typeof foo
-Line 9 col 8 IdentifierName "a" = any
-Line 10 col 11 IdentifierName "a" = any
-Line 12 col 6 IdentifierName "A" = A
-Line 13 col 11 IdentifierName "a" = any
-Line 14 col 11 IdentifierName "foo" = () => any
-Line 15 col 12 IdentifierName "a" = any
-Line 16 col 15 IdentifierName "a" = any
-Line 19 col 7 IdentifierName "M" = M
-Line 20 col 15 IdentifierName "n" = any
-Line 22 col 4 IdentifierName "objA" = A
-Line 22 col 11 ObjectCreationExpression "new A()" = A
-Line 22 col 15 IdentifierName "A" = typeof A
-Line 25 col 4 IdentifierName "ResultIsAny1" = any
-Line 25 col 19 VoidExpression "void ANY1" = any
-Line 25 col 24 IdentifierName "ANY1" = any
-Line 26 col 4 IdentifierName "ResultIsAny2" = any
-Line 26 col 19 VoidExpression "void ANY2" = any
-Line 26 col 24 IdentifierName "ANY2" = any[]
-Line 27 col 4 IdentifierName "ResultIsAny3" = any
-Line 27 col 19 VoidExpression "void A" = any
-Line 27 col 24 IdentifierName "A" = typeof A
-Line 28 col 4 IdentifierName "ResultIsAny4" = any
-Line 28 col 19 VoidExpression "void M" = any
-Line 28 col 24 IdentifierName "M" = typeof M
-Line 29 col 4 IdentifierName "ResultIsAny5" = any
-Line 29 col 19 VoidExpression "void obj" = any
-Line 29 col 24 IdentifierName "obj" = () => {}
-Line 30 col 4 IdentifierName "ResultIsAny6" = any
-Line 30 col 19 VoidExpression "void obj1" = any
-Line 30 col 24 IdentifierName "obj1" = { x: string; y: number; }
-Line 33 col 4 IdentifierName "ResultIsAny7" = any
-Line 33 col 19 VoidExpression "void undefined" = any
-Line 33 col 24 IdentifierName "undefined" = any
-Line 34 col 4 IdentifierName "ResultIsAny8" = any
-Line 34 col 19 VoidExpression "void null" = any
-Line 37 col 4 IdentifierName "ResultIsAny9" = any
-Line 37 col 19 VoidExpression "void ANY2[0]" = any
-Line 37 col 24 ElementAccessExpression "ANY2[0]" = any
-Line 37 col 24 IdentifierName "ANY2" = any[]
-Line 38 col 4 IdentifierName "ResultIsAny10" = any
-Line 38 col 20 VoidExpression "void obj1.x" = any
-Line 38 col 25 MemberAccessExpression "obj1.x" = string
-Line 38 col 25 IdentifierName "obj1" = { x: string; y: number; }
-Line 38 col 30 IdentifierName "x" = string
-Line 39 col 4 IdentifierName "ResultIsAny11" = any
-Line 39 col 20 VoidExpression "void obj1.y" = any
-Line 39 col 25 MemberAccessExpression "obj1.y" = number
-Line 39 col 25 IdentifierName "obj1" = { x: string; y: number; }
-Line 39 col 30 IdentifierName "y" = number
-Line 40 col 4 IdentifierName "ResultIsAny12" = any
-Line 40 col 20 VoidExpression "void objA.a" = any
-Line 40 col 25 MemberAccessExpression "objA.a" = any
-Line 40 col 25 IdentifierName "objA" = A
-Line 40 col 30 IdentifierName "a" = any
-Line 41 col 4 IdentifierName "ResultIsAny13" = any
-Line 41 col 20 VoidExpression "void M.n" = any
-Line 41 col 25 MemberAccessExpression "M.n" = any
-Line 41 col 25 IdentifierName "M" = typeof M
-Line 41 col 27 IdentifierName "n" = any
-Line 42 col 4 IdentifierName "ResultIsAny14" = any
-Line 42 col 20 VoidExpression "void foo()" = any
-Line 42 col 25 InvocationExpression "foo()" = any
-Line 42 col 25 IdentifierName "foo" = typeof foo
-Line 43 col 4 IdentifierName "ResultIsAny15" = any
-Line 43 col 20 VoidExpression "void A.foo()" = any
-Line 43 col 25 InvocationExpression "A.foo()" = any
-Line 43 col 25 MemberAccessExpression "A.foo" = () => any
-Line 43 col 25 IdentifierName "A" = typeof A
-Line 43 col 27 IdentifierName "foo" = () => any
-Line 44 col 4 IdentifierName "ResultIsAny16" = any
-Line 44 col 20 VoidExpression "void (ANY + ANY1)" = any
-Line 44 col 25 ParenthesizedExpression "(ANY + ANY1)" = any
-Line 44 col 26 AddExpression "ANY + ANY1" = any
-Line 44 col 26 IdentifierName "ANY" = any
-Line 44 col 32 IdentifierName "ANY1" = any
-Line 45 col 4 IdentifierName "ResultIsAny17" = any
-Line 45 col 20 VoidExpression "void (null + undefined)" = any
-Line 45 col 25 ParenthesizedExpression "(null + undefined)" = any
-Line 45 col 26 AddExpression "null + undefined" = any
-Line 45 col 33 IdentifierName "undefined" = any
-Line 46 col 4 IdentifierName "ResultIsAny18" = any
-Line 46 col 20 VoidExpression "void (null + null)" = any
-Line 46 col 25 ParenthesizedExpression "(null + null)" = any
-Line 46 col 26 AddExpression "null + null" = any
-Line 47 col 4 IdentifierName "ResultIsAny19" = any
-Line 47 col 20 VoidExpression "void (undefined + undefined)" = any
-Line 47 col 25 ParenthesizedExpression "(undefined + undefined)" = any
-Line 47 col 26 AddExpression "undefined + undefined" = any
-Line 47 col 26 IdentifierName "undefined" = any
-Line 47 col 38 IdentifierName "undefined" = any
-Line 50 col 4 IdentifierName "ResultIsAny20" = any
-Line 50 col 20 VoidExpression "void void ANY" = any
-Line 50 col 25 VoidExpression "void ANY" = any
-Line 50 col 30 IdentifierName "ANY" = any
-Line 51 col 4 IdentifierName "ResultIsAny21" = any
-Line 51 col 20 VoidExpression "void void void (ANY + ANY1)" = any
-Line 51 col 25 VoidExpression "void void (ANY + ANY1)" = any
-Line 51 col 30 VoidExpression "void (ANY + ANY1)" = any
-Line 51 col 35 ParenthesizedExpression "(ANY + ANY1)" = any
-Line 51 col 36 AddExpression "ANY + ANY1" = any
-Line 51 col 36 IdentifierName "ANY" = any
-Line 51 col 42 IdentifierName "ANY1" = any
-Line 52 col 0 VoidExpression "// miss assignment operators
-void ANY" = any
-Line 54 col 5 IdentifierName "ANY" = any
-Line 55 col 0 VoidExpression "void ANY1" = any
-Line 55 col 5 IdentifierName "ANY1" = any
-Line 56 col 0 VoidExpression "void ANY2[0]" = any
-Line 56 col 5 ElementAccessExpression "ANY2[0]" = any
-Line 56 col 5 IdentifierName "ANY2" = any[]
-Line 57 col 0 CommaExpression "void ANY, ANY1" = any
-Line 57 col 0 VoidExpression "void ANY" = any
-Line 57 col 5 IdentifierName "ANY" = any
-Line 57 col 10 IdentifierName "ANY1" = any
-Line 58 col 0 VoidExpression "void objA.a" = any
-Line 58 col 5 MemberAccessExpression "objA.a" = any
-Line 58 col 5 IdentifierName "objA" = A
-Line 58 col 10 IdentifierName "a" = any
-Line 59 col 0 VoidExpression "void M.n" = any
-Line 59 col 5 MemberAccessExpression "M.n" = any
-Line 59 col 5 IdentifierName "M" = typeof M
-Line 59 col 7 IdentifierName "n" = any
+// void  operator on any type
+
+var ANY: any;
+>ANY : any
+
+var ANY1;
+>ANY1 : any
+
+var ANY2: any[] = ["", ""];
+>ANY2 : any[]
+>["", ""] : any[]
+
+var obj: () => {}
+>obj : () => {}
+
+var obj1 = {x:"",y:1};
+>obj1 : { x: string; y: number; }
+>{x:"",y:1} : { x: string; y: number; }
+>x : string
+>y : number
+
+function foo(): any {
+>foo : typeof foo
+
+    var a;
+>a : any
+
+    return a;
+>a : any
+}
+class A {
+>A : A
+
+    public a: any;
+>a : any
+
+    static foo() {
+>foo : () => any
+
+        var a;
+>a : any
+
+        return a;
+>a : any
+    }
+}
+module M {
+>M : M
+
+    export var n: any;
+>n : any
+}
+var objA = new A();
+>objA : A
+>new A() : A
+>A : typeof A
+
+// any type var
+var ResultIsAny1 = void ANY1;
+>ResultIsAny1 : any
+>void ANY1 : any
+>ANY1 : any
+
+var ResultIsAny2 = void ANY2;
+>ResultIsAny2 : any
+>void ANY2 : any
+>ANY2 : any[]
+
+var ResultIsAny3 = void A;
+>ResultIsAny3 : any
+>void A : any
+>A : typeof A
+
+var ResultIsAny4 = void M;
+>ResultIsAny4 : any
+>void M : any
+>M : typeof M
+
+var ResultIsAny5 = void obj;
+>ResultIsAny5 : any
+>void obj : any
+>obj : () => {}
+
+var ResultIsAny6 = void obj1;
+>ResultIsAny6 : any
+>void obj1 : any
+>obj1 : { x: string; y: number; }
+
+// any type literal
+var ResultIsAny7 = void undefined;
+>ResultIsAny7 : any
+>void undefined : any
+>undefined : any
+
+var ResultIsAny8 = void null;
+>ResultIsAny8 : any
+>void null : any
+
+// any type expressions
+var ResultIsAny9 = void ANY2[0]
+>ResultIsAny9 : any
+>void ANY2[0] : any
+>ANY2[0] : any
+>ANY2 : any[]
+
+var ResultIsAny10 = void obj1.x;
+>ResultIsAny10 : any
+>void obj1.x : any
+>obj1.x : string
+>obj1 : { x: string; y: number; }
+>x : string
+
+var ResultIsAny11 = void obj1.y;
+>ResultIsAny11 : any
+>void obj1.y : any
+>obj1.y : number
+>obj1 : { x: string; y: number; }
+>y : number
+
+var ResultIsAny12 = void objA.a;
+>ResultIsAny12 : any
+>void objA.a : any
+>objA.a : any
+>objA : A
+>a : any
+
+var ResultIsAny13 = void M.n;
+>ResultIsAny13 : any
+>void M.n : any
+>M.n : any
+>M : typeof M
+>n : any
+
+var ResultIsAny14 = void foo();
+>ResultIsAny14 : any
+>void foo() : any
+>foo() : any
+>foo : typeof foo
+
+var ResultIsAny15 = void A.foo();
+>ResultIsAny15 : any
+>void A.foo() : any
+>A.foo() : any
+>A.foo : () => any
+>A : typeof A
+>foo : () => any
+
+var ResultIsAny16 = void (ANY + ANY1);
+>ResultIsAny16 : any
+>void (ANY + ANY1) : any
+>(ANY + ANY1) : any
+>ANY + ANY1 : any
+>ANY : any
+>ANY1 : any
+
+var ResultIsAny17 = void (null + undefined);
+>ResultIsAny17 : any
+>void (null + undefined) : any
+>(null + undefined) : any
+>null + undefined : any
+>undefined : any
+
+var ResultIsAny18 = void (null + null);
+>ResultIsAny18 : any
+>void (null + null) : any
+>(null + null) : any
+>null + null : any
+
+var ResultIsAny19 = void (undefined + undefined);
+>ResultIsAny19 : any
+>void (undefined + undefined) : any
+>(undefined + undefined) : any
+>undefined + undefined : any
+>undefined : any
+>undefined : any
+
+// multiple void  operators
+var ResultIsAny20 = void void ANY;
+>ResultIsAny20 : any
+>void void ANY : any
+>void ANY : any
+>ANY : any
+
+var ResultIsAny21 = void void void (ANY + ANY1);
+>ResultIsAny21 : any
+>void void void (ANY + ANY1) : any
+>void void (ANY + ANY1) : any
+>void (ANY + ANY1) : any
+>(ANY + ANY1) : any
+>ANY + ANY1 : any
+>ANY : any
+>ANY1 : any
+
+>// miss assignment operators
+void ANY : any
+
+// miss assignment operators
+void ANY;
+>ANY : any
+
+void ANY1;
+>void ANY1 : any
+>ANY1 : any
+
+void ANY2[0];
+>void ANY2[0] : any
+>ANY2[0] : any
+>ANY2 : any[]
+
+void ANY, ANY1;
+>void ANY, ANY1 : any
+>void ANY : any
+>ANY : any
+>ANY1 : any
+
+void objA.a;
+>void objA.a : any
+>objA.a : any
+>objA : A
+>a : any
+
+void M.n;
+>void M.n : any
+>M.n : any
+>M : typeof M
+>n : any
+

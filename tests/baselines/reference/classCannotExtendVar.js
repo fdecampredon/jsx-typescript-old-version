@@ -1,3 +1,4 @@
+//// [classCannotExtendVar.js]
 var Markup;
 
 var Markup = (function () {

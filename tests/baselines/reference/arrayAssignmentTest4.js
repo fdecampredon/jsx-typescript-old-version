@@ -1,3 +1,4 @@
+//// [arrayAssignmentTest4.js]
 var C3 = (function () {
     function C3() {
     }

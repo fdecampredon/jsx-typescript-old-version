@@ -1,11 +1,31 @@
 === tests/cases/compiler/interMixingModulesInterfaces3.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 2 col 11 IdentifierName "B" = B
-Line 3 col 24 IdentifierName "createB" = typeof createB
-Line 3 col 35 IdentifierName "B" = B
-Line 8 col 21 IdentifierName "B" = B
-Line 9 col 0 IdentifierName "name" = string
-Line 10 col 0 IdentifierName "value" = number
-Line 14 col 4 IdentifierName "x" = A.B
-Line 14 col 7 IdentifierName "A" = A
-Line 14 col 9 IdentifierName "B" = A.B
+module A {
+>A : A
+
+    module B {
+>B : B
+
+        export function createB(): B {
+>createB : typeof createB
+>B : B
+
+            return null;
+        }
+    }
+
+    export interface B {
+>B : B
+
+        name: string;
+>name : string
+
+        value: number;
+>value : number
+    }
+}
+
+var x: A.B = null;
+>x : A.B
+>A : A
+>B : A.B
+

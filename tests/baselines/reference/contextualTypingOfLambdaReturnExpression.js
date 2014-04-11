@@ -1,3 +1,4 @@
+//// [contextualTypingOfLambdaReturnExpression.js]
 function callb(a) {
 }
 

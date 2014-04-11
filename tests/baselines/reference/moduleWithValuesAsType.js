@@ -1,3 +1,4 @@
+//// [moduleWithValuesAsType.js]
 var A;
 (function (A) {
     var b = 1;

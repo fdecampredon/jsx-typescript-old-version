@@ -1,8 +1,11 @@
 === tests/cases/compiler/assignmentCompatBug3.ts ===
-Line 0 col 9 IdentifierName "makePoint" = typeof makePoint
-Line 0 col 19 IdentifierName "x" = number
-Line 0 col 30 IdentifierName "y" = number
-Line 1 col 11 ObjectLiteralExpression "{
+function makePoint(x: number, y: number) {
+>makePoint : typeof makePoint
+>x : number
+>y : number
+
+    return {
+>{
         get x() { return x;}, // shouldn't be "void"
         get y() { return y;}, // shouldn't be "void"
         //x: "yo",
@@ -10,39 +13,73 @@ Line 1 col 11 ObjectLiteralExpression "{
         dist: function () {
 			return Math.sqrt(x*x+y*y); // shouldn't be picking up "x" and "y" from the object lit
 		}
-	}" = { x: number; y: number; dist: () => number; }
-Line 2 col 12 IdentifierName "x" = number
-Line 2 col 25 IdentifierName "x" = number
-Line 3 col 12 IdentifierName "y" = number
-Line 3 col 25 IdentifierName "y" = number
-Line 4 col 0 IdentifierName "//x: "yo",
+	} : { x: number; y: number; dist: () => number; }
+
+        get x() { return x;}, // shouldn't be "void"
+>x : number
+>x : number
+
+        get y() { return y;}, // shouldn't be "void"
+>y : number
+>y : number
+
+        //x: "yo",
+>//x: "yo",
         //y: "boo",
-        dist" = () => number
-Line 6 col 14 FunctionExpression "function () {
+        dist : () => number
+
+        //y: "boo",
+        dist: function () {
+>function () {
 			return Math.sqrt(x*x+y*y); // shouldn't be picking up "x" and "y" from the object lit
-		}" = () => number
-Line 7 col 10 InvocationExpression "Math.sqrt(x*x+y*y)" = number
-Line 7 col 10 MemberAccessExpression "Math.sqrt" = (x: number) => number
-Line 7 col 10 IdentifierName "Math" = Math
-Line 7 col 15 IdentifierName "sqrt" = (x: number) => number
-Line 7 col 20 AddExpression "x*x+y*y" = number
-Line 7 col 20 MultiplyExpression "x*x" = number
-Line 7 col 20 IdentifierName "x" = number
-Line 7 col 22 IdentifierName "x" = number
-Line 7 col 24 MultiplyExpression "y*y" = number
-Line 7 col 24 IdentifierName "y" = number
-Line 7 col 26 IdentifierName "y" = number
-Line 12 col 6 IdentifierName "C" = C
-Line 13 col 8 IdentifierName "x" = number
-Line 18 col 9 IdentifierName "foo" = typeof foo
-Line 18 col 13 IdentifierName "test" = string
-Line 20 col 4 IdentifierName "x" = any
-Line 21 col 4 IdentifierName "y" = any
-Line 22 col 0 InvocationExpression "foo(x)" = void
-Line 22 col 0 IdentifierName "foo" = typeof foo
-Line 23 col 4 IdentifierName "x" = any
-Line 24 col 0 InvocationExpression "foo(x + y)" = void
-Line 24 col 0 IdentifierName "foo" = typeof foo
-Line 24 col 4 AddExpression "x + y" = any
-Line 24 col 4 IdentifierName "x" = any
-Line 24 col 8 IdentifierName "y" = any
+		} : () => number
+
+			return Math.sqrt(x*x+y*y); // shouldn't be picking up "x" and "y" from the object lit
+>Math.sqrt(x*x+y*y) : number
+>Math.sqrt : (x: number) => number
+>Math : Math
+>sqrt : (x: number) => number
+>x*x+y*y : number
+>x*x : number
+>x : number
+>x : number
+>y*y : number
+>y : number
+>y : number
+		}
+	}
+}
+
+class C {
+>C : C
+
+    get x() {
+>x : number
+
+        return 0;
+    }
+}
+
+function foo(test: string) { }
+>foo : typeof foo
+>test : string
+
+var x: any;
+>x : any
+
+var y: any;
+>y : any
+
+>foo(x) : void
+>foo : typeof foo
+
+foo(x);
+>x : any
+
+foo(x + y);
+>foo(x + y) : void
+>foo : typeof foo
+>x + y : any
+>x : any
+>y : any
+

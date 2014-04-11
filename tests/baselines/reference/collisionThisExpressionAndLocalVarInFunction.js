@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndLocalVarInFunction.js]
 var console;
 function x() {
     var _this = this;

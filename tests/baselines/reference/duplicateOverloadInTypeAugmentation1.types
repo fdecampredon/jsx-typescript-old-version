@@ -1,43 +1,57 @@
 === tests/cases/compiler/duplicateOverloadInTypeAugmentation1.ts ===
-Line 0 col 10 IdentifierName "Array" = Array<T>
-Line 0 col 16 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "reduce" = { (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; }
-Line 1 col 11 IdentifierName "callbackfn" = (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T
-Line 1 col 24 IdentifierName "previousValue" = T
-Line 1 col 39 IdentifierName "T" = T
-Line 1 col 42 IdentifierName "currentValue" = T
-Line 1 col 56 IdentifierName "T" = T
-Line 1 col 59 IdentifierName "currentIndex" = number
-Line 1 col 81 IdentifierName "array" = T[]
-Line 1 col 88 IdentifierName "T" = T
-Line 1 col 96 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "initialValue" = T
-Line 2 col 23 IdentifierName "T" = T
-Line 2 col 27 IdentifierName "T" = T
-Line 3 col 0 IdentifierName "reduce" = { (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; }
-Line 3 col 11 IdentifierName "U" = U
-Line 3 col 14 IdentifierName "callbackfn" = (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U
-Line 3 col 27 IdentifierName "previousValue" = U
-Line 3 col 42 IdentifierName "U" = U
-Line 3 col 45 IdentifierName "currentValue" = T
-Line 3 col 59 IdentifierName "T" = T
-Line 3 col 62 IdentifierName "currentIndex" = number
-Line 3 col 84 IdentifierName "array" = T[]
-Line 3 col 91 IdentifierName "T" = T
-Line 3 col 99 IdentifierName "U" = U
-Line 4 col 0 IdentifierName "initialValue" = U
-Line 4 col 22 IdentifierName "U" = U
-Line 4 col 26 IdentifierName "U" = U
-Line 6 col 4 IdentifierName "a" = string[]
-Line 6 col 7 IdentifierName "Array" = Array<T>
-Line 7 col 4 IdentifierName "r5" = string
-Line 7 col 9 InvocationExpression "a.reduce((x, y) => x + y)" = string
-Line 7 col 9 MemberAccessExpression "a.reduce" = { (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue?: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U; (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue?: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U; }
-Line 7 col 9 IdentifierName "a" = string[]
-Line 7 col 11 IdentifierName "reduce" = { (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue?: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U; (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue?: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U; }
-Line 7 col 18 ParenthesizedArrowFunctionExpression "(x, y) => x + y" = (x: string, y: string) => string
-Line 7 col 19 IdentifierName "x" = string
-Line 7 col 22 IdentifierName "y" = string
-Line 7 col 28 AddExpression "x + y" = string
-Line 7 col 28 IdentifierName "x" = string
-Line 7 col 32 IdentifierName "y" = string
+interface Array<T> {
+>Array : Array<T>
+>T : T
+
+    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
+>reduce : { (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; }
+>callbackfn : (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T
+>previousValue : T
+>T : T
+>currentValue : T
+>T : T
+>currentIndex : number
+>array : T[]
+>T : T
+>T : T
+
+        initialValue?: T): T;
+>initialValue : T
+>T : T
+>T : T
+
+    reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U,
+>reduce : { (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; }
+>U : U
+>callbackfn : (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U
+>previousValue : U
+>U : U
+>currentValue : T
+>T : T
+>currentIndex : number
+>array : T[]
+>T : T
+>U : U
+
+        initialValue: U): U;
+>initialValue : U
+>U : U
+>U : U
+}
+var a: Array<string>;
+>a : string[]
+>Array : Array<T>
+
+var r5 = a.reduce((x, y) => x + y);
+>r5 : string
+>a.reduce((x, y) => x + y) : string
+>a.reduce : { (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue?: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U; (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue?: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U; }
+>a : string[]
+>reduce : { (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue?: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U; (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue?: string): string; <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U; }
+>(x, y) => x + y : (x: string, y: string) => string
+>x : string
+>y : string
+>x + y : string
+>x : string
+>y : string
+

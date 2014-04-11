@@ -1,3 +1,4 @@
+//// [genericCloneReturnTypes2.js]
 var MyList = (function () {
     function MyList(n) {
         this.size = n;

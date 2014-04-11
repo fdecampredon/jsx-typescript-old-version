@@ -1,81 +1,153 @@
 === tests/cases/compiler/moduleWithStatementsOfEveryKind.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 1 col 10 IdentifierName "A" = A
-Line 1 col 14 IdentifierName "s" = string
-Line 2 col 10 IdentifierName "AA" = AA<T>
-Line 2 col 13 IdentifierName "T" = T
-Line 2 col 18 IdentifierName "s" = T
-Line 2 col 21 IdentifierName "T" = T
-Line 3 col 14 IdentifierName "I" = I
-Line 3 col 18 IdentifierName "id" = number
-Line 5 col 10 IdentifierName "B" = B
-Line 5 col 20 IdentifierName "AA" = AA<T>
-Line 5 col 42 IdentifierName "I" = I
-Line 5 col 46 IdentifierName "id" = number
-Line 6 col 10 IdentifierName "BB" = BB<T>
-Line 6 col 13 IdentifierName "T" = T
-Line 6 col 24 IdentifierName "A" = A
-Line 7 col 0 IdentifierName "id" = number
-Line 10 col 11 IdentifierName "Module" = Module
-Line 11 col 14 IdentifierName "A" = A
-Line 11 col 18 IdentifierName "s" = string
-Line 13 col 9 IdentifierName "Color" = Color
-Line 13 col 17 IdentifierName "Blue" = Color
-Line 13 col 23 IdentifierName "Red" = Color
-Line 14 col 8 IdentifierName "x" = number
-Line 15 col 13 IdentifierName "F" = typeof F
-Line 15 col 15 IdentifierName "s" = string
-Line 18 col 8 IdentifierName "array" = I[]
-Line 18 col 15 IdentifierName "I" = I
-Line 19 col 8 IdentifierName "fn" = (s: string) => string
-Line 19 col 13 ParenthesizedArrowFunctionExpression "(s: string) => {
+module A {
+>A : A
+
+    class A { s: string }
+>A : A
+>s : string
+
+    class AA<T> { s: T }
+>AA : AA<T>
+>T : T
+>s : T
+>T : T
+
+    interface I { id: number }
+>I : I
+>id : number
+
+    class B extends AA<string> implements I { id: number }
+>B : B
+>AA : AA<T>
+>I : I
+>id : number
+
+    class BB<T> extends A {
+>BB : BB<T>
+>T : T
+>A : A
+
+        id: number;
+>id : number
+    }
+
+    module Module {
+>Module : Module
+
+        class A { s: string }
+>A : A
+>s : string
+    }
+    enum Color { Blue, Red }
+>Color : Color
+>Blue : Color
+>Red : Color
+
+    var x = 12;
+>x : number
+
+    function F(s: string): number {
+>F : typeof F
+>s : string
+
+        return 2;
+    }
+    var array: I[] = null;
+>array : I[]
+>I : I
+
+    var fn = (s: string) => {
+>fn : (s: string) => string
+>(s: string) => {
         return 'hello ' + s;
-    }" = (s: string) => string
-Line 19 col 14 IdentifierName "s" = string
-Line 20 col 15 AddExpression "'hello ' + s" = string
-Line 20 col 26 IdentifierName "s" = string
-Line 22 col 8 IdentifierName "ol" = { s: string; id: number; isvalid: boolean; }
-Line 22 col 13 ObjectLiteralExpression "{ s: 'hello', id: 2, isvalid: true }" = { s: string; id: number; isvalid: boolean; }
-Line 22 col 15 IdentifierName "s" = string
-Line 22 col 27 IdentifierName "id" = number
-Line 22 col 34 IdentifierName "isvalid" = boolean
-Line 25 col 7 IdentifierName "Y" = Y
-Line 26 col 17 IdentifierName "A" = A
-Line 26 col 21 IdentifierName "s" = string
-Line 27 col 17 IdentifierName "AA" = AA<T>
-Line 27 col 20 IdentifierName "T" = T
-Line 27 col 25 IdentifierName "s" = T
-Line 27 col 28 IdentifierName "T" = T
-Line 28 col 21 IdentifierName "I" = I
-Line 28 col 25 IdentifierName "id" = number
-Line 30 col 17 IdentifierName "B" = B
-Line 30 col 27 IdentifierName "AA" = AA<T>
-Line 30 col 49 IdentifierName "I" = I
-Line 30 col 53 IdentifierName "id" = number
-Line 31 col 17 IdentifierName "BB" = BB<T>
-Line 31 col 20 IdentifierName "T" = T
-Line 31 col 31 IdentifierName "A" = A
-Line 32 col 0 IdentifierName "id" = number
-Line 35 col 18 IdentifierName "Module" = Module
-Line 36 col 14 IdentifierName "A" = A
-Line 36 col 18 IdentifierName "s" = string
-Line 38 col 16 IdentifierName "Color" = Color
-Line 38 col 24 IdentifierName "Blue" = Color
-Line 38 col 30 IdentifierName "Red" = Color
-Line 39 col 15 IdentifierName "x" = number
-Line 40 col 20 IdentifierName "F" = typeof F
-Line 40 col 22 IdentifierName "s" = string
-Line 43 col 15 IdentifierName "array" = I[]
-Line 43 col 22 IdentifierName "I" = I
-Line 44 col 15 IdentifierName "fn" = (s: string) => string
-Line 44 col 20 ParenthesizedArrowFunctionExpression "(s: string) => {
+    } : (s: string) => string
+>s : string
+
         return 'hello ' + s;
-    }" = (s: string) => string
-Line 44 col 21 IdentifierName "s" = string
-Line 45 col 15 AddExpression "'hello ' + s" = string
-Line 45 col 26 IdentifierName "s" = string
-Line 47 col 15 IdentifierName "ol" = { s: string; id: number; isvalid: boolean; }
-Line 47 col 20 ObjectLiteralExpression "{ s: 'hello', id: 2, isvalid: true }" = { s: string; id: number; isvalid: boolean; }
-Line 47 col 22 IdentifierName "s" = string
-Line 47 col 34 IdentifierName "id" = number
-Line 47 col 41 IdentifierName "isvalid" = boolean
+>'hello ' + s : string
+>s : string
+    }
+    var ol = { s: 'hello', id: 2, isvalid: true };
+>ol : { s: string; id: number; isvalid: boolean; }
+>{ s: 'hello', id: 2, isvalid: true } : { s: string; id: number; isvalid: boolean; }
+>s : string
+>id : number
+>isvalid : boolean
+}
+
+module Y {
+>Y : Y
+
+    export class A { s: string }
+>A : A
+>s : string
+
+    export class AA<T> { s: T }
+>AA : AA<T>
+>T : T
+>s : T
+>T : T
+
+    export interface I { id: number }
+>I : I
+>id : number
+
+    export class B extends AA<string> implements I { id: number }
+>B : B
+>AA : AA<T>
+>I : I
+>id : number
+
+    export class BB<T> extends A {
+>BB : BB<T>
+>T : T
+>A : A
+
+        id: number;
+>id : number
+    }
+
+    export module Module {
+>Module : Module
+
+        class A { s: string }
+>A : A
+>s : string
+    }
+    export enum Color { Blue, Red }
+>Color : Color
+>Blue : Color
+>Red : Color
+
+    export var x = 12;
+>x : number
+
+    export function F(s: string): number {
+>F : typeof F
+>s : string
+
+        return 2;
+    }
+    export var array: I[] = null;
+>array : I[]
+>I : I
+
+    export var fn = (s: string) => {
+>fn : (s: string) => string
+>(s: string) => {
+        return 'hello ' + s;
+    } : (s: string) => string
+>s : string
+
+        return 'hello ' + s;
+>'hello ' + s : string
+>s : string
+    }
+    export var ol = { s: 'hello', id: 2, isvalid: true };
+>ol : { s: string; id: number; isvalid: boolean; }
+>{ s: 'hello', id: 2, isvalid: true } : { s: string; id: number; isvalid: boolean; }
+>s : string
+>id : number
+>isvalid : boolean
+}
+

@@ -1,3 +1,4 @@
+//// [restArgAssignmentCompat.js]
 function f() {
     var x = [];
     for (var _i = 0; _i < (arguments.length - 0); _i++) {

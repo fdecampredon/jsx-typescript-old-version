@@ -1,3 +1,4 @@
+//// [recursiveFunctionTypes.js]
 function fn() {
     return 1;
 }

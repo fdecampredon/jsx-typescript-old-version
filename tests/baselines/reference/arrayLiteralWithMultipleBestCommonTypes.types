@@ -1,57 +1,79 @@
 === tests/cases/compiler/arrayLiteralWithMultipleBestCommonTypes.ts ===
-Line 2 col 4 IdentifierName "a" = { x: number; y?: number; }
-Line 2 col 9 IdentifierName "x" = number
-Line 2 col 20 IdentifierName "y" = number
-Line 3 col 4 IdentifierName "b" = { x: number; z?: number; }
-Line 3 col 9 IdentifierName "x" = number
-Line 3 col 20 IdentifierName "z" = number
-Line 4 col 4 IdentifierName "c" = { x: number; a?: number; }
-Line 4 col 9 IdentifierName "x" = number
-Line 4 col 20 IdentifierName "a" = number
-Line 6 col 4 IdentifierName "as" = { x: number; y?: number; }[]
-Line 6 col 9 ArrayLiteralExpression "[a, b]" = { x: number; y?: number; }[]
-Line 6 col 10 IdentifierName "a" = { x: number; y?: number; }
-Line 6 col 13 IdentifierName "b" = { x: number; z?: number; }
-Line 7 col 4 IdentifierName "bs" = { x: number; z?: number; }[]
-Line 7 col 9 ArrayLiteralExpression "[b, a]" = { x: number; z?: number; }[]
-Line 7 col 10 IdentifierName "b" = { x: number; z?: number; }
-Line 7 col 13 IdentifierName "a" = { x: number; y?: number; }
-Line 8 col 4 IdentifierName "cs" = { x: number; y?: number; }[]
-Line 8 col 9 ArrayLiteralExpression "[a, b, c]" = { x: number; y?: number; }[]
-Line 8 col 10 IdentifierName "a" = { x: number; y?: number; }
-Line 8 col 13 IdentifierName "b" = { x: number; z?: number; }
-Line 8 col 16 IdentifierName "c" = { x: number; a?: number; }
-Line 10 col 4 IdentifierName "ds" = { (x: Object): number; }[]
-Line 10 col 9 ArrayLiteralExpression "[(x: Object) => 1, (x: string) => 2]" = { (x: Object): number; }[]
-Line 10 col 10 ParenthesizedArrowFunctionExpression "(x: Object) => 1" = (x: Object) => number
-Line 10 col 11 IdentifierName "x" = Object
-Line 10 col 14 IdentifierName "Object" = Object
-Line 10 col 28 ParenthesizedArrowFunctionExpression "(x: string) => 2" = (x: string) => number
-Line 10 col 29 IdentifierName "x" = string
-Line 11 col 4 IdentifierName "es" = { (x: string): number; }[]
-Line 11 col 9 ArrayLiteralExpression "[(x: string) => 2, (x: Object) => 1]" = { (x: string): number; }[]
-Line 11 col 10 ParenthesizedArrowFunctionExpression "(x: string) => 2" = (x: string) => number
-Line 11 col 11 IdentifierName "x" = string
-Line 11 col 28 ParenthesizedArrowFunctionExpression "(x: Object) => 1" = (x: Object) => number
-Line 11 col 29 IdentifierName "x" = Object
-Line 11 col 32 IdentifierName "Object" = Object
-Line 12 col 4 IdentifierName "fs" = { (a: { x: number; y?: number; }): number; }[]
-Line 12 col 9 ArrayLiteralExpression "[(a: { x: number; y?: number }) => 1, (b: { x: number; z?: number }) => 2]" = { (a: { x: number; y?: number; }): number; }[]
-Line 12 col 10 ParenthesizedArrowFunctionExpression "(a: { x: number; y?: number }) => 1" = (a: { x: number; y?: number; }) => number
-Line 12 col 11 IdentifierName "a" = { x: number; y?: number; }
-Line 12 col 16 IdentifierName "x" = number
-Line 12 col 27 IdentifierName "y" = number
-Line 12 col 47 ParenthesizedArrowFunctionExpression "(b: { x: number; z?: number }) => 2" = (b: { x: number; z?: number; }) => number
-Line 12 col 48 IdentifierName "b" = { x: number; z?: number; }
-Line 12 col 53 IdentifierName "x" = number
-Line 12 col 64 IdentifierName "z" = number
-Line 13 col 4 IdentifierName "gs" = { (b: { x: number; z?: number; }): number; }[]
-Line 13 col 9 ArrayLiteralExpression "[(b: { x: number; z?: number }) => 2, (a: { x: number; y?: number }) => 1]" = { (b: { x: number; z?: number; }): number; }[]
-Line 13 col 10 ParenthesizedArrowFunctionExpression "(b: { x: number; z?: number }) => 2" = (b: { x: number; z?: number; }) => number
-Line 13 col 11 IdentifierName "b" = { x: number; z?: number; }
-Line 13 col 16 IdentifierName "x" = number
-Line 13 col 27 IdentifierName "z" = number
-Line 13 col 47 ParenthesizedArrowFunctionExpression "(a: { x: number; y?: number }) => 1" = (a: { x: number; y?: number; }) => number
-Line 13 col 48 IdentifierName "a" = { x: number; y?: number; }
-Line 13 col 53 IdentifierName "x" = number
-Line 13 col 64 IdentifierName "y" = number
+// when multiple best common types exist we will choose the first candidate
+
+var a: { x: number; y?: number };
+>a : { x: number; y?: number; }
+>x : number
+>y : number
+
+var b: { x: number; z?: number };
+>b : { x: number; z?: number; }
+>x : number
+>z : number
+
+var c: { x: number; a?: number };
+>c : { x: number; a?: number; }
+>x : number
+>a : number
+
+var as = [a, b]; // { x: number; y?: number };[]
+>as : { x: number; y?: number; }[]
+>[a, b] : { x: number; y?: number; }[]
+>a : { x: number; y?: number; }
+>b : { x: number; z?: number; }
+
+var bs = [b, a]; // { x: number; z?: number };[]
+>bs : { x: number; z?: number; }[]
+>[b, a] : { x: number; z?: number; }[]
+>b : { x: number; z?: number; }
+>a : { x: number; y?: number; }
+
+var cs = [a, b, c]; // { x: number; y?: number };[]
+>cs : { x: number; y?: number; }[]
+>[a, b, c] : { x: number; y?: number; }[]
+>a : { x: number; y?: number; }
+>b : { x: number; z?: number; }
+>c : { x: number; a?: number; }
+
+var ds = [(x: Object) => 1, (x: string) => 2]; // { (x:Object) => number }[]
+>ds : { (x: Object): number; }[]
+>[(x: Object) => 1, (x: string) => 2] : { (x: Object): number; }[]
+>(x: Object) => 1 : (x: Object) => number
+>x : Object
+>Object : Object
+>(x: string) => 2 : (x: string) => number
+>x : string
+
+var es = [(x: string) => 2, (x: Object) => 1]; // { (x:string) => number }[]
+>es : { (x: string): number; }[]
+>[(x: string) => 2, (x: Object) => 1] : { (x: string): number; }[]
+>(x: string) => 2 : (x: string) => number
+>x : string
+>(x: Object) => 1 : (x: Object) => number
+>x : Object
+>Object : Object
+
+var fs = [(a: { x: number; y?: number }) => 1, (b: { x: number; z?: number }) => 2]; // (a: { x: number; y?: number }) => number[]
+>fs : { (a: { x: number; y?: number; }): number; }[]
+>[(a: { x: number; y?: number }) => 1, (b: { x: number; z?: number }) => 2] : { (a: { x: number; y?: number; }): number; }[]
+>(a: { x: number; y?: number }) => 1 : (a: { x: number; y?: number; }) => number
+>a : { x: number; y?: number; }
+>x : number
+>y : number
+>(b: { x: number; z?: number }) => 2 : (b: { x: number; z?: number; }) => number
+>b : { x: number; z?: number; }
+>x : number
+>z : number
+
+var gs = [(b: { x: number; z?: number }) => 2, (a: { x: number; y?: number }) => 1]; // (b: { x: number; z?: number }) => number[]
+>gs : { (b: { x: number; z?: number; }): number; }[]
+>[(b: { x: number; z?: number }) => 2, (a: { x: number; y?: number }) => 1] : { (b: { x: number; z?: number; }): number; }[]
+>(b: { x: number; z?: number }) => 2 : (b: { x: number; z?: number; }) => number
+>b : { x: number; z?: number; }
+>x : number
+>z : number
+>(a: { x: number; y?: number }) => 1 : (a: { x: number; y?: number; }) => number
+>a : { x: number; y?: number; }
+>x : number
+>y : number
+

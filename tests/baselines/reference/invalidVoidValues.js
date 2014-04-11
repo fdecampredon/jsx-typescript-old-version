@@ -1,3 +1,4 @@
+//// [invalidVoidValues.js]
 var x;
 x = 1;
 x = '';

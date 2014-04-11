@@ -1,13 +1,23 @@
 === tests/cases/compiler/noCollisionThisExpressionAndLocalVarInFunction.ts ===
-Line 0 col 4 IdentifierName "console" = { log(val: any): any; }
-Line 1 col 0 IdentifierName "log" = (val: any) => any
-Line 1 col 8 IdentifierName "val" = any
-Line 3 col 9 IdentifierName "x" = typeof x
-Line 4 col 8 IdentifierName "_this" = number
-Line 5 col 0 SimpleArrowFunctionExpression "x => { console.log(_this); }" = (x: any) => void
-Line 5 col 0 IdentifierName "x" = any
-Line 5 col 11 InvocationExpression "console.log(_this)" = any
-Line 5 col 11 MemberAccessExpression "console.log" = (val: any) => any
-Line 5 col 11 IdentifierName "console" = { log(val: any): any; }
-Line 5 col 19 IdentifierName "log" = (val: any) => any
-Line 5 col 23 IdentifierName "_this" = number
+var console: {
+>console : { log(val: any): any; }
+
+    log(val: any);
+>log : (val: any) => any
+>val : any
+}
+function x() {
+>x : typeof x
+
+    var _this = 5;
+>_this : number
+
+    x => { console.log(_this); };
+>x => { console.log(_this); } : (x: any) => void
+>x : any
+>console.log(_this) : any
+>console.log : (val: any) => any
+>console : { log(val: any): any; }
+>log : (val: any) => any
+>_this : number
+}

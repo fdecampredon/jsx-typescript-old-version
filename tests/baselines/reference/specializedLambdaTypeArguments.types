@@ -1,8 +1,15 @@
 === tests/cases/compiler/specializedLambdaTypeArguments.ts ===
-Line 0 col 6 IdentifierName "X" = X<A>
-Line 0 col 8 IdentifierName "A" = A
-Line 1 col 0 IdentifierName "prop" = X<<any>() => any>
-Line 1 col 7 IdentifierName "X" = X<A>
-Line 1 col 11 IdentifierName "any" = any
-Line 3 col 4 IdentifierName "a" = X<boolean>
-Line 3 col 7 IdentifierName "X" = X<A>
+class X<A> {
+>X : X<A>
+>A : A
+
+	prop: X< <any>() => any >;
+>prop : X<<any>() => any>
+>X : X<A>
+>any : any
+}
+var a: X<boolean>;
+>a : X<boolean>
+>X : X<A>
+ 
+

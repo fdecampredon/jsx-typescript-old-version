@@ -1,73 +1,148 @@
 === tests/cases/compiler/declarationEmit_nameConflicts_0.ts ===
-Line 0 col 7 IdentifierName "im" = im
-Line 1 col 14 IdentifierName "M" = M
-Line 2 col 20 IdentifierName "f" = typeof a
-Line 3 col 17 IdentifierName "C" = C
-Line 4 col 18 IdentifierName "N" = c
-Line 5 col 24 IdentifierName "g" = typeof g
-Line 6 col 25 IdentifierName "I" = I
-Line 9 col 18 IdentifierName "a" = a
-Line 9 col 22 IdentifierName "M" = M
-Line 9 col 24 IdentifierName "f" = typeof a
-Line 10 col 18 IdentifierName "b" = b
-Line 10 col 22 IdentifierName "M" = M
-Line 10 col 24 IdentifierName "C" = b
-Line 11 col 18 IdentifierName "c" = c
-Line 11 col 22 IdentifierName "N" = c
-Line 12 col 18 IdentifierName "d" = d
-Line 12 col 22 IdentifierName "im" = d
-Line 15 col 14 IdentifierName "M" = M
-Line 15 col 16 IdentifierName "P" = M.P
-Line 16 col 20 IdentifierName "f" = typeof im
-Line 17 col 17 IdentifierName "C" = C
-Line 18 col 18 IdentifierName "N" = N
-Line 19 col 24 IdentifierName "g" = typeof g
-Line 20 col 25 IdentifierName "I" = I
-Line 22 col 18 IdentifierName "im" = im
-Line 22 col 23 IdentifierName "M" = M
-Line 22 col 25 IdentifierName "P" = P
-Line 22 col 27 IdentifierName "f" = typeof im
-Line 24 col 15 IdentifierName "a" = typeof f
-Line 24 col 19 MemberAccessExpression "M.a" = typeof f
-Line 24 col 19 IdentifierName "M" = typeof M
-Line 24 col 21 IdentifierName "a" = typeof f
-Line 25 col 15 IdentifierName "b" = typeof M.C
-Line 25 col 19 MemberAccessExpression "M.b" = typeof M.C
-Line 25 col 19 IdentifierName "M" = typeof M
-Line 25 col 21 IdentifierName "b" = typeof M.C
-Line 26 col 15 IdentifierName "c" = typeof M.N
-Line 26 col 19 MemberAccessExpression "M.c" = typeof M.N
-Line 26 col 19 IdentifierName "M" = typeof M
-Line 26 col 21 IdentifierName "c" = typeof M.N
-Line 27 col 15 IdentifierName "g" = typeof M.N.g
-Line 27 col 19 MemberAccessExpression "M.c.g" = typeof M.N.g
-Line 27 col 19 MemberAccessExpression "M.c" = typeof M.N
-Line 27 col 19 IdentifierName "M" = typeof M
-Line 27 col 21 IdentifierName "c" = typeof M.N
-Line 27 col 23 IdentifierName "g" = typeof M.N.g
-Line 28 col 15 IdentifierName "d" = typeof im
-Line 28 col 19 MemberAccessExpression "M.d" = typeof im
-Line 28 col 19 IdentifierName "M" = typeof M
-Line 28 col 21 IdentifierName "d" = typeof im
-Line 31 col 14 IdentifierName "M" = M
-Line 31 col 16 IdentifierName "Q" = M.Q
-Line 32 col 20 IdentifierName "f" = typeof f
-Line 33 col 17 IdentifierName "C" = C
-Line 34 col 18 IdentifierName "N" = N
-Line 35 col 24 IdentifierName "g" = typeof g
-Line 36 col 25 IdentifierName "I" = I
-Line 38 col 21 IdentifierName "b" = b
-Line 38 col 31 IdentifierName "M" = M
-Line 38 col 33 IdentifierName "b" = M.C
-Line 39 col 21 IdentifierName "I" = I
-Line 39 col 31 IdentifierName "M" = M
-Line 39 col 33 IdentifierName "c" = M.c
-Line 39 col 35 IdentifierName "I" = M.N.I
-Line 40 col 18 IdentifierName "c" = c
-Line 41 col 25 IdentifierName "I" = I
-Line 41 col 35 IdentifierName "M" = M
-Line 41 col 37 IdentifierName "c" = M.c
-Line 41 col 39 IdentifierName "I" = M.N.I
+import im = require('declarationEmit_nameConflicts_1');
+>im : im
+
+export module M {
+>M : M
+
+    export function f() { }
+>f : typeof a
+
+    export class C { }
+>C : C
+
+    export module N {
+>N : c
+
+        export function g() { };
+>g : typeof g
+
+        export interface I { }
+>I : I
+    }
+
+    export import a = M.f;
+>a : a
+>M : M
+>f : typeof a
+
+    export import b = M.C;
+>b : b
+>M : M
+>C : b
+
+    export import c = N;
+>c : c
+>N : c
+
+    export import d = im;
+>d : d
+>im : d
+}
+
+export module M.P {
+>M : M
+>P : M.P
+
+    export function f() { }
+>f : typeof im
+
+    export class C { }
+>C : C
+
+    export module N {
+>N : N
+
+        export function g() { };
+>g : typeof g
+
+        export interface I { }
+>I : I
+    }
+    export import im = M.P.f;
+>im : im
+>M : M
+>P : P
+>f : typeof im
+
+    // Bug 887180
+    export var a = M.a; // emitted incorrectly as typeof f
+>a : typeof f
+>M.a : typeof f
+>M : typeof M
+>a : typeof f
+
+    export var b = M.b; // ok
+>b : typeof M.C
+>M.b : typeof M.C
+>M : typeof M
+>b : typeof M.C
+
+    export var c = M.c; // ok
+>c : typeof M.N
+>M.c : typeof M.N
+>M : typeof M
+>c : typeof M.N
+
+    export var g = M.c.g; // ok
+>g : typeof M.N.g
+>M.c.g : typeof M.N.g
+>M.c : typeof M.N
+>M : typeof M
+>c : typeof M.N
+>g : typeof M.N.g
+
+    export var d = M.d; // emitted incorrectly as typeof im
+>d : typeof im
+>M.d : typeof im
+>M : typeof M
+>d : typeof im
+}
+
+export module M.Q {
+>M : M
+>Q : M.Q
+
+    export function f() { }
+>f : typeof f
+
+    export class C { }
+>C : C
+
+    export module N {
+>N : N
+
+        export function g() { };
+>g : typeof g
+
+        export interface I { }
+>I : I
+    }
+    export interface b extends M.b { } // ok
+>b : b
+>M : M
+>b : M.C
+
+    export interface I extends M.c.I { } // ok
+>I : I
+>M : M
+>c : M.c
+>I : M.N.I
+
+    export module c {
+>c : c
+
+        export interface I extends M.c.I { } // ok
+>I : I
+>M : M
+>c : M.c
+>I : M.N.I
+    }
+}
 === tests/cases/compiler/declarationEmit_nameConflicts_1.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 1 col 9 IdentifierName "f" = typeof f
+function f() { }
+>f : typeof f
+
+export = f;
+>f : typeof f
+

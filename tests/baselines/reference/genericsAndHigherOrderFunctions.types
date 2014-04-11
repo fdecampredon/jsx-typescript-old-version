@@ -1,105 +1,131 @@
 === tests/cases/compiler/genericsAndHigherOrderFunctions.ts ===
-Line 2 col 4 IdentifierName "combine" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (x: U) => S
-Line 2 col 14 IdentifierName "T" = T
-Line 2 col 17 IdentifierName "S" = S
-Line 2 col 20 IdentifierName "f" = (_: T) => S
-Line 2 col 24 IdentifierName "_" = T
-Line 2 col 27 IdentifierName "T" = T
-Line 2 col 33 IdentifierName "S" = S
-Line 3 col 5 IdentifierName "U" = U
-Line 3 col 8 IdentifierName "g" = (_: U) => T
-Line 3 col 12 IdentifierName "_" = U
-Line 3 col 15 IdentifierName "U" = U
-Line 3 col 21 IdentifierName "T" = T
-Line 4 col 5 IdentifierName "x" = U
-Line 4 col 8 IdentifierName "U" = U
-Line 4 col 14 IdentifierName "S" = S
-Line 6 col 6 ParenthesizedArrowFunctionExpression "<T, S>(f: (_: T) => S) =>
+// no errors expected
+
+var combine: <T, S>(f: (_: T) => S) =>
+>combine : <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (x: U) => S
+>T : T
+>S : S
+>f : (_: T) => S
+>_ : T
+>T : T
+>S : S
+
+    <U>(g: (_: U) => T) =>
+>U : U
+>g : (_: U) => T
+>_ : U
+>U : U
+>T : T
+
+    (x: U) => S
+>x : U
+>U : U
+>S : S
+
+    = <T, S>(f: (_: T) => S) =>
+><T, S>(f: (_: T) => S) =>
         <U>(g: (_: U) => T) =>
-            (x: U) => f(g(x))" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (x: U) => S
-Line 6 col 7 IdentifierName "T" = T
-Line 6 col 10 IdentifierName "S" = S
-Line 6 col 13 IdentifierName "f" = (_: T) => S
-Line 6 col 17 IdentifierName "_" = T
-Line 6 col 20 IdentifierName "T" = T
-Line 6 col 26 IdentifierName "S" = S
-Line 7 col 0 ParenthesizedArrowFunctionExpression "<U>(g: (_: U) => T) =>
-            (x: U) => f(g(x))" = <U>(g: (_: U) => T) => (x: U) => S
-Line 7 col 9 IdentifierName "U" = U
-Line 7 col 12 IdentifierName "g" = (_: U) => T
-Line 7 col 16 IdentifierName "_" = U
-Line 7 col 19 IdentifierName "U" = U
-Line 7 col 25 IdentifierName "T" = T
-Line 8 col 0 ParenthesizedArrowFunctionExpression "(x: U) => f(g(x))" = (x: U) => S
-Line 8 col 13 IdentifierName "x" = U
-Line 8 col 16 IdentifierName "U" = U
-Line 8 col 22 InvocationExpression "f(g(x))" = S
-Line 8 col 22 IdentifierName "f" = (_: T) => S
-Line 8 col 24 InvocationExpression "g(x)" = T
-Line 8 col 24 IdentifierName "g" = (_: U) => T
-Line 8 col 26 IdentifierName "x" = U
-Line 10 col 4 IdentifierName "foo" = <K, N>(g: (x: K) => N) => (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) => <R>(f: (_: N) => (_: R) => R) => (_: R) => R
-Line 10 col 10 IdentifierName "K" = K
-Line 10 col 13 IdentifierName "N" = N
-Line 10 col 16 IdentifierName "g" = (x: K) => N
-Line 10 col 20 IdentifierName "x" = K
-Line 10 col 23 IdentifierName "K" = K
-Line 10 col 29 IdentifierName "N" = N
-Line 11 col 5 IdentifierName "h" = <M>(_: (_: K) => (_: M) => M) => (_: M) => M
-Line 11 col 9 IdentifierName "M" = M
-Line 11 col 12 IdentifierName "_" = (_: K) => (_: M) => M
-Line 11 col 16 IdentifierName "_" = K
-Line 11 col 19 IdentifierName "K" = K
-Line 11 col 26 IdentifierName "_" = M
-Line 11 col 29 IdentifierName "M" = M
-Line 11 col 35 IdentifierName "M" = M
-Line 11 col 42 IdentifierName "_" = M
-Line 11 col 45 IdentifierName "M" = M
-Line 11 col 51 IdentifierName "M" = M
-Line 12 col 5 IdentifierName "R" = R
-Line 12 col 8 IdentifierName "f" = (_: N) => (_: R) => R
-Line 12 col 12 IdentifierName "_" = N
-Line 12 col 15 IdentifierName "N" = N
-Line 12 col 22 IdentifierName "_" = R
-Line 12 col 25 IdentifierName "R" = R
-Line 12 col 31 IdentifierName "R" = R
-Line 12 col 38 IdentifierName "_" = R
-Line 12 col 41 IdentifierName "R" = R
-Line 12 col 47 IdentifierName "R" = R
-Line 14 col 6 ParenthesizedArrowFunctionExpression "<K, N>(g: (x: K) => N) =>
+            (x: U) => f(g(x)) : <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (x: U) => S
+>T : T
+>S : S
+>f : (_: T) => S
+>_ : T
+>T : T
+>S : S
+
+        <U>(g: (_: U) => T) =>
+><U>(g: (_: U) => T) =>
+            (x: U) => f(g(x)) : <U>(g: (_: U) => T) => (x: U) => S
+>U : U
+>g : (_: U) => T
+>_ : U
+>U : U
+>T : T
+
+            (x: U) => f(g(x))
+>(x: U) => f(g(x)) : (x: U) => S
+>x : U
+>U : U
+>f(g(x)) : S
+>f : (_: T) => S
+>g(x) : T
+>g : (_: U) => T
+>x : U
+
+var foo: <K, N>(g: (x: K) => N) =>
+>foo : <K, N>(g: (x: K) => N) => (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) => <R>(f: (_: N) => (_: R) => R) => (_: R) => R
+>K : K
+>N : N
+>g : (x: K) => N
+>x : K
+>K : K
+>N : N
+
+    (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) =>
+>h : <M>(_: (_: K) => (_: M) => M) => (_: M) => M
+>M : M
+>_ : (_: K) => (_: M) => M
+>_ : K
+>K : K
+>_ : M
+>M : M
+>M : M
+>_ : M
+>M : M
+>M : M
+
+    <R>(f: (_: N) => (_: R) => R) => (_: R) => R
+>R : R
+>f : (_: N) => (_: R) => R
+>_ : N
+>N : N
+>_ : R
+>R : R
+>R : R
+>_ : R
+>R : R
+>R : R
+
+    = <K, N>(g: (x: K) => N) =>
+><K, N>(g: (x: K) => N) =>
         (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) =>
-            <R>(f: (_: N) => (_: R) => R) => h(combine(f)(g))" = <K, N>(g: (x: K) => N) => (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) => <R>(f: (_: N) => (_: R) => R) => (_: R) => R
-Line 14 col 7 IdentifierName "K" = K
-Line 14 col 10 IdentifierName "N" = N
-Line 14 col 13 IdentifierName "g" = (x: K) => N
-Line 14 col 17 IdentifierName "x" = K
-Line 14 col 20 IdentifierName "K" = K
-Line 14 col 26 IdentifierName "N" = N
-Line 15 col 0 ParenthesizedArrowFunctionExpression "(h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) =>
-            <R>(f: (_: N) => (_: R) => R) => h(combine(f)(g))" = (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) => <R>(f: (_: N) => (_: R) => R) => (_: R) => R
-Line 15 col 9 IdentifierName "h" = <M>(_: (_: K) => (_: M) => M) => (_: M) => M
-Line 15 col 13 IdentifierName "M" = M
-Line 15 col 16 IdentifierName "_" = (_: K) => (_: M) => M
-Line 15 col 20 IdentifierName "_" = K
-Line 15 col 23 IdentifierName "K" = K
-Line 15 col 30 IdentifierName "_" = M
-Line 15 col 33 IdentifierName "M" = M
-Line 15 col 39 IdentifierName "M" = M
-Line 15 col 46 IdentifierName "_" = M
-Line 15 col 49 IdentifierName "M" = M
-Line 15 col 55 IdentifierName "M" = M
-Line 16 col 0 ParenthesizedArrowFunctionExpression "<R>(f: (_: N) => (_: R) => R) => h(combine(f)(g))" = <R>(f: (_: N) => (_: R) => R) => (_: R) => R
-Line 16 col 13 IdentifierName "R" = R
-Line 16 col 16 IdentifierName "f" = (_: N) => (_: R) => R
-Line 16 col 20 IdentifierName "_" = N
-Line 16 col 23 IdentifierName "N" = N
-Line 16 col 30 IdentifierName "_" = R
-Line 16 col 33 IdentifierName "R" = R
-Line 16 col 39 IdentifierName "R" = R
-Line 16 col 45 InvocationExpression "h(combine(f)(g))" = (_: R) => R
-Line 16 col 45 IdentifierName "h" = <M>(_: (_: K) => (_: M) => M) => (_: M) => M
-Line 16 col 47 InvocationExpression "combine(f)(g)" = (x: K) => (_: R) => R
-Line 16 col 47 InvocationExpression "combine(f)" = <U>(g: (_: U) => N) => (x: U) => (_: R) => R
-Line 16 col 47 IdentifierName "combine" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (x: U) => S
-Line 16 col 55 IdentifierName "f" = (_: N) => (_: R) => R
-Line 16 col 58 IdentifierName "g" = (x: K) => N
+            <R>(f: (_: N) => (_: R) => R) => h(combine(f)(g)) : <K, N>(g: (x: K) => N) => (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) => <R>(f: (_: N) => (_: R) => R) => (_: R) => R
+>K : K
+>N : N
+>g : (x: K) => N
+>x : K
+>K : K
+>N : N
+
+        (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) =>
+>(h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) =>
+            <R>(f: (_: N) => (_: R) => R) => h(combine(f)(g)) : (h: <M>(_: (_: K) => (_: M) => M) => (_: M) => M) => <R>(f: (_: N) => (_: R) => R) => (_: R) => R
+>h : <M>(_: (_: K) => (_: M) => M) => (_: M) => M
+>M : M
+>_ : (_: K) => (_: M) => M
+>_ : K
+>K : K
+>_ : M
+>M : M
+>M : M
+>_ : M
+>M : M
+>M : M
+
+            <R>(f: (_: N) => (_: R) => R) => h(combine(f)(g))
+><R>(f: (_: N) => (_: R) => R) => h(combine(f)(g)) : <R>(f: (_: N) => (_: R) => R) => (_: R) => R
+>R : R
+>f : (_: N) => (_: R) => R
+>_ : N
+>N : N
+>_ : R
+>R : R
+>R : R
+>h(combine(f)(g)) : (_: R) => R
+>h : <M>(_: (_: K) => (_: M) => M) => (_: M) => M
+>combine(f)(g) : (x: K) => (_: R) => R
+>combine(f) : <U>(g: (_: U) => N) => (x: U) => (_: R) => R
+>combine : <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (x: U) => S
+>f : (_: N) => (_: R) => R
+>g : (x: K) => N
+

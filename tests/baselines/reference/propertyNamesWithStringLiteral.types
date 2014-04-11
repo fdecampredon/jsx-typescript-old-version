@@ -1,30 +1,53 @@
 === tests/cases/compiler/propertyNamesWithStringLiteral.ts ===
-Line 0 col 6 IdentifierName "_Color" = _Color
-Line 1 col 0 IdentifierName "a" = number
-Line 1 col 15 IdentifierName "r" = number
-Line 1 col 26 IdentifierName "g" = number
-Line 1 col 37 IdentifierName "b" = number
-Line 4 col 10 IdentifierName "NamedColors" = NamedColors
-Line 5 col 0 IdentifierName "azure" = _Color
-Line 5 col 11 IdentifierName "_Color" = _Color
-Line 6 col 12 IdentifierName "_Color" = _Color
-Line 7 col 17 IdentifierName "_Color" = _Color
-Line 9 col 7 IdentifierName "Color" = Color
-Line 10 col 15 IdentifierName "namedColors" = NamedColors
-Line 10 col 28 IdentifierName "NamedColors" = NamedColors
-Line 12 col 4 IdentifierName "a" = _Color
-Line 12 col 8 ElementAccessExpression "Color.namedColors["azure"]" = _Color
-Line 12 col 8 MemberAccessExpression "Color.namedColors" = NamedColors
-Line 12 col 8 IdentifierName "Color" = typeof Color
-Line 12 col 14 IdentifierName "namedColors" = NamedColors
-Line 13 col 4 IdentifierName "a" = _Color
-Line 13 col 8 MemberAccessExpression "Color.namedColors.blue" = _Color
-Line 13 col 8 MemberAccessExpression "Color.namedColors" = NamedColors
-Line 13 col 8 IdentifierName "Color" = typeof Color
-Line 13 col 14 IdentifierName "namedColors" = NamedColors
-Line 13 col 26 IdentifierName "blue" = _Color
-Line 14 col 4 IdentifierName "a" = _Color
-Line 14 col 8 ElementAccessExpression "Color.namedColors["pale blue"]" = _Color
-Line 14 col 8 MemberAccessExpression "Color.namedColors" = NamedColors
-Line 14 col 8 IdentifierName "Color" = typeof Color
-Line 14 col 14 IdentifierName "namedColors" = NamedColors
+class _Color {
+>_Color : _Color
+
+    a: number; r: number; g: number; b: number;
+>a : number
+>r : number
+>g : number
+>b : number
+}
+
+interface NamedColors {
+>NamedColors : NamedColors
+
+    azure: _Color;
+>azure : _Color
+>_Color : _Color
+
+    "blue": _Color;
+>_Color : _Color
+
+    "pale blue": _Color;
+>_Color : _Color
+}
+module Color {
+>Color : Color
+
+    export var namedColors: NamedColors;
+>namedColors : NamedColors
+>NamedColors : NamedColors
+}
+var a = Color.namedColors["azure"];
+>a : _Color
+>Color.namedColors["azure"] : _Color
+>Color.namedColors : NamedColors
+>Color : typeof Color
+>namedColors : NamedColors
+
+var a = Color.namedColors.blue; // Should not error
+>a : _Color
+>Color.namedColors.blue : _Color
+>Color.namedColors : NamedColors
+>Color : typeof Color
+>namedColors : NamedColors
+>blue : _Color
+
+var a = Color.namedColors["pale blue"]; // should not error
+>a : _Color
+>Color.namedColors["pale blue"] : _Color
+>Color.namedColors : NamedColors
+>Color : typeof Color
+>namedColors : NamedColors
+

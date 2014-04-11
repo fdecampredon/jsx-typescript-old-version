@@ -1,3 +1,4 @@
+//// [widenedTypes.js]
 null instanceof (function () {
 });
 ({}) instanceof null; // Ok because null is a subtype of function

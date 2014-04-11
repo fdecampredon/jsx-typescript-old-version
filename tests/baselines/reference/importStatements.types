@@ -1,48 +1,93 @@
 === tests/cases/compiler/importStatements.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 1 col 17 IdentifierName "Point" = Point
-Line 2 col 27 IdentifierName "x" = number
-Line 2 col 45 IdentifierName "y" = number
-Line 5 col 15 IdentifierName "Origin" = Point
-Line 5 col 24 ObjectCreationExpression "new Point(0, 0)" = Point
-Line 5 col 28 IdentifierName "Point" = typeof Point
-Line 9 col 7 IdentifierName "B" = B
-Line 10 col 11 IdentifierName "a" = a
-Line 10 col 15 IdentifierName "A" = A
-Line 14 col 7 IdentifierName "C" = C
-Line 15 col 11 IdentifierName "a" = a
-Line 15 col 15 IdentifierName "A" = A
-Line 16 col 8 IdentifierName "m" = typeof A
-Line 16 col 18 IdentifierName "a" = typeof A
-Line 17 col 8 IdentifierName "p" = A.Point
-Line 17 col 11 IdentifierName "a" = a
-Line 17 col 13 IdentifierName "Point" = A.Point
-Line 18 col 8 IdentifierName "p" = { x: number; y: number; }
-Line 18 col 12 ObjectLiteralExpression "{x:0, y:0 }" = { x: number; y: number; }
-Line 18 col 13 IdentifierName "x" = number
-Line 18 col 18 IdentifierName "y" = number
-Line 22 col 7 IdentifierName "D" = D
-Line 23 col 11 IdentifierName "a" = a
-Line 23 col 15 IdentifierName "A" = A
-Line 25 col 8 IdentifierName "p" = A.Point
-Line 25 col 12 ObjectCreationExpression "new a.Point(1, 1)" = A.Point
-Line 25 col 16 MemberAccessExpression "a.Point" = typeof A.Point
-Line 25 col 16 IdentifierName "a" = typeof A
-Line 25 col 18 IdentifierName "Point" = typeof A.Point
-Line 28 col 7 IdentifierName "E" = E
-Line 29 col 11 IdentifierName "a" = a
-Line 29 col 15 IdentifierName "A" = A
-Line 30 col 20 IdentifierName "xDist" = typeof xDist
-Line 30 col 26 IdentifierName "x" = A.Point
-Line 30 col 29 IdentifierName "a" = a
-Line 30 col 31 IdentifierName "Point" = A.Point
-Line 31 col 15 ParenthesizedExpression "(a.Origin.x - x.x)" = number
-Line 31 col 16 SubtractExpression "a.Origin.x - x.x" = number
-Line 31 col 16 MemberAccessExpression "a.Origin.x" = number
-Line 31 col 16 MemberAccessExpression "a.Origin" = A.Point
-Line 31 col 16 IdentifierName "a" = typeof A
-Line 31 col 18 IdentifierName "Origin" = A.Point
-Line 31 col 25 IdentifierName "x" = number
-Line 31 col 29 MemberAccessExpression "x.x" = number
-Line 31 col 29 IdentifierName "x" = A.Point
-Line 31 col 31 IdentifierName "x" = number
+module A {
+>A : A
+
+    export class Point {
+>Point : Point
+
+        constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+    }
+
+    export var Origin = new Point(0, 0);
+>Origin : Point
+>new Point(0, 0) : Point
+>Point : typeof Point
+}
+
+// no code gen expected
+module B {
+>B : B
+
+    import a = A; //Error generates 'var <Alias> = <EntityName>;'
+>a : a
+>A : A
+}
+
+// no code gen expected
+module C {
+>C : C
+
+    import a = A; //Error generates 'var <Alias> = <EntityName>;'
+>a : a
+>A : A
+
+    var m: typeof a;
+>m : typeof A
+>a : typeof A
+
+    var p: a.Point;
+>p : A.Point
+>a : a
+>Point : A.Point
+
+    var p = {x:0, y:0 };
+>p : { x: number; y: number; }
+>{x:0, y:0 } : { x: number; y: number; }
+>x : number
+>y : number
+}
+
+// code gen expected
+module D {
+>D : D
+
+    import a = A;
+>a : a
+>A : A
+
+    var p = new a.Point(1, 1);
+>p : A.Point
+>new a.Point(1, 1) : A.Point
+>a.Point : typeof A.Point
+>a : typeof A
+>Point : typeof A.Point
+}
+
+module E {
+>E : E
+
+    import a = A;
+>a : a
+>A : A
+
+    export function xDist(x: a.Point) {
+>xDist : typeof xDist
+>x : A.Point
+>a : a
+>Point : A.Point
+
+        return (a.Origin.x - x.x);
+>(a.Origin.x - x.x) : number
+>a.Origin.x - x.x : number
+>a.Origin.x : number
+>a.Origin : A.Point
+>a : typeof A
+>Origin : A.Point
+>x : number
+>x.x : number
+>x : A.Point
+>x : number
+    }
+}

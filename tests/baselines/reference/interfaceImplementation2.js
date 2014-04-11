@@ -1,3 +1,4 @@
+//// [interfaceImplementation2.js]
 var C3 = (function () {
     function C3() {
     }

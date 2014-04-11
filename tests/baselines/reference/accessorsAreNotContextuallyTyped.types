@@ -1,15 +1,32 @@
 === tests/cases/compiler/accessorsAreNotContextuallyTyped.ts ===
-Line 2 col 6 IdentifierName "C" = C
-Line 3 col 8 IdentifierName "x" = (a: string) => string
-Line 3 col 10 IdentifierName "v" = (a: string) => string
-Line 3 col 14 IdentifierName "a" = string
-Line 6 col 8 IdentifierName "x" = (a: string) => string
-Line 7 col 15 ParenthesizedArrowFunctionExpression "(x: string) => """ = (x: string) => string
-Line 7 col 16 IdentifierName "x" = string
-Line 11 col 4 IdentifierName "c" = C
-Line 11 col 7 IdentifierName "C" = C
-Line 12 col 4 IdentifierName "r" = string
-Line 12 col 8 InvocationExpression "c.x('')" = string
-Line 12 col 8 MemberAccessExpression "c.x" = (a: string) => string
-Line 12 col 8 IdentifierName "c" = C
-Line 12 col 10 IdentifierName "x" = (a: string) => string
+// accessors are not contextually typed
+
+class C {
+>C : C
+
+    set x(v: (a: string) => string) {
+>x : (a: string) => string
+>v : (a: string) => string
+>a : string
+    }
+
+    get x() {
+>x : (a: string) => string
+
+        return (x: string) => "";
+>(x: string) => "" : (x: string) => string
+>x : string
+    }
+}
+
+var c: C;
+>c : C
+>C : C
+
+var r = c.x(''); // string
+>r : string
+>c.x('') : string
+>c.x : (a: string) => string
+>c : C
+>x : (a: string) => string
+

@@ -1,36 +1,46 @@
 === tests/cases/compiler/nestedRecursiveLambda.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 0 col 11 IdentifierName "a" = any
-Line 1 col 0 VoidExpression "void (r =>(r => r))" = any
-Line 1 col 5 ParenthesizedExpression "(r =>(r => r))" = (r: any) => (r: any) => any
-Line 1 col 6 SimpleArrowFunctionExpression "r =>(r => r)" = (r: any) => (r: any) => any
-Line 1 col 6 IdentifierName "r" = any
-Line 1 col 10 ParenthesizedExpression "(r => r)" = (r: any) => any
-Line 1 col 11 SimpleArrowFunctionExpression "r => r" = (r: any) => any
-Line 1 col 11 IdentifierName "r" = any
-Line 1 col 16 IdentifierName "r" = any
-Line 3 col 0 InvocationExpression "f((r =>(r => r)))" = void
-Line 3 col 0 IdentifierName "f" = typeof f
-Line 3 col 2 ParenthesizedExpression "(r =>(r => r))" = (r: any) => (r: any) => any
-Line 3 col 3 SimpleArrowFunctionExpression "r =>(r => r)" = (r: any) => (r: any) => any
-Line 3 col 3 IdentifierName "r" = any
-Line 3 col 7 ParenthesizedExpression "(r => r)" = (r: any) => any
-Line 3 col 8 SimpleArrowFunctionExpression "r => r" = (r: any) => any
-Line 3 col 8 IdentifierName "r" = any
-Line 3 col 13 IdentifierName "r" = any
-Line 4 col 0 VoidExpression "void(r =>(r => r))" = any
-Line 4 col 4 ParenthesizedExpression "(r =>(r => r))" = (r: any) => (r: any) => any
-Line 4 col 5 SimpleArrowFunctionExpression "r =>(r => r)" = (r: any) => (r: any) => any
-Line 4 col 5 IdentifierName "r" = any
-Line 4 col 9 ParenthesizedExpression "(r => r)" = (r: any) => any
-Line 4 col 10 SimpleArrowFunctionExpression "r => r" = (r: any) => any
-Line 4 col 10 IdentifierName "r" = any
-Line 4 col 15 IdentifierName "r" = any
-Line 5 col 0 ArrayLiteralExpression "[(r =>(r => r))]" = { (r: any): (r: any) => any; }[]
-Line 5 col 1 ParenthesizedExpression "(r =>(r => r))" = (r: any) => (r: any) => any
-Line 5 col 2 SimpleArrowFunctionExpression "r =>(r => r)" = (r: any) => (r: any) => any
-Line 5 col 2 IdentifierName "r" = any
-Line 5 col 6 ParenthesizedExpression "(r => r)" = (r: any) => any
-Line 5 col 7 SimpleArrowFunctionExpression "r => r" = (r: any) => any
-Line 5 col 7 IdentifierName "r" = any
-Line 5 col 12 IdentifierName "r" = any
+function f(a:any) {
+>f : typeof f
+>a : any
+
+void (r =>(r => r));
+>void (r =>(r => r)) : any
+>(r =>(r => r)) : (r: any) => (r: any) => any
+>r =>(r => r) : (r: any) => (r: any) => any
+>r : any
+>(r => r) : (r: any) => any
+>r => r : (r: any) => any
+>r : any
+>r : any
+}
+f((r =>(r => r)));
+>f((r =>(r => r))) : void
+>f : typeof f
+>(r =>(r => r)) : (r: any) => (r: any) => any
+>r =>(r => r) : (r: any) => (r: any) => any
+>r : any
+>(r => r) : (r: any) => any
+>r => r : (r: any) => any
+>r : any
+>r : any
+
+void(r =>(r => r));
+>void(r =>(r => r)) : any
+>(r =>(r => r)) : (r: any) => (r: any) => any
+>r =>(r => r) : (r: any) => (r: any) => any
+>r : any
+>(r => r) : (r: any) => any
+>r => r : (r: any) => any
+>r : any
+>r : any
+
+[(r =>(r => r))]
+>[(r =>(r => r))] : { (r: any): (r: any) => any; }[]
+>(r =>(r => r)) : (r: any) => (r: any) => any
+>r =>(r => r) : (r: any) => (r: any) => any
+>r : any
+>(r => r) : (r: any) => any
+>r => r : (r: any) => any
+>r : any
+>r : any
+

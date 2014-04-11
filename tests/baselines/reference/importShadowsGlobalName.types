@@ -1,8 +1,19 @@
 === tests/cases/compiler/Bar.ts ===
-Line 0 col 7 IdentifierName "Error" = Error
-Line 1 col 6 IdentifierName "Bar" = Bar
-Line 1 col 18 IdentifierName "Error" = Error
-Line 2 col 9 IdentifierName "Bar" = typeof Bar
+import Error = require('Foo');
+>Error : Error
+
+class Bar extends Error {}
+>Bar : Bar
+>Error : Error
+
+export = Bar;
+>Bar : typeof Bar
+
 === tests/cases/compiler/Foo.ts ===
-Line 1 col 6 IdentifierName "Foo" = Foo
-Line 2 col 9 IdentifierName "Foo" = typeof Foo
+
+class Foo {}
+>Foo : Foo
+
+export = Foo;
+>Foo : typeof Foo
+

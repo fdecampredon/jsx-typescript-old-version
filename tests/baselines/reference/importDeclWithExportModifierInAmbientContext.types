@@ -1,8 +1,19 @@
 === tests/cases/compiler/importDeclWithExportModifierInAmbientContext.ts ===
-Line 1 col 11 IdentifierName "x" = x
-Line 2 col 18 IdentifierName "c" = c
-Line 5 col 18 IdentifierName "a" = a
-Line 5 col 22 IdentifierName "x" = x
-Line 5 col 24 IdentifierName "c" = a
-Line 6 col 8 IdentifierName "b" = a
-Line 6 col 11 IdentifierName "a" = a
+declare module "m" {
+    module x {
+>x : x
+
+        interface c {
+>c : c
+        }
+    }
+    export import a = x.c;
+>a : a
+>x : x
+>c : a
+
+    var b: a;
+>b : a
+>a : a
+}
+

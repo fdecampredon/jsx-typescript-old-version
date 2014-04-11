@@ -1,33 +1,52 @@
 === tests/cases/compiler/inferTypeArgumentsInSignatureWithRestParameters.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 0 col 11 IdentifierName "T" = T
-Line 0 col 14 IdentifierName "array" = T[]
-Line 0 col 21 IdentifierName "T" = T
-Line 0 col 29 IdentifierName "args" = any[]
-Line 1 col 9 IdentifierName "g" = typeof g
-Line 1 col 11 IdentifierName "array" = number[]
-Line 1 col 31 IdentifierName "args" = any[]
-Line 2 col 9 IdentifierName "h" = typeof h
-Line 2 col 11 IdentifierName "T" = T
-Line 2 col 14 IdentifierName "nonarray" = T
-Line 2 col 24 IdentifierName "T" = T
-Line 2 col 30 IdentifierName "args" = any[]
-Line 3 col 9 IdentifierName "i" = typeof i
-Line 3 col 11 IdentifierName "T" = T
-Line 3 col 14 IdentifierName "array" = T[]
-Line 3 col 21 IdentifierName "T" = T
-Line 3 col 26 IdentifierName "opt" = any[]
-Line 4 col 4 IdentifierName "a" = number[]
-Line 4 col 8 ArrayLiteralExpression "[1, 2, 3, 4, 5]" = number[]
-Line 5 col 0 InvocationExpression "f(a)" = void
-Line 5 col 0 IdentifierName "f" = typeof f
-Line 6 col 2 IdentifierName "a" = number[]
-Line 7 col 0 InvocationExpression "g(a)" = void
-Line 7 col 0 IdentifierName "g" = typeof g
-Line 7 col 2 IdentifierName "a" = number[]
-Line 8 col 0 InvocationExpression "h(a)" = void
-Line 8 col 0 IdentifierName "h" = typeof h
-Line 8 col 2 IdentifierName "a" = number[]
-Line 9 col 0 InvocationExpression "i(a)" = void
-Line 9 col 0 IdentifierName "i" = typeof i
-Line 9 col 2 IdentifierName "a" = number[]
+function f<T>(array: T[], ...args) { }
+>f : typeof f
+>T : T
+>array : T[]
+>T : T
+>args : any[]
+
+function g(array: number[], ...args) { }
+>g : typeof g
+>array : number[]
+>args : any[]
+
+function h<T>(nonarray: T, ...args) { }
+>h : typeof h
+>T : T
+>nonarray : T
+>T : T
+>args : any[]
+
+function i<T>(array: T[], opt?: any[]) { }
+>i : typeof i
+>T : T
+>array : T[]
+>T : T
+>opt : any[]
+
+var a = [1, 2, 3, 4, 5];
+>a : number[]
+>[1, 2, 3, 4, 5] : number[]
+
+>f(a) : void
+>f : typeof f
+
+f(a); // OK
+>a : number[]
+
+g(a); // OK
+>g(a) : void
+>g : typeof g
+>a : number[]
+
+h(a); // OK
+>h(a) : void
+>h : typeof h
+>a : number[]
+
+i(a); // OK
+>i(a) : void
+>i : typeof i
+>a : number[]
+

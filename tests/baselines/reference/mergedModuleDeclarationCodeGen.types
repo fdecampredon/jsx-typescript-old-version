@@ -1,10 +1,31 @@
 === tests/cases/compiler/mergedModuleDeclarationCodeGen.ts ===
-Line 0 col 14 IdentifierName "X" = X
-Line 1 col 18 IdentifierName "Y" = Y
-Line 2 col 14 IdentifierName "A" = A
-Line 3 col 24 IdentifierName "Y" = any
-Line 4 col 0 ObjectCreationExpression "new B()" = B
-Line 4 col 20 IdentifierName "B" = typeof B
-Line 9 col 14 IdentifierName "X" = X
-Line 10 col 18 IdentifierName "Y" = Y
-Line 11 col 21 IdentifierName "B" = B
+export module X {
+>X : X
+
+    export module Y {
+>Y : Y
+
+        class A {
+>A : A
+
+            constructor(Y: any) {
+>Y : any
+
+                new B();
+>new B() : B
+>B : typeof B
+            }
+        }
+    }
+}
+export module X {
+>X : X
+
+    export module Y {
+>Y : Y
+
+        export class B {
+>B : B
+        }
+    }
+}

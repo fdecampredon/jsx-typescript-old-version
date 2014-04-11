@@ -1,3 +1,15 @@
+//// [enumMapBackIntoItself.ts]
+enum TShirtSize {
+   Small,
+   Medium,
+   Large
+}
+var mySize = TShirtSize.Large;
+var test = TShirtSize[mySize];
+// specifically checking output here, bug was that test used to be undefined at runtime
+test + ''
+
+//// [enumMapBackIntoItself.js]
 var TShirtSize;
 (function (TShirtSize) {
     TShirtSize[TShirtSize["Small"] = 0] = "Small";

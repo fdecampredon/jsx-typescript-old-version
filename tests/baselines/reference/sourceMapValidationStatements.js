@@ -1,3 +1,4 @@
+//// [sourceMapValidationStatements.js]
 function f() {
     var y;
     var x = 0;

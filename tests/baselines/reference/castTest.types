@@ -1,83 +1,129 @@
 === tests/cases/compiler/castTest.ts ===
-Line 1 col 4 IdentifierName "x" = any
-Line 2 col 4 IdentifierName "z" = number
-Line 2 col 8 CastExpression "<number> x" = number
-Line 2 col 17 IdentifierName "x" = any
-Line 3 col 4 IdentifierName "y" = any
-Line 3 col 8 AddExpression "x + z" = any
-Line 3 col 8 IdentifierName "x" = any
-Line 3 col 12 IdentifierName "z" = number
-Line 5 col 4 IdentifierName "a" = any
-Line 5 col 8 CastExpression "<any>0" = any
-Line 6 col 4 IdentifierName "b" = boolean
-Line 6 col 8 CastExpression "<boolean>true" = boolean
-Line 7 col 4 IdentifierName "s" = string
-Line 7 col 8 CastExpression "<string>""" = string
-Line 9 col 4 IdentifierName "ar" = any[]
-Line 9 col 9 CastExpression "<any[]>null" = any[]
-Line 11 col 4 IdentifierName "f" = (res: number) => void
-Line 11 col 8 CastExpression "<(res : number) => void>null" = (res: number) => void
-Line 11 col 10 IdentifierName "res" = number
-Line 13 col 14 IdentifierName "Point" = Point
-Line 15 col 0 IdentifierName "x" = number
-Line 16 col 0 IdentifierName "y" = number
-Line 17 col 0 IdentifierName "add" = (dx: number, dy: number) => Point
-Line 17 col 8 IdentifierName "dx" = number
-Line 17 col 20 IdentifierName "dy" = number
-Line 17 col 33 IdentifierName "Point" = Point
-Line 18 col 0 IdentifierName "mult" = (p: Point) => Point
-Line 18 col 9 IdentifierName "p" = Point
-Line 18 col 12 IdentifierName "Point" = Point
-Line 18 col 20 IdentifierName "Point" = Point
-Line 19 col 16 IdentifierName "x" = number
-Line 19 col 27 IdentifierName "y" = number
-Line 22 col 4 IdentifierName "p_cast" = Point
-Line 22 col 13 CastExpression "<Point> ({
+
+var x : any = 0;
+>x : any
+
+var z = <number> x;
+>z : number
+><number> x : number
+>x : any
+
+var y = x + z;
+>y : any
+>x + z : any
+>x : any
+>z : number
+
+var a = <any>0;
+>a : any
+><any>0 : any
+
+var b = <boolean>true;
+>b : boolean
+><boolean>true : boolean
+
+var s = <string>"";
+>s : string
+><string>"" : string
+
+var ar = <any[]>null;
+>ar : any[]
+><any[]>null : any[]
+
+var f = <(res : number) => void>null;
+>f : (res: number) => void
+><(res : number) => void>null : (res: number) => void
+>res : number
+
+declare class Point
+>Point : Point
+{
+    x: number;
+>x : number
+
+    y: number;
+>y : number
+
+    add(dx: number, dy: number): Point;
+>add : (dx: number, dy: number) => Point
+>dx : number
+>dy : number
+>Point : Point
+
+    mult(p: Point): Point;
+>mult : (p: Point) => Point
+>p : Point
+>Point : Point
+>Point : Point
+
+    constructor(x: number, y: number);
+>x : number
+>y : number
+}
+
+var p_cast = <Point> ({
+>p_cast : Point
+><Point> ({
     x: 0,
     y: 0,
     add: function(dx, dy) {
         return new Point(this.x + dx, this.y + dy);
     },
     mult: function(p) { return p; }
-})" = Point
-Line 22 col 14 IdentifierName "Point" = Point
-Line 22 col 21 ParenthesizedExpression "({
+}) : Point
+>Point : Point
+>({
     x: 0,
     y: 0,
     add: function(dx, dy) {
         return new Point(this.x + dx, this.y + dy);
     },
     mult: function(p) { return p; }
-})" = { x: number; y: number; add: (dx: any, dy: any) => Point; mult: (p: any) => any; }
-Line 22 col 22 ObjectLiteralExpression "{
+}) : { x: number; y: number; add: (dx: any, dy: any) => Point; mult: (p: any) => any; }
+>{
     x: 0,
     y: 0,
     add: function(dx, dy) {
         return new Point(this.x + dx, this.y + dy);
     },
     mult: function(p) { return p; }
-}" = { x: number; y: number; add: (dx: any, dy: any) => Point; mult: (p: any) => any; }
-Line 23 col 0 IdentifierName "x" = number
-Line 24 col 0 IdentifierName "y" = number
-Line 25 col 0 IdentifierName "add" = (dx: any, dy: any) => Point
-Line 25 col 9 FunctionExpression "function(dx, dy) {
+} : { x: number; y: number; add: (dx: any, dy: any) => Point; mult: (p: any) => any; }
+
+    x: 0,
+>x : number
+
+    y: 0,
+>y : number
+
+    add: function(dx, dy) {
+>add : (dx: any, dy: any) => Point
+>function(dx, dy) {
         return new Point(this.x + dx, this.y + dy);
-    }" = (dx: any, dy: any) => Point
-Line 25 col 18 IdentifierName "dx" = any
-Line 25 col 22 IdentifierName "dy" = any
-Line 26 col 15 ObjectCreationExpression "new Point(this.x + dx, this.y + dy)" = Point
-Line 26 col 19 IdentifierName "Point" = typeof Point
-Line 26 col 25 AddExpression "this.x + dx" = any
-Line 26 col 25 MemberAccessExpression "this.x" = any
-Line 26 col 25 ThisKeyword "this" = any
-Line 26 col 30 IdentifierName "x" = any
-Line 26 col 34 IdentifierName "dx" = any
-Line 26 col 38 AddExpression "this.y + dy" = any
-Line 26 col 38 MemberAccessExpression "this.y" = any
-Line 26 col 38 ThisKeyword "this" = any
-Line 26 col 43 IdentifierName "y" = any
-Line 26 col 47 IdentifierName "dy" = any
-Line 28 col 0 IdentifierName "mult" = (p: any) => any
-Line 28 col 10 FunctionExpression "function(p) { return p; }" = (p: any) => any
-Line 28 col 19 IdentifierName "p" = any
-Line 28 col 31 IdentifierName "p" = any
+    } : (dx: any, dy: any) => Point
+>dx : any
+>dy : any
+
+        return new Point(this.x + dx, this.y + dy);
+>new Point(this.x + dx, this.y + dy) : Point
+>Point : typeof Point
+>this.x + dx : any
+>this.x : any
+>this : any
+>x : any
+>dx : any
+>this.y + dy : any
+>this.y : any
+>this : any
+>y : any
+>dy : any
+
+    },
+    mult: function(p) { return p; }
+>mult : (p: any) => any
+>function(p) { return p; } : (p: any) => any
+>p : any
+>p : any
+
+})
+
+

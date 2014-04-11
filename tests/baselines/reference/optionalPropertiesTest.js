@@ -1,3 +1,4 @@
+//// [optionalPropertiesTest.js]
 var x;
 
 var foo;

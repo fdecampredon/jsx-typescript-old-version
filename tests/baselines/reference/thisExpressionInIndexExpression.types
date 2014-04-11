@@ -1,7 +1,11 @@
 === tests/cases/compiler/thisExpressionInIndexExpression.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 1 col 11 SimpleArrowFunctionExpression "r => r[this]" = (r: any) => any
-Line 1 col 11 IdentifierName "r" = any
-Line 1 col 16 ElementAccessExpression "r[this]" = any
-Line 1 col 16 IdentifierName "r" = any
-Line 1 col 18 ThisKeyword "this" = any
+function f() {
+>f : typeof f
+
+    return r => r[this];
+>r => r[this] : (r: any) => any
+>r : any
+>r[this] : any
+>r : any
+>this : any
+}

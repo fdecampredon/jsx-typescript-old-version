@@ -1,3 +1,4 @@
+//// [aliasInaccessibleModule2.js]
 var M;
 (function (M) {
     var N;

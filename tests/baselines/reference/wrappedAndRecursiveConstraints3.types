@@ -1,36 +1,58 @@
 === tests/cases/compiler/wrappedAndRecursiveConstraints3.ts ===
-Line 2 col 6 IdentifierName "C" = C<T>
-Line 2 col 8 IdentifierName "T" = T
-Line 2 col 20 IdentifierName "length" = number
-Line 3 col 16 IdentifierName "x" = T
-Line 3 col 19 IdentifierName "T" = T
-Line 4 col 0 IdentifierName "foo" = <U extends T>(x: U) => <V extends U>(x: V) => V
-Line 4 col 8 IdentifierName "U" = U
-Line 4 col 18 IdentifierName "T" = T
-Line 4 col 21 IdentifierName "x" = U
-Line 4 col 24 IdentifierName "U" = U
-Line 5 col 17 IdentifierName "bar" = <V extends U>(x: V) => V
-Line 5 col 21 IdentifierName "V" = V
-Line 5 col 31 IdentifierName "U" = U
-Line 5 col 34 IdentifierName "x" = V
-Line 5 col 37 IdentifierName "V" = V
-Line 6 col 19 IdentifierName "x" = V
-Line 8 col 15 IdentifierName "bar" = <V extends U>(x: V) => V
-Line 12 col 4 IdentifierName "c" = C<{ length: number; }>
-Line 12 col 8 ObjectCreationExpression "new C({ length: 2 })" = C<{ length: number; }>
-Line 12 col 12 IdentifierName "C" = typeof C
-Line 12 col 14 ObjectLiteralExpression "{ length: 2 }" = { length: number; }
-Line 12 col 16 IdentifierName "length" = number
-Line 13 col 4 IdentifierName "r" = <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V
-Line 13 col 8 InvocationExpression "c.foo({ length: 3, charAt: (x: number) => { '' } })" = <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V
-Line 13 col 8 MemberAccessExpression "c.foo" = <U extends { length: number; }>(x: U) => <V extends U>(x: V) => V
-Line 13 col 8 IdentifierName "c" = C<{ length: number; }>
-Line 13 col 10 IdentifierName "foo" = <U extends { length: number; }>(x: U) => <V extends U>(x: V) => V
-Line 13 col 14 ObjectLiteralExpression "{ length: 3, charAt: (x: number) => { '' } }" = { length: number; charAt: (x: number) => void; }
-Line 13 col 16 IdentifierName "length" = number
-Line 13 col 27 IdentifierName "charAt" = (x: number) => void
-Line 13 col 35 ParenthesizedArrowFunctionExpression "(x: number) => { '' }" = (x: number) => void
-Line 13 col 36 IdentifierName "x" = number
-Line 14 col 4 IdentifierName "r2" = string
-Line 14 col 9 InvocationExpression "r('')" = string
-Line 14 col 9 IdentifierName "r" = <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V
+// no errors expected
+
+class C<T extends { length: number }> {
+>C : C<T>
+>T : T
+>length : number
+
+    constructor(x: T) { }
+>x : T
+>T : T
+
+    foo<U extends T>(x: U) {
+>foo : <U extends T>(x: U) => <V extends U>(x: V) => V
+>U : U
+>T : T
+>x : U
+>U : U
+
+        function bar<V extends U>(x: V) {
+>bar : <V extends U>(x: V) => V
+>V : V
+>U : U
+>x : V
+>V : V
+
+            return x;
+>x : V
+        }
+        return bar;
+>bar : <V extends U>(x: V) => V
+    }
+}
+
+var c = new C({ length: 2 });
+>c : C<{ length: number; }>
+>new C({ length: 2 }) : C<{ length: number; }>
+>C : typeof C
+>{ length: 2 } : { length: number; }
+>length : number
+
+var r = c.foo({ length: 3, charAt: (x: number) => { '' } });
+>r : <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V
+>c.foo({ length: 3, charAt: (x: number) => { '' } }) : <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V
+>c.foo : <U extends { length: number; }>(x: U) => <V extends U>(x: V) => V
+>c : C<{ length: number; }>
+>foo : <U extends { length: number; }>(x: U) => <V extends U>(x: V) => V
+>{ length: 3, charAt: (x: number) => { '' } } : { length: number; charAt: (x: number) => void; }
+>length : number
+>charAt : (x: number) => void
+>(x: number) => { '' } : (x: number) => void
+>x : number
+
+var r2 = r('');
+>r2 : string
+>r('') : string
+>r : <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V
+

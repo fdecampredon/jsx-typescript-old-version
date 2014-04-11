@@ -1,10 +1,14 @@
 === tests/cases/compiler/compoundVarDecl1.ts ===
-Line 0 col 7 IdentifierName "Foo" = Foo
-Line 0 col 17 IdentifierName "a" = number
-Line 0 col 24 IdentifierName "b" = number
-Line 0 col 31 AssignmentExpression "a = b + 2" = number
-Line 0 col 31 IdentifierName "a" = number
-Line 0 col 35 AddExpression "b + 2" = number
-Line 0 col 35 IdentifierName "b" = number
-Line 2 col 4 IdentifierName "foo" = number
-Line 2 col 13 IdentifierName "bar" = number
+module Foo { var a = 1, b = 1; a = b + 2; }
+>Foo : Foo
+>a : number
+>b : number
+>a = b + 2 : number
+>a : number
+>b + 2 : number
+>b : number
+
+var foo = 4, bar = 5;
+>foo : number
+>bar : number
+

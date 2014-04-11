@@ -1,3 +1,8 @@
+//// [exportImportMultipleFiles_userCode.ts]
+import lib = require('./exportImportMultipleFiles_library');
+lib.math.add(3, 4); // Shouldnt be error
+
+
 //// [exportImportMultipleFiles_math.js]
 define(["require", "exports"], function(require, exports) {
     function add(a, b) {

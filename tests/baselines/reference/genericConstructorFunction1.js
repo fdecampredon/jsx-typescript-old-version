@@ -1,3 +1,4 @@
+//// [genericConstructorFunction1.js]
 function f1(args) {
     var v1;
     var v2 = v1['test'];

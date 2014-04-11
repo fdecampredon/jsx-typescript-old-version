@@ -1,3 +1,4 @@
+//// [privacyTypeParametersOfInterface.js]
 var privateClass = (function () {
     function privateClass() {
     }

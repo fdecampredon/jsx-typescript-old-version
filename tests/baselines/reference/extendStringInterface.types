@@ -1,27 +1,44 @@
 === tests/cases/compiler/extendStringInterface.ts ===
-Line 0 col 10 IdentifierName "String" = String
-Line 1 col 0 IdentifierName "doStuff" = () => string
-Line 2 col 0 IdentifierName "doOtherStuff" = <T>(x: T) => T
-Line 2 col 17 IdentifierName "T" = T
-Line 2 col 20 IdentifierName "x" = T
-Line 2 col 22 IdentifierName "T" = T
-Line 2 col 26 IdentifierName "T" = T
-Line 5 col 4 IdentifierName "x" = string
-Line 6 col 4 IdentifierName "a" = string
-Line 6 col 16 InvocationExpression "x.doStuff()" = string
-Line 6 col 16 MemberAccessExpression "x.doStuff" = () => string
-Line 6 col 16 IdentifierName "x" = string
-Line 6 col 18 IdentifierName "doStuff" = () => string
-Line 7 col 4 IdentifierName "b" = string
-Line 7 col 16 InvocationExpression "x.doOtherStuff('hm')" = string
-Line 7 col 16 MemberAccessExpression "x.doOtherStuff" = <T>(x: T) => T
-Line 7 col 16 IdentifierName "x" = string
-Line 7 col 18 IdentifierName "doOtherStuff" = <T>(x: T) => T
-Line 8 col 4 IdentifierName "c" = string
-Line 8 col 16 InvocationExpression "x['doStuff']()" = string
-Line 8 col 16 ElementAccessExpression "x['doStuff']" = () => string
-Line 8 col 16 IdentifierName "x" = string
-Line 9 col 4 IdentifierName "d" = string
-Line 9 col 16 InvocationExpression "x['doOtherStuff']('hm')" = string
-Line 9 col 16 ElementAccessExpression "x['doOtherStuff']" = <T>(x: T) => T
-Line 9 col 16 IdentifierName "x" = string
+interface String {
+>String : String
+
+    doStuff(): string;
+>doStuff : () => string
+
+    doOtherStuff<T>(x:T): T;
+>doOtherStuff : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+}
+
+var x = '';
+>x : string
+
+var a: string = x.doStuff();
+>a : string
+>x.doStuff() : string
+>x.doStuff : () => string
+>x : string
+>doStuff : () => string
+
+var b: string = x.doOtherStuff('hm');
+>b : string
+>x.doOtherStuff('hm') : string
+>x.doOtherStuff : <T>(x: T) => T
+>x : string
+>doOtherStuff : <T>(x: T) => T
+
+var c: string = x['doStuff']();
+>c : string
+>x['doStuff']() : string
+>x['doStuff'] : () => string
+>x : string
+
+var d: string = x['doOtherStuff']('hm');
+>d : string
+>x['doOtherStuff']('hm') : string
+>x['doOtherStuff'] : <T>(x: T) => T
+>x : string
+

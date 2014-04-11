@@ -1,10 +1,14 @@
 === tests/cases/compiler/ambientModules.ts ===
-Line 0 col 15 IdentifierName "Foo" = Foo
-Line 0 col 19 IdentifierName "Bar" = Foo.Bar
-Line 0 col 36 IdentifierName "foo" = any
-Line 1 col 0 AssignmentExpression "Foo.Bar.foo = 5" = number
-Line 1 col 0 MemberAccessExpression "Foo.Bar.foo" = any
-Line 1 col 0 MemberAccessExpression "Foo.Bar" = typeof Foo.Bar
-Line 1 col 0 IdentifierName "Foo" = typeof Foo
-Line 1 col 4 IdentifierName "Bar" = typeof Foo.Bar
-Line 1 col 8 IdentifierName "foo" = any
+declare module Foo.Bar { export var foo; };
+>Foo : Foo
+>Bar : Foo.Bar
+>foo : any
+
+Foo.Bar.foo = 5; 
+>Foo.Bar.foo = 5 : number
+>Foo.Bar.foo : any
+>Foo.Bar : typeof Foo.Bar
+>Foo : typeof Foo
+>Bar : typeof Foo.Bar
+>foo : any
+

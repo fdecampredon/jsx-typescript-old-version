@@ -1,3 +1,4 @@
+//// [inheritSameNamePrivatePropertiesFromDifferentOrigins.js]
 var C = (function () {
     function C() {
     }

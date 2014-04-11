@@ -1,52 +1,79 @@
 === tests/cases/compiler/logicalAndOperatorWithTypeParameters.ts ===
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 IdentifierName "T" = T
-Line 3 col 16 IdentifierName "U" = U
-Line 3 col 19 IdentifierName "V/* extends T*/" = V
-Line 3 col 36 IdentifierName "t" = T
-Line 3 col 39 IdentifierName "T" = T
-Line 3 col 42 IdentifierName "u" = U
-Line 3 col 45 IdentifierName "U" = U
-Line 3 col 48 IdentifierName "v" = V
-Line 3 col 51 IdentifierName "V" = V
-Line 4 col 8 IdentifierName "r1" = T
-Line 4 col 13 LogicalAndExpression "t && t" = T
-Line 4 col 13 IdentifierName "t" = T
-Line 4 col 18 IdentifierName "t" = T
-Line 5 col 8 IdentifierName "r2" = T
-Line 5 col 13 LogicalAndExpression "u && t" = T
-Line 5 col 13 IdentifierName "u" = U
-Line 5 col 18 IdentifierName "t" = T
-Line 6 col 8 IdentifierName "r3" = T
-Line 6 col 13 LogicalAndExpression "v && t" = T
-Line 6 col 13 IdentifierName "v" = V
-Line 6 col 18 IdentifierName "t" = T
-Line 8 col 8 IdentifierName "r4" = U
-Line 8 col 13 LogicalAndExpression "t && u" = U
-Line 8 col 13 IdentifierName "t" = T
-Line 8 col 18 IdentifierName "u" = U
-Line 9 col 8 IdentifierName "r5" = U
-Line 9 col 13 LogicalAndExpression "u && u" = U
-Line 9 col 13 IdentifierName "u" = U
-Line 9 col 18 IdentifierName "u" = U
-Line 10 col 8 IdentifierName "r6" = U
-Line 10 col 13 LogicalAndExpression "v && u" = U
-Line 10 col 13 IdentifierName "v" = V
-Line 10 col 18 IdentifierName "u" = U
-Line 12 col 8 IdentifierName "r7" = V
-Line 12 col 13 LogicalAndExpression "t && v" = V
-Line 12 col 13 IdentifierName "t" = T
-Line 12 col 18 IdentifierName "v" = V
-Line 13 col 8 IdentifierName "r8" = V
-Line 13 col 13 LogicalAndExpression "u && v" = V
-Line 13 col 13 IdentifierName "u" = U
-Line 13 col 18 IdentifierName "v" = V
-Line 14 col 8 IdentifierName "r9" = V
-Line 14 col 13 LogicalAndExpression "v && v" = V
-Line 14 col 13 IdentifierName "v" = V
-Line 14 col 18 IdentifierName "v" = V
-Line 16 col 8 IdentifierName "a" = number
-Line 17 col 8 IdentifierName "r10" = number
-Line 17 col 14 LogicalAndExpression "t && a" = number
-Line 17 col 14 IdentifierName "t" = T
-Line 17 col 19 IdentifierName "a" = number
+// The && operator permits the operands to be of any type and produces a result of the same
+// type as the second operand.
+
+function foo<T, U, V/* extends T*/>(t: T, u: U, v: V) {
+>foo : typeof foo
+>T : T
+>U : U
+>V/* extends T*/ : V
+>t : T
+>T : T
+>u : U
+>U : U
+>v : V
+>V : V
+
+    var r1 = t && t;
+>r1 : T
+>t && t : T
+>t : T
+>t : T
+
+    var r2 = u && t;
+>r2 : T
+>u && t : T
+>u : U
+>t : T
+
+    var r3 = v && t;
+>r3 : T
+>v && t : T
+>v : V
+>t : T
+
+    var r4 = t && u;
+>r4 : U
+>t && u : U
+>t : T
+>u : U
+
+    var r5 = u && u;
+>r5 : U
+>u && u : U
+>u : U
+>u : U
+
+    var r6 = v && u;
+>r6 : U
+>v && u : U
+>v : V
+>u : U
+
+    var r7 = t && v;
+>r7 : V
+>t && v : V
+>t : T
+>v : V
+
+    var r8 = u && v;
+>r8 : V
+>u && v : V
+>u : U
+>v : V
+
+    var r9 = v && v;
+>r9 : V
+>v && v : V
+>v : V
+>v : V
+
+    var a: number;
+>a : number
+
+    var r10 = t && a;
+>r10 : number
+>t && a : number
+>t : T
+>a : number
+}

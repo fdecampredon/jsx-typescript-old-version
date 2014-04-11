@@ -1,57 +1,75 @@
 === tests/cases/compiler/uncaughtCompilerError1.ts ===
-Line 0 col 12 IdentifierName "index" = any
-Line 0 col 19 IdentifierName "lineTokens" = any
-Line 0 col 31 IdentifierName "token" = any
-Line 0 col 38 IdentifierName "tokens" = any
-Line 2 col 9 IdentifierName "f" = typeof f
-Line 3 col 8 LogicalAndExpression "lineTokens[index].trim() === '=' && index > 0 && token.type === '' && tokens[index - 1].type === 'attribute.name.html'" = boolean
-Line 3 col 8 LogicalAndExpression "lineTokens[index].trim() === '=' && index > 0 && token.type === ''" = boolean
-Line 3 col 8 LogicalAndExpression "lineTokens[index].trim() === '=' && index > 0" = boolean
-Line 3 col 8 EqualsExpression "lineTokens[index].trim() === '='" = boolean
-Line 3 col 8 InvocationExpression "lineTokens[index].trim()" = any
-Line 3 col 8 MemberAccessExpression "lineTokens[index].trim" = any
-Line 3 col 8 ElementAccessExpression "lineTokens[index]" = any
-Line 3 col 8 IdentifierName "lineTokens" = any
-Line 3 col 19 IdentifierName "index" = any
-Line 3 col 26 IdentifierName "trim" = any
-Line 3 col 44 GreaterThanExpression "index > 0" = boolean
-Line 3 col 44 IdentifierName "index" = any
-Line 3 col 57 EqualsExpression "token.type === ''" = boolean
-Line 3 col 57 MemberAccessExpression "token.type" = any
-Line 3 col 57 IdentifierName "token" = any
-Line 3 col 63 IdentifierName "type" = any
-Line 3 col 78 EqualsExpression "tokens[index - 1].type === 'attribute.name.html'" = boolean
-Line 3 col 78 MemberAccessExpression "tokens[index - 1].type" = any
-Line 3 col 78 ElementAccessExpression "tokens[index - 1]" = any
-Line 3 col 78 IdentifierName "tokens" = any
-Line 3 col 85 SubtractExpression "index - 1" = number
-Line 3 col 85 IdentifierName "index" = any
-Line 3 col 96 IdentifierName "type" = any
-Line 4 col 12 EqualsExpression "index === (tokens.length - 1)" = boolean
-Line 4 col 12 IdentifierName "index" = any
-Line 4 col 22 ParenthesizedExpression "(tokens.length - 1)" = number
-Line 4 col 23 SubtractExpression "tokens.length - 1" = number
-Line 4 col 23 MemberAccessExpression "tokens.length" = any
-Line 4 col 23 IdentifierName "tokens" = any
-Line 4 col 30 IdentifierName "length" = any
-Line 5 col 19 ObjectLiteralExpression "{ appendText: '\"\"', advanceCount: 1 }" = { appendText: string; advanceCount: number; }
-Line 5 col 21 IdentifierName "appendText" = string
-Line 5 col 41 IdentifierName "advanceCount" = number
-Line 7 col 17 LogicalAndExpression "tokens[index + 1].type !== 'attribute.value.html' && tokens[index + 1].type !== ''" = boolean
-Line 7 col 17 NotEqualsExpression "tokens[index + 1].type !== 'attribute.value.html'" = boolean
-Line 7 col 17 MemberAccessExpression "tokens[index + 1].type" = any
-Line 7 col 17 ElementAccessExpression "tokens[index + 1]" = any
-Line 7 col 17 IdentifierName "tokens" = any
-Line 7 col 24 AddExpression "index + 1" = any
-Line 7 col 24 IdentifierName "index" = any
-Line 7 col 35 IdentifierName "type" = any
-Line 7 col 70 NotEqualsExpression "tokens[index + 1].type !== ''" = boolean
-Line 7 col 70 MemberAccessExpression "tokens[index + 1].type" = any
-Line 7 col 70 ElementAccessExpression "tokens[index + 1]" = any
-Line 7 col 70 IdentifierName "tokens" = any
-Line 7 col 77 AddExpression "index + 1" = any
-Line 7 col 77 IdentifierName "index" = any
-Line 7 col 88 IdentifierName "type" = any
-Line 8 col 19 ObjectLiteralExpression "{ appendText: '\"\"', advanceCount: 1 }" = { appendText: string; advanceCount: number; }
-Line 8 col 21 IdentifierName "appendText" = string
-Line 8 col 41 IdentifierName "advanceCount" = number
+declare var index, lineTokens, token, tokens;
+>index : any
+>lineTokens : any
+>token : any
+>tokens : any
+
+function f() {
+>f : typeof f
+
+    if (lineTokens[index].trim() === '=' && index > 0 && token.type === '' && tokens[index - 1].type === 'attribute.name.html') {
+>lineTokens[index].trim() === '=' && index > 0 && token.type === '' && tokens[index - 1].type === 'attribute.name.html' : boolean
+>lineTokens[index].trim() === '=' && index > 0 && token.type === '' : boolean
+>lineTokens[index].trim() === '=' && index > 0 : boolean
+>lineTokens[index].trim() === '=' : boolean
+>lineTokens[index].trim() : any
+>lineTokens[index].trim : any
+>lineTokens[index] : any
+>lineTokens : any
+>index : any
+>trim : any
+>index > 0 : boolean
+>index : any
+>token.type === '' : boolean
+>token.type : any
+>token : any
+>type : any
+>tokens[index - 1].type === 'attribute.name.html' : boolean
+>tokens[index - 1].type : any
+>tokens[index - 1] : any
+>tokens : any
+>index - 1 : number
+>index : any
+>type : any
+
+        if (index === (tokens.length - 1)) {
+>index === (tokens.length - 1) : boolean
+>index : any
+>(tokens.length - 1) : number
+>tokens.length - 1 : number
+>tokens.length : any
+>tokens : any
+>length : any
+
+            return { appendText: '\"\"', advanceCount: 1 };
+>{ appendText: '\"\"', advanceCount: 1 } : { appendText: string; advanceCount: number; }
+>appendText : string
+>advanceCount : number
+        }
+        else if (tokens[index + 1].type !== 'attribute.value.html' && tokens[index + 1].type !== '') {
+>tokens[index + 1].type !== 'attribute.value.html' && tokens[index + 1].type !== '' : boolean
+>tokens[index + 1].type !== 'attribute.value.html' : boolean
+>tokens[index + 1].type : any
+>tokens[index + 1] : any
+>tokens : any
+>index + 1 : any
+>index : any
+>type : any
+>tokens[index + 1].type !== '' : boolean
+>tokens[index + 1].type : any
+>tokens[index + 1] : any
+>tokens : any
+>index + 1 : any
+>index : any
+>type : any
+
+            return { appendText: '\"\"', advanceCount: 1 };
+>{ appendText: '\"\"', advanceCount: 1 } : { appendText: string; advanceCount: number; }
+>appendText : string
+>advanceCount : number
+        }
+        return null;
+    }
+}
+

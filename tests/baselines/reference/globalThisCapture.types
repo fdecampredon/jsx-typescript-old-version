@@ -1,13 +1,23 @@
 === tests/cases/compiler/globalThisCapture.ts ===
-Line 0 col 0 ParenthesizedExpression "// Add a lambda to ensure global 'this' capture is triggered
-(()=>this.window)" = () => any
-Line 1 col 1 ParenthesizedArrowFunctionExpression "()=>this.window" = () => any
-Line 1 col 5 MemberAccessExpression "this.window" = any
-Line 1 col 5 ThisKeyword "this" = any
-Line 1 col 10 IdentifierName "window" = any
-Line 3 col 4 IdentifierName "parts" = any[]
-Line 3 col 12 ArrayLiteralExpression "[]" = any[]
-Line 4 col 0 ElementAccessExpression "// Ensure that the generated code is correct
-parts[0]" = any
-Line 4 col 0 IdentifierName "// Ensure that the generated code is correct
-parts" = any[]
+// Add a lambda to ensure global 'this' capture is triggered
+>// Add a lambda to ensure global 'this' capture is triggered
+(()=>this.window) : () => any
+
+(()=>this.window);
+>()=>this.window : () => any
+>this.window : any
+>this : any
+>window : any
+
+var parts = [];
+>parts : any[]
+>[] : any[]
+
+>// Ensure that the generated code is correct
+parts[0] : any
+>// Ensure that the generated code is correct
+parts : any[]
+
+// Ensure that the generated code is correct
+parts[0];
+

@@ -1,13 +1,19 @@
 === tests/cases/compiler/functionOverloads15.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "foo" = { a: string; b: number; }
-Line 0 col 18 IdentifierName "a" = string
-Line 0 col 28 IdentifierName "b" = number
-Line 1 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 13 IdentifierName "foo" = { a: string; b: number; }
-Line 1 col 18 IdentifierName "a" = string
-Line 1 col 28 IdentifierName "b" = number
-Line 2 col 9 IdentifierName "foo" = typeof foo
-Line 2 col 13 IdentifierName "foo" = { a: string; b?: number; }
-Line 2 col 18 IdentifierName "a" = string
-Line 2 col 28 IdentifierName "b" = number
+function foo(foo:{a:string; b:number;}):string;
+>foo : typeof foo
+>foo : { a: string; b: number; }
+>a : string
+>b : number
+
+function foo(foo:{a:string; b:number;}):number;
+>foo : typeof foo
+>foo : { a: string; b: number; }
+>a : string
+>b : number
+
+function foo(foo:{a:string; b?:number;}):any { return "" }
+>foo : typeof foo
+>foo : { a: string; b?: number; }
+>a : string
+>b : number
+

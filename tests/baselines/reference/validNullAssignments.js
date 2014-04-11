@@ -1,3 +1,4 @@
+//// [validNullAssignments.js]
 var a = null;
 var b = null;
 var c = null;

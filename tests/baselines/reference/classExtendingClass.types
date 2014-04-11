@@ -1,64 +1,112 @@
 === tests/cases/compiler/classExtendingClass.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "foo" = string
-Line 2 col 0 IdentifierName "thing" = () => void
-Line 3 col 11 IdentifierName "other" = () => void
-Line 6 col 6 IdentifierName "D" = D
-Line 6 col 16 IdentifierName "C" = C
-Line 7 col 0 IdentifierName "bar" = string
-Line 10 col 4 IdentifierName "d" = D
-Line 10 col 7 IdentifierName "D" = D
-Line 11 col 4 IdentifierName "r" = string
-Line 11 col 8 MemberAccessExpression "d.foo" = string
-Line 11 col 8 IdentifierName "d" = D
-Line 11 col 10 IdentifierName "foo" = string
-Line 12 col 4 IdentifierName "r2" = string
-Line 12 col 9 MemberAccessExpression "d.bar" = string
-Line 12 col 9 IdentifierName "d" = D
-Line 12 col 11 IdentifierName "bar" = string
-Line 13 col 4 IdentifierName "r3" = void
-Line 13 col 9 InvocationExpression "d.thing()" = void
-Line 13 col 9 MemberAccessExpression "d.thing" = () => void
-Line 13 col 9 IdentifierName "d" = D
-Line 13 col 11 IdentifierName "thing" = () => void
-Line 14 col 4 IdentifierName "r4" = void
-Line 14 col 9 InvocationExpression "D.other()" = void
-Line 14 col 9 MemberAccessExpression "D.other" = () => void
-Line 14 col 9 IdentifierName "D" = typeof D
-Line 14 col 11 IdentifierName "other" = () => void
-Line 16 col 6 IdentifierName "C2" = C2<T>
-Line 16 col 9 IdentifierName "T" = T
-Line 17 col 0 IdentifierName "foo" = T
-Line 17 col 9 IdentifierName "T" = T
-Line 18 col 0 IdentifierName "thing" = (x: T) => void
-Line 18 col 10 IdentifierName "x" = T
-Line 18 col 13 IdentifierName "T" = T
-Line 19 col 11 IdentifierName "other" = <T>(x: T) => void
-Line 19 col 17 IdentifierName "T" = T
-Line 19 col 20 IdentifierName "x" = T
-Line 19 col 23 IdentifierName "T" = T
-Line 22 col 6 IdentifierName "D2" = D2<T>
-Line 22 col 9 IdentifierName "T" = T
-Line 22 col 20 IdentifierName "C2" = C2<T>
-Line 22 col 23 IdentifierName "T" = T
-Line 23 col 0 IdentifierName "bar" = string
-Line 26 col 4 IdentifierName "d2" = D2<string>
-Line 26 col 8 IdentifierName "D2" = D2<T>
-Line 27 col 4 IdentifierName "r5" = string
-Line 27 col 9 MemberAccessExpression "d2.foo" = string
-Line 27 col 9 IdentifierName "d2" = D2<string>
-Line 27 col 12 IdentifierName "foo" = string
-Line 28 col 4 IdentifierName "r6" = string
-Line 28 col 9 MemberAccessExpression "d2.bar" = string
-Line 28 col 9 IdentifierName "d2" = D2<string>
-Line 28 col 12 IdentifierName "bar" = string
-Line 29 col 4 IdentifierName "r7" = void
-Line 29 col 9 InvocationExpression "d2.thing('')" = void
-Line 29 col 9 MemberAccessExpression "d2.thing" = (x: string) => void
-Line 29 col 9 IdentifierName "d2" = D2<string>
-Line 29 col 12 IdentifierName "thing" = (x: string) => void
-Line 30 col 4 IdentifierName "r8" = void
-Line 30 col 9 InvocationExpression "D2.other(1)" = void
-Line 30 col 9 MemberAccessExpression "D2.other" = <T>(x: T) => void
-Line 30 col 9 IdentifierName "D2" = typeof D2
-Line 30 col 12 IdentifierName "other" = <T>(x: T) => void
+class C {
+>C : C
+
+    foo: string;
+>foo : string
+
+    thing() { }
+>thing : () => void
+
+    static other() { }
+>other : () => void
+}
+
+class D extends C {
+>D : D
+>C : C
+
+    bar: string;
+>bar : string
+}
+
+var d: D;
+>d : D
+>D : D
+
+var r = d.foo;
+>r : string
+>d.foo : string
+>d : D
+>foo : string
+
+var r2 = d.bar;
+>r2 : string
+>d.bar : string
+>d : D
+>bar : string
+
+var r3 = d.thing();
+>r3 : void
+>d.thing() : void
+>d.thing : () => void
+>d : D
+>thing : () => void
+
+var r4 = D.other();
+>r4 : void
+>D.other() : void
+>D.other : () => void
+>D : typeof D
+>other : () => void
+
+class C2<T> {
+>C2 : C2<T>
+>T : T
+
+    foo: T;
+>foo : T
+>T : T
+
+    thing(x: T) { }
+>thing : (x: T) => void
+>x : T
+>T : T
+
+    static other<T>(x: T) { }
+>other : <T>(x: T) => void
+>T : T
+>x : T
+>T : T
+}
+
+class D2<T> extends C2<T> {
+>D2 : D2<T>
+>T : T
+>C2 : C2<T>
+>T : T
+
+    bar: string;
+>bar : string
+}
+
+var d2: D2<string>;
+>d2 : D2<string>
+>D2 : D2<T>
+
+var r5 = d2.foo;
+>r5 : string
+>d2.foo : string
+>d2 : D2<string>
+>foo : string
+
+var r6 = d2.bar;
+>r6 : string
+>d2.bar : string
+>d2 : D2<string>
+>bar : string
+
+var r7 = d2.thing('');
+>r7 : void
+>d2.thing('') : void
+>d2.thing : (x: string) => void
+>d2 : D2<string>
+>thing : (x: string) => void
+
+var r8 = D2.other(1);
+>r8 : void
+>D2.other(1) : void
+>D2.other : <T>(x: T) => void
+>D2 : typeof D2
+>other : <T>(x: T) => void
+

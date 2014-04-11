@@ -1,7 +1,16 @@
 === tests/cases/compiler/declFileForFunctionTypeAsTypeParameter.ts ===
-Line 1 col 6 IdentifierName "X" = X<T>
-Line 1 col 8 IdentifierName "T" = T
-Line 3 col 6 IdentifierName "C" = C
-Line 3 col 16 IdentifierName "X" = X<T>
-Line 5 col 10 IdentifierName "I" = I
-Line 5 col 20 IdentifierName "X" = X<T>
+
+class X<T> {
+>X : X<T>
+>T : T
+}
+class C extends X<() => number> {
+>C : C
+>X : X<T>
+}
+interface I extends X<() => number> {
+>I : I
+>X : X<T>
+}
+
+

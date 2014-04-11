@@ -1,3 +1,4 @@
+//// [variableDeclaratorResolvedDuringContextualTyping.js]
 var WinJS;
 (function (WinJS) {
 })(WinJS || (WinJS = {}));

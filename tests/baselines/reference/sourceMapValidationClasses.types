@@ -1,72 +1,119 @@
 === tests/cases/compiler/sourceMapValidationClasses.ts ===
-Line 0 col 7 IdentifierName "Foo" = Foo
-Line 0 col 11 IdentifierName "Bar" = Foo.Bar
-Line 3 col 10 IdentifierName "Greeter" = Greeter
-Line 4 col 27 IdentifierName "greeting" = string
-Line 6 col 0 IdentifierName "greet" = () => string
-Line 8 col 19 AddExpression ""<h1>" + this.greeting + "</h1>"" = string
-Line 8 col 19 AddExpression ""<h1>" + this.greeting" = string
-Line 8 col 28 MemberAccessExpression "this.greeting" = string
-Line 8 col 28 ThisKeyword "this" = Greeter
-Line 8 col 33 IdentifierName "greeting" = string
-Line 13 col 13 IdentifierName "foo" = typeof foo
-Line 13 col 17 IdentifierName "greeting" = string
-Line 13 col 36 IdentifierName "Greeter" = Greeter
-Line 14 col 15 ObjectCreationExpression "new Greeter(greeting)" = Greeter
-Line 14 col 19 IdentifierName "Greeter" = typeof Greeter
-Line 14 col 27 IdentifierName "greeting" = string
-Line 17 col 8 IdentifierName "greeter" = Greeter
-Line 17 col 18 ObjectCreationExpression "new Greeter("Hello, world!")" = Greeter
-Line 17 col 22 IdentifierName "Greeter" = typeof Greeter
-Line 18 col 8 IdentifierName "str" = string
-Line 18 col 14 InvocationExpression "greeter.greet()" = string
-Line 18 col 14 MemberAccessExpression "greeter.greet" = () => string
-Line 18 col 14 IdentifierName "greeter" = Greeter
-Line 18 col 22 IdentifierName "greet" = () => string
-Line 20 col 13 IdentifierName "foo2" = typeof foo2
-Line 20 col 18 IdentifierName "greeting" = string
-Line 20 col 39 IdentifierName "restGreetings /* more greeting */" = string[]
-Line 21 col 12 IdentifierName "greeters" = Greeter[]
-Line 21 col 22 IdentifierName "Greeter" = Greeter
-Line 21 col 34 ArrayLiteralExpression "[]" = Greeter[]
-Line 22 col 0 AssignmentExpression "greeters[0] = new Greeter(greeting)" = Greeter
-Line 22 col 0 ElementAccessExpression "greeters[0]" = Greeter
-Line 22 col 0 IdentifierName "greeters" = Greeter[]
-Line 22 col 22 ObjectCreationExpression "new Greeter(greeting)" = Greeter
-Line 22 col 26 IdentifierName "Greeter" = typeof Greeter
-Line 22 col 34 IdentifierName "greeting" = string
-Line 23 col 17 IdentifierName "i" = number
-Line 23 col 24 LessThanExpression "i < restGreetings.length" = boolean
-Line 23 col 24 IdentifierName "i" = number
-Line 23 col 28 MemberAccessExpression "restGreetings.length" = number
-Line 23 col 28 IdentifierName "restGreetings" = string[]
-Line 23 col 42 IdentifierName "length" = number
-Line 23 col 50 PostIncrementExpression "i++" = number
-Line 23 col 50 IdentifierName "i" = number
-Line 24 col 0 InvocationExpression "greeters.push(new Greeter(restGreetings[i]))" = number
-Line 24 col 0 MemberAccessExpression "greeters.push" = (...items: Greeter[]) => number
-Line 24 col 0 IdentifierName "greeters" = Greeter[]
-Line 24 col 21 IdentifierName "push" = (...items: Greeter[]) => number
-Line 24 col 26 ObjectCreationExpression "new Greeter(restGreetings[i])" = Greeter
-Line 24 col 30 IdentifierName "Greeter" = typeof Greeter
-Line 24 col 38 ElementAccessExpression "restGreetings[i]" = string
-Line 24 col 38 IdentifierName "restGreetings" = string[]
-Line 24 col 52 IdentifierName "i" = number
-Line 27 col 15 IdentifierName "greeters" = Greeter[]
-Line 30 col 8 IdentifierName "b" = Greeter[]
-Line 30 col 12 InvocationExpression "foo2("Hello", "World", "!")" = Greeter[]
-Line 30 col 12 IdentifierName "foo2" = typeof foo2
-Line 32 col 13 IdentifierName "j" = number
-Line 32 col 20 LessThanExpression "j < b.length" = boolean
-Line 32 col 20 IdentifierName "j" = number
-Line 32 col 24 MemberAccessExpression "b.length" = number
-Line 32 col 24 IdentifierName "b" = Greeter[]
-Line 32 col 26 IdentifierName "length" = number
-Line 32 col 34 PostIncrementExpression "j++" = number
-Line 32 col 34 IdentifierName "j" = number
-Line 33 col 0 InvocationExpression "b[j].greet()" = string
-Line 33 col 0 MemberAccessExpression "b[j].greet" = () => string
-Line 33 col 0 ElementAccessExpression "b[j]" = Greeter
-Line 33 col 0 IdentifierName "b" = Greeter[]
-Line 33 col 10 IdentifierName "j" = number
-Line 33 col 13 IdentifierName "greet" = () => string
+module Foo.Bar {
+>Foo : Foo
+>Bar : Foo.Bar
+
+    "use strict";
+
+    class Greeter {
+>Greeter : Greeter
+
+        constructor(public greeting: string) {
+>greeting : string
+        }
+
+>greet : () => string
+
+        greet() {
+            return "<h1>" + this.greeting + "</h1>";
+>"<h1>" + this.greeting + "</h1>" : string
+>"<h1>" + this.greeting : string
+>this.greeting : string
+>this : Greeter
+>greeting : string
+        }
+    }
+
+
+    function foo(greeting: string): Greeter {
+>foo : typeof foo
+>greeting : string
+>Greeter : Greeter
+
+        return new Greeter(greeting);
+>new Greeter(greeting) : Greeter
+>Greeter : typeof Greeter
+>greeting : string
+    }
+
+    var greeter = new Greeter("Hello, world!");
+>greeter : Greeter
+>new Greeter("Hello, world!") : Greeter
+>Greeter : typeof Greeter
+
+    var str = greeter.greet();
+>str : string
+>greeter.greet() : string
+>greeter.greet : () => string
+>greeter : Greeter
+>greet : () => string
+
+    function foo2(greeting: string, ...restGreetings /* more greeting */: string[]) {
+>foo2 : typeof foo2
+>greeting : string
+>restGreetings /* more greeting */ : string[]
+
+        var greeters: Greeter[] = []; /* inline block comment */
+>greeters : Greeter[]
+>Greeter : Greeter
+>[] : Greeter[]
+
+        greeters[0] = new Greeter(greeting);
+>greeters[0] = new Greeter(greeting) : Greeter
+>greeters[0] : Greeter
+>greeters : Greeter[]
+>new Greeter(greeting) : Greeter
+>Greeter : typeof Greeter
+>greeting : string
+
+        for (var i = 0; i < restGreetings.length; i++) {
+>i : number
+>i < restGreetings.length : boolean
+>i : number
+>restGreetings.length : number
+>restGreetings : string[]
+>length : number
+>i++ : number
+>i : number
+
+            greeters.push(new Greeter(restGreetings[i]));
+>greeters.push(new Greeter(restGreetings[i])) : number
+>greeters.push : (...items: Greeter[]) => number
+>greeters : Greeter[]
+>push : (...items: Greeter[]) => number
+>new Greeter(restGreetings[i]) : Greeter
+>Greeter : typeof Greeter
+>restGreetings[i] : string
+>restGreetings : string[]
+>i : number
+        }
+
+        return greeters;
+>greeters : Greeter[]
+    }
+
+    var b = foo2("Hello", "World", "!");
+>b : Greeter[]
+>foo2("Hello", "World", "!") : Greeter[]
+>foo2 : typeof foo2
+
+    // This is simple signle line comment
+    for (var j = 0; j < b.length; j++) {
+>j : number
+>j < b.length : boolean
+>j : number
+>b.length : number
+>b : Greeter[]
+>length : number
+>j++ : number
+>j : number
+
+        b[j].greet();
+>b[j].greet() : string
+>b[j].greet : () => string
+>b[j] : Greeter
+>b : Greeter[]
+>j : number
+>greet : () => string
+    }
+}

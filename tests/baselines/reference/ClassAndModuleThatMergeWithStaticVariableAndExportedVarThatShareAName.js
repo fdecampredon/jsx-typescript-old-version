@@ -1,3 +1,4 @@
+//// [ClassAndModuleThatMergeWithStaticVariableAndExportedVarThatShareAName.js]
 var Point = (function () {
     function Point(x, y) {
         this.x = x;

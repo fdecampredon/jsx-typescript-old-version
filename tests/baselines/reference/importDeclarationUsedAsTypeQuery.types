@@ -1,7 +1,17 @@
 === tests/cases/compiler/importDeclarationUsedAsTypeQuery_1.ts ===
-Line 1 col 7 IdentifierName "a" = a
-Line 2 col 11 IdentifierName "x" = typeof a
-Line 2 col 21 IdentifierName "a" = typeof a
+///<reference path='importDeclarationUsedAsTypeQuery_require.ts'/>
+import a = require('importDeclarationUsedAsTypeQuery_require');
+>a : a
+
+export var x: typeof a;
+>x : typeof a
+>a : typeof a
+
 === tests/cases/compiler/importDeclarationUsedAsTypeQuery_require.ts ===
-Line 0 col 13 IdentifierName "B" = B
-Line 1 col 0 IdentifierName "id" = number
+export class B {
+>B : B
+
+    id: number;
+>id : number
+}
+

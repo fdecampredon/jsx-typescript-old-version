@@ -1,25 +1,53 @@
 === tests/cases/compiler/multiModuleClodule1.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 16 IdentifierName "x" = number
-Line 2 col 0 IdentifierName "foo" = () => void
-Line 3 col 0 IdentifierName "bar" = () => void
-Line 4 col 11 IdentifierName "boo" = () => void
-Line 7 col 7 IdentifierName "C" = C
-Line 8 col 15 IdentifierName "x" = number
-Line 9 col 8 IdentifierName "y" = number
-Line 11 col 7 IdentifierName "C" = C
-Line 12 col 20 IdentifierName "foo" = () => void
-Line 13 col 13 IdentifierName "baz" = () => string
-Line 16 col 4 IdentifierName "c" = C
-Line 16 col 8 ObjectCreationExpression "new C(C.x)" = C
-Line 16 col 12 IdentifierName "C" = typeof C
-Line 16 col 14 MemberAccessExpression "C.x" = number
-Line 16 col 14 IdentifierName "C" = typeof C
-Line 16 col 16 IdentifierName "x" = number
-Line 17 col 0 AssignmentExpression "c.foo = C.foo" = () => void
-Line 17 col 0 MemberAccessExpression "c.foo" = () => void
-Line 17 col 0 IdentifierName "c" = C
-Line 17 col 2 IdentifierName "foo" = () => void
-Line 17 col 8 MemberAccessExpression "C.foo" = () => void
-Line 17 col 8 IdentifierName "C" = typeof C
-Line 17 col 10 IdentifierName "foo" = () => void
+class C {
+>C : C
+
+    constructor(x: number) { }
+>x : number
+
+    foo() { }
+>foo : () => void
+
+    bar() { }
+>bar : () => void
+
+    static boo() { }
+>boo : () => void
+}
+
+module C {
+>C : C
+
+    export var x = 1;
+>x : number
+
+    var y = 2;
+>y : number
+}
+module C {
+>C : C
+
+    export function foo() { }
+>foo : () => void
+
+    function baz() { return ''; }
+>baz : () => string
+}
+
+var c = new C(C.x);
+>c : C
+>new C(C.x) : C
+>C : typeof C
+>C.x : number
+>C : typeof C
+>x : number
+
+c.foo = C.foo;
+>c.foo = C.foo : () => void
+>c.foo : () => void
+>c : C
+>foo : () => void
+>C.foo : () => void
+>C : typeof C
+>foo : () => void
+

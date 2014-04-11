@@ -1,3 +1,17 @@
+//// [commentsEnums.ts]
+
+/** Enum of colors*/
+enum Colors {
+    /** Fancy name for 'blue'*/
+    Cornflower /* blue */,
+    /** Fancy name for 'pink'*/
+    FancyPink
+}
+var x = Colors.Cornflower;
+x = Colors.FancyPink;
+
+
+
 //// [commentsEnums.js]
 /** Enum of colors*/
 var Colors;

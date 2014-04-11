@@ -1,3 +1,4 @@
+//// [rectype.js]
 var M;
 (function (M) {
     function f(p) {

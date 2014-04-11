@@ -1,3 +1,4 @@
+//// [interfaceWithPropertyThatIsPrivateInBaseType2.js]
 var Base = (function () {
     function Base() {
     }

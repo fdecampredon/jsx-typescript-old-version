@@ -1,2 +1,7 @@
 === tests/cases/compiler/randomSemicolons1.ts ===
-Line 1 col 4 IdentifierName "a" = number
+; ;
+var a = 1;
+>a : number
+
+; 
+

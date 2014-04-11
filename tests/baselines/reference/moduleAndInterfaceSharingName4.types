@@ -1,10 +1,22 @@
 === tests/cases/compiler/moduleAndInterfaceSharingName4.ts ===
-Line 0 col 15 IdentifierName "D3" = D3
-Line 1 col 8 IdentifierName "x" = Color.Color
-Line 1 col 11 IdentifierName "D3" = D3
-Line 1 col 14 IdentifierName "Color" = Color
-Line 1 col 20 IdentifierName "Color" = Color.Color
-Line 3 col 11 IdentifierName "Color" = Color
-Line 4 col 25 IdentifierName "Color" = Color
-Line 5 col 0 IdentifierName "darker" = Color
-Line 5 col 20 IdentifierName "Color" = Color
+declare module D3 {
+>D3 : D3
+
+    var x: D3.Color.Color;
+>x : Color.Color
+>D3 : D3
+>Color : Color
+>Color : Color.Color
+
+    module Color {
+>Color : Color
+
+        export interface Color {
+>Color : Color
+
+            darker: Color;
+>darker : Color
+>Color : Color
+        }
+    }
+}

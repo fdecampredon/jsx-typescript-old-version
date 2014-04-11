@@ -1,3 +1,4 @@
+//// [importAnImport.js]
 var c;
 (function (c) {
     (function (a) {

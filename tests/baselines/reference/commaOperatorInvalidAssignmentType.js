@@ -1,3 +1,4 @@
+//// [commaOperatorInvalidAssignmentType.js]
 var BOOLEAN;
 var NUMBER;
 var STRING;

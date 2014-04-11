@@ -1,20 +1,36 @@
 === tests/cases/compiler/genericBaseClassLiteralProperty.ts ===
-Line 0 col 6 IdentifierName "BaseClass" = BaseClass<T>
-Line 0 col 16 IdentifierName "T" = T
-Line 1 col 11 IdentifierName "_getValue1" = () => T
-Line 1 col 29 IdentifierName "T" = T
-Line 2 col 11 IdentifierName "_getValue2" = () => T
-Line 2 col 29 IdentifierName "T" = T
-Line 5 col 6 IdentifierName "SubClass" = SubClass
-Line 5 col 23 IdentifierName "BaseClass" = BaseClass<T>
-Line 6 col 11 IdentifierName "Error" = () => void
-Line 8 col 12 IdentifierName "x" = number
-Line 8 col 25 InvocationExpression "this._getValue1()" = number
-Line 8 col 25 MemberAccessExpression "this._getValue1" = () => number
-Line 8 col 25 ThisKeyword "this" = SubClass
-Line 8 col 30 IdentifierName "_getValue1" = () => number
-Line 9 col 12 IdentifierName "y" = number
-Line 9 col 25 InvocationExpression "this._getValue2()" = number
-Line 9 col 25 MemberAccessExpression "this._getValue2" = () => number
-Line 9 col 25 ThisKeyword "this" = SubClass
-Line 9 col 30 IdentifierName "_getValue2" = () => number
+class BaseClass<T> {
+>BaseClass : BaseClass<T>
+>T : T
+
+    public _getValue1: { (): T; };
+>_getValue1 : () => T
+>T : T
+
+    public _getValue2: () => T;
+>_getValue2 : () => T
+>T : T
+}
+
+class SubClass extends BaseClass<number> {
+>SubClass : SubClass
+>BaseClass : BaseClass<T>
+
+    public Error(): void {
+>Error : () => void
+
+        var x : number = this._getValue1();
+>x : number
+>this._getValue1() : number
+>this._getValue1 : () => number
+>this : SubClass
+>_getValue1 : () => number
+
+        var y : number = this._getValue2();
+>y : number
+>this._getValue2() : number
+>this._getValue2 : () => number
+>this : SubClass
+>_getValue2 : () => number
+    }
+}

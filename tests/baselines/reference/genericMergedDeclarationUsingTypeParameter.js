@@ -1,3 +1,4 @@
+//// [genericMergedDeclarationUsingTypeParameter.js]
 function foo(y, z) {
     return y;
 }

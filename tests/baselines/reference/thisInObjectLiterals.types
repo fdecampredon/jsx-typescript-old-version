@@ -1,28 +1,51 @@
 === tests/cases/compiler/thisInObjectLiterals.ts ===
-Line 0 col 6 IdentifierName "MyClass" = MyClass
-Line 1 col 0 IdentifierName "t" = number
-Line 2 col 0 IdentifierName "fn" = () => void
-Line 5 col 12 IdentifierName "t" = { x: MyClass; y: number; }
-Line 5 col 16 ObjectLiteralExpression "{ x: this, y: this.t }" = { x: MyClass; y: number; }
-Line 5 col 18 IdentifierName "x" = MyClass
-Line 5 col 21 ThisKeyword "this" = MyClass
-Line 5 col 27 IdentifierName "y" = number
-Line 5 col 30 MemberAccessExpression "this.t" = number
-Line 5 col 30 ThisKeyword "this" = MyClass
-Line 5 col 35 IdentifierName "t" = number
-Line 6 col 12 IdentifierName "t" = { x: MyClass; y: number; }
-Line 6 col 17 IdentifierName "x" = MyClass
-Line 6 col 20 IdentifierName "MyClass" = MyClass
-Line 6 col 29 IdentifierName "y" = number
-Line 11 col 4 IdentifierName "obj" = { f(): any; }
-Line 11 col 10 ObjectLiteralExpression "{
+class MyClass {
+>MyClass : MyClass
+
+    t: number;
+>t : number
+
+>fn : () => void
+
+    fn() {
+        //type of 'this' in an object literal is the containing scope's this
+        var t = { x: this, y: this.t };
+>t : { x: MyClass; y: number; }
+>{ x: this, y: this.t } : { x: MyClass; y: number; }
+>x : MyClass
+>this : MyClass
+>y : number
+>this.t : number
+>this : MyClass
+>t : number
+
+        var t: { x: MyClass; y: number };
+>t : { x: MyClass; y: number; }
+>x : MyClass
+>MyClass : MyClass
+>y : number
+    }
+}
+
+//type of 'this' in an object literal property of a function type is Any
+var obj = {
+>obj : { f(): any; }
+>{
     f() {
         return this.spaaace;
     }
-}" = { f(): any; }
-Line 12 col 0 IdentifierName "f" = () => any
-Line 13 col 15 MemberAccessExpression "this.spaaace" = any
-Line 13 col 15 ThisKeyword "this" = any
-Line 13 col 20 IdentifierName "spaaace" = any
-Line 16 col 4 IdentifierName "obj" = { f: () => any; }
-Line 16 col 11 IdentifierName "f" = () => any
+} : { f(): any; }
+
+    f() {
+>f : () => any
+
+        return this.spaaace;
+>this.spaaace : any
+>this : any
+>spaaace : any
+    }
+};
+var obj: { f: () => any; };
+>obj : { f: () => any; }
+>f : () => any
+

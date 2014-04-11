@@ -1,3 +1,8 @@
+//// [exportAssignmentFunction_B.ts]
+import fooFunc = require("exportAssignmentFunction_A");
+
+var n: number = fooFunc();
+
 //// [exportAssignmentFunction_A.js]
 define(["require", "exports"], function(require, exports) {
     function foo() {

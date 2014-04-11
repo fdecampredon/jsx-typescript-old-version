@@ -1,3 +1,10 @@
+//// [staticAndMemberFunctions.ts]
+class T {
+    static x() { }
+    public y() { }
+}
+
+//// [staticAndMemberFunctions.js]
 var T = (function () {
     function T() {
     }

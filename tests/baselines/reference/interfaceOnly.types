@@ -1,5 +1,11 @@
 === tests/cases/compiler/interfaceOnly.ts ===
-Line 0 col 10 IdentifierName "foo" = foo
-Line 1 col 0 IdentifierName "foo" = () => any
-Line 2 col 0 IdentifierName "f2" = (f: () => void) => any
-Line 2 col 8 IdentifierName "f" = () => void
+interface foo {
+>foo : foo
+
+    foo();
+>foo : () => any
+
+    f2 (f: ()=> void);
+>f2 : (f: () => void) => any
+>f : () => void
+}

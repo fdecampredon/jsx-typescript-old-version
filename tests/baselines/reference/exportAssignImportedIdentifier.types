@@ -1,14 +1,29 @@
 === tests/cases/compiler/foo3.ts ===
-Line 0 col 7 IdentifierName "foo2" = foo2
-Line 1 col 4 IdentifierName "x" = boolean
-Line 1 col 8 InvocationExpression "foo2()" = boolean
-Line 1 col 8 IdentifierName "foo2" = typeof x
+import foo2 = require('./foo2');
+>foo2 : foo2
+
+var x = foo2(); // should be boolean
+>x : boolean
+>foo2() : boolean
+>foo2 : typeof x
+
 === tests/cases/compiler/foo1.ts ===
-Line 0 col 16 IdentifierName "x" = typeof x
+export function x(){
+>x : typeof x
+
+	return true;
+}
+
 === tests/cases/compiler/foo2.ts ===
-Line 0 col 7 IdentifierName "foo1" = foo1
-Line 1 col 4 IdentifierName "x" = typeof foo1.x
-Line 1 col 8 MemberAccessExpression "foo1.x" = typeof foo1.x
-Line 1 col 8 IdentifierName "foo1" = typeof foo1
-Line 1 col 13 IdentifierName "x" = typeof foo1.x
-Line 2 col 9 IdentifierName "x" = typeof foo1.x
+import foo1 = require('./foo1');
+>foo1 : foo1
+
+var x = foo1.x;
+>x : typeof foo1.x
+>foo1.x : typeof foo1.x
+>foo1 : typeof foo1
+>x : typeof foo1.x
+
+export = x;
+>x : typeof foo1.x
+

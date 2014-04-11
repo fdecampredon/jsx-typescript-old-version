@@ -1,3 +1,13 @@
+//// [typeofEnum.ts]
+enum E {
+    e1,
+    e2
+}
+
+var e1: typeof E;
+e1.e1;
+
+//// [typeofEnum.js]
 var E;
 (function (E) {
     E[E["e1"] = 0] = "e1";

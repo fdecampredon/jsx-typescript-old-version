@@ -1,12 +1,21 @@
 === tests/cases/compiler/genericInterfaceFunctionTypeParameter.ts ===
-Line 0 col 17 IdentifierName "IFoo" = IFoo<A>
-Line 0 col 22 IdentifierName "A" = A
-Line 1 col 16 IdentifierName "foo" = typeof foo
-Line 1 col 20 IdentifierName "A" = A
-Line 1 col 23 IdentifierName "fn" = (ifoo: IFoo<A>) => void
-Line 1 col 28 IdentifierName "ifoo" = IFoo<A>
-Line 1 col 34 IdentifierName "IFoo" = IFoo<A>
-Line 1 col 39 IdentifierName "A" = A
-Line 2 col 0 InvocationExpression "foo(fn)" = void
-Line 2 col 0 IdentifierName "foo" = typeof foo
-Line 2 col 8 IdentifierName "fn" = (ifoo: IFoo<A>) => void
+export interface IFoo<A> { }
+>IFoo : IFoo<A>
+>A : A
+
+export function foo<A>(fn: (ifoo: IFoo<A>) => void) {
+>foo : typeof foo
+>A : A
+>fn : (ifoo: IFoo<A>) => void
+>ifoo : IFoo<A>
+>IFoo : IFoo<A>
+>A : A
+
+    foo(fn); // Invocation is necessary to repro (!)
+>foo(fn) : void
+>foo : typeof foo
+>fn : (ifoo: IFoo<A>) => void
+}
+
+
+

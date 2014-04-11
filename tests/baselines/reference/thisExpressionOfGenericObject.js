@@ -1,3 +1,13 @@
+//// [thisExpressionOfGenericObject.ts]
+class MyClass1<T> {
+    private obj: MyClass1<string>;
+    constructor() {
+        () => this;
+    }
+}
+
+
+//// [thisExpressionOfGenericObject.js]
 var MyClass1 = (function () {
     function MyClass1() {
         var _this = this;

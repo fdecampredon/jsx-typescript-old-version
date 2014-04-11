@@ -1,6 +1,8 @@
 === tests/cases/compiler/contextualTyping13.ts ===
-Line 0 col 4 IdentifierName "foo" = (a: number) => number
-Line 0 col 9 IdentifierName "a" = number
-Line 0 col 29 FunctionExpression "function(a){return a}" = (a: number) => number
-Line 0 col 38 IdentifierName "a" = number
-Line 0 col 48 IdentifierName "a" = number
+var foo:(a:number)=>number = function(a){return a};
+>foo : (a: number) => number
+>a : number
+>function(a){return a} : (a: number) => number
+>a : number
+>a : number
+

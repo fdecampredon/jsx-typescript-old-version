@@ -1,26 +1,43 @@
 === tests/cases/compiler/typeArgumentsInFunctionExpressions.ts ===
-Line 0 col 4 IdentifierName "obj" = <T>(a: T) => T
-Line 0 col 10 FunctionExpression "function f<T>(a: T) { // should not error
+var obj = function f<T>(a: T) { // should not error
+>obj : <T>(a: T) => T
+>function f<T>(a: T) { // should not error
     var x: T;
     return a;
-}" = <T>(a: T) => T
-Line 0 col 19 IdentifierName "f" = <T>(a: T) => T
-Line 0 col 21 IdentifierName "T" = T
-Line 0 col 24 IdentifierName "a" = T
-Line 0 col 27 IdentifierName "T" = T
-Line 1 col 8 IdentifierName "x" = T
-Line 1 col 11 IdentifierName "T" = T
-Line 2 col 11 IdentifierName "a" = T
-Line 5 col 4 IdentifierName "obj2" = <T>(a: T) => T
-Line 5 col 11 FunctionExpression "function f<T>(a: T): T { // should not error
+} : <T>(a: T) => T
+>f : <T>(a: T) => T
+>T : T
+>a : T
+>T : T
+
+    var x: T;
+>x : T
+>T : T
+
+    return a;
+>a : T
+
+};
+ 
+var obj2 = function f<T>(a: T): T { // should not error
+>obj2 : <T>(a: T) => T
+>function f<T>(a: T): T { // should not error
     var x: T;
     return a;
-}" = <T>(a: T) => T
-Line 5 col 20 IdentifierName "f" = <T>(a: T) => T
-Line 5 col 22 IdentifierName "T" = T
-Line 5 col 25 IdentifierName "a" = T
-Line 5 col 28 IdentifierName "T" = T
-Line 5 col 32 IdentifierName "T" = T
-Line 6 col 8 IdentifierName "x" = T
-Line 6 col 11 IdentifierName "T" = T
-Line 7 col 11 IdentifierName "a" = T
+} : <T>(a: T) => T
+>f : <T>(a: T) => T
+>T : T
+>a : T
+>T : T
+>T : T
+
+    var x: T;
+>x : T
+>T : T
+
+    return a;
+>a : T
+
+};
+
+

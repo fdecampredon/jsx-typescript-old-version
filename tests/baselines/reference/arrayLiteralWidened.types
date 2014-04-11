@@ -1,32 +1,50 @@
 === tests/cases/compiler/arrayLiteralWidened.ts ===
-Line 2 col 4 IdentifierName "a" = any[]
-Line 2 col 8 ArrayLiteralExpression "[]" = any[]
-Line 4 col 4 IdentifierName "a" = any[]
-Line 4 col 8 ArrayLiteralExpression "[null, null]" = any[]
-Line 5 col 4 IdentifierName "a" = any[]
-Line 5 col 8 ArrayLiteralExpression "[undefined, undefined]" = any[]
-Line 5 col 9 IdentifierName "undefined" = any
-Line 5 col 20 IdentifierName "undefined" = any
-Line 7 col 4 IdentifierName "b" = any[][]
-Line 7 col 8 ArrayLiteralExpression "[[], [null, null]]" = any[][]
-Line 7 col 9 ArrayLiteralExpression "[]" = any[]
-Line 7 col 13 ArrayLiteralExpression "[null, null]" = any[]
-Line 8 col 4 IdentifierName "b" = any[][]
-Line 8 col 8 ArrayLiteralExpression "[[], []]" = any[][]
-Line 8 col 9 ArrayLiteralExpression "[]" = any[]
-Line 8 col 13 ArrayLiteralExpression "[]" = any[]
-Line 9 col 4 IdentifierName "b" = any[][]
-Line 9 col 8 ArrayLiteralExpression "[[undefined, undefined]]" = any[][]
-Line 9 col 9 ArrayLiteralExpression "[undefined, undefined]" = any[]
-Line 9 col 10 IdentifierName "undefined" = any
-Line 9 col 21 IdentifierName "undefined" = any
-Line 11 col 4 IdentifierName "c" = any[][][]
-Line 11 col 8 ArrayLiteralExpression "[[[]]]" = any[][][]
-Line 11 col 9 ArrayLiteralExpression "[[]]" = any[][]
-Line 11 col 10 ArrayLiteralExpression "[]" = any[]
-Line 12 col 4 IdentifierName "c" = any[][][]
-Line 12 col 8 ArrayLiteralExpression "[[[null]],[undefined]]" = any[][][]
-Line 12 col 9 ArrayLiteralExpression "[[null]]" = any[][]
-Line 12 col 10 ArrayLiteralExpression "[null]" = any[]
-Line 12 col 18 ArrayLiteralExpression "[undefined]" = any[]
-Line 12 col 19 IdentifierName "undefined" = any
+// array literals are widened upon assignment according to their element type
+
+var a = []; // any[]
+>a : any[]
+>[] : any[]
+
+var a = [null, null];
+>a : any[]
+>[null, null] : any[]
+
+var a = [undefined, undefined];
+>a : any[]
+>[undefined, undefined] : any[]
+>undefined : any
+>undefined : any
+
+var b = [[], [null, null]]; // any[][]
+>b : any[][]
+>[[], [null, null]] : any[][]
+>[] : any[]
+>[null, null] : any[]
+
+var b = [[], []];
+>b : any[][]
+>[[], []] : any[][]
+>[] : any[]
+>[] : any[]
+
+var b = [[undefined, undefined]];
+>b : any[][]
+>[[undefined, undefined]] : any[][]
+>[undefined, undefined] : any[]
+>undefined : any
+>undefined : any
+
+var c = [[[]]]; // any[][][]
+>c : any[][][]
+>[[[]]] : any[][][]
+>[[]] : any[][]
+>[] : any[]
+
+var c = [[[null]],[undefined]]
+>c : any[][][]
+>[[[null]],[undefined]] : any[][][]
+>[[null]] : any[][]
+>[null] : any[]
+>[undefined] : any[]
+>undefined : any
+

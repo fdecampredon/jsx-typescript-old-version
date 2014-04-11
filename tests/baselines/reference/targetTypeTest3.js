@@ -1,3 +1,4 @@
+//// [targetTypeTest3.js]
 // Test target typing for array literals and call expressions
 var a = [1, 2, "3"];
 

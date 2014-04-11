@@ -1,3 +1,15 @@
+//// [inheritanceStaticFuncOverridingPropertyOfFuncType.ts]
+class a {
+    static x: () => string;
+}
+
+class b extends a {
+    static x() {
+        return "20";
+    }
+}
+
+//// [inheritanceStaticFuncOverridingPropertyOfFuncType.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

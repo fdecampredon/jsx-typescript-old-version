@@ -1,8 +1,16 @@
 === tests/cases/compiler/inOperatorWithGeneric.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "foo" = (x: T) => void
-Line 1 col 8 IdentifierName "x" = T
-Line 1 col 10 IdentifierName "T" = T
-Line 2 col 17 IdentifierName "p" = any
-Line 2 col 22 IdentifierName "x" = T
+class C<T> {
+>C : C<T>
+>T : T
+
+    foo(x:T) {
+>foo : (x: T) => void
+>x : T
+>T : T
+
+        for (var p in x) {
+>p : any
+>x : T
+        }
+    }
+}

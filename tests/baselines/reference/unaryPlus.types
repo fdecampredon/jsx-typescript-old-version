@@ -1,21 +1,37 @@
 === tests/cases/compiler/unaryPlus.ts ===
-Line 1 col 4 IdentifierName "a" = number
-Line 1 col 8 PlusExpression "+1" = number
-Line 2 col 4 IdentifierName "b" = number
-Line 2 col 8 PlusExpression "+(<any>"")" = number
-Line 2 col 9 ParenthesizedExpression "(<any>"")" = any
-Line 2 col 10 CastExpression "<any>""" = any
-Line 3 col 5 IdentifierName "E" = E
-Line 3 col 9 IdentifierName "some" = E
-Line 3 col 15 IdentifierName "thing" = E
-Line 4 col 4 IdentifierName "c" = number
-Line 4 col 8 PlusExpression "+E.some" = number
-Line 4 col 9 MemberAccessExpression "E.some" = E
-Line 4 col 9 IdentifierName "E" = typeof E
-Line 4 col 11 IdentifierName "some" = E
-Line 7 col 4 IdentifierName "x" = number
-Line 7 col 8 PlusExpression "+"3"" = number
-Line 8 col 4 IdentifierName "y" = number
-Line 8 col 8 NegateExpression "-"3"" = number
-Line 9 col 4 IdentifierName "z" = number
-Line 9 col 8 BitwiseNotExpression "~"3"" = number
+// allowed per spec
+var a = +1;
+>a : number
+>+1 : number
+
+var b = +(<any>"");
+>b : number
+>+(<any>"") : number
+>(<any>"") : any
+><any>"" : any
+
+enum E { some, thing };
+>E : E
+>some : E
+>thing : E
+
+var c = +E.some;
+>c : number
+>+E.some : number
+>E.some : E
+>E : typeof E
+>some : E
+
+// also allowed, used to be errors
+var x = +"3"; //should be valid
+>x : number
+>+"3" : number
+
+var y = -"3"; // should be valid
+>y : number
+>-"3" : number
+
+var z = ~"3"; // should be valid
+>z : number
+>~"3" : number
+

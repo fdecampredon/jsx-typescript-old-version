@@ -1,3 +1,4 @@
+//// [augmentedTypesEnum3.js]
 var E;
 (function (E) {
     var t;

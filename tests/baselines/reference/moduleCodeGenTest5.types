@@ -1,23 +1,53 @@
 === tests/cases/compiler/moduleCodeGenTest5.ts ===
-Line 0 col 11 IdentifierName "x" = number
-Line 1 col 4 IdentifierName "y" = number
-Line 3 col 16 IdentifierName "f1" = typeof f1
-Line 4 col 9 IdentifierName "f2" = typeof f2
-Line 6 col 13 IdentifierName "C1" = C1
-Line 7 col 8 IdentifierName "p1" = number
-Line 8 col 8 IdentifierName "p2" = () => void
-Line 10 col 6 IdentifierName "C2" = C2
-Line 11 col 8 IdentifierName "p1" = number
-Line 12 col 8 IdentifierName "p2" = () => void
-Line 15 col 12 IdentifierName "E1" = E1
-Line 15 col 16 IdentifierName "A" = E1
-Line 16 col 4 IdentifierName "u" = E1
-Line 16 col 8 MemberAccessExpression "E1.A" = E1
-Line 16 col 8 IdentifierName "E1" = typeof E1
-Line 16 col 11 IdentifierName "A" = E1
-Line 17 col 5 IdentifierName "E2" = E2
-Line 17 col 9 IdentifierName "B" = E2
-Line 18 col 4 IdentifierName "v" = E2
-Line 18 col 8 MemberAccessExpression "E2.B" = E2
-Line 18 col 8 IdentifierName "E2" = typeof E2
-Line 18 col 11 IdentifierName "B" = E2
+export var x = 0;
+>x : number
+
+var y = 0;
+>y : number
+
+export function f1() {}
+>f1 : typeof f1
+
+function f2() {}
+>f2 : typeof f2
+
+export class C1 {
+>C1 : C1
+
+	public p1 = 0;
+>p1 : number
+
+	public p2() {}
+>p2 : () => void
+}
+class C2{
+>C2 : C2
+
+	public p1 = 0;
+>p1 : number
+
+	public p2() {}	
+>p2 : () => void
+}
+
+export enum E1 {A=0}
+>E1 : E1
+>A : E1
+
+var u = E1.A;
+>u : E1
+>E1.A : E1
+>E1 : typeof E1
+>A : E1
+
+enum E2 {B=0}
+>E2 : E2
+>B : E2
+
+var v = E2.B;
+>v : E2
+>E2.B : E2
+>E2 : typeof E2
+>B : E2
+
+

@@ -1,3 +1,21 @@
+//// [accessOverriddenBaseClassMember1.ts]
+class Point {
+    constructor(public x: number, public y: number) { }
+    public toString() {
+        return "x=" + this.x + " y=" + this.y;
+    }
+}
+class ColoredPoint extends Point {
+    constructor(x: number, y: number, public color: string) {
+        super(x, y);
+    }
+    public toString() {
+        return super.toString() + " color=" + this.color;
+    }
+}
+
+
+//// [accessOverriddenBaseClassMember1.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

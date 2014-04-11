@@ -1,3 +1,4 @@
+//// [inferredFunctionReturnTypeIsEmptyType.js]
 function foo() {
     if (true) {
         return 42;

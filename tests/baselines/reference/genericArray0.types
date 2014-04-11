@@ -1,9 +1,21 @@
 === tests/cases/compiler/genericArray0.ts ===
-Line 2 col 4 IdentifierName "x" = number[]
-Line 5 col 4 IdentifierName "y" = number[]
-Line 5 col 8 IdentifierName "x" = number[]
-Line 7 col 9 IdentifierName "map" = typeof map
-Line 7 col 13 IdentifierName "U" = U
-Line 8 col 8 IdentifierName "ys" = U[]
-Line 8 col 12 IdentifierName "U" = U
-Line 8 col 18 ArrayLiteralExpression "[]" = U[]
+
+
+var x:number[];
+>x : number[]
+
+
+var y = x; 
+>y : number[]
+>x : number[]
+
+function map<U>() {
+>map : typeof map
+>U : U
+
+    var ys: U[] = [];
+>ys : U[]
+>U : U
+>[] : U[]
+}
+

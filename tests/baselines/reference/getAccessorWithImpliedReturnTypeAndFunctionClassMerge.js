@@ -1,3 +1,4 @@
+//// [getAccessorWithImpliedReturnTypeAndFunctionClassMerge.js]
 var MyModule;
 (function (MyModule) {
     var MyClass = (function () {

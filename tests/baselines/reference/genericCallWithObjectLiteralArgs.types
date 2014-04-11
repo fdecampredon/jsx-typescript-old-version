@@ -1,36 +1,50 @@
 === tests/cases/compiler/genericCallWithObjectLiteralArgs.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "x" = { bar: T; baz: T; }
-Line 0 col 21 IdentifierName "bar" = T
-Line 0 col 26 IdentifierName "T" = T
-Line 0 col 29 IdentifierName "baz" = T
-Line 0 col 34 IdentifierName "T" = T
-Line 1 col 11 IdentifierName "x" = { bar: T; baz: T; }
-Line 4 col 4 IdentifierName "r" = { bar: {}; baz: {}; }
-Line 4 col 8 InvocationExpression "foo({ bar: 1, baz: '' })" = { bar: {}; baz: {}; }
-Line 4 col 8 IdentifierName "foo" = typeof foo
-Line 4 col 12 ObjectLiteralExpression "{ bar: 1, baz: '' }" = { bar: number; baz: string; }
-Line 4 col 14 IdentifierName "bar" = number
-Line 4 col 22 IdentifierName "baz" = string
-Line 5 col 4 IdentifierName "r2" = { bar: number; baz: number; }
-Line 5 col 9 InvocationExpression "foo({ bar: 1, baz: 1 })" = { bar: number; baz: number; }
-Line 5 col 9 IdentifierName "foo" = typeof foo
-Line 5 col 13 ObjectLiteralExpression "{ bar: 1, baz: 1 }" = { bar: number; baz: number; }
-Line 5 col 15 IdentifierName "bar" = number
-Line 5 col 23 IdentifierName "baz" = number
-Line 7 col 4 IdentifierName "r3" = { bar: any; baz: any; }
-Line 7 col 9 InvocationExpression "foo({ bar: foo, baz: foo })" = { bar: any; baz: any; }
-Line 7 col 9 IdentifierName "foo" = typeof foo
-Line 7 col 13 ObjectLiteralExpression "{ bar: foo, baz: foo }" = { bar: typeof foo; baz: typeof foo; }
-Line 7 col 15 IdentifierName "bar" = typeof foo
-Line 7 col 20 IdentifierName "foo" = typeof foo
-Line 7 col 25 IdentifierName "baz" = typeof foo
-Line 7 col 30 IdentifierName "foo" = typeof foo
-Line 8 col 4 IdentifierName "r4" = { bar: Object; baz: Object; }
-Line 8 col 9 InvocationExpression "foo<Object>({ bar: 1, baz: '' })" = { bar: Object; baz: Object; }
-Line 8 col 9 IdentifierName "foo" = typeof foo
-Line 8 col 13 IdentifierName "Object" = Object
-Line 8 col 21 ObjectLiteralExpression "{ bar: 1, baz: '' }" = { bar: number; baz: string; }
-Line 8 col 23 IdentifierName "bar" = number
-Line 8 col 31 IdentifierName "baz" = string
+function foo<T>(x: { bar: T; baz: T }) {
+>foo : typeof foo
+>T : T
+>x : { bar: T; baz: T; }
+>bar : T
+>T : T
+>baz : T
+>T : T
+
+    return x;
+>x : { bar: T; baz: T; }
+}
+
+var r = foo({ bar: 1, baz: '' }); // T = {}
+>r : { bar: {}; baz: {}; }
+>foo({ bar: 1, baz: '' }) : { bar: {}; baz: {}; }
+>foo : typeof foo
+>{ bar: 1, baz: '' } : { bar: number; baz: string; }
+>bar : number
+>baz : string
+
+var r2 = foo({ bar: 1, baz: 1 }); // T = number
+>r2 : { bar: number; baz: number; }
+>foo({ bar: 1, baz: 1 }) : { bar: number; baz: number; }
+>foo : typeof foo
+>{ bar: 1, baz: 1 } : { bar: number; baz: number; }
+>bar : number
+>baz : number
+
+// BUG 835724
+var r3 = foo({ bar: foo, baz: foo }); // T = any
+>r3 : { bar: any; baz: any; }
+>foo({ bar: foo, baz: foo }) : { bar: any; baz: any; }
+>foo : typeof foo
+>{ bar: foo, baz: foo } : { bar: typeof foo; baz: typeof foo; }
+>bar : typeof foo
+>foo : typeof foo
+>baz : typeof foo
+>foo : typeof foo
+
+var r4 = foo<Object>({ bar: 1, baz: '' }); // T = Object
+>r4 : { bar: Object; baz: Object; }
+>foo<Object>({ bar: 1, baz: '' }) : { bar: Object; baz: Object; }
+>foo : typeof foo
+>Object : Object
+>{ bar: 1, baz: '' } : { bar: number; baz: string; }
+>bar : number
+>baz : string
+

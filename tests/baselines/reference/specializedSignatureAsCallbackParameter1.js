@@ -1,3 +1,4 @@
+//// [specializedSignatureAsCallbackParameter1.js]
 function x3(a, cb) {
     cb(a);
 }

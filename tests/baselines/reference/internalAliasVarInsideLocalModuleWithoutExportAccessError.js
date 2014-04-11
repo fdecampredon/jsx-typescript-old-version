@@ -1,3 +1,4 @@
+//// [internalAliasVarInsideLocalModuleWithoutExportAccessError.js]
 (function (a) {
     a.x = 10;
 })(exports.a || (exports.a = {}));

@@ -1,3 +1,4 @@
+//// [typeIdentityConsidersBrands.js]
 var X = (function () {
     function X() {
     }

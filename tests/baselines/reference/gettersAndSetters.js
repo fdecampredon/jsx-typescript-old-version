@@ -1,3 +1,4 @@
+//// [gettersAndSetters.js]
 // classes
 var C = (function () {
     function C() {

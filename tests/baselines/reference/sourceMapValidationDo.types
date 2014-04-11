@@ -1,10 +1,23 @@
 === tests/cases/compiler/sourceMapValidationDo.ts ===
-Line 0 col 4 IdentifierName "i" = number
-Line 3 col 0 PostIncrementExpression "i++" = number
-Line 3 col 0 IdentifierName "i" = number
-Line 4 col 9 LessThanExpression "i < 10" = boolean
-Line 4 col 9 IdentifierName "i" = number
-Line 6 col 0 PostIncrementExpression "i++" = number
-Line 6 col 0 IdentifierName "i" = number
-Line 7 col 9 LessThanExpression "i < 20" = boolean
-Line 7 col 9 IdentifierName "i" = number
+var i = 0;
+>i : number
+
+do
+{
+    i++;
+>i++ : number
+>i : number
+
+} while (i < 10);
+>i < 10 : boolean
+>i : number
+
+do {
+    i++;
+>i++ : number
+>i : number
+
+} while (i < 20);
+>i < 20 : boolean
+>i : number
+

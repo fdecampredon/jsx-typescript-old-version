@@ -1,5 +1,17 @@
 === tests/cases/compiler/visSyntax.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 17 IdentifierName "C" = C
-Line 4 col 21 IdentifierName "I" = I
-Line 8 col 15 IdentifierName "x" = number
+module M {
+>M : M
+
+    export class C {
+>C : C
+    }
+
+    export interface I {
+>I : I
+	
+    }
+
+    export var x=10;
+>x : number
+}
+

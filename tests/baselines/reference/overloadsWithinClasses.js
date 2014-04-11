@@ -1,3 +1,4 @@
+//// [overloadsWithinClasses.js]
 var foo = (function () {
     function foo() {
     }

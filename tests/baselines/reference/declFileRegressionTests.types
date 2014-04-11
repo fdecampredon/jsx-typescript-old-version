@@ -1,8 +1,13 @@
 === tests/cases/compiler/declFileRegressionTests.ts ===
-Line 2 col 4 IdentifierName "n" = { w: any; x: string; y: () => void; z: number; }
-Line 2 col 8 ObjectLiteralExpression "{ w: null, x: '', y: () => { }, z: 32 }" = { w: any; x: string; y: () => void; z: number; }
-Line 2 col 10 IdentifierName "w" = any
-Line 2 col 19 IdentifierName "x" = string
-Line 2 col 26 IdentifierName "y" = () => void
-Line 2 col 29 ParenthesizedArrowFunctionExpression "() => { }" = () => void
-Line 2 col 40 IdentifierName "z" = number
+// 'null' not converted to 'any' in d.ts
+// function types not piped through correctly
+var n = { w: null, x: '', y: () => { }, z: 32 };
+>n : { w: any; x: string; y: () => void; z: number; }
+>{ w: null, x: '', y: () => { }, z: 32 } : { w: any; x: string; y: () => void; z: number; }
+>w : any
+>x : string
+>y : () => void
+>() => { } : () => void
+>z : number
+
+

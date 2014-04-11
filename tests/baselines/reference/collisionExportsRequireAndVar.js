@@ -1,3 +1,4 @@
+//// [collisionExportsRequireAndVar.js]
 define(["require", "exports"], function(require, exports) {
     function foo() {
     }

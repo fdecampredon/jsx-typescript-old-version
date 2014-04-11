@@ -1,6 +1,10 @@
 === tests/cases/compiler/instanceofOperatorWithAny.ts ===
-Line 0 col 4 IdentifierName "a" = any
-Line 2 col 4 IdentifierName "r" = boolean
-Line 2 col 17 InstanceOfExpression "a instanceof a" = boolean
-Line 2 col 17 IdentifierName "a" = any
-Line 2 col 30 IdentifierName "a" = any
+var a: any;
+>a : any
+
+var r: boolean = a instanceof a;
+>r : boolean
+>a instanceof a : boolean
+>a : any
+>a : any
+

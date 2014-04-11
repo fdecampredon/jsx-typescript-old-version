@@ -1,37 +1,71 @@
 === tests/cases/compiler/objectTypeHidingMembersOfObject.ts ===
-Line 2 col 6 IdentifierName "C" = C
-Line 3 col 0 IdentifierName "valueOf" = () => void
-Line 6 col 4 IdentifierName "c" = C
-Line 6 col 7 IdentifierName "C" = C
-Line 7 col 4 IdentifierName "r1" = void
-Line 7 col 15 InvocationExpression "c.valueOf()" = void
-Line 7 col 15 MemberAccessExpression "c.valueOf" = () => void
-Line 7 col 15 IdentifierName "c" = C
-Line 7 col 17 IdentifierName "valueOf" = () => void
-Line 9 col 10 IdentifierName "I" = I
-Line 10 col 0 IdentifierName "valueOf" = () => void
-Line 13 col 4 IdentifierName "i" = I
-Line 13 col 7 IdentifierName "I" = I
-Line 14 col 4 IdentifierName "r2" = void
-Line 14 col 15 InvocationExpression "i.valueOf()" = void
-Line 14 col 15 MemberAccessExpression "i.valueOf" = () => void
-Line 14 col 15 IdentifierName "i" = I
-Line 14 col 17 IdentifierName "valueOf" = () => void
-Line 16 col 4 IdentifierName "a" = { valueOf: () => void; }
-Line 16 col 8 ObjectLiteralExpression "{
+// all of these valueOf calls should return the type shown in the overriding signatures here
+
+class C {
+>C : C
+
+    valueOf() { }
+>valueOf : () => void
+}
+
+var c: C;
+>c : C
+>C : C
+
+var r1: void = c.valueOf();
+>r1 : void
+>c.valueOf() : void
+>c.valueOf : () => void
+>c : C
+>valueOf : () => void
+
+interface I {
+>I : I
+
+    valueOf(): void;
+>valueOf : () => void
+}
+
+var i: I;
+>i : I
+>I : I
+
+var r2: void = i.valueOf();
+>r2 : void
+>i.valueOf() : void
+>i.valueOf : () => void
+>i : I
+>valueOf : () => void
+
+var a = {
+>a : { valueOf: () => void; }
+>{
     valueOf: () => { }
-}" = { valueOf: () => void; }
-Line 17 col 0 IdentifierName "valueOf" = () => void
-Line 17 col 13 ParenthesizedArrowFunctionExpression "() => { }" = () => void
-Line 20 col 4 IdentifierName "r3" = void
-Line 20 col 15 InvocationExpression "a.valueOf()" = void
-Line 20 col 15 MemberAccessExpression "a.valueOf" = () => void
-Line 20 col 15 IdentifierName "a" = { valueOf: () => void; }
-Line 20 col 17 IdentifierName "valueOf" = () => void
-Line 22 col 4 IdentifierName "b" = { valueOf(): void; }
-Line 23 col 0 IdentifierName "valueOf" = () => void
-Line 26 col 4 IdentifierName "r4" = void
-Line 26 col 15 InvocationExpression "b.valueOf()" = void
-Line 26 col 15 MemberAccessExpression "b.valueOf" = () => void
-Line 26 col 15 IdentifierName "b" = { valueOf(): void; }
-Line 26 col 17 IdentifierName "valueOf" = () => void
+} : { valueOf: () => void; }
+
+    valueOf: () => { }
+>valueOf : () => void
+>() => { } : () => void
+}
+
+var r3: void = a.valueOf();
+>r3 : void
+>a.valueOf() : void
+>a.valueOf : () => void
+>a : { valueOf: () => void; }
+>valueOf : () => void
+
+var b: {
+>b : { valueOf(): void; }
+
+    valueOf(): void;
+>valueOf : () => void
+}
+
+var r4: void = b.valueOf();
+>r4 : void
+>b.valueOf() : void
+>b.valueOf : () => void
+>b : { valueOf(): void; }
+>valueOf : () => void
+

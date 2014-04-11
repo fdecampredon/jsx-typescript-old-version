@@ -1,30 +1,56 @@
 === tests/cases/compiler/sourceMapValidationTryCatchFinally.ts ===
-Line 0 col 4 IdentifierName "x" = number
-Line 2 col 0 AssignmentExpression "x = x + 1" = number
-Line 2 col 0 IdentifierName "x" = number
-Line 2 col 8 AddExpression "x + 1" = number
-Line 2 col 8 IdentifierName "x" = number
-Line 3 col 9 IdentifierName "e" = any
-Line 4 col 0 AssignmentExpression "x = x - 1" = number
-Line 4 col 0 IdentifierName "x" = number
-Line 4 col 8 SubtractExpression "x - 1" = number
-Line 4 col 8 IdentifierName "x" = number
-Line 6 col 0 AssignmentExpression "x = x * 10" = number
-Line 6 col 0 IdentifierName "x" = number
-Line 6 col 8 MultiplyExpression "x * 10" = number
-Line 6 col 8 IdentifierName "x" = number
-Line 10 col 0 AssignmentExpression "x = x + 1" = number
-Line 10 col 0 IdentifierName "x" = number
-Line 10 col 8 AddExpression "x + 1" = number
-Line 10 col 8 IdentifierName "x" = number
-Line 11 col 10 ObjectCreationExpression "new Error()" = Error
-Line 11 col 14 IdentifierName "Error" = { prototype: Error; (message?: string): Error; new(message?: string): Error; }
-Line 13 col 7 IdentifierName "e" = any
-Line 15 col 0 AssignmentExpression "x = x - 1" = number
-Line 15 col 0 IdentifierName "x" = number
-Line 15 col 8 SubtractExpression "x - 1" = number
-Line 15 col 8 IdentifierName "x" = number
-Line 19 col 0 AssignmentExpression "x = x * 10" = number
-Line 19 col 0 IdentifierName "x" = number
-Line 19 col 8 MultiplyExpression "x * 10" = number
-Line 19 col 8 IdentifierName "x" = number
+var x = 10;
+>x : number
+
+try {
+    x = x + 1;
+>x = x + 1 : number
+>x : number
+>x + 1 : number
+>x : number
+
+} catch (e) {
+>e : any
+
+    x = x - 1;
+>x = x - 1 : number
+>x : number
+>x - 1 : number
+>x : number
+
+} finally {
+    x = x * 10;
+>x = x * 10 : number
+>x : number
+>x * 10 : number
+>x : number
+}
+try
+{
+    x = x + 1;
+>x = x + 1 : number
+>x : number
+>x + 1 : number
+>x : number
+
+    throw new Error();
+>new Error() : Error
+>Error : { prototype: Error; (message?: string): Error; new(message?: string): Error; }
+}
+catch (e)
+>e : any
+{
+    x = x - 1;
+>x = x - 1 : number
+>x : number
+>x - 1 : number
+>x : number
+}
+finally
+{
+    x = x * 10;
+>x = x * 10 : number
+>x : number
+>x * 10 : number
+>x : number
+}

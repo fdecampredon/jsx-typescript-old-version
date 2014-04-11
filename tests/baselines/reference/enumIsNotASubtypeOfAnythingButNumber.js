@@ -1,3 +1,4 @@
+//// [enumIsNotASubtypeOfAnythingButNumber.js]
 // enums are only subtypes of number, any and no other types
 var E;
 (function (E) {

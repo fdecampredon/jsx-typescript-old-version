@@ -1,32 +1,54 @@
 === tests/cases/compiler/genericClasses2.ts ===
-Line 0 col 10 IdentifierName "Foo" = Foo<T>
-Line 0 col 14 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "a" = T
-Line 1 col 4 IdentifierName "T" = T
-Line 4 col 6 IdentifierName "C" = C<T>
-Line 4 col 8 IdentifierName "T" = T
-Line 5 col 8 IdentifierName "x" = T
-Line 5 col 11 IdentifierName "T" = T
-Line 6 col 8 IdentifierName "y" = Foo<T>
-Line 6 col 11 IdentifierName "Foo" = Foo<T>
-Line 6 col 15 IdentifierName "T" = T
-Line 7 col 8 IdentifierName "z" = Foo<number>
-Line 7 col 11 IdentifierName "Foo" = Foo<T>
-Line 10 col 4 IdentifierName "v1" = C<string>
-Line 10 col 9 IdentifierName "C" = C<T>
-Line 12 col 4 IdentifierName "y" = string
-Line 12 col 8 MemberAccessExpression "v1.x" = string
-Line 12 col 8 IdentifierName "v1" = C<string>
-Line 12 col 11 IdentifierName "x" = string
-Line 13 col 4 IdentifierName "w" = string
-Line 13 col 8 MemberAccessExpression "v1.y.a" = string
-Line 13 col 8 MemberAccessExpression "v1.y" = Foo<string>
-Line 13 col 8 IdentifierName "v1" = C<string>
-Line 13 col 11 IdentifierName "y" = Foo<string>
-Line 13 col 13 IdentifierName "a" = string
-Line 14 col 4 IdentifierName "z" = number
-Line 14 col 8 MemberAccessExpression "v1.z.a" = number
-Line 14 col 8 MemberAccessExpression "v1.z" = Foo<number>
-Line 14 col 8 IdentifierName "v1" = C<string>
-Line 14 col 11 IdentifierName "z" = Foo<number>
-Line 14 col 13 IdentifierName "a" = number
+interface Foo<T> {
+>Foo : Foo<T>
+>T : T
+
+	a: T;
+>a : T
+>T : T
+}
+
+class C<T> {
+>C : C<T>
+>T : T
+
+	public x: T;
+>x : T
+>T : T
+
+	public y: Foo<T>;
+>y : Foo<T>
+>Foo : Foo<T>
+>T : T
+
+	public z: Foo<number>;
+>z : Foo<number>
+>Foo : Foo<T>
+}
+
+var v1 : C<string>;
+>v1 : C<string>
+>C : C<T>
+
+var y = v1.x; // should be 'string'
+>y : string
+>v1.x : string
+>v1 : C<string>
+>x : string
+
+var w = v1.y.a; // should be 'string'
+>w : string
+>v1.y.a : string
+>v1.y : Foo<string>
+>v1 : C<string>
+>y : Foo<string>
+>a : string
+
+var z = v1.z.a; // should be 'number'
+>z : number
+>v1.z.a : number
+>v1.z : Foo<number>
+>v1 : C<string>
+>z : Foo<number>
+>a : number
+

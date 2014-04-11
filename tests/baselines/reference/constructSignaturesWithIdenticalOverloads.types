@@ -1,90 +1,158 @@
 === tests/cases/compiler/constructSignaturesWithIdenticalOverloads.ts ===
-Line 2 col 6 IdentifierName "C" = C
-Line 3 col 16 IdentifierName "x" = number
-Line 3 col 27 IdentifierName "y" = string
-Line 4 col 16 IdentifierName "x" = number
-Line 4 col 27 IdentifierName "y" = string
-Line 5 col 16 IdentifierName "x" = number
-Line 8 col 4 IdentifierName "r1" = C
-Line 8 col 9 ObjectCreationExpression "new C(1, '')" = C
-Line 8 col 13 IdentifierName "C" = typeof C
-Line 10 col 6 IdentifierName "C2" = C2<T>
-Line 10 col 9 IdentifierName "T" = T
-Line 11 col 16 IdentifierName "x" = T
-Line 11 col 19 IdentifierName "T" = T
-Line 11 col 22 IdentifierName "y" = string
-Line 12 col 16 IdentifierName "x" = T
-Line 12 col 19 IdentifierName "T" = T
-Line 12 col 22 IdentifierName "y" = string
-Line 13 col 16 IdentifierName "x" = T
-Line 13 col 19 IdentifierName "T" = T
-Line 16 col 4 IdentifierName "r2" = C2<number>
-Line 16 col 9 ObjectCreationExpression "new C2(1, '')" = C2<number>
-Line 16 col 13 IdentifierName "C2" = typeof C2
-Line 18 col 10 IdentifierName "I" = I
-Line 19 col 9 IdentifierName "x" = number
-Line 19 col 20 IdentifierName "y" = string
-Line 19 col 32 IdentifierName "C" = C
-Line 20 col 9 IdentifierName "x" = number
-Line 20 col 20 IdentifierName "y" = string
-Line 20 col 32 IdentifierName "C" = C
-Line 23 col 4 IdentifierName "i" = I
-Line 23 col 7 IdentifierName "I" = I
-Line 24 col 4 IdentifierName "r3" = C
-Line 24 col 9 ObjectCreationExpression "new i(1, '')" = C
-Line 24 col 13 IdentifierName "i" = I
-Line 26 col 10 IdentifierName "I2" = I2<T>
-Line 26 col 13 IdentifierName "T" = T
-Line 27 col 9 IdentifierName "x" = T
-Line 27 col 12 IdentifierName "T" = T
-Line 27 col 15 IdentifierName "y" = string
-Line 27 col 27 IdentifierName "C2" = C2<T>
-Line 27 col 30 IdentifierName "T" = T
-Line 28 col 9 IdentifierName "x" = T
-Line 28 col 12 IdentifierName "T" = T
-Line 28 col 15 IdentifierName "y" = string
-Line 28 col 27 IdentifierName "C2" = C2<T>
-Line 28 col 30 IdentifierName "T" = T
-Line 29 col 9 IdentifierName "T" = T
-Line 29 col 12 IdentifierName "x" = T
-Line 29 col 15 IdentifierName "T" = T
-Line 29 col 18 IdentifierName "y" = string
-Line 29 col 30 IdentifierName "C2" = C2<T>
-Line 29 col 33 IdentifierName "T" = T
-Line 30 col 9 IdentifierName "T" = T
-Line 30 col 12 IdentifierName "x" = T
-Line 30 col 15 IdentifierName "T" = T
-Line 30 col 18 IdentifierName "y" = string
-Line 30 col 30 IdentifierName "C2" = C2<T>
-Line 30 col 33 IdentifierName "T" = T
-Line 33 col 4 IdentifierName "i2" = I2<number>
-Line 33 col 8 IdentifierName "I2" = I2<T>
-Line 34 col 4 IdentifierName "r4" = C2<number>
-Line 34 col 9 ObjectCreationExpression "new i2(1, '')" = C2<number>
-Line 34 col 13 IdentifierName "i2" = I2<number>
-Line 36 col 4 IdentifierName "a" = { new(x: number, y: string): C; new(x: number, y: string): C; }
-Line 37 col 9 IdentifierName "x" = number
-Line 37 col 20 IdentifierName "y" = string
-Line 37 col 32 IdentifierName "C" = C
-Line 38 col 9 IdentifierName "x" = number
-Line 38 col 20 IdentifierName "y" = string
-Line 38 col 32 IdentifierName "C" = C
-Line 41 col 4 IdentifierName "r5" = C
-Line 41 col 9 ObjectCreationExpression "new a(1, '')" = C
-Line 41 col 13 IdentifierName "a" = { new(x: number, y: string): C; new(x: number, y: string): C; }
-Line 43 col 4 IdentifierName "b" = { new<T>(x: T, y: string): C2<T>; new<T>(x: T, y: string): C2<T>; }
-Line 44 col 9 IdentifierName "T" = T
-Line 44 col 12 IdentifierName "x" = T
-Line 44 col 15 IdentifierName "T" = T
-Line 44 col 18 IdentifierName "y" = string
-Line 44 col 30 IdentifierName "C2" = C2<T>
-Line 44 col 33 IdentifierName "T" = T
-Line 45 col 9 IdentifierName "T" = T
-Line 45 col 12 IdentifierName "x" = T
-Line 45 col 15 IdentifierName "T" = T
-Line 45 col 18 IdentifierName "y" = string
-Line 45 col 30 IdentifierName "C2" = C2<T>
-Line 45 col 33 IdentifierName "T" = T
-Line 48 col 4 IdentifierName "r6" = C2<number>
-Line 48 col 9 ObjectCreationExpression "new b(1, '')" = C2<number>
-Line 48 col 13 IdentifierName "b" = { new<T>(x: T, y: string): C2<T>; new<T>(x: T, y: string): C2<T>; }
+// Duplicate overloads of construct signatures should generate errors
+
+class C {
+>C : C
+
+    constructor(x: number, y: string);
+>x : number
+>y : string
+
+    constructor(x: number, y: string); // error
+>x : number
+>y : string
+
+    constructor(x: number) { }
+>x : number
+}
+
+var r1 = new C(1, '');
+>r1 : C
+>new C(1, '') : C
+>C : typeof C
+
+class C2<T> {
+>C2 : C2<T>
+>T : T
+
+    constructor(x: T, y: string);
+>x : T
+>T : T
+>y : string
+
+    constructor(x: T, y: string); // error
+>x : T
+>T : T
+>y : string
+
+    constructor(x: T) { }
+>x : T
+>T : T
+}
+
+var r2 = new C2(1, '');
+>r2 : C2<number>
+>new C2(1, '') : C2<number>
+>C2 : typeof C2
+
+interface I {
+>I : I
+
+    new (x: number, y: string): C;
+>x : number
+>y : string
+>C : C
+
+    new (x: number, y: string): C; // error
+>x : number
+>y : string
+>C : C
+}
+
+var i: I;
+>i : I
+>I : I
+
+var r3 = new i(1, '');
+>r3 : C
+>new i(1, '') : C
+>i : I
+
+interface I2<T> {
+>I2 : I2<T>
+>T : T
+
+    new (x: T, y: string): C2<T>;
+>x : T
+>T : T
+>y : string
+>C2 : C2<T>
+>T : T
+
+    new (x: T, y: string): C2<T>; // error
+>x : T
+>T : T
+>y : string
+>C2 : C2<T>
+>T : T
+
+    new <T>(x: T, y: string): C2<T>;
+>T : T
+>x : T
+>T : T
+>y : string
+>C2 : C2<T>
+>T : T
+
+    new <T>(x: T, y: string): C2<T>; // error
+>T : T
+>x : T
+>T : T
+>y : string
+>C2 : C2<T>
+>T : T
+}
+
+var i2: I2<number>;
+>i2 : I2<number>
+>I2 : I2<T>
+
+var r4 = new i2(1, '');
+>r4 : C2<number>
+>new i2(1, '') : C2<number>
+>i2 : I2<number>
+
+var a: {
+>a : { new(x: number, y: string): C; new(x: number, y: string): C; }
+
+    new (x: number, y: string): C;
+>x : number
+>y : string
+>C : C
+
+    new (x: number, y: string): C; // error
+>x : number
+>y : string
+>C : C
+}
+
+var r5 = new a(1, '');
+>r5 : C
+>new a(1, '') : C
+>a : { new(x: number, y: string): C; new(x: number, y: string): C; }
+
+var b: {
+>b : { new<T>(x: T, y: string): C2<T>; new<T>(x: T, y: string): C2<T>; }
+
+    new <T>(x: T, y: string): C2<T>;
+>T : T
+>x : T
+>T : T
+>y : string
+>C2 : C2<T>
+>T : T
+
+    new <T>(x: T, y: string): C2<T>; // error
+>T : T
+>x : T
+>T : T
+>y : string
+>C2 : C2<T>
+>T : T
+}
+
+var r6 = new b(1, '');
+>r6 : C2<number>
+>new b(1, '') : C2<number>
+>b : { new<T>(x: T, y: string): C2<T>; new<T>(x: T, y: string): C2<T>; }
+

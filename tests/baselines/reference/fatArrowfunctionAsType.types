@@ -1,16 +1,23 @@
 === tests/cases/compiler/fatArrowfunctionAsType.ts ===
-Line 0 col 12 IdentifierName "b" = <T>(x: T) => void
-Line 0 col 16 IdentifierName "T" = T
-Line 0 col 19 IdentifierName "x" = T
-Line 0 col 22 IdentifierName "T" = T
-Line 2 col 4 IdentifierName "c" = <T>(x: T) => void
-Line 2 col 8 IdentifierName "T" = T
-Line 2 col 11 IdentifierName "x" = T
-Line 2 col 14 IdentifierName "T" = T
-Line 2 col 27 FunctionExpression "function <T>(x: T) { return 42; }" = <T>(x: T) => number
-Line 2 col 37 IdentifierName "T" = T
-Line 2 col 40 IdentifierName "x" = T
-Line 2 col 43 IdentifierName "T" = T
-Line 3 col 0 AssignmentExpression "b = c" = <T>(x: T) => void
-Line 3 col 0 IdentifierName "b" = <T>(x: T) => void
-Line 4 col 4 IdentifierName "c" = <T>(x: T) => void
+declare var b: <T>(x: T) => void ;
+>b : <T>(x: T) => void
+>T : T
+>x : T
+>T : T
+
+var c: <T>(x: T) => void = function <T>(x: T) { return 42; }
+>c : <T>(x: T) => void
+>T : T
+>x : T
+>T : T
+>function <T>(x: T) { return 42; } : <T>(x: T) => number
+>T : T
+>x : T
+>T : T
+
+>b = c : <T>(x: T) => void
+>b : <T>(x: T) => void
+
+b = c;
+>c : <T>(x: T) => void
+

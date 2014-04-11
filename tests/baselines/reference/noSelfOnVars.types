@@ -1,5 +1,14 @@
 === tests/cases/compiler/noSelfOnVars.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 13 IdentifierName "bar" = () => void
-Line 2 col 8 IdentifierName "x" = () => void
-Line 2 col 12 IdentifierName "bar" = () => void
+function foo() {
+>foo : typeof foo
+
+    function bar() { }
+>bar : () => void
+
+    var x = bar;
+>x : () => void
+>bar : () => void
+}
+
+
+

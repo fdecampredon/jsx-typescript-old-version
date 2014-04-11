@@ -1,22 +1,53 @@
 === tests/cases/compiler/sourceMapValidationWithComments.ts ===
-Line 0 col 6 IdentifierName "DebugClass" = DebugClass
-Line 2 col 18 IdentifierName "debugFunc" = () => boolean
-Line 5 col 12 IdentifierName "i" = number
-Line 6 col 0 PostIncrementExpression "i++" = number
-Line 6 col 0 IdentifierName "i" = number
-Line 7 col 0 PostIncrementExpression "i++" = number
-Line 7 col 0 IdentifierName "i" = number
-Line 8 col 0 PostIncrementExpression "i++" = number
-Line 8 col 0 IdentifierName "i" = number
-Line 9 col 0 PostIncrementExpression "i++" = number
-Line 9 col 0 IdentifierName "i" = number
-Line 10 col 0 PostIncrementExpression "i++" = number
-Line 10 col 0 IdentifierName "i" = number
-Line 11 col 0 PostIncrementExpression "i++" = number
-Line 11 col 0 IdentifierName "i" = number
-Line 12 col 0 PostIncrementExpression "i++" = number
-Line 12 col 0 IdentifierName "i" = number
-Line 13 col 0 PostIncrementExpression "i++" = number
-Line 13 col 0 IdentifierName "i" = number
-Line 14 col 0 PostIncrementExpression "i++" = number
-Line 14 col 0 IdentifierName "i" = number
+class DebugClass {
+>DebugClass : DebugClass
+
+    public static debugFunc() {
+>debugFunc : () => boolean
+
+        // Start Debugger Test Code
+        var i = 0;
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        i++;
+>i++ : number
+>i : number
+
+        // End Debugger Test Code
+
+
+        return true;
+    }
+}

@@ -1,3 +1,4 @@
+//// [wrappedRecursiveGenericType.js]
 var x;
 x.val = 5; // val -> number
 x.a.val = 5; // val -> number

@@ -1,16 +1,30 @@
 === tests/cases/compiler/optionalConstructorArgInSuper.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 16 IdentifierName "opt" = any
-Line 2 col 0 IdentifierName "foo" = (other?: any) => void
-Line 2 col 8 IdentifierName "other" = any
-Line 4 col 6 IdentifierName "Derived" = Derived
-Line 4 col 22 IdentifierName "Base" = Base
-Line 6 col 4 IdentifierName "d" = Derived
-Line 6 col 8 ObjectCreationExpression "new Derived()" = Derived
-Line 6 col 12 IdentifierName "Derived" = typeof Derived
-Line 7 col 4 IdentifierName "d2" = Derived
-Line 7 col 8 IdentifierName "Derived" = Derived
-Line 8 col 0 InvocationExpression "d2.foo()" = void
-Line 8 col 0 MemberAccessExpression "d2.foo" = (other?: any) => void
-Line 8 col 0 IdentifierName "d2" = Derived
-Line 8 col 3 IdentifierName "foo" = (other?: any) => void
+class Base {
+>Base : Base
+
+    constructor(opt?) { }
+>opt : any
+
+    foo(other?) { }
+>foo : (other?: any) => void
+>other : any
+}
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+}
+var d = new Derived(); // bug caused an error here, couldn't select overload
+>d : Derived
+>new Derived() : Derived
+>Derived : typeof Derived
+
+var d2: Derived;
+>d2 : Derived
+>Derived : Derived
+
+d2.foo(); 
+>d2.foo() : void
+>d2.foo : (other?: any) => void
+>d2 : Derived
+>foo : (other?: any) => void
+

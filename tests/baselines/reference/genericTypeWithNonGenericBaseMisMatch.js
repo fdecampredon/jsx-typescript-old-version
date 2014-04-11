@@ -1,3 +1,4 @@
+//// [genericTypeWithNonGenericBaseMisMatch.js]
 var X = (function () {
     function X() {
     }

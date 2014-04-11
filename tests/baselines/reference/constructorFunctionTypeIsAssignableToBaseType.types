@@ -1,13 +1,38 @@
 === tests/cases/compiler/constructorFunctionTypeIsAssignableToBaseType.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 11 IdentifierName "foo" = { bar: Object; }
-Line 2 col 0 IdentifierName "bar" = Object
-Line 2 col 13 IdentifierName "Object" = Object
-Line 6 col 6 IdentifierName "Derived" = Derived
-Line 6 col 22 IdentifierName "Base" = Base
-Line 8 col 11 IdentifierName "foo" = { bar: number; }
-Line 9 col 0 IdentifierName "bar" = number
-Line 13 col 6 IdentifierName "Derived2" = Derived2
-Line 13 col 23 IdentifierName "Base" = Base
-Line 15 col 11 IdentifierName "foo" = { bar: any; }
-Line 16 col 0 IdentifierName "bar" = any
+class Base {
+>Base : Base
+
+    static foo: {
+>foo : { bar: Object; }
+
+        bar: Object;
+>bar : Object
+>Object : Object
+    }
+}
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    // ok
+    static foo: {
+>foo : { bar: number; }
+
+        bar: number;
+>bar : number
+    }
+}
+
+class Derived2 extends Base {
+>Derived2 : Derived2
+>Base : Base
+
+    // ok, use assignability here
+    static foo: {
+>foo : { bar: any; }
+
+        bar: any;
+>bar : any
+    }
+}

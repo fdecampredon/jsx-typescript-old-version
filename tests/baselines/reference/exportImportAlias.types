@@ -1,84 +1,175 @@
 === tests/cases/compiler/exportImportAlias.ts ===
-Line 2 col 7 IdentifierName "A" = A
-Line 4 col 15 IdentifierName "x" = string
-Line 5 col 17 IdentifierName "Point" = Point
-Line 6 col 27 IdentifierName "x" = number
-Line 6 col 45 IdentifierName "y" = number
-Line 8 col 18 IdentifierName "B" = B
-Line 9 col 25 IdentifierName "Id" = Id
-Line 10 col 0 IdentifierName "name" = string
-Line 15 col 7 IdentifierName "C" = C
-Line 16 col 18 IdentifierName "a" = a
-Line 16 col 22 IdentifierName "A" = a
-Line 19 col 4 IdentifierName "a" = string
-Line 19 col 16 MemberAccessExpression "C.a.x" = string
-Line 19 col 16 MemberAccessExpression "C.a" = typeof A
-Line 19 col 16 IdentifierName "C" = typeof C
-Line 19 col 18 IdentifierName "a" = typeof A
-Line 19 col 20 IdentifierName "x" = string
-Line 20 col 4 IdentifierName "b" = { x: number; y: number; }
-Line 20 col 9 IdentifierName "x" = number
-Line 20 col 20 IdentifierName "y" = number
-Line 20 col 35 ObjectCreationExpression "new C.a.Point(0, 0)" = A.Point
-Line 20 col 39 MemberAccessExpression "C.a.Point" = typeof A.Point
-Line 20 col 39 MemberAccessExpression "C.a" = typeof A
-Line 20 col 39 IdentifierName "C" = typeof C
-Line 20 col 41 IdentifierName "a" = typeof A
-Line 20 col 43 IdentifierName "Point" = typeof A.Point
-Line 21 col 4 IdentifierName "c" = { name: string; }
-Line 21 col 9 IdentifierName "name" = string
-Line 22 col 4 IdentifierName "c" = A.B.Id
-Line 22 col 7 IdentifierName "C" = C
-Line 22 col 9 IdentifierName "a" = C.a
-Line 22 col 11 IdentifierName "B" = A.B
-Line 22 col 13 IdentifierName "Id" = A.B.Id
-Line 24 col 7 IdentifierName "X" = X
-Line 25 col 20 IdentifierName "Y" = typeof Y
-Line 29 col 18 IdentifierName "Y" = Y
-Line 30 col 21 IdentifierName "Point" = Point
-Line 31 col 31 IdentifierName "x" = number
-Line 31 col 49 IdentifierName "y" = number
-Line 36 col 7 IdentifierName "Z" = Z
-Line 39 col 18 IdentifierName "y" = y
-Line 39 col 22 IdentifierName "X" = X
-Line 39 col 24 IdentifierName "Y" = typeof y
-Line 42 col 4 IdentifierName "m" = number
-Line 42 col 16 InvocationExpression "Z.y()" = number
-Line 42 col 16 MemberAccessExpression "Z.y" = typeof X.Y
-Line 42 col 16 IdentifierName "Z" = typeof Z
-Line 42 col 18 IdentifierName "y" = typeof X.Y
-Line 43 col 4 IdentifierName "n" = { x: number; y: number; }
-Line 43 col 9 IdentifierName "x" = number
-Line 43 col 20 IdentifierName "y" = number
-Line 43 col 35 ObjectCreationExpression "new Z.y.Point(0, 0)" = X.Y.Point
-Line 43 col 39 MemberAccessExpression "Z.y.Point" = typeof X.Y.Point
-Line 43 col 39 MemberAccessExpression "Z.y" = typeof X.Y
-Line 43 col 39 IdentifierName "Z" = typeof Z
-Line 43 col 41 IdentifierName "y" = typeof X.Y
-Line 43 col 43 IdentifierName "Point" = typeof X.Y.Point
-Line 45 col 7 IdentifierName "K" = K
-Line 46 col 17 IdentifierName "L" = L
-Line 47 col 27 IdentifierName "name" = string
-Line 50 col 18 IdentifierName "L" = L
-Line 51 col 19 IdentifierName "y" = number
-Line 52 col 25 IdentifierName "Point" = Point
-Line 53 col 0 IdentifierName "x" = number
-Line 54 col 0 IdentifierName "y" = number
-Line 59 col 7 IdentifierName "M" = M
-Line 60 col 18 IdentifierName "D" = D
-Line 60 col 22 IdentifierName "K" = K
-Line 60 col 24 IdentifierName "L" = D
-Line 63 col 4 IdentifierName "o" = { name: string; }
-Line 63 col 9 IdentifierName "name" = string
-Line 64 col 4 IdentifierName "o" = K.L
-Line 64 col 8 ObjectCreationExpression "new M.D('Hello')" = K.L
-Line 64 col 12 MemberAccessExpression "M.D" = typeof K.L
-Line 64 col 12 IdentifierName "M" = typeof M
-Line 64 col 14 IdentifierName "D" = typeof K.L
-Line 66 col 4 IdentifierName "p" = { x: number; y: number; }
-Line 66 col 9 IdentifierName "x" = number
-Line 66 col 20 IdentifierName "y" = number
-Line 67 col 4 IdentifierName "p" = K.L.Point
-Line 67 col 7 IdentifierName "M" = M
-Line 67 col 9 IdentifierName "D" = M.D
-Line 67 col 11 IdentifierName "Point" = K.L.Point
+// expect no errors here
+
+module A {
+>A : A
+
+    export var x = 'hello world'
+>x : string
+
+    export class Point {
+>Point : Point
+
+        constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+    }
+    export module B {
+>B : B
+
+        export interface Id {
+>Id : Id
+
+            name: string;
+>name : string
+        }
+    }
+}
+
+module C {
+>C : C
+
+    export import a = A;
+>a : a
+>A : a
+}
+
+var a: string = C.a.x;
+>a : string
+>C.a.x : string
+>C.a : typeof A
+>C : typeof C
+>a : typeof A
+>x : string
+
+var b: { x: number; y: number; } = new C.a.Point(0, 0);
+>b : { x: number; y: number; }
+>x : number
+>y : number
+>new C.a.Point(0, 0) : A.Point
+>C.a.Point : typeof A.Point
+>C.a : typeof A
+>C : typeof C
+>a : typeof A
+>Point : typeof A.Point
+
+var c: { name: string };
+>c : { name: string; }
+>name : string
+
+var c: C.a.B.Id;
+>c : A.B.Id
+>C : C
+>a : C.a
+>B : A.B
+>Id : A.B.Id
+
+module X {
+>X : X
+
+    export function Y() {
+>Y : typeof Y
+
+        return 42;
+    }
+
+    export module Y {
+>Y : Y
+
+        export class Point {
+>Point : Point
+
+            constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+        }
+    }
+}
+
+module Z {
+>Z : Z
+
+    // 'y' should be a fundule here
+    export import y = X.Y;
+>y : y
+>X : X
+>Y : typeof y
+}
+
+var m: number = Z.y();
+>m : number
+>Z.y() : number
+>Z.y : typeof X.Y
+>Z : typeof Z
+>y : typeof X.Y
+
+var n: { x: number; y: number; } = new Z.y.Point(0, 0);
+>n : { x: number; y: number; }
+>x : number
+>y : number
+>new Z.y.Point(0, 0) : X.Y.Point
+>Z.y.Point : typeof X.Y.Point
+>Z.y : typeof X.Y
+>Z : typeof Z
+>y : typeof X.Y
+>Point : typeof X.Y.Point
+
+module K {
+>K : K
+
+    export class L {
+>L : L
+
+        constructor(public name: string) { }
+>name : string
+    }
+
+    export module L {
+>L : L
+
+        export var y = 12;
+>y : number
+
+        export interface Point {
+>Point : Point
+
+            x: number;
+>x : number
+
+            y: number;
+>y : number
+        }
+    }
+}
+
+module M {
+>M : M
+
+    export import D = K.L;
+>D : D
+>K : K
+>L : D
+}
+
+var o: { name: string };
+>o : { name: string; }
+>name : string
+
+var o = new M.D('Hello');
+>o : K.L
+>new M.D('Hello') : K.L
+>M.D : typeof K.L
+>M : typeof M
+>D : typeof K.L
+
+var p: { x: number; y: number; }
+>p : { x: number; y: number; }
+>x : number
+>y : number
+
+var p: M.D.Point;
+>p : K.L.Point
+>M : M
+>D : M.D
+>Point : K.L.Point
+

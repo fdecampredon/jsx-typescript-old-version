@@ -1,16 +1,31 @@
 === tests/cases/compiler/genericInstanceOf.ts ===
-Line 0 col 10 IdentifierName "F" = F
-Line 4 col 6 IdentifierName "C" = C<T>
-Line 4 col 8 IdentifierName "T" = T
-Line 5 col 23 IdentifierName "a" = T
-Line 5 col 26 IdentifierName "T" = T
-Line 5 col 36 IdentifierName "b" = F
-Line 5 col 39 IdentifierName "F" = F
-Line 6 col 0 IdentifierName "foo" = () => void
-Line 7 col 12 InstanceOfExpression "this.a instanceof this.b" = boolean
-Line 7 col 12 MemberAccessExpression "this.a" = T
-Line 7 col 12 ThisKeyword "this" = C<T>
-Line 7 col 17 IdentifierName "a" = T
-Line 7 col 30 MemberAccessExpression "this.b" = F
-Line 7 col 30 ThisKeyword "this" = C<T>
-Line 7 col 35 IdentifierName "b" = F
+interface F {
+>F : F
+
+    (): number;
+}
+
+class C<T> {
+>C : C<T>
+>T : T
+
+    constructor(public a: T, public b: F) {}
+>a : T
+>T : T
+>b : F
+>F : F
+
+    foo() {
+>foo : () => void
+
+        if (this.a instanceof this.b) {
+>this.a instanceof this.b : boolean
+>this.a : T
+>this : C<T>
+>a : T
+>this.b : F
+>this : C<T>
+>b : F
+        }
+    }
+}

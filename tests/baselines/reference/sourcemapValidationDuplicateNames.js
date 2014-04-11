@@ -1,3 +1,14 @@
+//// [sourcemapValidationDuplicateNames.ts]
+module m1 {
+    var x = 10;
+    export class c {
+    }
+}
+module m1 {
+    var b = new m1.c();
+}
+
+//// [sourcemapValidationDuplicateNames.js]
 var m1;
 (function (m1) {
     var x = 10;

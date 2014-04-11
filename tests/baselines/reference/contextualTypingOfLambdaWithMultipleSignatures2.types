@@ -1,11 +1,22 @@
 === tests/cases/compiler/contextualTypingOfLambdaWithMultipleSignatures2.ts ===
-Line 0 col 4 IdentifierName "f" = { (x: string): string; (x: number): string; }
-Line 1 col 5 IdentifierName "x" = string
-Line 2 col 5 IdentifierName "x" = number
-Line 4 col 0 AssignmentExpression "f = (a) => { return a.asdf }" = (a: any) => any
-Line 4 col 0 IdentifierName "f" = { (x: string): string; (x: number): string; }
-Line 5 col 4 ParenthesizedArrowFunctionExpression "(a) => { return a.asdf }" = (a: any) => any
-Line 5 col 5 IdentifierName "a" = any
-Line 5 col 20 MemberAccessExpression "a.asdf" = any
-Line 5 col 20 IdentifierName "a" = any
-Line 5 col 22 IdentifierName "asdf" = any
+var f: {
+>f : { (x: string): string; (x: number): string; }
+
+    (x: string): string;
+>x : string
+
+    (x: number): string
+>x : number
+
+};
+
+>f = (a) => { return a.asdf } : (a: any) => any
+>f : { (x: string): string; (x: number): string; }
+
+f = (a) => { return a.asdf }
+>(a) => { return a.asdf } : (a: any) => any
+>a : any
+>a.asdf : any
+>a : any
+>asdf : any
+

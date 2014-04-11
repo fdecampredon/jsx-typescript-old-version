@@ -1,45 +1,69 @@
 === tests/cases/compiler/declarationEmit_nameConflicts2.ts ===
-Line 0 col 7 IdentifierName "X" = X
-Line 0 col 9 IdentifierName "Y" = X.Y
-Line 0 col 11 IdentifierName "base" = X.Y.base
-Line 1 col 20 IdentifierName "f" = typeof f
-Line 2 col 17 IdentifierName "C" = C
-Line 3 col 18 IdentifierName "M" = M
-Line 4 col 19 IdentifierName "v" = any
-Line 6 col 16 IdentifierName "E" = E
-Line 9 col 7 IdentifierName "X" = X
-Line 9 col 9 IdentifierName "Y" = X.Y
-Line 9 col 11 IdentifierName "base" = X.Y.base
-Line 9 col 16 IdentifierName "Z" = X.Y.base.Z
-Line 11 col 15 IdentifierName "f" = typeof f
-Line 11 col 19 MemberAccessExpression "X.Y.base.f" = typeof f
-Line 11 col 19 MemberAccessExpression "X.Y.base" = typeof base
-Line 11 col 19 MemberAccessExpression "X.Y" = typeof Y
-Line 11 col 19 IdentifierName "X" = typeof X
-Line 11 col 21 IdentifierName "Y" = typeof Y
-Line 11 col 23 IdentifierName "base" = typeof base
-Line 11 col 28 IdentifierName "f" = typeof f
-Line 12 col 15 IdentifierName "C" = typeof C
-Line 12 col 19 MemberAccessExpression "X.Y.base.C" = typeof C
-Line 12 col 19 MemberAccessExpression "X.Y.base" = typeof base
-Line 12 col 19 MemberAccessExpression "X.Y" = typeof Y
-Line 12 col 19 IdentifierName "X" = typeof X
-Line 12 col 21 IdentifierName "Y" = typeof Y
-Line 12 col 23 IdentifierName "base" = typeof base
-Line 12 col 28 IdentifierName "C" = typeof C
-Line 13 col 15 IdentifierName "M" = typeof M
-Line 13 col 19 MemberAccessExpression "X.Y.base.M" = typeof M
-Line 13 col 19 MemberAccessExpression "X.Y.base" = typeof base
-Line 13 col 19 MemberAccessExpression "X.Y" = typeof Y
-Line 13 col 19 IdentifierName "X" = typeof X
-Line 13 col 21 IdentifierName "Y" = typeof Y
-Line 13 col 23 IdentifierName "base" = typeof base
-Line 13 col 28 IdentifierName "M" = typeof M
-Line 14 col 15 IdentifierName "E" = typeof E
-Line 14 col 19 MemberAccessExpression "X.Y.base.E" = typeof E
-Line 14 col 19 MemberAccessExpression "X.Y.base" = typeof base
-Line 14 col 19 MemberAccessExpression "X.Y" = typeof Y
-Line 14 col 19 IdentifierName "X" = typeof X
-Line 14 col 21 IdentifierName "Y" = typeof Y
-Line 14 col 23 IdentifierName "base" = typeof base
-Line 14 col 28 IdentifierName "E" = typeof E
+module X.Y.base {
+>X : X
+>Y : X.Y
+>base : X.Y.base
+
+    export function f() { }
+>f : typeof f
+
+    export class C { }
+>C : C
+
+    export module M {
+>M : M
+
+        export var v;
+>v : any
+    }
+    export enum E { }
+>E : E
+}
+
+module X.Y.base.Z {
+>X : X
+>Y : X.Y
+>base : X.Y.base
+>Z : X.Y.base.Z
+
+    // Bug 887180
+    export var f = X.Y.base.f; // Should be base.f
+>f : typeof f
+>X.Y.base.f : typeof f
+>X.Y.base : typeof base
+>X.Y : typeof Y
+>X : typeof X
+>Y : typeof Y
+>base : typeof base
+>f : typeof f
+
+    export var C = X.Y.base.C; // Should be base.C
+>C : typeof C
+>X.Y.base.C : typeof C
+>X.Y.base : typeof base
+>X.Y : typeof Y
+>X : typeof X
+>Y : typeof Y
+>base : typeof base
+>C : typeof C
+
+    export var M = X.Y.base.M; // Should be base.M
+>M : typeof M
+>X.Y.base.M : typeof M
+>X.Y.base : typeof base
+>X.Y : typeof Y
+>X : typeof X
+>Y : typeof Y
+>base : typeof base
+>M : typeof M
+
+    export var E = X.Y.base.E; // Should be base.E
+>E : typeof E
+>X.Y.base.E : typeof E
+>X.Y.base : typeof base
+>X.Y : typeof Y
+>X : typeof X
+>Y : typeof Y
+>base : typeof base
+>E : typeof E
+}

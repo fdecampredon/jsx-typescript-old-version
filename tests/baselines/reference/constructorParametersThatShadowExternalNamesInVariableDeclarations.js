@@ -1,3 +1,4 @@
+//// [constructorParametersThatShadowExternalNamesInVariableDeclarations.js]
 var x = 1;
 var A = (function () {
     function A(x) {

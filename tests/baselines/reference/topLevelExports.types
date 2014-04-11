@@ -1,12 +1,19 @@
 === tests/cases/compiler/topLevelExports.ts ===
-Line 0 col 11 IdentifierName "foo" = number
-Line 2 col 9 IdentifierName "log" = typeof log
-Line 2 col 13 IdentifierName "n" = number
-Line 2 col 32 IdentifierName "n" = number
-Line 3 col 0 VoidExpression "void log(foo).toString()" = any
-Line 4 col 5 InvocationExpression "log(foo).toString()" = string
-Line 4 col 5 MemberAccessExpression "log(foo).toString" = (radix?: number) => string
-Line 4 col 5 InvocationExpression "log(foo)" = number
-Line 4 col 5 IdentifierName "log" = typeof log
-Line 4 col 9 IdentifierName "foo" = number
-Line 4 col 14 IdentifierName "toString" = (radix?: number) => string
+export var foo = 3;
+>foo : number
+
+function log(n:number) { return n;}
+>log : typeof log
+>n : number
+>n : number
+
+>void log(foo).toString() : any
+
+void log(foo).toString();
+>log(foo).toString() : string
+>log(foo).toString : (radix?: number) => string
+>log(foo) : number
+>log : typeof log
+>foo : number
+>toString : (radix?: number) => string
+

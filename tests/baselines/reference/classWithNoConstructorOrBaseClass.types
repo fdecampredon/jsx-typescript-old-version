@@ -1,23 +1,45 @@
 === tests/cases/compiler/classWithNoConstructorOrBaseClass.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "x" = string
-Line 4 col 4 IdentifierName "c" = C
-Line 4 col 8 ObjectCreationExpression "new C()" = C
-Line 4 col 12 IdentifierName "C" = typeof C
-Line 5 col 4 IdentifierName "r" = typeof C
-Line 5 col 8 IdentifierName "C" = typeof C
-Line 7 col 6 IdentifierName "D" = D<T, U>
-Line 7 col 8 IdentifierName "T" = T
-Line 7 col 10 IdentifierName "U" = U
-Line 8 col 0 IdentifierName "x" = T
-Line 8 col 7 IdentifierName "T" = T
-Line 9 col 0 IdentifierName "y" = U
-Line 9 col 7 IdentifierName "U" = U
-Line 12 col 4 IdentifierName "d" = D<{}, {}>
-Line 12 col 8 ObjectCreationExpression "new D()" = D<{}, {}>
-Line 12 col 12 IdentifierName "D" = typeof D
-Line 13 col 4 IdentifierName "d2" = D<string, number>
-Line 13 col 9 ObjectCreationExpression "new D<string, number>()" = D<string, number>
-Line 13 col 13 IdentifierName "D" = typeof D
-Line 14 col 4 IdentifierName "r2" = typeof D
-Line 14 col 9 IdentifierName "D" = typeof D
+class C {
+>C : C
+
+    x: string;
+>x : string
+}
+
+var c = new C();
+>c : C
+>new C() : C
+>C : typeof C
+
+var r = C;
+>r : typeof C
+>C : typeof C
+
+class D<T,U> {
+>D : D<T, U>
+>T : T
+>U : U
+
+    x: T;
+>x : T
+>T : T
+
+    y: U;
+>y : U
+>U : U
+}
+
+var d = new D();
+>d : D<{}, {}>
+>new D() : D<{}, {}>
+>D : typeof D
+
+var d2 = new D<string, number>();
+>d2 : D<string, number>
+>new D<string, number>() : D<string, number>
+>D : typeof D
+
+var r2 = D;
+>r2 : typeof D
+>D : typeof D
+

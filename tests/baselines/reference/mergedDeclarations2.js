@@ -1,3 +1,4 @@
+//// [mergedDeclarations2.js]
 var Foo;
 (function (Foo) {
     Foo[Foo["b"] = 0] = "b";

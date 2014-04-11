@@ -1,3 +1,4 @@
+//// [crashIntypeCheckInvocationExpression.js]
 define(["require", "exports"], function(require, exports) {
     var nake;
     function doCompile(fileset, moduleType) {

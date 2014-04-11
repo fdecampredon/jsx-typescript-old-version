@@ -1,13 +1,23 @@
 === tests/cases/compiler/mutuallyRecursiveGenericBaseTypes2.ts ===
-Line 0 col 6 IdentifierName "foo" = foo<T>
-Line 0 col 10 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "bar" = () => foo2<T[]>
-Line 2 col 11 IdentifierName "foo2" = foo2<T>
-Line 2 col 16 IdentifierName "T" = T
-Line 5 col 6 IdentifierName "foo2" = foo2<T>
-Line 5 col 11 IdentifierName "T" = T
-Line 5 col 22 IdentifierName "foo" = foo<T>
-Line 5 col 26 IdentifierName "T" = T
-Line 8 col 4 IdentifierName "test" = foo<string>
-Line 8 col 11 ObjectCreationExpression "new foo<string>()" = foo<string>
-Line 8 col 15 IdentifierName "foo" = typeof foo
+class foo<T>
+>foo : foo<T>
+>T : T
+{
+    bar(): foo2<T[]> { return null; }
+>bar : () => foo2<T[]>
+>foo2 : foo2<T>
+>T : T
+}
+ 
+class foo2<T> extends foo<T> {
+>foo2 : foo2<T>
+>T : T
+>foo : foo<T>
+>T : T
+}
+ 
+var test = new foo<string>();
+>test : foo<string>
+>new foo<string>() : foo<string>
+>foo : typeof foo
+

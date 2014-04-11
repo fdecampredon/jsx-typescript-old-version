@@ -1,55 +1,136 @@
 === tests/cases/compiler/superPropertyAccessNoError.ts ===
-Line 8 col 6 IdentifierName "SomeBaseClass" = SomeBaseClass
-Line 9 col 11 IdentifierName "func" = () => string
-Line 13 col 11 IdentifierName "func" = () => number
-Line 19 col 6 IdentifierName "SomeDerivedClass" = SomeDerivedClass
-Line 19 col 31 IdentifierName "SomeBaseClass" = SomeBaseClass
-Line 21 col 0 InvocationExpression "super()" = void
-Line 22 col 12 IdentifierName "x" = string
-Line 22 col 16 InvocationExpression "super.func()" = string
-Line 22 col 16 MemberAccessExpression "super.func" = () => string
-Line 22 col 22 IdentifierName "func" = () => string
-Line 23 col 12 IdentifierName "x" = string
-Line 25 col 0 IdentifierName "fn" = () => void
-Line 27 col 12 IdentifierName "x" = string
-Line 27 col 16 InvocationExpression "super.func()" = string
-Line 27 col 16 MemberAccessExpression "super.func" = () => string
-Line 27 col 22 IdentifierName "func" = () => string
-Line 28 col 12 IdentifierName "x" = string
-Line 29 col 12 IdentifierName "y" = () => string
-Line 29 col 16 ParenthesizedArrowFunctionExpression "() => super.func()" = () => string
-Line 29 col 22 InvocationExpression "super.func()" = string
-Line 29 col 22 MemberAccessExpression "super.func" = () => string
-Line 29 col 28 IdentifierName "func" = () => string
-Line 32 col 8 IdentifierName "a" = any
-Line 33 col 12 IdentifierName "x" = string
-Line 33 col 16 InvocationExpression "super.func()" = string
-Line 33 col 16 MemberAccessExpression "super.func" = () => string
-Line 33 col 22 IdentifierName "func" = () => string
-Line 34 col 12 IdentifierName "x" = string
-Line 38 col 8 IdentifierName "a" = any
-Line 38 col 10 IdentifierName "n" = any
-Line 39 col 12 IdentifierName "x" = string
-Line 39 col 16 InvocationExpression "super.func()" = string
-Line 39 col 16 MemberAccessExpression "super.func" = () => string
-Line 39 col 22 IdentifierName "func" = () => string
-Line 40 col 12 IdentifierName "x" = string
-Line 43 col 11 IdentifierName "fn" = () => void
-Line 44 col 12 IdentifierName "x" = number
-Line 44 col 16 InvocationExpression "super.func()" = number
-Line 44 col 16 MemberAccessExpression "super.func" = () => number
-Line 44 col 22 IdentifierName "func" = () => number
-Line 45 col 12 IdentifierName "x" = number
-Line 48 col 15 IdentifierName "a" = any
-Line 49 col 12 IdentifierName "x" = number
-Line 49 col 16 InvocationExpression "super.func()" = number
-Line 49 col 16 MemberAccessExpression "super.func" = () => number
-Line 49 col 22 IdentifierName "func" = () => number
-Line 50 col 12 IdentifierName "x" = number
-Line 54 col 15 IdentifierName "a" = any
-Line 54 col 17 IdentifierName "n" = any
-Line 55 col 12 IdentifierName "x" = number
-Line 55 col 16 InvocationExpression "super.func()" = number
-Line 55 col 16 MemberAccessExpression "super.func" = () => number
-Line 55 col 22 IdentifierName "func" = () => number
-Line 56 col 12 IdentifierName "x" = number
+//super.publicInstanceMemberFunction in constructor of derived class
+//super.publicInstanceMemberFunction in instance member function of derived class
+//super.publicInstanceMemberFunction in instance member accessor(get and set) of derived class
+//super.publicInstanceMemberFunction in lambda in member function
+//super.publicStaticMemberFunction in static member function of derived class
+//super.publicStaticMemberFunction in static member accessor(get and set) of derived class
+
+
+class SomeBaseClass {
+>SomeBaseClass : SomeBaseClass
+
+    public func() {
+>func : () => string
+
+        return '';
+    }
+
+    static func() {
+>func : () => number
+
+        return 3;
+    }
+
+}
+
+class SomeDerivedClass extends SomeBaseClass {
+>SomeDerivedClass : SomeDerivedClass
+>SomeBaseClass : SomeBaseClass
+
+    constructor() {
+        super();
+>super() : void
+
+        var x = super.func();
+>x : string
+>super.func() : string
+>super.func : () => string
+>func : () => string
+
+        var x: string;
+>x : string
+    }
+
+>fn : () => void
+
+    fn() {
+        var x = super.func();
+>x : string
+>super.func() : string
+>super.func : () => string
+>func : () => string
+
+        var x: string;
+>x : string
+
+        var y = () => super.func();
+>y : () => string
+>() => super.func() : () => string
+>super.func() : string
+>super.func : () => string
+>func : () => string
+    }
+
+    get a() {
+>a : any
+
+        var x = super.func();
+>x : string
+>super.func() : string
+>super.func : () => string
+>func : () => string
+
+        var x: string;
+>x : string
+
+        return null;
+    }
+
+    set a(n) {
+>a : any
+>n : any
+
+        var x = super.func();
+>x : string
+>super.func() : string
+>super.func : () => string
+>func : () => string
+
+        var x: string;
+>x : string
+    }
+
+    static fn() {
+>fn : () => void
+
+        var x = super.func();
+>x : number
+>super.func() : number
+>super.func : () => number
+>func : () => number
+
+        var x: number;
+>x : number
+    }
+
+    static get a() {
+>a : any
+
+        var x = super.func();
+>x : number
+>super.func() : number
+>super.func : () => number
+>func : () => number
+
+        var x: number;
+>x : number
+
+        return null;
+    }
+
+    static set a(n) {
+>a : any
+>n : any
+
+        var x = super.func();
+>x : number
+>super.func() : number
+>super.func : () => number
+>func : () => number
+
+        var x: number;
+>x : number
+    }
+
+}

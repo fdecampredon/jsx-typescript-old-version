@@ -1,3 +1,4 @@
+//// [genericArrayAssignmentCompatErrors.js]
 var myCars = new Array();
 var myCars2 = new [];
 var myCars3 = new Array({});

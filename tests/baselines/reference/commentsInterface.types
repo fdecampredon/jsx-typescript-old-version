@@ -1,108 +1,204 @@
 === tests/cases/compiler/commentsInterface.ts ===
-Line 1 col 10 IdentifierName "i1" = i1
-Line 3 col 4 IdentifierName "i1_i" = i1
-Line 3 col 10 IdentifierName "i1" = i1
-Line 4 col 10 IdentifierName "nc_i1" = nc_i1
-Line 6 col 4 IdentifierName "nc_i1_i" = nc_i1
-Line 6 col 13 IdentifierName "nc_i1" = nc_i1
-Line 8 col 10 IdentifierName "i2" = i2
-Line 9 col 0 IdentifierName "/** this is x*/
-    x" = number
-Line 11 col 0 IdentifierName "/** this is foo*/
-    foo" = (b: number) => string
-Line 12 col 25 IdentifierName "b" = number
-Line 14 col 22 IdentifierName "i" = string
-Line 16 col 20 IdentifierName "i" = i1
-Line 16 col 23 IdentifierName "i1" = i1
-Line 17 col 0 IdentifierName "nc_x" = number
-Line 18 col 0 IdentifierName "nc_foo" = (b: number) => string
-Line 18 col 13 IdentifierName "b" = number
-Line 19 col 5 IdentifierName "i" = number
-Line 21 col 21 IdentifierName "a" = number
-Line 21 col 48 IdentifierName "b" = number
-Line 22 col 0 IdentifierName "/** this is fnfoo*/
-    fnfoo" = (b: number) => string
-Line 23 col 25 IdentifierName "b" = number
-Line 24 col 0 IdentifierName "nc_fnfoo" = (b: number) => string
-Line 24 col 13 IdentifierName "b" = number
-Line 25 col 0 IdentifierName "// nc_y
-    nc_y" = number
-Line 28 col 4 IdentifierName "i2_i" = i2
-Line 28 col 10 IdentifierName "i2" = i2
-Line 29 col 4 IdentifierName "i2_i_x" = number
-Line 29 col 13 MemberAccessExpression "i2_i.x" = number
-Line 29 col 13 IdentifierName "i2_i" = i2
-Line 29 col 18 IdentifierName "x" = number
-Line 30 col 4 IdentifierName "i2_i_foo" = (b: number) => string
-Line 30 col 15 MemberAccessExpression "i2_i.foo" = (b: number) => string
-Line 30 col 15 IdentifierName "i2_i" = i2
-Line 30 col 20 IdentifierName "foo" = (b: number) => string
-Line 31 col 4 IdentifierName "i2_i_foo_r" = string
-Line 31 col 17 InvocationExpression "i2_i.foo(30)" = string
-Line 31 col 17 MemberAccessExpression "i2_i.foo" = (b: number) => string
-Line 31 col 17 IdentifierName "i2_i" = i2
-Line 31 col 22 IdentifierName "foo" = (b: number) => string
-Line 32 col 4 IdentifierName "i2_i_i2_si" = any
-Line 32 col 17 ElementAccessExpression "i2_i["hello"]" = any
-Line 32 col 17 IdentifierName "i2_i" = i2
-Line 33 col 4 IdentifierName "i2_i_i2_ii" = number
-Line 33 col 17 ElementAccessExpression "i2_i[30]" = number
-Line 33 col 17 IdentifierName "i2_i" = i2
-Line 34 col 4 IdentifierName "i2_i_n" = any
-Line 34 col 13 ObjectCreationExpression "new i2_i(i1_i)" = any
-Line 34 col 17 IdentifierName "i2_i" = i2
-Line 34 col 22 IdentifierName "i1_i" = i1
-Line 35 col 4 IdentifierName "i2_i_nc_x" = number
-Line 35 col 16 MemberAccessExpression "i2_i.nc_x" = number
-Line 35 col 16 IdentifierName "i2_i" = i2
-Line 35 col 21 IdentifierName "nc_x" = number
-Line 36 col 4 IdentifierName "i2_i_nc_foo" = (b: number) => string
-Line 36 col 18 MemberAccessExpression "i2_i.nc_foo" = (b: number) => string
-Line 36 col 18 IdentifierName "i2_i" = i2
-Line 36 col 23 IdentifierName "nc_foo" = (b: number) => string
-Line 37 col 4 IdentifierName "i2_i_nc_foo_r" = string
-Line 37 col 20 InvocationExpression "i2_i.nc_foo(30)" = string
-Line 37 col 20 MemberAccessExpression "i2_i.nc_foo" = (b: number) => string
-Line 37 col 20 IdentifierName "i2_i" = i2
-Line 37 col 25 IdentifierName "nc_foo" = (b: number) => string
-Line 38 col 4 IdentifierName "i2_i_r" = number
-Line 38 col 13 InvocationExpression "i2_i(10, 20)" = number
-Line 38 col 13 IdentifierName "i2_i" = i2
-Line 39 col 4 IdentifierName "i2_i_fnfoo" = (b: number) => string
-Line 39 col 17 MemberAccessExpression "i2_i.fnfoo" = (b: number) => string
-Line 39 col 17 IdentifierName "i2_i" = i2
-Line 39 col 22 IdentifierName "fnfoo" = (b: number) => string
-Line 40 col 4 IdentifierName "i2_i_fnfoo_r" = string
-Line 40 col 19 InvocationExpression "i2_i.fnfoo(10)" = string
-Line 40 col 19 MemberAccessExpression "i2_i.fnfoo" = (b: number) => string
-Line 40 col 19 IdentifierName "i2_i" = i2
-Line 40 col 24 IdentifierName "fnfoo" = (b: number) => string
-Line 41 col 4 IdentifierName "i2_i_nc_fnfoo" = (b: number) => string
-Line 41 col 20 MemberAccessExpression "i2_i.nc_fnfoo" = (b: number) => string
-Line 41 col 20 IdentifierName "i2_i" = i2
-Line 41 col 25 IdentifierName "nc_fnfoo" = (b: number) => string
-Line 42 col 4 IdentifierName "i2_i_nc_fnfoo_r" = string
-Line 42 col 22 InvocationExpression "i2_i.nc_fnfoo(10)" = string
-Line 42 col 22 MemberAccessExpression "i2_i.nc_fnfoo" = (b: number) => string
-Line 42 col 22 IdentifierName "i2_i" = i2
-Line 42 col 27 IdentifierName "nc_fnfoo" = (b: number) => string
-Line 43 col 10 IdentifierName "i3" = i3
-Line 44 col 0 IdentifierName "/** Comment i3 x*/
-    x" = number
-Line 46 col 0 IdentifierName "/** Function i3 f*/
-    f" = (a: number) => string
-Line 47 col 27 IdentifierName "a" = number
-Line 48 col 0 IdentifierName "/** i3 l*/
-    l" = (b: number) => string
-Line 49 col 27 IdentifierName "b" = number
-Line 50 col 0 IdentifierName "nc_x" = number
-Line 51 col 0 IdentifierName "nc_f" = (a: number) => string
-Line 51 col 9 IdentifierName "a" = number
-Line 52 col 0 IdentifierName "nc_l" = (b: number) => string
-Line 52 col 11 IdentifierName "b" = number
-Line 54 col 4 IdentifierName "i3_i" = i3
-Line 54 col 10 IdentifierName "i3" = i3
-Line 55 col 0 AssignmentExpression "i3_i = {
+/** this is interface 1*/
+interface i1 {
+>i1 : i1
+}
+var i1_i: i1;
+>i1_i : i1
+>i1 : i1
+
+interface nc_i1 {
+>nc_i1 : nc_i1
+}
+var nc_i1_i: nc_i1;
+>nc_i1_i : nc_i1
+>nc_i1 : nc_i1
+
+/** this is interface 2 with memebers*/
+interface i2 {
+>i2 : i2
+
+    /** this is x*/
+>/** this is x*/
+    x : number
+
+    x: number;
+    /** this is foo*/
+>/** this is foo*/
+    foo : (b: number) => string
+
+    foo: (/**param help*/b: number) => string;
+>b : number
+
+    /** this is indexer*/
+    [/**string param*/i: string]: any;
+>i : string
+
+    /**new method*/
+    new (/** param*/i: i1);
+>i : i1
+>i1 : i1
+
+    nc_x: number;
+>nc_x : number
+
+    nc_foo: (b: number) => string;
+>nc_foo : (b: number) => string
+>b : number
+
+    [i: number]: number;
+>i : number
+
+    /** this is call signature*/
+    (/**paramhelp a*/a: number,/**paramhelp b*/ b: number) : number;
+>a : number
+>b : number
+
+    /** this is fnfoo*/
+>/** this is fnfoo*/
+    fnfoo : (b: number) => string
+
+    fnfoo(/**param help*/b: number): string;
+>b : number
+
+    nc_fnfoo(b: number): string;
+>nc_fnfoo : (b: number) => string
+>b : number
+
+    // nc_y
+>// nc_y
+    nc_y : number
+
+    nc_y: number;
+}
+var i2_i: i2;
+>i2_i : i2
+>i2 : i2
+
+var i2_i_x = i2_i.x;
+>i2_i_x : number
+>i2_i.x : number
+>i2_i : i2
+>x : number
+
+var i2_i_foo = i2_i.foo;
+>i2_i_foo : (b: number) => string
+>i2_i.foo : (b: number) => string
+>i2_i : i2
+>foo : (b: number) => string
+
+var i2_i_foo_r = i2_i.foo(30);
+>i2_i_foo_r : string
+>i2_i.foo(30) : string
+>i2_i.foo : (b: number) => string
+>i2_i : i2
+>foo : (b: number) => string
+
+var i2_i_i2_si = i2_i["hello"];
+>i2_i_i2_si : any
+>i2_i["hello"] : any
+>i2_i : i2
+
+var i2_i_i2_ii = i2_i[30];
+>i2_i_i2_ii : number
+>i2_i[30] : number
+>i2_i : i2
+
+var i2_i_n = new i2_i(i1_i);
+>i2_i_n : any
+>new i2_i(i1_i) : any
+>i2_i : i2
+>i1_i : i1
+
+var i2_i_nc_x = i2_i.nc_x;
+>i2_i_nc_x : number
+>i2_i.nc_x : number
+>i2_i : i2
+>nc_x : number
+
+var i2_i_nc_foo = i2_i.nc_foo;
+>i2_i_nc_foo : (b: number) => string
+>i2_i.nc_foo : (b: number) => string
+>i2_i : i2
+>nc_foo : (b: number) => string
+
+var i2_i_nc_foo_r = i2_i.nc_foo(30);
+>i2_i_nc_foo_r : string
+>i2_i.nc_foo(30) : string
+>i2_i.nc_foo : (b: number) => string
+>i2_i : i2
+>nc_foo : (b: number) => string
+
+var i2_i_r = i2_i(10, 20);
+>i2_i_r : number
+>i2_i(10, 20) : number
+>i2_i : i2
+
+var i2_i_fnfoo = i2_i.fnfoo;
+>i2_i_fnfoo : (b: number) => string
+>i2_i.fnfoo : (b: number) => string
+>i2_i : i2
+>fnfoo : (b: number) => string
+
+var i2_i_fnfoo_r = i2_i.fnfoo(10);
+>i2_i_fnfoo_r : string
+>i2_i.fnfoo(10) : string
+>i2_i.fnfoo : (b: number) => string
+>i2_i : i2
+>fnfoo : (b: number) => string
+
+var i2_i_nc_fnfoo = i2_i.nc_fnfoo;
+>i2_i_nc_fnfoo : (b: number) => string
+>i2_i.nc_fnfoo : (b: number) => string
+>i2_i : i2
+>nc_fnfoo : (b: number) => string
+
+var i2_i_nc_fnfoo_r = i2_i.nc_fnfoo(10);
+>i2_i_nc_fnfoo_r : string
+>i2_i.nc_fnfoo(10) : string
+>i2_i.nc_fnfoo : (b: number) => string
+>i2_i : i2
+>nc_fnfoo : (b: number) => string
+
+interface i3 {
+>i3 : i3
+
+    /** Comment i3 x*/
+>/** Comment i3 x*/
+    x : number
+
+    x: number;
+    /** Function i3 f*/
+>/** Function i3 f*/
+    f : (a: number) => string
+
+    f(/**number parameter*/a: number): string;
+>a : number
+
+    /** i3 l*/
+>/** i3 l*/
+    l : (b: number) => string
+
+    l: (/**comment i3 l b*/b: number) => string;
+>b : number
+
+    nc_x: number;
+>nc_x : number
+
+    nc_f(a: number): string;
+>nc_f : (a: number) => string
+>a : number
+
+    nc_l: (b: number) => string;
+>nc_l : (b: number) => string
+>b : number
+}
+var i3_i: i3;
+>i3_i : i3
+>i3 : i3
+
+i3_i = {
+>i3_i = {
     f: /**own f*/ (/**i3_i a*/a: number) => "Hello" + a,
     l: this.f,
     /** own x*/
@@ -110,9 +206,9 @@ Line 55 col 0 AssignmentExpression "i3_i = {
     nc_x: this.l(this.x),
     nc_f: this.f,
     nc_l: this.l
-}" = { f: (a: number) => string; l: any; x: any; nc_x: any; nc_f: any; nc_l: any; }
-Line 55 col 0 IdentifierName "i3_i" = i3
-Line 55 col 7 ObjectLiteralExpression "{
+} : { f: (a: number) => string; l: any; x: any; nc_x: any; nc_f: any; nc_l: any; }
+>i3_i : i3
+>{
     f: /**own f*/ (/**i3_i a*/a: number) => "Hello" + a,
     l: this.f,
     /** own x*/
@@ -120,51 +216,75 @@ Line 55 col 7 ObjectLiteralExpression "{
     nc_x: this.l(this.x),
     nc_f: this.f,
     nc_l: this.l
-}" = { f: (a: number) => string; l: any; x: any; nc_x: any; nc_f: any; nc_l: any; }
-Line 56 col 0 IdentifierName "f" = (a: number) => string
-Line 56 col 18 ParenthesizedArrowFunctionExpression "(/**i3_i a*/a: number) => "Hello" + a" = (a: number) => string
-Line 56 col 30 IdentifierName "a" = number
-Line 56 col 44 AddExpression ""Hello" + a" = string
-Line 56 col 54 IdentifierName "a" = number
-Line 57 col 0 IdentifierName "l" = any
-Line 57 col 7 MemberAccessExpression "this.f" = any
-Line 57 col 7 ThisKeyword "this" = any
-Line 57 col 12 IdentifierName "f" = any
-Line 58 col 0 IdentifierName "/** own x*/
-    x" = any
-Line 59 col 7 InvocationExpression "this.f(10)" = any
-Line 59 col 7 MemberAccessExpression "this.f" = any
-Line 59 col 7 ThisKeyword "this" = any
-Line 59 col 12 IdentifierName "f" = any
-Line 60 col 0 IdentifierName "nc_x" = any
-Line 60 col 10 InvocationExpression "this.l(this.x)" = any
-Line 60 col 10 MemberAccessExpression "this.l" = any
-Line 60 col 10 ThisKeyword "this" = any
-Line 60 col 15 IdentifierName "l" = any
-Line 60 col 17 MemberAccessExpression "this.x" = any
-Line 60 col 17 ThisKeyword "this" = any
-Line 60 col 22 IdentifierName "x" = any
-Line 61 col 0 IdentifierName "nc_f" = any
-Line 61 col 10 MemberAccessExpression "this.f" = any
-Line 61 col 10 ThisKeyword "this" = any
-Line 61 col 15 IdentifierName "f" = any
-Line 62 col 0 IdentifierName "nc_l" = any
-Line 62 col 10 MemberAccessExpression "this.l" = any
-Line 62 col 10 ThisKeyword "this" = any
-Line 62 col 15 IdentifierName "l" = any
-Line 64 col 0 InvocationExpression "i3_i.f(10)" = string
-Line 64 col 0 MemberAccessExpression "i3_i.f" = (a: number) => string
-Line 64 col 0 IdentifierName "i3_i" = i3
-Line 64 col 5 IdentifierName "f" = (a: number) => string
-Line 65 col 0 InvocationExpression "i3_i.l(10)" = string
-Line 65 col 0 MemberAccessExpression "i3_i.l" = (b: number) => string
-Line 65 col 0 IdentifierName "i3_i" = i3
-Line 65 col 5 IdentifierName "l" = (b: number) => string
-Line 66 col 0 InvocationExpression "i3_i.nc_f(10)" = string
-Line 66 col 0 MemberAccessExpression "i3_i.nc_f" = (a: number) => string
-Line 66 col 0 IdentifierName "i3_i" = i3
-Line 66 col 5 IdentifierName "nc_f" = (a: number) => string
-Line 67 col 0 InvocationExpression "i3_i.nc_l(10)" = string
-Line 67 col 0 MemberAccessExpression "i3_i.nc_l" = (b: number) => string
-Line 67 col 0 IdentifierName "i3_i" = i3
-Line 67 col 5 IdentifierName "nc_l" = (b: number) => string
+} : { f: (a: number) => string; l: any; x: any; nc_x: any; nc_f: any; nc_l: any; }
+
+    f: /**own f*/ (/**i3_i a*/a: number) => "Hello" + a,
+>f : (a: number) => string
+>(/**i3_i a*/a: number) => "Hello" + a : (a: number) => string
+>a : number
+>"Hello" + a : string
+>a : number
+
+    l: this.f,
+>l : any
+>this.f : any
+>this : any
+>f : any
+
+    /** own x*/
+>/** own x*/
+    x : any
+
+    x: this.f(10),
+>this.f(10) : any
+>this.f : any
+>this : any
+>f : any
+
+    nc_x: this.l(this.x),
+>nc_x : any
+>this.l(this.x) : any
+>this.l : any
+>this : any
+>l : any
+>this.x : any
+>this : any
+>x : any
+
+    nc_f: this.f,
+>nc_f : any
+>this.f : any
+>this : any
+>f : any
+
+    nc_l: this.l
+>nc_l : any
+>this.l : any
+>this : any
+>l : any
+
+};
+i3_i.f(10);
+>i3_i.f(10) : string
+>i3_i.f : (a: number) => string
+>i3_i : i3
+>f : (a: number) => string
+
+i3_i.l(10);
+>i3_i.l(10) : string
+>i3_i.l : (b: number) => string
+>i3_i : i3
+>l : (b: number) => string
+
+i3_i.nc_f(10);
+>i3_i.nc_f(10) : string
+>i3_i.nc_f : (a: number) => string
+>i3_i : i3
+>nc_f : (a: number) => string
+
+i3_i.nc_l(10);
+>i3_i.nc_l(10) : string
+>i3_i.nc_l : (b: number) => string
+>i3_i : i3
+>nc_l : (b: number) => string
+

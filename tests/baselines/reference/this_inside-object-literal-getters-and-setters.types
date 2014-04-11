@@ -1,7 +1,10 @@
 === tests/cases/compiler/this_inside-object-literal-getters-and-setters.ts ===
-Line 0 col 7 IdentifierName "ObjectLiteral" = ObjectLiteral
-Line 1 col 8 IdentifierName "ThisInObjectLiteral" = { _foo: string; foo: string; test: () => any; }
-Line 1 col 30 ObjectLiteralExpression "{
+module ObjectLiteral {
+>ObjectLiteral : ObjectLiteral
+
+    var ThisInObjectLiteral = {
+>ThisInObjectLiteral : { _foo: string; foo: string; test: () => any; }
+>{
         _foo: '1',
         get foo(): string {
             return this._foo;
@@ -12,23 +15,44 @@ Line 1 col 30 ObjectLiteralExpression "{
         test: function () {
             return this._foo;
         }
-    }" = { _foo: string; foo: string; test: () => any; }
-Line 2 col 0 IdentifierName "_foo" = string
-Line 3 col 12 IdentifierName "foo" = string
-Line 4 col 19 MemberAccessExpression "this._foo" = any
-Line 4 col 19 ThisKeyword "this" = any
-Line 4 col 24 IdentifierName "_foo" = any
-Line 6 col 12 IdentifierName "foo" = string
-Line 6 col 16 IdentifierName "value" = string
-Line 7 col 0 AssignmentExpression "this._foo = value" = string
-Line 7 col 0 MemberAccessExpression "this._foo" = any
-Line 7 col 0 ThisKeyword "this" = any
-Line 7 col 17 IdentifierName "_foo" = any
-Line 7 col 24 IdentifierName "value" = string
-Line 9 col 0 IdentifierName "test" = () => any
-Line 9 col 14 FunctionExpression "function () {
+    } : { _foo: string; foo: string; test: () => any; }
+
+        _foo: '1',
+>_foo : string
+
+        get foo(): string {
+>foo : string
+
             return this._foo;
-        }" = () => any
-Line 10 col 19 MemberAccessExpression "this._foo" = any
-Line 10 col 19 ThisKeyword "this" = any
-Line 10 col 24 IdentifierName "_foo" = any
+>this._foo : any
+>this : any
+>_foo : any
+
+        },
+        set foo(value: string) {
+>foo : string
+>value : string
+
+            this._foo = value;
+>this._foo = value : string
+>this._foo : any
+>this : any
+>_foo : any
+>value : string
+
+        },
+        test: function () {
+>test : () => any
+>function () {
+            return this._foo;
+        } : () => any
+
+            return this._foo;
+>this._foo : any
+>this : any
+>_foo : any
+        }
+    }
+}
+
+

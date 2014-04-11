@@ -1,9 +1,24 @@
 === tests/cases/compiler/reuseInnerModuleMember_1.ts ===
-Line 1 col 15 IdentifierName "bar" = bar
-Line 2 col 14 IdentifierName "alpha" = alpha
-Line 5 col 7 IdentifierName "f" = f
-Line 6 col 7 IdentifierName "bar" = bar
-Line 7 col 8 IdentifierName "x" = alpha
-Line 7 col 11 IdentifierName "alpha" = alpha
+///<reference path='reuseInnerModuleMember_0.ts'/>
+declare module bar {
+>bar : bar
+
+    interface alpha { }
+>alpha : alpha
+}
+
+import f = require('reuseInnerModuleMember_0');
+>f : f
+
+module bar {
+>bar : bar
+
+    var x: alpha;
+>x : alpha
+>alpha : alpha
+}
+
 === tests/cases/compiler/reuseInnerModuleMember_0.ts ===
-Line 0 col 14 IdentifierName "M" = M
+export module M { }
+>M : M
+

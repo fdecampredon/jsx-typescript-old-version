@@ -1,34 +1,48 @@
 === tests/cases/compiler/typeArgInferenceWithNull.ts ===
-Line 2 col 9 IdentifierName "fn4" = typeof fn4
-Line 2 col 13 IdentifierName "T" = T
-Line 2 col 31 IdentifierName "n" = T
-Line 2 col 34 IdentifierName "T" = T
-Line 3 col 0 InvocationExpression "fn4(null)" = void
-Line 3 col 0 IdentifierName "fn4" = typeof fn4
-Line 5 col 9 IdentifierName "fn5" = typeof fn5
-Line 5 col 13 IdentifierName "T" = T
-Line 5 col 25 IdentifierName "x" = string
-Line 5 col 38 IdentifierName "n" = T
-Line 5 col 41 IdentifierName "T" = T
-Line 6 col 0 InvocationExpression "fn5({ x: null })" = void
-Line 6 col 0 IdentifierName "fn5" = typeof fn5
-Line 6 col 4 ObjectLiteralExpression "{ x: null }" = { x: any; }
-Line 6 col 6 IdentifierName "x" = any
-Line 8 col 9 IdentifierName "fn6" = typeof fn6
-Line 8 col 13 IdentifierName "T" = T
-Line 8 col 25 IdentifierName "x" = string
-Line 8 col 38 IdentifierName "n" = T
-Line 8 col 41 IdentifierName "T" = T
-Line 8 col 44 IdentifierName "fun" = (x: T) => void
-Line 8 col 50 IdentifierName "x" = T
-Line 8 col 53 IdentifierName "T" = T
-Line 8 col 65 IdentifierName "n2" = T
-Line 8 col 69 IdentifierName "T" = T
-Line 9 col 0 InvocationExpression "fn6({ x: null }, y => { }, { x: "" })" = void
-Line 9 col 0 IdentifierName "fn6" = typeof fn6
-Line 9 col 4 ObjectLiteralExpression "{ x: null }" = { x: any; }
-Line 9 col 6 IdentifierName "x" = any
-Line 9 col 17 SimpleArrowFunctionExpression "y => { }" = (y: { x: any; }) => void
-Line 9 col 17 IdentifierName "y" = { x: any; }
-Line 9 col 27 ObjectLiteralExpression "{ x: "" }" = { x: string; }
-Line 9 col 29 IdentifierName "x" = string
+// All legal
+
+function fn4<T extends string>(n: T) { }
+>fn4 : typeof fn4
+>T : T
+>n : T
+>T : T
+
+fn4(null);
+>fn4(null) : void
+>fn4 : typeof fn4
+
+function fn5<T extends { x: string }>(n: T) { }
+>fn5 : typeof fn5
+>T : T
+>x : string
+>n : T
+>T : T
+
+fn5({ x: null });
+>fn5({ x: null }) : void
+>fn5 : typeof fn5
+>{ x: null } : { x: any; }
+>x : any
+
+function fn6<T extends { x: string }>(n: T, fun: (x: T) => void, n2: T) { }
+>fn6 : typeof fn6
+>T : T
+>x : string
+>n : T
+>T : T
+>fun : (x: T) => void
+>x : T
+>T : T
+>n2 : T
+>T : T
+
+fn6({ x: null }, y => { }, { x: "" }); // y has type { x: any }, but ideally would have type { x: string }
+>fn6({ x: null }, y => { }, { x: "" }) : void
+>fn6 : typeof fn6
+>{ x: null } : { x: any; }
+>x : any
+>y => { } : (y: { x: any; }) => void
+>y : { x: any; }
+>{ x: "" } : { x: string; }
+>x : string
+

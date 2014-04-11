@@ -1,3 +1,4 @@
+//// [es6MemberScoping.js]
 var Foo = (function () {
     function Foo(store) {
         this._store = store;

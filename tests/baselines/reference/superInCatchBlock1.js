@@ -1,3 +1,19 @@
+//// [superInCatchBlock1.ts]
+class A {
+ m(): void { }
+}
+class B extends A {
+ m() {
+  try {
+  }
+  catch (e) {
+   super.m();
+  }
+ }
+}
+
+
+//// [superInCatchBlock1.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

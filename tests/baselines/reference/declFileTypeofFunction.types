@@ -1,43 +1,88 @@
 === tests/cases/compiler/declFileTypeofFunction.ts ===
-Line 1 col 9 IdentifierName "f" = typeof f
-Line 1 col 11 IdentifierName "n" = typeof f
-Line 1 col 21 IdentifierName "f" = typeof f
-Line 2 col 9 IdentifierName "f" = typeof f
-Line 2 col 11 IdentifierName "n" = typeof g
-Line 2 col 21 IdentifierName "g" = typeof g
-Line 3 col 9 IdentifierName "f" = typeof f
-Line 3 col 22 IdentifierName "undefined" = any
-Line 4 col 9 IdentifierName "g" = typeof g
-Line 4 col 11 IdentifierName "n" = typeof g
-Line 4 col 21 IdentifierName "g" = typeof g
-Line 5 col 9 IdentifierName "g" = typeof g
-Line 5 col 11 IdentifierName "n" = typeof f
-Line 5 col 21 IdentifierName "f" = typeof f
-Line 6 col 9 IdentifierName "g" = typeof g
-Line 6 col 22 IdentifierName "undefined" = any
-Line 8 col 4 IdentifierName "b" = () => any
-Line 8 col 20 IdentifierName "b" = () => any
-Line 10 col 9 IdentifierName "b1" = typeof b1
-Line 11 col 11 IdentifierName "b1" = typeof b1
-Line 14 col 9 IdentifierName "foo" = typeof foo
-Line 14 col 23 IdentifierName "foo" = typeof foo
-Line 17 col 4 IdentifierName "foo1" = typeof foo
-Line 17 col 17 IdentifierName "foo" = typeof foo
-Line 18 col 4 IdentifierName "foo2" = typeof foo
-Line 18 col 11 IdentifierName "foo" = typeof foo
-Line 20 col 4 IdentifierName "foo3" = () => any
-Line 20 col 11 FunctionExpression "function () {
+
+function f(n: typeof f): string;
+>f : typeof f
+>n : typeof f
+>f : typeof f
+
+function f(n: typeof g): string;
+>f : typeof f
+>n : typeof g
+>g : typeof g
+
+function f() { return undefined; }
+>f : typeof f
+>undefined : any
+
+function g(n: typeof g): number;
+>g : typeof g
+>n : typeof g
+>g : typeof g
+
+function g(n: typeof f): number;
+>g : typeof g
+>n : typeof f
+>f : typeof f
+
+function g() { return undefined; }
+>g : typeof g
+>undefined : any
+
+var b: () => typeof b;
+>b : () => any
+>b : () => any
+
+function b1() {
+>b1 : typeof b1
+
+    return b1;
+>b1 : typeof b1
+}
+
+function foo(): typeof foo {
+>foo : typeof foo
+>foo : typeof foo
+
+    return null;
+}
+var foo1: typeof foo;
+>foo1 : typeof foo
+>foo : typeof foo
+
+var foo2 = foo;
+>foo2 : typeof foo
+>foo : typeof foo
+
+var foo3 = function () {
+>foo3 : () => any
+>function () {
     return foo3;
-}" = () => any
-Line 21 col 11 IdentifierName "foo3" = () => any
-Line 23 col 4 IdentifierName "x" = () => any
-Line 23 col 8 ParenthesizedArrowFunctionExpression "() => {
+} : () => any
+
+    return foo3;
+>foo3 : () => any
+}
+var x = () => {
+>x : () => any
+>() => {
     return x;
-}" = () => any
-Line 24 col 11 IdentifierName "x" = () => any
-Line 27 col 9 IdentifierName "foo5" = typeof foo5
-Line 27 col 14 IdentifierName "x" = number
-Line 28 col 13 IdentifierName "bar" = (x: number) => number
-Line 28 col 17 IdentifierName "x" = number
-Line 29 col 15 IdentifierName "x" = number
-Line 31 col 11 IdentifierName "bar" = (x: number) => number
+} : () => any
+
+    return x;
+>x : () => any
+}
+
+function foo5(x: number) {
+>foo5 : typeof foo5
+>x : number
+
+    function bar(x: number) {
+>bar : (x: number) => number
+>x : number
+
+        return x;
+>x : number
+    }
+    return bar;
+>bar : (x: number) => number
+}

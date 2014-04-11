@@ -1,68 +1,108 @@
 === tests/cases/compiler/arrayOfFunctionTypes3.ts ===
-Line 2 col 4 IdentifierName "x" = { (): void; }[]
-Line 2 col 8 ArrayLiteralExpression "[() => 1, () => { }]" = { (): void; }[]
-Line 2 col 9 ParenthesizedArrowFunctionExpression "() => 1" = () => number
-Line 2 col 18 ParenthesizedArrowFunctionExpression "() => { }" = () => void
-Line 3 col 4 IdentifierName "r2" = void
-Line 3 col 9 InvocationExpression "x[0]()" = void
-Line 3 col 9 ElementAccessExpression "x[0]" = () => void
-Line 3 col 9 IdentifierName "x" = { (): void; }[]
-Line 5 col 6 IdentifierName "C" = C
-Line 6 col 0 IdentifierName "foo" = string
-Line 8 col 4 IdentifierName "y" = typeof C[]
-Line 8 col 8 ArrayLiteralExpression "[C, C]" = typeof C[]
-Line 8 col 9 IdentifierName "C" = typeof C
-Line 8 col 12 IdentifierName "C" = typeof C
-Line 9 col 4 IdentifierName "r3" = C
-Line 9 col 9 ObjectCreationExpression "new y[0]()" = C
-Line 9 col 13 ElementAccessExpression "y[0]" = typeof C
-Line 9 col 13 IdentifierName "y" = typeof C[]
-Line 11 col 4 IdentifierName "a" = { (x: number): number; (x: string): string; }
-Line 11 col 10 IdentifierName "x" = number
-Line 11 col 31 IdentifierName "x" = string
-Line 12 col 4 IdentifierName "b" = { (x: number): number; (x: string): string; }
-Line 12 col 10 IdentifierName "x" = number
-Line 12 col 31 IdentifierName "x" = string
-Line 13 col 4 IdentifierName "c" = { (x: number): number; (x: any): any; }
-Line 13 col 10 IdentifierName "x" = number
-Line 13 col 31 IdentifierName "x" = any
-Line 14 col 4 IdentifierName "z" = { (x: number): number; (x: any): any; }[]
-Line 14 col 8 ArrayLiteralExpression "[a, b, c]" = { (x: number): number; (x: any): any; }[]
-Line 14 col 9 IdentifierName "a" = { (x: number): number; (x: string): string; }
-Line 14 col 12 IdentifierName "b" = { (x: number): number; (x: string): string; }
-Line 14 col 15 IdentifierName "c" = { (x: number): number; (x: any): any; }
-Line 15 col 4 IdentifierName "r4" = { (x: number): number; (x: any): any; }
-Line 15 col 9 ElementAccessExpression "z[0]" = { (x: number): number; (x: any): any; }
-Line 15 col 9 IdentifierName "z" = { (x: number): number; (x: any): any; }[]
-Line 16 col 4 IdentifierName "r5" = any
-Line 16 col 9 InvocationExpression "r4('')" = any
-Line 16 col 9 IdentifierName "r4" = { (x: number): number; (x: any): any; }
-Line 17 col 4 IdentifierName "r5b" = number
-Line 17 col 10 InvocationExpression "r4(1)" = number
-Line 17 col 10 IdentifierName "r4" = { (x: number): number; (x: any): any; }
-Line 19 col 4 IdentifierName "a2" = { <T>(x: T): number; (x: string): string; }
-Line 19 col 11 IdentifierName "T" = T
-Line 19 col 14 IdentifierName "x" = T
-Line 19 col 17 IdentifierName "T" = T
-Line 19 col 30 IdentifierName "x" = string
-Line 20 col 4 IdentifierName "b2" = { <T>(x: T): number; (x: string): string; }
-Line 20 col 11 IdentifierName "T" = T
-Line 20 col 14 IdentifierName "x" = T
-Line 20 col 17 IdentifierName "T" = T
-Line 20 col 30 IdentifierName "x" = string
-Line 21 col 4 IdentifierName "c2" = { (x: number): number; <T>(x: T): any; }
-Line 21 col 11 IdentifierName "x" = number
-Line 21 col 32 IdentifierName "T" = T
-Line 21 col 35 IdentifierName "x" = T
-Line 21 col 38 IdentifierName "T" = T
-Line 23 col 4 IdentifierName "z2" = { (x: number): number; <T>(x: T): any; }[]
-Line 23 col 9 ArrayLiteralExpression "[a2, b2, c2]" = { (x: number): number; <T>(x: T): any; }[]
-Line 23 col 10 IdentifierName "a2" = { <T>(x: T): number; (x: string): string; }
-Line 23 col 14 IdentifierName "b2" = { <T>(x: T): number; (x: string): string; }
-Line 23 col 18 IdentifierName "c2" = { (x: number): number; <T>(x: T): any; }
-Line 24 col 4 IdentifierName "r6" = { (x: number): number; <T>(x: T): any; }
-Line 24 col 9 ElementAccessExpression "z2[0]" = { (x: number): number; <T>(x: T): any; }
-Line 24 col 9 IdentifierName "z2" = { (x: number): number; <T>(x: T): any; }[]
-Line 25 col 4 IdentifierName "r7" = any
-Line 25 col 9 InvocationExpression "r6('')" = any
-Line 25 col 9 IdentifierName "r6" = { (x: number): number; <T>(x: T): any; }
+// valid uses of arrays of function types
+
+var x = [() => 1, () => { }];
+>x : { (): void; }[]
+>[() => 1, () => { }] : { (): void; }[]
+>() => 1 : () => number
+>() => { } : () => void
+
+var r2 = x[0]();
+>r2 : void
+>x[0]() : void
+>x[0] : () => void
+>x : { (): void; }[]
+
+class C {
+>C : C
+
+    foo: string;
+>foo : string
+}
+var y = [C, C];
+>y : typeof C[]
+>[C, C] : typeof C[]
+>C : typeof C
+>C : typeof C
+
+var r3 = new y[0]();
+>r3 : C
+>new y[0]() : C
+>y[0] : typeof C
+>y : typeof C[]
+
+var a: { (x: number): number; (x: string): string; };
+>a : { (x: number): number; (x: string): string; }
+>x : number
+>x : string
+
+var b: { (x: number): number; (x: string): string; };
+>b : { (x: number): number; (x: string): string; }
+>x : number
+>x : string
+
+var c: { (x: number): number; (x: any): any; };
+>c : { (x: number): number; (x: any): any; }
+>x : number
+>x : any
+
+var z = [a, b, c];
+>z : { (x: number): number; (x: any): any; }[]
+>[a, b, c] : { (x: number): number; (x: any): any; }[]
+>a : { (x: number): number; (x: string): string; }
+>b : { (x: number): number; (x: string): string; }
+>c : { (x: number): number; (x: any): any; }
+
+var r4 = z[0];
+>r4 : { (x: number): number; (x: any): any; }
+>z[0] : { (x: number): number; (x: any): any; }
+>z : { (x: number): number; (x: any): any; }[]
+
+var r5 = r4(''); // any not string
+>r5 : any
+>r4('') : any
+>r4 : { (x: number): number; (x: any): any; }
+
+var r5b = r4(1);
+>r5b : number
+>r4(1) : number
+>r4 : { (x: number): number; (x: any): any; }
+
+var a2: { <T>(x: T): number; (x: string): string;};
+>a2 : { <T>(x: T): number; (x: string): string; }
+>T : T
+>x : T
+>T : T
+>x : string
+
+var b2: { <T>(x: T): number; (x: string): string; };
+>b2 : { <T>(x: T): number; (x: string): string; }
+>T : T
+>x : T
+>T : T
+>x : string
+
+var c2: { (x: number): number; <T>(x: T): any; };
+>c2 : { (x: number): number; <T>(x: T): any; }
+>x : number
+>T : T
+>x : T
+>T : T
+
+var z2 = [a2, b2, c2];
+>z2 : { (x: number): number; <T>(x: T): any; }[]
+>[a2, b2, c2] : { (x: number): number; <T>(x: T): any; }[]
+>a2 : { <T>(x: T): number; (x: string): string; }
+>b2 : { <T>(x: T): number; (x: string): string; }
+>c2 : { (x: number): number; <T>(x: T): any; }
+
+var r6 = z2[0];
+>r6 : { (x: number): number; <T>(x: T): any; }
+>z2[0] : { (x: number): number; <T>(x: T): any; }
+>z2 : { (x: number): number; <T>(x: T): any; }[]
+
+var r7 = r6(''); // any not string
+>r7 : any
+>r6('') : any
+>r6 : { (x: number): number; <T>(x: T): any; }
+

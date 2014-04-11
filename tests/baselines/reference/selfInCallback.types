@@ -1,17 +1,28 @@
 === tests/cases/compiler/selfInCallback.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 8 IdentifierName "p1" = number
-Line 2 col 8 IdentifierName "callback" = (cb: () => void) => void
-Line 2 col 17 IdentifierName "cb" = () => void
-Line 2 col 31 InvocationExpression "cb()" = void
-Line 2 col 31 IdentifierName "cb" = () => void
-Line 3 col 8 IdentifierName "doit" = () => void
-Line 4 col 0 InvocationExpression "this.callback(()=>{this.p1+1})" = void
-Line 4 col 0 MemberAccessExpression "this.callback" = (cb: () => void) => void
-Line 4 col 0 ThisKeyword "this" = C
-Line 4 col 7 IdentifierName "callback" = (cb: () => void) => void
-Line 4 col 16 ParenthesizedArrowFunctionExpression "()=>{this.p1+1}" = () => void
-Line 4 col 21 AddExpression "this.p1+1" = number
-Line 4 col 21 MemberAccessExpression "this.p1" = number
-Line 4 col 21 ThisKeyword "this" = C
-Line 4 col 26 IdentifierName "p1" = number
+class C {
+>C : C
+
+	public p1 = 0;
+>p1 : number
+
+	public callback(cb:()=>void) {cb();}
+>callback : (cb: () => void) => void
+>cb : () => void
+>cb() : void
+>cb : () => void
+
+	public doit() {
+>doit : () => void
+
+		this.callback(()=>{this.p1+1});
+>this.callback(()=>{this.p1+1}) : void
+>this.callback : (cb: () => void) => void
+>this : C
+>callback : (cb: () => void) => void
+>()=>{this.p1+1} : () => void
+>this.p1+1 : number
+>this.p1 : number
+>this : C
+>p1 : number
+	}
+}

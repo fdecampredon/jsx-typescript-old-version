@@ -1,57 +1,91 @@
 === tests/cases/compiler/operatorAddNullUndefined.ts ===
-Line 0 col 5 IdentifierName "E" = E
-Line 0 col 9 IdentifierName "x" = E
-Line 1 col 4 IdentifierName "x1" = any
-Line 1 col 9 AddExpression "null + null" = any
-Line 2 col 4 IdentifierName "x2" = any
-Line 2 col 9 AddExpression "null + undefined" = any
-Line 2 col 16 IdentifierName "undefined" = any
-Line 3 col 4 IdentifierName "x3" = any
-Line 3 col 9 AddExpression "undefined + null" = any
-Line 3 col 9 IdentifierName "undefined" = any
-Line 4 col 4 IdentifierName "x4" = any
-Line 4 col 9 AddExpression "undefined + undefined" = any
-Line 4 col 9 IdentifierName "undefined" = any
-Line 4 col 21 IdentifierName "undefined" = any
-Line 5 col 4 IdentifierName "x5" = number
-Line 5 col 9 AddExpression "1 + null" = number
-Line 6 col 4 IdentifierName "x6" = number
-Line 6 col 9 AddExpression "1 + undefined" = number
-Line 6 col 13 IdentifierName "undefined" = any
-Line 7 col 4 IdentifierName "x7" = number
-Line 7 col 9 AddExpression "null + 1" = number
-Line 8 col 4 IdentifierName "x8" = number
-Line 8 col 9 AddExpression "undefined + 1" = number
-Line 8 col 9 IdentifierName "undefined" = any
-Line 9 col 4 IdentifierName "x9" = string
-Line 9 col 9 AddExpression ""test" + null" = string
-Line 10 col 4 IdentifierName "x10" = string
-Line 10 col 10 AddExpression ""test" + undefined" = string
-Line 10 col 19 IdentifierName "undefined" = any
-Line 11 col 4 IdentifierName "x11" = string
-Line 11 col 10 AddExpression "null + "test"" = string
-Line 12 col 4 IdentifierName "x12" = string
-Line 12 col 10 AddExpression "undefined + "test"" = string
-Line 12 col 10 IdentifierName "undefined" = any
-Line 13 col 4 IdentifierName "x13" = number
-Line 13 col 10 AddExpression "null + E.x" = number
-Line 13 col 17 MemberAccessExpression "E.x" = E
-Line 13 col 17 IdentifierName "E" = typeof E
-Line 13 col 19 IdentifierName "x" = E
-Line 14 col 4 IdentifierName "x14" = number
-Line 14 col 10 AddExpression "undefined + E.x" = number
-Line 14 col 10 IdentifierName "undefined" = any
-Line 14 col 22 MemberAccessExpression "E.x" = E
-Line 14 col 22 IdentifierName "E" = typeof E
-Line 14 col 24 IdentifierName "x" = E
-Line 15 col 4 IdentifierName "x15" = number
-Line 15 col 10 AddExpression "E.x + null" = number
-Line 15 col 10 MemberAccessExpression "E.x" = E
-Line 15 col 10 IdentifierName "E" = typeof E
-Line 15 col 12 IdentifierName "x" = E
-Line 16 col 4 IdentifierName "x16" = number
-Line 16 col 10 AddExpression "E.x + undefined" = number
-Line 16 col 10 MemberAccessExpression "E.x" = E
-Line 16 col 10 IdentifierName "E" = typeof E
-Line 16 col 12 IdentifierName "x" = E
-Line 16 col 16 IdentifierName "undefined" = any
+enum E { x }
+>E : E
+>x : E
+
+var x1 = null + null;
+>x1 : any
+>null + null : any
+
+var x2 = null + undefined;
+>x2 : any
+>null + undefined : any
+>undefined : any
+
+var x3 = undefined + null;
+>x3 : any
+>undefined + null : any
+>undefined : any
+
+var x4 = undefined + undefined;
+>x4 : any
+>undefined + undefined : any
+>undefined : any
+>undefined : any
+
+var x5 = 1 + null;
+>x5 : number
+>1 + null : number
+
+var x6 = 1 + undefined;
+>x6 : number
+>1 + undefined : number
+>undefined : any
+
+var x7 = null + 1;
+>x7 : number
+>null + 1 : number
+
+var x8 = undefined + 1;
+>x8 : number
+>undefined + 1 : number
+>undefined : any
+
+var x9 = "test" + null;
+>x9 : string
+>"test" + null : string
+
+var x10 = "test" + undefined;
+>x10 : string
+>"test" + undefined : string
+>undefined : any
+
+var x11 = null + "test";
+>x11 : string
+>null + "test" : string
+
+var x12 = undefined + "test";
+>x12 : string
+>undefined + "test" : string
+>undefined : any
+
+var x13 = null + E.x
+>x13 : number
+>null + E.x : number
+>E.x : E
+>E : typeof E
+>x : E
+
+var x14 = undefined + E.x
+>x14 : number
+>undefined + E.x : number
+>undefined : any
+>E.x : E
+>E : typeof E
+>x : E
+
+var x15 = E.x + null
+>x15 : number
+>E.x + null : number
+>E.x : E
+>E : typeof E
+>x : E
+
+var x16 = E.x + undefined
+>x16 : number
+>E.x + undefined : number
+>E.x : E
+>E : typeof E
+>x : E
+>undefined : any
+

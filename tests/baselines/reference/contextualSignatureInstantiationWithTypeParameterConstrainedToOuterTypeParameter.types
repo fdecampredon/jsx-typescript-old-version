@@ -1,25 +1,35 @@
 === tests/cases/compiler/contextualSignatureInstantiationWithTypeParameterConstrainedToOuterTypeParameter.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 0 col 11 IdentifierName "T" = T
-Line 1 col 13 IdentifierName "g" = <U extends T>(u: U) => U
-Line 1 col 15 IdentifierName "U" = U
-Line 1 col 25 IdentifierName "T" = T
-Line 1 col 28 IdentifierName "u" = U
-Line 1 col 31 IdentifierName "U" = U
-Line 1 col 35 IdentifierName "U" = U
-Line 2 col 11 IdentifierName "g" = <U extends T>(u: U) => U
-Line 4 col 4 IdentifierName "h" = <V, W>(v: V, func: (v: V) => W) => W
-Line 4 col 8 IdentifierName "V" = V
-Line 4 col 11 IdentifierName "W" = W
-Line 4 col 14 IdentifierName "v" = V
-Line 4 col 17 IdentifierName "V" = V
-Line 4 col 20 IdentifierName "func" = (v: V) => W
-Line 4 col 27 IdentifierName "v" = V
-Line 4 col 30 IdentifierName "V" = V
-Line 4 col 36 IdentifierName "W" = W
-Line 4 col 42 IdentifierName "W" = W
-Line 5 col 4 IdentifierName "x" = string
-Line 5 col 8 InvocationExpression "h("", f<string>())" = string
-Line 5 col 8 IdentifierName "h" = <V, W>(v: V, func: (v: V) => W) => W
-Line 5 col 14 InvocationExpression "f<string>()" = <U extends string>(u: U) => U
-Line 5 col 14 IdentifierName "f" = typeof f
+function f<T>() {
+>f : typeof f
+>T : T
+
+    function g<U extends T>(u: U): U { return null }
+>g : <U extends T>(u: U) => U
+>U : U
+>T : T
+>u : U
+>U : U
+>U : U
+
+    return g;
+>g : <U extends T>(u: U) => U
+}
+var h: <V, W>(v: V, func: (v: V) => W) => W;
+>h : <V, W>(v: V, func: (v: V) => W) => W
+>V : V
+>W : W
+>v : V
+>V : V
+>func : (v: V) => W
+>v : V
+>V : V
+>W : W
+>W : W
+
+var x = h("", f<string>()); // Call should succeed and x should be string. All type parameters should be instantiated to string
+>x : string
+>h("", f<string>()) : string
+>h : <V, W>(v: V, func: (v: V) => W) => W
+>f<string>() : <U extends string>(u: U) => U
+>f : typeof f
+

@@ -1,3 +1,4 @@
+//// [constructorAsType.js]
 var Person = function () {
     return { name: "joe" };
 };

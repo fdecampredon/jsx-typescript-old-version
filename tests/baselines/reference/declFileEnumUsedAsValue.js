@@ -1,3 +1,12 @@
+//// [declFileEnumUsedAsValue.ts]
+
+enum e {
+    a,
+    b,
+    c
+}
+var x = e;
+
 //// [declFileEnumUsedAsValue.js]
 var e;
 (function (e) {

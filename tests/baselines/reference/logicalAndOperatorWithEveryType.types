@@ -1,394 +1,615 @@
 === tests/cases/compiler/logicalAndOperatorWithEveryType.ts ===
-Line 3 col 5 IdentifierName "E" = E
-Line 3 col 9 IdentifierName "a" = E
-Line 3 col 12 IdentifierName "b" = E
-Line 3 col 15 IdentifierName "c" = E
-Line 5 col 4 IdentifierName "a1" = any
-Line 6 col 4 IdentifierName "a2" = boolean
-Line 7 col 4 IdentifierName "a3" = number
-Line 8 col 4 IdentifierName "a4" = string
-Line 9 col 4 IdentifierName "a5" = void
-Line 10 col 4 IdentifierName "a6" = E
-Line 10 col 8 IdentifierName "E" = E
-Line 11 col 4 IdentifierName "a7" = {}
-Line 12 col 4 IdentifierName "a8" = string[]
-Line 14 col 4 IdentifierName "ra1" = any
-Line 14 col 10 LogicalAndExpression "a1 && a1" = any
-Line 14 col 10 IdentifierName "a1" = any
-Line 14 col 16 IdentifierName "a1" = any
-Line 15 col 4 IdentifierName "ra2" = any
-Line 15 col 10 LogicalAndExpression "a2 && a1" = any
-Line 15 col 10 IdentifierName "a2" = boolean
-Line 15 col 16 IdentifierName "a1" = any
-Line 16 col 4 IdentifierName "ra3" = any
-Line 16 col 10 LogicalAndExpression "a3 && a1" = any
-Line 16 col 10 IdentifierName "a3" = number
-Line 16 col 16 IdentifierName "a1" = any
-Line 17 col 4 IdentifierName "ra4" = any
-Line 17 col 10 LogicalAndExpression "a4 && a1" = any
-Line 17 col 10 IdentifierName "a4" = string
-Line 17 col 16 IdentifierName "a1" = any
-Line 18 col 4 IdentifierName "ra5" = any
-Line 18 col 10 LogicalAndExpression "a5 && a1" = any
-Line 18 col 10 IdentifierName "a5" = void
-Line 18 col 16 IdentifierName "a1" = any
-Line 19 col 4 IdentifierName "ra6" = any
-Line 19 col 10 LogicalAndExpression "a6 && a1" = any
-Line 19 col 10 IdentifierName "a6" = E
-Line 19 col 16 IdentifierName "a1" = any
-Line 20 col 4 IdentifierName "ra7" = any
-Line 20 col 10 LogicalAndExpression "a7 && a1" = any
-Line 20 col 10 IdentifierName "a7" = {}
-Line 20 col 16 IdentifierName "a1" = any
-Line 21 col 4 IdentifierName "ra8" = any
-Line 21 col 10 LogicalAndExpression "a8 && a1" = any
-Line 21 col 10 IdentifierName "a8" = string[]
-Line 21 col 16 IdentifierName "a1" = any
-Line 22 col 4 IdentifierName "ra9" = any
-Line 22 col 10 LogicalAndExpression "null && a1" = any
-Line 22 col 18 IdentifierName "a1" = any
-Line 23 col 4 IdentifierName "ra10" = any
-Line 23 col 11 LogicalAndExpression "undefined && a1" = any
-Line 23 col 11 IdentifierName "undefined" = any
-Line 23 col 24 IdentifierName "a1" = any
-Line 25 col 4 IdentifierName "rb1" = boolean
-Line 25 col 10 LogicalAndExpression "a1 && a2" = boolean
-Line 25 col 10 IdentifierName "a1" = any
-Line 25 col 16 IdentifierName "a2" = boolean
-Line 26 col 4 IdentifierName "rb2" = boolean
-Line 26 col 10 LogicalAndExpression "a2 && a2" = boolean
-Line 26 col 10 IdentifierName "a2" = boolean
-Line 26 col 16 IdentifierName "a2" = boolean
-Line 27 col 4 IdentifierName "rb3" = boolean
-Line 27 col 10 LogicalAndExpression "a3 && a2" = boolean
-Line 27 col 10 IdentifierName "a3" = number
-Line 27 col 16 IdentifierName "a2" = boolean
-Line 28 col 4 IdentifierName "rb4" = boolean
-Line 28 col 10 LogicalAndExpression "a4 && a2" = boolean
-Line 28 col 10 IdentifierName "a4" = string
-Line 28 col 16 IdentifierName "a2" = boolean
-Line 29 col 4 IdentifierName "rb5" = boolean
-Line 29 col 10 LogicalAndExpression "a5 && a2" = boolean
-Line 29 col 10 IdentifierName "a5" = void
-Line 29 col 16 IdentifierName "a2" = boolean
-Line 30 col 4 IdentifierName "rb6" = boolean
-Line 30 col 10 LogicalAndExpression "a6 && a2" = boolean
-Line 30 col 10 IdentifierName "a6" = E
-Line 30 col 16 IdentifierName "a2" = boolean
-Line 31 col 4 IdentifierName "rb7" = boolean
-Line 31 col 10 LogicalAndExpression "a7 && a2" = boolean
-Line 31 col 10 IdentifierName "a7" = {}
-Line 31 col 16 IdentifierName "a2" = boolean
-Line 32 col 4 IdentifierName "rb8" = boolean
-Line 32 col 10 LogicalAndExpression "a8 && a2" = boolean
-Line 32 col 10 IdentifierName "a8" = string[]
-Line 32 col 16 IdentifierName "a2" = boolean
-Line 33 col 4 IdentifierName "rb9" = boolean
-Line 33 col 10 LogicalAndExpression "null && a2" = boolean
-Line 33 col 18 IdentifierName "a2" = boolean
-Line 34 col 4 IdentifierName "rb10" = boolean
-Line 34 col 11 LogicalAndExpression "undefined && a2" = boolean
-Line 34 col 11 IdentifierName "undefined" = any
-Line 34 col 24 IdentifierName "a2" = boolean
-Line 36 col 4 IdentifierName "rc1" = number
-Line 36 col 10 LogicalAndExpression "a1 && a3" = number
-Line 36 col 10 IdentifierName "a1" = any
-Line 36 col 16 IdentifierName "a3" = number
-Line 37 col 4 IdentifierName "rc2" = number
-Line 37 col 10 LogicalAndExpression "a2 && a3" = number
-Line 37 col 10 IdentifierName "a2" = boolean
-Line 37 col 16 IdentifierName "a3" = number
-Line 38 col 4 IdentifierName "rc3" = number
-Line 38 col 10 LogicalAndExpression "a3 && a3" = number
-Line 38 col 10 IdentifierName "a3" = number
-Line 38 col 16 IdentifierName "a3" = number
-Line 39 col 4 IdentifierName "rc4" = number
-Line 39 col 10 LogicalAndExpression "a4 && a3" = number
-Line 39 col 10 IdentifierName "a4" = string
-Line 39 col 16 IdentifierName "a3" = number
-Line 40 col 4 IdentifierName "rc5" = number
-Line 40 col 10 LogicalAndExpression "a5 && a3" = number
-Line 40 col 10 IdentifierName "a5" = void
-Line 40 col 16 IdentifierName "a3" = number
-Line 41 col 4 IdentifierName "rc6" = number
-Line 41 col 10 LogicalAndExpression "a6 && a3" = number
-Line 41 col 10 IdentifierName "a6" = E
-Line 41 col 16 IdentifierName "a3" = number
-Line 42 col 4 IdentifierName "rc7" = number
-Line 42 col 10 LogicalAndExpression "a7 && a3" = number
-Line 42 col 10 IdentifierName "a7" = {}
-Line 42 col 16 IdentifierName "a3" = number
-Line 43 col 4 IdentifierName "rc8" = number
-Line 43 col 10 LogicalAndExpression "a8 && a3" = number
-Line 43 col 10 IdentifierName "a8" = string[]
-Line 43 col 16 IdentifierName "a3" = number
-Line 44 col 4 IdentifierName "rc9" = number
-Line 44 col 10 LogicalAndExpression "null && a3" = number
-Line 44 col 18 IdentifierName "a3" = number
-Line 45 col 4 IdentifierName "rc10" = number
-Line 45 col 11 LogicalAndExpression "undefined && a3" = number
-Line 45 col 11 IdentifierName "undefined" = any
-Line 45 col 24 IdentifierName "a3" = number
-Line 47 col 4 IdentifierName "rd1" = string
-Line 47 col 10 LogicalAndExpression "a1 && a4" = string
-Line 47 col 10 IdentifierName "a1" = any
-Line 47 col 16 IdentifierName "a4" = string
-Line 48 col 4 IdentifierName "rd2" = string
-Line 48 col 10 LogicalAndExpression "a2 && a4" = string
-Line 48 col 10 IdentifierName "a2" = boolean
-Line 48 col 16 IdentifierName "a4" = string
-Line 49 col 4 IdentifierName "rd3" = string
-Line 49 col 10 LogicalAndExpression "a3 && a4" = string
-Line 49 col 10 IdentifierName "a3" = number
-Line 49 col 16 IdentifierName "a4" = string
-Line 50 col 4 IdentifierName "rd4" = string
-Line 50 col 10 LogicalAndExpression "a4 && a4" = string
-Line 50 col 10 IdentifierName "a4" = string
-Line 50 col 16 IdentifierName "a4" = string
-Line 51 col 4 IdentifierName "rd5" = string
-Line 51 col 10 LogicalAndExpression "a5 && a4" = string
-Line 51 col 10 IdentifierName "a5" = void
-Line 51 col 16 IdentifierName "a4" = string
-Line 52 col 4 IdentifierName "rd6" = string
-Line 52 col 10 LogicalAndExpression "a6 && a4" = string
-Line 52 col 10 IdentifierName "a6" = E
-Line 52 col 16 IdentifierName "a4" = string
-Line 53 col 4 IdentifierName "rd7" = string
-Line 53 col 10 LogicalAndExpression "a7 && a4" = string
-Line 53 col 10 IdentifierName "a7" = {}
-Line 53 col 16 IdentifierName "a4" = string
-Line 54 col 4 IdentifierName "rd8" = string
-Line 54 col 10 LogicalAndExpression "a8 && a4" = string
-Line 54 col 10 IdentifierName "a8" = string[]
-Line 54 col 16 IdentifierName "a4" = string
-Line 55 col 4 IdentifierName "rd9" = string
-Line 55 col 10 LogicalAndExpression "null && a4" = string
-Line 55 col 18 IdentifierName "a4" = string
-Line 56 col 4 IdentifierName "rd10" = string
-Line 56 col 11 LogicalAndExpression "undefined && a4" = string
-Line 56 col 11 IdentifierName "undefined" = any
-Line 56 col 24 IdentifierName "a4" = string
-Line 58 col 4 IdentifierName "re1" = void
-Line 58 col 10 LogicalAndExpression "a1 && a5" = void
-Line 58 col 10 IdentifierName "a1" = any
-Line 58 col 16 IdentifierName "a5" = void
-Line 59 col 4 IdentifierName "re2" = void
-Line 59 col 10 LogicalAndExpression "a2 && a5" = void
-Line 59 col 10 IdentifierName "a2" = boolean
-Line 59 col 16 IdentifierName "a5" = void
-Line 60 col 4 IdentifierName "re3" = void
-Line 60 col 10 LogicalAndExpression "a3 && a5" = void
-Line 60 col 10 IdentifierName "a3" = number
-Line 60 col 16 IdentifierName "a5" = void
-Line 61 col 4 IdentifierName "re4" = void
-Line 61 col 10 LogicalAndExpression "a4 && a5" = void
-Line 61 col 10 IdentifierName "a4" = string
-Line 61 col 16 IdentifierName "a5" = void
-Line 62 col 4 IdentifierName "re5" = void
-Line 62 col 10 LogicalAndExpression "a5 && a5" = void
-Line 62 col 10 IdentifierName "a5" = void
-Line 62 col 16 IdentifierName "a5" = void
-Line 63 col 4 IdentifierName "re6" = void
-Line 63 col 10 LogicalAndExpression "a6 && a5" = void
-Line 63 col 10 IdentifierName "a6" = E
-Line 63 col 16 IdentifierName "a5" = void
-Line 64 col 4 IdentifierName "re7" = void
-Line 64 col 10 LogicalAndExpression "a7 && a5" = void
-Line 64 col 10 IdentifierName "a7" = {}
-Line 64 col 16 IdentifierName "a5" = void
-Line 65 col 4 IdentifierName "re8" = void
-Line 65 col 10 LogicalAndExpression "a8 && a5" = void
-Line 65 col 10 IdentifierName "a8" = string[]
-Line 65 col 16 IdentifierName "a5" = void
-Line 66 col 4 IdentifierName "re9" = void
-Line 66 col 10 LogicalAndExpression "null && a5" = void
-Line 66 col 18 IdentifierName "a5" = void
-Line 67 col 4 IdentifierName "re10" = void
-Line 67 col 11 LogicalAndExpression "undefined && a5" = void
-Line 67 col 11 IdentifierName "undefined" = any
-Line 67 col 24 IdentifierName "a5" = void
-Line 69 col 4 IdentifierName "rf1" = E
-Line 69 col 10 LogicalAndExpression "a1 && a6" = E
-Line 69 col 10 IdentifierName "a1" = any
-Line 69 col 16 IdentifierName "a6" = E
-Line 70 col 4 IdentifierName "rf2" = E
-Line 70 col 10 LogicalAndExpression "a2 && a6" = E
-Line 70 col 10 IdentifierName "a2" = boolean
-Line 70 col 16 IdentifierName "a6" = E
-Line 71 col 4 IdentifierName "rf3" = E
-Line 71 col 10 LogicalAndExpression "a3 && a6" = E
-Line 71 col 10 IdentifierName "a3" = number
-Line 71 col 16 IdentifierName "a6" = E
-Line 72 col 4 IdentifierName "rf4" = E
-Line 72 col 10 LogicalAndExpression "a4 && a6" = E
-Line 72 col 10 IdentifierName "a4" = string
-Line 72 col 16 IdentifierName "a6" = E
-Line 73 col 4 IdentifierName "rf5" = E
-Line 73 col 10 LogicalAndExpression "a5 && a6" = E
-Line 73 col 10 IdentifierName "a5" = void
-Line 73 col 16 IdentifierName "a6" = E
-Line 74 col 4 IdentifierName "rf6" = E
-Line 74 col 10 LogicalAndExpression "a6 && a6" = E
-Line 74 col 10 IdentifierName "a6" = E
-Line 74 col 16 IdentifierName "a6" = E
-Line 75 col 4 IdentifierName "rf7" = E
-Line 75 col 10 LogicalAndExpression "a7 && a6" = E
-Line 75 col 10 IdentifierName "a7" = {}
-Line 75 col 16 IdentifierName "a6" = E
-Line 76 col 4 IdentifierName "rf8" = E
-Line 76 col 10 LogicalAndExpression "a8 && a6" = E
-Line 76 col 10 IdentifierName "a8" = string[]
-Line 76 col 16 IdentifierName "a6" = E
-Line 77 col 4 IdentifierName "rf9" = E
-Line 77 col 10 LogicalAndExpression "null && a6" = E
-Line 77 col 18 IdentifierName "a6" = E
-Line 78 col 4 IdentifierName "rf10" = E
-Line 78 col 11 LogicalAndExpression "undefined && a6" = E
-Line 78 col 11 IdentifierName "undefined" = any
-Line 78 col 24 IdentifierName "a6" = E
-Line 80 col 4 IdentifierName "rg1" = {}
-Line 80 col 10 LogicalAndExpression "a1 && a7" = {}
-Line 80 col 10 IdentifierName "a1" = any
-Line 80 col 16 IdentifierName "a7" = {}
-Line 81 col 4 IdentifierName "rg2" = {}
-Line 81 col 10 LogicalAndExpression "a2 && a7" = {}
-Line 81 col 10 IdentifierName "a2" = boolean
-Line 81 col 16 IdentifierName "a7" = {}
-Line 82 col 4 IdentifierName "rg3" = {}
-Line 82 col 10 LogicalAndExpression "a3 && a7" = {}
-Line 82 col 10 IdentifierName "a3" = number
-Line 82 col 16 IdentifierName "a7" = {}
-Line 83 col 4 IdentifierName "rg4" = {}
-Line 83 col 10 LogicalAndExpression "a4 && a7" = {}
-Line 83 col 10 IdentifierName "a4" = string
-Line 83 col 16 IdentifierName "a7" = {}
-Line 84 col 4 IdentifierName "rg5" = {}
-Line 84 col 10 LogicalAndExpression "a5 && a7" = {}
-Line 84 col 10 IdentifierName "a5" = void
-Line 84 col 16 IdentifierName "a7" = {}
-Line 85 col 4 IdentifierName "rg6" = {}
-Line 85 col 10 LogicalAndExpression "a6 && a7" = {}
-Line 85 col 10 IdentifierName "a6" = E
-Line 85 col 16 IdentifierName "a7" = {}
-Line 86 col 4 IdentifierName "rg7" = {}
-Line 86 col 10 LogicalAndExpression "a7 && a7" = {}
-Line 86 col 10 IdentifierName "a7" = {}
-Line 86 col 16 IdentifierName "a7" = {}
-Line 87 col 4 IdentifierName "rg8" = {}
-Line 87 col 10 LogicalAndExpression "a8 && a7" = {}
-Line 87 col 10 IdentifierName "a8" = string[]
-Line 87 col 16 IdentifierName "a7" = {}
-Line 88 col 4 IdentifierName "rg9" = {}
-Line 88 col 10 LogicalAndExpression "null && a7" = {}
-Line 88 col 18 IdentifierName "a7" = {}
-Line 89 col 4 IdentifierName "rg10" = {}
-Line 89 col 11 LogicalAndExpression "undefined && a7" = {}
-Line 89 col 11 IdentifierName "undefined" = any
-Line 89 col 24 IdentifierName "a7" = {}
-Line 91 col 4 IdentifierName "rh1" = string[]
-Line 91 col 10 LogicalAndExpression "a1 && a8" = string[]
-Line 91 col 10 IdentifierName "a1" = any
-Line 91 col 16 IdentifierName "a8" = string[]
-Line 92 col 4 IdentifierName "rh2" = string[]
-Line 92 col 10 LogicalAndExpression "a2 && a8" = string[]
-Line 92 col 10 IdentifierName "a2" = boolean
-Line 92 col 16 IdentifierName "a8" = string[]
-Line 93 col 4 IdentifierName "rh3" = string[]
-Line 93 col 10 LogicalAndExpression "a3 && a8" = string[]
-Line 93 col 10 IdentifierName "a3" = number
-Line 93 col 16 IdentifierName "a8" = string[]
-Line 94 col 4 IdentifierName "rh4" = string[]
-Line 94 col 10 LogicalAndExpression "a4 && a8" = string[]
-Line 94 col 10 IdentifierName "a4" = string
-Line 94 col 16 IdentifierName "a8" = string[]
-Line 95 col 4 IdentifierName "rh5" = string[]
-Line 95 col 10 LogicalAndExpression "a5 && a8" = string[]
-Line 95 col 10 IdentifierName "a5" = void
-Line 95 col 16 IdentifierName "a8" = string[]
-Line 96 col 4 IdentifierName "rh6" = string[]
-Line 96 col 10 LogicalAndExpression "a6 && a8" = string[]
-Line 96 col 10 IdentifierName "a6" = E
-Line 96 col 16 IdentifierName "a8" = string[]
-Line 97 col 4 IdentifierName "rh7" = string[]
-Line 97 col 10 LogicalAndExpression "a7 && a8" = string[]
-Line 97 col 10 IdentifierName "a7" = {}
-Line 97 col 16 IdentifierName "a8" = string[]
-Line 98 col 4 IdentifierName "rh8" = string[]
-Line 98 col 10 LogicalAndExpression "a8 && a8" = string[]
-Line 98 col 10 IdentifierName "a8" = string[]
-Line 98 col 16 IdentifierName "a8" = string[]
-Line 99 col 4 IdentifierName "rh9" = string[]
-Line 99 col 10 LogicalAndExpression "null && a8" = string[]
-Line 99 col 18 IdentifierName "a8" = string[]
-Line 100 col 4 IdentifierName "rh10" = string[]
-Line 100 col 11 LogicalAndExpression "undefined && a8" = string[]
-Line 100 col 11 IdentifierName "undefined" = any
-Line 100 col 24 IdentifierName "a8" = string[]
-Line 102 col 4 IdentifierName "ri1" = any
-Line 102 col 10 LogicalAndExpression "a1 && null" = any
-Line 102 col 10 IdentifierName "a1" = any
-Line 103 col 4 IdentifierName "ri2" = any
-Line 103 col 10 LogicalAndExpression "a2 && null" = any
-Line 103 col 10 IdentifierName "a2" = boolean
-Line 104 col 4 IdentifierName "ri3" = any
-Line 104 col 10 LogicalAndExpression "a3 && null" = any
-Line 104 col 10 IdentifierName "a3" = number
-Line 105 col 4 IdentifierName "ri4" = any
-Line 105 col 10 LogicalAndExpression "a4 && null" = any
-Line 105 col 10 IdentifierName "a4" = string
-Line 106 col 4 IdentifierName "ri5" = any
-Line 106 col 10 LogicalAndExpression "a5 && null" = any
-Line 106 col 10 IdentifierName "a5" = void
-Line 107 col 4 IdentifierName "ri6" = any
-Line 107 col 10 LogicalAndExpression "a6 && null" = any
-Line 107 col 10 IdentifierName "a6" = E
-Line 108 col 4 IdentifierName "ri7" = any
-Line 108 col 10 LogicalAndExpression "a7 && null" = any
-Line 108 col 10 IdentifierName "a7" = {}
-Line 109 col 4 IdentifierName "ri8" = any
-Line 109 col 10 LogicalAndExpression "a8 && null" = any
-Line 109 col 10 IdentifierName "a8" = string[]
-Line 110 col 4 IdentifierName "ri9" = any
-Line 110 col 10 LogicalAndExpression "null && null" = any
-Line 111 col 4 IdentifierName "ri10" = any
-Line 111 col 11 LogicalAndExpression "undefined && null" = any
-Line 111 col 11 IdentifierName "undefined" = any
-Line 113 col 4 IdentifierName "rj1" = any
-Line 113 col 10 LogicalAndExpression "a1 && undefined" = any
-Line 113 col 10 IdentifierName "a1" = any
-Line 113 col 16 IdentifierName "undefined" = any
-Line 114 col 4 IdentifierName "rj2" = any
-Line 114 col 10 LogicalAndExpression "a2 && undefined" = any
-Line 114 col 10 IdentifierName "a2" = boolean
-Line 114 col 16 IdentifierName "undefined" = any
-Line 115 col 4 IdentifierName "rj3" = any
-Line 115 col 10 LogicalAndExpression "a3 && undefined" = any
-Line 115 col 10 IdentifierName "a3" = number
-Line 115 col 16 IdentifierName "undefined" = any
-Line 116 col 4 IdentifierName "rj4" = any
-Line 116 col 10 LogicalAndExpression "a4 && undefined" = any
-Line 116 col 10 IdentifierName "a4" = string
-Line 116 col 16 IdentifierName "undefined" = any
-Line 117 col 4 IdentifierName "rj5" = any
-Line 117 col 10 LogicalAndExpression "a5 && undefined" = any
-Line 117 col 10 IdentifierName "a5" = void
-Line 117 col 16 IdentifierName "undefined" = any
-Line 118 col 4 IdentifierName "rj6" = any
-Line 118 col 10 LogicalAndExpression "a6 && undefined" = any
-Line 118 col 10 IdentifierName "a6" = E
-Line 118 col 16 IdentifierName "undefined" = any
-Line 119 col 4 IdentifierName "rj7" = any
-Line 119 col 10 LogicalAndExpression "a7 && undefined" = any
-Line 119 col 10 IdentifierName "a7" = {}
-Line 119 col 16 IdentifierName "undefined" = any
-Line 120 col 4 IdentifierName "rj8" = any
-Line 120 col 10 LogicalAndExpression "a8 && undefined" = any
-Line 120 col 10 IdentifierName "a8" = string[]
-Line 120 col 16 IdentifierName "undefined" = any
-Line 121 col 4 IdentifierName "rj9" = any
-Line 121 col 10 LogicalAndExpression "null && undefined" = any
-Line 121 col 18 IdentifierName "undefined" = any
-Line 122 col 4 IdentifierName "rj10" = any
-Line 122 col 11 LogicalAndExpression "undefined && undefined" = any
-Line 122 col 11 IdentifierName "undefined" = any
-Line 122 col 24 IdentifierName "undefined" = any
+// The && operator permits the operands to be of any type and produces a result of the same
+// type as the second operand.
+
+enum E { a, b, c }
+>E : E
+>a : E
+>b : E
+>c : E
+
+var a1: any;
+>a1 : any
+
+var a2: boolean;
+>a2 : boolean
+
+var a3: number
+>a3 : number
+
+var a4: string;
+>a4 : string
+
+var a5: void;
+>a5 : void
+
+var a6: E;
+>a6 : E
+>E : E
+
+var a7: {};
+>a7 : {}
+
+var a8: string[];
+>a8 : string[]
+
+var ra1 = a1 && a1;
+>ra1 : any
+>a1 && a1 : any
+>a1 : any
+>a1 : any
+
+var ra2 = a2 && a1;
+>ra2 : any
+>a2 && a1 : any
+>a2 : boolean
+>a1 : any
+
+var ra3 = a3 && a1;
+>ra3 : any
+>a3 && a1 : any
+>a3 : number
+>a1 : any
+
+var ra4 = a4 && a1;
+>ra4 : any
+>a4 && a1 : any
+>a4 : string
+>a1 : any
+
+var ra5 = a5 && a1;
+>ra5 : any
+>a5 && a1 : any
+>a5 : void
+>a1 : any
+
+var ra6 = a6 && a1;
+>ra6 : any
+>a6 && a1 : any
+>a6 : E
+>a1 : any
+
+var ra7 = a7 && a1;
+>ra7 : any
+>a7 && a1 : any
+>a7 : {}
+>a1 : any
+
+var ra8 = a8 && a1;
+>ra8 : any
+>a8 && a1 : any
+>a8 : string[]
+>a1 : any
+
+var ra9 = null && a1;
+>ra9 : any
+>null && a1 : any
+>a1 : any
+
+var ra10 = undefined && a1;
+>ra10 : any
+>undefined && a1 : any
+>undefined : any
+>a1 : any
+
+var rb1 = a1 && a2;
+>rb1 : boolean
+>a1 && a2 : boolean
+>a1 : any
+>a2 : boolean
+
+var rb2 = a2 && a2;
+>rb2 : boolean
+>a2 && a2 : boolean
+>a2 : boolean
+>a2 : boolean
+
+var rb3 = a3 && a2;
+>rb3 : boolean
+>a3 && a2 : boolean
+>a3 : number
+>a2 : boolean
+
+var rb4 = a4 && a2;
+>rb4 : boolean
+>a4 && a2 : boolean
+>a4 : string
+>a2 : boolean
+
+var rb5 = a5 && a2;
+>rb5 : boolean
+>a5 && a2 : boolean
+>a5 : void
+>a2 : boolean
+
+var rb6 = a6 && a2;
+>rb6 : boolean
+>a6 && a2 : boolean
+>a6 : E
+>a2 : boolean
+
+var rb7 = a7 && a2;
+>rb7 : boolean
+>a7 && a2 : boolean
+>a7 : {}
+>a2 : boolean
+
+var rb8 = a8 && a2;
+>rb8 : boolean
+>a8 && a2 : boolean
+>a8 : string[]
+>a2 : boolean
+
+var rb9 = null && a2;
+>rb9 : boolean
+>null && a2 : boolean
+>a2 : boolean
+
+var rb10 = undefined && a2;
+>rb10 : boolean
+>undefined && a2 : boolean
+>undefined : any
+>a2 : boolean
+
+var rc1 = a1 && a3;
+>rc1 : number
+>a1 && a3 : number
+>a1 : any
+>a3 : number
+
+var rc2 = a2 && a3;
+>rc2 : number
+>a2 && a3 : number
+>a2 : boolean
+>a3 : number
+
+var rc3 = a3 && a3;
+>rc3 : number
+>a3 && a3 : number
+>a3 : number
+>a3 : number
+
+var rc4 = a4 && a3;
+>rc4 : number
+>a4 && a3 : number
+>a4 : string
+>a3 : number
+
+var rc5 = a5 && a3;
+>rc5 : number
+>a5 && a3 : number
+>a5 : void
+>a3 : number
+
+var rc6 = a6 && a3;
+>rc6 : number
+>a6 && a3 : number
+>a6 : E
+>a3 : number
+
+var rc7 = a7 && a3;
+>rc7 : number
+>a7 && a3 : number
+>a7 : {}
+>a3 : number
+
+var rc8 = a8 && a3;
+>rc8 : number
+>a8 && a3 : number
+>a8 : string[]
+>a3 : number
+
+var rc9 = null && a3;
+>rc9 : number
+>null && a3 : number
+>a3 : number
+
+var rc10 = undefined && a3;
+>rc10 : number
+>undefined && a3 : number
+>undefined : any
+>a3 : number
+
+var rd1 = a1 && a4;
+>rd1 : string
+>a1 && a4 : string
+>a1 : any
+>a4 : string
+
+var rd2 = a2 && a4;
+>rd2 : string
+>a2 && a4 : string
+>a2 : boolean
+>a4 : string
+
+var rd3 = a3 && a4;
+>rd3 : string
+>a3 && a4 : string
+>a3 : number
+>a4 : string
+
+var rd4 = a4 && a4;
+>rd4 : string
+>a4 && a4 : string
+>a4 : string
+>a4 : string
+
+var rd5 = a5 && a4;
+>rd5 : string
+>a5 && a4 : string
+>a5 : void
+>a4 : string
+
+var rd6 = a6 && a4;
+>rd6 : string
+>a6 && a4 : string
+>a6 : E
+>a4 : string
+
+var rd7 = a7 && a4;
+>rd7 : string
+>a7 && a4 : string
+>a7 : {}
+>a4 : string
+
+var rd8 = a8 && a4;
+>rd8 : string
+>a8 && a4 : string
+>a8 : string[]
+>a4 : string
+
+var rd9 = null && a4;
+>rd9 : string
+>null && a4 : string
+>a4 : string
+
+var rd10 = undefined && a4;
+>rd10 : string
+>undefined && a4 : string
+>undefined : any
+>a4 : string
+
+var re1 = a1 && a5;
+>re1 : void
+>a1 && a5 : void
+>a1 : any
+>a5 : void
+
+var re2 = a2 && a5;
+>re2 : void
+>a2 && a5 : void
+>a2 : boolean
+>a5 : void
+
+var re3 = a3 && a5;
+>re3 : void
+>a3 && a5 : void
+>a3 : number
+>a5 : void
+
+var re4 = a4 && a5;
+>re4 : void
+>a4 && a5 : void
+>a4 : string
+>a5 : void
+
+var re5 = a5 && a5;
+>re5 : void
+>a5 && a5 : void
+>a5 : void
+>a5 : void
+
+var re6 = a6 && a5;
+>re6 : void
+>a6 && a5 : void
+>a6 : E
+>a5 : void
+
+var re7 = a7 && a5;
+>re7 : void
+>a7 && a5 : void
+>a7 : {}
+>a5 : void
+
+var re8 = a8 && a5;
+>re8 : void
+>a8 && a5 : void
+>a8 : string[]
+>a5 : void
+
+var re9 = null && a5;
+>re9 : void
+>null && a5 : void
+>a5 : void
+
+var re10 = undefined && a5;
+>re10 : void
+>undefined && a5 : void
+>undefined : any
+>a5 : void
+
+var rf1 = a1 && a6;
+>rf1 : E
+>a1 && a6 : E
+>a1 : any
+>a6 : E
+
+var rf2 = a2 && a6;
+>rf2 : E
+>a2 && a6 : E
+>a2 : boolean
+>a6 : E
+
+var rf3 = a3 && a6;
+>rf3 : E
+>a3 && a6 : E
+>a3 : number
+>a6 : E
+
+var rf4 = a4 && a6;
+>rf4 : E
+>a4 && a6 : E
+>a4 : string
+>a6 : E
+
+var rf5 = a5 && a6;
+>rf5 : E
+>a5 && a6 : E
+>a5 : void
+>a6 : E
+
+var rf6 = a6 && a6;
+>rf6 : E
+>a6 && a6 : E
+>a6 : E
+>a6 : E
+
+var rf7 = a7 && a6;
+>rf7 : E
+>a7 && a6 : E
+>a7 : {}
+>a6 : E
+
+var rf8 = a8 && a6;
+>rf8 : E
+>a8 && a6 : E
+>a8 : string[]
+>a6 : E
+
+var rf9 = null && a6;
+>rf9 : E
+>null && a6 : E
+>a6 : E
+
+var rf10 = undefined && a6;
+>rf10 : E
+>undefined && a6 : E
+>undefined : any
+>a6 : E
+
+var rg1 = a1 && a7;
+>rg1 : {}
+>a1 && a7 : {}
+>a1 : any
+>a7 : {}
+
+var rg2 = a2 && a7;
+>rg2 : {}
+>a2 && a7 : {}
+>a2 : boolean
+>a7 : {}
+
+var rg3 = a3 && a7;
+>rg3 : {}
+>a3 && a7 : {}
+>a3 : number
+>a7 : {}
+
+var rg4 = a4 && a7;
+>rg4 : {}
+>a4 && a7 : {}
+>a4 : string
+>a7 : {}
+
+var rg5 = a5 && a7;
+>rg5 : {}
+>a5 && a7 : {}
+>a5 : void
+>a7 : {}
+
+var rg6 = a6 && a7;
+>rg6 : {}
+>a6 && a7 : {}
+>a6 : E
+>a7 : {}
+
+var rg7 = a7 && a7;
+>rg7 : {}
+>a7 && a7 : {}
+>a7 : {}
+>a7 : {}
+
+var rg8 = a8 && a7;
+>rg8 : {}
+>a8 && a7 : {}
+>a8 : string[]
+>a7 : {}
+
+var rg9 = null && a7;
+>rg9 : {}
+>null && a7 : {}
+>a7 : {}
+
+var rg10 = undefined && a7;
+>rg10 : {}
+>undefined && a7 : {}
+>undefined : any
+>a7 : {}
+
+var rh1 = a1 && a8;
+>rh1 : string[]
+>a1 && a8 : string[]
+>a1 : any
+>a8 : string[]
+
+var rh2 = a2 && a8;
+>rh2 : string[]
+>a2 && a8 : string[]
+>a2 : boolean
+>a8 : string[]
+
+var rh3 = a3 && a8;
+>rh3 : string[]
+>a3 && a8 : string[]
+>a3 : number
+>a8 : string[]
+
+var rh4 = a4 && a8;
+>rh4 : string[]
+>a4 && a8 : string[]
+>a4 : string
+>a8 : string[]
+
+var rh5 = a5 && a8;
+>rh5 : string[]
+>a5 && a8 : string[]
+>a5 : void
+>a8 : string[]
+
+var rh6 = a6 && a8;
+>rh6 : string[]
+>a6 && a8 : string[]
+>a6 : E
+>a8 : string[]
+
+var rh7 = a7 && a8;
+>rh7 : string[]
+>a7 && a8 : string[]
+>a7 : {}
+>a8 : string[]
+
+var rh8 = a8 && a8;
+>rh8 : string[]
+>a8 && a8 : string[]
+>a8 : string[]
+>a8 : string[]
+
+var rh9 = null && a8;
+>rh9 : string[]
+>null && a8 : string[]
+>a8 : string[]
+
+var rh10 = undefined && a8;
+>rh10 : string[]
+>undefined && a8 : string[]
+>undefined : any
+>a8 : string[]
+
+var ri1 = a1 && null;
+>ri1 : any
+>a1 && null : any
+>a1 : any
+
+var ri2 = a2 && null;
+>ri2 : any
+>a2 && null : any
+>a2 : boolean
+
+var ri3 = a3 && null;
+>ri3 : any
+>a3 && null : any
+>a3 : number
+
+var ri4 = a4 && null;
+>ri4 : any
+>a4 && null : any
+>a4 : string
+
+var ri5 = a5 && null;
+>ri5 : any
+>a5 && null : any
+>a5 : void
+
+var ri6 = a6 && null;
+>ri6 : any
+>a6 && null : any
+>a6 : E
+
+var ri7 = a7 && null;
+>ri7 : any
+>a7 && null : any
+>a7 : {}
+
+var ri8 = a8 && null;
+>ri8 : any
+>a8 && null : any
+>a8 : string[]
+
+var ri9 = null && null;
+>ri9 : any
+>null && null : any
+
+var ri10 = undefined && null;
+>ri10 : any
+>undefined && null : any
+>undefined : any
+
+var rj1 = a1 && undefined;
+>rj1 : any
+>a1 && undefined : any
+>a1 : any
+>undefined : any
+
+var rj2 = a2 && undefined;
+>rj2 : any
+>a2 && undefined : any
+>a2 : boolean
+>undefined : any
+
+var rj3 = a3 && undefined;
+>rj3 : any
+>a3 && undefined : any
+>a3 : number
+>undefined : any
+
+var rj4 = a4 && undefined;
+>rj4 : any
+>a4 && undefined : any
+>a4 : string
+>undefined : any
+
+var rj5 = a5 && undefined;
+>rj5 : any
+>a5 && undefined : any
+>a5 : void
+>undefined : any
+
+var rj6 = a6 && undefined;
+>rj6 : any
+>a6 && undefined : any
+>a6 : E
+>undefined : any
+
+var rj7 = a7 && undefined;
+>rj7 : any
+>a7 && undefined : any
+>a7 : {}
+>undefined : any
+
+var rj8 = a8 && undefined;
+>rj8 : any
+>a8 && undefined : any
+>a8 : string[]
+>undefined : any
+
+var rj9 = null && undefined;
+>rj9 : any
+>null && undefined : any
+>undefined : any
+
+var rj10 = undefined && undefined;
+>rj10 : any
+>undefined && undefined : any
+>undefined : any
+>undefined : any
+

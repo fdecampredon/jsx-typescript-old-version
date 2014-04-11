@@ -1,15 +1,38 @@
 === tests/cases/compiler/declFileWithExtendsClauseThatHasItsContainerNameConflict.ts ===
-Line 1 col 15 IdentifierName "A" = A
-Line 1 col 17 IdentifierName "B" = A.B
-Line 1 col 19 IdentifierName "C" = A.B.C
-Line 2 col 10 IdentifierName "B" = B
-Line 6 col 7 IdentifierName "A" = A
-Line 6 col 9 IdentifierName "B" = A.B
-Line 7 col 17 IdentifierName "EventManager" = EventManager
-Line 8 col 0 IdentifierName "id" = number
-Line 13 col 7 IdentifierName "A" = A
-Line 13 col 9 IdentifierName "B" = A.B
-Line 13 col 11 IdentifierName "C" = A.B.C
-Line 14 col 17 IdentifierName "ContextMenu" = ContextMenu
-Line 14 col 37 IdentifierName "EventManager" = EventManager
-Line 15 col 0 IdentifierName "name" = string
+
+declare module A.B.C {
+>A : A
+>B : A.B
+>C : A.B.C
+
+    class B {
+>B : B
+    }
+}
+
+module A.B {
+>A : A
+>B : A.B
+
+    export class EventManager {
+>EventManager : EventManager
+
+        id: number;
+>id : number
+
+    }
+}
+
+module A.B.C {
+>A : A
+>B : A.B
+>C : A.B.C
+
+    export class ContextMenu extends EventManager {
+>ContextMenu : ContextMenu
+>EventManager : EventManager
+
+        name: string;
+>name : string
+    }
+}

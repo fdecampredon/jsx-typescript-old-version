@@ -1,382 +1,565 @@
 === tests/cases/compiler/assignmentCompatWithConstructSignatures3.ts ===
-Line 2 col 6 IdentifierName "Base" = Base
-Line 2 col 13 IdentifierName "foo" = string
-Line 3 col 6 IdentifierName "Derived" = Derived
-Line 3 col 22 IdentifierName "Base" = Base
-Line 3 col 29 IdentifierName "bar" = string
-Line 4 col 6 IdentifierName "Derived2" = Derived2
-Line 4 col 23 IdentifierName "Derived" = Derived
-Line 4 col 33 IdentifierName "baz" = string
-Line 5 col 6 IdentifierName "OtherDerived" = OtherDerived
-Line 5 col 27 IdentifierName "Base" = Base
-Line 5 col 34 IdentifierName "bing" = string
-Line 7 col 4 IdentifierName "a" = new(x: number) => number[]
-Line 7 col 12 IdentifierName "x" = number
-Line 8 col 4 IdentifierName "a2" = new(x: number) => string[]
-Line 8 col 13 IdentifierName "x" = number
-Line 9 col 4 IdentifierName "a3" = new(x: number) => void
-Line 9 col 13 IdentifierName "x" = number
-Line 10 col 4 IdentifierName "a4" = new(x: string, y: number) => string
-Line 10 col 13 IdentifierName "x" = string
-Line 10 col 24 IdentifierName "y" = number
-Line 11 col 4 IdentifierName "a5" = new(x: (arg: string) => number) => string
-Line 11 col 13 IdentifierName "x" = (arg: string) => number
-Line 11 col 17 IdentifierName "arg" = string
-Line 12 col 4 IdentifierName "a6" = new(x: (arg: Base) => Derived) => Base
-Line 12 col 13 IdentifierName "x" = (arg: Base) => Derived
-Line 12 col 17 IdentifierName "arg" = Base
-Line 12 col 22 IdentifierName "Base" = Base
-Line 12 col 31 IdentifierName "Derived" = Derived
-Line 12 col 43 IdentifierName "Base" = Base
-Line 13 col 4 IdentifierName "a7" = new(x: (arg: Base) => Derived) => (r: Base) => Derived
-Line 13 col 13 IdentifierName "x" = (arg: Base) => Derived
-Line 13 col 17 IdentifierName "arg" = Base
-Line 13 col 22 IdentifierName "Base" = Base
-Line 13 col 31 IdentifierName "Derived" = Derived
-Line 13 col 44 IdentifierName "r" = Base
-Line 13 col 47 IdentifierName "Base" = Base
-Line 13 col 56 IdentifierName "Derived" = Derived
-Line 14 col 4 IdentifierName "a8" = new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 14 col 13 IdentifierName "x" = (arg: Base) => Derived
-Line 14 col 17 IdentifierName "arg" = Base
-Line 14 col 22 IdentifierName "Base" = Base
-Line 14 col 31 IdentifierName "Derived" = Derived
-Line 14 col 40 IdentifierName "y" = (arg2: Base) => Derived
-Line 14 col 44 IdentifierName "arg2" = Base
-Line 14 col 50 IdentifierName "Base" = Base
-Line 14 col 59 IdentifierName "Derived" = Derived
-Line 14 col 72 IdentifierName "r" = Base
-Line 14 col 75 IdentifierName "Base" = Base
-Line 14 col 84 IdentifierName "Derived" = Derived
-Line 15 col 4 IdentifierName "a9" = new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 15 col 13 IdentifierName "x" = (arg: Base) => Derived
-Line 15 col 17 IdentifierName "arg" = Base
-Line 15 col 22 IdentifierName "Base" = Base
-Line 15 col 31 IdentifierName "Derived" = Derived
-Line 15 col 40 IdentifierName "y" = (arg2: Base) => Derived
-Line 15 col 44 IdentifierName "arg2" = Base
-Line 15 col 50 IdentifierName "Base" = Base
-Line 15 col 59 IdentifierName "Derived" = Derived
-Line 15 col 72 IdentifierName "r" = Base
-Line 15 col 75 IdentifierName "Base" = Base
-Line 15 col 84 IdentifierName "Derived" = Derived
-Line 16 col 4 IdentifierName "a10" = new(...x: Derived[]) => Derived
-Line 16 col 17 IdentifierName "x" = Derived[]
-Line 16 col 20 IdentifierName "Derived" = Derived
-Line 16 col 34 IdentifierName "Derived" = Derived
-Line 17 col 4 IdentifierName "a11" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 17 col 14 IdentifierName "x" = { foo: string; }
-Line 17 col 19 IdentifierName "foo" = string
-Line 17 col 34 IdentifierName "y" = { foo: string; bar: string; }
-Line 17 col 39 IdentifierName "foo" = string
-Line 17 col 52 IdentifierName "bar" = string
-Line 17 col 70 IdentifierName "Base" = Base
-Line 18 col 4 IdentifierName "a12" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 18 col 14 IdentifierName "x" = Base[]
-Line 18 col 17 IdentifierName "Array" = Array<T>
-Line 18 col 23 IdentifierName "Base" = Base
-Line 18 col 30 IdentifierName "y" = Derived2[]
-Line 18 col 33 IdentifierName "Array" = Array<T>
-Line 18 col 39 IdentifierName "Derived2" = Derived2
-Line 18 col 53 IdentifierName "Array" = Array<T>
-Line 18 col 59 IdentifierName "Derived" = Derived
-Line 19 col 4 IdentifierName "a13" = new(x: Base[], y: Derived[]) => Derived[]
-Line 19 col 14 IdentifierName "x" = Base[]
-Line 19 col 17 IdentifierName "Array" = Array<T>
-Line 19 col 23 IdentifierName "Base" = Base
-Line 19 col 30 IdentifierName "y" = Derived[]
-Line 19 col 33 IdentifierName "Array" = Array<T>
-Line 19 col 39 IdentifierName "Derived" = Derived
-Line 19 col 52 IdentifierName "Array" = Array<T>
-Line 19 col 58 IdentifierName "Derived" = Derived
-Line 20 col 4 IdentifierName "a14" = new(x: { a: string; b: number; }) => Object
-Line 20 col 14 IdentifierName "x" = { a: string; b: number; }
-Line 20 col 19 IdentifierName "a" = string
-Line 20 col 30 IdentifierName "b" = number
-Line 20 col 46 IdentifierName "Object" = Object
-Line 21 col 4 IdentifierName "a15" = { new(x: number): number[]; new(x: string): string[]; }
-Line 22 col 9 IdentifierName "x" = number
-Line 23 col 9 IdentifierName "x" = string
-Line 25 col 4 IdentifierName "a16" = { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
-Line 26 col 9 IdentifierName "T" = T
-Line 26 col 19 IdentifierName "Derived" = Derived
-Line 26 col 28 IdentifierName "x" = T
-Line 26 col 31 IdentifierName "T" = T
-Line 27 col 9 IdentifierName "U" = U
-Line 27 col 19 IdentifierName "Base" = Base
-Line 27 col 25 IdentifierName "x" = U
-Line 27 col 28 IdentifierName "U" = U
-Line 29 col 4 IdentifierName "a17" = { new(x: new(a: number) => number): number[]; new(x: new(a: string) => string): string[]; }
-Line 30 col 9 IdentifierName "x" = new(a: number) => number
-Line 30 col 17 IdentifierName "a" = number
-Line 31 col 9 IdentifierName "x" = new(a: string) => string
-Line 31 col 17 IdentifierName "a" = string
-Line 33 col 4 IdentifierName "a18" = { new(x: { new(a: number): number; new(a: string): string; }): any[]; new(x: { new(a: boolean): boolean; new(a: Date): Date; }): any[]; }
-Line 34 col 9 IdentifierName "x" = { new(a: number): number; new(a: string): string; }
-Line 35 col 13 IdentifierName "a" = number
-Line 36 col 13 IdentifierName "a" = string
-Line 38 col 9 IdentifierName "x" = { new(a: boolean): boolean; new(a: Date): Date; }
-Line 39 col 13 IdentifierName "a" = boolean
-Line 40 col 13 IdentifierName "a" = Date
-Line 40 col 16 IdentifierName "Date" = Date
-Line 40 col 23 IdentifierName "Date" = Date
-Line 44 col 4 IdentifierName "b" = new<T>(x: T) => T[]
-Line 44 col 12 IdentifierName "T" = T
-Line 44 col 15 IdentifierName "x" = T
-Line 44 col 18 IdentifierName "T" = T
-Line 44 col 24 IdentifierName "T" = T
-Line 45 col 0 AssignmentExpression "a = b" = new<T>(x: T) => T[]
-Line 45 col 0 IdentifierName "a" = new(x: number) => number[]
-Line 45 col 4 IdentifierName "b" = new<T>(x: T) => T[]
-Line 46 col 0 AssignmentExpression "b = a" = new(x: number) => number[]
-Line 46 col 0 IdentifierName "b" = new<T>(x: T) => T[]
-Line 46 col 4 IdentifierName "a" = new(x: number) => number[]
-Line 47 col 4 IdentifierName "b2" = new<T>(x: T) => string[]
-Line 47 col 13 IdentifierName "T" = T
-Line 47 col 16 IdentifierName "x" = T
-Line 47 col 19 IdentifierName "T" = T
-Line 48 col 0 AssignmentExpression "a2 = b2" = new<T>(x: T) => string[]
-Line 48 col 0 IdentifierName "a2" = new(x: number) => string[]
-Line 48 col 5 IdentifierName "b2" = new<T>(x: T) => string[]
-Line 49 col 0 AssignmentExpression "b2 = a2" = new(x: number) => string[]
-Line 49 col 0 IdentifierName "b2" = new<T>(x: T) => string[]
-Line 49 col 5 IdentifierName "a2" = new(x: number) => string[]
-Line 50 col 4 IdentifierName "b3" = new<T>(x: T) => T
-Line 50 col 13 IdentifierName "T" = T
-Line 50 col 16 IdentifierName "x" = T
-Line 50 col 19 IdentifierName "T" = T
-Line 50 col 25 IdentifierName "T" = T
-Line 51 col 0 AssignmentExpression "a3 = b3" = new<T>(x: T) => T
-Line 51 col 0 IdentifierName "a3" = new(x: number) => void
-Line 51 col 5 IdentifierName "b3" = new<T>(x: T) => T
-Line 52 col 0 AssignmentExpression "b3 = a3" = new(x: number) => void
-Line 52 col 0 IdentifierName "b3" = new<T>(x: T) => T
-Line 52 col 5 IdentifierName "a3" = new(x: number) => void
-Line 53 col 4 IdentifierName "b4" = new<T, U>(x: T, y: U) => T
-Line 53 col 13 IdentifierName "T" = T
-Line 53 col 16 IdentifierName "U" = U
-Line 53 col 19 IdentifierName "x" = T
-Line 53 col 22 IdentifierName "T" = T
-Line 53 col 25 IdentifierName "y" = U
-Line 53 col 28 IdentifierName "U" = U
-Line 53 col 34 IdentifierName "T" = T
-Line 54 col 0 AssignmentExpression "a4 = b4" = new<T, U>(x: T, y: U) => T
-Line 54 col 0 IdentifierName "a4" = new(x: string, y: number) => string
-Line 54 col 5 IdentifierName "b4" = new<T, U>(x: T, y: U) => T
-Line 55 col 0 AssignmentExpression "b4 = a4" = new(x: string, y: number) => string
-Line 55 col 0 IdentifierName "b4" = new<T, U>(x: T, y: U) => T
-Line 55 col 5 IdentifierName "a4" = new(x: string, y: number) => string
-Line 56 col 4 IdentifierName "b5" = new<T, U>(x: (arg: T) => U) => T
-Line 56 col 13 IdentifierName "T" = T
-Line 56 col 16 IdentifierName "U" = U
-Line 56 col 19 IdentifierName "x" = (arg: T) => U
-Line 56 col 23 IdentifierName "arg" = T
-Line 56 col 28 IdentifierName "T" = T
-Line 56 col 34 IdentifierName "U" = U
-Line 56 col 40 IdentifierName "T" = T
-Line 57 col 0 AssignmentExpression "a5 = b5" = new<T, U>(x: (arg: T) => U) => T
-Line 57 col 0 IdentifierName "a5" = new(x: (arg: string) => number) => string
-Line 57 col 5 IdentifierName "b5" = new<T, U>(x: (arg: T) => U) => T
-Line 58 col 0 AssignmentExpression "b5 = a5" = new(x: (arg: string) => number) => string
-Line 58 col 0 IdentifierName "b5" = new<T, U>(x: (arg: T) => U) => T
-Line 58 col 5 IdentifierName "a5" = new(x: (arg: string) => number) => string
-Line 59 col 4 IdentifierName "b6" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
-Line 59 col 13 IdentifierName "T" = T
-Line 59 col 23 IdentifierName "Base" = Base
-Line 59 col 29 IdentifierName "U" = U
-Line 59 col 39 IdentifierName "Derived" = Derived
-Line 59 col 48 IdentifierName "x" = (arg: T) => U
-Line 59 col 52 IdentifierName "arg" = T
-Line 59 col 57 IdentifierName "T" = T
-Line 59 col 63 IdentifierName "U" = U
-Line 59 col 69 IdentifierName "T" = T
-Line 60 col 0 AssignmentExpression "a6 = b6" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
-Line 60 col 0 IdentifierName "a6" = new(x: (arg: Base) => Derived) => Base
-Line 60 col 5 IdentifierName "b6" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
-Line 61 col 0 AssignmentExpression "b6 = a6" = new(x: (arg: Base) => Derived) => Base
-Line 61 col 0 IdentifierName "b6" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
-Line 61 col 5 IdentifierName "a6" = new(x: (arg: Base) => Derived) => Base
-Line 62 col 4 IdentifierName "b7" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
-Line 62 col 13 IdentifierName "T" = T
-Line 62 col 23 IdentifierName "Base" = Base
-Line 62 col 29 IdentifierName "U" = U
-Line 62 col 39 IdentifierName "Derived" = Derived
-Line 62 col 48 IdentifierName "x" = (arg: T) => U
-Line 62 col 52 IdentifierName "arg" = T
-Line 62 col 57 IdentifierName "T" = T
-Line 62 col 63 IdentifierName "U" = U
-Line 62 col 70 IdentifierName "r" = T
-Line 62 col 73 IdentifierName "T" = T
-Line 62 col 79 IdentifierName "U" = U
-Line 63 col 0 AssignmentExpression "a7 = b7" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
-Line 63 col 0 IdentifierName "a7" = new(x: (arg: Base) => Derived) => (r: Base) => Derived
-Line 63 col 5 IdentifierName "b7" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
-Line 64 col 0 AssignmentExpression "b7 = a7" = new(x: (arg: Base) => Derived) => (r: Base) => Derived
-Line 64 col 0 IdentifierName "b7" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
-Line 64 col 5 IdentifierName "a7" = new(x: (arg: Base) => Derived) => (r: Base) => Derived
-Line 65 col 4 IdentifierName "b8" = new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
-Line 65 col 13 IdentifierName "T" = T
-Line 65 col 23 IdentifierName "Base" = Base
-Line 65 col 29 IdentifierName "U" = U
-Line 65 col 39 IdentifierName "Derived" = Derived
-Line 65 col 48 IdentifierName "x" = (arg: T) => U
-Line 65 col 52 IdentifierName "arg" = T
-Line 65 col 57 IdentifierName "T" = T
-Line 65 col 63 IdentifierName "U" = U
-Line 65 col 66 IdentifierName "y" = (arg2: T) => U
-Line 65 col 70 IdentifierName "arg2" = T
-Line 65 col 76 IdentifierName "T" = T
-Line 65 col 82 IdentifierName "U" = U
-Line 65 col 89 IdentifierName "r" = T
-Line 65 col 92 IdentifierName "T" = T
-Line 65 col 98 IdentifierName "U" = U
-Line 66 col 0 AssignmentExpression "a8 = b8" = new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
-Line 66 col 0 IdentifierName "a8" = new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 66 col 5 IdentifierName "b8" = new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
-Line 67 col 0 AssignmentExpression "b8 = a8" = new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 67 col 0 IdentifierName "b8" = new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
-Line 67 col 5 IdentifierName "a8" = new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 68 col 4 IdentifierName "b9" = new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
-Line 68 col 13 IdentifierName "T" = T
-Line 68 col 23 IdentifierName "Base" = Base
-Line 68 col 29 IdentifierName "U" = U
-Line 68 col 39 IdentifierName "Derived" = Derived
-Line 68 col 48 IdentifierName "x" = (arg: T) => U
-Line 68 col 52 IdentifierName "arg" = T
-Line 68 col 57 IdentifierName "T" = T
-Line 68 col 63 IdentifierName "U" = U
-Line 68 col 66 IdentifierName "y" = (arg2: { foo: string; bing: number; }) => U
-Line 68 col 70 IdentifierName "arg2" = { foo: string; bing: number; }
-Line 68 col 78 IdentifierName "foo" = string
-Line 68 col 91 IdentifierName "bing" = number
-Line 68 col 110 IdentifierName "U" = U
-Line 68 col 117 IdentifierName "r" = T
-Line 68 col 120 IdentifierName "T" = T
-Line 68 col 126 IdentifierName "U" = U
-Line 69 col 0 AssignmentExpression "a9 = b9" = new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
-Line 69 col 0 IdentifierName "a9" = new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 69 col 5 IdentifierName "b9" = new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
-Line 70 col 0 AssignmentExpression "b9 = a9" = new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 70 col 0 IdentifierName "b9" = new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
-Line 70 col 5 IdentifierName "a9" = new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 71 col 4 IdentifierName "b10" = new<T extends Derived>(...x: T[]) => T
-Line 71 col 14 IdentifierName "T" = T
-Line 71 col 24 IdentifierName "Derived" = Derived
-Line 71 col 36 IdentifierName "x" = T[]
-Line 71 col 39 IdentifierName "T" = T
-Line 71 col 47 IdentifierName "T" = T
-Line 72 col 0 AssignmentExpression "a10 = b10" = new<T extends Derived>(...x: T[]) => T
-Line 72 col 0 IdentifierName "a10" = new(...x: Derived[]) => Derived
-Line 72 col 6 IdentifierName "b10" = new<T extends Derived>(...x: T[]) => T
-Line 73 col 0 AssignmentExpression "b10 = a10" = new(...x: Derived[]) => Derived
-Line 73 col 0 IdentifierName "b10" = new<T extends Derived>(...x: T[]) => T
-Line 73 col 6 IdentifierName "a10" = new(...x: Derived[]) => Derived
-Line 74 col 4 IdentifierName "b11" = new<T extends Base>(x: T, y: T) => T
-Line 74 col 14 IdentifierName "T" = T
-Line 74 col 24 IdentifierName "Base" = Base
-Line 74 col 30 IdentifierName "x" = T
-Line 74 col 33 IdentifierName "T" = T
-Line 74 col 36 IdentifierName "y" = T
-Line 74 col 39 IdentifierName "T" = T
-Line 74 col 45 IdentifierName "T" = T
-Line 75 col 0 AssignmentExpression "a11 = b11" = new<T extends Base>(x: T, y: T) => T
-Line 75 col 0 IdentifierName "a11" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 75 col 6 IdentifierName "b11" = new<T extends Base>(x: T, y: T) => T
-Line 76 col 0 AssignmentExpression "b11 = a11" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 76 col 0 IdentifierName "b11" = new<T extends Base>(x: T, y: T) => T
-Line 76 col 6 IdentifierName "a11" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 77 col 4 IdentifierName "b12" = new<T extends Base[]>(x: Base[], y: T) => Derived[]
-Line 77 col 14 IdentifierName "T" = T
-Line 77 col 24 IdentifierName "Array" = Array<T>
-Line 77 col 30 IdentifierName "Base" = Base
-Line 77 col 37 IdentifierName "x" = Base[]
-Line 77 col 40 IdentifierName "Array" = Array<T>
-Line 77 col 46 IdentifierName "Base" = Base
-Line 77 col 53 IdentifierName "y" = T
-Line 77 col 56 IdentifierName "T" = T
-Line 77 col 62 IdentifierName "Array" = Array<T>
-Line 77 col 68 IdentifierName "Derived" = Derived
-Line 78 col 0 AssignmentExpression "a12 = b12" = new<T extends Base[]>(x: Base[], y: T) => Derived[]
-Line 78 col 0 IdentifierName "a12" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 78 col 6 IdentifierName "b12" = new<T extends Base[]>(x: Base[], y: T) => Derived[]
-Line 79 col 0 AssignmentExpression "b12 = a12" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 79 col 0 IdentifierName "b12" = new<T extends Base[]>(x: Base[], y: T) => Derived[]
-Line 79 col 6 IdentifierName "a12" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 80 col 4 IdentifierName "b13" = new<T extends Derived[]>(x: Base[], y: T) => T
-Line 80 col 14 IdentifierName "T" = T
-Line 80 col 24 IdentifierName "Array" = Array<T>
-Line 80 col 30 IdentifierName "Derived" = Derived
-Line 80 col 40 IdentifierName "x" = Base[]
-Line 80 col 43 IdentifierName "Array" = Array<T>
-Line 80 col 49 IdentifierName "Base" = Base
-Line 80 col 56 IdentifierName "y" = T
-Line 80 col 59 IdentifierName "T" = T
-Line 80 col 65 IdentifierName "T" = T
-Line 81 col 0 AssignmentExpression "a13 = b13" = new<T extends Derived[]>(x: Base[], y: T) => T
-Line 81 col 0 IdentifierName "a13" = new(x: Base[], y: Derived[]) => Derived[]
-Line 81 col 6 IdentifierName "b13" = new<T extends Derived[]>(x: Base[], y: T) => T
-Line 82 col 0 AssignmentExpression "b13 = a13" = new(x: Base[], y: Derived[]) => Derived[]
-Line 82 col 0 IdentifierName "b13" = new<T extends Derived[]>(x: Base[], y: T) => T
-Line 82 col 6 IdentifierName "a13" = new(x: Base[], y: Derived[]) => Derived[]
-Line 83 col 4 IdentifierName "b14" = new<T>(x: { a: T; b: T; }) => T
-Line 83 col 14 IdentifierName "T" = T
-Line 83 col 17 IdentifierName "x" = { a: T; b: T; }
-Line 83 col 22 IdentifierName "a" = T
-Line 83 col 25 IdentifierName "T" = T
-Line 83 col 28 IdentifierName "b" = T
-Line 83 col 31 IdentifierName "T" = T
-Line 83 col 39 IdentifierName "T" = T
-Line 84 col 0 AssignmentExpression "a14 = b14" = new<T>(x: { a: T; b: T; }) => T
-Line 84 col 0 IdentifierName "a14" = new(x: { a: string; b: number; }) => Object
-Line 84 col 6 IdentifierName "b14" = new<T>(x: { a: T; b: T; }) => T
-Line 85 col 0 AssignmentExpression "b14 = a14" = new(x: { a: string; b: number; }) => Object
-Line 85 col 0 IdentifierName "b14" = new<T>(x: { a: T; b: T; }) => T
-Line 85 col 6 IdentifierName "a14" = new(x: { a: string; b: number; }) => Object
-Line 86 col 4 IdentifierName "b15" = new<T>(x: T) => T[]
-Line 86 col 14 IdentifierName "T" = T
-Line 86 col 17 IdentifierName "x" = T
-Line 86 col 20 IdentifierName "T" = T
-Line 86 col 26 IdentifierName "T" = T
-Line 87 col 0 AssignmentExpression "a15 = b15" = new<T>(x: T) => T[]
-Line 87 col 0 IdentifierName "a15" = { new(x: number): number[]; new(x: string): string[]; }
-Line 87 col 6 IdentifierName "b15" = new<T>(x: T) => T[]
-Line 88 col 0 AssignmentExpression "b15 = a15" = { new(x: number): number[]; new(x: string): string[]; }
-Line 88 col 0 IdentifierName "b15" = new<T>(x: T) => T[]
-Line 88 col 6 IdentifierName "a15" = { new(x: number): number[]; new(x: string): string[]; }
-Line 89 col 4 IdentifierName "b16" = new<T extends Base>(x: T) => number[]
-Line 89 col 14 IdentifierName "T" = T
-Line 89 col 24 IdentifierName "Base" = Base
-Line 89 col 30 IdentifierName "x" = T
-Line 89 col 33 IdentifierName "T" = T
-Line 90 col 0 AssignmentExpression "a16 = b16" = new<T extends Base>(x: T) => number[]
-Line 90 col 0 IdentifierName "a16" = { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
-Line 90 col 6 IdentifierName "b16" = new<T extends Base>(x: T) => number[]
-Line 91 col 0 AssignmentExpression "b16 = a16" = { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
-Line 91 col 0 IdentifierName "b16" = new<T extends Base>(x: T) => number[]
-Line 91 col 6 IdentifierName "a16" = { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
-Line 92 col 4 IdentifierName "b17" = new<T>(x: new(a: T) => T) => T[]
-Line 92 col 14 IdentifierName "T" = T
-Line 92 col 17 IdentifierName "x" = new(a: T) => T
-Line 92 col 25 IdentifierName "a" = T
-Line 92 col 28 IdentifierName "T" = T
-Line 92 col 34 IdentifierName "T" = T
-Line 92 col 40 IdentifierName "T" = T
-Line 93 col 0 AssignmentExpression "a17 = b17" = new<T>(x: new(a: T) => T) => T[]
-Line 93 col 0 IdentifierName "a17" = { new(x: new(a: number) => number): number[]; new(x: new(a: string) => string): string[]; }
-Line 93 col 6 IdentifierName "b17" = new<T>(x: new(a: T) => T) => T[]
-Line 94 col 0 AssignmentExpression "b17 = a17" = { new(x: new(a: number) => number): number[]; new(x: new(a: string) => string): string[]; }
-Line 94 col 0 IdentifierName "b17" = new<T>(x: new(a: T) => T) => T[]
-Line 94 col 6 IdentifierName "a17" = { new(x: new(a: number) => number): number[]; new(x: new(a: string) => string): string[]; }
-Line 95 col 4 IdentifierName "b18" = new<T>(x: new(a: T) => T) => T[]
-Line 95 col 14 IdentifierName "T" = T
-Line 95 col 17 IdentifierName "x" = new(a: T) => T
-Line 95 col 25 IdentifierName "a" = T
-Line 95 col 28 IdentifierName "T" = T
-Line 95 col 34 IdentifierName "T" = T
-Line 95 col 40 IdentifierName "T" = T
-Line 96 col 0 AssignmentExpression "a18 = b18" = new<T>(x: new(a: T) => T) => T[]
-Line 96 col 0 IdentifierName "a18" = { new(x: { new(a: number): number; new(a: string): string; }): any[]; new(x: { new(a: boolean): boolean; new(a: Date): Date; }): any[]; }
-Line 96 col 6 IdentifierName "b18" = new<T>(x: new(a: T) => T) => T[]
-Line 97 col 0 AssignmentExpression "b18 = a18" = { new(x: { new(a: number): number; new(a: string): string; }): any[]; new(x: { new(a: boolean): boolean; new(a: Date): Date; }): any[]; }
-Line 97 col 0 IdentifierName "b18" = new<T>(x: new(a: T) => T) => T[]
-Line 97 col 6 IdentifierName "a18" = { new(x: { new(a: number): number; new(a: string): string; }): any[]; new(x: { new(a: boolean): boolean; new(a: Date): Date; }): any[]; }
+// checking assignment compatibility relations for function types. All of these are valid.
+
+class Base { foo: string; }
+>Base : Base
+>foo : string
+
+class Derived extends Base { bar: string; }
+>Derived : Derived
+>Base : Base
+>bar : string
+
+class Derived2 extends Derived { baz: string; }
+>Derived2 : Derived2
+>Derived : Derived
+>baz : string
+
+class OtherDerived extends Base { bing: string; }
+>OtherDerived : OtherDerived
+>Base : Base
+>bing : string
+
+var a: new (x: number) => number[];
+>a : new(x: number) => number[]
+>x : number
+
+var a2: new (x: number) => string[];
+>a2 : new(x: number) => string[]
+>x : number
+
+var a3: new (x: number) => void;
+>a3 : new(x: number) => void
+>x : number
+
+var a4: new (x: string, y: number) => string;
+>a4 : new(x: string, y: number) => string
+>x : string
+>y : number
+
+var a5: new (x: (arg: string) => number) => string;
+>a5 : new(x: (arg: string) => number) => string
+>x : (arg: string) => number
+>arg : string
+
+var a6: new (x: (arg: Base) => Derived) => Base;
+>a6 : new(x: (arg: Base) => Derived) => Base
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>Base : Base
+
+var a7: new (x: (arg: Base) => Derived) => (r: Base) => Derived;
+>a7 : new(x: (arg: Base) => Derived) => (r: Base) => Derived
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived : Derived
+
+var a8: new (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived;
+>a8 : new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>y : (arg2: Base) => Derived
+>arg2 : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived : Derived
+
+var a9: new (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived;
+>a9 : new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>y : (arg2: Base) => Derived
+>arg2 : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived : Derived
+
+var a10: new (...x: Derived[]) => Derived;
+>a10 : new(...x: Derived[]) => Derived
+>x : Derived[]
+>Derived : Derived
+>Derived : Derived
+
+var a11: new (x: { foo: string }, y: { foo: string; bar: string }) => Base;
+>a11 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+>x : { foo: string; }
+>foo : string
+>y : { foo: string; bar: string; }
+>foo : string
+>bar : string
+>Base : Base
+
+var a12: new (x: Array<Base>, y: Array<Derived2>) => Array<Derived>;
+>a12 : new(x: Base[], y: Derived2[]) => Derived[]
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : Derived2[]
+>Array : Array<T>
+>Derived2 : Derived2
+>Array : Array<T>
+>Derived : Derived
+
+var a13: new (x: Array<Base>, y: Array<Derived>) => Array<Derived>;
+>a13 : new(x: Base[], y: Derived[]) => Derived[]
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : Derived[]
+>Array : Array<T>
+>Derived : Derived
+>Array : Array<T>
+>Derived : Derived
+
+var a14: new (x: { a: string; b: number }) => Object;
+>a14 : new(x: { a: string; b: number; }) => Object
+>x : { a: string; b: number; }
+>a : string
+>b : number
+>Object : Object
+
+var a15: {
+>a15 : { new(x: number): number[]; new(x: string): string[]; }
+
+    new (x: number): number[];
+>x : number
+
+    new (x: string): string[];
+>x : string
+}
+var a16: {
+>a16 : { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
+
+    new <T extends Derived>(x: T): number[];
+>T : T
+>Derived : Derived
+>x : T
+>T : T
+
+    new <U extends Base>(x: U): number[];
+>U : U
+>Base : Base
+>x : U
+>U : U
+}
+var a17: {
+>a17 : { new(x: new(a: number) => number): number[]; new(x: new(a: string) => string): string[]; }
+
+    new (x: new (a: number) => number): number[];
+>x : new(a: number) => number
+>a : number
+
+    new (x: new (a: string) => string): string[];
+>x : new(a: string) => string
+>a : string
+
+};
+var a18: {
+>a18 : { new(x: { new(a: number): number; new(a: string): string; }): any[]; new(x: { new(a: boolean): boolean; new(a: Date): Date; }): any[]; }
+
+    new (x: {
+>x : { new(a: number): number; new(a: string): string; }
+
+        new (a: number): number;
+>a : number
+
+        new (a: string): string;
+>a : string
+
+    }): any[];
+    new (x: {
+>x : { new(a: boolean): boolean; new(a: Date): Date; }
+
+        new (a: boolean): boolean;
+>a : boolean
+
+        new (a: Date): Date;
+>a : Date
+>Date : Date
+>Date : Date
+
+    }): any[];
+}
+
+var b: new <T>(x: T) => T[]; 
+>b : new<T>(x: T) => T[]
+>T : T
+>x : T
+>T : T
+>T : T
+
+a = b; // ok
+>a = b : new<T>(x: T) => T[]
+>a : new(x: number) => number[]
+>b : new<T>(x: T) => T[]
+
+b = a; // ok
+>b = a : new(x: number) => number[]
+>b : new<T>(x: T) => T[]
+>a : new(x: number) => number[]
+
+var b2: new <T>(x: T) => string[]; 
+>b2 : new<T>(x: T) => string[]
+>T : T
+>x : T
+>T : T
+
+a2 = b2; // ok 
+>a2 = b2 : new<T>(x: T) => string[]
+>a2 : new(x: number) => string[]
+>b2 : new<T>(x: T) => string[]
+
+b2 = a2; // ok
+>b2 = a2 : new(x: number) => string[]
+>b2 : new<T>(x: T) => string[]
+>a2 : new(x: number) => string[]
+
+var b3: new <T>(x: T) => T; 
+>b3 : new<T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+a3 = b3; // ok
+>a3 = b3 : new<T>(x: T) => T
+>a3 : new(x: number) => void
+>b3 : new<T>(x: T) => T
+
+b3 = a3; // ok
+>b3 = a3 : new(x: number) => void
+>b3 : new<T>(x: T) => T
+>a3 : new(x: number) => void
+
+var b4: new <T, U>(x: T, y: U) => T; 
+>b4 : new<T, U>(x: T, y: U) => T
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+>T : T
+
+a4 = b4; // ok
+>a4 = b4 : new<T, U>(x: T, y: U) => T
+>a4 : new(x: string, y: number) => string
+>b4 : new<T, U>(x: T, y: U) => T
+
+b4 = a4; // ok
+>b4 = a4 : new(x: string, y: number) => string
+>b4 : new<T, U>(x: T, y: U) => T
+>a4 : new(x: string, y: number) => string
+
+var b5: new <T, U>(x: (arg: T) => U) => T; 
+>b5 : new<T, U>(x: (arg: T) => U) => T
+>T : T
+>U : U
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>T : T
+
+a5 = b5; // ok
+>a5 = b5 : new<T, U>(x: (arg: T) => U) => T
+>a5 : new(x: (arg: string) => number) => string
+>b5 : new<T, U>(x: (arg: T) => U) => T
+
+b5 = a5; // ok
+>b5 = a5 : new(x: (arg: string) => number) => string
+>b5 : new<T, U>(x: (arg: T) => U) => T
+>a5 : new(x: (arg: string) => number) => string
+
+var b6: new <T extends Base, U extends Derived>(x: (arg: T) => U) => T; 
+>b6 : new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>T : T
+
+a6 = b6; // ok
+>a6 = b6 : new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
+>a6 : new(x: (arg: Base) => Derived) => Base
+>b6 : new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
+
+b6 = a6; // ok
+>b6 = a6 : new(x: (arg: Base) => Derived) => Base
+>b6 : new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
+>a6 : new(x: (arg: Base) => Derived) => Base
+
+var b7: new <T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U; 
+>b7 : new<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>r : T
+>T : T
+>U : U
+
+a7 = b7; // ok
+>a7 = b7 : new<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+>a7 : new(x: (arg: Base) => Derived) => (r: Base) => Derived
+>b7 : new<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+
+b7 = a7; // ok
+>b7 = a7 : new(x: (arg: Base) => Derived) => (r: Base) => Derived
+>b7 : new<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+>a7 : new(x: (arg: Base) => Derived) => (r: Base) => Derived
+
+var b8: new <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U;
+>b8 : new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>y : (arg2: T) => U
+>arg2 : T
+>T : T
+>U : U
+>r : T
+>T : T
+>U : U
+
+a8 = b8; // ok
+>a8 = b8 : new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+>a8 : new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+>b8 : new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+
+b8 = a8; // ok
+>b8 = a8 : new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+>b8 : new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+>a8 : new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+
+var b9: new <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number }) => U) => (r: T) => U; 
+>b9 : new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>y : (arg2: { foo: string; bing: number; }) => U
+>arg2 : { foo: string; bing: number; }
+>foo : string
+>bing : number
+>U : U
+>r : T
+>T : T
+>U : U
+
+a9 = b9; // ok
+>a9 = b9 : new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+>a9 : new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+>b9 : new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+
+b9 = a9; // ok
+>b9 = a9 : new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+>b9 : new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+>a9 : new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+
+var b10: new <T extends Derived>(...x: T[]) => T; 
+>b10 : new<T extends Derived>(...x: T[]) => T
+>T : T
+>Derived : Derived
+>x : T[]
+>T : T
+>T : T
+
+a10 = b10; // ok
+>a10 = b10 : new<T extends Derived>(...x: T[]) => T
+>a10 : new(...x: Derived[]) => Derived
+>b10 : new<T extends Derived>(...x: T[]) => T
+
+b10 = a10; // ok
+>b10 = a10 : new(...x: Derived[]) => Derived
+>b10 : new<T extends Derived>(...x: T[]) => T
+>a10 : new(...x: Derived[]) => Derived
+
+var b11: new <T extends Base>(x: T, y: T) => T; 
+>b11 : new<T extends Base>(x: T, y: T) => T
+>T : T
+>Base : Base
+>x : T
+>T : T
+>y : T
+>T : T
+>T : T
+
+a11 = b11; // ok
+>a11 = b11 : new<T extends Base>(x: T, y: T) => T
+>a11 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+>b11 : new<T extends Base>(x: T, y: T) => T
+
+b11 = a11; // ok
+>b11 = a11 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+>b11 : new<T extends Base>(x: T, y: T) => T
+>a11 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+
+var b12: new <T extends Array<Base>>(x: Array<Base>, y: T) => Array<Derived>; 
+>b12 : new<T extends Base[]>(x: Base[], y: T) => Derived[]
+>T : T
+>Array : Array<T>
+>Base : Base
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : T
+>T : T
+>Array : Array<T>
+>Derived : Derived
+
+a12 = b12; // ok
+>a12 = b12 : new<T extends Base[]>(x: Base[], y: T) => Derived[]
+>a12 : new(x: Base[], y: Derived2[]) => Derived[]
+>b12 : new<T extends Base[]>(x: Base[], y: T) => Derived[]
+
+b12 = a12; // ok
+>b12 = a12 : new(x: Base[], y: Derived2[]) => Derived[]
+>b12 : new<T extends Base[]>(x: Base[], y: T) => Derived[]
+>a12 : new(x: Base[], y: Derived2[]) => Derived[]
+
+var b13: new <T extends Array<Derived>>(x: Array<Base>, y: T) => T; 
+>b13 : new<T extends Derived[]>(x: Base[], y: T) => T
+>T : T
+>Array : Array<T>
+>Derived : Derived
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : T
+>T : T
+>T : T
+
+a13 = b13; // ok
+>a13 = b13 : new<T extends Derived[]>(x: Base[], y: T) => T
+>a13 : new(x: Base[], y: Derived[]) => Derived[]
+>b13 : new<T extends Derived[]>(x: Base[], y: T) => T
+
+b13 = a13; // ok
+>b13 = a13 : new(x: Base[], y: Derived[]) => Derived[]
+>b13 : new<T extends Derived[]>(x: Base[], y: T) => T
+>a13 : new(x: Base[], y: Derived[]) => Derived[]
+
+var b14: new <T>(x: { a: T; b: T }) => T; 
+>b14 : new<T>(x: { a: T; b: T; }) => T
+>T : T
+>x : { a: T; b: T; }
+>a : T
+>T : T
+>b : T
+>T : T
+>T : T
+
+a14 = b14; // ok
+>a14 = b14 : new<T>(x: { a: T; b: T; }) => T
+>a14 : new(x: { a: string; b: number; }) => Object
+>b14 : new<T>(x: { a: T; b: T; }) => T
+
+b14 = a14; // ok
+>b14 = a14 : new(x: { a: string; b: number; }) => Object
+>b14 : new<T>(x: { a: T; b: T; }) => T
+>a14 : new(x: { a: string; b: number; }) => Object
+
+var b15: new <T>(x: T) => T[]; 
+>b15 : new<T>(x: T) => T[]
+>T : T
+>x : T
+>T : T
+>T : T
+
+a15 = b15; // ok
+>a15 = b15 : new<T>(x: T) => T[]
+>a15 : { new(x: number): number[]; new(x: string): string[]; }
+>b15 : new<T>(x: T) => T[]
+
+b15 = a15; // ok
+>b15 = a15 : { new(x: number): number[]; new(x: string): string[]; }
+>b15 : new<T>(x: T) => T[]
+>a15 : { new(x: number): number[]; new(x: string): string[]; }
+
+var b16: new <T extends Base>(x: T) => number[];
+>b16 : new<T extends Base>(x: T) => number[]
+>T : T
+>Base : Base
+>x : T
+>T : T
+
+a16 = b16; // ok
+>a16 = b16 : new<T extends Base>(x: T) => number[]
+>a16 : { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
+>b16 : new<T extends Base>(x: T) => number[]
+
+b16 = a16; // ok
+>b16 = a16 : { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
+>b16 : new<T extends Base>(x: T) => number[]
+>a16 : { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
+
+var b17: new <T>(x: new (a: T) => T) => T[]; // ok
+>b17 : new<T>(x: new(a: T) => T) => T[]
+>T : T
+>x : new(a: T) => T
+>a : T
+>T : T
+>T : T
+>T : T
+
+a17 = b17; // ok
+>a17 = b17 : new<T>(x: new(a: T) => T) => T[]
+>a17 : { new(x: new(a: number) => number): number[]; new(x: new(a: string) => string): string[]; }
+>b17 : new<T>(x: new(a: T) => T) => T[]
+
+b17 = a17; // ok
+>b17 = a17 : { new(x: new(a: number) => number): number[]; new(x: new(a: string) => string): string[]; }
+>b17 : new<T>(x: new(a: T) => T) => T[]
+>a17 : { new(x: new(a: number) => number): number[]; new(x: new(a: string) => string): string[]; }
+
+var b18: new <T>(x: new (a: T) => T) => T[]; 
+>b18 : new<T>(x: new(a: T) => T) => T[]
+>T : T
+>x : new(a: T) => T
+>a : T
+>T : T
+>T : T
+>T : T
+
+a18 = b18; // ok
+>a18 = b18 : new<T>(x: new(a: T) => T) => T[]
+>a18 : { new(x: { new(a: number): number; new(a: string): string; }): any[]; new(x: { new(a: boolean): boolean; new(a: Date): Date; }): any[]; }
+>b18 : new<T>(x: new(a: T) => T) => T[]
+
+b18 = a18; // ok
+>b18 = a18 : { new(x: { new(a: number): number; new(a: string): string; }): any[]; new(x: { new(a: boolean): boolean; new(a: Date): Date; }): any[]; }
+>b18 : new<T>(x: new(a: T) => T) => T[]
+>a18 : { new(x: { new(a: number): number; new(a: string): string; }): any[]; new(x: { new(a: boolean): boolean; new(a: Date): Date; }): any[]; }
+

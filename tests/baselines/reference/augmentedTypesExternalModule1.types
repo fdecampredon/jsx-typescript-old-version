@@ -1,5 +1,11 @@
 === tests/cases/compiler/augmentedTypesExternalModule1.ts ===
-Line 0 col 11 IdentifierName "a" = number
-Line 1 col 6 IdentifierName "c5" = c5
-Line 1 col 18 IdentifierName "foo" = () => void
-Line 2 col 7 IdentifierName "c5" = c5
+export var a = 1;
+>a : number
+
+class c5 { public foo() { } }
+>c5 : c5
+>foo : () => void
+
+module c5 { } // bug made this an error only in external modules, should be ok everywhere
+>c5 : c5
+

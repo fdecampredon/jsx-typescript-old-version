@@ -1,57 +1,103 @@
 === tests/cases/compiler/validEnumAssignments.ts ===
-Line 0 col 5 IdentifierName "E" = E
-Line 1 col 0 IdentifierName "A" = E
-Line 2 col 0 IdentifierName "B" = E
-Line 5 col 4 IdentifierName "n" = number
-Line 6 col 4 IdentifierName "a" = any
-Line 7 col 4 IdentifierName "e" = E
-Line 7 col 7 IdentifierName "E" = E
-Line 8 col 0 AssignmentExpression "n = e" = E
-Line 8 col 0 IdentifierName "n" = number
-Line 9 col 4 IdentifierName "e" = E
-Line 10 col 0 AssignmentExpression "n = E.A" = E
-Line 10 col 0 IdentifierName "n" = number
-Line 10 col 4 MemberAccessExpression "E.A" = E
-Line 10 col 4 IdentifierName "E" = typeof E
-Line 10 col 6 IdentifierName "A" = E
-Line 11 col 0 AssignmentExpression "a = n" = number
-Line 11 col 0 IdentifierName "a" = any
-Line 12 col 4 IdentifierName "n" = number
-Line 13 col 0 AssignmentExpression "a = e" = E
-Line 13 col 0 IdentifierName "a" = any
-Line 13 col 4 IdentifierName "e" = E
-Line 14 col 0 AssignmentExpression "a = E.A" = E
-Line 14 col 0 IdentifierName "a" = any
-Line 14 col 4 MemberAccessExpression "E.A" = E
-Line 14 col 4 IdentifierName "E" = typeof E
-Line 14 col 6 IdentifierName "A" = E
-Line 15 col 0 AssignmentExpression "e = e" = E
-Line 15 col 0 IdentifierName "e" = E
-Line 16 col 4 IdentifierName "e" = E
-Line 17 col 0 AssignmentExpression "e = E.A" = E
-Line 17 col 0 IdentifierName "e" = E
-Line 17 col 4 MemberAccessExpression "E.A" = E
-Line 17 col 4 IdentifierName "E" = typeof E
-Line 17 col 6 IdentifierName "A" = E
-Line 18 col 0 AssignmentExpression "e = E.B" = E
-Line 18 col 0 IdentifierName "e" = E
-Line 18 col 4 MemberAccessExpression "E.B" = E
-Line 18 col 4 IdentifierName "E" = typeof E
-Line 18 col 6 IdentifierName "B" = E
-Line 19 col 0 AssignmentExpression "e = n" = number
-Line 19 col 0 IdentifierName "e" = E
-Line 19 col 4 IdentifierName "n" = number
-Line 20 col 0 AssignmentExpression "e = null" = any
-Line 20 col 0 IdentifierName "e" = E
-Line 21 col 0 AssignmentExpression "e = undefined" = any
-Line 21 col 0 IdentifierName "e" = E
-Line 21 col 4 IdentifierName "undefined" = any
-Line 22 col 0 AssignmentExpression "e = 1" = number
-Line 22 col 0 IdentifierName "e" = E
-Line 23 col 0 AssignmentExpression "e = 1." = number
-Line 23 col 0 IdentifierName "e" = E
-Line 24 col 0 AssignmentExpression "e = 1.0" = number
-Line 24 col 0 IdentifierName "e" = E
-Line 25 col 0 AssignmentExpression "e = -1" = number
-Line 25 col 0 IdentifierName "e" = E
-Line 25 col 4 NegateExpression "-1" = number
+enum E {
+>E : E
+
+    A,
+>A : E
+
+    B
+>B : E
+}
+
+var n: number;
+>n : number
+
+var a: any;
+>a : any
+
+var e: E;
+>e : E
+>E : E
+
+>n = e : E
+>n : number
+
+n = e;
+>e : E
+
+n = E.A;
+>n = E.A : E
+>n : number
+>E.A : E
+>E : typeof E
+>A : E
+
+>a = n : number
+>a : any
+
+a = n;
+>n : number
+
+a = e;
+>a = e : E
+>a : any
+>e : E
+
+a = E.A;
+>a = E.A : E
+>a : any
+>E.A : E
+>E : typeof E
+>A : E
+
+>e = e : E
+>e : E
+
+e = e;
+>e : E
+
+e = E.A;
+>e = E.A : E
+>e : E
+>E.A : E
+>E : typeof E
+>A : E
+
+e = E.B;
+>e = E.B : E
+>e : E
+>E.B : E
+>E : typeof E
+>B : E
+
+e = n;
+>e = n : number
+>e : E
+>n : number
+
+e = null;
+>e = null : any
+>e : E
+
+e = undefined;
+>e = undefined : any
+>e : E
+>undefined : any
+
+e = 1;
+>e = 1 : number
+>e : E
+
+e = 1.;
+>e = 1. : number
+>e : E
+
+e = 1.0;
+>e = 1.0 : number
+>e : E
+
+e = -1;
+>e = -1 : number
+>e : E
+>-1 : number
+

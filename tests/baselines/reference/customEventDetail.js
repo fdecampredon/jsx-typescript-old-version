@@ -1,3 +1,4 @@
+//// [customEventDetail.js]
 var x;
 
 // valid since detail is any

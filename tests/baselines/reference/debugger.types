@@ -1,2 +1,9 @@
 === tests/cases/compiler/debugger.ts ===
-Line 2 col 9 IdentifierName "foo" = typeof foo
+debugger;
+
+function foo() {
+>foo : typeof foo
+
+    debugger;
+
+}

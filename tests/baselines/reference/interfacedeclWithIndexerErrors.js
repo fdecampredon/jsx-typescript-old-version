@@ -1,3 +1,4 @@
+//// [interfacedeclWithIndexerErrors.js]
 var c1 = (function () {
     function c1() {
     }

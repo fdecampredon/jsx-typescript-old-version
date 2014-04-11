@@ -1,47 +1,65 @@
 === tests/cases/compiler/instanceAndStaticDeclarations1.ts ===
-Line 2 col 6 IdentifierName "Point" = Point
-Line 3 col 23 IdentifierName "x" = number
-Line 3 col 41 IdentifierName "y" = number
-Line 4 col 11 IdentifierName "distance" = (p: Point) => number
-Line 4 col 20 IdentifierName "p" = Point
-Line 4 col 23 IdentifierName "Point" = Point
-Line 5 col 12 IdentifierName "dx" = number
-Line 5 col 17 SubtractExpression "this.x - p.x" = number
-Line 5 col 17 MemberAccessExpression "this.x" = number
-Line 5 col 17 ThisKeyword "this" = Point
-Line 5 col 22 IdentifierName "x" = number
-Line 5 col 26 MemberAccessExpression "p.x" = number
-Line 5 col 26 IdentifierName "p" = Point
-Line 5 col 28 IdentifierName "x" = number
-Line 6 col 12 IdentifierName "dy" = number
-Line 6 col 17 SubtractExpression "this.y - p.y" = number
-Line 6 col 17 MemberAccessExpression "this.y" = number
-Line 6 col 17 ThisKeyword "this" = Point
-Line 6 col 22 IdentifierName "y" = number
-Line 6 col 26 MemberAccessExpression "p.y" = number
-Line 6 col 26 IdentifierName "p" = Point
-Line 6 col 28 IdentifierName "y" = number
-Line 7 col 15 InvocationExpression "Math.sqrt(dx * dx + dy * dy)" = number
-Line 7 col 15 MemberAccessExpression "Math.sqrt" = (x: number) => number
-Line 7 col 15 IdentifierName "Math" = Math
-Line 7 col 20 IdentifierName "sqrt" = (x: number) => number
-Line 7 col 25 AddExpression "dx * dx + dy * dy" = number
-Line 7 col 25 MultiplyExpression "dx * dx" = number
-Line 7 col 25 IdentifierName "dx" = number
-Line 7 col 30 IdentifierName "dx" = number
-Line 7 col 35 MultiplyExpression "dy * dy" = number
-Line 7 col 35 IdentifierName "dy" = number
-Line 7 col 40 IdentifierName "dy" = number
-Line 9 col 11 IdentifierName "origin" = Point
-Line 9 col 20 ObjectCreationExpression "new Point(0, 0)" = Point
-Line 9 col 24 IdentifierName "Point" = typeof Point
-Line 10 col 11 IdentifierName "distance" = (p1: Point, p2: Point) => number
-Line 10 col 20 IdentifierName "p1" = Point
-Line 10 col 24 IdentifierName "Point" = Point
-Line 10 col 31 IdentifierName "p2" = Point
-Line 10 col 35 IdentifierName "Point" = Point
-Line 10 col 51 InvocationExpression "p1.distance(p2)" = number
-Line 10 col 51 MemberAccessExpression "p1.distance" = (p: Point) => number
-Line 10 col 51 IdentifierName "p1" = Point
-Line 10 col 54 IdentifierName "distance" = (p: Point) => number
-Line 10 col 63 IdentifierName "p2" = Point
+// from spec
+
+class Point {
+>Point : Point
+
+    constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+
+    public distance(p: Point) {
+>distance : (p: Point) => number
+>p : Point
+>Point : Point
+
+        var dx = this.x - p.x;
+>dx : number
+>this.x - p.x : number
+>this.x : number
+>this : Point
+>x : number
+>p.x : number
+>p : Point
+>x : number
+
+        var dy = this.y - p.y;
+>dy : number
+>this.y - p.y : number
+>this.y : number
+>this : Point
+>y : number
+>p.y : number
+>p : Point
+>y : number
+
+        return Math.sqrt(dx * dx + dy * dy);
+>Math.sqrt(dx * dx + dy * dy) : number
+>Math.sqrt : (x: number) => number
+>Math : Math
+>sqrt : (x: number) => number
+>dx * dx + dy * dy : number
+>dx * dx : number
+>dx : number
+>dx : number
+>dy * dy : number
+>dy : number
+>dy : number
+    }
+    static origin = new Point(0, 0);
+>origin : Point
+>new Point(0, 0) : Point
+>Point : typeof Point
+
+    static distance(p1: Point, p2: Point) { return p1.distance(p2); }
+>distance : (p1: Point, p2: Point) => number
+>p1 : Point
+>Point : Point
+>p2 : Point
+>Point : Point
+>p1.distance(p2) : number
+>p1.distance : (p: Point) => number
+>p1 : Point
+>distance : (p: Point) => number
+>p2 : Point
+}

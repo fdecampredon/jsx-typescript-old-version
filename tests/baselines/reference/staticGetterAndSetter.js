@@ -1,3 +1,11 @@
+//// [staticGetterAndSetter.ts]
+class Foo {
+    static get Foo():number { return 0; }
+    static set Foo(n: number) {}
+}
+
+
+//// [staticGetterAndSetter.js]
 var Foo = (function () {
     function Foo() {
     }

@@ -1,29 +1,57 @@
 === tests/cases/compiler/infinitelyExpandingTypesNonGenericBase.ts ===
-Line 0 col 6 IdentifierName "Functionality" = Functionality<V>
-Line 0 col 20 IdentifierName "V" = V
-Line 1 col 0 IdentifierName "property" = Options<V>
-Line 1 col 14 IdentifierName "Options" = Options<T>
-Line 1 col 22 IdentifierName "V" = V
-Line 4 col 6 IdentifierName "Base" = Base
-Line 7 col 6 IdentifierName "A" = A<T>
-Line 7 col 8 IdentifierName "T" = T
-Line 7 col 19 IdentifierName "Base" = Base
-Line 8 col 0 IdentifierName "options" = Options<Functionality<T>[]>
-Line 8 col 13 IdentifierName "Options" = Options<T>
-Line 8 col 21 IdentifierName "Functionality" = Functionality<V>
-Line 8 col 35 IdentifierName "T" = T
-Line 11 col 10 IdentifierName "OptionsBase" = OptionsBase<T>
-Line 11 col 22 IdentifierName "T" = T
-Line 12 col 0 IdentifierName "Options" = Options<T>
-Line 12 col 13 IdentifierName "Options" = Options<T>
-Line 12 col 21 IdentifierName "T" = T
-Line 15 col 10 IdentifierName "Options" = Options<T>
-Line 15 col 18 IdentifierName "T" = T
-Line 15 col 29 IdentifierName "OptionsBase" = OptionsBase<T>
-Line 15 col 41 IdentifierName "T" = T
-Line 19 col 9 IdentifierName "o" = typeof o
-Line 19 col 11 IdentifierName "type" = new() => Base
-Line 19 col 27 IdentifierName "Base" = Base
-Line 21 col 0 InvocationExpression "o(A)" = void
-Line 21 col 0 IdentifierName "o" = typeof o
-Line 22 col 2 IdentifierName "A" = typeof A
+class Functionality<V> {
+>Functionality : Functionality<V>
+>V : V
+
+    property: Options<V>;
+>property : Options<V>
+>Options : Options<T>
+>V : V
+}
+
+class Base {
+>Base : Base
+}
+
+class A<T> extends Base {
+>A : A<T>
+>T : T
+>Base : Base
+
+    options: Options<Functionality<T>[]>;
+>options : Options<Functionality<T>[]>
+>Options : Options<T>
+>Functionality : Functionality<V>
+>T : T
+}
+
+interface OptionsBase<T> {
+>OptionsBase : OptionsBase<T>
+>T : T
+
+    Options: Options<T>;
+>Options : Options<T>
+>Options : Options<T>
+>T : T
+}
+
+interface Options<T> extends OptionsBase<T> {
+>Options : Options<T>
+>T : T
+>OptionsBase : OptionsBase<T>
+>T : T
+}
+
+
+function o(type: new () => Base) {
+>o : typeof o
+>type : new() => Base
+>Base : Base
+}
+
+>o(A) : void
+>o : typeof o
+
+o(A);
+>A : typeof A
+

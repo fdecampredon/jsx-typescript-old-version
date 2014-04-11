@@ -1,12 +1,25 @@
 === tests/cases/compiler/overloadOnConstInheritance1.ts ===
-Line 0 col 10 IdentifierName "Base" = Base
-Line 1 col 0 IdentifierName "addEventListener" = { (x: string): any; (x: 'foo'): string; }
-Line 1 col 21 IdentifierName "x" = string
-Line 2 col 0 IdentifierName "addEventListener" = { (x: string): any; (x: 'foo'): string; }
-Line 2 col 21 IdentifierName "x" = 'foo'
-Line 4 col 10 IdentifierName "Deriver" = Deriver
-Line 4 col 26 IdentifierName "Base" = Base
-Line 5 col 0 IdentifierName "addEventListener" = { (x: string): any; (x: 'bar'): string; }
-Line 5 col 21 IdentifierName "x" = string
-Line 6 col 0 IdentifierName "addEventListener" = { (x: string): any; (x: 'bar'): string; }
-Line 6 col 21 IdentifierName "x" = 'bar'
+interface Base {
+>Base : Base
+
+    addEventListener(x: string): any;
+>addEventListener : { (x: string): any; (x: 'foo'): string; }
+>x : string
+
+    addEventListener(x: 'foo'): string;
+>addEventListener : { (x: string): any; (x: 'foo'): string; }
+>x : 'foo'
+}
+interface Deriver extends Base {
+>Deriver : Deriver
+>Base : Base
+
+    addEventListener(x: string): any;
+>addEventListener : { (x: string): any; (x: 'bar'): string; }
+>x : string
+
+    addEventListener(x: 'bar'): string;
+>addEventListener : { (x: string): any; (x: 'bar'): string; }
+>x : 'bar'
+}
+

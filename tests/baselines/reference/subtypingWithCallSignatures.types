@@ -1,40 +1,58 @@
 === tests/cases/compiler/subtypingWithCallSignatures.ts ===
-Line 0 col 7 IdentifierName "CallSignature" = CallSignature
-Line 1 col 21 IdentifierName "foo1" = typeof foo1
-Line 1 col 26 IdentifierName "cb" = (x: number) => void
-Line 1 col 31 IdentifierName "x" = number
-Line 1 col 59 IdentifierName "cb" = (x: number) => void
-Line 2 col 21 IdentifierName "foo1" = typeof foo1
-Line 2 col 26 IdentifierName "cb" = any
-Line 3 col 8 IdentifierName "r" = (x: number) => void
-Line 3 col 12 InvocationExpression "foo1((x: number) => 1)" = (x: number) => void
-Line 3 col 12 IdentifierName "foo1" = typeof foo1
-Line 3 col 17 ParenthesizedArrowFunctionExpression "(x: number) => 1" = (x: number) => number
-Line 3 col 18 IdentifierName "x" = number
-Line 4 col 8 IdentifierName "r2" = (x: number) => void
-Line 4 col 13 InvocationExpression "foo1(<T>(x: T) => '')" = (x: number) => void
-Line 4 col 13 IdentifierName "foo1" = typeof foo1
-Line 4 col 18 ParenthesizedArrowFunctionExpression "<T>(x: T) => ''" = <T>(x: T) => string
-Line 4 col 19 IdentifierName "T" = T
-Line 4 col 22 IdentifierName "x" = T
-Line 4 col 25 IdentifierName "T" = T
-Line 6 col 21 IdentifierName "foo2" = typeof foo2
-Line 6 col 26 IdentifierName "cb" = (x: number, y: number) => void
-Line 6 col 31 IdentifierName "x" = number
-Line 6 col 42 IdentifierName "y" = number
-Line 6 col 70 IdentifierName "cb" = (x: number, y: number) => void
-Line 7 col 21 IdentifierName "foo2" = typeof foo2
-Line 7 col 26 IdentifierName "cb" = any
-Line 8 col 8 IdentifierName "r3" = (x: number, y: number) => void
-Line 8 col 13 InvocationExpression "foo2((x: number, y: number) => 1)" = (x: number, y: number) => void
-Line 8 col 13 IdentifierName "foo2" = typeof foo2
-Line 8 col 18 ParenthesizedArrowFunctionExpression "(x: number, y: number) => 1" = (x: number, y: number) => number
-Line 8 col 19 IdentifierName "x" = number
-Line 8 col 30 IdentifierName "y" = number
-Line 9 col 8 IdentifierName "r4" = (x: number, y: number) => void
-Line 9 col 13 InvocationExpression "foo2(<T>(x: T) => '')" = (x: number, y: number) => void
-Line 9 col 13 IdentifierName "foo2" = typeof foo2
-Line 9 col 18 ParenthesizedArrowFunctionExpression "<T>(x: T) => ''" = <T>(x: T) => string
-Line 9 col 19 IdentifierName "T" = T
-Line 9 col 22 IdentifierName "x" = T
-Line 9 col 25 IdentifierName "T" = T
+module CallSignature {
+>CallSignature : CallSignature
+
+    declare function foo1(cb: (x: number) => void): typeof cb;
+>foo1 : typeof foo1
+>cb : (x: number) => void
+>x : number
+>cb : (x: number) => void
+
+    declare function foo1(cb: any): any;
+>foo1 : typeof foo1
+>cb : any
+
+    var r = foo1((x: number) => 1); // ok because base returns void
+>r : (x: number) => void
+>foo1((x: number) => 1) : (x: number) => void
+>foo1 : typeof foo1
+>(x: number) => 1 : (x: number) => number
+>x : number
+
+    var r2 = foo1(<T>(x: T) => ''); // ok because base returns void
+>r2 : (x: number) => void
+>foo1(<T>(x: T) => '') : (x: number) => void
+>foo1 : typeof foo1
+><T>(x: T) => '' : <T>(x: T) => string
+>T : T
+>x : T
+>T : T
+
+    declare function foo2(cb: (x: number, y: number) => void): typeof cb;
+>foo2 : typeof foo2
+>cb : (x: number, y: number) => void
+>x : number
+>y : number
+>cb : (x: number, y: number) => void
+
+    declare function foo2(cb: any): any;
+>foo2 : typeof foo2
+>cb : any
+
+    var r3 = foo2((x: number, y: number) => 1); // ok because base returns void
+>r3 : (x: number, y: number) => void
+>foo2((x: number, y: number) => 1) : (x: number, y: number) => void
+>foo2 : typeof foo2
+>(x: number, y: number) => 1 : (x: number, y: number) => number
+>x : number
+>y : number
+
+    var r4 = foo2(<T>(x: T) => ''); // ok because base returns void
+>r4 : (x: number, y: number) => void
+>foo2(<T>(x: T) => '') : (x: number, y: number) => void
+>foo2 : typeof foo2
+><T>(x: T) => '' : <T>(x: T) => string
+>T : T
+>x : T
+>T : T
+}

@@ -1,3 +1,4 @@
+//// [typeCheckTypeArgument.js]
 /// <reference no-default-lib="true"/>
 var f;
 

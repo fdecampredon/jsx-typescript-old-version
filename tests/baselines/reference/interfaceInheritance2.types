@@ -1,8 +1,19 @@
 === tests/cases/compiler/interfaceInheritance2.ts ===
-Line 0 col 10 IdentifierName "I6" = I6
-Line 4 col 10 IdentifierName "I7" = I7
-Line 4 col 21 IdentifierName "I6" = I6
-Line 6 col 4 IdentifierName "v1" = I7
-Line 6 col 7 IdentifierName "I7" = I7
-Line 7 col 0 InvocationExpression "v1()" = void
-Line 7 col 0 IdentifierName "v1" = I7
+interface I6 {
+>I6 : I6
+
+ ():void;
+}
+
+interface I7 extends I6 { }
+>I7 : I7
+>I6 : I6
+
+var v1:I7;
+>v1 : I7
+>I7 : I7
+
+v1();
+>v1() : void
+>v1 : I7
+

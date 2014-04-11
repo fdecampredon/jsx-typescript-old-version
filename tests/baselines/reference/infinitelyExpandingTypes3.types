@@ -1,30 +1,56 @@
 === tests/cases/compiler/infinitelyExpandingTypes3.ts ===
-Line 0 col 10 IdentifierName "List" = List<T>
-Line 0 col 15 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "data" = T
-Line 1 col 10 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "next" = List<T>
-Line 2 col 10 IdentifierName "List" = List<T>
-Line 2 col 15 IdentifierName "T" = T
-Line 3 col 0 IdentifierName "owner" = OwnerList<T>
-Line 3 col 11 IdentifierName "OwnerList" = OwnerList<U>
-Line 3 col 21 IdentifierName "T" = T
-Line 6 col 10 IdentifierName "OwnerList" = OwnerList<U>
-Line 6 col 20 IdentifierName "U" = U
-Line 6 col 31 IdentifierName "List" = List<T>
-Line 6 col 36 IdentifierName "List" = List<T>
-Line 6 col 41 IdentifierName "U" = U
-Line 7 col 0 IdentifierName "name" = string
-Line 10 col 10 IdentifierName "OwnerList2" = OwnerList2<U>
-Line 10 col 21 IdentifierName "U" = U
-Line 10 col 32 IdentifierName "List" = List<T>
-Line 10 col 37 IdentifierName "List" = List<T>
-Line 10 col 42 IdentifierName "U" = U
-Line 11 col 0 IdentifierName "name" = string
-Line 14 col 4 IdentifierName "o1" = OwnerList<number>
-Line 14 col 8 IdentifierName "OwnerList" = OwnerList<U>
-Line 15 col 4 IdentifierName "o2" = OwnerList2<number>
-Line 15 col 8 IdentifierName "OwnerList2" = OwnerList2<U>
-Line 16 col 0 AssignmentExpression "o1 = o2" = OwnerList2<number>
-Line 16 col 0 IdentifierName "o1" = OwnerList<number>
-Line 17 col 5 IdentifierName "o2" = OwnerList2<number>
+interface List<T> {
+>List : List<T>
+>T : T
+
+    data: T;
+>data : T
+>T : T
+
+    next: List<T>; // will be recursive reference when OwnerList is expanded
+>next : List<T>
+>List : List<T>
+>T : T
+
+    owner: OwnerList<T>;
+>owner : OwnerList<T>
+>OwnerList : OwnerList<U>
+>T : T
+}
+
+interface OwnerList<U> extends List<List<U>> {
+>OwnerList : OwnerList<U>
+>U : U
+>List : List<T>
+>List : List<T>
+>U : U
+
+    name: string;
+>name : string
+}
+
+interface OwnerList2<U> extends List<List<U>> {
+>OwnerList2 : OwnerList2<U>
+>U : U
+>List : List<T>
+>List : List<T>
+>U : U
+
+    name: string;
+>name : string
+}
+
+var o1: OwnerList<number>;
+>o1 : OwnerList<number>
+>OwnerList : OwnerList<U>
+
+var o2: OwnerList2<number>;
+>o2 : OwnerList2<number>
+>OwnerList2 : OwnerList2<U>
+
+>o1 = o2 : OwnerList2<number>
+>o1 : OwnerList<number>
+
+o1 = o2; // should not error
+>o2 : OwnerList2<number>
+

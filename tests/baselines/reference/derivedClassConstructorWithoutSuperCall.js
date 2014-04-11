@@ -1,3 +1,4 @@
+//// [derivedClassConstructorWithoutSuperCall.js]
 // derived class constructors must contain a super call
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

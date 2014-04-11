@@ -1,19 +1,37 @@
 === tests/cases/compiler/bestCommonTypeReturnStatement.ts ===
-Line 1 col 10 IdentifierName "IPromise" = IPromise<T>
-Line 1 col 19 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "then" = (successCallback: (promiseValue: T) => any, errorCallback?: (reason: any) => any) => IPromise<any>
-Line 2 col 9 IdentifierName "successCallback" = (promiseValue: T) => any
-Line 2 col 27 IdentifierName "promiseValue" = T
-Line 2 col 41 IdentifierName "T" = T
-Line 2 col 52 IdentifierName "errorCallback" = (reason: any) => any
-Line 2 col 69 IdentifierName "reason" = any
-Line 2 col 91 IdentifierName "IPromise" = IPromise<T>
-Line 5 col 9 IdentifierName "f" = typeof f
-Line 6 col 21 InvocationExpression "b()" = IPromise<void>
-Line 6 col 21 IdentifierName "b" = typeof b
-Line 7 col 11 InvocationExpression "d()" = IPromise<any>
-Line 7 col 11 IdentifierName "d" = typeof d
-Line 11 col 9 IdentifierName "b" = typeof b
-Line 11 col 14 IdentifierName "IPromise" = IPromise<T>
-Line 12 col 9 IdentifierName "d" = typeof d
-Line 12 col 14 IdentifierName "IPromise" = IPromise<T>
+// bug 804258: cannot determine return type
+interface IPromise<T> {
+>IPromise : IPromise<T>
+>T : T
+
+    then(successCallback: (promiseValue: T) => any, errorCallback?: (reason: any) => any): IPromise<any>;
+>then : (successCallback: (promiseValue: T) => any, errorCallback?: (reason: any) => any) => IPromise<any>
+>successCallback : (promiseValue: T) => any
+>promiseValue : T
+>T : T
+>errorCallback : (reason: any) => any
+>reason : any
+>IPromise : IPromise<T>
+}
+
+function f() {
+>f : typeof f
+
+    if (true) return b();
+>b() : IPromise<void>
+>b : typeof b
+
+    return d();
+>d() : IPromise<any>
+>d : typeof d
+}
+
+
+function b(): IPromise<void> { return null; }
+>b : typeof b
+>IPromise : IPromise<T>
+
+function d(): IPromise<any> { return null; }
+>d : typeof d
+>IPromise : IPromise<T>
+

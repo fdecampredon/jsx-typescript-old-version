@@ -1,49 +1,97 @@
 === tests/cases/compiler/primtiveTypesAreIdentical.ts ===
-Line 2 col 9 IdentifierName "foo1" = typeof foo1
-Line 2 col 14 IdentifierName "x" = number
-Line 3 col 9 IdentifierName "foo1" = typeof foo1
-Line 3 col 14 IdentifierName "x" = number
-Line 4 col 9 IdentifierName "foo1" = typeof foo1
-Line 4 col 14 IdentifierName "x" = any
-Line 6 col 9 IdentifierName "foo2" = typeof foo2
-Line 6 col 14 IdentifierName "x" = string
-Line 7 col 9 IdentifierName "foo2" = typeof foo2
-Line 7 col 14 IdentifierName "x" = string
-Line 8 col 9 IdentifierName "foo2" = typeof foo2
-Line 8 col 14 IdentifierName "x" = any
-Line 10 col 9 IdentifierName "foo3" = typeof foo3
-Line 10 col 14 IdentifierName "x" = boolean
-Line 11 col 9 IdentifierName "foo3" = typeof foo3
-Line 11 col 14 IdentifierName "x" = boolean
-Line 12 col 9 IdentifierName "foo3" = typeof foo3
-Line 12 col 14 IdentifierName "x" = any
-Line 14 col 9 IdentifierName "foo4" = typeof foo4
-Line 14 col 14 IdentifierName "x" = any
-Line 15 col 9 IdentifierName "foo4" = typeof foo4
-Line 15 col 14 IdentifierName "x" = any
-Line 16 col 9 IdentifierName "foo4" = typeof foo4
-Line 16 col 14 IdentifierName "x" = any
-Line 18 col 9 IdentifierName "foo5" = typeof foo5
-Line 18 col 14 IdentifierName "x" = 'a'
-Line 19 col 9 IdentifierName "foo5" = typeof foo5
-Line 19 col 14 IdentifierName "x" = 'a'
-Line 20 col 9 IdentifierName "foo5" = typeof foo5
-Line 20 col 14 IdentifierName "x" = string
-Line 21 col 9 IdentifierName "foo5" = typeof foo5
-Line 21 col 14 IdentifierName "x" = any
-Line 23 col 5 IdentifierName "E" = E
-Line 23 col 9 IdentifierName "A" = E
-Line 24 col 9 IdentifierName "foo6" = typeof foo6
-Line 24 col 14 IdentifierName "x" = E
-Line 24 col 17 IdentifierName "E" = E
-Line 25 col 9 IdentifierName "foo6" = typeof foo6
-Line 25 col 14 IdentifierName "x" = E
-Line 25 col 17 IdentifierName "E" = E
-Line 26 col 9 IdentifierName "foo6" = typeof foo6
-Line 26 col 14 IdentifierName "x" = any
-Line 28 col 9 IdentifierName "foo7" = typeof foo7
-Line 28 col 14 IdentifierName "x" = void
-Line 29 col 9 IdentifierName "foo7" = typeof foo7
-Line 29 col 14 IdentifierName "x" = void
-Line 30 col 9 IdentifierName "foo7" = typeof foo7
-Line 30 col 14 IdentifierName "x" = any
+// primitive types are identical to themselves so these overloads will all cause errors
+
+function foo1(x: number);
+>foo1 : typeof foo1
+>x : number
+
+function foo1(x: number);
+>foo1 : typeof foo1
+>x : number
+
+function foo1(x: any) { }
+>foo1 : typeof foo1
+>x : any
+
+function foo2(x: string);
+>foo2 : typeof foo2
+>x : string
+
+function foo2(x: string);
+>foo2 : typeof foo2
+>x : string
+
+function foo2(x: any) { }
+>foo2 : typeof foo2
+>x : any
+
+function foo3(x: boolean);
+>foo3 : typeof foo3
+>x : boolean
+
+function foo3(x: boolean);
+>foo3 : typeof foo3
+>x : boolean
+
+function foo3(x: any) { }
+>foo3 : typeof foo3
+>x : any
+
+function foo4(x: any);
+>foo4 : typeof foo4
+>x : any
+
+function foo4(x: any);
+>foo4 : typeof foo4
+>x : any
+
+function foo4(x: any) { }
+>foo4 : typeof foo4
+>x : any
+
+function foo5(x: 'a');
+>foo5 : typeof foo5
+>x : 'a'
+
+function foo5(x: 'a');
+>foo5 : typeof foo5
+>x : 'a'
+
+function foo5(x: string);
+>foo5 : typeof foo5
+>x : string
+
+function foo5(x: any) { }
+>foo5 : typeof foo5
+>x : any
+
+enum E { A }
+>E : E
+>A : E
+
+function foo6(x: E);
+>foo6 : typeof foo6
+>x : E
+>E : E
+
+function foo6(x: E);
+>foo6 : typeof foo6
+>x : E
+>E : E
+
+function foo6(x: any) { }
+>foo6 : typeof foo6
+>x : any
+
+function foo7(x: void);
+>foo7 : typeof foo7
+>x : void
+
+function foo7(x: void);
+>foo7 : typeof foo7
+>x : void
+
+function foo7(x: any) { }
+>foo7 : typeof foo7
+>x : any
+

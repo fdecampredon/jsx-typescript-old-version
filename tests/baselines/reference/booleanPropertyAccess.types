@@ -1,11 +1,17 @@
 === tests/cases/compiler/booleanPropertyAccess.ts ===
-Line 0 col 4 IdentifierName "x" = boolean
-Line 2 col 4 IdentifierName "a" = string
-Line 2 col 8 InvocationExpression "x.toString()" = string
-Line 2 col 8 MemberAccessExpression "x.toString" = () => string
-Line 2 col 8 IdentifierName "x" = boolean
-Line 2 col 10 IdentifierName "toString" = () => string
-Line 3 col 4 IdentifierName "b" = string
-Line 3 col 8 InvocationExpression "x['toString']()" = string
-Line 3 col 8 ElementAccessExpression "x['toString']" = () => string
-Line 3 col 8 IdentifierName "x" = boolean
+var x = true;
+>x : boolean
+
+var a = x.toString();
+>a : string
+>x.toString() : string
+>x.toString : () => string
+>x : boolean
+>toString : () => string
+
+var b = x['toString']();
+>b : string
+>x['toString']() : string
+>x['toString'] : () => string
+>x : boolean
+

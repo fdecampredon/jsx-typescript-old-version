@@ -1,3 +1,19 @@
+//// [constructorOverloadsWithOptionalParameters.ts]
+class C {
+    foo: string;
+    constructor(x?, y?: any[]); 
+    constructor() {
+    }
+}
+
+class D<T> {
+    foo: string;
+    constructor(x?, y?: any[]); 
+    constructor() {
+    }
+}
+
+//// [constructorOverloadsWithOptionalParameters.js]
 var C = (function () {
     function C() {
     }

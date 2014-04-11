@@ -1,10 +1,21 @@
 === tests/cases/compiler/parameterReferencesOtherParameter2.ts ===
-Line 0 col 6 IdentifierName "Model" = Model
-Line 1 col 11 IdentifierName "name" = string
-Line 4 col 6 IdentifierName "UI" = UI
-Line 5 col 16 IdentifierName "model" = Model
-Line 5 col 23 IdentifierName "Model" = Model
-Line 5 col 30 IdentifierName "foo" = string
-Line 5 col 36 MemberAccessExpression "model.name" = string
-Line 5 col 36 IdentifierName "model" = Model
-Line 5 col 42 IdentifierName "name" = string
+class Model {
+>Model : Model
+
+    public name: string;
+>name : string
+}
+
+class UI {
+>UI : UI
+
+    constructor(model: Model, foo = model.name)
+>model : Model
+>Model : Model
+>foo : string
+>model.name : string
+>model : Model
+>name : string
+    {
+    }
+}

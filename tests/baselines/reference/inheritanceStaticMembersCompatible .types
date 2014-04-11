@@ -1,8 +1,17 @@
 === tests/cases/compiler/inheritanceStaticMembersCompatible .ts ===
-Line 0 col 6 IdentifierName "a" = a
-Line 1 col 11 IdentifierName "x" = a
-Line 1 col 14 IdentifierName "a" = a
-Line 4 col 6 IdentifierName "b" = b
-Line 4 col 16 IdentifierName "a" = a
-Line 5 col 11 IdentifierName "x" = b
-Line 5 col 14 IdentifierName "b" = b
+class a {
+>a : a
+
+    static x: a;
+>x : a
+>a : a
+}
+
+class b extends a {
+>b : b
+>a : a
+
+    static x: b;
+>x : b
+>b : b
+}

@@ -1,3 +1,4 @@
+//// [invocationExpressionInFunctionParameter.js]
 function foo1(val) {
 }
 function foo3(x) {

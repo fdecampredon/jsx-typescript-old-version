@@ -1,2 +1,7 @@
 === tests/cases/compiler/numericMethodName1.ts ===
-Line 0 col 6 IdentifierName "C" = C
+class C {
+>C : C
+
+  1 = 2;
+}
+

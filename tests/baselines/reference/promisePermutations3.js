@@ -1,3 +1,4 @@
+//// [promisePermutations3.js]
 // same as promisePermutations but without the same overloads in IPromise<T>
 
 var r1;

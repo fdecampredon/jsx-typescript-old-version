@@ -1,65 +1,97 @@
 === tests/cases/compiler/conditionallyDuplicateOverloadsCausedByOverloadResolution.ts ===
-Line 0 col 17 IdentifierName "foo" = typeof foo
-Line 0 col 21 IdentifierName "func" = (x: string, y: string) => any
-Line 0 col 28 IdentifierName "x" = string
-Line 0 col 39 IdentifierName "y" = string
-Line 1 col 17 IdentifierName "foo" = typeof foo
-Line 1 col 21 IdentifierName "func" = (x: string, y: number) => any
-Line 1 col 28 IdentifierName "x" = string
-Line 1 col 39 IdentifierName "y" = number
-Line 3 col 4 IdentifierName "out" = boolean
-Line 3 col 10 InvocationExpression "foo((x, y) => {
+declare function foo(func: (x: string, y: string) => any): boolean;
+>foo : typeof foo
+>func : (x: string, y: string) => any
+>x : string
+>y : string
+
+declare function foo(func: (x: string, y: number) => any): string;
+>foo : typeof foo
+>func : (x: string, y: number) => any
+>x : string
+>y : number
+
+var out = foo((x, y) => {
+>out : boolean
+>foo((x, y) => {
     function bar(a: typeof x): void;
     function bar(b: typeof y): void;
     function bar() { }
     return bar;
-})" = boolean
-Line 3 col 10 IdentifierName "foo" = typeof foo
-Line 3 col 14 ParenthesizedArrowFunctionExpression "(x, y) => {
+}) : boolean
+>foo : typeof foo
+>(x, y) => {
     function bar(a: typeof x): void;
     function bar(b: typeof y): void;
     function bar() { }
     return bar;
-}" = (x: string, y: string) => { (a: string): void; (b: string): void; }
-Line 3 col 15 IdentifierName "x" = string
-Line 3 col 18 IdentifierName "y" = string
-Line 4 col 13 IdentifierName "bar" = { (a: string): void; (b: string): void; }
-Line 4 col 17 IdentifierName "a" = string
-Line 4 col 27 IdentifierName "x" = string
-Line 5 col 13 IdentifierName "bar" = { (a: string): void; (b: string): void; }
-Line 5 col 17 IdentifierName "b" = string
-Line 5 col 27 IdentifierName "y" = string
-Line 6 col 13 IdentifierName "bar" = { (a: string): void; (b: string): void; }
-Line 7 col 11 IdentifierName "bar" = { (a: string): void; (b: string): void; }
-Line 10 col 17 IdentifierName "foo2" = typeof foo2
-Line 10 col 22 IdentifierName "func" = (x: string, y: string) => any
-Line 10 col 29 IdentifierName "x" = string
-Line 10 col 40 IdentifierName "y" = string
-Line 11 col 17 IdentifierName "foo2" = typeof foo2
-Line 11 col 22 IdentifierName "func" = (x: string, y: number) => any
-Line 11 col 29 IdentifierName "x" = string
-Line 11 col 40 IdentifierName "y" = number
-Line 13 col 4 IdentifierName "out2" = boolean
-Line 13 col 11 InvocationExpression "foo2((x, y) => {
+} : (x: string, y: string) => { (a: string): void; (b: string): void; }
+>x : string
+>y : string
+
+    function bar(a: typeof x): void;
+>bar : { (a: string): void; (b: string): void; }
+>a : string
+>x : string
+
+    function bar(b: typeof y): void;
+>bar : { (a: string): void; (b: string): void; }
+>b : string
+>y : string
+
+    function bar() { }
+>bar : { (a: string): void; (b: string): void; }
+
+    return bar;
+>bar : { (a: string): void; (b: string): void; }
+
+});
+
+declare function foo2(func: (x: string, y: string) => any): boolean;
+>foo2 : typeof foo2
+>func : (x: string, y: string) => any
+>x : string
+>y : string
+
+declare function foo2(func: (x: string, y: number) => any): string;
+>foo2 : typeof foo2
+>func : (x: string, y: number) => any
+>x : string
+>y : number
+
+var out2 = foo2((x, y) => {
+>out2 : boolean
+>foo2((x, y) => {
     var bar: {
         (a: typeof x): void;
         (b: typeof y): void;
     };
     return bar;
-})" = boolean
-Line 13 col 11 IdentifierName "foo2" = typeof foo2
-Line 13 col 16 ParenthesizedArrowFunctionExpression "(x, y) => {
+}) : boolean
+>foo2 : typeof foo2
+>(x, y) => {
     var bar: {
         (a: typeof x): void;
         (b: typeof y): void;
     };
     return bar;
-}" = (x: string, y: string) => { (a: string): void; (b: string): void; }
-Line 13 col 17 IdentifierName "x" = string
-Line 13 col 20 IdentifierName "y" = string
-Line 14 col 8 IdentifierName "bar" = { (a: string): void; (b: string): void; }
-Line 15 col 9 IdentifierName "a" = string
-Line 15 col 19 IdentifierName "x" = string
-Line 16 col 9 IdentifierName "b" = string
-Line 16 col 19 IdentifierName "y" = string
-Line 18 col 11 IdentifierName "bar" = { (a: string): void; (b: string): void; }
+} : (x: string, y: string) => { (a: string): void; (b: string): void; }
+>x : string
+>y : string
+
+    var bar: {
+>bar : { (a: string): void; (b: string): void; }
+
+        (a: typeof x): void;
+>a : string
+>x : string
+
+        (b: typeof y): void;
+>b : string
+>y : string
+
+    };
+    return bar;
+>bar : { (a: string): void; (b: string): void; }
+
+});

@@ -1,3 +1,4 @@
+//// [internalAliasUninitializedModuleInsideLocalModuleWithoutExportAccessError.js]
 define(["require", "exports"], function(require, exports) {
     (function (c) {
         c.x;

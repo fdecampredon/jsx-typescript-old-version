@@ -1,105 +1,226 @@
 === tests/cases/compiler/commentsModules.ts ===
-Line 1 col 7 IdentifierName "m1" = m1
-Line 3 col 15 IdentifierName "b" = number
-Line 5 col 13 IdentifierName "foo" = typeof foo
-Line 6 col 15 IdentifierName "b" = number
-Line 9 col 18 IdentifierName "m2" = m2
-Line 11 col 21 IdentifierName "c" = c
-Line 14 col 19 IdentifierName "i" = c
-Line 14 col 23 ObjectCreationExpression "new c()" = c
-Line 14 col 27 IdentifierName "c" = typeof c
-Line 17 col 20 IdentifierName "fooExport" = typeof fooExport
-Line 18 col 15 InvocationExpression "foo()" = number
-Line 18 col 15 IdentifierName "foo" = typeof foo
-Line 22 col 20 IdentifierName "foo2Export" = typeof foo2Export
-Line 22 col 39 IdentifierName "a" = string
-Line 28 col 20 IdentifierName "foo3Export" = typeof foo3Export
-Line 34 col 13 IdentifierName "foo4Export" = typeof foo4Export
-Line 37 col 0 InvocationExpression "m1.fooExport()" = number
-Line 37 col 0 MemberAccessExpression "m1.fooExport" = typeof m1.fooExport
-Line 37 col 0 IdentifierName "m1" = typeof m1
-Line 37 col 3 IdentifierName "fooExport" = typeof m1.fooExport
-Line 38 col 4 IdentifierName "myvar" = m1.m2.c
-Line 38 col 12 ObjectCreationExpression "new m1.m2.c()" = m1.m2.c
-Line 38 col 16 MemberAccessExpression "m1.m2.c" = typeof m1.m2.c
-Line 38 col 16 MemberAccessExpression "m1.m2" = typeof m1.m2
-Line 38 col 16 IdentifierName "m1" = typeof m1
-Line 38 col 19 IdentifierName "m2" = typeof m1.m2
-Line 38 col 22 IdentifierName "c" = typeof m1.m2.c
-Line 40 col 7 IdentifierName "m2" = m2
-Line 40 col 10 IdentifierName "m3" = m2.m3
-Line 42 col 17 IdentifierName "c" = c
-Line 45 col 0 ObjectCreationExpression "new m2.m3.c()" = m2.m3.c
-Line 45 col 4 MemberAccessExpression "m2.m3.c" = typeof m2.m3.c
-Line 45 col 4 MemberAccessExpression "m2.m3" = typeof m2.m3
-Line 45 col 4 IdentifierName "m2" = typeof m2
-Line 45 col 7 IdentifierName "m3" = typeof m2.m3
-Line 45 col 10 IdentifierName "c" = typeof m2.m3.c
-Line 47 col 7 IdentifierName "m3" = m3
-Line 47 col 10 IdentifierName "m4" = m3.m4
-Line 47 col 13 IdentifierName "m5" = m3.m4.m5
-Line 49 col 17 IdentifierName "c" = c
-Line 52 col 0 ObjectCreationExpression "new m3.m4.m5.c()" = m3.m4.m5.c
-Line 52 col 4 MemberAccessExpression "m3.m4.m5.c" = typeof m3.m4.m5.c
-Line 52 col 4 MemberAccessExpression "m3.m4.m5" = typeof m3.m4.m5
-Line 52 col 4 MemberAccessExpression "m3.m4" = typeof m3.m4
-Line 52 col 4 IdentifierName "m3" = typeof m3
-Line 52 col 7 IdentifierName "m4" = typeof m3.m4
-Line 52 col 10 IdentifierName "m5" = typeof m3.m4.m5
-Line 52 col 13 IdentifierName "c" = typeof m3.m4.m5.c
-Line 54 col 7 IdentifierName "m4" = m4
-Line 54 col 10 IdentifierName "m5" = m4.m5
-Line 54 col 13 IdentifierName "m6" = m4.m5.m6
-Line 55 col 18 IdentifierName "m7" = m7
-Line 57 col 21 IdentifierName "c" = c
-Line 61 col 0 ObjectCreationExpression "new m4.m5.m6.m7.c()" = m4.m5.m6.m7.c
-Line 61 col 4 MemberAccessExpression "m4.m5.m6.m7.c" = typeof m4.m5.m6.m7.c
-Line 61 col 4 MemberAccessExpression "m4.m5.m6.m7" = typeof m4.m5.m6.m7
-Line 61 col 4 MemberAccessExpression "m4.m5.m6" = typeof m4.m5.m6
-Line 61 col 4 MemberAccessExpression "m4.m5" = typeof m4.m5
-Line 61 col 4 IdentifierName "m4" = typeof m4
-Line 61 col 7 IdentifierName "m5" = typeof m4.m5
-Line 61 col 10 IdentifierName "m6" = typeof m4.m5.m6
-Line 61 col 13 IdentifierName "m7" = typeof m4.m5.m6.m7
-Line 61 col 16 IdentifierName "c" = typeof m4.m5.m6.m7.c
-Line 63 col 7 IdentifierName "m5" = m5
-Line 63 col 10 IdentifierName "m6" = m5.m6
-Line 63 col 13 IdentifierName "m7" = m5.m6.m7
-Line 65 col 18 IdentifierName "m8" = m8
-Line 67 col 21 IdentifierName "c" = c
-Line 71 col 0 ObjectCreationExpression "new m5.m6.m7.m8.c()" = m5.m6.m7.m8.c
-Line 71 col 4 MemberAccessExpression "m5.m6.m7.m8.c" = typeof m5.m6.m7.m8.c
-Line 71 col 4 MemberAccessExpression "m5.m6.m7.m8" = typeof m5.m6.m7.m8
-Line 71 col 4 MemberAccessExpression "m5.m6.m7" = typeof m5.m6.m7
-Line 71 col 4 MemberAccessExpression "m5.m6" = typeof m5.m6
-Line 71 col 4 IdentifierName "m5" = typeof m5
-Line 71 col 7 IdentifierName "m6" = typeof m5.m6
-Line 71 col 10 IdentifierName "m7" = typeof m5.m6.m7
-Line 71 col 13 IdentifierName "m8" = typeof m5.m6.m7.m8
-Line 71 col 16 IdentifierName "c" = typeof m5.m6.m7.m8.c
-Line 72 col 7 IdentifierName "m6" = m6
-Line 72 col 10 IdentifierName "m7" = m6.m7
-Line 73 col 18 IdentifierName "m8" = m8
-Line 75 col 21 IdentifierName "c" = c
-Line 79 col 0 ObjectCreationExpression "new m6.m7.m8.c()" = m6.m7.m8.c
-Line 79 col 4 MemberAccessExpression "m6.m7.m8.c" = typeof m6.m7.m8.c
-Line 79 col 4 MemberAccessExpression "m6.m7.m8" = typeof m6.m7.m8
-Line 79 col 4 MemberAccessExpression "m6.m7" = typeof m6.m7
-Line 79 col 4 IdentifierName "m6" = typeof m6
-Line 79 col 7 IdentifierName "m7" = typeof m6.m7
-Line 79 col 10 IdentifierName "m8" = typeof m6.m7.m8
-Line 79 col 13 IdentifierName "c" = typeof m6.m7.m8.c
-Line 80 col 7 IdentifierName "m7" = m7
-Line 80 col 10 IdentifierName "m8" = m7.m8
-Line 82 col 18 IdentifierName "m9" = m9
-Line 84 col 21 IdentifierName "c" = c
-Line 88 col 14 IdentifierName "d" = d
-Line 92 col 21 IdentifierName "e" = e
-Line 96 col 0 ObjectCreationExpression "new m7.m8.m9.c()" = m7.m8.m9.c
-Line 96 col 4 MemberAccessExpression "m7.m8.m9.c" = typeof m7.m8.m9.c
-Line 96 col 4 MemberAccessExpression "m7.m8.m9" = typeof m7.m8.m9
-Line 96 col 4 MemberAccessExpression "m7.m8" = typeof m7.m8
-Line 96 col 4 IdentifierName "m7" = typeof m7
-Line 96 col 7 IdentifierName "m8" = typeof m7.m8
-Line 96 col 10 IdentifierName "m9" = typeof m7.m8.m9
-Line 96 col 13 IdentifierName "c" = typeof m7.m8.m9.c
+/** Module comment*/
+module m1 {
+>m1 : m1
+
+    /** b's comment*/
+    export var b: number;
+>b : number
+
+    /** foo's comment*/
+    function foo() {
+>foo : typeof foo
+
+        return b;
+>b : number
+    }
+    /** m2 comments*/
+    export module m2 {
+>m2 : m2
+
+        /** class comment;*/
+        export class c {
+>c : c
+
+        };
+        /** i*/
+        export var i = new c();
+>i : c
+>new c() : c
+>c : typeof c
+    }
+    /** exported function*/
+    export function fooExport() {
+>fooExport : typeof fooExport
+
+        return foo();
+>foo() : number
+>foo : typeof foo
+    }
+
+    // shouldn't appear
+    export function foo2Export(/**hm*/ a: string) {
+>foo2Export : typeof foo2Export
+>a : string
+    }
+
+    /** foo3Export
+     * comment
+     */
+    export function foo3Export() {
+>foo3Export : typeof foo3Export
+    }
+
+    /** foo4Export
+     * comment
+     */
+    function foo4Export() {
+>foo4Export : typeof foo4Export
+    }
+}
+m1.fooExport();
+>m1.fooExport() : number
+>m1.fooExport : typeof m1.fooExport
+>m1 : typeof m1
+>fooExport : typeof m1.fooExport
+
+var myvar = new m1.m2.c();
+>myvar : m1.m2.c
+>new m1.m2.c() : m1.m2.c
+>m1.m2.c : typeof m1.m2.c
+>m1.m2 : typeof m1.m2
+>m1 : typeof m1
+>m2 : typeof m1.m2
+>c : typeof m1.m2.c
+
+/** module comment of m2.m3*/
+module m2.m3 {
+>m2 : m2
+>m3 : m2.m3
+
+    /** Exported class comment*/
+    export class c {
+>c : c
+    }
+}
+new m2.m3.c();
+>new m2.m3.c() : m2.m3.c
+>m2.m3.c : typeof m2.m3.c
+>m2.m3 : typeof m2.m3
+>m2 : typeof m2
+>m3 : typeof m2.m3
+>c : typeof m2.m3.c
+
+/** module comment of m3.m4.m5*/
+module m3.m4.m5 {
+>m3 : m3
+>m4 : m3.m4
+>m5 : m3.m4.m5
+
+    /** Exported class comment*/
+    export class c {
+>c : c
+    }
+}
+new m3.m4.m5.c();
+>new m3.m4.m5.c() : m3.m4.m5.c
+>m3.m4.m5.c : typeof m3.m4.m5.c
+>m3.m4.m5 : typeof m3.m4.m5
+>m3.m4 : typeof m3.m4
+>m3 : typeof m3
+>m4 : typeof m3.m4
+>m5 : typeof m3.m4.m5
+>c : typeof m3.m4.m5.c
+
+/** module comment of m4.m5.m6*/
+module m4.m5.m6 {
+>m4 : m4
+>m5 : m4.m5
+>m6 : m4.m5.m6
+
+    export module m7 {
+>m7 : m7
+
+        /** Exported class comment*/
+        export class c {
+>c : c
+        }
+    }
+}
+new m4.m5.m6.m7.c();
+>new m4.m5.m6.m7.c() : m4.m5.m6.m7.c
+>m4.m5.m6.m7.c : typeof m4.m5.m6.m7.c
+>m4.m5.m6.m7 : typeof m4.m5.m6.m7
+>m4.m5.m6 : typeof m4.m5.m6
+>m4.m5 : typeof m4.m5
+>m4 : typeof m4
+>m5 : typeof m4.m5
+>m6 : typeof m4.m5.m6
+>m7 : typeof m4.m5.m6.m7
+>c : typeof m4.m5.m6.m7.c
+
+/** module comment of m5.m6.m7*/
+module m5.m6.m7 {
+>m5 : m5
+>m6 : m5.m6
+>m7 : m5.m6.m7
+
+    /** module m8 comment*/
+    export module m8 {
+>m8 : m8
+
+        /** Exported class comment*/
+        export class c {
+>c : c
+        }
+    }
+}
+new m5.m6.m7.m8.c();
+>new m5.m6.m7.m8.c() : m5.m6.m7.m8.c
+>m5.m6.m7.m8.c : typeof m5.m6.m7.m8.c
+>m5.m6.m7.m8 : typeof m5.m6.m7.m8
+>m5.m6.m7 : typeof m5.m6.m7
+>m5.m6 : typeof m5.m6
+>m5 : typeof m5
+>m6 : typeof m5.m6
+>m7 : typeof m5.m6.m7
+>m8 : typeof m5.m6.m7.m8
+>c : typeof m5.m6.m7.m8.c
+
+module m6.m7 {
+>m6 : m6
+>m7 : m6.m7
+
+    export module m8 {
+>m8 : m8
+
+        /** Exported class comment*/
+        export class c {
+>c : c
+        }
+    }
+}
+new m6.m7.m8.c();
+>new m6.m7.m8.c() : m6.m7.m8.c
+>m6.m7.m8.c : typeof m6.m7.m8.c
+>m6.m7.m8 : typeof m6.m7.m8
+>m6.m7 : typeof m6.m7
+>m6 : typeof m6
+>m7 : typeof m6.m7
+>m8 : typeof m6.m7.m8
+>c : typeof m6.m7.m8.c
+
+module m7.m8 {
+>m7 : m7
+>m8 : m7.m8
+
+    /** module m9 comment*/
+    export module m9 {
+>m9 : m9
+
+        /** Exported class comment*/
+        export class c {
+>c : c
+        }
+
+        /** class d */
+        class d {
+>d : d
+        }
+
+        // class e
+        export class e {
+>e : e
+        }
+    }
+}
+new m7.m8.m9.c();
+>new m7.m8.m9.c() : m7.m8.m9.c
+>m7.m8.m9.c : typeof m7.m8.m9.c
+>m7.m8.m9 : typeof m7.m8.m9
+>m7.m8 : typeof m7.m8
+>m7 : typeof m7
+>m8 : typeof m7.m8
+>m9 : typeof m7.m8.m9
+>c : typeof m7.m8.m9.c
+

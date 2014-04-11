@@ -1,3 +1,26 @@
+//// [consumer.ts]
+import iString = require('./expString');
+var v1: string = iString;
+
+import iNumber = require('./expNumber');
+var v2: number = iNumber;
+
+import iBoolean = require('./expBoolean');
+var v3: boolean = iBoolean;
+
+import iArray = require('./expArray');
+var v4: Array<number> = iArray;
+
+import iObject = require('./expObject');
+var v5: Object = iObject;
+
+import iAny = require('./expAny');
+var v6 = iAny;
+
+import iGeneric = require('./expGeneric');
+var v7: {<x>(p1: x): x} = iGeneric;
+
+
 //// [expString.js]
 var x = "test";
 module.exports = x;

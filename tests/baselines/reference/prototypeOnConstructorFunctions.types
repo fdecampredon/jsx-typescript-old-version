@@ -1,15 +1,26 @@
 === tests/cases/compiler/prototypeOnConstructorFunctions.ts ===
-Line 0 col 10 IdentifierName "I1" = I1
-Line 1 col 0 IdentifierName "const" = new(options?: any, element?: any) => any
-Line 1 col 16 IdentifierName "options" = any
-Line 1 col 26 IdentifierName "element" = any
-Line 5 col 4 IdentifierName "i" = I1
-Line 5 col 7 IdentifierName "I1" = I1
-Line 6 col 0 AssignmentExpression "i.const.prototype.prop = "yo"" = string
-Line 6 col 0 MemberAccessExpression "i.const.prototype.prop" = any
-Line 6 col 0 MemberAccessExpression "i.const.prototype" = any
-Line 6 col 0 MemberAccessExpression "i.const" = new(options?: any, element?: any) => any
-Line 6 col 0 IdentifierName "i" = I1
-Line 8 col 2 IdentifierName "const" = new(options?: any, element?: any) => any
-Line 8 col 8 IdentifierName "prototype" = any
-Line 8 col 18 IdentifierName "prop" = any
+interface I1 {
+>I1 : I1
+
+    const: new (options?, element?) => any;
+>const : new(options?: any, element?: any) => any
+>options : any
+>element : any
+}
+
+
+var i: I1;
+>i : I1
+>I1 : I1
+
+>i.const.prototype.prop = "yo" : string
+>i.const.prototype.prop : any
+>i.const.prototype : any
+>i.const : new(options?: any, element?: any) => any
+>i : I1
+
+i.const.prototype.prop = "yo";
+>const : new(options?: any, element?: any) => any
+>prototype : any
+>prop : any
+

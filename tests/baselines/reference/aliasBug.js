@@ -1,3 +1,4 @@
+//// [aliasBug.js]
 var foo;
 (function (foo) {
     var Provide = (function () {

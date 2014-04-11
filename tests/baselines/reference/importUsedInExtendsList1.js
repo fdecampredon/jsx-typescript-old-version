@@ -1,3 +1,11 @@
+//// [importUsedInExtendsList1_1.ts]
+///<reference path='importUsedInExtendsList1_require.ts'/>
+import foo = require('importUsedInExtendsList1_require');
+class Sub extends foo.Super { }
+var s: Sub;
+var r: string = s.foo;
+
+
 //// [importUsedInExtendsList1_require.js]
 var Super = (function () {
     function Super() {

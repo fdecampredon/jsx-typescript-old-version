@@ -1,3 +1,4 @@
+//// [arithAssignTyping.js]
 var f = (function () {
     function f() {
     }

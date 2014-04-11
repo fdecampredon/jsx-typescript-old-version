@@ -1,3 +1,4 @@
+//// [assignmentToReferenceTypes.js]
 // Should all be allowed
 M = null;
 

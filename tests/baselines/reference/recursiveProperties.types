@@ -1,14 +1,23 @@
 === tests/cases/compiler/recursiveProperties.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 1 col 8 IdentifierName "testProp" = any
-Line 1 col 28 MemberAccessExpression "this.testProp" = any
-Line 1 col 28 ThisKeyword "this" = A
-Line 1 col 33 IdentifierName "testProp" = any
-Line 4 col 6 IdentifierName "B" = B
-Line 5 col 8 IdentifierName "testProp" = string
-Line 5 col 17 IdentifierName "value" = string
-Line 5 col 33 AssignmentExpression "this.testProp = value" = string
-Line 5 col 33 MemberAccessExpression "this.testProp" = string
-Line 5 col 33 ThisKeyword "this" = B
-Line 5 col 38 IdentifierName "testProp" = string
-Line 5 col 49 IdentifierName "value" = string
+class A {
+>A : A
+
+    get testProp() { return this.testProp; }
+>testProp : any
+>this.testProp : any
+>this : A
+>testProp : any
+}
+
+class B {
+>B : B
+
+    set testProp(value:string) { this.testProp = value; }
+>testProp : string
+>value : string
+>this.testProp = value : string
+>this.testProp : string
+>this : B
+>testProp : string
+>value : string
+}

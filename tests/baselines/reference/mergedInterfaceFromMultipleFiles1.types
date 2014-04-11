@@ -1,36 +1,63 @@
 === tests/cases/compiler/mergedInterfaceFromMultipleFiles1_1.ts ===
-Line 2 col 10 IdentifierName "D" = D
-Line 2 col 14 IdentifierName "bar" = () => number
-Line 4 col 10 IdentifierName "C" = C
-Line 4 col 20 IdentifierName "D" = D
-Line 5 col 0 IdentifierName "b" = () => Date
-Line 5 col 6 IdentifierName "Date" = Date
-Line 8 col 4 IdentifierName "c" = C
-Line 8 col 6 IdentifierName "C" = C
-Line 9 col 4 IdentifierName "a" = string
-Line 9 col 16 InvocationExpression "c.foo()" = string
-Line 9 col 16 MemberAccessExpression "c.foo" = () => string
-Line 9 col 16 IdentifierName "c" = C
-Line 9 col 18 IdentifierName "foo" = () => string
-Line 10 col 4 IdentifierName "b" = number
-Line 10 col 16 InvocationExpression "c.bar()" = number
-Line 10 col 16 MemberAccessExpression "c.bar" = () => number
-Line 10 col 16 IdentifierName "c" = C
-Line 10 col 18 IdentifierName "bar" = () => number
-Line 11 col 4 IdentifierName "d" = number
-Line 11 col 16 InvocationExpression "c.a()" = number
-Line 11 col 16 MemberAccessExpression "c.a" = () => number
-Line 11 col 16 IdentifierName "c" = C
-Line 11 col 18 IdentifierName "a" = () => number
-Line 12 col 4 IdentifierName "e" = Date
-Line 12 col 7 IdentifierName "Date" = Date
-Line 12 col 14 InvocationExpression "c.b()" = Date
-Line 12 col 14 MemberAccessExpression "c.b" = () => Date
-Line 12 col 14 IdentifierName "c" = C
-Line 12 col 16 IdentifierName "b" = () => Date
+/// <reference path='mergedInterfaceFromMultipleFiles1_0.ts'/>
+
+interface D { bar(): number; }
+>D : D
+>bar : () => number
+
+interface C extends D {
+>C : C
+>D : D
+
+	b(): Date;
+>b : () => Date
+>Date : Date
+}
+
+var c:C;
+>c : C
+>C : C
+
+var a: string = c.foo();
+>a : string
+>c.foo() : string
+>c.foo : () => string
+>c : C
+>foo : () => string
+
+var b: number = c.bar();
+>b : number
+>c.bar() : number
+>c.bar : () => number
+>c : C
+>bar : () => number
+
+var d: number = c.a();
+>d : number
+>c.a() : number
+>c.a : () => number
+>c : C
+>a : () => number
+
+var e: Date = c.b();
+>e : Date
+>Date : Date
+>c.b() : Date
+>c.b : () => Date
+>c : C
+>b : () => Date
+
 === tests/cases/compiler/mergedInterfaceFromMultipleFiles1_0.ts ===
-Line 1 col 10 IdentifierName "I" = I
-Line 1 col 14 IdentifierName "foo" = () => string
-Line 3 col 10 IdentifierName "C" = C
-Line 3 col 20 IdentifierName "I" = I
-Line 4 col 0 IdentifierName "a" = () => number
+
+interface I { foo(): string; }
+>I : I
+>foo : () => string
+
+interface C extends I {
+>C : C
+>I : I
+
+	a(): number;
+>a : () => number
+}
+

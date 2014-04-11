@@ -1,6 +1,8 @@
 === tests/cases/compiler/invalidSplice.ts ===
-Line 0 col 4 IdentifierName "arr" = any[]
-Line 0 col 10 InvocationExpression "[].splice(0,3,4,5)" = any[]
-Line 0 col 10 MemberAccessExpression "[].splice" = { (start: number): any[]; (start: number, deleteCount: number, ...items: any[]): any[]; }
-Line 0 col 10 ArrayLiteralExpression "[]" = any[]
-Line 0 col 13 IdentifierName "splice" = { (start: number): any[]; (start: number, deleteCount: number, ...items: any[]): any[]; }
+var arr = [].splice(0,3,4,5);
+>arr : any[]
+>[].splice(0,3,4,5) : any[]
+>[].splice : { (start: number): any[]; (start: number, deleteCount: number, ...items: any[]): any[]; }
+>[] : any[]
+>splice : { (start: number): any[]; (start: number, deleteCount: number, ...items: any[]): any[]; }
+

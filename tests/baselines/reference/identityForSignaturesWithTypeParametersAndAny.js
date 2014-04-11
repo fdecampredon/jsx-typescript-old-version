@@ -1,3 +1,4 @@
+//// [identityForSignaturesWithTypeParametersAndAny.js]
 var f;
 var f;
 

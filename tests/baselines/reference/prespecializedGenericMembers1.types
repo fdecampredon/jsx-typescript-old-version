@@ -1,24 +1,50 @@
 === tests/cases/compiler/prespecializedGenericMembers1.ts ===
-Line 0 col 17 IdentifierName "IKitty" = IKitty
-Line 4 col 13 IdentifierName "Cat" = Cat<CatType>
-Line 4 col 17 IdentifierName "CatType" = CatType
-Line 4 col 33 IdentifierName "IKitty" = IKitty
-Line 10 col 13 IdentifierName "CatBag" = CatBag
-Line 11 col 16 IdentifierName "cats" = { barry: Cat<IKitty>; }
-Line 11 col 24 IdentifierName "barry" = Cat<IKitty>
-Line 11 col 31 IdentifierName "Cat" = Cat<CatType>
-Line 11 col 35 IdentifierName "IKitty" = IKitty
-Line 15 col 4 IdentifierName "cat" = Cat<IKitty>
-Line 15 col 10 ObjectCreationExpression "new Cat<IKitty>()" = Cat<IKitty>
-Line 15 col 14 IdentifierName "Cat" = typeof Cat
-Line 15 col 18 IdentifierName "IKitty" = IKitty
-Line 16 col 4 IdentifierName "catThing" = { barry: Cat<IKitty>; }
-Line 16 col 15 ObjectLiteralExpression "{
+export interface IKitty {
+>IKitty : IKitty
+
+    }
+
+export class Cat<CatType extends IKitty> {
+>Cat : Cat<CatType>
+>CatType : CatType
+>IKitty : IKitty
+
+    constructor() {
+    
+    }
+}
+
+export class CatBag {
+>CatBag : CatBag
+
+    constructor(cats: { barry: Cat<IKitty>; }) {
+>cats : { barry: Cat<IKitty>; }
+>barry : Cat<IKitty>
+>Cat : Cat<CatType>
+>IKitty : IKitty
+        
+    }
+}
+var cat = new Cat<IKitty>();
+>cat : Cat<IKitty>
+>new Cat<IKitty>() : Cat<IKitty>
+>Cat : typeof Cat
+>IKitty : IKitty
+
+var catThing = {
+>catThing : { barry: Cat<IKitty>; }
+>{
     barry: cat
-}" = { barry: Cat<IKitty>; }
-Line 17 col 0 IdentifierName "barry" = Cat<IKitty>
-Line 17 col 11 IdentifierName "cat" = Cat<IKitty>
-Line 19 col 4 IdentifierName "catBag" = CatBag
-Line 19 col 13 ObjectCreationExpression "new CatBag(catThing)" = CatBag
-Line 19 col 17 IdentifierName "CatBag" = typeof CatBag
-Line 19 col 24 IdentifierName "catThing" = { barry: Cat<IKitty>; }
+} : { barry: Cat<IKitty>; }
+
+    barry: cat
+>barry : Cat<IKitty>
+>cat : Cat<IKitty>
+
+};
+var catBag = new CatBag(catThing);
+>catBag : CatBag
+>new CatBag(catThing) : CatBag
+>CatBag : typeof CatBag
+>catThing : { barry: Cat<IKitty>; }
+
