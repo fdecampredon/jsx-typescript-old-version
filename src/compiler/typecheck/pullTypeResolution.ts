@@ -2153,7 +2153,7 @@ module TypeScript {
 
                 this.checkSymbolPrivacy(importDeclSymbol, containerSymbol, (symbol: PullSymbol) => {
                     var messageCode = DiagnosticCode.Exported_import_declaration_0_is_assigned_container_that_is_or_is_using_inaccessible_module_1;
-                    var messageArguments = [importDeclSymbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null), symbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null, /*skipTypeParametersInName*/ false, /*useContraintInName*/false, /*skipInternalAliasName*/true)];
+                    var messageArguments = [importDeclSymbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null), symbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null, /*skipTypeParametersInName*/ false, /*useConstraintInName*/false, /*skipInternalAliasName*/true)];
                     context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(importStatementAST, messageCode, messageArguments));
                 });
 
@@ -2163,7 +2163,7 @@ module TypeScript {
                             DiagnosticCode.Exported_import_declaration_0_is_assigned_type_that_is_using_inaccessible_module_1 :
                             DiagnosticCode.Exported_import_declaration_0_is_assigned_type_that_has_or_is_using_private_type_1;
 
-                        var messageArguments = [importDeclSymbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null), symbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null, /*skipTypeParametersInName*/ false, /*useContraintInName*/false, /*skipInternalAliasName*/true)];
+                        var messageArguments = [importDeclSymbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null), symbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null, /*skipTypeParametersInName*/ false, /*useConstraintInName*/false, /*skipInternalAliasName*/true)];
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(importStatementAST, messageCode, messageArguments));
                     });
                 }
@@ -2173,7 +2173,7 @@ module TypeScript {
                         var messageCode = symbol.isContainer() && !(<PullTypeSymbol>symbol).isEnum() ?
                             DiagnosticCode.Exported_import_declaration_0_is_assigned_value_with_type_that_is_using_inaccessible_module_1 :
                             DiagnosticCode.Exported_import_declaration_0_is_assigned_value_with_type_that_has_or_is_using_private_type_1;
-                        var messageArguments = [importDeclSymbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null), symbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null, /*skipTypeParametersInName*/ false, /*useContraintInName*/false, /*skipInternalAliasName*/true)];
+                        var messageArguments = [importDeclSymbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null), symbol.getScopedName(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null, /*skipTypeParametersInName*/ false, /*useConstraintInName*/false, /*skipInternalAliasName*/true)];
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(importStatementAST, messageCode, messageArguments));
                     });
                 }
