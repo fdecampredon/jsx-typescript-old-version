@@ -34,7 +34,7 @@ module TypeScript.Services {
         }
 
         public visitInterfaceDeclaration(node: TypeScript.InterfaceDeclarationSyntax): void {
-            this.addOutlineRange(node, node.body, node.body);
+            this.addOutlineRange(node, node.body.openBraceToken, node.body.closeBraceToken);
             super.visitInterfaceDeclaration(node);
         }
 
