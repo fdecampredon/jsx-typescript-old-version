@@ -88,6 +88,9 @@ describe("testDocumentRetrievalAndUpdate", () => {
             },
             getParentDirectory(path: string): string {
                 throw TypeScript.Errors.notYetImplemented();
+            },
+            getCancellationToken(): TypeScript.ICancellationToken {
+                return TypeScript.CancellationToken.None;
             }
         }
     }

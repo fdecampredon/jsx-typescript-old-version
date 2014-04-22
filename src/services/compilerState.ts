@@ -257,7 +257,7 @@ module TypeScript.Services {
         // A cache of all the information about the files on the host side.
         private hostCache: HostCache = null;
 
-        constructor(private host: ILanguageServiceHost, private documentRegistry: DocumentRegistry, private cancellationToken: CancellationToken) {
+        constructor(private host: ILanguageServiceHost, private documentRegistry: IDocumentRegistry, private cancellationToken: CancellationToken) {
             this.logger = this.host;
         }
 
