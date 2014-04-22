@@ -127,6 +127,30 @@ module TypeScript {
         }
     }
 
+    export interface ICancellationToken {
+        isCancellationRequested(): boolean;
+    }
+
+    export class OperationCanceledException { }
+
+    export class CancellationToken implements ICancellationToken {
+
+        public static None: CancellationToken = new CancellationToken(null)
+
+        constructor(private cancellationToken: ICancellationToken) {
+        }
+
+        public isCancellationRequested() {
+            return this.cancellationToken && this.cancellationToken.isCancellationRequested();
+        }
+
+        public throwIfCancellationRequested(): void {
+            if (this.isCancellationRequested()) {
+                throw new OperationCanceledException();
+            }
+        }
+    }
+
     export class TypeScriptCompiler {
         private semanticInfoChain: SemanticInfoChain = null;
 

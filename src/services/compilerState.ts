@@ -257,7 +257,7 @@ module TypeScript.Services {
         // A cache of all the information about the files on the host side.
         private hostCache: HostCache = null;
 
-        constructor(private host: ILanguageServiceHost) {
+        constructor(private host: ILanguageServiceHost, private cancellationToken: CancellationToken) {
             this.logger = this.host;
         }
 
@@ -272,8 +272,8 @@ module TypeScript.Services {
             this.hostCache = new HostCache(this.host);
 
             var compilationSettings = this.hostCache.compilationSettings();
-
-                // If we don't have a compiler, then create a new one.
+            
+            // If we don't have a compiler, then create a new one.
             if (this.compiler === null) {
                 this.compiler = new TypeScript.TypeScriptCompiler(this.logger, compilationSettings);
             }

@@ -54,6 +54,7 @@ module TypeScript.Services {
         getParentDirectory(path: string): string;
         getDiagnosticsObject(): TypeScript.Services.ILanguageServicesDiagnostics;
         getLocalizedDiagnosticMessages(): string;
+        getCancellationToken(): TypeScript.ICancellationToken
     }
 
     //
@@ -249,6 +250,10 @@ module TypeScript.Services {
             }
         }
 
+        public getCancellationToken(): ICancellationToken {
+            return this.shimHost.getCancellationToken();
+        }
+
         // IReferenceResolverHost methods
         public resolveRelativePath(path: string, directory: string): string {
             return this.shimHost.resolveRelativePath(path, directory);
@@ -289,6 +294,9 @@ module TypeScript.Services {
             return JSON.stringify({ result: result });
         }
         catch (err) {
+            if (err instanceof OperationCanceledException) {
+                return JSON.stringify({ cancelled: true });
+            }
             TypeScript.Services.logInternalError(logger, err);
             err.description = actionDescription;
             return JSON.stringify({ error: err });

@@ -1589,6 +1589,10 @@ module Harness {
             return ""; // i.e. default settings
         }
 
+        public getCancellationToken(): TypeScript.ICancellationToken {
+            return TypeScript.CancellationToken.None;
+        }
+
         public getScriptFileNames(): string {
             return JSON.stringify(this.fileNameToScript.getAllKeys());
         }
