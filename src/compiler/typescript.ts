@@ -232,6 +232,10 @@ module TypeScript {
             var entry = bucket.lookup(fileName);
             Debug.assert(entry);
 
+            if (entry.document.isOpen === isOpen && entry.document.version === version) {
+                return entry.document;
+            }
+
             entry.document = entry.document.update(scriptSnapshot, version, isOpen, textChangeRange);
             return entry.document;
         }

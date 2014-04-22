@@ -295,12 +295,8 @@ module TypeScript.Services {
 
                 var fileName = compilerFileNames[i];
 
-                var fileIsNotInHostCache = !this.hostCache.contains(fileName);
-                if (fileIsNotInHostCache) {
+                if (!this.hostCache.contains(fileName) || changesInCompilationSettingsAffectSyntax) {
                     this.compiler.removeFile(fileName);
-                }
-
-                if (fileIsNotInHostCache || changesInCompilationSettingsAffectSyntax) {
                     this.documentRegistry.releaseDocument(fileName, oldSettings, this.host.getHostIdentifier());
                 }
             }

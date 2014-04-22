@@ -331,6 +331,8 @@ if (runners.length === 0) {
         runners.push(new CompilerBaselineRunner(CompilerTestType.Conformance));
         runners.push(new CompilerBaselineRunner(CompilerTestType.Regressions));
         runners.push(new UnitTestRunner(UnittestTestType.Compiler));
+        runners.push(new UnitTestRunner(UnittestTestType.LanguageService));
+
         runners.push(new ProjectRunner());
 
         // language services
