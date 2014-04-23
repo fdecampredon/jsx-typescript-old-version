@@ -130,6 +130,49 @@ module FourSlash {
 
     export var currentTestState: TestState = null;
 
+    export class TestCancellationToken implements TypeScript.ICancellationToken {
+        // 0 - cancelled
+        // >0 - not cancelled 
+        // <0 - not cancelled and value denotes number of isCancellationRequested after which token become cancelled
+        private static NotCancelled: number = -1;
+        private numberOfCallsBeforeCancellation: number = TestCancellationToken.NotCancelled;
+        public isCancellationRequested(): boolean {
+
+            if (this.numberOfCallsBeforeCancellation < 0) {
+                return false;
+            }
+
+            if (this.numberOfCallsBeforeCancellation > 0) {
+                this.numberOfCallsBeforeCancellation--;
+                return false;
+            }
+
+            return true;
+        }
+
+        public setCancelled(numberOfCalls: number = 0): void {
+            TypeScript.Debug.assert(numberOfCalls >= 0);
+            this.numberOfCallsBeforeCancellation = numberOfCalls;
+        }
+
+        public resetCancelled(): void {
+            this.numberOfCallsBeforeCancellation = TestCancellationToken.NotCancelled;
+        }
+    }
+
+    export function verifyOperationIsCancelled(f: () => void) {
+        try {
+            f();
+        }
+        catch (e) {
+            if (e instanceof TypeScript.OperationCanceledException) {
+                return;
+            }
+        }
+
+        throw new Error("Operation should be cancelled");
+    }
+
     export class TestState {
         // Language service instance
         public languageServiceShimHost: Harness.TypeScriptLS = null;
@@ -150,6 +193,8 @@ module FourSlash {
 
         public formatCodeOptions: TypeScript.Services.FormatCodeOptions = null;
 
+        public cancellationToken: TestCancellationToken;
+
         public editValidation = IncrementalEditValidation.Complete;
         public typingFidelity = TypingFidelity.Low;
 
@@ -158,7 +203,8 @@ module FourSlash {
 
         constructor(public testData: FourSlashData) {
             // Initialize the language service with all the scripts
-            this.languageServiceShimHost = new Harness.TypeScriptLS();
+            this.cancellationToken = new TestCancellationToken();
+            this.languageServiceShimHost = new Harness.TypeScriptLS(this.cancellationToken);
 
             var harnessCompiler = Harness.Compiler.getCompiler(Harness.Compiler.CompilerInstance.RunTime);
             var inputFiles: { unitName: string; content: string }[] = [];
