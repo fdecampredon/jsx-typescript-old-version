@@ -60,6 +60,25 @@ module TypeScript.Services {
                     }
                 }
 
+                // check if we are dealing with the implementation of interface method or a method override
+                if (firstSymbol.name === secondSymbol.name) {
+                    // at this point firstSymbol.kind === secondSymbol.kind so we can pick any of those
+                    switch (firstSymbol.kind) {
+                        case PullElementKind.Property:
+                        case PullElementKind.Method:
+                        case PullElementKind.GetAccessor:
+                        case PullElementKind.SetAccessor:
+                            // these kinds can only be defined in types
+                            var t1 = <PullTypeSymbol>firstSymbol.getContainer();
+                            var t2 = <PullTypeSymbol>secondSymbol.getContainer();
+                            t1._resolveDeclaredSymbol();
+                            t2._resolveDeclaredSymbol();
+
+                            return t1.hasBase(t2) || t2.hasBase(t1);
+                            break;
+                    }
+                }
+
                 return false;
             }
             else {
