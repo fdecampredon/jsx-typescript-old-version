@@ -85,7 +85,7 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
             <any>{ name: 'equalsToken', isToken: true },
             <any>{ name: 'moduleReference', type: 'IModuleReferenceSyntax' },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ],
         isTypeScriptSpecific: true
     },
@@ -97,7 +97,7 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'exportKeyword', isToken: true },
             <any>{ name: 'equalsToken', isToken: true },
             <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ],
         isTypeScriptSpecific: true
     },
@@ -176,7 +176,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken', isTypeScriptSpecific: true },
             <any>{ name: 'variableDeclaration', type: 'VariableDeclarationSyntax' },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ]
     },
     <any>{
@@ -584,7 +584,7 @@ var definitions:ITypeDefinition[] = [
         interfaces: ['IStatementSyntax'],
         children: [
             <any>{ name: 'expression', type: 'IExpressionSyntax' },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ]
     },
     <any>{
@@ -646,7 +646,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
             <any>{ name: 'variableDeclarator', type: 'VariableDeclaratorSyntax' },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ],
         isTypeScriptSpecific: true
     },
@@ -657,7 +657,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
             <any>{ name: 'indexSignature', type: 'IndexSignatureSyntax' },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ],
         isTypeScriptSpecific: true
     },
@@ -668,7 +668,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'throwKeyword', isToken: true },
             <any>{ name: 'expression', type: 'IExpressionSyntax' },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ]
     },
     <any>{
@@ -678,7 +678,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'returnKeyword', isToken: true },
             <any>{ name: 'expression', type: 'IExpressionSyntax', isOptional: true },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ]
     },
     <any>{
@@ -733,7 +733,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'breakKeyword', isToken: true },
             <any>{ name: 'identifier', isToken: true, isOptional: true, tokenKinds: ['IdentifierName'] },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ]
     },
     <any>{
@@ -743,7 +743,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'continueKeyword', isToken: true },
             <any>{ name: 'identifier', isToken: true, isOptional: true, tokenKinds: ['IdentifierName'] },
-            <any>{ name: 'semicolonToken', isToken: true }
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ]
     },
     <any>{
@@ -931,7 +931,7 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'openParenToken', isToken: true },
             <any>{ name: 'condition', type: 'IExpressionSyntax' },
             <any>{ name: 'closeParenToken', isToken: true },
-            <any>{ name: 'semicolonToken', isToken: true }]
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }]
     },
     <any>{
         name: 'TypeOfExpressionSyntax',
@@ -963,7 +963,7 @@ var definitions:ITypeDefinition[] = [
         interfaces: ['IStatementSyntax'],
         children: [
             <any>{ name: 'debuggerKeyword', isToken: true },
-            <any>{ name: 'semicolonToken', isToken: true }]
+            <any>{ name: 'semicolonToken', isToken: true, isOptional: true }]
     }];
 
 //function endsWith(string: string, value: string): boolean {

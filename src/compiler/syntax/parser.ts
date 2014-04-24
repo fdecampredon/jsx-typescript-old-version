@@ -1378,22 +1378,11 @@ module TypeScript.Parser {
                 return this.eatToken(SyntaxKind.SemicolonToken);
             }
 
-            // Check if an automatic semicolon could go here.  If so, synthesize one.  However, if the
-            // user has the option set to error on automatic semicolons, then add an error to that
-            // token as well.
+            // Check if an automatic semicolon could go here.  If so, then there's no problem and
+            // we can proceed without error.  Return 'null' as there's no actual token for this 
+            // position. 
             if (this.canEatAutomaticSemicolon(allowWithoutNewline)) {
-                // Note: the missing token needs to go between real tokens.  So we place it at the 
-                // fullstart of the current token.
-                var semicolonToken = Syntax.emptyToken(SyntaxKind.SemicolonToken);
-
-                if (!this.parseOptions.allowAutomaticSemicolonInsertion()) {
-                    // Report the missing semicolon at the end of the *previous* token.
-
-                    this.addDiagnostic(
-                        new Diagnostic(this.fileName, this.lineMap, this.previousTokenEnd(), 0, DiagnosticCode.Automatic_semicolon_insertion_not_allowed, null));
-                }
-
-                return semicolonToken;
+                return null;
             }
 
             // No semicolon could be consumed here at all.  Just call the standard eating function
@@ -5295,7 +5284,8 @@ module TypeScript.Parser {
                 // consume the '}' just fine.  So ASI doesn't apply.
 
                 if (allowAutomaticSemicolonInsertion && this.canEatAutomaticSemicolon(/*allowWithoutNewline:*/ false)) {
-                    items.push(this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
+                    var semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false) || Syntax.emptyToken(SyntaxKind.SemicolonToken);
+                    items.push(semicolonToken);
                     // Debug.assert(items.length % 2 === 0);
                     continue;
                 }

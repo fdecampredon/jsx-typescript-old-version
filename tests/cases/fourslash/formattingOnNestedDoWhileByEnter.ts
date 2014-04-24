@@ -12,9 +12,7 @@ verify.currentLineContentIs("    {");
 goTo.marker("2");
 verify.currentLineContentIs("do{");
 goTo.marker("3");
-//bug 718362 expected result : "    do" , actual result : "do"
-//verify.currentLineContentIs("    do");
-verify.currentLineContentIs("do");
+verify.currentLineContentIs("    do");
 goTo.marker("4");
 verify.currentLineContentIs("do{");
 goTo.marker("5");

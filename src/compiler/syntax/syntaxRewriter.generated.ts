@@ -86,7 +86,7 @@ module TypeScript {
                 this.visitToken(node.identifier),
                 this.visitToken(node.equalsToken),
                 <IModuleReferenceSyntax>this.visitNodeOrToken(node.moduleReference),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitExportAssignment(node: ExportAssignmentSyntax): any {
@@ -94,7 +94,7 @@ module TypeScript {
                 this.visitToken(node.exportKeyword),
                 this.visitToken(node.equalsToken),
                 this.visitToken(node.identifier),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitClassDeclaration(node: ClassDeclarationSyntax): any {
@@ -151,7 +151,7 @@ module TypeScript {
             return node.update(
                 this.visitList(node.modifiers),
                 <VariableDeclarationSyntax>this.visitNode(node.variableDeclaration),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitVariableDeclaration(node: VariableDeclarationSyntax): any {
@@ -427,7 +427,7 @@ module TypeScript {
         public visitExpressionStatement(node: ExpressionStatementSyntax): any {
             return node.update(
                 <IExpressionSyntax>this.visitNodeOrToken(node.expression),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitConstructorDeclaration(node: ConstructorDeclarationSyntax): any {
@@ -471,28 +471,28 @@ module TypeScript {
             return node.update(
                 this.visitList(node.modifiers),
                 <VariableDeclaratorSyntax>this.visitNode(node.variableDeclarator),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): any {
             return node.update(
                 this.visitList(node.modifiers),
                 <IndexSignatureSyntax>this.visitNode(node.indexSignature),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitThrowStatement(node: ThrowStatementSyntax): any {
             return node.update(
                 this.visitToken(node.throwKeyword),
                 <IExpressionSyntax>this.visitNodeOrToken(node.expression),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitReturnStatement(node: ReturnStatementSyntax): any {
             return node.update(
                 this.visitToken(node.returnKeyword),
                 node.expression === null ? null : <IExpressionSyntax>this.visitNodeOrToken(node.expression),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitObjectCreationExpression(node: ObjectCreationExpressionSyntax): any {
@@ -532,14 +532,14 @@ module TypeScript {
             return node.update(
                 this.visitToken(node.breakKeyword),
                 node.identifier === null ? null : this.visitToken(node.identifier),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitContinueStatement(node: ContinueStatementSyntax): any {
             return node.update(
                 this.visitToken(node.continueKeyword),
                 node.identifier === null ? null : this.visitToken(node.identifier),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitForStatement(node: ForStatementSyntax): any {
@@ -683,7 +683,7 @@ module TypeScript {
                 this.visitToken(node.openParenToken),
                 <IExpressionSyntax>this.visitNodeOrToken(node.condition),
                 this.visitToken(node.closeParenToken),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
         public visitTypeOfExpression(node: TypeOfExpressionSyntax): any {
@@ -707,7 +707,7 @@ module TypeScript {
         public visitDebuggerStatement(node: DebuggerStatementSyntax): any {
             return node.update(
                 this.visitToken(node.debuggerKeyword),
-                this.visitToken(node.semicolonToken));
+                node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
     }
 }

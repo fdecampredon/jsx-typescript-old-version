@@ -43,7 +43,7 @@ verify.currentLineContentIs("                return e ^ f;");
 goTo.marker("11");
 verify.currentLineContentIs("            }");
 goTo.marker("12");
-verify.currentLineContentIs("}");
+verify.currentLineContentIs("        }");
 goTo.marker("13");
 verify.currentLineContentIs("    }");
 goTo.marker("14");
