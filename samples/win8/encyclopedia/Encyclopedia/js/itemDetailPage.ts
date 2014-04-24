@@ -1,7 +1,3 @@
-///<reference path='win.ts'/>
-///<reference path='topic.ts'/>
-///<reference path='data.ts'/>
-
 module ItemDetailPage {
     "use strict";
 

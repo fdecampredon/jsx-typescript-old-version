@@ -1,6 +1,3 @@
-///<reference path='win.ts'/>
-///<reference path='data.ts'/>
-
 module GroupDetailPage {
     "use strict";
 

@@ -1,6 +1,3 @@
-///<reference path='win.ts'/>
-///<reference path='topic.ts'/> 
-
 module Default {
     "use strict";
 
