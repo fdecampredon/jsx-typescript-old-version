@@ -29,36 +29,36 @@
 //     / \
 //    a   b
 
-var ParserExpressionPrecedence;
+var ParserExpressionPrecedence
 (function(ParserExpressionPrecedence) {
     // Intuitively, commas have the lowest precedence.  "a || b, c" is "(a || b), c", not
     // "a || (b, c)"
-    ParserExpressionPrecedence[ParserExpressionPrecedence.CommaExpressionPrecedence = 1] = "CommaExpressionPrecedence";
+    ParserExpressionPrecedence[ParserExpressionPrecedence.CommaExpressionPrecedence = 1] = "CommaExpressionPrecedence"
 
-    ParserExpressionPrecedence[ParserExpressionPrecedence.AssignmentExpressionPrecedence = 2] = "AssignmentExpressionPrecedence";
+    ParserExpressionPrecedence[ParserExpressionPrecedence.AssignmentExpressionPrecedence = 2] = "AssignmentExpressionPrecedence"
 
-    ParserExpressionPrecedence[ParserExpressionPrecedence.ConditionalExpressionPrecedence = 3] = "ConditionalExpressionPrecedence";
+    ParserExpressionPrecedence[ParserExpressionPrecedence.ConditionalExpressionPrecedence = 3] = "ConditionalExpressionPrecedence"
 
     // REVIEW: Should ArrowFunctions have higher, lower, or the same precedence as ternary?
-    ParserExpressionPrecedence[ParserExpressionPrecedence.ArrowFunctionPrecedence = 4] = "ArrowFunctionPrecedence";
+    ParserExpressionPrecedence[ParserExpressionPrecedence.ArrowFunctionPrecedence = 4] = "ArrowFunctionPrecedence"
 
-    ParserExpressionPrecedence[ParserExpressionPrecedence.LogicalOrExpressionPrecedence = 5] = "LogicalOrExpressionPrecedence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.LogicalAndExpressionPrecedence = 6] = "LogicalAndExpressionPrecedence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.BitwiseOrExpressionPrecedence = 7] = "BitwiseOrExpressionPrecedence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.BitwiseExclusiveOrExpressionPrecedence = 8] = "BitwiseExclusiveOrExpressionPrecedence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.BitwiseAndExpressionPrecedence = 9] = "BitwiseAndExpressionPrecedence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.EqualityExpressionPrecedence = 10] = "EqualityExpressionPrecedence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.RelationalExpressionPrecedence = 11] = "RelationalExpressionPrecedence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.ShiftExpressionPrecdence = 12] = "ShiftExpressionPrecdence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.AdditiveExpressionPrecedence = 13] = "AdditiveExpressionPrecedence";
-    ParserExpressionPrecedence[ParserExpressionPrecedence.MultiplicativeExpressionPrecedence = 14] = "MultiplicativeExpressionPrecedence";
+    ParserExpressionPrecedence[ParserExpressionPrecedence.LogicalOrExpressionPrecedence = 5] = "LogicalOrExpressionPrecedence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.LogicalAndExpressionPrecedence = 6] = "LogicalAndExpressionPrecedence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.BitwiseOrExpressionPrecedence = 7] = "BitwiseOrExpressionPrecedence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.BitwiseExclusiveOrExpressionPrecedence = 8] = "BitwiseExclusiveOrExpressionPrecedence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.BitwiseAndExpressionPrecedence = 9] = "BitwiseAndExpressionPrecedence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.EqualityExpressionPrecedence = 10] = "EqualityExpressionPrecedence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.RelationalExpressionPrecedence = 11] = "RelationalExpressionPrecedence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.ShiftExpressionPrecdence = 12] = "ShiftExpressionPrecdence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.AdditiveExpressionPrecedence = 13] = "AdditiveExpressionPrecedence"
+    ParserExpressionPrecedence[ParserExpressionPrecedence.MultiplicativeExpressionPrecedence = 14] = "MultiplicativeExpressionPrecedence"
 
     // Intuitively, unary expressions have the highest precedence.  After all, if you have:
     //   !foo || bar
     //
     // Then you have "(!foo) || bar", not "!(foo || bar)"
-    ParserExpressionPrecedence[ParserExpressionPrecedence.UnaryExpressionPrecedence = 15] = "UnaryExpressionPrecedence";
-})(ParserExpressionPrecedence||(ParserExpressionPrecedence={}));
+    ParserExpressionPrecedence[ParserExpressionPrecedence.UnaryExpressionPrecedence = 15] = "UnaryExpressionPrecedence"
+})(ParserExpressionPrecedence||(ParserExpressionPrecedence={}))
 
 // The current state of the parser wrt to list parsing.  The way to read these is as:
 // CurrentProduction_SubList.  i.e. "Block_Statements" means "we're parsing a Block, and we're 
@@ -88,30 +88,30 @@ var ParserExpressionPrecedence;
 // If none of the higher up states consider this a stop or start token, then we will simply consume
 // the token and add it to our list of 'skipped tokens'.  We will then repeat the above algorithm
 // until we resynchronize at some point.
-var ParserListParsingState;
+var ParserListParsingState
 (function(ParserListParsingState) {
-    ParserListParsingState[ParserListParsingState.SourceUnit_ModuleElements = 1 << 0] = "SourceUnit_ModuleElements";
-    ParserListParsingState[ParserListParsingState.ClassDeclaration_ClassElements = 1 << 1] = "ClassDeclaration_ClassElements";
-    ParserListParsingState[ParserListParsingState.ModuleDeclaration_ModuleElements = 1 << 2] = "ModuleDeclaration_ModuleElements";
-    ParserListParsingState[ParserListParsingState.SwitchStatement_SwitchClauses = 1 << 3] = "SwitchStatement_SwitchClauses";
-    ParserListParsingState[ParserListParsingState.SwitchClause_Statements = 1 << 4] = "SwitchClause_Statements";
-    ParserListParsingState[ParserListParsingState.Block_Statements = 1 << 5] = "Block_Statements";
-    ParserListParsingState[ParserListParsingState.EnumDeclaration_VariableDeclarators = 1 << 7] = "EnumDeclaration_VariableDeclarators";
-    ParserListParsingState[ParserListParsingState.ObjectType_TypeMembers = 1 << 8] = "ObjectType_TypeMembers";
-    ParserListParsingState[ParserListParsingState.ExtendsOrImplementsClause_TypeNameList = 1 << 9] = "ExtendsOrImplementsClause_TypeNameList";
-    ParserListParsingState[ParserListParsingState.VariableDeclaration_VariableDeclarators_AllowIn = 1 << 10] = "VariableDeclaration_VariableDeclarators_AllowIn";
-    ParserListParsingState[ParserListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn = 1 << 11] = "VariableDeclaration_VariableDeclarators_DisallowIn";
-    ParserListParsingState[ParserListParsingState.ArgumentList_AssignmentExpressions = 1 << 12] = "ArgumentList_AssignmentExpressions";
-    ParserListParsingState[ParserListParsingState.ObjectLiteralExpression_PropertyAssignments = 1 << 13] = "ObjectLiteralExpression_PropertyAssignments";
-    ParserListParsingState[ParserListParsingState.ArrayLiteralExpression_AssignmentExpressions = 1 << 14] = "ArrayLiteralExpression_AssignmentExpressions";
-    ParserListParsingState[ParserListParsingState.ParameterList_Parameters = 1 << 15] = "ParameterList_Parameters";
+    ParserListParsingState[ParserListParsingState.SourceUnit_ModuleElements = 1 << 0] = "SourceUnit_ModuleElements"
+    ParserListParsingState[ParserListParsingState.ClassDeclaration_ClassElements = 1 << 1] = "ClassDeclaration_ClassElements"
+    ParserListParsingState[ParserListParsingState.ModuleDeclaration_ModuleElements = 1 << 2] = "ModuleDeclaration_ModuleElements"
+    ParserListParsingState[ParserListParsingState.SwitchStatement_SwitchClauses = 1 << 3] = "SwitchStatement_SwitchClauses"
+    ParserListParsingState[ParserListParsingState.SwitchClause_Statements = 1 << 4] = "SwitchClause_Statements"
+    ParserListParsingState[ParserListParsingState.Block_Statements = 1 << 5] = "Block_Statements"
+    ParserListParsingState[ParserListParsingState.EnumDeclaration_VariableDeclarators = 1 << 7] = "EnumDeclaration_VariableDeclarators"
+    ParserListParsingState[ParserListParsingState.ObjectType_TypeMembers = 1 << 8] = "ObjectType_TypeMembers"
+    ParserListParsingState[ParserListParsingState.ExtendsOrImplementsClause_TypeNameList = 1 << 9] = "ExtendsOrImplementsClause_TypeNameList"
+    ParserListParsingState[ParserListParsingState.VariableDeclaration_VariableDeclarators_AllowIn = 1 << 10] = "VariableDeclaration_VariableDeclarators_AllowIn"
+    ParserListParsingState[ParserListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn = 1 << 11] = "VariableDeclaration_VariableDeclarators_DisallowIn"
+    ParserListParsingState[ParserListParsingState.ArgumentList_AssignmentExpressions = 1 << 12] = "ArgumentList_AssignmentExpressions"
+    ParserListParsingState[ParserListParsingState.ObjectLiteralExpression_PropertyAssignments = 1 << 13] = "ObjectLiteralExpression_PropertyAssignments"
+    ParserListParsingState[ParserListParsingState.ArrayLiteralExpression_AssignmentExpressions = 1 << 14] = "ArrayLiteralExpression_AssignmentExpressions"
+    ParserListParsingState[ParserListParsingState.ParameterList_Parameters = 1 << 15] = "ParameterList_Parameters"
 
-    ParserListParsingState[ParserListParsingState.FirstListParsingState = SourceUnit_ModuleElements] = "FirstListParsingState";
-    ParserListParsingState[ParserListParsingState.LastListParsingState = ParameterList_Parameters] = "LastListParsingState";
-})(ParserListParsingState||(ParserListParsingState={}));
+    ParserListParsingState[ParserListParsingState.FirstListParsingState = SourceUnit_ModuleElements] = "FirstListParsingState"
+    ParserListParsingState[ParserListParsingState.LastListParsingState = ParameterList_Parameters] = "LastListParsingState"
+})(ParserListParsingState||(ParserListParsingState={}))
 
 var ParserSkippedTokensAdder = (function(_super) {
-    __extends(ParserSkippedTokensAdder, _super);
+    __extends(ParserSkippedTokensAdder, _super)
 
     function ParserSkippedTokensAdder(skippedTokens) {
         _super.call(this);
@@ -125,7 +125,7 @@ var ParserSkippedTokensAdder = (function(_super) {
         }
 
         return _super.prototype.visitNode.call(this, node);
-    };
+    }
 
     ParserSkippedTokensAdder.prototype.visitList = function(list) {
         if (this.skippedTokens.length === 0) {
@@ -133,7 +133,7 @@ var ParserSkippedTokensAdder = (function(_super) {
         }
 
         return _super.prototype.visitList.call(this, list);
-    };
+    }
 
     ParserSkippedTokensAdder.prototype.visitSeparatedList = function(list) {
         if (this.skippedTokens.length === 0) {
@@ -141,7 +141,7 @@ var ParserSkippedTokensAdder = (function(_super) {
         }
 
         return _super.prototype.visitSeparatedList.call(this, list);
-    };
+    }
 
     ParserSkippedTokensAdder.prototype.visitToken = function(token) {
         if (this.skippedTokens.length === 0) {
@@ -198,13 +198,13 @@ var ParserSkippedTokensAdder = (function(_super) {
         }
 
         return result;
-    };
+    }
 
     ParserSkippedTokensAdder.prototype.addTriviaTo = function(list, array) {
         for (var i = 0, n = list.count(); i < n; i++) {
             array.push(list.syntaxTriviaAt(i));
         }
-    };
+    }
 
     ParserSkippedTokensAdder.prototype.addSkippedTokenTo = function(skippedToken, array) {
         Debug.assert(skippedToken.text().length > 0);
@@ -217,12 +217,12 @@ var ParserSkippedTokensAdder = (function(_super) {
 
         // Finally, add the trailing trivia of the skipped token to the trivia array.
         this.addTriviaTo(skippedToken.trailingTrivia(), array);
-    };
+    }
     return ParserSkippedTokensAdder;
-})(SyntaxRewriter);
+})(SyntaxRewriter)
 
 var Parser = (function(_super) {
-    __extends(Parser, _super);
+    __extends(Parser, _super)
 
     function Parser(text,
                     options,
@@ -230,14 +230,14 @@ var Parser = (function(_super) {
                     stringTable,
                     oldTree,
                     changes) {
-        if (typeof languageVersion === "undefined") { languageVersion = LanguageVersion.EcmaScript5; }
-        if (typeof stringTable === "undefined") { stringTable = null; }
-        if (typeof oldTree === "undefined") { oldTree = null; }
-        if (typeof changes === "undefined") { changes = null; }
+        if (typeof languageVersion === "undefined") { languageVersion = LanguageVersion.EcmaScript5 }
+        if (typeof stringTable === "undefined") { stringTable = null }
+        if (typeof oldTree === "undefined") { oldTree = null }
+        if (typeof changes === "undefined") { changes = null }
         _super.call(this, 32, null);
 
         // Parsing options.
-        this.options = null;
+        this.options = null
 
         // Current state of the parser.  If we need to rewind we will store and reset these values as
         // appropriate.
@@ -245,41 +245,41 @@ var Parser = (function(_super) {
         // The current token the parser is examining.  If it is null it needs to be fetched from the 
         // scanner.  Cached because it's accessed so often that even getting it from the sliding window
         // can be expensive.
-        this._currentToken = null;
+        this._currentToken = null
 
         // The previous token to the current token.  Set when we advance to the next token.
-        this.previousToken = null;
+        this.previousToken = null
 
         // The full start position of the current token the parser is pointing at.
-        this.currentTokenFullStart = 0;
+        this.currentTokenFullStart = 0
 
         // The diagnostics we get while scanning.  Note: this never gets rewound when we do a normal
         // rewind.  That's because rewinding doesn't affect the tokens created.  It only affects where
         // in the token stream we're pointing at.  However, it will get modified if we we decide to
         // reparse a / or /= as a regular expression.
-        this.tokenDiagnostics = [];
+        this.tokenDiagnostics = []
 
         // TODO: do we need to store/restore this when speculative parsing?  I don't think so.  The
         // parsing logic already handles storing/restoring this and should work properly even if we're
         // speculative parsing.
-        this.listParsingState = 0;
+        this.listParsingState = 0
 
         // Whether or not we are in strict parsing mode.  All that changes in strict parsing mode is
         // that some tokens that would be considered identifiers may be considered keywords.  When 
         // rewinding, we need to store and restore this as the mode may have changed.
-        this.isInStrictMode = false;
+        this.isInStrictMode = false
 
         // Tokens we've decided to skip because they couldn't fit into the current production.  Any
         // tokens that are skipped when speculative parsing need to removed when rewinding.  To do this
         // we store the count of skipped tokens when we start speculative parsing.  And if we rewind,
         // we restore this to the same count that we started at.
-        this.skippedTokens = [];
+        this.skippedTokens = []
 
         // Diagnostics created when parsing invalid code.  Any diagnosics created when speculative 
         // parsing need to removed when rewinding.  To do this we store the count of diagnostics when 
         // we start speculative parsing.  And if we rewind, we restore this to the same count that we 
         // started at.
-        this.diagnostics = [];
+        this.diagnostics = []
 
         this.scanner = new Scanner(text, languageVersion, stringTable);
 
@@ -289,7 +289,7 @@ var Parser = (function(_super) {
 
     Parser.prototype.isIncremental = function() {
         return this.oldTree !== null;
-    };
+    }
 
     Parser.prototype.storeAdditionalRewindState = function(rewindPoint) {
         rewindPoint.previousToken = this.previousToken;
@@ -297,7 +297,7 @@ var Parser = (function(_super) {
         rewindPoint.isInStrictMode = this.isInStrictMode;
         rewindPoint.diagnosticsCount = this.diagnostics.length;
         rewindPoint.skippedTokensCount = this.skippedTokens.length;
-    };
+    }
 
     Parser.prototype.restoreStateFromRewindPoint = function(rewindPoint) {
         this._currentToken = null;
@@ -306,18 +306,18 @@ var Parser = (function(_super) {
         this.isInStrictMode = rewindPoint.isInStrictMode;
         this.diagnostics.length = rewindPoint.diagnosticsCount;
         this.skippedTokens.length = rewindPoint.skippedTokensCount;
-    };
+    }
 
     Parser.prototype.fetchMoreItems = function(argument, sourceIndex, window, destinationIndex, spaceAvailable) {
         // Assert disabled because it is actually expensive enugh to affect perf.
         // Debug.assert(spaceAvailable > 0);
         window[destinationIndex] = this.scanner.scan(this.tokenDiagnostics, argument);
         return 1;
-    };
+    }
 
     Parser.prototype.currentTokenStart = function() {
         return this.currentTokenFullStart + this.currentToken().leadingTriviaWidth();
-    };
+    }
 
     Parser.prototype.previousTokenStart = function() {
         if (this.previousToken === null) {
@@ -327,7 +327,7 @@ var Parser = (function(_super) {
         return this.currentTokenFullStart -
                this.previousToken.fullWidth() +
                this.previousToken.leadingTriviaWidth();
-    };
+    }
 
     Parser.prototype.previousTokenEnd = function() {
         if (this.previousToken === null) {
@@ -335,7 +335,7 @@ var Parser = (function(_super) {
         }
 
         return this.previousTokenStart() + this.previousToken.width();
-    };
+    }
     
     Parser.prototype.currentToken = function() {
         var result = this._currentToken;
@@ -346,7 +346,7 @@ var Parser = (function(_super) {
         }
 
         return result;
-    };
+    }
 
     Parser.prototype.currentTokenAllowingRegularExpression = function() {
         Debug.assert(this._currentToken === null);
@@ -354,11 +354,11 @@ var Parser = (function(_super) {
         var result = this.currentItem(/*allowRegularExpression:*/ true);
         this._currentToken = result;
         return result;
-    };
+    }
 
     Parser.prototype.peekTokenN = function(n) {
         return this.peekItemN(n);
-    };
+    }
 
     //this method is called very frequently
     //we should keep it simple so that it can be inlined.
@@ -366,7 +366,7 @@ var Parser = (function(_super) {
         var token = this.currentToken();
         this.moveToNextToken();
         return token;
-    };
+    }
 
     Parser.prototype.moveToNextToken = function() {
         this.currentTokenFullStart += this._currentToken.fullWidth();
@@ -374,7 +374,7 @@ var Parser = (function(_super) {
         this._currentToken = null;
 
         this.moveToNextItem();
-    };
+    }
 
     Parser.prototype.canEatAutomaticSemicolon = function(allowWithoutNewLine) {
         var token = this.currentToken();
@@ -399,7 +399,7 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.canEatExplicitOrAutomaticSemicolon = function(allowWithoutNewline) {
         var token = this.currentToken();
@@ -409,7 +409,7 @@ var Parser = (function(_super) {
         }
 
         return this.canEatAutomaticSemicolon(allowWithoutNewline);
-    };
+    }
 
     Parser.prototype.eatExplicitOrAutomaticSemicolon = function(allowWithoutNewline) {
         var token = this.currentToken();
@@ -440,7 +440,7 @@ var Parser = (function(_super) {
         // No semicolon could be consumed here at all.  Just call the standard eating function
         // so we get the token and the error for it.
         return this.eatToken(SyntaxKind.SemicolonToken);
-    };
+    }
 
     //this method is called very frequently
     //we should keep it simple so that it can be inlined.
@@ -456,7 +456,7 @@ var Parser = (function(_super) {
 
         //slow part of EatToken(SyntaxKind kind)
         return this.createMissingToken(kind, SyntaxKind.None, token);
-    };
+    }
 
     // Eats the token if it is there.  Otherwise does nothing.  Will not report errors.
     Parser.prototype.tryEatToken = function(kind) {
@@ -465,7 +465,7 @@ var Parser = (function(_super) {
         }
 
          return null;
-    };
+    }
 
     // Eats the keyword if it is there.  Otherwise does nothing.  Will not report errors.
     Parser.prototype.tryEatKeyword = function(kind) {
@@ -474,7 +474,7 @@ var Parser = (function(_super) {
         }
 
          return null;
-    };
+    }
 
     Parser.prototype.eatKeyword = function(kind) {
         Debug.assert(SyntaxFacts.isTokenKind(kind))
@@ -487,7 +487,7 @@ var Parser = (function(_super) {
 
         //slow part of EatToken(SyntaxKind kind)
         return this.createMissingToken(SyntaxKind.IdentifierNameToken, kind, token);
-    };
+    }
 
     // This method should be called when the grammar calls for on *IdentifierName* and not an
     // *Identifier*.
@@ -499,7 +499,7 @@ var Parser = (function(_super) {
         }
 
         return this.createMissingToken(SyntaxKind.IdentifierNameToken, SyntaxKind.None, token);
-    };
+    }
 
     // This method should be called when the grammar calls for on *Identifier* and not an
     // *IdentifierName*.
@@ -515,11 +515,11 @@ var Parser = (function(_super) {
         }
 
         return this.createMissingToken(SyntaxKind.IdentifierNameToken, SyntaxKind.None, token);
-    };
+    }
 
     Parser.prototype.isIdentifier = function(token) {
         return token.tokenKind === SyntaxKind.IdentifierNameToken && !this.isKeyword(token.keywordKind());
-    };
+    }
 
     Parser.prototype.isKeyword = function(kind) {
         if (SyntaxFacts.isStandardKeyword(kind) ||
@@ -532,7 +532,7 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.createMissingToken = function(expectedKind, expectedKeywordKind, actual) {
         var diagnostic = this.getExpectedTokenDiagnostic(expectedKind, expectedKeywordKind, actual);
@@ -541,7 +541,7 @@ var Parser = (function(_super) {
         // The missing token will be at the full start of the current token.  That way empty tokens
         // will always be between real tokens and not inside an actual token.
         return SyntaxToken.createEmpty(expectedKind, expectedKeywordKind);
-    };
+    }
 
     Parser.prototype.getExpectedTokenDiagnostic = function(expectedKind, expectedKeywordKind, actual) {
         var token = this.currentToken();
@@ -570,7 +570,7 @@ var Parser = (function(_super) {
         }
 
         throw Errors.notYetImplemented();
-    };
+    }
 
     Parser.getPrecedence = function(expressionKind) {
         switch (expressionKind) {
@@ -650,7 +650,7 @@ var Parser = (function(_super) {
         }
 
         throw Errors.invalidOperation();
-    };
+    }
 
     Parser.isDirectivePrologueElement = function(node) {
         if (node.kind() === SyntaxKind.ExpressionStatement) {
@@ -663,7 +663,7 @@ var Parser = (function(_super) {
         }
 
         return false
-    };
+    }
 
     Parser.isUseStrictDirective = function(node) {
         var expressionStatement = node;
@@ -674,7 +674,7 @@ var Parser = (function(_super) {
 
         var text = stringLiteral.text();
         return text === '"use strict"' || text === "'use strict'";
-    };
+    }
 
     Parser.prototype.parseSyntaxTree = function() {
         var sourceUnit = this.parseSourceUnit();
@@ -687,7 +687,7 @@ var Parser = (function(_super) {
         sourceUnit = this.addSkippedTokensTo(sourceUnit);
 
         return new SyntaxTree(sourceUnit, allDiagnostics);
-    };
+    }
     
     Parser.prototype.addSkippedTokensTo = function(sourceUnit) {
         if (this.skippedTokens.length === 0) {
@@ -696,7 +696,7 @@ var Parser = (function(_super) {
         }
 
         return sourceUnit.accept1(new ParserSkippedTokensAdder(this.skippedTokens));
-    };
+    }
 
     Parser.prototype.parseSourceUnit = function() {
         // Note: technically we don't need to save and restore this here.  After all, this the top
@@ -707,7 +707,7 @@ var Parser = (function(_super) {
         this.isInStrictMode = savedIsInStrictMode;
 
         return new SourceUnitSyntax(moduleElements, this.currentToken());
-    };
+    }
 
     Parser.updateStrictModeState = function(parser, items) {
         if (!parser.isInStrictMode) {
@@ -721,7 +721,7 @@ var Parser = (function(_super) {
 
             parser.isInStrictMode = Parser.isUseStrictDirective(items[items.length - 1]);
         }
-    };
+    }
 
     Parser.prototype.isModuleElement = function() {
         return this.isImportDeclaration() ||
@@ -730,7 +730,7 @@ var Parser = (function(_super) {
                this.isClassDeclaration() ||
                this.isEnumDeclaration() ||
                this.isStatement(/*allowFunctionDeclaration:*/ true);
-    };
+    }
 
     Parser.prototype.parseModuleElement = function() {
         if (this.isImportDeclaration()) {
@@ -754,7 +754,7 @@ var Parser = (function(_super) {
         else {
             throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.isImportDeclaration = function() {
         // REVIEW: because 'import' is not a javascript keyword, we need to make sure that this is 
@@ -764,7 +764,7 @@ var Parser = (function(_super) {
         return this.currentToken().keywordKind() === SyntaxKind.ImportKeyword &&
                this.peekTokenN(1).tokenKind === SyntaxKind.IdentifierNameToken &&
                this.peekTokenN(2).tokenKind === SyntaxKind.EqualsToken;
-    };
+    }
 
     Parser.prototype.parseImportDeclaration = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.ImportKeyword);
@@ -776,7 +776,7 @@ var Parser = (function(_super) {
         var semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
 
         return new ImportDeclarationSyntax(importKeyword, identifier, equalsToken, moduleReference, semicolonToken);
-    };
+    }
 
     Parser.prototype.parseModuleReference = function() {
         if (this.isExternalModuleReference()) {
@@ -785,12 +785,12 @@ var Parser = (function(_super) {
         else {
             return this.parseModuleNameModuleReference();
         }
-    };
+    }
 
     Parser.prototype.isExternalModuleReference = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ModuleKeyword &&
                this.peekTokenN(1).tokenKind === SyntaxKind.OpenParenToken;
-    };
+    }
 
     Parser.prototype.parseExternalModuleReference = function() {
         Debug.assert(this.isExternalModuleReference());
@@ -801,22 +801,22 @@ var Parser = (function(_super) {
         var closeParenToken = this.eatToken(SyntaxKind.CloseParenToken);
 
         return new ExternalModuleReferenceSyntax(moduleKeyword, openParenToken, stringLiteral, closeParenToken);
-    };
+    }
 
     Parser.prototype.parseModuleNameModuleReference = function() {
         var name = this.parseName();
         return new ModuleNameModuleReferenceSyntax(name);
-    };
+    }
 
     // NOTE: This will allow all identifier names.  Even the ones that are keywords.
     Parser.prototype.parseIdentifierName = function() {
         var identifierName = this.eatIdentifierNameToken();
         return new IdentifierNameSyntax(identifierName);
-    };
+    }
 
     Parser.prototype.isName = function() {
         return this.isIdentifier(this.currentToken());
-    };
+    }
 
     Parser.prototype.parseName = function() {
         var isIdentifier = this.currentToken().tokenKind === SyntaxKind.IdentifierNameToken;
@@ -836,7 +836,7 @@ var Parser = (function(_super) {
         }
 
         return current;
-    };
+    }
 
     Parser.prototype.isEnumDeclaration = function() {
         if (this.currentToken().keywordKind() === SyntaxKind.ExportKeyword &&
@@ -846,7 +846,7 @@ var Parser = (function(_super) {
 
         return this.currentToken().keywordKind() === SyntaxKind.EnumKeyword &&
                this.isIdentifier(this.peekTokenN(1));
-    };
+    }
 
     Parser.prototype.parseEnumDeclaration = function() {
         Debug.assert(this.isEnumDeclaration());
@@ -866,7 +866,7 @@ var Parser = (function(_super) {
 
         return new EnumDeclarationSyntax(exportKeyword, enumKeyword, identifier,
             openBraceToken, variableDeclarators, closeBraceToken);
-    };
+    }
 
     Parser.prototype.isClassDeclaration = function() {
         var token0 = this.currentToken();
@@ -884,7 +884,7 @@ var Parser = (function(_super) {
 
         return token0.keywordKind() === SyntaxKind.ClassKeyword &&
                this.isIdentifier(token1);
-    };
+    }
 
     Parser.prototype.parseClassDeclaration = function() {
         Debug.assert(this.isClassDeclaration());
@@ -916,11 +916,11 @@ var Parser = (function(_super) {
         return new ClassDeclarationSyntax(
             exportKeyword, declareKeyword, classKeyword, identifier, extendsClause,
             implementsClause, openBraceToken, classElements, closeBraceToken);
-    };
+    }
 
     Parser.prototype.isConstructorDeclaration = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ConstructorKeyword;
-    };
+    }
 
     Parser.prototype.isMemberAccessorDeclaration = function() {
         var rewindPoint = this.getRewindPoint();
@@ -946,7 +946,7 @@ var Parser = (function(_super) {
             this.rewind(rewindPoint);
             this.releaseRewindPoint(rewindPoint);
         }
-    };
+    }
 
     Parser.prototype.parseMemberAccessorDeclaration = function() {
         Debug.assert(this.isMemberAccessorDeclaration());
@@ -968,7 +968,7 @@ var Parser = (function(_super) {
         else {
             throw Errors.invalidOperation();
         }
-    };
+    }
     
     Parser.prototype.parseGetMemberAccessorDeclaration = function(publicOrPrivateKeyword, 
                                               staticKeyword) {
@@ -982,7 +982,7 @@ var Parser = (function(_super) {
 
         return new GetMemberAccessorDeclarationSyntax(
             publicOrPrivateKeyword, staticKeyword, getKeyword, identifier, parameterList, typeAnnotation, block);
-    };
+    }
     
     Parser.prototype.parseSetMemberAccessorDeclaration = function(publicOrPrivateKeyword, 
                                               staticKeyword) {
@@ -995,7 +995,7 @@ var Parser = (function(_super) {
 
         return new SetMemberAccessorDeclarationSyntax(
             publicOrPrivateKeyword, staticKeyword, setKeyword, identifier, parameterList, block);
-    };
+    }
 
     Parser.prototype.isMemberVariableDeclaration = function() {
         var rewindPoint = this.getRewindPoint();
@@ -1031,7 +1031,7 @@ var Parser = (function(_super) {
             this.rewind(rewindPoint);
             this.releaseRewindPoint(rewindPoint);
         }
-    };
+    }
     
     Parser.prototype.isClassElement = function() {
         // Note: the order of these calls is important.  Specifically, isMemberVariableDeclaration
@@ -1040,7 +1040,7 @@ var Parser = (function(_super) {
                this.isMemberFunctionDeclaration() ||
                this.isMemberAccessorDeclaration() ||
                this.isMemberVariableDeclaration();
-    };
+    }
 
     Parser.prototype.parseConstructorDeclaration = function() {
         Debug.assert(this.isConstructorDeclaration());
@@ -1059,7 +1059,7 @@ var Parser = (function(_super) {
         }
 
         return new ConstructorDeclarationSyntax(constructorKeyword, parameterList, block, semicolonToken);
-    };
+    }
 
     Parser.prototype.isMemberFunctionDeclaration = function() {
         var rewindPoint = this.getRewindPoint();
@@ -1079,7 +1079,7 @@ var Parser = (function(_super) {
             this.rewind(rewindPoint);
             this.releaseRewindPoint(rewindPoint);
         }
-    };
+    }
 
     Parser.prototype.parseMemberFunctionDeclaration = function() {
         Debug.assert(this.isMemberFunctionDeclaration());
@@ -1103,7 +1103,7 @@ var Parser = (function(_super) {
         }
 
         return new MemberFunctionDeclarationSyntax(publicOrPrivateKeyword, staticKeyword, functionSignature, block, semicolon);
-    };
+    }
 
     Parser.prototype.parseMemberVariableDeclaration = function() {
         Debug.assert(this.isMemberVariableDeclaration());
@@ -1119,7 +1119,7 @@ var Parser = (function(_super) {
         var semicolon = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
 
         return new MemberVariableDeclarationSyntax(publicOrPrivateKeyword, staticKeyword, variableDeclarator, semicolon);
-    };
+    }
 
     Parser.prototype.parseClassElement = function() {
         Debug.assert(this.isClassElement());
@@ -1138,7 +1138,7 @@ var Parser = (function(_super) {
         else {
             throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.isFunctionDeclaration = function() {
         var token0 = this.currentToken();
@@ -1154,7 +1154,7 @@ var Parser = (function(_super) {
 
         return token0.keywordKind() === SyntaxKind.DeclareKeyword &&
                token1.keywordKind() === SyntaxKind.FunctionKeyword;
-    };
+    }
 
     Parser.prototype.parseFunctionDeclaration = function() {
         Debug.assert(this.isFunctionDeclaration());
@@ -1176,7 +1176,7 @@ var Parser = (function(_super) {
         }
 
         return new FunctionDeclarationSyntax(exportKeyword, declareKeyword, functionKeyword, functionSignature, block, semicolonToken);
-    };
+    }
 
     Parser.prototype.isModuleDeclaration = function() {
         var token0 = this.currentToken();
@@ -1218,7 +1218,7 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.parseModuleDeclaration = function() {
         Debug.assert(this.isModuleDeclaration());
@@ -1248,7 +1248,7 @@ var Parser = (function(_super) {
         return new ModuleDeclarationSyntax(
             exportKeyword, declareKeyword, moduleKeyword, moduleName, stringLiteral,
             openBraceToken, moduleElements, closeBraceToken);
-    };
+    }
 
     Parser.prototype.isInterfaceDeclaration = function() {
         // export interface
@@ -1260,7 +1260,7 @@ var Parser = (function(_super) {
         // interface foo
         return this.currentToken().keywordKind() === SyntaxKind.InterfaceKeyword &&
                this.isIdentifier(this.peekTokenN(1));
-    };
+    }
 
     Parser.prototype.parseInterfaceDeclaration = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.ExportKeyword ||
@@ -1277,7 +1277,7 @@ var Parser = (function(_super) {
 
         var objectType = this.parseObjectType();
         return new InterfaceDeclarationSyntax(exportKeyword, interfaceKeyword, identifier, extendsClause, objectType);
-    };
+    }
 
     Parser.prototype.parseObjectType = function() {
         var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
@@ -1289,7 +1289,7 @@ var Parser = (function(_super) {
 
         var closeBraceToken = this.eatToken(SyntaxKind.CloseBraceToken);
         return new ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken);
-    };
+    }
 
     Parser.prototype.isTypeMember = function() {
         return this.isCallSignature() ||
@@ -1297,7 +1297,7 @@ var Parser = (function(_super) {
                this.isIndexSignature() ||
                this.isFunctionSignature() ||
                this.isPropertySignature();
-    };
+    }
 
     Parser.prototype.parseTypeMember = function() {
         if (this.isCallSignature()) {
@@ -1320,7 +1320,7 @@ var Parser = (function(_super) {
         else {
             throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.parseConstructSignature = function() {
         Debug.assert(this.isConstructSignature());
@@ -1330,7 +1330,7 @@ var Parser = (function(_super) {
         var typeAnnotation = this.parseOptionalTypeAnnotation();
 
         return new ConstructSignatureSyntax(newKeyword, parameterList, typeAnnotation);
-    };
+    }
 
     Parser.prototype.parseIndexSignature = function() {
         Debug.assert(this.isIndexSignature());
@@ -1341,7 +1341,7 @@ var Parser = (function(_super) {
         var typeAnnotation = this.parseOptionalTypeAnnotation();
 
         return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation);
-    };
+    }
 
     Parser.prototype.parseFunctionSignature = function() {
         var identifier = this.eatIdentifierToken();
@@ -1351,7 +1351,7 @@ var Parser = (function(_super) {
         var typeAnnotation = this.parseOptionalTypeAnnotation();
 
         return new FunctionSignatureSyntax(identifier, questionToken, parameterList, typeAnnotation);
-    };
+    }
 
     Parser.prototype.parsePropertySignature = function() {
         Debug.assert(this.isPropertySignature());
@@ -1361,19 +1361,19 @@ var Parser = (function(_super) {
         var typeAnnotation = this.parseOptionalTypeAnnotation();
 
         return new PropertySignatureSyntax(identifier, questionToken, typeAnnotation);
-    };
+    }
 
     Parser.prototype.isCallSignature = function() {
         return this.currentToken().tokenKind === SyntaxKind.OpenParenToken;
-    };
+    }
 
     Parser.prototype.isConstructSignature = function() {
         return this.currentToken().keywordKind() === SyntaxKind.NewKeyword;
-    };
+    }
 
     Parser.prototype.isIndexSignature = function() {
         return this.currentToken().tokenKind === SyntaxKind.OpenBracketToken;
-    };
+    }
 
     Parser.prototype.isFunctionSignature = function() {
         if (this.isIdentifier(this.currentToken())) {
@@ -1390,17 +1390,17 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.isPropertySignature = function() {
         // Note: identifiers also start function signatures.  So it's important that we call this
         // after we calll isFunctionSignature.
         return this.isIdentifier(this.currentToken());
-    };
+    }
 
     Parser.prototype.isExtendsClause = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ExtendsKeyword;
-    };
+    }
 
     Parser.prototype.parseExtendsClause = function() {
         Debug.assert(this.isExtendsClause());
@@ -1409,11 +1409,11 @@ var Parser = (function(_super) {
         var typeNames = this.parseSeparatedSyntaxList(ParserListParsingState.ExtendsOrImplementsClause_TypeNameList);
 
         return new ExtendsClauseSyntax(extendsKeyword, typeNames);
-    };
+    }
 
     Parser.prototype.isImplementsClause = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ImplementsKeyword;
-    };
+    }
 
     Parser.prototype.parseImplementsClause = function() {
         Debug.assert(this.isImplementsClause());
@@ -1422,7 +1422,7 @@ var Parser = (function(_super) {
         var typeNames = this.parseSeparatedSyntaxList(ParserListParsingState.ExtendsOrImplementsClause_TypeNameList);
 
         return new ImplementsClauseSyntax(implementsKeyword, typeNames);
-    };
+    }
 
     Parser.prototype.isStatement = function(allowFunctionDeclaration) {
         // ERROR RECOVERY
@@ -1459,7 +1459,7 @@ var Parser = (function(_super) {
                this.isDoStatement() ||
                this.isTryStatement() ||
                this.isDebuggerStatement();
-    };
+    }
 
     Parser.prototype.parseStatement = function(allowFunctionDeclaration) {
         if (this.isVariableStatement()) {
@@ -1517,11 +1517,11 @@ var Parser = (function(_super) {
             // Fall back to parsing this as expression statement.
             return this.parseExpressionStatement();
         }
-    };
+    }
 
     Parser.prototype.isDebuggerStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.DebuggerKeyword;
-    };
+    }
 
     Parser.prototype.parseDebuggerStatement = function() {
         Debug.assert(this.isDebuggerStatement());
@@ -1530,11 +1530,11 @@ var Parser = (function(_super) {
         var semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
 
         return new DebuggerStatementSyntax(debuggerKeyword, semicolonToken);
-    };
+    }
 
     Parser.prototype.isDoStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.DoKeyword;
-    };
+    }
 
     Parser.prototype.parseDoStatement = function() {
         Debug.assert(this.isDoStatement());
@@ -1553,11 +1553,11 @@ var Parser = (function(_super) {
         var semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ true);
 
         return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken);
-    };
+    }
 
     Parser.prototype.isLabeledStatement = function() {
         return this.isIdentifier(this.currentToken()) && this.peekTokenN(1).tokenKind === SyntaxKind.ColonToken;
-    };
+    }
 
     Parser.prototype.parseLabeledStatement = function() {
         Debug.assert(this.isLabeledStatement());
@@ -1567,11 +1567,11 @@ var Parser = (function(_super) {
         var statement = this.parseStatement(/*allowFunctionDeclaration:*/ false);
         
         return new LabeledStatement(identifier, colonToken, statement);
-    };
+    }
 
     Parser.prototype.isTryStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.TryKeyword;
-    };
+    }
 
     Parser.prototype.parseTryStatement = function() {
         Debug.assert(this.isTryStatement());
@@ -1593,11 +1593,11 @@ var Parser = (function(_super) {
         // (Alternatively, report that at semantic checking time).
 
         return new TryStatementSyntax(tryKeyword, block, catchClause, finallyClause);
-    };
+    }
 
     Parser.prototype.isCatchClause = function() {
         return this.currentToken().keywordKind() === SyntaxKind.CatchKeyword;
-    };
+    }
 
     Parser.prototype.parseCatchClause = function() {
         Debug.assert(this.isCatchClause());
@@ -1609,11 +1609,11 @@ var Parser = (function(_super) {
         var block = this.parseBlock();
 
         return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, closeParenToken, block);
-    };
+    }
 
     Parser.prototype.isFinallyClause = function() {
         return this.currentToken().keywordKind() === SyntaxKind.FinallyKeyword;
-    };
+    }
 
     Parser.prototype.parseFinallyClause = function() {
         Debug.assert(this.isFinallyClause());
@@ -1622,11 +1622,11 @@ var Parser = (function(_super) {
         var block = this.parseBlock();
 
         return new FinallyClauseSyntax(finallyKeyword, block);
-    };
+    }
 
     Parser.prototype.isWithStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.WithKeyword;
-    };
+    }
 
     Parser.prototype.parseWithStatement = function() {
         Debug.assert(this.isWithStatement());
@@ -1638,11 +1638,11 @@ var Parser = (function(_super) {
         var statement = this.parseStatement(/*allowFunctionDeclaration:*/ false);
 
         return new WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement);
-    };
+    }
 
     Parser.prototype.isWhileStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.WhileKeyword;
-    };
+    }
 
     Parser.prototype.parseWhileStatement = function() {
         Debug.assert(this.isWhileStatement());
@@ -1654,22 +1654,22 @@ var Parser = (function(_super) {
         var statement = this.parseStatement(/*allowFunctionDeclaration:*/ false);
 
         return new WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement);
-    };
+    }
 
     Parser.prototype.isEmptyStatement = function() {
         return this.currentToken().tokenKind === SyntaxKind.SemicolonToken;
-    };
+    }
 
     Parser.prototype.parseEmptyStatement = function() {
         Debug.assert(this.isEmptyStatement());
 
         var semicolonToken = this.eatToken(SyntaxKind.SemicolonToken);
         return new EmptyStatementSyntax(semicolonToken);
-    };
+    }
 
     Parser.prototype.isForOrForInStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ForKeyword;
-    };
+    }
 
     Parser.prototype.parseForOrForInStatement = function() {
         Debug.assert(this.isForOrForInStatement());
@@ -1692,7 +1692,7 @@ var Parser = (function(_super) {
             // for ( LeftHandSideExpression in Expression ) Statement
             return this.parseForOrForInStatementWithInitializer(forKeyword, openParenToken);
         }
-    };
+    }
 
     Parser.prototype.parseForOrForInStatementWithVariableDeclaration = function(forKeyword, openParenToken) {
         Debug.assert(forKeyword.keywordKind() === SyntaxKind.ForKeyword &&
@@ -1709,7 +1709,7 @@ var Parser = (function(_super) {
         }
 
         return this.parseForStatementWithVariableDeclarationOrInitializer(forKeyword, openParenToken, variableDeclaration, null);
-    };
+    }
 
     Parser.prototype.parseForInStatementWithVariableDeclarationOrInitializer = function(forKeyword,
                                                                     openParenToken,
@@ -1725,7 +1725,7 @@ var Parser = (function(_super) {
 
         return new ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration,
             initializer, inKeyword, expression, closeParenToken, statement);
-    };
+    }
 
     Parser.prototype.parseForOrForInStatementWithInitializer = function(forKeyword, openParenToken) {
         Debug.assert(forKeyword.keywordKind() === SyntaxKind.ForKeyword &&
@@ -1741,7 +1741,7 @@ var Parser = (function(_super) {
         else {
             return this.parseForStatementWithVariableDeclarationOrInitializer(forKeyword, openParenToken, null, initializer);
         }
-    };
+    }
 
     Parser.prototype.parseForStatement = function(forKeyword, openParenToken) {
         Debug.assert(forKeyword.keywordKind() === SyntaxKind.ForKeyword &&
@@ -1757,7 +1757,7 @@ var Parser = (function(_super) {
         }
 
         return this.parseForStatementWithVariableDeclarationOrInitializer(forKeyword, openParenToken, null, initializer);
-    };
+    }
 
     Parser.prototype.parseForStatementWithVariableDeclarationOrInitializer = function(forKeyword,
                                                                   openParenToken,
@@ -1786,11 +1786,11 @@ var Parser = (function(_super) {
 
         return new ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, 
             firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement);
-    };
+    }
 
     Parser.prototype.isBreakStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.BreakKeyword;
-    };
+    }
 
     Parser.prototype.parseBreakStatement = function() {
         Debug.assert(this.isBreakStatement());
@@ -1808,11 +1808,11 @@ var Parser = (function(_super) {
 
         var semicolon = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
         return new BreakStatementSyntax(breakKeyword, identifier, semicolon);
-    };
+    }
 
     Parser.prototype.isContinueStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ContinueKeyword;
-    };
+    }
 
     Parser.prototype.parseContinueStatement = function() {
         Debug.assert(this.isContinueStatement());
@@ -1830,11 +1830,11 @@ var Parser = (function(_super) {
 
         var semicolon = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
         return new ContinueStatementSyntax(continueKeyword, identifier, semicolon);
-    };
+    }
 
     Parser.prototype.isSwitchStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.SwitchKeyword;
-    };
+    }
 
     Parser.prototype.parseSwitchStatement = function() {
         Debug.assert(this.isSwitchStatement());
@@ -1854,19 +1854,19 @@ var Parser = (function(_super) {
         var closeBraceToken = this.eatToken(SyntaxKind.CloseBraceToken);
         return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, 
             closeParenToken, openBraceToken, switchClauses, closeBraceToken);
-    };
+    }
 
     Parser.prototype.isCaseSwitchClause = function() {
         return this.currentToken().keywordKind() === SyntaxKind.CaseKeyword;
-    };
+    }
 
     Parser.prototype.isDefaultSwitchClause = function() {
         return this.currentToken().keywordKind() === SyntaxKind.DefaultKeyword;
-    };
+    }
 
     Parser.prototype.isSwitchClause = function() {
         return this.isCaseSwitchClause() || this.isDefaultSwitchClause();
-    };
+    }
 
     Parser.prototype.parseSwitchClause = function() {
         Debug.assert(this.isSwitchClause());
@@ -1879,7 +1879,7 @@ var Parser = (function(_super) {
         else {
             throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.parseCaseSwitchClause = function() {
         Debug.assert(this.isCaseSwitchClause());
@@ -1890,7 +1890,7 @@ var Parser = (function(_super) {
         var statements = this.parseSyntaxList(ParserListParsingState.SwitchClause_Statements);
 
         return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements);
-    };
+    }
 
     Parser.prototype.parseDefaultSwitchClause = function() {
         Debug.assert(this.isDefaultSwitchClause());
@@ -1900,11 +1900,11 @@ var Parser = (function(_super) {
         var statements = this.parseSyntaxList(ParserListParsingState.SwitchClause_Statements);
 
         return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements);
-    };
+    }
 
     Parser.prototype.isThrowStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ThrowKeyword;
-    };
+    }
 
     Parser.prototype.parseThrowStatement = function() {
         Debug.assert(this.isThrowStatement());
@@ -1926,11 +1926,11 @@ var Parser = (function(_super) {
         var semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
 
         return new ThrowStatementSyntax(throwKeyword, expression, semicolonToken);
-    };
+    }
 
     Parser.prototype.isReturnStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ReturnKeyword;
-    };
+    }
 
     Parser.prototype.parseReturnStatement = function() {
         Debug.assert(this.isReturnStatement());
@@ -1945,7 +1945,7 @@ var Parser = (function(_super) {
         var semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
 
         return new ReturnStatementSyntax(returnKeyword, expression, semicolonToken);
-    };
+    }
 
     Parser.prototype.isExpressionStatement = function() {
         // As per the gramar, neither { nor 'function' can start an expression statement.
@@ -1961,7 +1961,7 @@ var Parser = (function(_super) {
         }
 
         return this.isExpression();
-    };
+    }
 
     Parser.prototype.isAssignmentOrOmittedExpression = function() {
         if (this.currentToken().tokenKind === SyntaxKind.CommaToken) {
@@ -1969,7 +1969,7 @@ var Parser = (function(_super) {
         }
 
         return this.isExpression();
-    };
+    }
     
     Parser.prototype.parseAssignmentOrOmittedExpression = function() {
         Debug.assert(this.isAssignmentOrOmittedExpression());
@@ -1979,7 +1979,7 @@ var Parser = (function(_super) {
         }
 
         return this.parseAssignmentExpression(/*allowIn:*/ true);
-    };
+    }
     
     Parser.prototype.isExpression = function() {
         var currentToken = this.currentToken();
@@ -2058,7 +2058,7 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.parseExpressionStatement = function() {
         var expression = this.parseExpression(/*allowIn:*/ true);
@@ -2066,11 +2066,11 @@ var Parser = (function(_super) {
         var semicolon = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
 
         return new ExpressionStatementSyntax(expression, semicolon);
-    };
+    }
 
     Parser.prototype.isIfStatement = function() {
         return this.currentToken().keywordKind() === SyntaxKind.IfKeyword;
-    };
+    }
 
     Parser.prototype.parseIfStatement = function() {
         Debug.assert(this.isIfStatement());
@@ -2087,11 +2087,11 @@ var Parser = (function(_super) {
         }
 
         return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause);
-    };
+    }
 
     Parser.prototype.isElseClause = function() {
         return this.currentToken().keywordKind() === SyntaxKind.ElseKeyword;
-    };
+    }
 
     Parser.prototype.parseElseClause = function() {
         Debug.assert(this.isElseClause());
@@ -2100,7 +2100,7 @@ var Parser = (function(_super) {
         var statement = this.parseStatement(/*allowFunctionDeclaration:*/ false);
 
         return new ElseClauseSyntax(elseKeyword, statement);
-    };
+    }
 
     Parser.prototype.isVariableStatement = function() {
         var token0 = this.currentToken();
@@ -2116,7 +2116,7 @@ var Parser = (function(_super) {
 
         return token0.keywordKind() === SyntaxKind.DeclareKeyword &&
                token1.keywordKind() === SyntaxKind.VarKeyword;
-    };
+    }
 
     Parser.prototype.parseVariableStatement = function() {
         Debug.assert(this.isVariableStatement());
@@ -2128,7 +2128,7 @@ var Parser = (function(_super) {
         var semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
 
         return new VariableStatementSyntax(exportKeyword, declareKeyword, variableDeclaration, semicolonToken);
-    };
+    }
 
     Parser.prototype.parseVariableDeclaration = function(allowIn) {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.VarKeyword);
@@ -2140,11 +2140,11 @@ var Parser = (function(_super) {
 
         var variableDeclarators = this.parseSeparatedSyntaxList(listParsingState);
         return new VariableDeclarationSyntax(varKeyword, variableDeclarators);
-    };
+    }
 
     Parser.prototype.isVariableDeclarator = function() {
         return this.isIdentifier(this.currentToken());
-    };
+    }
 
     Parser.prototype.parseVariableDeclarator = function(allowIn) {
         var identifier = this.eatIdentifierToken();
@@ -2160,11 +2160,11 @@ var Parser = (function(_super) {
         }
 
         return new VariableDeclaratorSyntax(identifier, typeAnnotation, equalsValueClause);
-    };
+    }
 
     Parser.prototype.isEqualsValueClause = function() {
         return this.currentToken().tokenKind === SyntaxKind.EqualsToken;
-    };
+    }
 
     Parser.prototype.parseEqualsValuesClause = function(allowIn) {
         Debug.assert(this.isEqualsValueClause());
@@ -2173,11 +2173,11 @@ var Parser = (function(_super) {
         var value = this.parseAssignmentExpression(allowIn);
 
         return new EqualsValueClauseSyntax(equalsToken, value);
-    };
+    }
 
     Parser.prototype.parseExpression = function(allowIn) {
         return this.parseSubExpression(0, allowIn);
-    };
+    }
 
     // Called when you need to parse an expression, but you do not want to allow 'CommaExpressions'.
     // i.e. if you have "var a = 1, b = 2" then when we parse '1' we want to parse with higher 
@@ -2185,7 +2185,7 @@ var Parser = (function(_super) {
     // "var a = (1), b = (2)");
     Parser.prototype.parseAssignmentExpression = function(allowIn) {
         return this.parseSubExpression(ParserExpressionPrecedence.AssignmentExpressionPrecedence, allowIn);
-    };
+    }
 
     Parser.prototype.parseUnaryExpression = function() {
         var currentTokenKind = this.currentToken().tokenKind;
@@ -2200,7 +2200,7 @@ var Parser = (function(_super) {
         else {
             return this.parseTerm(/*allowInvocation*/ true, /*insideObjectCreation:*/ false);
         }
-    };
+    }
 
     Parser.prototype.parseSubExpression = function(precedence, allowIn) {
         // Because unary expression have the highest precedence, we can always parse one, regardless 
@@ -2209,7 +2209,7 @@ var Parser = (function(_super) {
         leftOperand = this.parseBinaryOrConditionalExpressions(precedence, allowIn, leftOperand);
 
         return leftOperand;
-    };
+    }
 
     Parser.prototype.parseBinaryOrConditionalExpressions = function(precedence, allowIn, leftOperand) {
         while (true) {
@@ -2273,7 +2273,7 @@ var Parser = (function(_super) {
         }
 
         return leftOperand;
-    };
+    }
 
     Parser.prototype.isRightAssociative = function(expressionKind) {
         switch (expressionKind) {
@@ -2293,7 +2293,7 @@ var Parser = (function(_super) {
             default:
                 return false;
         }
-    };
+    }
 
     Parser.prototype.parseTerm = function(allowInvocation, insideObjectCreation) {
         // NOTE: allowInvocation and insideObjectCreation are always the negation of the other.
@@ -2306,7 +2306,7 @@ var Parser = (function(_super) {
         }
 
         return this.parsePostFixExpression(term, allowInvocation);
-    };
+    }
 
     Parser.prototype.parsePostFixExpression = function(expression, allowInvocation) {
         Debug.assert(expression !== null);
@@ -2347,11 +2347,11 @@ var Parser = (function(_super) {
                     return expression;
             }
         }
-    };
+    }
 
     Parser.prototype.isArgumentList = function() {
         return this.currentToken().tokenKind === SyntaxKind.OpenParenToken;
-    };
+    }
 
     Parser.prototype.parseArgumentList = function() { 
         Debug.assert(this.isArgumentList());
@@ -2361,7 +2361,7 @@ var Parser = (function(_super) {
         var closeParenToken = this.eatToken(SyntaxKind.CloseParenToken);
 
         return new ArgumentListSyntax(openParenToken, arguments, closeParenToken);
-    };
+    }
 
     Parser.prototype.parseElementAccessExpression = function(expression) {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.OpenBracketToken);
@@ -2371,7 +2371,7 @@ var Parser = (function(_super) {
         var closeBracketToken = this.eatToken(SyntaxKind.CloseBracketToken);
 
         return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken);
-    };
+    }
 
     Parser.prototype.parseTermWorker = function(insideObjectCreation) {
         var currentToken = this.currentToken();
@@ -2489,7 +2489,7 @@ var Parser = (function(_super) {
 
         // Nothing else worked, just try to consume an identifier so we report an error.
         return new IdentifierNameSyntax(this.eatIdentifierToken());
-    };
+    }
 
     Parser.prototype.tryReparseDivideAsRegularExpression = function() {
         // If we see a / or /= token, then that may actually be the start of a regex in certain 
@@ -2607,7 +2607,7 @@ var Parser = (function(_super) {
             // to figure out and fix.
             throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.parseTypeOfExpression = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.TypeOfKeyword);
@@ -2616,7 +2616,7 @@ var Parser = (function(_super) {
         var expression = this.parseUnaryExpression();
 
         return new TypeOfExpressionSyntax(typeOfKeyword, expression);
-    };
+    }
 
     Parser.prototype.parseDeleteExpression = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.DeleteKeyword);
@@ -2625,7 +2625,7 @@ var Parser = (function(_super) {
         var expression = this.parseUnaryExpression();
 
         return new DeleteExpressionSyntax(deleteKeyword, expression);
-    };
+    }
 
     Parser.prototype.parseVoidExpression = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.VoidKeyword);
@@ -2634,14 +2634,14 @@ var Parser = (function(_super) {
         var expression = this.parseUnaryExpression();
 
         return new VoidExpressionSyntax(voidKeyword, expression);
-    };
+    }
 
     Parser.prototype.parseSuperExpression = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.SuperKeyword);
         
         var superKeyword = this.eatKeyword(SyntaxKind.SuperKeyword);
         return new SuperExpressionSyntax(superKeyword);
-    };
+    }
 
     Parser.prototype.parseFunctionExpression = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.FunctionKeyword);
@@ -2657,7 +2657,7 @@ var Parser = (function(_super) {
         var block = this.parseBlock();
 
         return new FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block);
-    };
+    }
 
     Parser.prototype.parseCastExpression = function() {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.LessThanToken);
@@ -2668,7 +2668,7 @@ var Parser = (function(_super) {
         var expression = this.parseUnaryExpression();
 
         return new CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression);
-    };
+    }
 
     Parser.prototype.parseObjectCreationExpression = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.NewKeyword);
@@ -2684,7 +2684,7 @@ var Parser = (function(_super) {
         }
 
         return new ObjectCreationExpressionSyntax(newKeyword, expression, argumentList);
-    };
+    }
 
     Parser.prototype.parseParenthesizedOrArrowFunctionExpression = function() {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.OpenParenToken);
@@ -2700,7 +2700,7 @@ var Parser = (function(_super) {
         var closeParenToken = this.eatToken(SyntaxKind.CloseParenToken);
 
         return new ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken);
-    };
+    }
 
     Parser.prototype.tryParseArrowFunctionExpression = function() {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.OpenParenToken);
@@ -2733,7 +2733,7 @@ var Parser = (function(_super) {
         finally {
             this.releaseRewindPoint(rewindPoint);
         }
-    };
+    }
 
     Parser.prototype.parseParenthesizedArrowFunctionExpression = function(requireArrow) {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.OpenParenToken);
@@ -2748,7 +2748,7 @@ var Parser = (function(_super) {
         var body = this.parseArrowFunctionBody();
 
         return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, body);
-    };
+    }
 
     Parser.prototype.parseArrowFunctionBody = function() {
         if (this.isBlock()) {
@@ -2759,7 +2759,7 @@ var Parser = (function(_super) {
         else {
             return this.parseAssignmentExpression(/*allowIn:*/ true); 
         }
-    };
+    }
 
     Parser.prototype.isSimpleArrowFunctionExpression = function() {
         // ERROR RECOVERY TWEAK:
@@ -2769,7 +2769,7 @@ var Parser = (function(_super) {
 
         return this.isIdentifier(this.currentToken()) && 
                this.peekTokenN(1).tokenKind === SyntaxKind.EqualsGreaterThanToken;
-    };
+    }
 
     Parser.prototype.parseSimpleArrowFunctionExpression = function() {
         Debug.assert(this.isSimpleArrowFunctionExpression());
@@ -2780,11 +2780,11 @@ var Parser = (function(_super) {
 
         return new SimpleArrowFunctionExpressionSyntax(
             identifier, equalsGreaterThanToken, body);
-    };
+    }
 
     Parser.prototype.isBlock = function() {
         return this.currentToken().tokenKind === SyntaxKind.OpenBraceToken;
-    };
+    }
 
     Parser.prototype.isDefinitelyArrowFunctionExpression = function() {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.OpenParenToken);
@@ -2859,7 +2859,7 @@ var Parser = (function(_super) {
         // Anything else wasn't clear enough.  Try to parse the expression as an arrow function and bail out
         // if we fail.
         return false;
-    };
+    }
 
     Parser.prototype.isPossiblyArrowFunctionExpression = function() {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.OpenParenToken);
@@ -2907,7 +2907,7 @@ var Parser = (function(_super) {
 
         // Nothing else could be an arrow function.
         return false;
-    };
+    }
 
     Parser.prototype.parseObjectLiteralExpression = function() {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.OpenBraceToken);
@@ -2918,7 +2918,7 @@ var Parser = (function(_super) {
 
         return new ObjectLiteralExpressionSyntax(
             openBraceToken, propertyAssignments, closeBraceToken);
-    };
+    }
 
     Parser.prototype.parsePropertyAssignment = function() {
         Debug.assert(this.isPropertyAssignment(/*inErrorRecovery:*/ false));
@@ -2934,18 +2934,18 @@ var Parser = (function(_super) {
         else {
             throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.isPropertyAssignment = function(inErrorRecovery) {
         return this.isGetAccessorPropertyAssignment() ||
                this.isSetAccessorPropertyAssignment() ||
                this.isSimplePropertyAssignment(inErrorRecovery);
-    };
+    }
 
     Parser.prototype.isGetAccessorPropertyAssignment = function() {
         return this.currentToken().keywordKind() === SyntaxKind.GetKeyword &&
                this.isPropertyName(this.peekTokenN(1), /*inErrorRecovery:*/ false);
-    };
+    }
 
     Parser.prototype.parseGetAccessorPropertyAssignment = function() {
         Debug.assert(this.isGetAccessorPropertyAssignment());
@@ -2957,12 +2957,12 @@ var Parser = (function(_super) {
         var block = this.parseBlock();
 
         return new GetAccessorPropertyAssignmentSyntax(getKeyword, propertyName, openParenToken, closeParenToken, block);
-    };
+    }
 
     Parser.prototype.isSetAccessorPropertyAssignment = function() {
         return this.currentToken().keywordKind() === SyntaxKind.SetKeyword &&
                this.isPropertyName(this.peekTokenN(1), /*inErrorRecovery:*/ false);
-    };
+    }
 
     Parser.prototype.parseSetAccessorPropertyAssignment = function() {
         Debug.assert(this.isSetAccessorPropertyAssignment());
@@ -2975,11 +2975,11 @@ var Parser = (function(_super) {
         var block = this.parseBlock();
 
         return new SetAccessorPropertyAssignmentSyntax(setKeyword, propertyName, openParenToken, parameterName, closeParenToken, block);
-    };
+    }
 
     Parser.prototype.isSimplePropertyAssignment = function(inErrorRecovery) {
         return this.isPropertyName(this.currentToken(), inErrorRecovery);
-    };
+    }
 
     Parser.prototype.parseSimplePropertyAssignment = function() {
         Debug.assert(this.isSimplePropertyAssignment(/*inErrorRecovery:*/ false));
@@ -2989,7 +2989,7 @@ var Parser = (function(_super) {
         var expression = this.parseAssignmentExpression(/*allowIn:*/ true);
 
         return new SimplePropertyAssignmentSyntax(propertyName, colonToken, expression);
-    };
+    }
 
     Parser.prototype.isPropertyName = function(token, inErrorRecovery) {
         // NOTE: we do *not* want to check "this.isIdentifier" here.  Any IdentifierNameToken is 
@@ -3017,7 +3017,7 @@ var Parser = (function(_super) {
             default:
                 return false;
         }
-    };
+    }
 
     Parser.prototype.parseArrayLiteralExpression = function() {
         Debug.assert(this.currentToken().tokenKind === SyntaxKind.OpenBracketToken);
@@ -3027,19 +3027,19 @@ var Parser = (function(_super) {
         var closeBracketToken = this.eatToken(SyntaxKind.CloseBracketToken);
 
         return new ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken);
-    };
+    }
 
     Parser.prototype.parseLiteralExpression = function(expressionKind) {
         // TODO: add appropriate asserts here.
         var literal = this.eatAnyToken();
         return new LiteralExpressionSyntax(expressionKind, literal);
-    };
+    }
 
     Parser.prototype.parseThisExpression = function() {
         Debug.assert(this.currentToken().keywordKind() === SyntaxKind.ThisKeyword);
         var thisKeyword = this.eatKeyword(SyntaxKind.ThisKeyword);
         return new ThisExpressionSyntax(thisKeyword);
-    };
+    }
 
     Parser.prototype.parseBlock = function() {
         var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
@@ -3055,14 +3055,14 @@ var Parser = (function(_super) {
         var closeBraceToken = this.eatToken(SyntaxKind.CloseBraceToken);
 
         return new BlockSyntax(openBraceToken, statements, closeBraceToken);
-    };
+    }
 
     Parser.prototype.parseCallSignature = function() {
         var parameterList = this.parseParameterList();
         var typeAnnotation = this.parseOptionalTypeAnnotation();
 
         return new CallSignatureSyntax(parameterList, typeAnnotation);
-    };
+    }
 
     Parser.prototype.parseParameterList = function() {
         var openParenToken = this.eatToken(SyntaxKind.OpenParenToken);
@@ -3074,17 +3074,17 @@ var Parser = (function(_super) {
 
         var closeParenToken = this.eatToken(SyntaxKind.CloseParenToken);
         return new ParameterListSyntax(openParenToken, parameters, closeParenToken);
-    };
+    }
 
     Parser.prototype.isTypeAnnotation = function() {
         return this.currentToken().tokenKind === SyntaxKind.ColonToken;
-    };
+    }
 
     Parser.prototype.parseOptionalTypeAnnotation = function() {
         return this.isTypeAnnotation()
             ? this.parseTypeAnnotation()
             : null;
-    };
+    }
 
     Parser.prototype.parseTypeAnnotation = function() {
         Debug.assert(this.isTypeAnnotation());
@@ -3093,13 +3093,13 @@ var Parser = (function(_super) {
         var type = this.parseType(/*requireCompleteArraySuffix:*/ false);
 
         return new TypeAnnotationSyntax(colonToken, type);
-    };
+    }
 
     Parser.prototype.isType = function(allowFunctionType, allowConstructorType) {
         return this.isPredefinedType() ||
                this.isTypeLiteral(allowFunctionType, allowConstructorType) ||
                this.isName();
-    };
+    }
 
     Parser.prototype.parseType = function(requireCompleteArraySuffix) {
         var type = this.parseNonArrayType();
@@ -3116,7 +3116,7 @@ var Parser = (function(_super) {
         }
 
         return type;
-    };
+    }
 
     Parser.prototype.parseNonArrayType = function() {
         if (this.isPredefinedType()) {
@@ -3128,7 +3128,7 @@ var Parser = (function(_super) {
         else {
             return this.parseName();
         }
-    };
+    }
 
     Parser.prototype.parseTypeLiteral = function() {
         Debug.assert(this.isTypeLiteral(/*allowFunctionType:*/ true, /*allowConstructorType:*/ true));
@@ -3144,7 +3144,7 @@ var Parser = (function(_super) {
         else {
             throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.parseFunctionType = function() {
         Debug.assert(this.isFunctionType());
@@ -3154,7 +3154,7 @@ var Parser = (function(_super) {
         var returnType = this.parseType(/*requireCompleteArraySuffix:*/ false);
 
         return new FunctionTypeSyntax(parameterList, equalsGreaterThanToken, returnType);
-    };
+    }
 
     Parser.prototype.parseConstructorType = function() {
         Debug.assert(this.isConstructorType());
@@ -3165,7 +3165,7 @@ var Parser = (function(_super) {
         var type = this.parseType(/*requreCompleteArraySuffix:*/ false);
 
         return new ConstructorTypeSyntax(newKeyword, parameterList, equalsGreaterThanToken, type);
-    };
+    }
 
     Parser.prototype.isTypeLiteral = function(allowFunctionType, allowConstructorType) {
         if (this.isObjectType()) {
@@ -3181,25 +3181,25 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.isObjectType = function() {
         return this.currentToken().tokenKind === SyntaxKind.OpenBraceToken;
-    };
+    }
 
     Parser.prototype.isFunctionType = function() {
         return this.currentToken().tokenKind === SyntaxKind.OpenParenToken;
-    };
+    }
 
     Parser.prototype.isConstructorType = function() {
         return this.currentToken().keywordKind() === SyntaxKind.NewKeyword;
-    };
+    }
 
     Parser.prototype.parsePredefinedType = function() {
         Debug.assert(this.isPredefinedType());
         var keyword = this.eatAnyToken();
         return new PredefinedTypeSyntax(keyword);
-    };
+    }
 
     Parser.prototype.isPredefinedType = function() {
         switch (this.currentToken().keywordKind()) {
@@ -3212,7 +3212,7 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.isParameter = function() {
         var token = this.currentToken();
@@ -3226,7 +3226,7 @@ var Parser = (function(_super) {
         }
 
         return this.isIdentifier(token);
-    };
+    }
 
     Parser.prototype.parseParameter = function() {
         var dotDotDotToken = this.tryEatToken(SyntaxKind.DotDotDotToken);
@@ -3247,11 +3247,11 @@ var Parser = (function(_super) {
         }
 
         return new ParameterSyntax(dotDotDotToken, publicOrPrivateToken, identifier, questionToken, typeAnnotation, equalsValueClause);
-    };
+    }
 
     Parser.prototype.parseSyntaxList = function(currentListType,
                             processItems) {
-        if (typeof processItems === "undefined") { processItems = null; }
+        if (typeof processItems === "undefined") { processItems = null }
         var savedListParsingState = this.listParsingState;
         this.listParsingState |= currentListType;
 
@@ -3260,7 +3260,7 @@ var Parser = (function(_super) {
         this.listParsingState = savedListParsingState;
 
         return result;
-    };
+    }
 
     Parser.prototype.parseSeparatedSyntaxList = function(currentListType) {
         var savedListParsingState = this.listParsingState;
@@ -3271,7 +3271,7 @@ var Parser = (function(_super) {
         this.listParsingState = savedListParsingState;
 
         return result;
-    };
+    }
 
     // Returns true if we should abort parsing the list.
     Parser.prototype.abortParsingListOrMoveToNextToken = function(currentListType, itemCount) {
@@ -3302,7 +3302,7 @@ var Parser = (function(_super) {
         // Consume this token and move onto the next item in the list.
         this.moveToNextToken();
         return false;
-    };
+    }
 
     Parser.prototype.tryParseExpectedListItem = function(currentListType,
                                      inErrorRecovery,
@@ -3321,12 +3321,12 @@ var Parser = (function(_super) {
         }
 
         return items;
-    };
+    }
 
     Parser.prototype.listIsTerminated = function(currentListType, itemCount) {
         return this.isExpectedListTerminator(currentListType, itemCount) ||
                this.currentToken().tokenKind === SyntaxKind.EndOfFileToken;
-    };
+    }
 
     Parser.prototype.parseSyntaxListWorker = function(currentListType,
                                   processItems) {
@@ -3357,7 +3357,7 @@ var Parser = (function(_super) {
         }
 
         return SyntaxList.create(items);
-    };
+    }
 
     Parser.prototype.parseSeparatedSyntaxListWorker = function(currentListType) {
         var items = null;
@@ -3457,7 +3457,7 @@ var Parser = (function(_super) {
         }
 
         return SeparatedSyntaxList.create(items);
-    };
+    }
 
     Parser.prototype.allowsTrailingSeparator = function(currentListType) {
         switch (currentListType) {
@@ -3484,7 +3484,7 @@ var Parser = (function(_super) {
             default:
                 throw Errors.notYetImplemented();
         }
-    };
+    }
 
     Parser.prototype.requiresAtLeastOneItem = function(currentListType) {
         switch (currentListType) {
@@ -3510,7 +3510,7 @@ var Parser = (function(_super) {
             default:
                 throw Errors.notYetImplemented();
         }
-    };
+    }
 
     Parser.prototype.allowsAutomaticSemicolonInsertion = function(currentListType) {
         switch (currentListType) {
@@ -3536,7 +3536,7 @@ var Parser = (function(_super) {
             default:
                 throw Errors.notYetImplemented();
         }
-    };
+    }
 
     Parser.prototype.separatorKind = function(currentListType) {
         switch (currentListType) {
@@ -3562,12 +3562,12 @@ var Parser = (function(_super) {
             default:
                 throw Errors.notYetImplemented();
         }
-    };
+    }
 
     Parser.prototype.existingDiagnosticAtPosition = function(position) {
         return this.diagnostics.length > 0 &&
             this.diagnostics[this.diagnostics.length - 1].position() === position;
-    };
+    }
 
     Parser.prototype.reportUnexpectedTokenDiagnostic = function(listType) {
         var token = this.currentToken();
@@ -3575,7 +3575,7 @@ var Parser = (function(_super) {
         var diagnostic = new SyntaxDiagnostic(
             this.currentTokenStart(), token.width(), DiagnosticCode.Unexpected_token__0_expected, [this.getExpectedListElementType(listType)]);
         this.addDiagnostic(diagnostic);
-    };
+    }
 
     Parser.prototype.addDiagnostic = function(diagnostic) {
         // Except: if we already have a diagnostic for this position, don't report another one.
@@ -3585,7 +3585,7 @@ var Parser = (function(_super) {
         }
 
         this.diagnostics.push(diagnostic);
-    };
+    }
 
     Parser.prototype.isExpectedListTerminator = function(currentListType, itemCount) {
         switch (currentListType) {
@@ -3637,31 +3637,31 @@ var Parser = (function(_super) {
             default:
                 throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.isExpectedSourceUnit_ModuleElementsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.EndOfFileToken;
-    };
+    }
 
     Parser.prototype.isExpectedEnumDeclaration_VariableDeclaratorsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBraceToken;
-    };
+    }
 
     Parser.prototype.isExpectedModuleDeclaration_ModuleElementsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBraceToken;
-    };
+    }
 
     Parser.prototype.isExpectedObjectType_TypeMembersTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBraceToken;
-    };
+    }
 
     Parser.prototype.isExpectedObjectLiteralExpression_PropertyAssignmentsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBraceToken;
-    };
+    }
 
     Parser.prototype.isExpectedLiteralExpression_AssignmentExpressionsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBracketToken;
-    };
+    }
 
     Parser.prototype.isExpectedParameterList_ParametersTerminator = function() {
         var token = this.currentToken();
@@ -3682,7 +3682,7 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.isExpectedVariableDeclaration_VariableDeclarators_DisallowInTerminator = function() {
         // This is the case when we're parsing variable declarations in a for/for-in statement.
@@ -3696,7 +3696,7 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.isExpectedVariableDeclaration_VariableDeclarators_AllowInTerminator = function(itemCount) {
         //// This is the case when we're parsing variable declarations in a variable statement.
@@ -3718,7 +3718,7 @@ var Parser = (function(_super) {
 
         // We're done when we can eat a semicolon and we've parsed at least one item.
         return itemCount > 0 && this.canEatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
-    };
+    }
 
     Parser.prototype.isExpectedExtendsOrImplementsClause_TypeNameListTerminator = function() {
         if (this.currentToken().keywordKind() === SyntaxKind.ExtendsKeyword ||
@@ -3732,28 +3732,28 @@ var Parser = (function(_super) {
         }
 
         return false;
-    };
+    }
 
     Parser.prototype.isExpectedArgumentList_AssignmentExpressionsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseParenToken;
-    };
+    }
 
     Parser.prototype.isExpectedClassDeclaration_ClassElementsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBraceToken;
-    };
+    }
 
     Parser.prototype.isExpectedSwitchStatement_SwitchClausesTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBraceToken;
-    };
+    }
 
     Parser.prototype.isExpectedSwitchClause_StatementsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBraceToken ||
                this.isSwitchClause();
-    };
+    }
 
     Parser.prototype.isExpectedBlock_StatementsTerminator = function() {
         return this.currentToken().tokenKind === SyntaxKind.CloseBraceToken;
-    };
+    }
 
     Parser.prototype.isExpectedListItem = function(currentListType, inErrorRecovery) {
         switch (currentListType) {
@@ -3801,7 +3801,7 @@ var Parser = (function(_super) {
             default:
                 throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.parseExpectedListItem = function(currentListType) {
         switch (currentListType) {
@@ -3853,7 +3853,7 @@ var Parser = (function(_super) {
             default:
                 throw Errors.invalidOperation();
         }
-    };
+    }
 
     Parser.prototype.getExpectedListElementType = function(currentListType) {
         switch (currentListType) {
@@ -3901,6 +3901,6 @@ var Parser = (function(_super) {
             default:
                 throw Errors.invalidOperation();
         }
-    };
+    }
     return Parser;
-})(SlidingWindow);
+})(SlidingWindow)

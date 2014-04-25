@@ -12,7 +12,6 @@
         "end": 1050,
         "fullWidth": 1050,
         "width": 696,
-        "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "VariableStatement",
@@ -193,7 +192,6 @@
                 "end": 405,
                 "fullWidth": 37,
                 "width": 35,
-                "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "AssignmentExpression",
                     "fullStart": 369,
@@ -202,7 +200,6 @@
                     "end": 404,
                     "fullWidth": 35,
                     "width": 34,
-                    "isIncrementallyUnusable": true,
                     "left": {
                         "kind": "ElementAccessExpression",
                         "fullStart": 369,
@@ -290,7 +287,6 @@
                         "end": 404,
                         "fullWidth": 21,
                         "width": 21,
-                        "isIncrementallyUnusable": true,
                         "functionKeyword": {
                             "kind": "FunctionKeyword",
                             "fullStart": 383,
@@ -354,7 +350,6 @@
                             "end": 404,
                             "fullWidth": 11,
                             "width": 11,
-                            "isIncrementallyUnusable": true,
                             "openBraceToken": {
                                 "kind": "OpenBraceToken",
                                 "fullStart": 393,
@@ -376,7 +371,6 @@
                                     "end": 403,
                                     "fullWidth": 9,
                                     "width": 9,
-                                    "isIncrementallyUnusable": true,
                                     "expression": {
                                         "kind": "PostIncrementExpression",
                                         "fullStart": 394,
@@ -409,16 +403,6 @@
                                             "value": "++",
                                             "valueText": "++"
                                         }
-                                    },
-                                    "semicolonToken": {
-                                        "kind": "SemicolonToken",
-                                        "fullStart": 403,
-                                        "fullEnd": 403,
-                                        "start": 403,
-                                        "end": 403,
-                                        "fullWidth": 0,
-                                        "width": 0,
-                                        "text": ""
                                     }
                                 }
                             ],

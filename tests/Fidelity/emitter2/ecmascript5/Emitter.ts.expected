@@ -1,7 +1,7 @@
 ///<reference path='References.ts' />
 
 var Emitter = (function(_super) {
-    __extends(Emitter, _super);
+    __extends(Emitter, _super)
 
     function Emitter(syntaxInformationMap,
                      options) {
@@ -16,7 +16,7 @@ var Emitter = (function(_super) {
     }
     
     Emitter.emit = function(input, options) {
-        if (typeof options === "undefined") { options = null; }
+        if (typeof options === "undefined") { options = null }
         SyntaxNodeInvariantsChecker.checkInvariants(input);
         var emitter = new Emitter(SyntaxInformationMap.create(input), options);
 
@@ -24,7 +24,7 @@ var Emitter = (function(_super) {
         SyntaxNodeInvariantsChecker.checkInvariants(output);
 
         return output;
-    };
+    }
 
     Emitter.prototype.visitSourceUnit = function(node) {
         var moduleElements = [];
@@ -44,7 +44,7 @@ var Emitter = (function(_super) {
         }
 
         return new SourceUnitSyntax(SyntaxList.create(moduleElements), node.endOfFileToken());
-    };
+    }
 
     Emitter.leftmostName = function(name) {
         if (name.kind() === SyntaxKind.IdentifierName) {
@@ -56,7 +56,7 @@ var Emitter = (function(_super) {
         else {
             throw Errors.invalidOperation();
         }
-    };
+    }
 
     Emitter.splitModuleName = function(name) {
         var result = [];
@@ -74,12 +74,12 @@ var Emitter = (function(_super) {
                 throw Errors.invalidOperation();
             }
         }
-    };
+    }
 
     Emitter.prototype.adjustListIndentation = function(nodes) {
         // TODO: determine if we should actually indent the first token or not.
         return SyntaxIndenter.indentNodes(nodes, /*indentFirstToken:*/ true, this.options.indentSpaces, this.options);
-    };
+    }
 
     Emitter.prototype.visitModuleDeclaration = function(node) {
         // Break up the dotted name into pieces.
@@ -116,7 +116,7 @@ var Emitter = (function(_super) {
         }
 
         return moduleElements;
-    };
+    }
 
     Emitter.prototype.convertModuleDeclaration = function(name, moduleElements) {
         name = name.withIdentifier(
@@ -176,7 +176,7 @@ var Emitter = (function(_super) {
             SyntaxToken.createElastic({ kind: SyntaxKind.SemicolonToken, trailingTrivia: this.newLineList }));
 
         return [variableStatement, expressionStatement];
-    };
+    }
 
     Emitter.prototype.visitExpressionStatement = function(node) {
         // Can't have an expression statement with an anonymous function expression in it.
@@ -205,7 +205,7 @@ var Emitter = (function(_super) {
             SyntaxToken.createElastic({ kind: SyntaxKind.CloseParenToken }));
 
         return rewritten.withExpression(parenthesizedExpression);
-    };
+    }
 
     Emitter.prototype.visitSimpleArrowFunctionExpression = function(node) {
         var identifier = node.identifier().withLeadingTrivia(SyntaxTriviaList.empty)
@@ -221,7 +221,7 @@ var Emitter = (function(_super) {
                     SeparatedSyntaxList.create([ParameterSyntax.create(identifier)]),
                     SyntaxToken.createElastic({ kind: SyntaxKind.CloseParenToken, trailingTrivia: this.spaceList }))),
             block);
-    };
+    }
 
     Emitter.prototype.visitParenthesizedArrowFunctionExpression = function(node) {
         var parameterList = node.callSignature().parameterList().accept1(this);
@@ -231,7 +231,7 @@ var Emitter = (function(_super) {
             SyntaxToken.createElastic({ leadingTrivia: node.leadingTrivia().toArray(), kind: SyntaxKind.FunctionKeyword}),
             CallSignatureSyntax.create(parameterList),
             block);
-    };
+    }
 
     Emitter.prototype.changeIndentation = function(node,
                               changeFirstToken,
@@ -255,7 +255,7 @@ var Emitter = (function(_super) {
                 /*minimumColumn:*/this.options.indentSpaces,
                 this.options);
         }
-    };
+    }
 
     Emitter.prototype.convertArrowFunctionBody = function(arrowFunction) {
         var rewrittenBody = this.visitNode(arrowFunction.body());
@@ -360,19 +360,19 @@ var Emitter = (function(_super) {
             Indentation.columnForStartOfFirstTokenInLineContainingToken(
                 arrowFunction.firstToken(), this.syntaxInformationMap, this.options), this.options);
         return block;
-    };
+    }
 
     Emitter.functionSignatureDefaultParameters = function(signature) {
         return Emitter.parameterListDefaultParameters(signature.parameterList());
-    };
+    }
 
     Emitter.parameterListDefaultParameters = function(parameterList) {
         return Emitter.parametersDefaultParameters(parameterList.parameters());
-    };
+    }
 
     Emitter.parameterListPropertyParameters = function(parameterList) {
         return Emitter.parametersPropertyParameters(parameterList.parameters());
-    };
+    }
 
     Emitter.parametersDefaultParameters = function(list) {
         var result = [];
@@ -385,7 +385,7 @@ var Emitter = (function(_super) {
         }
 
         return result;
-    };
+    }
 
     Emitter.parametersPropertyParameters = function(list) {
         var result = [];
@@ -398,7 +398,7 @@ var Emitter = (function(_super) {
         }
 
         return result;
-    };
+    }
 
     Emitter.prototype.generatePropertyAssignmentStatement = function(parameter) {
         var identifier = parameter.identifier().withLeadingTrivia(SyntaxTriviaList.empty)
@@ -414,7 +414,7 @@ var Emitter = (function(_super) {
                 SyntaxToken.createElastic({ kind: SyntaxKind.EqualsToken, trailingTrivia: this.spaceList }),
                 new IdentifierNameSyntax(identifier.clone())),
             SyntaxToken.createElastic({ kind: SyntaxKind.SemicolonToken, trailingTrivia: this.newLineList }));
-    };
+    }
 
     Emitter.prototype.generateDefaultValueAssignmentStatement = function(parameter) {
         var space = SyntaxTriviaList.create(this.spaceList);
@@ -453,7 +453,7 @@ var Emitter = (function(_super) {
             condition,
             SyntaxToken.createElastic({ kind: SyntaxKind.CloseParenToken, trailingTrivia: this.spaceList }),
             block, null);
-    };
+    }
 
     Emitter.prototype.visitFunctionDeclaration = function(node) {
         if (node.block() === null) {
@@ -489,7 +489,7 @@ var Emitter = (function(_super) {
         // TODO: remove export/declare keywords.
         return rewritten.withBlock(rewritten.block().withStatements(
             SyntaxList.create(statements)));
-    };
+    }
 
     Emitter.prototype.visitParameter = function(node) {
         // transfer the trivia from the first token to the the identifier.
@@ -498,7 +498,7 @@ var Emitter = (function(_super) {
                                .withTrailingTrivia(node.trailingTrivia());
 
         return ParameterSyntax.create(identifier);
-    };
+    }
 
     Emitter.prototype.generatePropertyAssignment = function(classDeclaration,
                                        static,
@@ -537,7 +537,7 @@ var Emitter = (function(_super) {
             SyntaxToken.createElastic({ kind: SyntaxKind.SemicolonToken, trailingTrivia: this.newLineList }));
 
         return statement;
-    };
+    }
 
     Emitter.prototype.generatePropertyAssignments = function(classDeclaration,
                                         static) {
@@ -559,7 +559,7 @@ var Emitter = (function(_super) {
         }
         
         return result;
-    };
+    }
 
     Emitter.prototype.createDefaultConstructorDeclaration = function(classDeclaration) {
         var identifier = classDeclaration.identifier()
@@ -609,7 +609,7 @@ var Emitter = (function(_super) {
 
         return SyntaxIndenter.indentNode(
             functionDeclaration, /*indentFirstToken:*/ true, this.options.indentSpaces + classIndentation, this.options);
-    };
+    }
 
     Emitter.prototype.convertConstructorDeclaration = function(classDeclaration,
                                           constructorDeclaration) {
@@ -706,7 +706,7 @@ var Emitter = (function(_super) {
             block, null);
 
         return functionDeclaration;
-    };
+    }
 
     Emitter.prototype.convertMemberFunctionDeclaration = function(classDeclaration,
                                              functionDeclaration) {
@@ -782,7 +782,7 @@ var Emitter = (function(_super) {
         return new ExpressionStatementSyntax(
             assignmentExpression,
             SyntaxToken.createElastic({ kind: SyntaxKind.SemicolonToken, trailingTrivia: blockTrailingTrivia.toArray() }));
-    };
+    }
 
     Emitter.prototype.convertClassElements = function(classDeclaration) {
         var result = [];
@@ -813,7 +813,7 @@ var Emitter = (function(_super) {
         }
 
         return result;
-    };
+    }
 
     Emitter.prototype.visitClassDeclaration = function(node) {
         var identifier = node.identifier().withLeadingTrivia(SyntaxTriviaList.empty)
@@ -933,7 +933,7 @@ var Emitter = (function(_super) {
             SyntaxToken.createElastic({ kind: SyntaxKind.SemicolonToken, trailingTrivia: this.newLineList }));
 
         return variableStatement;
-    };
+    }
     
     Emitter.prototype.visitVariableDeclarator = function(node) {
         var result = _super.prototype.visitVariableDeclarator.call(this, node);
@@ -946,7 +946,7 @@ var Emitter = (function(_super) {
 
         return result.withTypeAnnotation(null)
                      .withIdentifier(result.identifier().withTrailingTrivia(newTrailingTrivia));
-    };
+    }
 
     Emitter.prototype.visitCastExpression = function(node) {
         var result = _super.prototype.visitCastExpression.call(this, node);
@@ -958,12 +958,12 @@ var Emitter = (function(_super) {
             subExpression.firstToken(), subExpression.firstToken().withLeadingTrivia(totalTrivia));
 
         return subExpression;
-    };
+    }
 
     Emitter.prototype.visitInterfaceDeclaration = function(node) {
         // TODO: transfer trivia if important.
         return null;
-    };
+    }
 
     Emitter.prototype.generateEnumValueExpression = function(enumDeclaration,
                                         variableDeclarator,
@@ -1001,7 +1001,7 @@ var Emitter = (function(_super) {
             new LiteralExpressionSyntax(
                 SyntaxKind.NumericLiteralExpression,
                 SyntaxToken.createElastic({ kind: SyntaxKind.NumericLiteral, text: "1" })));
-    };
+    }
 
     Emitter.prototype.generateEnumFunctionExpression = function(node) {
         var identifier = node.identifier().withLeadingTrivia(SyntaxTriviaList.empty)
@@ -1052,7 +1052,7 @@ var Emitter = (function(_super) {
             block);
 
         return functionExpression;
-    };
+    }
 
     Emitter.prototype.visitEnumDeclaration = function(node) {
         var result = [];
@@ -1113,17 +1113,17 @@ var Emitter = (function(_super) {
         result.push(expressionStatement);
 
         return result;
-    };
+    }
 
     Emitter.isSuperInvocationExpressionStatement = function(node) {
         return node.kind() === SyntaxKind.ExpressionStatement &&
             Emitter.isSuperInvocationExpression((node).expression());
-    };
+    }
 
     Emitter.isSuperInvocationExpression = function(node) {
         return node.kind() === SyntaxKind.InvocationExpression &&
             (node).expression().kind() === SyntaxKind.SuperExpression;
-    };
+    }
 
     Emitter.prototype.visitInvocationExpression = function(node) {
         var result = _super.prototype.visitInvocationExpression.call(this, node);
@@ -1149,6 +1149,6 @@ var Emitter = (function(_super) {
         return result.withExpression(expression)
                      .withArgumentList(result.argumentList().withArguments(
                          SeparatedSyntaxList.create(arguments)));
-    };
+    }
     return Emitter;
-})(SyntaxRewriter);
+})(SyntaxRewriter)

@@ -1,39 +1,39 @@
 {
     "fullText": [
-        "var A;",
+        "var A",
         "(function(A) {",
         "    // A1",
-        "    A[A.A1 = 0] = \"A1\";",
+        "    A[A.A1 = 0] = \"A1\"",
         "    /* A1 */",
-        "    A[A.A2 = 2] = \"A2\";",
+        "    A[A.A2 = 2] = \"A2\"",
         "",
-        "    A[A.A3 = A.A2 + 1] = \"A3\";",
+        "    A[A.A3 = A.A2 + 1] = \"A3\"",
         "",
-        "    A[A.A4 = 1 << 1] = \"A4\";",
+        "    A[A.A4 = 1 << 1] = \"A4\"",
         "    // A5",
-        "    A[A.A5 = A.A4 + 1] = \"A5\";",
-        "})(A||(A={}));",
+        "    A[A.A5 = A.A4 + 1] = \"A5\"",
+        "})(A||(A={}))",
         "",
-        "var M;",
+        "var M",
         "(function(M) {",
-        "    var N;",
+        "    var N",
         "    (function(N) {",
-        "        var A;",
+        "        var A",
         "        (function(A) {",
         "            // A1",
-        "            A[A.A1 = 0] = \"A1\";",
+        "            A[A.A1 = 0] = \"A1\"",
         "            /* A1 */",
-        "            A[A.A2 = 2] = \"A2\";",
+        "            A[A.A2 = 2] = \"A2\"",
         "",
-        "            A[A.A3 = A.A2 + 1] = \"A3\";",
+        "            A[A.A3 = A.A2 + 1] = \"A3\"",
         "",
-        "            A[A.A4 = 1 << 1] = \"A4\";",
+        "            A[A.A4 = 1 << 1] = \"A4\"",
         "            // A5",
-        "            A[A.A5 = A.A4 + 1] = \"A5\";",
-        "        })(A||(A={}));",
-        "    })(N||(N={}));",
-        "    M.N = N;",
-        "})(M||(M={}));",
+        "            A[A.A5 = A.A4 + 1] = \"A5\"",
+        "        })(A||(A={}))",
+        "    })(N||(N={}))",
+        "    M.N = N",
+        "})(M||(M={}))",
         ""
     ],
     "sourceUnit": {
@@ -42,27 +42,27 @@
         "fullEnd": 277,
         "start": -1,
         "end": 277,
-        "fullWidth": 644,
-        "width": 644,
+        "fullWidth": 625,
+        "width": 625,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "VariableStatement",
                 "fullStart": -1,
-                "fullEnd": 2,
+                "fullEnd": 8,
                 "start": -1,
-                "end": 0,
-                "fullWidth": 8,
-                "width": 6,
+                "end": 6,
+                "fullWidth": 7,
+                "width": 5,
                 "isIncrementallyUnusable": true,
                 "modifiers": [],
                 "variableDeclaration": {
                     "kind": "VariableDeclaration",
                     "fullStart": -1,
-                    "fullEnd": 6,
+                    "fullEnd": 8,
                     "start": -1,
                     "end": 6,
-                    "fullWidth": 5,
+                    "fullWidth": 7,
                     "width": 5,
                     "isIncrementallyUnusable": true,
                     "varKeyword": {
@@ -90,46 +90,34 @@
                         {
                             "kind": "VariableDeclarator",
                             "fullStart": 5,
-                            "fullEnd": 6,
+                            "fullEnd": 8,
                             "start": 5,
                             "end": 6,
-                            "fullWidth": 1,
+                            "fullWidth": 3,
                             "width": 1,
                             "isIncrementallyUnusable": true,
                             "propertyName": {
                                 "kind": "IdentifierName",
                                 "fullStart": 5,
-                                "fullEnd": 6,
+                                "fullEnd": 8,
                                 "start": 5,
                                 "end": 6,
-                                "fullWidth": 1,
+                                "fullWidth": 3,
                                 "width": 1,
                                 "text": "A",
                                 "value": "A",
-                                "valueText": "A"
+                                "valueText": "A",
+                                "hasTrailingTrivia": true,
+                                "hasTrailingNewLine": true,
+                                "trailingTrivia": [
+                                    {
+                                        "kind": "NewLineTrivia",
+                                        "fullStart": -1,
+                                        "fullEnd": 1,
+                                        "text": "\r\n"
+                                    }
+                                ]
                             }
-                        }
-                    ]
-                },
-                "semicolonToken": {
-                    "kind": "SemicolonToken",
-                    "fullStart": -1,
-                    "fullEnd": 2,
-                    "start": -1,
-                    "end": 0,
-                    "fullWidth": 3,
-                    "width": 1,
-                    "text": ";",
-                    "value": ";",
-                    "valueText": ";",
-                    "hasTrailingTrivia": true,
-                    "hasTrailingNewLine": true,
-                    "trailingTrivia": [
-                        {
-                            "kind": "NewLineTrivia",
-                            "fullStart": -1,
-                            "fullEnd": 1,
-                            "text": "\r\n"
                         }
                     ]
                 }
@@ -140,17 +128,17 @@
                 "fullEnd": 2,
                 "start": -1,
                 "end": 0,
-                "fullWidth": 216,
-                "width": 214,
+                "fullWidth": 210,
+                "width": 208,
                 "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "InvocationExpression",
                     "fullStart": -1,
-                    "fullEnd": 0,
+                    "fullEnd": 2,
                     "start": -1,
                     "end": 0,
-                    "fullWidth": 213,
-                    "width": 213,
+                    "fullWidth": 210,
+                    "width": 208,
                     "isIncrementallyUnusable": true,
                     "expression": {
                         "kind": "ParenthesizedExpression",
@@ -158,8 +146,8 @@
                         "fullEnd": 0,
                         "start": -1,
                         "end": 0,
-                        "fullWidth": 202,
-                        "width": 202,
+                        "fullWidth": 197,
+                        "width": 197,
                         "isIncrementallyUnusable": true,
                         "openParenToken": {
                             "kind": "OpenParenToken",
@@ -179,8 +167,8 @@
                             "fullEnd": 0,
                             "start": -1,
                             "end": 0,
-                            "fullWidth": 200,
-                            "width": 200,
+                            "fullWidth": 195,
+                            "width": 195,
                             "isIncrementallyUnusable": true,
                             "functionKeyword": {
                                 "kind": "FunctionKeyword",
@@ -278,8 +266,8 @@
                                 "fullEnd": 0,
                                 "start": -1,
                                 "end": 0,
-                                "fullWidth": 188,
-                                "width": 188,
+                                "fullWidth": 183,
+                                "width": 183,
                                 "isIncrementallyUnusable": true,
                                 "openBraceToken": {
                                     "kind": "OpenBraceToken",
@@ -307,19 +295,19 @@
                                     {
                                         "kind": "ExpressionStatement",
                                         "fullStart": 5,
-                                        "fullEnd": 2,
+                                        "fullEnd": 5,
                                         "start": 20,
-                                        "end": 0,
-                                        "fullWidth": 36,
-                                        "width": 19,
+                                        "end": 3,
+                                        "fullWidth": 35,
+                                        "width": 18,
                                         "isIncrementallyUnusable": true,
                                         "expression": {
                                             "kind": "AssignmentExpression",
                                             "fullStart": 5,
-                                            "fullEnd": 3,
+                                            "fullEnd": 5,
                                             "start": 20,
                                             "end": 3,
-                                            "fullWidth": 33,
+                                            "fullWidth": 35,
                                             "width": 18,
                                             "isIncrementallyUnusable": true,
                                             "left": {
@@ -528,55 +516,43 @@
                                             "right": {
                                                 "kind": "StringLiteral",
                                                 "fullStart": -1,
-                                                "fullEnd": 3,
+                                                "fullEnd": 5,
                                                 "start": -1,
                                                 "end": 3,
-                                                "fullWidth": 4,
+                                                "fullWidth": 6,
                                                 "width": 4,
                                                 "text": "\"A1\"",
                                                 "value": "A1",
-                                                "valueText": "A1"
+                                                "valueText": "A1",
+                                                "hasTrailingTrivia": true,
+                                                "hasTrailingNewLine": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "NewLineTrivia",
+                                                        "fullStart": -1,
+                                                        "fullEnd": 1,
+                                                        "text": "\r\n"
+                                                    }
+                                                ]
                                             }
-                                        },
-                                        "semicolonToken": {
-                                            "kind": "SemicolonToken",
-                                            "fullStart": -1,
-                                            "fullEnd": 2,
-                                            "start": -1,
-                                            "end": 0,
-                                            "fullWidth": 3,
-                                            "width": 1,
-                                            "text": ";",
-                                            "value": ";",
-                                            "valueText": ";",
-                                            "hasTrailingTrivia": true,
-                                            "hasTrailingNewLine": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "NewLineTrivia",
-                                                    "fullStart": -1,
-                                                    "fullEnd": 1,
-                                                    "text": "\r\n"
-                                                }
-                                            ]
                                         }
                                     },
                                     {
                                         "kind": "ExpressionStatement",
                                         "fullStart": 5,
-                                        "fullEnd": 2,
+                                        "fullEnd": 5,
                                         "start": 23,
-                                        "end": 0,
-                                        "fullWidth": 39,
-                                        "width": 19,
+                                        "end": 3,
+                                        "fullWidth": 38,
+                                        "width": 18,
                                         "isIncrementallyUnusable": true,
                                         "expression": {
                                             "kind": "AssignmentExpression",
                                             "fullStart": 5,
-                                            "fullEnd": 3,
+                                            "fullEnd": 5,
                                             "start": 23,
                                             "end": 3,
-                                            "fullWidth": 36,
+                                            "fullWidth": 38,
                                             "width": 18,
                                             "isIncrementallyUnusable": true,
                                             "left": {
@@ -785,55 +761,43 @@
                                             "right": {
                                                 "kind": "StringLiteral",
                                                 "fullStart": -1,
-                                                "fullEnd": 3,
+                                                "fullEnd": 5,
                                                 "start": -1,
                                                 "end": 3,
-                                                "fullWidth": 4,
+                                                "fullWidth": 6,
                                                 "width": 4,
                                                 "text": "\"A2\"",
                                                 "value": "A2",
-                                                "valueText": "A2"
+                                                "valueText": "A2",
+                                                "hasTrailingTrivia": true,
+                                                "hasTrailingNewLine": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "NewLineTrivia",
+                                                        "fullStart": -1,
+                                                        "fullEnd": 1,
+                                                        "text": "\r\n"
+                                                    }
+                                                ]
                                             }
-                                        },
-                                        "semicolonToken": {
-                                            "kind": "SemicolonToken",
-                                            "fullStart": -1,
-                                            "fullEnd": 2,
-                                            "start": -1,
-                                            "end": 0,
-                                            "fullWidth": 3,
-                                            "width": 1,
-                                            "text": ";",
-                                            "value": ";",
-                                            "valueText": ";",
-                                            "hasTrailingTrivia": true,
-                                            "hasTrailingNewLine": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "NewLineTrivia",
-                                                    "fullStart": -1,
-                                                    "fullEnd": 1,
-                                                    "text": "\r\n"
-                                                }
-                                            ]
                                         }
                                     },
                                     {
                                         "kind": "ExpressionStatement",
                                         "fullStart": 5,
-                                        "fullEnd": 2,
+                                        "fullEnd": 5,
                                         "start": 11,
-                                        "end": 0,
-                                        "fullWidth": 34,
-                                        "width": 26,
+                                        "end": 3,
+                                        "fullWidth": 33,
+                                        "width": 25,
                                         "isIncrementallyUnusable": true,
                                         "expression": {
                                             "kind": "AssignmentExpression",
                                             "fullStart": 5,
-                                            "fullEnd": 3,
+                                            "fullEnd": 5,
                                             "start": 11,
                                             "end": 3,
-                                            "fullWidth": 31,
+                                            "fullWidth": 33,
                                             "width": 25,
                                             "isIncrementallyUnusable": true,
                                             "left": {
@@ -1115,55 +1079,43 @@
                                             "right": {
                                                 "kind": "StringLiteral",
                                                 "fullStart": -1,
-                                                "fullEnd": 3,
+                                                "fullEnd": 5,
                                                 "start": -1,
                                                 "end": 3,
-                                                "fullWidth": 4,
+                                                "fullWidth": 6,
                                                 "width": 4,
                                                 "text": "\"A3\"",
                                                 "value": "A3",
-                                                "valueText": "A3"
+                                                "valueText": "A3",
+                                                "hasTrailingTrivia": true,
+                                                "hasTrailingNewLine": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "NewLineTrivia",
+                                                        "fullStart": -1,
+                                                        "fullEnd": 1,
+                                                        "text": "\r\n"
+                                                    }
+                                                ]
                                             }
-                                        },
-                                        "semicolonToken": {
-                                            "kind": "SemicolonToken",
-                                            "fullStart": -1,
-                                            "fullEnd": 2,
-                                            "start": -1,
-                                            "end": 0,
-                                            "fullWidth": 3,
-                                            "width": 1,
-                                            "text": ";",
-                                            "value": ";",
-                                            "valueText": ";",
-                                            "hasTrailingTrivia": true,
-                                            "hasTrailingNewLine": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "NewLineTrivia",
-                                                    "fullStart": -1,
-                                                    "fullEnd": 1,
-                                                    "text": "\r\n"
-                                                }
-                                            ]
                                         }
                                     },
                                     {
                                         "kind": "ExpressionStatement",
                                         "fullStart": 5,
-                                        "fullEnd": 2,
+                                        "fullEnd": 5,
                                         "start": 11,
-                                        "end": 0,
-                                        "fullWidth": 32,
-                                        "width": 24,
+                                        "end": 3,
+                                        "fullWidth": 31,
+                                        "width": 23,
                                         "isIncrementallyUnusable": true,
                                         "expression": {
                                             "kind": "AssignmentExpression",
                                             "fullStart": 5,
-                                            "fullEnd": 3,
+                                            "fullEnd": 5,
                                             "start": 11,
                                             "end": 3,
-                                            "fullWidth": 29,
+                                            "fullWidth": 31,
                                             "width": 23,
                                             "isIncrementallyUnusable": true,
                                             "left": {
@@ -1411,55 +1363,43 @@
                                             "right": {
                                                 "kind": "StringLiteral",
                                                 "fullStart": -1,
-                                                "fullEnd": 3,
+                                                "fullEnd": 5,
                                                 "start": -1,
                                                 "end": 3,
-                                                "fullWidth": 4,
+                                                "fullWidth": 6,
                                                 "width": 4,
                                                 "text": "\"A4\"",
                                                 "value": "A4",
-                                                "valueText": "A4"
+                                                "valueText": "A4",
+                                                "hasTrailingTrivia": true,
+                                                "hasTrailingNewLine": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "NewLineTrivia",
+                                                        "fullStart": -1,
+                                                        "fullEnd": 1,
+                                                        "text": "\r\n"
+                                                    }
+                                                ]
                                             }
-                                        },
-                                        "semicolonToken": {
-                                            "kind": "SemicolonToken",
-                                            "fullStart": -1,
-                                            "fullEnd": 2,
-                                            "start": -1,
-                                            "end": 0,
-                                            "fullWidth": 3,
-                                            "width": 1,
-                                            "text": ";",
-                                            "value": ";",
-                                            "valueText": ";",
-                                            "hasTrailingTrivia": true,
-                                            "hasTrailingNewLine": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "NewLineTrivia",
-                                                    "fullStart": -1,
-                                                    "fullEnd": 1,
-                                                    "text": "\r\n"
-                                                }
-                                            ]
                                         }
                                     },
                                     {
                                         "kind": "ExpressionStatement",
                                         "fullStart": 5,
-                                        "fullEnd": 2,
+                                        "fullEnd": 5,
                                         "start": 20,
-                                        "end": 0,
-                                        "fullWidth": 43,
-                                        "width": 26,
+                                        "end": 3,
+                                        "fullWidth": 42,
+                                        "width": 25,
                                         "isIncrementallyUnusable": true,
                                         "expression": {
                                             "kind": "AssignmentExpression",
                                             "fullStart": 5,
-                                            "fullEnd": 3,
+                                            "fullEnd": 5,
                                             "start": 20,
                                             "end": 3,
-                                            "fullWidth": 40,
+                                            "fullWidth": 42,
                                             "width": 25,
                                             "isIncrementallyUnusable": true,
                                             "left": {
@@ -1754,37 +1694,25 @@
                                             "right": {
                                                 "kind": "StringLiteral",
                                                 "fullStart": -1,
-                                                "fullEnd": 3,
+                                                "fullEnd": 5,
                                                 "start": -1,
                                                 "end": 3,
-                                                "fullWidth": 4,
+                                                "fullWidth": 6,
                                                 "width": 4,
                                                 "text": "\"A5\"",
                                                 "value": "A5",
-                                                "valueText": "A5"
+                                                "valueText": "A5",
+                                                "hasTrailingTrivia": true,
+                                                "hasTrailingNewLine": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "NewLineTrivia",
+                                                        "fullStart": -1,
+                                                        "fullEnd": 1,
+                                                        "text": "\r\n"
+                                                    }
+                                                ]
                                             }
-                                        },
-                                        "semicolonToken": {
-                                            "kind": "SemicolonToken",
-                                            "fullStart": -1,
-                                            "fullEnd": 2,
-                                            "start": -1,
-                                            "end": 0,
-                                            "fullWidth": 3,
-                                            "width": 1,
-                                            "text": ";",
-                                            "value": ";",
-                                            "valueText": ";",
-                                            "hasTrailingTrivia": true,
-                                            "hasTrailingNewLine": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "NewLineTrivia",
-                                                    "fullStart": -1,
-                                                    "fullEnd": 1,
-                                                    "text": "\r\n"
-                                                }
-                                            ]
                                         }
                                     }
                                 ],
@@ -1818,10 +1746,10 @@
                     "argumentList": {
                         "kind": "ArgumentList",
                         "fullStart": -1,
-                        "fullEnd": 0,
+                        "fullEnd": 2,
                         "start": -1,
                         "end": 0,
-                        "fullWidth": 11,
+                        "fullWidth": 13,
                         "width": 11,
                         "isIncrementallyUnusable": true,
                         "openParenToken": {
@@ -1978,57 +1906,45 @@
                         "closeParenToken": {
                             "kind": "CloseParenToken",
                             "fullStart": -1,
-                            "fullEnd": 0,
+                            "fullEnd": 2,
                             "start": -1,
                             "end": 0,
-                            "fullWidth": 1,
+                            "fullWidth": 3,
                             "width": 1,
                             "text": ")",
                             "value": ")",
-                            "valueText": ")"
+                            "valueText": ")",
+                            "hasTrailingTrivia": true,
+                            "hasTrailingNewLine": true,
+                            "trailingTrivia": [
+                                {
+                                    "kind": "NewLineTrivia",
+                                    "fullStart": -1,
+                                    "fullEnd": 1,
+                                    "text": "\r\n"
+                                }
+                            ]
                         }
                     }
-                },
-                "semicolonToken": {
-                    "kind": "SemicolonToken",
-                    "fullStart": -1,
-                    "fullEnd": 2,
-                    "start": -1,
-                    "end": 0,
-                    "fullWidth": 3,
-                    "width": 1,
-                    "text": ";",
-                    "value": ";",
-                    "valueText": ";",
-                    "hasTrailingTrivia": true,
-                    "hasTrailingNewLine": true,
-                    "trailingTrivia": [
-                        {
-                            "kind": "NewLineTrivia",
-                            "fullStart": -1,
-                            "fullEnd": 1,
-                            "text": "\r\n"
-                        }
-                    ]
                 }
             },
             {
                 "kind": "VariableStatement",
                 "fullStart": -1,
-                "fullEnd": 2,
+                "fullEnd": 122,
                 "start": 1,
-                "end": 0,
-                "fullWidth": 10,
-                "width": 6,
+                "end": 120,
+                "fullWidth": 9,
+                "width": 5,
                 "isIncrementallyUnusable": true,
                 "modifiers": [],
                 "variableDeclaration": {
                     "kind": "VariableDeclaration",
                     "fullStart": -1,
-                    "fullEnd": 120,
+                    "fullEnd": 122,
                     "start": 1,
                     "end": 120,
-                    "fullWidth": 7,
+                    "fullWidth": 9,
                     "width": 5,
                     "isIncrementallyUnusable": true,
                     "varKeyword": {
@@ -2066,46 +1982,34 @@
                         {
                             "kind": "VariableDeclarator",
                             "fullStart": 119,
-                            "fullEnd": 120,
+                            "fullEnd": 122,
                             "start": 119,
                             "end": 120,
-                            "fullWidth": 1,
+                            "fullWidth": 3,
                             "width": 1,
                             "isIncrementallyUnusable": true,
                             "propertyName": {
                                 "kind": "IdentifierName",
                                 "fullStart": 119,
-                                "fullEnd": 120,
+                                "fullEnd": 122,
                                 "start": 119,
                                 "end": 120,
-                                "fullWidth": 1,
+                                "fullWidth": 3,
                                 "width": 1,
                                 "text": "M",
                                 "value": "M",
-                                "valueText": "M"
+                                "valueText": "M",
+                                "hasTrailingTrivia": true,
+                                "hasTrailingNewLine": true,
+                                "trailingTrivia": [
+                                    {
+                                        "kind": "NewLineTrivia",
+                                        "fullStart": -1,
+                                        "fullEnd": 1,
+                                        "text": "\r\n"
+                                    }
+                                ]
                             }
-                        }
-                    ]
-                },
-                "semicolonToken": {
-                    "kind": "SemicolonToken",
-                    "fullStart": -1,
-                    "fullEnd": 2,
-                    "start": -1,
-                    "end": 0,
-                    "fullWidth": 3,
-                    "width": 1,
-                    "text": ";",
-                    "value": ";",
-                    "valueText": ";",
-                    "hasTrailingTrivia": true,
-                    "hasTrailingNewLine": true,
-                    "trailingTrivia": [
-                        {
-                            "kind": "NewLineTrivia",
-                            "fullStart": -1,
-                            "fullEnd": 1,
-                            "text": "\r\n"
                         }
                     ]
                 }
@@ -2116,17 +2020,17 @@
                 "fullEnd": 2,
                 "start": -1,
                 "end": 0,
-                "fullWidth": 410,
-                "width": 408,
+                "fullWidth": 399,
+                "width": 397,
                 "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "InvocationExpression",
                     "fullStart": -1,
-                    "fullEnd": 0,
+                    "fullEnd": 2,
                     "start": -1,
                     "end": 0,
-                    "fullWidth": 407,
-                    "width": 407,
+                    "fullWidth": 399,
+                    "width": 397,
                     "isIncrementallyUnusable": true,
                     "expression": {
                         "kind": "ParenthesizedExpression",
@@ -2134,8 +2038,8 @@
                         "fullEnd": 0,
                         "start": -1,
                         "end": 0,
-                        "fullWidth": 396,
-                        "width": 396,
+                        "fullWidth": 386,
+                        "width": 386,
                         "isIncrementallyUnusable": true,
                         "openParenToken": {
                             "kind": "OpenParenToken",
@@ -2155,8 +2059,8 @@
                             "fullEnd": 0,
                             "start": -1,
                             "end": 0,
-                            "fullWidth": 394,
-                            "width": 394,
+                            "fullWidth": 384,
+                            "width": 384,
                             "isIncrementallyUnusable": true,
                             "functionKeyword": {
                                 "kind": "FunctionKeyword",
@@ -2254,8 +2158,8 @@
                                 "fullEnd": 0,
                                 "start": -1,
                                 "end": 0,
-                                "fullWidth": 382,
-                                "width": 382,
+                                "fullWidth": 372,
+                                "width": 372,
                                 "isIncrementallyUnusable": true,
                                 "openBraceToken": {
                                     "kind": "OpenBraceToken",
@@ -2283,20 +2187,20 @@
                                     {
                                         "kind": "VariableStatement",
                                         "fullStart": -1,
-                                        "fullEnd": 2,
+                                        "fullEnd": 124,
                                         "start": 3,
-                                        "end": 0,
-                                        "fullWidth": 12,
-                                        "width": 6,
+                                        "end": 122,
+                                        "fullWidth": 11,
+                                        "width": 5,
                                         "isIncrementallyUnusable": true,
                                         "modifiers": [],
                                         "variableDeclaration": {
                                             "kind": "VariableDeclaration",
                                             "fullStart": -1,
-                                            "fullEnd": 122,
+                                            "fullEnd": 124,
                                             "start": 3,
                                             "end": 122,
-                                            "fullWidth": 9,
+                                            "fullWidth": 11,
                                             "width": 5,
                                             "isIncrementallyUnusable": true,
                                             "varKeyword": {
@@ -2333,46 +2237,34 @@
                                                 {
                                                     "kind": "VariableDeclarator",
                                                     "fullStart": 121,
-                                                    "fullEnd": 122,
+                                                    "fullEnd": 124,
                                                     "start": 121,
                                                     "end": 122,
-                                                    "fullWidth": 1,
+                                                    "fullWidth": 3,
                                                     "width": 1,
                                                     "isIncrementallyUnusable": true,
                                                     "propertyName": {
                                                         "kind": "IdentifierName",
                                                         "fullStart": 121,
-                                                        "fullEnd": 122,
+                                                        "fullEnd": 124,
                                                         "start": 121,
                                                         "end": 122,
-                                                        "fullWidth": 1,
+                                                        "fullWidth": 3,
                                                         "width": 1,
                                                         "text": "N",
                                                         "value": "N",
-                                                        "valueText": "N"
+                                                        "valueText": "N",
+                                                        "hasTrailingTrivia": true,
+                                                        "hasTrailingNewLine": true,
+                                                        "trailingTrivia": [
+                                                            {
+                                                                "kind": "NewLineTrivia",
+                                                                "fullStart": -1,
+                                                                "fullEnd": 1,
+                                                                "text": "\r\n"
+                                                            }
+                                                        ]
                                                     }
-                                                }
-                                            ]
-                                        },
-                                        "semicolonToken": {
-                                            "kind": "SemicolonToken",
-                                            "fullStart": -1,
-                                            "fullEnd": 2,
-                                            "start": -1,
-                                            "end": 0,
-                                            "fullWidth": 3,
-                                            "width": 1,
-                                            "text": ";",
-                                            "value": ";",
-                                            "valueText": ";",
-                                            "hasTrailingTrivia": true,
-                                            "hasTrailingNewLine": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "NewLineTrivia",
-                                                    "fullStart": -1,
-                                                    "fullEnd": 1,
-                                                    "text": "\r\n"
                                                 }
                                             ]
                                         }
@@ -2383,17 +2275,17 @@
                                         "fullEnd": 2,
                                         "start": 3,
                                         "end": 0,
-                                        "fullWidth": 352,
-                                        "width": 346,
+                                        "fullWidth": 344,
+                                        "width": 338,
                                         "isIncrementallyUnusable": true,
                                         "expression": {
                                             "kind": "InvocationExpression",
                                             "fullStart": -1,
-                                            "fullEnd": 0,
+                                            "fullEnd": 2,
                                             "start": 3,
                                             "end": 0,
-                                            "fullWidth": 349,
-                                            "width": 345,
+                                            "fullWidth": 344,
+                                            "width": 338,
                                             "isIncrementallyUnusable": true,
                                             "expression": {
                                                 "kind": "ParenthesizedExpression",
@@ -2401,8 +2293,8 @@
                                                 "fullEnd": 0,
                                                 "start": 3,
                                                 "end": 0,
-                                                "fullWidth": 338,
-                                                "width": 334,
+                                                "fullWidth": 331,
+                                                "width": 327,
                                                 "isIncrementallyUnusable": true,
                                                 "openParenToken": {
                                                     "kind": "OpenParenToken",
@@ -2431,8 +2323,8 @@
                                                     "fullEnd": 4,
                                                     "start": -1,
                                                     "end": 4,
-                                                    "fullWidth": 332,
-                                                    "width": 332,
+                                                    "fullWidth": 325,
+                                                    "width": 325,
                                                     "isIncrementallyUnusable": true,
                                                     "functionKeyword": {
                                                         "kind": "FunctionKeyword",
@@ -2530,8 +2422,8 @@
                                                         "fullEnd": 4,
                                                         "start": -1,
                                                         "end": 4,
-                                                        "fullWidth": 320,
-                                                        "width": 320,
+                                                        "fullWidth": 313,
+                                                        "width": 313,
                                                         "isIncrementallyUnusable": true,
                                                         "openBraceToken": {
                                                             "kind": "OpenBraceToken",
@@ -2559,20 +2451,20 @@
                                                             {
                                                                 "kind": "VariableStatement",
                                                                 "fullStart": -1,
-                                                                "fullEnd": 2,
+                                                                "fullEnd": 138,
                                                                 "start": 7,
-                                                                "end": 0,
-                                                                "fullWidth": 16,
-                                                                "width": 6,
+                                                                "end": 136,
+                                                                "fullWidth": 15,
+                                                                "width": 5,
                                                                 "isIncrementallyUnusable": true,
                                                                 "modifiers": [],
                                                                 "variableDeclaration": {
                                                                     "kind": "VariableDeclaration",
                                                                     "fullStart": -1,
-                                                                    "fullEnd": 136,
+                                                                    "fullEnd": 138,
                                                                     "start": 7,
                                                                     "end": 136,
-                                                                    "fullWidth": 13,
+                                                                    "fullWidth": 15,
                                                                     "width": 5,
                                                                     "isIncrementallyUnusable": true,
                                                                     "varKeyword": {
@@ -2609,46 +2501,34 @@
                                                                         {
                                                                             "kind": "VariableDeclarator",
                                                                             "fullStart": 135,
-                                                                            "fullEnd": 136,
+                                                                            "fullEnd": 138,
                                                                             "start": 135,
                                                                             "end": 136,
-                                                                            "fullWidth": 1,
+                                                                            "fullWidth": 3,
                                                                             "width": 1,
                                                                             "isIncrementallyUnusable": true,
                                                                             "propertyName": {
                                                                                 "kind": "IdentifierName",
                                                                                 "fullStart": 135,
-                                                                                "fullEnd": 136,
+                                                                                "fullEnd": 138,
                                                                                 "start": 135,
                                                                                 "end": 136,
-                                                                                "fullWidth": 1,
+                                                                                "fullWidth": 3,
                                                                                 "width": 1,
                                                                                 "text": "A",
                                                                                 "value": "A",
-                                                                                "valueText": "A"
+                                                                                "valueText": "A",
+                                                                                "hasTrailingTrivia": true,
+                                                                                "hasTrailingNewLine": true,
+                                                                                "trailingTrivia": [
+                                                                                    {
+                                                                                        "kind": "NewLineTrivia",
+                                                                                        "fullStart": -1,
+                                                                                        "fullEnd": 1,
+                                                                                        "text": "\r\n"
+                                                                                    }
+                                                                                ]
                                                                             }
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                "semicolonToken": {
-                                                                    "kind": "SemicolonToken",
-                                                                    "fullStart": -1,
-                                                                    "fullEnd": 2,
-                                                                    "start": -1,
-                                                                    "end": 0,
-                                                                    "fullWidth": 3,
-                                                                    "width": 1,
-                                                                    "text": ";",
-                                                                    "value": ";",
-                                                                    "valueText": ";",
-                                                                    "hasTrailingTrivia": true,
-                                                                    "hasTrailingNewLine": true,
-                                                                    "trailingTrivia": [
-                                                                        {
-                                                                            "kind": "NewLineTrivia",
-                                                                            "fullStart": -1,
-                                                                            "fullEnd": 1,
-                                                                            "text": "\r\n"
                                                                         }
                                                                     ]
                                                                 }
@@ -2659,17 +2539,17 @@
                                                                 "fullEnd": 2,
                                                                 "start": 7,
                                                                 "end": 0,
-                                                                "fullWidth": 296,
-                                                                "width": 286,
+                                                                "fullWidth": 290,
+                                                                "width": 280,
                                                                 "isIncrementallyUnusable": true,
                                                                 "expression": {
                                                                     "kind": "InvocationExpression",
                                                                     "fullStart": -1,
-                                                                    "fullEnd": 0,
+                                                                    "fullEnd": 2,
                                                                     "start": 7,
                                                                     "end": 0,
-                                                                    "fullWidth": 293,
-                                                                    "width": 285,
+                                                                    "fullWidth": 290,
+                                                                    "width": 280,
                                                                     "isIncrementallyUnusable": true,
                                                                     "expression": {
                                                                         "kind": "ParenthesizedExpression",
@@ -2677,8 +2557,8 @@
                                                                         "fullEnd": 0,
                                                                         "start": 7,
                                                                         "end": 0,
-                                                                        "fullWidth": 282,
-                                                                        "width": 274,
+                                                                        "fullWidth": 277,
+                                                                        "width": 269,
                                                                         "isIncrementallyUnusable": true,
                                                                         "openParenToken": {
                                                                             "kind": "OpenParenToken",
@@ -2707,8 +2587,8 @@
                                                                             "fullEnd": 8,
                                                                             "start": -1,
                                                                             "end": 8,
-                                                                            "fullWidth": 272,
-                                                                            "width": 272,
+                                                                            "fullWidth": 267,
+                                                                            "width": 267,
                                                                             "isIncrementallyUnusable": true,
                                                                             "functionKeyword": {
                                                                                 "kind": "FunctionKeyword",
@@ -2806,8 +2686,8 @@
                                                                                 "fullEnd": 8,
                                                                                 "start": -1,
                                                                                 "end": 8,
-                                                                                "fullWidth": 260,
-                                                                                "width": 260,
+                                                                                "fullWidth": 255,
+                                                                                "width": 255,
                                                                                 "isIncrementallyUnusable": true,
                                                                                 "openBraceToken": {
                                                                                     "kind": "OpenBraceToken",
@@ -2835,19 +2715,19 @@
                                                                                     {
                                                                                         "kind": "ExpressionStatement",
                                                                                         "fullStart": 135,
-                                                                                        "fullEnd": 2,
+                                                                                        "fullEnd": 5,
                                                                                         "start": 166,
-                                                                                        "end": 0,
-                                                                                        "fullWidth": 52,
-                                                                                        "width": 19,
+                                                                                        "end": 3,
+                                                                                        "fullWidth": 51,
+                                                                                        "width": 18,
                                                                                         "isIncrementallyUnusable": true,
                                                                                         "expression": {
                                                                                             "kind": "AssignmentExpression",
                                                                                             "fullStart": 135,
-                                                                                            "fullEnd": 3,
+                                                                                            "fullEnd": 5,
                                                                                             "start": 166,
                                                                                             "end": 3,
-                                                                                            "fullWidth": 49,
+                                                                                            "fullWidth": 51,
                                                                                             "width": 18,
                                                                                             "isIncrementallyUnusable": true,
                                                                                             "left": {
@@ -3056,55 +2936,43 @@
                                                                                             "right": {
                                                                                                 "kind": "StringLiteral",
                                                                                                 "fullStart": -1,
-                                                                                                "fullEnd": 3,
+                                                                                                "fullEnd": 5,
                                                                                                 "start": -1,
                                                                                                 "end": 3,
-                                                                                                "fullWidth": 4,
+                                                                                                "fullWidth": 6,
                                                                                                 "width": 4,
                                                                                                 "text": "\"A1\"",
                                                                                                 "value": "A1",
-                                                                                                "valueText": "A1"
+                                                                                                "valueText": "A1",
+                                                                                                "hasTrailingTrivia": true,
+                                                                                                "hasTrailingNewLine": true,
+                                                                                                "trailingTrivia": [
+                                                                                                    {
+                                                                                                        "kind": "NewLineTrivia",
+                                                                                                        "fullStart": -1,
+                                                                                                        "fullEnd": 1,
+                                                                                                        "text": "\r\n"
+                                                                                                    }
+                                                                                                ]
                                                                                             }
-                                                                                        },
-                                                                                        "semicolonToken": {
-                                                                                            "kind": "SemicolonToken",
-                                                                                            "fullStart": -1,
-                                                                                            "fullEnd": 2,
-                                                                                            "start": -1,
-                                                                                            "end": 0,
-                                                                                            "fullWidth": 3,
-                                                                                            "width": 1,
-                                                                                            "text": ";",
-                                                                                            "value": ";",
-                                                                                            "valueText": ";",
-                                                                                            "hasTrailingTrivia": true,
-                                                                                            "hasTrailingNewLine": true,
-                                                                                            "trailingTrivia": [
-                                                                                                {
-                                                                                                    "kind": "NewLineTrivia",
-                                                                                                    "fullStart": -1,
-                                                                                                    "fullEnd": 1,
-                                                                                                    "text": "\r\n"
-                                                                                                }
-                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
                                                                                         "kind": "ExpressionStatement",
                                                                                         "fullStart": 135,
-                                                                                        "fullEnd": 2,
+                                                                                        "fullEnd": 5,
                                                                                         "start": 169,
-                                                                                        "end": 0,
-                                                                                        "fullWidth": 55,
-                                                                                        "width": 19,
+                                                                                        "end": 3,
+                                                                                        "fullWidth": 54,
+                                                                                        "width": 18,
                                                                                         "isIncrementallyUnusable": true,
                                                                                         "expression": {
                                                                                             "kind": "AssignmentExpression",
                                                                                             "fullStart": 135,
-                                                                                            "fullEnd": 3,
+                                                                                            "fullEnd": 5,
                                                                                             "start": 169,
                                                                                             "end": 3,
-                                                                                            "fullWidth": 52,
+                                                                                            "fullWidth": 54,
                                                                                             "width": 18,
                                                                                             "isIncrementallyUnusable": true,
                                                                                             "left": {
@@ -3313,55 +3181,43 @@
                                                                                             "right": {
                                                                                                 "kind": "StringLiteral",
                                                                                                 "fullStart": -1,
-                                                                                                "fullEnd": 3,
+                                                                                                "fullEnd": 5,
                                                                                                 "start": -1,
                                                                                                 "end": 3,
-                                                                                                "fullWidth": 4,
+                                                                                                "fullWidth": 6,
                                                                                                 "width": 4,
                                                                                                 "text": "\"A2\"",
                                                                                                 "value": "A2",
-                                                                                                "valueText": "A2"
+                                                                                                "valueText": "A2",
+                                                                                                "hasTrailingTrivia": true,
+                                                                                                "hasTrailingNewLine": true,
+                                                                                                "trailingTrivia": [
+                                                                                                    {
+                                                                                                        "kind": "NewLineTrivia",
+                                                                                                        "fullStart": -1,
+                                                                                                        "fullEnd": 1,
+                                                                                                        "text": "\r\n"
+                                                                                                    }
+                                                                                                ]
                                                                                             }
-                                                                                        },
-                                                                                        "semicolonToken": {
-                                                                                            "kind": "SemicolonToken",
-                                                                                            "fullStart": -1,
-                                                                                            "fullEnd": 2,
-                                                                                            "start": -1,
-                                                                                            "end": 0,
-                                                                                            "fullWidth": 3,
-                                                                                            "width": 1,
-                                                                                            "text": ";",
-                                                                                            "value": ";",
-                                                                                            "valueText": ";",
-                                                                                            "hasTrailingTrivia": true,
-                                                                                            "hasTrailingNewLine": true,
-                                                                                            "trailingTrivia": [
-                                                                                                {
-                                                                                                    "kind": "NewLineTrivia",
-                                                                                                    "fullStart": -1,
-                                                                                                    "fullEnd": 1,
-                                                                                                    "text": "\r\n"
-                                                                                                }
-                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
                                                                                         "kind": "ExpressionStatement",
                                                                                         "fullStart": 135,
-                                                                                        "fullEnd": 2,
+                                                                                        "fullEnd": 5,
                                                                                         "start": 149,
-                                                                                        "end": 0,
-                                                                                        "fullWidth": 42,
-                                                                                        "width": 26,
+                                                                                        "end": 3,
+                                                                                        "fullWidth": 41,
+                                                                                        "width": 25,
                                                                                         "isIncrementallyUnusable": true,
                                                                                         "expression": {
                                                                                             "kind": "AssignmentExpression",
                                                                                             "fullStart": 135,
-                                                                                            "fullEnd": 3,
+                                                                                            "fullEnd": 5,
                                                                                             "start": 149,
                                                                                             "end": 3,
-                                                                                            "fullWidth": 39,
+                                                                                            "fullWidth": 41,
                                                                                             "width": 25,
                                                                                             "isIncrementallyUnusable": true,
                                                                                             "left": {
@@ -3643,55 +3499,43 @@
                                                                                             "right": {
                                                                                                 "kind": "StringLiteral",
                                                                                                 "fullStart": -1,
-                                                                                                "fullEnd": 3,
+                                                                                                "fullEnd": 5,
                                                                                                 "start": -1,
                                                                                                 "end": 3,
-                                                                                                "fullWidth": 4,
+                                                                                                "fullWidth": 6,
                                                                                                 "width": 4,
                                                                                                 "text": "\"A3\"",
                                                                                                 "value": "A3",
-                                                                                                "valueText": "A3"
+                                                                                                "valueText": "A3",
+                                                                                                "hasTrailingTrivia": true,
+                                                                                                "hasTrailingNewLine": true,
+                                                                                                "trailingTrivia": [
+                                                                                                    {
+                                                                                                        "kind": "NewLineTrivia",
+                                                                                                        "fullStart": -1,
+                                                                                                        "fullEnd": 1,
+                                                                                                        "text": "\r\n"
+                                                                                                    }
+                                                                                                ]
                                                                                             }
-                                                                                        },
-                                                                                        "semicolonToken": {
-                                                                                            "kind": "SemicolonToken",
-                                                                                            "fullStart": -1,
-                                                                                            "fullEnd": 2,
-                                                                                            "start": -1,
-                                                                                            "end": 0,
-                                                                                            "fullWidth": 3,
-                                                                                            "width": 1,
-                                                                                            "text": ";",
-                                                                                            "value": ";",
-                                                                                            "valueText": ";",
-                                                                                            "hasTrailingTrivia": true,
-                                                                                            "hasTrailingNewLine": true,
-                                                                                            "trailingTrivia": [
-                                                                                                {
-                                                                                                    "kind": "NewLineTrivia",
-                                                                                                    "fullStart": -1,
-                                                                                                    "fullEnd": 1,
-                                                                                                    "text": "\r\n"
-                                                                                                }
-                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
                                                                                         "kind": "ExpressionStatement",
                                                                                         "fullStart": 135,
-                                                                                        "fullEnd": 2,
+                                                                                        "fullEnd": 5,
                                                                                         "start": 149,
-                                                                                        "end": 0,
-                                                                                        "fullWidth": 40,
-                                                                                        "width": 24,
+                                                                                        "end": 3,
+                                                                                        "fullWidth": 39,
+                                                                                        "width": 23,
                                                                                         "isIncrementallyUnusable": true,
                                                                                         "expression": {
                                                                                             "kind": "AssignmentExpression",
                                                                                             "fullStart": 135,
-                                                                                            "fullEnd": 3,
+                                                                                            "fullEnd": 5,
                                                                                             "start": 149,
                                                                                             "end": 3,
-                                                                                            "fullWidth": 37,
+                                                                                            "fullWidth": 39,
                                                                                             "width": 23,
                                                                                             "isIncrementallyUnusable": true,
                                                                                             "left": {
@@ -3939,55 +3783,43 @@
                                                                                             "right": {
                                                                                                 "kind": "StringLiteral",
                                                                                                 "fullStart": -1,
-                                                                                                "fullEnd": 3,
+                                                                                                "fullEnd": 5,
                                                                                                 "start": -1,
                                                                                                 "end": 3,
-                                                                                                "fullWidth": 4,
+                                                                                                "fullWidth": 6,
                                                                                                 "width": 4,
                                                                                                 "text": "\"A4\"",
                                                                                                 "value": "A4",
-                                                                                                "valueText": "A4"
+                                                                                                "valueText": "A4",
+                                                                                                "hasTrailingTrivia": true,
+                                                                                                "hasTrailingNewLine": true,
+                                                                                                "trailingTrivia": [
+                                                                                                    {
+                                                                                                        "kind": "NewLineTrivia",
+                                                                                                        "fullStart": -1,
+                                                                                                        "fullEnd": 1,
+                                                                                                        "text": "\r\n"
+                                                                                                    }
+                                                                                                ]
                                                                                             }
-                                                                                        },
-                                                                                        "semicolonToken": {
-                                                                                            "kind": "SemicolonToken",
-                                                                                            "fullStart": -1,
-                                                                                            "fullEnd": 2,
-                                                                                            "start": -1,
-                                                                                            "end": 0,
-                                                                                            "fullWidth": 3,
-                                                                                            "width": 1,
-                                                                                            "text": ";",
-                                                                                            "value": ";",
-                                                                                            "valueText": ";",
-                                                                                            "hasTrailingTrivia": true,
-                                                                                            "hasTrailingNewLine": true,
-                                                                                            "trailingTrivia": [
-                                                                                                {
-                                                                                                    "kind": "NewLineTrivia",
-                                                                                                    "fullStart": -1,
-                                                                                                    "fullEnd": 1,
-                                                                                                    "text": "\r\n"
-                                                                                                }
-                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
                                                                                         "kind": "ExpressionStatement",
                                                                                         "fullStart": 135,
-                                                                                        "fullEnd": 2,
+                                                                                        "fullEnd": 5,
                                                                                         "start": 166,
-                                                                                        "end": 0,
-                                                                                        "fullWidth": 59,
-                                                                                        "width": 26,
+                                                                                        "end": 3,
+                                                                                        "fullWidth": 58,
+                                                                                        "width": 25,
                                                                                         "isIncrementallyUnusable": true,
                                                                                         "expression": {
                                                                                             "kind": "AssignmentExpression",
                                                                                             "fullStart": 135,
-                                                                                            "fullEnd": 3,
+                                                                                            "fullEnd": 5,
                                                                                             "start": 166,
                                                                                             "end": 3,
-                                                                                            "fullWidth": 56,
+                                                                                            "fullWidth": 58,
                                                                                             "width": 25,
                                                                                             "isIncrementallyUnusable": true,
                                                                                             "left": {
@@ -4282,37 +4114,25 @@
                                                                                             "right": {
                                                                                                 "kind": "StringLiteral",
                                                                                                 "fullStart": -1,
-                                                                                                "fullEnd": 3,
+                                                                                                "fullEnd": 5,
                                                                                                 "start": -1,
                                                                                                 "end": 3,
-                                                                                                "fullWidth": 4,
+                                                                                                "fullWidth": 6,
                                                                                                 "width": 4,
                                                                                                 "text": "\"A5\"",
                                                                                                 "value": "A5",
-                                                                                                "valueText": "A5"
+                                                                                                "valueText": "A5",
+                                                                                                "hasTrailingTrivia": true,
+                                                                                                "hasTrailingNewLine": true,
+                                                                                                "trailingTrivia": [
+                                                                                                    {
+                                                                                                        "kind": "NewLineTrivia",
+                                                                                                        "fullStart": -1,
+                                                                                                        "fullEnd": 1,
+                                                                                                        "text": "\r\n"
+                                                                                                    }
+                                                                                                ]
                                                                                             }
-                                                                                        },
-                                                                                        "semicolonToken": {
-                                                                                            "kind": "SemicolonToken",
-                                                                                            "fullStart": -1,
-                                                                                            "fullEnd": 2,
-                                                                                            "start": -1,
-                                                                                            "end": 0,
-                                                                                            "fullWidth": 3,
-                                                                                            "width": 1,
-                                                                                            "text": ";",
-                                                                                            "value": ";",
-                                                                                            "valueText": ";",
-                                                                                            "hasTrailingTrivia": true,
-                                                                                            "hasTrailingNewLine": true,
-                                                                                            "trailingTrivia": [
-                                                                                                {
-                                                                                                    "kind": "NewLineTrivia",
-                                                                                                    "fullStart": -1,
-                                                                                                    "fullEnd": 1,
-                                                                                                    "text": "\r\n"
-                                                                                                }
-                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ],
@@ -4355,10 +4175,10 @@
                                                                     "argumentList": {
                                                                         "kind": "ArgumentList",
                                                                         "fullStart": -1,
-                                                                        "fullEnd": 0,
+                                                                        "fullEnd": 2,
                                                                         "start": -1,
                                                                         "end": 0,
-                                                                        "fullWidth": 11,
+                                                                        "fullWidth": 13,
                                                                         "width": 11,
                                                                         "isIncrementallyUnusable": true,
                                                                         "openParenToken": {
@@ -4515,38 +4335,26 @@
                                                                         "closeParenToken": {
                                                                             "kind": "CloseParenToken",
                                                                             "fullStart": -1,
-                                                                            "fullEnd": 0,
+                                                                            "fullEnd": 2,
                                                                             "start": -1,
                                                                             "end": 0,
-                                                                            "fullWidth": 1,
+                                                                            "fullWidth": 3,
                                                                             "width": 1,
                                                                             "text": ")",
                                                                             "value": ")",
-                                                                            "valueText": ")"
+                                                                            "valueText": ")",
+                                                                            "hasTrailingTrivia": true,
+                                                                            "hasTrailingNewLine": true,
+                                                                            "trailingTrivia": [
+                                                                                {
+                                                                                    "kind": "NewLineTrivia",
+                                                                                    "fullStart": -1,
+                                                                                    "fullEnd": 1,
+                                                                                    "text": "\r\n"
+                                                                                }
+                                                                            ]
                                                                         }
                                                                     }
-                                                                },
-                                                                "semicolonToken": {
-                                                                    "kind": "SemicolonToken",
-                                                                    "fullStart": -1,
-                                                                    "fullEnd": 2,
-                                                                    "start": -1,
-                                                                    "end": 0,
-                                                                    "fullWidth": 3,
-                                                                    "width": 1,
-                                                                    "text": ";",
-                                                                    "value": ";",
-                                                                    "valueText": ";",
-                                                                    "hasTrailingTrivia": true,
-                                                                    "hasTrailingNewLine": true,
-                                                                    "trailingTrivia": [
-                                                                        {
-                                                                            "kind": "NewLineTrivia",
-                                                                            "fullStart": -1,
-                                                                            "fullEnd": 1,
-                                                                            "text": "\r\n"
-                                                                        }
-                                                                    ]
                                                                 }
                                                             }
                                                         ],
@@ -4589,10 +4397,10 @@
                                             "argumentList": {
                                                 "kind": "ArgumentList",
                                                 "fullStart": -1,
-                                                "fullEnd": 0,
+                                                "fullEnd": 2,
                                                 "start": -1,
                                                 "end": 0,
-                                                "fullWidth": 11,
+                                                "fullWidth": 13,
                                                 "width": 11,
                                                 "isIncrementallyUnusable": true,
                                                 "openParenToken": {
@@ -4749,56 +4557,44 @@
                                                 "closeParenToken": {
                                                     "kind": "CloseParenToken",
                                                     "fullStart": -1,
-                                                    "fullEnd": 0,
+                                                    "fullEnd": 2,
                                                     "start": -1,
                                                     "end": 0,
-                                                    "fullWidth": 1,
+                                                    "fullWidth": 3,
                                                     "width": 1,
                                                     "text": ")",
                                                     "value": ")",
-                                                    "valueText": ")"
+                                                    "valueText": ")",
+                                                    "hasTrailingTrivia": true,
+                                                    "hasTrailingNewLine": true,
+                                                    "trailingTrivia": [
+                                                        {
+                                                            "kind": "NewLineTrivia",
+                                                            "fullStart": -1,
+                                                            "fullEnd": 1,
+                                                            "text": "\r\n"
+                                                        }
+                                                    ]
                                                 }
                                             }
-                                        },
-                                        "semicolonToken": {
-                                            "kind": "SemicolonToken",
-                                            "fullStart": -1,
-                                            "fullEnd": 2,
-                                            "start": -1,
-                                            "end": 0,
-                                            "fullWidth": 3,
-                                            "width": 1,
-                                            "text": ";",
-                                            "value": ";",
-                                            "valueText": ";",
-                                            "hasTrailingTrivia": true,
-                                            "hasTrailingNewLine": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "NewLineTrivia",
-                                                    "fullStart": -1,
-                                                    "fullEnd": 1,
-                                                    "text": "\r\n"
-                                                }
-                                            ]
                                         }
                                     },
                                     {
                                         "kind": "ExpressionStatement",
                                         "fullStart": 119,
-                                        "fullEnd": 2,
+                                        "fullEnd": 124,
                                         "start": 123,
-                                        "end": 0,
-                                        "fullWidth": 14,
-                                        "width": 8,
+                                        "end": 122,
+                                        "fullWidth": 13,
+                                        "width": 7,
                                         "isIncrementallyUnusable": true,
                                         "expression": {
                                             "kind": "AssignmentExpression",
                                             "fullStart": 119,
-                                            "fullEnd": 122,
+                                            "fullEnd": 124,
                                             "start": 123,
                                             "end": 122,
-                                            "fullWidth": 11,
+                                            "fullWidth": 13,
                                             "width": 7,
                                             "isIncrementallyUnusable": true,
                                             "left": {
@@ -4889,37 +4685,25 @@
                                             "right": {
                                                 "kind": "IdentifierName",
                                                 "fullStart": 121,
-                                                "fullEnd": 122,
+                                                "fullEnd": 124,
                                                 "start": 121,
                                                 "end": 122,
-                                                "fullWidth": 1,
+                                                "fullWidth": 3,
                                                 "width": 1,
                                                 "text": "N",
                                                 "value": "N",
-                                                "valueText": "N"
+                                                "valueText": "N",
+                                                "hasTrailingTrivia": true,
+                                                "hasTrailingNewLine": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "NewLineTrivia",
+                                                        "fullStart": -1,
+                                                        "fullEnd": 1,
+                                                        "text": "\r\n"
+                                                    }
+                                                ]
                                             }
-                                        },
-                                        "semicolonToken": {
-                                            "kind": "SemicolonToken",
-                                            "fullStart": -1,
-                                            "fullEnd": 2,
-                                            "start": -1,
-                                            "end": 0,
-                                            "fullWidth": 3,
-                                            "width": 1,
-                                            "text": ";",
-                                            "value": ";",
-                                            "valueText": ";",
-                                            "hasTrailingTrivia": true,
-                                            "hasTrailingNewLine": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "NewLineTrivia",
-                                                    "fullStart": -1,
-                                                    "fullEnd": 1,
-                                                    "text": "\r\n"
-                                                }
-                                            ]
                                         }
                                     }
                                 ],
@@ -4953,10 +4737,10 @@
                     "argumentList": {
                         "kind": "ArgumentList",
                         "fullStart": -1,
-                        "fullEnd": 0,
+                        "fullEnd": 2,
                         "start": -1,
                         "end": 0,
-                        "fullWidth": 11,
+                        "fullWidth": 13,
                         "width": 11,
                         "isIncrementallyUnusable": true,
                         "openParenToken": {
@@ -5113,38 +4897,26 @@
                         "closeParenToken": {
                             "kind": "CloseParenToken",
                             "fullStart": -1,
-                            "fullEnd": 0,
+                            "fullEnd": 2,
                             "start": -1,
                             "end": 0,
-                            "fullWidth": 1,
+                            "fullWidth": 3,
                             "width": 1,
                             "text": ")",
                             "value": ")",
-                            "valueText": ")"
+                            "valueText": ")",
+                            "hasTrailingTrivia": true,
+                            "hasTrailingNewLine": true,
+                            "trailingTrivia": [
+                                {
+                                    "kind": "NewLineTrivia",
+                                    "fullStart": -1,
+                                    "fullEnd": 1,
+                                    "text": "\r\n"
+                                }
+                            ]
                         }
                     }
-                },
-                "semicolonToken": {
-                    "kind": "SemicolonToken",
-                    "fullStart": -1,
-                    "fullEnd": 2,
-                    "start": -1,
-                    "end": 0,
-                    "fullWidth": 3,
-                    "width": 1,
-                    "text": ";",
-                    "value": ";",
-                    "valueText": ";",
-                    "hasTrailingTrivia": true,
-                    "hasTrailingNewLine": true,
-                    "trailingTrivia": [
-                        {
-                            "kind": "NewLineTrivia",
-                            "fullStart": -1,
-                            "fullEnd": 1,
-                            "text": "\r\n"
-                        }
-                    ]
                 }
             }
         ],
