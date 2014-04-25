@@ -5,8 +5,6 @@ module TypeScript {
         childAt(index: number): T;
         toArray(): T[];
 
-        insertChildrenInto(array: ISyntaxElement[], index: number): void;
-
         any(func: (v: T) => boolean): boolean;
 
         firstOrDefault(func: (v: T, index: number) => boolean): T;
@@ -125,9 +123,6 @@ module TypeScript.Syntax {
 
         public isIncrementallyUnusable(): boolean {
             return false;
-        }
-
-        public insertChildrenInto(array: ISyntaxElement[], index: number): void {
         }
 
         public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
@@ -268,10 +263,6 @@ module TypeScript.Syntax {
 
         public isIncrementallyUnusable(): boolean {
             return this.item.isIncrementallyUnusable();
-        }
-
-        public insertChildrenInto(array: ISyntaxElement[], index: number): void {
-            array.splice(index, 0, this.item);
         }
 
         public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
@@ -452,16 +443,6 @@ module TypeScript.Syntax {
             }
 
             return this._data;
-        }
-
-        public insertChildrenInto(array: ISyntaxElement[], index: number): void {
-            if (index === 0) {
-                array.unshift.apply(array, this.nodeOrTokens);
-            }
-            else {
-                // TODO: this seems awfully innefficient.  Can we do better here?
-                array.splice.apply(array, [index, <any>0].concat(this.nodeOrTokens));
-            }
         }
 
         public any(func: (v: ISyntaxNodeOrToken) => boolean): boolean {

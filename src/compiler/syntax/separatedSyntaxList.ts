@@ -12,8 +12,6 @@ module TypeScript {
 
         nonSeparatorCount(): number;
         nonSeparatorAt(index: number): T;
-
-        insertChildrenInto(array: ISyntaxElement[], index: number): void;
     }
 }
 
@@ -146,9 +144,6 @@ module TypeScript.Syntax {
 
         isIncrementallyUnusable() {
             return false;
-        }
-
-        insertChildrenInto(array: ISyntaxElement[], index: number): void {
         }
 
         leadingTrivia() {
@@ -304,10 +299,6 @@ module TypeScript.Syntax {
 
         public isIncrementallyUnusable(): boolean {
             return this.item.isIncrementallyUnusable();
-        }
-
-        public insertChildrenInto(array: ISyntaxElement[], index: number): void {
-            array.splice(index, 0, this.item);
         }
     }
 
@@ -508,16 +499,6 @@ module TypeScript.Syntax {
             for (var i = 0, n = this.elements.length; i < n; i++) {
                 var element = this.elements[i];
                 element.collectTextElements(elements);
-            }
-        }
-
-        public insertChildrenInto(array: ISyntaxElement[], index: number): void {
-            if (index === 0) {
-                array.unshift.apply(array, this.elements);
-            }
-            else {
-                // TODO: this seems awfully innefficient.  Can we do better here?
-                array.splice.apply(array, [index, <any>0].concat(this.elements));
             }
         }
     }

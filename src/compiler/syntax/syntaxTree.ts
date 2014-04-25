@@ -82,8 +82,11 @@ module TypeScript {
         }
 
         public structuralEquals(tree: SyntaxTree): boolean {
-            return ArrayUtilities.sequenceEquals(this.diagnostics(), tree.diagnostics(), Diagnostic.equals) &&
-                this.sourceUnit().structuralEquals(tree.sourceUnit());
+            if (!ArrayUtilities.sequenceEquals(this.diagnostics(), tree.diagnostics(), Diagnostic.equals)) {
+                return false;
+            }
+
+            return this.sourceUnit().structuralEquals(tree.sourceUnit());
         }
     }
 

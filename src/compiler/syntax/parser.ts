@@ -9,7 +9,7 @@ module TypeScript.Parser {
         slidingWindowIndex: number;
 
         // Information used by the incremental parser source.
-        oldSourceUnitCursorIndex: number;
+        oldSourceUnitCursor: SyntaxCursor;
         changeDelta: number;
         changeRange: TextChangeRange;
 
@@ -156,32 +156,115 @@ module TypeScript.Parser {
         LastListParsingState = TypeParameterList_TypeParameters,
     }
 
-    // Allows one to easily move over a syntax tree.  Used during incremental parsing to move over
-    // the previously parsed tree to provide nodes and tokens that can be reused when parsing the
-    // updated text.
-    class SyntaxCursor {
-        private _elements: ISyntaxElement[] = [];
-        private _index: number = 0;
-        private _pinCount: number = 0;
+    class SyntaxCursorPiece {
+        constructor(public element: ISyntaxElement,
+                    public indexInParent: number) {
+        }
+    }
 
-        constructor(sourceUnit: SourceUnitSyntax) {
-            sourceUnit.insertChildrenInto(this._elements, 0);
+    // Pool syntax cursors so we don't churn too much memory when we need temporary cursors.  
+    // i.e. when we're speculatively parsing, we can cheaply get a pooled cursor and then
+    // return it when we no longer need it.
+    var syntaxCursorPool: SyntaxCursor[] = [];
+    var syntaxCursorPoolCount: number = 0;
+
+    function returnSyntaxCursor(cursor: SyntaxCursor): void {
+        // Make sure the cursor isn't holding onto any syntax elements.  We don't want to leak 
+        // them when we return the cursor to the pool.
+        cursor.clean();
+
+        syntaxCursorPool[syntaxCursorPoolCount] = cursor;
+        syntaxCursorPoolCount++;
+    }
+
+    function getSyntaxCursor(): SyntaxCursor {
+        // Get an existing cursor from the pool if we have one.  Or create a new one if we don't.
+        var cursor = syntaxCursorPoolCount > 0
+            ? syntaxCursorPool[syntaxCursorPoolCount - 1]
+            : new SyntaxCursor();
+
+        if (syntaxCursorPoolCount > 0) {
+            // If we reused an existing cursor, take it out of the pool so no one else uses it.
+            syntaxCursorPoolCount--;
+            syntaxCursorPool[syntaxCursorPoolCount] = null;
+        }
+
+        return cursor;
+    }
+
+    function cloneSyntaxCursor(cursor: SyntaxCursor): SyntaxCursor {
+        var newCursor = getSyntaxCursor();
+
+        // Make the new cursor a *deep* copy of the cursor passed in.  This ensures each cursor can
+        // be moved without affecting the other.
+        newCursor.deepCopyFrom(cursor);
+
+        return newCursor;
+    }
+
+    class SyntaxCursor {
+        // Our list of path pieces.  The piece pointed to by 'currentPieceIndex' must be a node or
+        // token.  However, pieces earlier than that may point to list nodes.
+        //
+        // For perf we reuse pieces as much as possible.  i.e. instead of popping items off the 
+        // list, we just will change currentPieceIndex so we can reuse that piece later.
+        private pieces: SyntaxCursorPiece[] = [];
+        private currentPieceIndex: number = -1;
+
+        // Cleans up this cursor so that it doesn't have any references to actual syntax nodes.
+        // This sould be done before returning the cursor to the pool so that the Parser module
+        // doesn't unnecessarily keep old syntax trees alive.
+        public clean(): void {
+            for (var i = 0, n = this.pieces.length; i < n; i++) {
+                var piece = this.pieces[i];
+
+                if (piece.element === null) {
+                    break;
+                }
+
+                piece.element = null;
+                piece.indexInParent = -1;
+            }
+
+            this.currentPieceIndex = -1;
+        }
+
+        // Makes this cursor into a deep copy of the cursor passed in.
+        public deepCopyFrom(other: SyntaxCursor): void {
+            Debug.assert(this.currentPieceIndex === -1);
+            for (var i = 0, n = other.pieces.length; i < n; i++) {
+                var piece = other.pieces[i];
+
+                if (piece.element === null) {
+                    break;
+                }
+
+                this.pushElement(piece.element, piece.indexInParent);
+            }
+
+            Debug.assert(this.currentPieceIndex === other.currentPieceIndex);
         }
 
         public isFinished(): boolean {
-            return this._index === this._elements.length;
+            return this.currentPieceIndex < 0;
         }
 
-        public currentElement(): ISyntaxElement {
+        public currentNodeOrToken(): ISyntaxNodeOrToken {
             if (this.isFinished()) {
                 return null;
             }
 
-            return this._elements[this._index];
+            var result = this.pieces[this.currentPieceIndex].element;
+
+            // The current element must always be a node or a token.
+            Debug.assert(result !== null);
+            Debug.assert(result.isNode() || result.isToken());
+
+            return <ISyntaxNodeOrToken>result;
         }
 
         public currentNode(): SyntaxNode {
-            var element = this.currentElement();
+            var element = this.currentNodeOrToken();
             return element !== null && element.isNode() ? <SyntaxNode>element : null;
         }
 
@@ -190,113 +273,130 @@ module TypeScript.Parser {
                 return;
             }
 
-            var element = this._elements[this._index];
-            if (element.isToken()) {
+            var nodeOrToken = this.currentNodeOrToken();
+            if (nodeOrToken.isToken()) {
                 // If we're already on a token, there's nothing to do.
                 return;
             }
 
-            // Otherwise, break the node we're pointing at into its children.  We'll then be 
-            // pointing at the first child
-            var node = <SyntaxNode>element;
+            // The last element must be a token or a node.
+            Debug.assert(nodeOrToken.isNode());
 
-            // Remove the item that we're pointing at.
-            this._elements.splice(this._index, 1);
+            // Either the node has some existent child, then move to it.  if it doesn't, then it's
+            // an empty node.  Conceptually the first child of an empty node is really just the 
+            // next sibling of the empty node.
+            for (var i = 0, n = nodeOrToken.childCount(); i < n; i++) {
+                var child = nodeOrToken.childAt(i);
+                if (child !== null && !child.isShared()) {
+                    // Great, we found a real child.  Push that.
+                    this.pushElement(child, /*indexInParent:*/ i);
 
-            // And add its children into the position it was at.
-            node.insertChildrenInto(this._elements, this._index);
+                    // If it was a list, make sure we're pointing at its first element.  We know we
+                    // must have one because this is a non-shared list.
+                    this.moveToFirstChildIfList();
+                    return;
+                }
+            }
+
+            // This element must have been an empty node.  Moving to its 'first child' is equivalent to just
+            // moving to the next sibling.
+
+            Debug.assert(nodeOrToken.fullWidth() === 0);
+            this.moveToNextSibling();
         }
 
-        public moveToNextSibling() {
+        public moveToNextSibling(): void {
             if (this.isFinished()) {
                 return;
             }
 
-            if (this._pinCount > 0) {
-                // If we're currently pinned, then just move our index forward.  We'll then be 
-                // pointing at the next sibling.
-                this._index++;
-                return;
+            // first look to our parent and see if it has a sibling of us that we can move to.
+            var currentPiece = this.pieces[this.currentPieceIndex];
+            var parent = currentPiece.element.parent;
+
+            // We start searching at the index one past our own index in the parent.
+            for (var i = currentPiece.indexInParent + 1, n = parent.childCount(); i < n; i++) {
+                var sibling = parent.childAt(i);
+
+                if (sibling !== null && !sibling.isShared()) {
+                    // We found a good sibling that we can move to.  Just reuse our existing piece
+                    // so we don't have to push/pop.
+                    currentPiece.element = sibling;
+                    currentPiece.indexInParent = i;
+
+                    // The sibling might have been a list.  Move to it's first child.  it must have
+                    // one since this was a non-shared element.
+                    this.moveToFirstChildIfList();
+                    return;
+                }
             }
 
-            // if we're not pinned, we better be pointed at the first item in the list.
-            // Debug.assert(this._index === 0);
-
-            // Just shift ourselves over so we forget the current element we're pointing at and 
-            // we're pointing at the next slibing.
-            this._elements.shift();
+            // Didn't have a sibling for this element.  Go up to our parent and get its sibling.
+            this.moveToParent();
+            this.moveToNextSibling();
         }
 
-        public getAndPinCursorIndex(): number {
-            this._pinCount++;
-            return this._index;
-        }
+        private moveToFirstChildIfList(): void {
+            var element = this.pieces[this.currentPieceIndex].element;
 
-        public releaseAndUnpinCursorIndex(index: number) {
-            // this._index = index;
+            if (element.isList() || element.isSeparatedList()) {
+                // We cannot ever get an empty list in our piece path.  Empty lists are 'shared' and
+                // we make sure to filter that out before pushing any children.
+                Debug.assert(element.childCount() > 0);
 
-            // Debug.assert(this._pinCount > 0);
-            this._pinCount--;
-            if (this._pinCount === 0) {
-                // The first pin was given out at index 0.  So we better be back at index 0.
-                // Debug.assert(this._index === 0);
+                this.pushElement(element.childAt(0), /*indexInParent:*/ 0);
             }
         }
 
-        public rewindToPinnedCursorIndex(index: number): void {
-            // Debug.assert(index >= 0 && index <= this._elements.length);
-            // Debug.assert(this._pinCount > 0);
-            this._index = index;
+        public pushElement(element: ISyntaxElement, indexInParent: number): void {
+            Debug.assert(element !== null);
+            Debug.assert(indexInParent >= 0);
+            this.currentPieceIndex++;
+
+            // Reuse an existing piece if we have one.  Otherwise, push a new piece to our list.
+            if (this.currentPieceIndex === this.pieces.length) {
+                this.pieces.push(new SyntaxCursorPiece(element, indexInParent));
+            }
+            else {
+                var piece = this.pieces[this.currentPieceIndex];
+                piece.element = element;
+                piece.indexInParent = indexInParent;
+            }
         }
 
-        public pinCount(): number {
-            return this._pinCount;
+        private moveToParent(): void {
+            var currentPiece = this.pieces[this.currentPieceIndex];
+
+            // Clear the data from the old piece.
+            currentPiece.element = null;
+            currentPiece.indexInParent = -1;
+
+            // Point at the parent.  if we move past the top of the path, then we're finished.
+            this.currentPieceIndex--;
         }
 
-        private moveToFirstToken(): void {
-            var element: ISyntaxElement;
-
+        public moveToFirstToken(): void {
             while (!this.isFinished()) {
-                element = this.currentElement();
+                var element = this.currentNodeOrToken();
                 if (element.isNode()) {
                     this.moveToFirstChild();
                     continue;
                 }
 
-                // Debug.assert(element.isToken());
+                Debug.assert(element.isToken());
                 return;
             }
         }
 
         public currentToken(): ISyntaxToken {
             this.moveToFirstToken();
-            if (this.isFinished()) {
-                return null;
-            }
 
-            var element = this.currentElement();
-
-            // Debug.assert(element.isToken());
-            return <ISyntaxToken>element;
-        }
-
-        public peekToken(n: number): ISyntaxToken {
-            this.moveToFirstToken();
-            var pin = this.getAndPinCursorIndex();
-
-            for (var i = 0; i < n; i++) {
-                this.moveToNextSibling();
-                this.moveToFirstToken();
-            }
-
-            var result = this.currentToken();
-            this.rewindToPinnedCursorIndex(pin);
-            this.releaseAndUnpinCursorIndex(pin);
-
-            return result;
+            var element = this.currentNodeOrToken();
+            Debug.assert(element === null || element.isToken());
+            return element === null ? null : <ISyntaxToken>element;
         }
     }
-    
+
     // Interface that represents the source that the parser pulls tokens from.  Essentially, this 
     // is the interface that the parser needs an underlying scanner to provide.  This allows us to
     // separate out "what" the parser does with the tokens it retrieves versus "how" it obtains
@@ -638,7 +738,12 @@ module TypeScript.Parser {
 
         constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, newText: ISimpleText) {
             var oldSourceUnit = oldSyntaxTree.sourceUnit();
-            this._oldSourceUnitCursor = new SyntaxCursor(oldSourceUnit);
+            this._oldSourceUnitCursor = getSyntaxCursor();
+
+            // Start the cursor pointing at the first element in the source unit (if it exists).
+            if (oldSourceUnit.moduleElements.childCount() > 0) {
+                this._oldSourceUnitCursor.pushElement(oldSourceUnit.moduleElements.childAt(0), /*indexInParent:*/ 0);
+            }
 
             // In general supporting multiple individual edits is just not that important.  So we 
             // just collapse this all down to a single range to make the code here easier.  The only
@@ -716,12 +821,16 @@ module TypeScript.Parser {
         public getRewindPoint(): IParserRewindPoint {
             // Get a rewind point for our new text reader and for our old source unit cursor.
             var rewindPoint = this._normalParserSource.getRewindPoint();
-            var oldSourceUnitCursorIndex = this._oldSourceUnitCursor.getAndPinCursorIndex();
+
+            // Clone our cursor.  That way we can restore to that point if hte parser needs to rewind.
+            var oldSourceUnitCursorClone = cloneSyntaxCursor(this._oldSourceUnitCursor);
 
             // Store where we were when the rewind point was created.
             rewindPoint.changeDelta = this._changeDelta;
             rewindPoint.changeRange = this._changeRange;
-            rewindPoint.oldSourceUnitCursorIndex = oldSourceUnitCursorIndex;
+            rewindPoint.oldSourceUnitCursor = this._oldSourceUnitCursor;
+
+            this._oldSourceUnitCursor = oldSourceUnitCursorClone;
 
             // Debug.assert(rewindPoint.pinCount === this._oldSourceUnitCursor.pinCount());
 
@@ -732,14 +841,22 @@ module TypeScript.Parser {
             // Restore our state to the values when the rewind point was created.
             this._changeRange = rewindPoint.changeRange;
             this._changeDelta = rewindPoint.changeDelta;
-            this._oldSourceUnitCursor.rewindToPinnedCursorIndex(rewindPoint.oldSourceUnitCursorIndex);
+
+            returnSyntaxCursor(this._oldSourceUnitCursor);
+            this._oldSourceUnitCursor = rewindPoint.oldSourceUnitCursor;
+
+            // null out the cursor in the rewind point so that we don't try to return it again
+            // when we release hte rewind point.
+            rewindPoint.oldSourceUnitCursor = null;
 
             this._normalParserSource.rewind(rewindPoint);
         }
 
         public releaseRewindPoint(rewindPoint: IParserRewindPoint): void {
-            // Release both the new text reader and the old text cursor.
-            this._oldSourceUnitCursor.releaseAndUnpinCursorIndex(rewindPoint.oldSourceUnitCursorIndex);
+            if (rewindPoint.oldSourceUnitCursor !== null) {
+                returnSyntaxCursor(rewindPoint.oldSourceUnitCursor);
+            }
+
             this._normalParserSource.releaseRewindPoint(rewindPoint);
         }
 
@@ -838,14 +955,14 @@ module TypeScript.Parser {
                 // We're behind in the original tree.  Throw out a node or token in an attempt to 
                 // catch up to the position we're at in the new text.
 
-                var currentElement = this._oldSourceUnitCursor.currentElement();
+                var currentNodeOrToken = this._oldSourceUnitCursor.currentNodeOrToken();
 
                 // If we're pointing at a node, and that node's width is less than our delta,
                 // then we can just skip that node.  Otherwise, if we're pointing at a node
                 // whose width is greater than the delta, then crumble it and try again.
                 // Otherwise, we must be pointing at a token.  Just skip it and try again.
                     
-                if (currentElement.isNode() && (currentElement.fullWidth() > Math.abs(this._changeDelta))) {
+                if (currentNodeOrToken.isNode() && (currentNodeOrToken.fullWidth() > Math.abs(this._changeDelta))) {
                     // We were pointing at a node whose width was more than changeDelta.  Crumble the 
                     // node and try again.  Note: we haven't changed changeDelta.  So the callers loop
                     // will just repeat this until we get to a node or token that we can skip over.
@@ -855,7 +972,7 @@ module TypeScript.Parser {
                     this._oldSourceUnitCursor.moveToNextSibling();
 
                     // Get our change delta closer to 0 as we skip past this item.
-                    this._changeDelta += currentElement.fullWidth();
+                    this._changeDelta += currentNodeOrToken.fullWidth();
 
                     // If this was a node, then our changeDelta is 0 or negative.  If this was a 
                     // token, then we could still be negative (and we have to read another token),
@@ -961,21 +1078,42 @@ module TypeScript.Parser {
 
         private tryPeekTokenFromOldSourceUnit(n: number): ISyntaxToken {
             // Debug.assert(this.canReadFromOldSourceUnit());
+            
+            // clone the existing cursor so we can move it forward and then restore ourselves back
+            // to where we started from.
 
+            var cursorClone = cloneSyntaxCursor(this._oldSourceUnitCursor);
+
+            var token = this.tryPeekTokenFromOldSourceUnitWorker(n);
+
+            returnSyntaxCursor(this._oldSourceUnitCursor);
+            this._oldSourceUnitCursor = cursorClone;
+
+            return token;
+        }
+
+        private tryPeekTokenFromOldSourceUnitWorker(n: number): ISyntaxToken {
             // In order to peek the 'nth' token we need all the tokens up to that point.  That way
             // we know we know position that the nth token is at.  The position is necessary so 
             // that we can test if this token (or any that precede it cross the change range).
             var currentPosition = this.absolutePosition();
+
+            // First, make sure the cursor is pointing at a token.
+            this._oldSourceUnitCursor.moveToFirstToken();
+
+            // Now, keep walking forward to successive tokens.
             for (var i = 0; i < n; i++) {
-                var interimToken = this._oldSourceUnitCursor.peekToken(i);
+                var interimToken = this._oldSourceUnitCursor.currentToken();
+
                 if (!this.canReuseTokenFromOldSourceUnit(currentPosition, interimToken)) {
                     return null;
                 }
 
                 currentPosition += interimToken.fullWidth();
+                this._oldSourceUnitCursor.moveToNextSibling();
             }
 
-            var token = this._oldSourceUnitCursor.peekToken(n);
+            var token = this._oldSourceUnitCursor.currentToken();
             return this.canReuseTokenFromOldSourceUnit(currentPosition, token) 
                 ? token : null;
         }
@@ -986,11 +1124,11 @@ module TypeScript.Parser {
             // Debug.assert(this._changeDelta === 0);
 
             // Get the current node we were pointing at, and move to the next element.
-            var currentElement = this._oldSourceUnitCursor.currentElement();
+            var currentElement = this._oldSourceUnitCursor.currentNodeOrToken();
             var currentNode = this._oldSourceUnitCursor.currentNode();
 
             // We better still be pointing at the node.
-            // Debug.assert(currentElement === currentNode);
+            Debug.assert(currentElement === currentNode);
             this._oldSourceUnitCursor.moveToNextSibling();
 
             // Update the underlying source with where it should now be currently pointing, and 
