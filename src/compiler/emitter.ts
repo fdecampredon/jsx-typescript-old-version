@@ -2607,6 +2607,7 @@ module TypeScript {
                         this.emitIndent();
                         this.recordSourceMappingStart(varDecl);
 
+                        this.emitComments(varDecl, true);
                         var varDeclName = varDecl.variableDeclarator.propertyName.text();
                         if (isQuoted(varDeclName) || varDecl.variableDeclarator.propertyName.kind() !== SyntaxKind.IdentifierName) {
                             this.writeToOutput(classDecl.identifier.text() + "[" + varDeclName + "]");
