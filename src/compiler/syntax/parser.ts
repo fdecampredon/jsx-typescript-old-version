@@ -305,34 +305,38 @@ module TypeScript.Parser {
         }
 
         public moveToNextSibling(): void {
-            if (this.isFinished()) {
-                return;
-            }
+            while (!this.isFinished()) {
+                // first look to our parent and see if it has a sibling of us that we can move to.
+                var currentPiece = this.pieces[this.currentPieceIndex];
+                var parent = currentPiece.element.parent;
 
-            // first look to our parent and see if it has a sibling of us that we can move to.
-            var currentPiece = this.pieces[this.currentPieceIndex];
-            var parent = currentPiece.element.parent;
+                // We start searching at the index one past our own index in the parent.
+                for (var i = currentPiece.indexInParent + 1, n = parent.childCount(); i < n; i++) {
+                    var sibling = parent.childAt(i);
 
-            // We start searching at the index one past our own index in the parent.
-            for (var i = currentPiece.indexInParent + 1, n = parent.childCount(); i < n; i++) {
-                var sibling = parent.childAt(i);
+                    if (sibling !== null && !sibling.isShared()) {
+                        // We found a good sibling that we can move to.  Just reuse our existing piece
+                        // so we don't have to push/pop.
+                        currentPiece.element = sibling;
+                        currentPiece.indexInParent = i;
 
-                if (sibling !== null && !sibling.isShared()) {
-                    // We found a good sibling that we can move to.  Just reuse our existing piece
-                    // so we don't have to push/pop.
-                    currentPiece.element = sibling;
-                    currentPiece.indexInParent = i;
-
-                    // The sibling might have been a list.  Move to it's first child.  it must have
-                    // one since this was a non-shared element.
-                    this.moveToFirstChildIfList();
-                    return;
+                        // The sibling might have been a list.  Move to it's first child.  it must have
+                        // one since this was a non-shared element.
+                        this.moveToFirstChildIfList();
+                        return;
+                    }
                 }
-            }
 
-            // Didn't have a sibling for this element.  Go up to our parent and get its sibling.
-            this.moveToParent();
-            this.moveToNextSibling();
+                // Didn't have a sibling for this element.  Go up to our parent and get its sibling.
+
+                // Clear the data from the old piece.  We don't want to keep any elements around
+                // unintentionally.
+                currentPiece.element = null;
+                currentPiece.indexInParent = -1;
+
+                // Point at the parent.  if we move past the top of the path, then we're finished.
+                this.currentPieceIndex--;
+            }
         }
 
         private moveToFirstChildIfList(): void {
@@ -361,17 +365,6 @@ module TypeScript.Parser {
                 piece.element = element;
                 piece.indexInParent = indexInParent;
             }
-        }
-
-        private moveToParent(): void {
-            var currentPiece = this.pieces[this.currentPieceIndex];
-
-            // Clear the data from the old piece.
-            currentPiece.element = null;
-            currentPiece.indexInParent = -1;
-
-            // Point at the parent.  if we move past the top of the path, then we're finished.
-            this.currentPieceIndex--;
         }
 
         public moveToFirstToken(): void {
@@ -697,6 +690,9 @@ module TypeScript.Parser {
         // the change.
         private _changeRange: TextChangeRange;
 
+        // Cached value of _changeRange.newSpan().  Cached for performance.
+        private _changeRangeNewSpan: TextSpan;
+
         // This number represents how our position in the old tree relates to the position we're 
         // pointing at in the new text.  If it is 0 then our positions are in sync and we can read
         // nodes or tokens from the old tree.  If it is non-zero, then our positions are not in 
@@ -733,6 +729,7 @@ module TypeScript.Parser {
             // For example, doing a column select on a *large* section of a code.  If this is a 
             // problem, we can always update this code to handle multiple changes.
             this._changeRange = IncrementalParserSource.extendToAffectedRange(textChangeRange, oldSourceUnit);
+            this._changeRangeNewSpan = this._changeRange.newSpan();
 
             // The old tree's length, plus whatever length change was caused by the edit
             // Had better equal the new text's length!
@@ -851,7 +848,7 @@ module TypeScript.Parser {
 
             // If our current absolute position is in the middle of the changed range in the new text
             // then we definitely can't read from the old source unit right now.
-            if (this._changeRange !== null && this._changeRange.newSpan().intersectsWithPosition(this.absolutePosition())) {
+            if (this._changeRange !== null && this._changeRangeNewSpan.intersectsWithPosition(this.absolutePosition())) {
                 return false;
             }
 
@@ -1168,8 +1165,7 @@ module TypeScript.Parser {
                 // compensate for the length change between the old and new text.
                 if (!this.isPastChangeRange()) {
                     // var changeEndInNewText = this._changeRange.span().start() + this._changeRange.newLength();
-                    var changeRangeSpanInNewText = this._changeRange.newSpan();
-                    if (this.absolutePosition() >= changeRangeSpanInNewText.end()) {
+                    if (this.absolutePosition() >= this._changeRangeNewSpan.end()) {
                         this._changeDelta += this._changeRange.newLength() - this._changeRange.span().length();
 
                         // Once we're past the change range, we no longer need it.  Null it out.
