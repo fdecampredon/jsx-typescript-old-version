@@ -573,14 +573,11 @@ module TypeScript.Syntax {
 
         var triviaList = token.trailingTrivia();
         if (includeSkippedTokens && triviaList && triviaList.hasSkippedToken()) {
-            var fullStart = token.end();
             for (var i = 0, n = triviaList.count(); i < n; i++) {
                 var trivia = triviaList.syntaxTriviaAt(i);
                 if (trivia.isSkippedToken()) {
                     return trivia.skippedToken();
                 }
-
-                fullStart += trivia.fullWidth();
             }
         }
 

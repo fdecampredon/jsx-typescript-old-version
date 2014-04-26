@@ -4,13 +4,6 @@
     "parseOptions": {
         "allowAutomaticSemicolonInsertion": true
     },
-    "diagnostics": [
-        {
-            "start": 6,
-            "length": 0,
-            "diagnosticCode": "Identifier expected."
-        }
-    ],
     "sourceUnit": {
         "kind": "SourceUnit",
         "fullStart": 0,
@@ -33,11 +26,11 @@
                 "variableDeclaration": {
                     "kind": "VariableDeclaration",
                     "fullStart": 0,
-                    "fullEnd": 6,
+                    "fullEnd": 5,
                     "start": 0,
-                    "end": 6,
-                    "fullWidth": 6,
-                    "width": 6,
+                    "end": 5,
+                    "fullWidth": 5,
+                    "width": 5,
                     "varKeyword": {
                         "kind": "VarKeyword",
                         "fullStart": 0,
@@ -80,20 +73,20 @@
                                 "value": "a",
                                 "valueText": "a"
                             }
-                        },
-                        {
-                            "kind": "CommaToken",
-                            "fullStart": 5,
-                            "fullEnd": 6,
-                            "start": 5,
-                            "end": 6,
-                            "fullWidth": 1,
-                            "width": 1,
-                            "text": ",",
-                            "value": ",",
-                            "valueText": ","
                         }
                     ]
+                },
+                "semicolonToken": {
+                    "kind": "SemicolonToken",
+                    "fullStart": 5,
+                    "fullEnd": 6,
+                    "start": 5,
+                    "end": 6,
+                    "fullWidth": 1,
+                    "width": 1,
+                    "text": ";",
+                    "value": ";",
+                    "valueText": ";"
                 }
             }
         ],

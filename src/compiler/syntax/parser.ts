@@ -5710,22 +5710,15 @@ module TypeScript.Parser {
         private isExpectedVariableDeclaration_VariableDeclarators_AllowInTerminator(): boolean {
             //// This is the case when we're parsing variable declarations in a variable statement.
 
-            // If we just parsed a comma, then we can't terminate this list.  i.e.:
-            //      var a = bar, // <-- just consumed the comma
-            //          b = baz;
-            if (this.previousToken().tokenKind === SyntaxKind.CommaToken) {
-                return false;
-            }
-
             // ERROR RECOVERY TWEAK:
             // For better error recovery, if we see a => then we just stop immediately.  We've got an
-            // arrow function here and it's going to be veyr unlikely that we'll resynchronize and get
+            // arrow function here and it's going to be very unlikely that we'll resynchronize and get
             // another variable declaration.
             if (this.currentToken().tokenKind === SyntaxKind.EqualsGreaterThanToken) {
                 return true;
             }
 
-            // We're done when we can eat a semicolon and we've parsed at least one item.
+            // We're done when we can eat a semicolon.
             return this.canEatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
         }
 
