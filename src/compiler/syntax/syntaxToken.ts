@@ -70,8 +70,7 @@ module TypeScript.Syntax {
 
     export function convertToIdentifierName(token: ISyntaxToken): ISyntaxToken {
         Debug.assert(SyntaxFacts.isAnyKeyword(token.tokenKind));
-        return new RealizedToken(token.fullStart(), SyntaxKind.IdentifierName,
-            token.leadingTrivia(), token.text(), token.text(), token.text(), token.trailingTrivia());
+        return new ConvertedIdentifierToken(token);
     }
 
     export function tokenToJSON(token: ISyntaxToken): any {
@@ -555,6 +554,165 @@ module TypeScript.Syntax {
 
     export function emptyToken(kind: SyntaxKind): ISyntaxToken {
         return new EmptyToken(kind);
+    }
+
+    class ConvertedIdentifierToken implements ISyntaxToken {
+        public parent: ISyntaxElement = null;
+        public tokenKind: SyntaxKind = SyntaxKind.IdentifierName;
+        private _underlyingToken: ISyntaxToken;
+        private _syntaxID: number = 0;
+
+        constructor(underlyingToken: ISyntaxToken) {
+            this._underlyingToken = underlyingToken;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
+        }
+
+        public setFullStart(fullStart: number): void {
+            this._underlyingToken.setFullStart(fullStart);
+        }
+
+        public clone(): ISyntaxToken {
+            throw Errors.notYetImplemented();
+        }
+
+        public kind(): SyntaxKind { return this.tokenKind; }
+        public toJSON(key: any): any { return tokenToJSON(this); }
+        public firstToken() { return this.fullWidth() > 0 ? this : null; }
+        public lastToken() { return this.fullWidth() > 0 ? this : null; }
+        public isTypeScriptSpecific() { return false; }
+
+        // Converted tokens are created from the parser.  They are *never* incrementally reusable.
+        public isIncrementallyUnusable() { return true; }
+
+        public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
+
+        public childCount(): number {
+            return 0;
+        }
+
+        public childAt(index: number): ISyntaxElement {
+            throw Errors.argumentOutOfRange("index");
+        }
+
+        public isShared(): boolean {
+            return false;
+        }
+
+        public isToken(): boolean { return true; }
+        public isNode(): boolean { return false; }
+        public isList(): boolean { return false; }
+        public isSeparatedList(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
+
+        public fullWidth(): number { return this._underlyingToken.fullWidth(); }
+        public width(): number { return this._underlyingToken.width(); }
+
+        public fullStart(): number { return this._underlyingToken.fullStart(); }
+        public fullEnd(): number { return this._underlyingToken.fullEnd(); }
+        public start(): number { return this._underlyingToken.start(); }
+        public end(): number { return this._underlyingToken.end(); }
+
+        public text(): string { return this._underlyingToken.text(); }
+        public fullText(): string { return this._underlyingToken.fullText(); }
+
+        public value(): any { return this.text(); }
+        public valueText(): string { return this.text(); }
+
+        public hasLeadingTrivia(): boolean { return this._underlyingToken.hasLeadingTrivia(); }
+        public hasLeadingComment(): boolean { return this._underlyingToken.hasLeadingComment(); }
+        public hasLeadingNewLine(): boolean { return this._underlyingToken.hasLeadingNewLine(); }
+        public hasLeadingSkippedText(): boolean { return this._underlyingToken.hasLeadingSkippedText(); }
+        public leadingTriviaWidth(): number { return this._underlyingToken.leadingTriviaWidth(); }
+
+        public hasTrailingTrivia(): boolean { return this._underlyingToken.hasTrailingTrivia(); }
+        public hasTrailingComment(): boolean { return this._underlyingToken.hasTrailingComment(); }
+        public hasTrailingNewLine(): boolean { return this._underlyingToken.hasTrailingNewLine(); }
+        public hasTrailingSkippedText(): boolean { return this._underlyingToken.hasTrailingSkippedText(); }
+        public trailingTriviaWidth(): number { return this._underlyingToken.trailingTriviaWidth(); }
+
+        public hasSkippedToken(): boolean { return this.hasLeadingSkippedText() || this.hasTrailingSkippedText(); }
+
+        public leadingTrivia(): ISyntaxTriviaList { 
+            var triviaList = this._underlyingToken.leadingTrivia().clone();
+            triviaList.parent = this;
+
+            return triviaList;
+        }
+
+        public trailingTrivia(): ISyntaxTriviaList {
+            var triviaList = this._underlyingToken.trailingTrivia().clone();
+            triviaList.parent = this;
+
+            return triviaList;
+        }
+
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
+        }
+
+        public collectTextElements(elements: string[]): void {
+            this.leadingTrivia().collectTextElements(elements);
+            elements.push(this.text());
+            this.trailingTrivia().collectTextElements(elements);
+        }
+
+        public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
+            return new RealizedToken(
+                this.fullStart(), this.tokenKind, leadingTrivia, this.text(), this.value(), this.valueText(), this.trailingTrivia());
+        }
+
+        public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
+            return new RealizedToken(
+                this.fullStart(), this.tokenKind, this.leadingTrivia(), this.text(), this.value(), this.valueText(), trailingTrivia);
+        }
+
+        public isPrimaryExpression(): boolean {
+            return isPrimaryExpression(this);
+        }
+
+        public isExpression(): boolean {
+            return this.isPrimaryExpression();
+        }
+
+        public isLeftHandSideExpression(): boolean {
+            return this.isPrimaryExpression();
+        }
+
+        public isMemberExpression(): boolean {
+            return this.isPrimaryExpression();
+        }
+
+        public isPostfixExpression(): boolean {
+            return this.isPrimaryExpression();
+        }
+
+        public isUnaryExpression(): boolean {
+            return this.isPrimaryExpression();
+        }
+
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken {
+            return Syntax.previousToken(this, includeSkippedTokens);
+        }
+
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken {
+            return Syntax.nextToken(this, includeSkippedTokens);
+        }
     }
 
     class RealizedToken implements ISyntaxToken {

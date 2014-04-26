@@ -1150,11 +1150,11 @@ module TypeScript.Parser {
                 // Debug.assert(previousToken !== null);
                 // Debug.assert(previousToken.width() > 0);
 
-                if (!this.isPastChangeRange()) {
-                    // If we still have a change range, then this token must have ended before the 
-                    // change range starts.  Thus, we don't need to call 'skipPastChanges'.
-                    // Debug.assert(this.absolutePosition() < this._changeRange.span().start());
-                }
+                // if (!this.isPastChangeRange()) {
+                //     // If we still have a change range, then this token must have ended before the 
+                //     // change range starts.  Thus, we don't need to call 'skipPastChanges'.
+                //     // Debug.assert(this.absolutePosition() < this._changeRange.span().start());
+                // }
             }
             else {
                 // the token came from the new text.  We have to update our delta appropriately.
