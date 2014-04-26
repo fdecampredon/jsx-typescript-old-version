@@ -842,11 +842,13 @@ module TypeScript.Parser {
             this._changeRange = rewindPoint.changeRange;
             this._changeDelta = rewindPoint.changeDelta;
 
+            // Reset the cursor to what it was when we got the rewind point.  Make sure to return 
+            // our existing cursor to the pool so it can be reused.
             returnSyntaxCursor(this._oldSourceUnitCursor);
             this._oldSourceUnitCursor = rewindPoint.oldSourceUnitCursor;
 
-            // null out the cursor in the rewind point so that we don't try to return it again
-            // when we release hte rewind point.
+            // Null out the cursor that the rewind point points to.  This way we don't try
+            // to return it in 'releaseRewindPoint'.
             rewindPoint.oldSourceUnitCursor = null;
 
             this._normalParserSource.rewind(rewindPoint);
@@ -1257,6 +1259,16 @@ module TypeScript.Parser {
 
         private factory: Syntax.IFactory = Syntax.normalModeFactory;
 
+        // It can be expensive to compute these values, and we find ourselves accessing them quite
+        // a lot (esp due to the nature of our "isXXX / parseXXX" pattern).  So cache these values
+        // to save time.
+        //
+        // Note: any time we access our 'source' object, we need to thoughtfully consider if we need
+        // to clear these values.  Fortunately, all those accesses are contined in just a few methods
+        // at the start of this class.
+        private _currentToken: ISyntaxToken = null;
+        private _currentNode: SyntaxNode = null;
+
         constructor(fileName: string, lineMap: LineMap, source: IParserSource, parseOptions: ParseOptions, private text: ISimpleText) {
             this.fileName = fileName;
             this.lineMap = lineMap;
@@ -1264,7 +1276,14 @@ module TypeScript.Parser {
             this.parseOptions = parseOptions;
         }
 
+        private clearCachedData(): void {
+            this._currentNode = null;
+            this._currentToken = null;
+        }
+
         private getRewindPoint(): IParserRewindPoint {
+            this.clearCachedData();
+
             var rewindPoint = this.source.getRewindPoint();
 
             rewindPoint.diagnosticsCount = this.diagnostics.length;
@@ -1277,12 +1296,16 @@ module TypeScript.Parser {
         }
 
         public rewind(rewindPoint: IParserRewindPoint): void {
+            this.clearCachedData();
+
             this.source.rewind(rewindPoint);
 
             this.diagnostics.length = rewindPoint.diagnosticsCount;
         }
 
         public releaseRewindPoint(rewindPoint: IParserRewindPoint): void {
+            this.clearCachedData();
+
             // Debug.assert(this.listParsingState === rewindPoint.listParsingState);
             // Debug.assert(this.isInStrictMode === rewindPoint.isInStrictMode);
 
@@ -1290,10 +1313,14 @@ module TypeScript.Parser {
         }
 
         public currentTokenStart(): number {
+            // Query method.  We don't need to clear our cached data.
+
             return this.source.absolutePosition() + this.currentToken().leadingTriviaWidth();
         }
 
         public previousTokenStart(): number {
+            // Query method.  We don't need to clear our cached data.
+
             if (this.previousToken() === null) {
                 return 0;
             }
@@ -1304,6 +1331,8 @@ module TypeScript.Parser {
         }
 
         private previousTokenEnd(): number {
+            // Query method.  We don't need to clear our cached data.
+
             if (this.previousToken() === null) {
                 return 0;
             }
@@ -1312,6 +1341,16 @@ module TypeScript.Parser {
         }
 
         private currentNode(): SyntaxNode {
+            this._currentToken = null;
+
+            if (this._currentNode === null) {
+                this._currentNode = this.currentNodeWorker();
+            }
+
+            return this._currentNode;
+        }
+
+        private currentNodeWorker(): SyntaxNode {
             var node = this.source.currentNode();
 
             // We can only reuse a node if it was parsed under the same strict mode that we're 
@@ -1331,14 +1370,26 @@ module TypeScript.Parser {
         }
 
         private currentToken(): ISyntaxToken {
-            return this.source.currentToken();
+            this._currentNode = null;
+
+            if (this._currentToken === null) {
+                this._currentToken = this.source.currentToken();
+            }
+
+            return this._currentToken;
         }
 
         private currentTokenAllowingRegularExpression(): ISyntaxToken {
+            // We're mutating the source here.  We are potentially overwriting the original token we
+            // scanned with a regex token.  So we have to clear our state.
+            this.clearCachedData();
+
             return this.source.currentTokenAllowingRegularExpression();
         }
 
         private peekToken(n: number): ISyntaxToken {
+            this.clearCachedData();
+
             return this.source.peekToken(n);
         }
 
@@ -1349,6 +1400,8 @@ module TypeScript.Parser {
         }
 
         private moveToNextToken(): void {
+            this.clearCachedData();
+
             this.source.moveToNextToken();
         }
 
@@ -1359,13 +1412,15 @@ module TypeScript.Parser {
         }
 
         private previousToken(): ISyntaxToken {
+            // Query method.  no need to clear cached data.
+
             return this.source.previousToken();
         }
 
-        private eatNode(): SyntaxNode {
-            var node = this.source.currentNode();
+        private moveToNextNode(): void {
+            this.clearCachedData();
+
             this.source.moveToNextNode();
-            return node;
         }
 
         //this method is called very frequently
@@ -1802,8 +1857,10 @@ module TypeScript.Parser {
         }
         
         private parseModuleElement(inErrorRecovery: boolean): IModuleElementSyntax {
-            if (this.currentNode() !== null && this.currentNode().isModuleElement()) {
-                return <IModuleElementSyntax>this.eatNode();
+            var node = this.currentNode();
+            if (node !== null && node.isModuleElement()) {
+                this.moveToNextNode();
+                return <IModuleElementSyntax>node;
             }
 
             var modifierCount = this.modifierCount();
@@ -2102,8 +2159,10 @@ module TypeScript.Parser {
 
         private parseEnumElement(): EnumElementSyntax {
             // Debug.assert(this.isEnumElement());
-            if (this.currentNode() !== null && this.currentNode().kind() === SyntaxKind.EnumElement) {
-                return <EnumElementSyntax>this.eatNode();
+            var node = this.currentNode();
+            if (node !== null && node.kind() === SyntaxKind.EnumElement) {
+                this.moveToNextNode();
+                return <EnumElementSyntax>node;
             }
 
             var propertyName = this.eatPropertyName();
@@ -2287,9 +2346,10 @@ module TypeScript.Parser {
 
         private parseClassElement(inErrorRecovery: boolean): IClassElementSyntax {
             // Debug.assert(this.isClassElement());
-
-            if (this.currentNode() !== null && this.currentNode().isClassElement()) {
-                return <IClassElementSyntax>this.eatNode();
+            var node = this.currentNode();
+            if (node !== null && node.isClassElement()) {
+                this.moveToNextNode();
+                return <IClassElementSyntax>node;
             }
 
             if (this.isConstructorDeclaration()) {
@@ -2680,8 +2740,10 @@ module TypeScript.Parser {
         }
 
         private parseTypeMember(inErrorRecovery: boolean): ITypeMemberSyntax {
-            if (this.currentNode() !== null && this.currentNode().isTypeMember()) {
-                return <ITypeMemberSyntax>this.eatNode();
+            var node = this.currentNode();
+            if (node !== null && node.isTypeMember()) {
+                this.moveToNextNode();
+                return <ITypeMemberSyntax>node;
             }
 
             if (this.isCallSignature(/*tokenIndex:*/ 0)) {
@@ -2911,8 +2973,10 @@ module TypeScript.Parser {
         }
 
         private parseStatement(inErrorRecovery: boolean): IStatementSyntax {
-            if (this.currentNode() !== null && this.currentNode().isStatement()) {
-                return <IStatementSyntax>this.eatNode();
+            var node = this.currentNode();
+            if (node !== null && node.isStatement()) {
+                this.moveToNextNode();
+                return <IStatementSyntax>node;
             }
 
             var currentToken = this.currentToken();
@@ -3286,8 +3350,10 @@ module TypeScript.Parser {
 
         private parseSwitchClause(): ISwitchClauseSyntax {
             // Debug.assert(this.isSwitchClause());
-            if (this.currentNode() !== null && this.currentNode().isSwitchClause()) {
-                return <ISwitchClauseSyntax><ISyntaxNode>this.eatNode();
+            var node = this.currentNode();
+            if (node !== null && node.isSwitchClause()) {
+                this.moveToNextNode();
+                return <ISwitchClauseSyntax><ISyntaxNode>node;
             }
 
             if (this.isCaseSwitchClause()) {
@@ -3579,8 +3645,10 @@ module TypeScript.Parser {
             // "for (var i = a in b".  We would not want to reuse the declarator as the "in b" portion 
             // would need to be consumed by the for declaration instead.  Need to see if it is possible
             // to hit this case.
-            if (this.canReuseVariableDeclaratorNode(this.currentNode())) {
-                return <VariableDeclaratorSyntax>this.eatNode();
+            var node = this.currentNode();
+            if (this.canReuseVariableDeclaratorNode(node)) {
+                this.moveToNextNode();
+                return <VariableDeclaratorSyntax>node;
             }
 
             var propertyName = allowPropertyName ? this.eatPropertyName() : this.eatIdentifierToken();
@@ -5140,8 +5208,10 @@ module TypeScript.Parser {
         }
 
         private parseParameter(): ParameterSyntax {
-            if (this.currentNode() !== null && this.currentNode().kind() === SyntaxKind.Parameter) {
-                return <ParameterSyntax>this.eatNode();
+            var node = this.currentNode();
+            if (node !== null && node.kind() === SyntaxKind.Parameter) {
+                this.moveToNextNode();
+                return <ParameterSyntax>node;
             }
 
             var dotDotDotToken = this.tryEatToken(SyntaxKind.DotDotDotToken);
