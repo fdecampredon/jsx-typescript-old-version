@@ -1,7 +1,7 @@
 var _fs = require('fs');
 
 var wholeCompilerString = _fs.readFileSync("wholecompiler.ts");
-var wholeLibString = _fs.readFileSync("../../../typings/lib.d.ts");
+var wholeLibString = _fs.readFileSync("../../../bin/lib.d.ts");
 
 function quoteString(str, name) {
     str = String(str);
