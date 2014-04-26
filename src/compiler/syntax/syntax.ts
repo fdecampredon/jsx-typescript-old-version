@@ -612,8 +612,14 @@ module TypeScript.Syntax {
             var child = element.childAt(i);
 
             if (child !== null && child.fullWidth() > 0) {
-                if (position >= child.fullStart() && position < child.fullEnd()) {
-                    return findToken(child, position);
+                var childFullStart = child.fullStart();
+
+                if (position >= childFullStart) {
+                    var childFullEnd = childFullStart + child.fullWidth();
+
+                    if (position < childFullEnd) {
+                        return findToken(child, position);
+                    }
                 }
             }
         }
