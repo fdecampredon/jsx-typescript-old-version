@@ -229,12 +229,8 @@ module TypeScript {
                 return false;
             }
 
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                var child = list.childAt(i);
-                if (i === n - 1) {
-                    this.pushDiagnostic(child, DiagnosticCode.Trailing_separator_not_allowed);
-                }
-            }
+            var child = list.childAt(list.childCount() - 1);
+            this.pushDiagnostic(child, DiagnosticCode.Trailing_separator_not_allowed);
 
             return true;
         }
@@ -281,8 +277,19 @@ module TypeScript {
         }
 
         public visitVariableDeclaration(node: VariableDeclarationSyntax): void {
-            if (this.checkForTrailingSeparator(node, node.variableDeclarators) ||
-                this.checkForAtLeastOneElement(node, node.variableDeclarators, getLocalizedText(DiagnosticCode.identifier, null))) {
+            if (this.checkForAtLeastOneElement(node, node.variableDeclarators, getLocalizedText(DiagnosticCode.identifier, null))) {
+                return;
+            }
+
+            // If we have at least one child, and we have an even number of children, then that 
+            // means we have an illegal trailing separator.
+            var declarators = node.variableDeclarators;
+            if (declarators.childCount() % 2 === 0) {
+                var lastComma = declarators.childAt(declarators.childCount() - 1);
+                Debug.assert(lastComma.isToken());
+
+                var nextToken = Syntax.nextToken(<ISyntaxToken>lastComma, /*includeSkippedTokens:*/ true);
+                this.pushDiagnostic(nextToken, DiagnosticCode.Identifier_expected);
                 return;
             }
 

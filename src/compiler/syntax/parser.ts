@@ -4,7 +4,6 @@ module TypeScript.Parser {
     // Information the parser needs to effectively rewind.
     interface IParserRewindPoint {
         // Information used by normal parser source.
-        previousToken: ISyntaxToken;
         absolutePosition: number;
         slidingWindowIndex: number;
 
@@ -411,10 +410,8 @@ module TypeScript.Parser {
     // the parser having to be aware of it.
     //
     // In general terms, a parser source represents a position within a text.  At that position, 
-    // one can ask for the 'currentToken' that the source is pointing at.  The 'previousToken' that
-    // precedes this token (generally used for automatic semicolon insertion, and other minor 
-    // parsing decisions).  Then, once the parser consumes that token it can ask the source to
-    // 'moveToNextToken'.
+    // one can ask for the 'currentToken' that the source is pointing at.  Then, once the parser 
+    // consumes that token it can ask the source to 'moveToNextToken'.
     //
     // Additional special abilities include:
     //  1) Being able to peek an arbitrary number of tokens ahead efficiently.
@@ -434,12 +431,8 @@ module TypeScript.Parser {
     //     have done when they originally scanned that token.
     interface IParserSource {
         // The absolute index that the current token starts at.  'currentToken' and 'currentNode'
-        // have their fullStart at this position.  previousToken has it's fullEnd at this position.
+        // have their fullStart at this position.
         absolutePosition(): number;
-
-        // The token that comes before the 'currentToken' that the source is pointing at. Initially
-        // null. 
-        previousToken(): ISyntaxToken;
 
         // The current syntax node the source is pointing at.  Only available in incremental settings.
         // The source can point at a node if that node doesn't intersect any of the text changes in
@@ -515,9 +508,6 @@ module TypeScript.Parser {
         // The scanner we're pulling tokens from.
         private scanner: Scanner;
 
-        // The previous token to the current token.  Set when we advance to the next token.
-        private _previousToken: ISyntaxToken = null;
-
         // The absolute position we're at in the text we're reading from.
         private _absolutePosition: number = 0;
 
@@ -553,10 +543,6 @@ module TypeScript.Parser {
             return this._absolutePosition;
         }
 
-        public previousToken(): ISyntaxToken {
-            return this._previousToken;
-        }
-
         public tokenDiagnostics(): Diagnostic[] {
             return this._tokenDiagnostics;
         }
@@ -578,7 +564,6 @@ module TypeScript.Parser {
             var rewindPoint = this.getOrCreateRewindPoint();
 
             rewindPoint.slidingWindowIndex = slidingWindowIndex;
-            rewindPoint.previousToken = this._previousToken;
             rewindPoint.absolutePosition = this._absolutePosition;
 
             rewindPoint.pinCount = this.slidingWindow.pinCount();
@@ -593,7 +578,6 @@ module TypeScript.Parser {
         public rewind(rewindPoint: IParserRewindPoint): void {
             this.slidingWindow.rewindToPinnedIndex(rewindPoint.slidingWindowIndex);
 
-            this._previousToken = rewindPoint.previousToken;
             this._absolutePosition = rewindPoint.absolutePosition;
         }
 
@@ -619,7 +603,6 @@ module TypeScript.Parser {
         public moveToNextToken(): void {
             var currentToken = this.currentToken();
             this._absolutePosition += currentToken.fullWidth();
-            this._previousToken = currentToken;
 
             this.slidingWindow.moveToNextItem();
         }
@@ -645,9 +628,8 @@ module TypeScript.Parser {
             this._tokenDiagnostics.length = tokenDiagnosticsLength;
         }
 
-        public resetToPosition(absolutePosition: number, previousToken: ISyntaxToken): void {
+        public resetToPosition(absolutePosition: number): void {
             this._absolutePosition = absolutePosition;
-            this._previousToken = previousToken;
 
             // First, remove any diagnostics that came after this position.
             this.removeDiagnosticsOnOrAfterPosition(absolutePosition);
@@ -674,7 +656,7 @@ module TypeScript.Parser {
             // We also need to remove all the tokens we've gotten from the slash and onwards.  They may
             // not have been what the scanner would have produced if it decides that this is actually
             // a regular expresion.
-            this.resetToPosition(this._absolutePosition, this._previousToken);
+            this.resetToPosition(this._absolutePosition);
 
             // Now actually fetch the token again from the scanner. This time let it know that it
             // can scan it as a regex token if it wants to.
@@ -808,10 +790,6 @@ module TypeScript.Parser {
 
         public absolutePosition() {
             return this._normalParserSource.absolutePosition();
-        }
-
-        public previousToken() {
-            return this._normalParserSource.previousToken();
         }
 
         public tokenDiagnostics(): Diagnostic[] {
@@ -1136,8 +1114,7 @@ module TypeScript.Parser {
             // Update the underlying source with where it should now be currently pointing, and 
             // what the previous token is before that position.
             var absolutePosition = this.absolutePosition() + currentNode.fullWidth();
-            var previousToken = currentNode.lastToken();
-            this._normalParserSource.resetToPosition(absolutePosition, previousToken);
+            this._normalParserSource.resetToPosition(absolutePosition);
 
             // Debug.assert(previousToken !== null);
             // Debug.assert(previousToken.width() > 0);
@@ -1168,8 +1145,7 @@ module TypeScript.Parser {
                 // the token came from the new text as the source will automatically be placed in
                 // the right position.
                 var absolutePosition = this.absolutePosition() + currentToken.fullWidth();
-                var previousToken = currentToken;
-                this._normalParserSource.resetToPosition(absolutePosition, previousToken);
+                this._normalParserSource.resetToPosition(absolutePosition);
 
                 // Debug.assert(previousToken !== null);
                 // Debug.assert(previousToken.width() > 0);
@@ -1383,12 +1359,6 @@ module TypeScript.Parser {
             }
         }
 
-        private previousToken(): ISyntaxToken {
-            // Query method.  no need to clear cached data.
-
-            return this.source.previousToken();
-        }
-
         private moveToNextNode(): void {
             this.clearCachedData();
 
@@ -1500,6 +1470,22 @@ module TypeScript.Parser {
             return this.createMissingToken(SyntaxKind.IdentifierName, token);
         }
 
+        private previousTokenHasTrailingNewLine(token: ISyntaxToken): boolean {
+            var tokenFullStart = token.fullStart();
+            if (tokenFullStart === 0) {
+                // First token in the document.  Thus it has no 'previous' token, and there is 
+                // no preceding newline.
+                return false;
+            }
+
+            // If our previous token ended with a newline, then *by definition* we must have started
+            // at the beginning of a line.  
+            var lineNumber = this.lineMap.getLineNumberFromPosition(tokenFullStart);
+            var lineStart = this.lineMap.getLineStartPosition(lineNumber);
+
+            return lineStart == tokenFullStart;
+        }
+
         private canEatAutomaticSemicolon(allowWithoutNewLine: boolean): boolean {
             var token = this.currentToken();
 
@@ -1518,7 +1504,7 @@ module TypeScript.Parser {
             }
 
             // It is also allowed if there is a newline between the last token seen and the next one.
-            if (this.previousToken() !== null && this.previousToken().hasTrailingNewLine()) {
+            if (this.previousTokenHasTrailingNewLine(token)) {
                 return true;
             }
 
@@ -2067,7 +2053,7 @@ module TypeScript.Parser {
                 // In the first case though, ASI will not take effect because there is not a
                 // line terminator after the dot.
                 if (SyntaxFacts.isAnyKeyword(currentToken.tokenKind) &&
-                    this.previousToken().hasTrailingNewLine() &&
+                    this.previousTokenHasTrailingNewLine(currentToken) &&
                     !currentToken.hasTrailingNewLine() &&
                     SyntaxFacts.isIdentifierNameOrAnyKeyword(this.peekToken(1))) {
 
@@ -3651,8 +3637,7 @@ module TypeScript.Parser {
             // It's not uncommon during typing for the user to miss writing the '=' token.  Check if
             // there is no newline after the last token and if we're on an expression.  If so, parse
             // this as an equals-value clause with a missing equals.
-            if (!this.previousToken().hasTrailingNewLine()) {
-
+            if (!this.previousTokenHasTrailingNewLine(token0)) {
                 // The 'isExpression' call below returns true for "=>".  That's because it smartly
                 // assumes that there is just a missing identifier and the user wanted a lambda.  
                 // While this is sensible, we don't want to allow that here as that would mean we're
@@ -4159,14 +4144,15 @@ module TypeScript.Parser {
         private parsePostfixExpressionOrHigher(): IPostfixExpressionSyntax {
             var expression = this.parseLeftHandSideExpressionOrHigher();
 
-            var currentTokenKind = this.currentToken().tokenKind;
+            var currentToken = this.currentToken();
+            var currentTokenKind = currentToken.tokenKind;
 
             switch (currentTokenKind) {
                 case SyntaxKind.PlusPlusToken:
                 case SyntaxKind.MinusMinusToken:
                     // Because of automatic semicolon insertion, we should only consume the ++ or -- 
                     // if it is on the same line as the previous token.
-                    if (this.previousToken() !== null && this.previousToken().hasTrailingNewLine()) {
+                    if (this.previousTokenHasTrailingNewLine(currentToken)) {
                         break;
                     }
 
@@ -4341,54 +4327,6 @@ module TypeScript.Parser {
 
             var currentToken = this.currentToken();
             // Debug.assert(SyntaxFacts.isAnyDivideToken(currentToken.tokenKind));
-
-            // There are several contexts where we could never see a regex.  Don't even bother 
-            // reinterpretting the / in these contexts.
-            if (this.previousToken() !== null) {
-                var previousTokenKind = this.previousToken().tokenKind;
-                switch (previousTokenKind) {
-                    case SyntaxKind.IdentifierName:
-                        // Regular expressions can't follow identifiers.
-                        return null;
-
-                    // Regexs also can't follow certain keywords:
-                    case SyntaxKind.ThisKeyword:
-                    case SyntaxKind.TrueKeyword:
-                    case SyntaxKind.FalseKeyword:
-                        return null;
-
-                    // A regular expression could follow other keywords.  i.e. "return /blah/;"
-                    // TODO: be more specific about the keywords that a regex could follow.
-
-                    case SyntaxKind.StringLiteral:
-                    case SyntaxKind.NumericLiteral:
-                    case SyntaxKind.RegularExpressionLiteral:
-                    case SyntaxKind.PlusPlusToken:
-                    case SyntaxKind.MinusMinusToken:
-                    case SyntaxKind.CloseBracketToken:
-                        // A regular expression can't follow any of these.  It must be a divide. Note: this
-                        // list *may* be incorrect (especially in the context of typescript).  We need to
-                        // carefully review it.
-                        return null;
-
-                    // case SyntaxKind.CloseBraceToken:
-                    // A regex can easily follow a close brace. Consider the simple case of:
-                    //
-                    // {
-                    // }
-                    // /regex/
-
-                    // case SyntaxKind.CloseParenToken:
-                    // It is tempting to say that if we have a slash after a close paren that it can't be 
-                    // a regular expression.  after all, the normal case where we see that is "(1 + 2) / 3".
-                    // However, it can appear in legal code.  Specifically:
-                    //
-                    //      for (...)
-                    //          /regex/.Stuff...
-                    //
-                    // So we have to see if we can get a regular expression in that case.
-                }
-            }
 
             // Ok, from our quick lexical check, this could be a place where a regular expression could
             // go.  Now we have to do a bunch of work.  Ask the source to retrive the token at the 
@@ -5710,22 +5648,15 @@ module TypeScript.Parser {
         private isExpectedVariableDeclaration_VariableDeclarators_AllowInTerminator(): boolean {
             //// This is the case when we're parsing variable declarations in a variable statement.
 
-            // If we just parsed a comma, then we can't terminate this list.  i.e.:
-            //      var a = bar, // <-- just consumed the comma
-            //          b = baz;
-            if (this.previousToken().tokenKind === SyntaxKind.CommaToken) {
-                return false;
-            }
-
             // ERROR RECOVERY TWEAK:
             // For better error recovery, if we see a => then we just stop immediately.  We've got an
-            // arrow function here and it's going to be veyr unlikely that we'll resynchronize and get
+            // arrow function here and it's going to be very unlikely that we'll resynchronize and get
             // another variable declaration.
             if (this.currentToken().tokenKind === SyntaxKind.EqualsGreaterThanToken) {
                 return true;
             }
 
-            // We're done when we can eat a semicolon and we've parsed at least one item.
+            // We're done when we can eat a semicolon.
             return this.canEatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
         }
 
