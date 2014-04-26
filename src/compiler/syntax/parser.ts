@@ -256,8 +256,8 @@ module TypeScript.Parser {
             var result = this.pieces[this.currentPieceIndex].element;
 
             // The current element must always be a node or a token.
-            Debug.assert(result !== null);
-            Debug.assert(result.isNode() || result.isToken());
+            // Debug.assert(result !== null);
+            // Debug.assert(result.isNode() || result.isToken());
 
             return <ISyntaxNodeOrToken>result;
         }
@@ -268,11 +268,11 @@ module TypeScript.Parser {
         }
 
         public moveToFirstChild() {
-            if (this.isFinished()) {
+            var nodeOrToken = this.currentNodeOrToken();
+            if (nodeOrToken === null) {
                 return;
             }
 
-            var nodeOrToken = this.currentNodeOrToken();
             if (nodeOrToken.isToken()) {
                 // If we're already on a token, there's nothing to do.
                 return;
@@ -376,7 +376,7 @@ module TypeScript.Parser {
 
         public moveToFirstToken(): void {
             while (!this.isFinished()) {
-                var element = this.currentNodeOrToken();
+                var element = this.pieces[this.currentPieceIndex].element;
                 if (element.isNode()) {
                     this.moveToFirstChild();
                     continue;
@@ -391,7 +391,7 @@ module TypeScript.Parser {
             this.moveToFirstToken();
 
             var element = this.currentNodeOrToken();
-            Debug.assert(element === null || element.isToken());
+            // Debug.assert(element === null || element.isToken());
             return element === null ? null : <ISyntaxToken>element;
         }
     }

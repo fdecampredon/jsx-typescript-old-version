@@ -222,19 +222,19 @@ module TypeScript.Syntax {
         }
 
         public fullStart(): number {
-            return this.firstToken().fullStart();
+            return this.item.fullStart();
         }
 
         public fullEnd(): number {
-            return this.lastToken().fullEnd();
+            return this.item.fullEnd();
         }
 
         public start(): number {
-            return this.firstToken().start();
+            return this.item.start();
         }
 
         public end(): number {
-            return this.lastToken().end();
+            return this.item.end();
         }
 
         public leadingTrivia(): ISyntaxTriviaList {
