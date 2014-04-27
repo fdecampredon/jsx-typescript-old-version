@@ -196,7 +196,7 @@ module TypeScript {
         }
 
         private checkParameterAccessibilityModifier(parameterList: ParameterListSyntax, modifier: ISyntaxToken, modifierIndex: number): boolean {
-            if (modifier.tokenKind !== SyntaxKind.PublicKeyword && modifier.tokenKind !== SyntaxKind.PrivateKeyword) {
+            if (modifier.kind() !== SyntaxKind.PublicKeyword && modifier.kind() !== SyntaxKind.PrivateKeyword) {
                 this.pushDiagnostic(modifier,
                     DiagnosticCode._0_modifier_cannot_appear_on_a_parameter, [modifier.text()]);
                 return true;
@@ -379,7 +379,7 @@ module TypeScript {
                 Debug.assert(i <= 2);
                 var heritageClause = node.heritageClauses.childAt(i);
 
-                if (heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword) {
+                if (heritageClause.extendsOrImplementsKeyword.kind() === SyntaxKind.ExtendsKeyword) {
                     if (seenExtendsClause) {
                         this.pushDiagnostic(heritageClause,
                             DiagnosticCode.extends_clause_already_seen);
@@ -401,7 +401,7 @@ module TypeScript {
                     seenExtendsClause = true;
                 }
                 else {
-                    Debug.assert(heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ImplementsKeyword);
+                    Debug.assert(heritageClause.extendsOrImplementsKeyword.kind() === SyntaxKind.ImplementsKeyword);
                     if (seenImplementsClause) {
                         this.pushDiagnostic(heritageClause,
                             DiagnosticCode.implements_clause_already_seen);
@@ -654,7 +654,7 @@ module TypeScript {
                 Debug.assert(i <= 1);
                 var heritageClause = node.heritageClauses.childAt(i);
 
-                if (heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword) {
+                if (heritageClause.extendsOrImplementsKeyword.kind() === SyntaxKind.ExtendsKeyword) {
                     if (seenExtendsClause) {
                         this.pushDiagnostic(heritageClause,
                             DiagnosticCode.extends_clause_already_seen);
@@ -664,7 +664,7 @@ module TypeScript {
                     seenExtendsClause = true;
                 }
                 else {
-                    Debug.assert(heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ImplementsKeyword);
+                    Debug.assert(heritageClause.extendsOrImplementsKeyword.kind() === SyntaxKind.ImplementsKeyword);
                     this.pushDiagnostic(heritageClause,
                         DiagnosticCode.Interface_declaration_cannot_have_implements_clause);
                     return true;
@@ -677,7 +677,7 @@ module TypeScript {
         private checkInterfaceModifiers(modifiers: ISyntaxList<ISyntaxToken>): boolean {
             for (var i = 0, n = modifiers.childCount(); i < n; i++) {
                 var modifier = modifiers.childAt(i);
-                if (modifier.tokenKind === SyntaxKind.DeclareKeyword) {
+                if (modifier.kind() === SyntaxKind.DeclareKeyword) {
                     this.pushDiagnostic(modifier,
                         DiagnosticCode.declare_modifier_cannot_appear_on_an_interface_declaration);
                     return true;
@@ -705,8 +705,8 @@ module TypeScript {
 
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var modifier = list.childAt(i);
-                if (modifier.tokenKind === SyntaxKind.PublicKeyword ||
-                    modifier.tokenKind === SyntaxKind.PrivateKeyword) {
+                if (modifier.kind() === SyntaxKind.PublicKeyword ||
+                    modifier.kind() === SyntaxKind.PrivateKeyword) {
 
                     if (seenAccessibilityModifier) {
                         this.pushDiagnostic(modifier,
@@ -723,7 +723,7 @@ module TypeScript {
 
                     seenAccessibilityModifier = true;
                 }
-                else if (modifier.tokenKind === SyntaxKind.StaticKeyword) {
+                else if (modifier.kind() === SyntaxKind.StaticKeyword) {
                     if (seenStaticModifier) {
                         this.pushDiagnostic(modifier,
                             DiagnosticCode._0_modifier_already_seen, [modifier.text()]);
@@ -932,15 +932,15 @@ module TypeScript {
 
             for (var i = 0, n = modifiers.childCount(); i < n; i++) {
                 var modifier = modifiers.childAt(i);
-                if (modifier.tokenKind === SyntaxKind.PublicKeyword ||
-                    modifier.tokenKind === SyntaxKind.PrivateKeyword ||
-                    modifier.tokenKind === SyntaxKind.StaticKeyword) {
+                if (modifier.kind() === SyntaxKind.PublicKeyword ||
+                    modifier.kind() === SyntaxKind.PrivateKeyword ||
+                    modifier.kind() === SyntaxKind.StaticKeyword) {
                     this.pushDiagnostic(modifier,
                         DiagnosticCode._0_modifier_cannot_appear_on_a_module_element, [modifier.text()]);
                     return true;
                 }
 
-                if (modifier.tokenKind === SyntaxKind.DeclareKeyword) {
+                if (modifier.kind() === SyntaxKind.DeclareKeyword) {
                     if (seenDeclareModifier) {
                         this.pushDiagnostic(modifier,
                             DiagnosticCode.Accessibility_modifier_already_seen);
@@ -949,7 +949,7 @@ module TypeScript {
 
                     seenDeclareModifier = true;
                 }
-                else if (modifier.tokenKind === SyntaxKind.ExportKeyword) {
+                else if (modifier.kind() === SyntaxKind.ExportKeyword) {
                     if (seenExportModifier) {
                         this.pushDiagnostic(modifier,
                             DiagnosticCode._0_modifier_already_seen, [modifier.text()]);

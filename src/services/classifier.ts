@@ -86,7 +86,7 @@ module TypeScript.Services {
             while (this.scanner.absoluteIndex() < text.length) {
                 this.diagnostics.length = 0;
                 var token = this.scanner.scan(this.diagnostics, !noRegexTable[lastTokenKind]);
-                lastTokenKind = token.tokenKind;
+                lastTokenKind = token.kind();
 
                 this.processToken(text, offset, token, result);
             }
@@ -96,7 +96,7 @@ module TypeScript.Services {
 
         private processToken(text: string, offset: number, token: TypeScript.ISyntaxToken, result: ClassificationResult): void {
             this.processTriviaList(text, offset, token.leadingTrivia(), result);
-            this.addResult(text, offset, result, token.width(), token.tokenKind);
+            this.addResult(text, offset, result, token.width(), token.kind());
             this.processTriviaList(text, offset, token.trailingTrivia(), result);
 
             if (this.scanner.absoluteIndex() >= text.length) {
@@ -108,7 +108,7 @@ module TypeScript.Services {
                     }
                 }
 
-                if (token.tokenKind === TypeScript.SyntaxKind.StringLiteral) {
+                if (token.kind() === TypeScript.SyntaxKind.StringLiteral) {
                     var tokenText = token.text();
                     if (tokenText.length > 0 && tokenText.charCodeAt(tokenText.length - 1) === TypeScript.CharacterCodes.backslash) {
                         var quoteChar = tokenText.charCodeAt(0);

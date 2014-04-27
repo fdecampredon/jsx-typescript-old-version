@@ -37,7 +37,7 @@ module TypeScript.Services.Breakpoints {
         }
 
         private breakpointSpanOfToken(positionedToken: TypeScript.ISyntaxToken): SpanInfo {
-            switch (positionedToken.tokenKind) {
+            switch (positionedToken.kind()) {
                 case TypeScript.SyntaxKind.OpenBraceToken:
                     return this.breakpointSpanOfOpenBrace(positionedToken);
 

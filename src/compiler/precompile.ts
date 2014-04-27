@@ -89,27 +89,27 @@ module TypeScript {
         var start = new Date().getTime();
         // Look for: 
         // import foo = module("foo")
-        while (token.tokenKind !== SyntaxKind.EndOfFileToken) {
-            if (token.tokenKind === SyntaxKind.ImportKeyword) {
+        while (token.kind() !== SyntaxKind.EndOfFileToken) {
+            if (token.kind() === SyntaxKind.ImportKeyword) {
                 var importStart = position + token.leadingTriviaWidth();
                 token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
 
                 if (SyntaxFacts.isIdentifierNameOrAnyKeyword(token)) {
                     token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
 
-                    if (token.tokenKind === SyntaxKind.EqualsToken) {
+                    if (token.kind() === SyntaxKind.EqualsToken) {
                         token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
 
-                        if (token.tokenKind === SyntaxKind.ModuleKeyword || token.tokenKind === SyntaxKind.RequireKeyword) {
+                        if (token.kind() === SyntaxKind.ModuleKeyword || token.kind() === SyntaxKind.RequireKeyword) {
                             token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
 
-                            if (token.tokenKind === SyntaxKind.OpenParenToken) {
+                            if (token.kind() === SyntaxKind.OpenParenToken) {
                                 var afterOpenParenPosition = scanner.absoluteIndex();
                                 token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
 
                                 lineMap.fillLineAndCharacterFromPosition(importStart, lineChar);
 
-                                if (token.tokenKind === SyntaxKind.StringLiteral) {
+                                if (token.kind() === SyntaxKind.StringLiteral) {
                                     var ref = {
                                         line: lineChar.line,
                                         character: lineChar.character,

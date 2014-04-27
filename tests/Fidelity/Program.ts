@@ -523,7 +523,7 @@ class Program {
             var token = scanner.scan(diagnostics, /*allowRegularExpression:*/ false);
             tokens.push(token);
 
-            if (token.tokenKind === TypeScript.SyntaxKind.EndOfFileToken) {
+            if (token.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
                 break;
             }
         }
@@ -553,7 +553,7 @@ class Program {
             TypeScript.Debug.assert(position === token.fullStart());
             position += token.fullWidth();
 
-            if (token.tokenKind === TypeScript.SyntaxKind.EndOfFileToken) {
+            if (token.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
                 break;
             }
         }

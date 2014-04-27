@@ -23,7 +23,7 @@ module TypeScript.SyntaxFacts {
     }
 
     export function isIdentifierNameOrAnyKeyword(token: ISyntaxToken): boolean {
-        var tokenKind = token.tokenKind;
+        var tokenKind = token.kind();
         return tokenKind === SyntaxKind.IdentifierName || SyntaxFacts.isAnyKeyword(tokenKind);
     }
 }

@@ -112,7 +112,7 @@ module TypeScript {
                 var moduleElement = node.moduleElements.childAt(i);
 
                 firstToken = moduleElement.firstToken();
-                if (firstToken !== null && firstToken.tokenKind === SyntaxKind.ExportKeyword) {
+                if (firstToken !== null && firstToken.kind() === SyntaxKind.ExportKeyword) {
                     return new TextSpan(position + firstToken.leadingTriviaWidth(), firstToken.width());
                 }
 
