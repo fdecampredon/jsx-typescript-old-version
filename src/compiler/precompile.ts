@@ -80,7 +80,6 @@ module TypeScript {
         return null;
     }
 
-    var scannerWindow = ArrayUtilities.createArray<number>(2048, 0);
     var scannerDiagnostics: any[] = [];
 
     function processImports(lineMap: LineMap, scanner: Scanner, token: ISyntaxToken, importedFiles: IFileReference[]): void {
@@ -176,7 +175,7 @@ module TypeScript {
 
     export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, readImportFiles = true): IPreProcessedFileInfo {
         var text = SimpleText.fromScriptSnapshot(sourceText);
-        var scanner = new Scanner(fileName, text, LanguageVersion.EcmaScript5, scannerWindow);
+        var scanner = new Scanner(fileName, LanguageVersion.EcmaScript5, text);
 
         var firstToken = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
 

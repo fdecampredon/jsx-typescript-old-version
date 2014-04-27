@@ -51,7 +51,6 @@ module TypeScript.Services {
 
     export class Classifier {
         private scanner: TypeScript.Scanner;
-        private characterWindow: number[] = TypeScript.ArrayUtilities.createArray<number>(2048, 0);
         private diagnostics: TypeScript.Diagnostic[] = [];
 
         constructor(public host: IClassifierHost) {
@@ -80,7 +79,7 @@ module TypeScript.Services {
             }
 
             var result = new ClassificationResult();
-            this.scanner = new TypeScript.Scanner("", TypeScript.SimpleText.fromString(text), TypeScript.LanguageVersion.EcmaScript5, this.characterWindow);
+            this.scanner = new TypeScript.Scanner("", TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text));
 
             var lastTokenKind = TypeScript.SyntaxKind.None;
 

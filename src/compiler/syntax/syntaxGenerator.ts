@@ -1635,34 +1635,34 @@ function generateLastTokenMethod(definition: ITypeDefinition): string {
     return result;
 }
 
-function generateInsertChildrenIntoMethod(definition: ITypeDefinition): string {
-    var result = "";
+//function generateInsertChildrenIntoMethod(definition: ITypeDefinition): string {
+//    var result = "";
 
-    result += "\r\n";
-    result += "    public insertChildrenInto(array: ISyntaxElement[], index: number) {\r\n";
+//    result += "\r\n";
+//    result += "    public insertChildrenInto(array: ISyntaxElement[], index: number) {\r\n";
 
-    for (var i = definition.children.length - 1; i >= 0; i--) {
-        var child = definition.children[i];
+//    for (var i = definition.children.length - 1; i >= 0; i--) {
+//        var child = definition.children[i];
 
-        if (child.type === "SyntaxKind") {
-            continue;
-        }
+//        if (child.type === "SyntaxKind") {
+//            continue;
+//        }
 
-        if (child.isList || child.isSeparatedList) {
-            result += "        " + getPropertyAccess(child) + ".insertChildrenInto(array, index);\r\n";
-        }
-        else if (child.isOptional) {
-            result += "        if (" + getPropertyAccess(child) + " !== null) { array.splice(index, 0, " + getPropertyAccess(child) + "); }\r\n";
-        }
-        else {
-            result += "        array.splice(index, 0, " + getPropertyAccess(child) + ");\r\n";
-        }
-    }
+//        if (child.isList || child.isSeparatedList) {
+//            result += "        " + getPropertyAccess(child) + ".insertChildrenInto(array, index);\r\n";
+//        }
+//        else if (child.isOptional) {
+//            result += "        if (" + getPropertyAccess(child) + " !== null) { array.splice(index, 0, " + getPropertyAccess(child) + "); }\r\n";
+//        }
+//        else {
+//            result += "        array.splice(index, 0, " + getPropertyAccess(child) + ");\r\n";
+//        }
+//    }
 
-    result += "    }\r\n";
+//    result += "    }\r\n";
 
-    return result;
-}
+//    return result;
+//}
 
 function baseType(definition: ITypeDefinition): ITypeDefinition {
     return TypeScript.ArrayUtilities.firstOrDefault(definitions, d => d.name === definition.baseType);
@@ -1968,7 +1968,6 @@ function generateNode(definition: ITypeDefinition): string {
     // result += generateCollectTextElementsMethod(definition);
     // result += generateFindTokenInternalMethod(definition);
     // result += generateStructuralEqualsMethod(definition);
-
     result += "    }";
 
     return result;
@@ -2594,14 +2593,14 @@ function generateKeywordCondition(keywords: { text: string; kind: TypeScript.Syn
             }
 
             index = i === 0 ? "startIndex" : ("startIndex + " + i);
-            result += "array[" + index + "] === CharacterCodes." + keywordText.substr(i, 1);
+            result += "array.charCodeAt(" + index + ") === CharacterCodes." + keywordText.substr(i, 1);
         }
 
         result += ") ? SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + " : SyntaxKind.IdentifierName;\r\n";
     }
     else {
         index = currentCharacter === 0 ? "startIndex" : ("startIndex + " + currentCharacter);
-        result += indent + "switch(array[" + index + "]) {\r\n"
+        result += indent + "switch(array.charCodeAt(" + index + ")) {\r\n"
 
         var groupedKeywords = TypeScript.ArrayUtilities.groupBy(keywords, k => k.text.substr(currentCharacter, 1));
 
@@ -2634,7 +2633,7 @@ function generateScannerUtilities(): string {
         keywords.push({ kind: i, text: TypeScript.SyntaxFacts.getText(i) });
     }
 
-    result += "        public static identifierKind(array: number[], startIndex: number, length: number): SyntaxKind {\r\n";
+    result += "        public static identifierKind(array: string, startIndex: number, length: number): SyntaxKind {\r\n";
 
     var minTokenLength = TypeScript.ArrayUtilities.min(keywords, k => k.text.length);
     var maxTokenLength = TypeScript.ArrayUtilities.max(keywords, k => k.text.length);
