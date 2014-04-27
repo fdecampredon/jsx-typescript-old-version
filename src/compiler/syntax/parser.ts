@@ -996,7 +996,8 @@ module TypeScript.Parser {
 
                 if (!this.intersectsWithChangeRangeSpanInOriginalText(this.absolutePosition(), node.fullWidth())) {
                     // Didn't intersect with the change range.
-                    if (!node.isIncrementallyUnusable()) {
+                    var isIncrementallyUnusuable = node.isIncrementallyUnusable();
+                    if (!isIncrementallyUnusuable) {
 
                         // Didn't contain anything that would make it unusable.  Awesome.  This is
                         // a node we can reuse.
@@ -1022,11 +1023,18 @@ module TypeScript.Parser {
             // NOTE: It is safe to get a token regardless of what our strict context was/is.  That's 
             // because the strict context doesn't change what tokens are scanned, only how the 
             // parser reacts to them.
-
+            //
+            // NOTE: we don't mark a keyword that was converted to an identifier as 'incrementally 
+            // unusable.  This is because we don't want to mark it's containing parent node as 
+            // unusable.  i.e. if i have this:  "public Foo(string: Type) { }", then that *entire* node 
+            // is reusuable even though "string" was converted to an identifier.  However, we still
+            // need to make sure that if that the parser asks for a *token* we don't return it.  
+            // Converted identifiers can't ever be created by the scanner, and as such, should not 
+            // be returned by this source.
             if (token !== null) {
                 if (!this.intersectsWithChangeRangeSpanInOriginalText(position, token.fullWidth())) {
                     // Didn't intersect with the change range.
-                    if (!token.isIncrementallyUnusable()) {
+                    if (!token.isIncrementallyUnusable() && !token.isKeywordConvertedToIdentifier()) {
 
                         // Didn't contain anything that would make it unusable.  Awesome.  This is
                         // a token we can reuse.

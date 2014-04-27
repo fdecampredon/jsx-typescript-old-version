@@ -1305,6 +1305,7 @@ module TypeScript {
         public isTypeScriptSpecific(): boolean { return false; }
 
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind()); }
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
 
         public fullWidth(): number { return unpackFullWidth(this._packedFullWidthAndKind); }
         public fullStart(): number { return unpackFullStart(this._packedFullStartAndTriviaInfo); }

@@ -32,6 +32,17 @@ module TypeScript {
         previousToken(includeSkippedTokens?: boolean): ISyntaxToken;
         nextToken(includeSkippedTokens?: boolean): ISyntaxToken;
 
+        // True if this was a keyword that the parser converted to an identifier.  i.e. if you have
+        //      x.public
+        //
+        // then 'public' will be converted to an identifier.  These tokens should are parser 
+        // generated and, as such, should not be returned when the incremental parser source
+        // hands out tokens.  Note: If it is included in a node then *that* node may still
+        // be reusuable.  i.e. if i have:  private Foo() { x.public = 1; }
+        //
+        // Then that entire method node is reusable even if the 'public' identifier is not.
+        isKeywordConvertedToIdentifier(): boolean;
+
         clone(): ISyntaxToken;
     }
 
@@ -402,6 +413,8 @@ module TypeScript.Syntax {
         // Empty tokens are never incrementally reusable.
         public isIncrementallyUnusable() { return true; }
 
+        public isKeywordConvertedToIdentifier() { return false; }
+
         public fullWidth() { return 0; }
         public width() { return 0; }
 
@@ -593,8 +606,18 @@ module TypeScript.Syntax {
         public lastToken() { return this.fullWidth() > 0 ? this : null; }
         public isTypeScriptSpecific() { return false; }
 
-        // Converted tokens are created from the parser.  They are *never* incrementally reusable.
-        public isIncrementallyUnusable() { return true; }
+        // We mark this token as being incrementally *reusable* and also that it was a keyword
+        // that was converted to an identifier.  The incremental parser knows not to return this
+        // token if hte parser is asking for a *token*.  That's because this token would not have
+        // been created by the scanner (and thus the incremental source will be behaving differently
+        // from the normal source).  However, if the parser asks for a *node*, then we can still
+        // reuse a node even if it contains one of these tokens in it.  
+        // 
+        // NOTE: a converted keyword is still unusable if it's underlying token is unusable.  The
+        // underlying token may be unusable if the scanner encountered errors while trying to scan
+        // it.
+        public isIncrementallyUnusable() { return this._underlyingToken.isIncrementallyUnusable(); }
+        public isKeywordConvertedToIdentifier() { return true; }
 
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
 
@@ -781,6 +804,7 @@ module TypeScript.Syntax {
 
         // Realized tokens are created from the parser.  They are *never* incrementally reusable.
         public isIncrementallyUnusable() { return true; }
+        public isKeywordConvertedToIdentifier() { return false; }
 
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
 
