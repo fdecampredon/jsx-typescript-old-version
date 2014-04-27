@@ -1203,6 +1203,33 @@ module TypeScript.Parser {
         }
     }
 
+    var arrayPool: any[][] = [];
+    var arrayPoolCount: number = 0;
+
+    function getArray(): any[] {
+        if (arrayPoolCount === 0) {
+            return [];
+        }
+
+        arrayPoolCount--;
+        var result = arrayPool[arrayPoolCount];
+        arrayPool[arrayPoolCount] = null;
+
+        return result;
+    }
+
+    function returnZeroOrOneLengthArray(array: any[]) {
+        if (array.length <= 1) {
+            returnArray(array);
+        }
+    }
+
+    function returnArray(array: any[]) {
+        array.length = 0;
+        arrayPool[arrayPoolCount] = array;
+        arrayPoolCount++;
+    }
+
     // Contains the actual logic to parse typescript/javascript.  This is the code that generally
     // represents the logic necessary to handle all the language grammar constructs.  When the 
     // language changes, this should generally only be the place necessary to fix up.
@@ -1688,7 +1715,7 @@ module TypeScript.Parser {
             updatedToken.setTextAndFullStart(this.source.fullText, skippedTokens[0].fullStart());
 
             // Don't need this array anymore.  Give it back so we can reuse it.
-            this.returnArray(skippedTokens);
+            returnArray(skippedTokens);
 
             return updatedToken;
         }
@@ -1696,7 +1723,7 @@ module TypeScript.Parser {
         private addSkippedTokensAfterToken(token: ISyntaxToken, skippedTokens: ISyntaxToken[]): ISyntaxToken {
             // Debug.assert(token.fullWidth() > 0);
             if (skippedTokens.length === 0) {
-                this.returnArray(skippedTokens);
+                returnArray(skippedTokens);
                 return token;
             }
 
@@ -1707,7 +1734,7 @@ module TypeScript.Parser {
             }
 
             // Don't need this array anymore.  Give it back so we can reuse it.
-            this.returnArray(skippedTokens);
+            returnArray(skippedTokens);
             return token.withTrailingTrivia(Syntax.triviaList(trailingTrivia));
         }
 
@@ -2163,7 +2190,7 @@ module TypeScript.Parser {
         }
 
         private parseModifiers(): ISyntaxList<ISyntaxToken> {
-            var tokens: ISyntaxToken[] = this.getArray();
+            var tokens: ISyntaxToken[] = getArray();
 
             while (true) {
                 if (ParserImpl.isModifier(this.currentToken())) {
@@ -2178,7 +2205,7 @@ module TypeScript.Parser {
 
             // If the tokens array is greater than one, then we can't return it.  It will have been 
             // copied directly into the syntax list.
-            this.returnZeroOrOneLengthArray(tokens);
+            returnZeroOrOneLengthArray(tokens);
 
             return result;
         }
@@ -2397,7 +2424,7 @@ module TypeScript.Parser {
         private parseMemberFunctionDeclaration(): MemberFunctionDeclarationSyntax {
             // Debug.assert(this.isMemberFunctionDeclaration());
 
-            var modifierArray: ISyntaxToken[] = this.getArray();
+            var modifierArray: ISyntaxToken[] = getArray();
 
             while (true) {
                 var currentToken = this.currentToken();
@@ -2411,8 +2438,8 @@ module TypeScript.Parser {
             }
 
             var modifiers = Syntax.list(modifierArray);
-            this.returnZeroOrOneLengthArray(modifierArray);
-            
+            returnZeroOrOneLengthArray(modifierArray);
+
             var propertyName = this.eatPropertyName();
             var callSignature = this.parseCallSignature(/*requireCompleteTypeParameterList:*/ false);
 
@@ -2499,7 +2526,7 @@ module TypeScript.Parser {
         private parseMemberVariableDeclaration(): MemberVariableDeclarationSyntax {
             // Debug.assert(this.isMemberVariableDeclaration());
 
-            var modifierArray: ISyntaxToken[] = this.getArray();
+            var modifierArray: ISyntaxToken[] = getArray();
 
             while (true) {
                 var currentToken = this.currentToken();
@@ -2513,7 +2540,7 @@ module TypeScript.Parser {
             }
 
             var modifiers = Syntax.list(modifierArray);
-            this.returnZeroOrOneLengthArray(modifierArray);
+            returnZeroOrOneLengthArray(modifierArray);
 
             var variableDeclarator = this.parseVariableDeclarator(/*allowIn:*/ true, /*allowPropertyName:*/ true);
             var semicolon = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
@@ -5128,7 +5155,7 @@ module TypeScript.Parser {
 
             var dotDotDotToken = this.tryEatToken(SyntaxKind.DotDotDotToken);
 
-            var modifierArray: ISyntaxToken[] = this.getArray();
+            var modifierArray: ISyntaxToken[] = getArray();
 
             while (true) {
                 var currentToken = this.currentToken();
@@ -5141,7 +5168,7 @@ module TypeScript.Parser {
             }
 
             var modifiers = Syntax.list(modifierArray);
-            this.returnZeroOrOneLengthArray(modifierArray);
+            returnZeroOrOneLengthArray(modifierArray);
 
             var identifier = this.eatIdentifierToken();
             var questionToken = this.tryEatToken(SyntaxKind.QuestionToken);
@@ -5256,31 +5283,11 @@ module TypeScript.Parser {
                    this.currentToken().kind() === SyntaxKind.EndOfFileToken;
         }
 
-        private arrayPool: any[][] = [];
-        private getArray(): any[] {
-            if (this.arrayPool.length > 0) {
-                return this.arrayPool.pop();
-            }
-
-            return [];
-        }
-
-        private returnZeroOrOneLengthArray(array: any[]) {
-            if (array.length <= 1) {
-                this.returnArray(array);
-            }
-        }
-
-        private returnArray(array: any[]) {
-            array.length = 0;
-            this.arrayPool.push(array);
-        }
-
         private parseSyntaxListWorker<T extends ISyntaxNodeOrToken>(
                 currentListType: ListParsingState,
                 processItems: (parser: ParserImpl, items: any[]) => void ): { skippedTokens: ISyntaxToken[]; list: ISyntaxList<T>; } {
-            var items: T[] = this.getArray();
-            var skippedTokens: ISyntaxToken[] = this.getArray();
+            var items: T[] = getArray();
+            var skippedTokens: ISyntaxToken[] = getArray();
 
             while (true) {
                 // Try to parse an item of the list.  If we fail then decide if we need to abort or 
@@ -5314,14 +5321,14 @@ module TypeScript.Parser {
 
             // Can't return if it has more then 1 element.  In that case, the list will have been
             // copied into the SyntaxList.
-            this.returnZeroOrOneLengthArray(items);
+            returnZeroOrOneLengthArray(items);
 
             return { skippedTokens: skippedTokens, list: result };
         }
 
         private parseSeparatedSyntaxListWorker<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList<T>; } {
-            var items: ISyntaxNodeOrToken[] = this.getArray();
-            var skippedTokens: ISyntaxToken[] = this.getArray();
+            var items: ISyntaxNodeOrToken[] = getArray();
+            var skippedTokens: ISyntaxToken[] = getArray();
             Debug.assert(items.length === 0);
             Debug.assert(skippedTokens.length === 0);
             Debug.assert(skippedTokens !== items);
@@ -5435,7 +5442,7 @@ module TypeScript.Parser {
 
             // Can't return if it has more then 1 element.  In that case, the list will have been
             // copied into the SyntaxList.
-            this.returnZeroOrOneLengthArray(items);
+            returnZeroOrOneLengthArray(items);
 
             return { skippedTokens: skippedTokens, list: result };
         }
