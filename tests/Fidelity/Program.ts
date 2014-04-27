@@ -93,7 +93,7 @@ class Program {
 
         TypeScript.Environment.standardOut.WriteLine("Testing against 262.");
         this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\test262",
-            fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, /*verify:*/ true, /*generateBaselines:*/ generate));
+            fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
     }
 
     private static reusedElements(oldNode: TypeScript.SourceUnitSyntax, newNode: TypeScript.SourceUnitSyntax, key: any): { originalElements: number; reusedElements: number; } {
