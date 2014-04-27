@@ -75,30 +75,26 @@ module TypeScript {
         }
 
         private getImplicitImportSpan(sourceUnitLeadingTrivia: ISyntaxTriviaList): TextSpan {
-            var position = 0;
-
             for (var i = 0, n = sourceUnitLeadingTrivia.count(); i < n; i++) {
                 var trivia = sourceUnitLeadingTrivia.syntaxTriviaAt(i);
 
                 if (trivia.isComment()) {
-                    var span = this.getImplicitImportSpanWorker(trivia, position);
+                    var span = this.getImplicitImportSpanWorker(trivia);
                     if (span) {
                         return span;
                     }
                 }
-
-                position += trivia.fullWidth();
             }
 
             return null;
         }
 
-        private getImplicitImportSpanWorker(trivia: ISyntaxTrivia, position: number): TextSpan {
+        private getImplicitImportSpanWorker(trivia: ISyntaxTrivia): TextSpan {
             var implicitImportRegEx = /^(\/\/\/\s*<implicit-import\s*)*\/>/gim;
             var match = implicitImportRegEx.exec(trivia.fullText());
 
             if (match) {
-                return new TextSpan(position, trivia.fullWidth());
+                return new TextSpan(trivia.fullStart(), trivia.fullWidth());
             }
 
             return null;
@@ -106,24 +102,21 @@ module TypeScript {
 
         private getTopLevelImportOrExportSpan(node: SourceUnitSyntax): TextSpan {
             var firstToken: ISyntaxToken;
-            var position = 0;
 
             for (var i = 0, n = node.moduleElements.childCount(); i < n; i++) {
                 var moduleElement = node.moduleElements.childAt(i);
 
                 firstToken = moduleElement.firstToken();
                 if (firstToken !== null && firstToken.kind() === SyntaxKind.ExportKeyword) {
-                    return new TextSpan(position + firstToken.leadingTriviaWidth(), firstToken.width());
+                    return new TextSpan(firstToken.start(), firstToken.width());
                 }
 
                 if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
                     var importDecl = <ImportDeclarationSyntax>moduleElement;
                     if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
-                        return new TextSpan(position + importDecl.leadingTriviaWidth(), importDecl.width());
+                        return new TextSpan(importDecl.start(), importDecl.width());
                     }
                 }
-
-                position += moduleElement.fullWidth();
             }
 
             return null;;
@@ -196,7 +189,9 @@ module TypeScript {
                     TypeScript.isDTSFile(this.fileName),
                     getParseOptions(this._compiler.compilationSettings()));
 
-                TypeScript.syntaxTreeParseTime += new Date().getTime() - start;
+                var time = new Date().getTime() - start;
+
+                TypeScript.syntaxTreeParseTime += time;
 
                 this._syntaxTree = result;
             }
