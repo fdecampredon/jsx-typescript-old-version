@@ -2,15 +2,6 @@
 
 module TypeScript {
     export enum SyntaxConstants {
-        // Masks that we use to place information about trivia into a single int. The first two flags 
-        // mark bools that tell us if the trivia contains a comment or a newline. The width of the 
-        // trivia is then stored in the rest of the int.  This allows trivia of nearly any length.
-        // However, nearly all of the time the trivia will be less than 511MB, and will fit into 31
-        // bits (which will only be stored a a single 32bit int in chakra).
-        TriviaNewLineMask = 0x00000001, //  0000 0000 0000 0000 0000 0000 0000 0001
-        TriviaCommentMask = 0x00000002, //  0000 0100 0000 0000 0000 0000 0000 0010
-        TriviaFullWidthShift = 2,       //  1111 1111 1111 1111 1111 1111 1111 1100
-
         // Masks that we use to place information about a node into a single int.  The first bit tells
         // us if we've computed the data for a node.
         //
@@ -29,8 +20,5 @@ module TypeScript {
         NodeIncrementallyUnusableMask = 0x00000002, // 0000 0000 0000 0000 0000 0000 0000 0010
         NodeParsedInStrictModeMask    = 0x00000004, // 0000 0000 0000 0000 0000 0000 0000 0100
         NodeFullWidthShift            = 3,          // 1111 1111 1111 1111 1111 1111 1111 1000
-
-        // Set when the scanner sees a keyword that isn't fixed width.  i.e. a keyword like: \u0076ar
-        IsVariableWidthKeyword        = 1 << 31
     }
 }

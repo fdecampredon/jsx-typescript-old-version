@@ -512,8 +512,7 @@ class Program {
 
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
 
-        var text = TypeScript.TextFactory.createText(contents);
-        var scanner = new TypeScript.Scanner(fileName, languageVersion, text);
+        var scanner = new TypeScript.Scanner(fileName, languageVersion, contents, TypeScript.LineMap1.fromString(contents));
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var textArray: string[] = [];
@@ -538,8 +537,7 @@ class Program {
 
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
 
-        var text = TypeScript.TextFactory.createText(contents);
-        var scanner = new TypeScript.Scanner(fileName, languageVersion, text);
+        var scanner = new TypeScript.Scanner(fileName, languageVersion, contents, TypeScript.LineMap1.fromString(contents));
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var textArray: string[] = [];

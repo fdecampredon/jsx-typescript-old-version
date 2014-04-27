@@ -174,8 +174,9 @@ module TypeScript {
     }
 
     export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, readImportFiles = true): IPreProcessedFileInfo {
-        var text = SimpleText.fromScriptSnapshot(sourceText);
-        var scanner = new Scanner(fileName, LanguageVersion.EcmaScript5, text);
+        var simpleText = SimpleText.fromScriptSnapshot(sourceText);
+        var scanner = new Scanner(fileName, LanguageVersion.EcmaScript5,
+            simpleText.substr(0, simpleText.length(), false), simpleText.lineMap());
 
         var firstToken = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
 
@@ -185,10 +186,10 @@ module TypeScript {
 
         var importedFiles: IFileReference[] = [];
         if (readImportFiles) {
-            processImports(text.lineMap(), scanner, firstToken, importedFiles);
+            processImports(simpleText.lineMap(), scanner, firstToken, importedFiles);
         }
 
-        var properties = processTripleSlashDirectives(fileName, text.lineMap(), firstToken);
+        var properties = processTripleSlashDirectives(fileName, simpleText.lineMap(), firstToken);
 
         scannerDiagnostics.length = 0;
         return { referencedFiles: properties.referencedFiles, importedFiles: importedFiles, isLibFile: properties.noDefaultLib, diagnostics: properties.diagnostics };

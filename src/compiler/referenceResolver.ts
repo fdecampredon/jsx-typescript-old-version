@@ -181,7 +181,7 @@ module TypeScript {
                 var totalTime = new Date().getTime() - start;
                 TypeScript.fileResolutionIOTime += totalTime;
 
-                var lineMap = LineMap1.fromScriptSnapshot(scriptSnapshot);
+                var text = SimpleText.fromScriptSnapshot(scriptSnapshot);
                 var preprocessedFileInformation = TypeScript.preProcessFile(normalizedPath, scriptSnapshot);
                 resolutionResult.diagnostics.push.apply(resolutionResult.diagnostics, preprocessedFileInformation.diagnostics);
 
@@ -193,7 +193,7 @@ module TypeScript {
                 // Resolve explicit references
                 var normalizedReferencePaths: string[] = [];
                 preprocessedFileInformation.referencedFiles.forEach(fileReference => {
-                    var currentReferenceLocation = new ReferenceLocation(normalizedPath, lineMap, fileReference.position, fileReference.length, /* isImported */ false);
+                    var currentReferenceLocation = new ReferenceLocation(normalizedPath, text.lineMap(), fileReference.position, fileReference.length, /* isImported */ false);
                     var normalizedReferencePath = this.resolveIncludedFile(fileReference.path, currentReferenceLocation, resolutionResult);
                     normalizedReferencePaths.push(normalizedReferencePath);
                 });
@@ -202,7 +202,7 @@ module TypeScript {
                 var normalizedImportPaths: string[] = [];
                 for (var i = 0; i < preprocessedFileInformation.importedFiles.length; i++) {
                     var fileImport = preprocessedFileInformation.importedFiles[i];
-                    var currentReferenceLocation = new ReferenceLocation(normalizedPath, lineMap, fileImport.position, fileImport.length, /* isImported */ true);
+                    var currentReferenceLocation = new ReferenceLocation(normalizedPath, text.lineMap(), fileImport.position, fileImport.length, /* isImported */ true);
                     var normalizedImportPath = this.resolveImportedFile(fileImport.path, currentReferenceLocation, resolutionResult);
                     normalizedImportPaths.push(normalizedImportPath);
                 }

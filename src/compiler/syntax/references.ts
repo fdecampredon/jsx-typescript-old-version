@@ -30,7 +30,6 @@
 // SyntaxIndenter depends on SyntaxRewriter
 ///<reference path='syntaxIndenter.ts' />
 
-///<reference path='syntaxToken.generated.ts' />
 ///<reference path='syntaxToken.ts' />
 ///<reference path='syntaxTokenReplacer.ts' />
 ///<reference path='syntaxTrivia.ts' />

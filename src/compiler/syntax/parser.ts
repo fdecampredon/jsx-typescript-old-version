@@ -427,6 +427,9 @@ module TypeScript.Parser {
         // have their fullStart at this position.
         absolutePosition(): number;
 
+        fullText: string;
+        lineMap: LineMap;
+
         // The current syntax node the source is pointing at.  Only available in incremental settings.
         // The source can point at a node if that node doesn't intersect any of the text changes in
         // the file, and doesn't contain certain unacceptable constructs.  For example, if the node
@@ -515,10 +518,11 @@ module TypeScript.Parser {
         private rewindPointPoolCount = 0;
 
         constructor(fileName: string,
-                    text: ISimpleText,
-                    languageVersion: LanguageVersion) {
+                    languageVersion: LanguageVersion,
+                    public fullText: string,
+                    public lineMap: LineMap) {
             this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 32, null), null);
-            this.scanner = new Scanner(fileName, languageVersion, text);
+            this.scanner = new Scanner(fileName, languageVersion, fullText, lineMap);
         }
 
         public currentNode(): SyntaxNode {
@@ -714,7 +718,9 @@ module TypeScript.Parser {
         // The cursor we use to navigate through and retrieve nodes and tokens from the old tree.
         private _oldSourceUnitCursor: SyntaxCursor;
 
-        constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, newText: ISimpleText) {
+        constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, public fullText: string, public lineMap: LineMap) {
+            var newText = fullText;
+
             var oldSourceUnit = oldSyntaxTree.sourceUnit();
             this._oldSourceUnitCursor = getSyntaxCursor();
 
@@ -734,11 +740,11 @@ module TypeScript.Parser {
             // The old tree's length, plus whatever length change was caused by the edit
             // Had better equal the new text's length!
             if (Debug.shouldAssert(AssertionLevel.Aggressive)) {
-                Debug.assert((oldSourceUnit.fullWidth() - this._changeRange.span().length() + this._changeRange.newLength()) === newText.length());
+                Debug.assert((oldSourceUnit.fullWidth() - this._changeRange.span().length() + this._changeRange.newLength()) === newText.length);
             }
 
             // Set up a scanner so that we can scan tokens out of the new text.
-            this._normalParserSource = new NormalParserSource(oldSyntaxTree.fileName(), newText, oldSyntaxTree.parseOptions().languageVersion());
+            this._normalParserSource = new NormalParserSource(oldSyntaxTree.fileName(), oldSyntaxTree.parseOptions().languageVersion(), newText, lineMap);
         }
 
         private static extendToAffectedRange(changeRange:TextChangeRange,
@@ -875,6 +881,7 @@ module TypeScript.Parser {
 
             var position = this.absolutePosition();
             if (this.isPastChangeRange() && nodeOrToken.fullStart() !== position) {
+                this.setTokenPositionWalker.text = this.fullText;
                 this.setTokenPositionWalker.position = position;
 
                 nodeOrToken.accept(this.setTokenPositionWalker);
@@ -1186,10 +1193,11 @@ module TypeScript.Parser {
     // are reused in a different location because of an incremental parse.
     class SetTokenPositionWalker extends SyntaxWalker {
         public position: number;
+        public text: string;
 
         public visitToken(token: ISyntaxToken): void {
             var position = this.position;
-            token.setFullStart(position);
+            token.setTextAndFullStart(this.text, position);
 
             this.position += token.fullWidth();
         }
@@ -1202,7 +1210,6 @@ module TypeScript.Parser {
         // Underlying source where we pull nodes and tokens from.
         private source: IParserSource;
         private fileName: string;
-        private lineMap: LineMap;
 
         private parseOptions: ParseOptions;
 
@@ -1241,9 +1248,8 @@ module TypeScript.Parser {
         private _currentToken: ISyntaxToken = null;
         private _currentNode: SyntaxNode = null;
 
-        constructor(fileName: string, lineMap: LineMap, source: IParserSource, parseOptions: ParseOptions, private text: ISimpleText) {
+        constructor(fileName: string, source: IParserSource, parseOptions: ParseOptions) {
             this.fileName = fileName;
-            this.lineMap = lineMap;
             this.source = source;
             this.parseOptions = parseOptions;
         }
@@ -1476,8 +1482,8 @@ module TypeScript.Parser {
 
             // If our previous token ended with a newline, then *by definition* we must have started
             // at the beginning of a line.  
-            var lineNumber = this.lineMap.getLineNumberFromPosition(tokenFullStart);
-            var lineStart = this.lineMap.getLineStartPosition(lineNumber);
+            var lineNumber = this.source.lineMap.getLineNumberFromPosition(tokenFullStart);
+            var lineStart = this.source.lineMap.getLineStartPosition(lineNumber);
 
             return lineStart == tokenFullStart;
         }
@@ -1565,18 +1571,18 @@ module TypeScript.Parser {
 
             // They wanted something specific, just report that that token was missing.
             if (SyntaxFacts.isAnyKeyword(expectedKind) || SyntaxFacts.isAnyPunctuation(expectedKind)) {
-                return new Diagnostic(this.fileName, this.lineMap, token.start(), token.width(), DiagnosticCode._0_expected, [SyntaxFacts.getText(expectedKind)]);
+                return new Diagnostic(this.fileName, this.source.lineMap, token.start(), token.width(), DiagnosticCode._0_expected, [SyntaxFacts.getText(expectedKind)]);
             }
             else {
                 // They wanted an identifier.
 
                 // If the user supplied a keyword, give them a specialized message.
                 if (actual !== null && SyntaxFacts.isAnyKeyword(actual.kind())) {
-                    return new Diagnostic(this.fileName, this.lineMap, token.start(), token.width(), DiagnosticCode.Identifier_expected_0_is_a_keyword, [SyntaxFacts.getText(actual.kind())]);
+                    return new Diagnostic(this.fileName, this.source.lineMap, token.start(), token.width(), DiagnosticCode.Identifier_expected_0_is_a_keyword, [SyntaxFacts.getText(actual.kind())]);
                 }
                 else {
                     // Otherwise just report that an identifier was expected.
-                    return new Diagnostic(this.fileName, this.lineMap, token.start(), token.width(), DiagnosticCode.Identifier_expected, null);
+                    return new Diagnostic(this.fileName, this.source.lineMap, token.start(), token.width(), DiagnosticCode.Identifier_expected, null);
                 }
             }
 
@@ -1679,7 +1685,7 @@ module TypeScript.Parser {
             // We've prepending this token with new leading trivia.  This means the full start of
             // the token is not where the scanner originally thought it was, but is instead at the
             // start of the first skipped token.
-            updatedToken.setFullStart(skippedTokens[0].fullStart());
+            updatedToken.setTextAndFullStart(this.source.fullText, skippedTokens[0].fullStart());
 
             // Don't need this array anymore.  Give it back so we can reuse it.
             this.returnArray(skippedTokens);
@@ -1725,7 +1731,7 @@ module TypeScript.Parser {
 
             // Because we removed the leading trivia from the skipped token, the full start of the
             // trimmed token is the start of the skipped token.
-            trimmedToken.setFullStart(skippedToken.start());
+            trimmedToken.setTextAndFullStart(this.source.fullText, skippedToken.start());
 
             array.push(Syntax.skippedTokenTrivia(trimmedToken));
 
@@ -1745,7 +1751,7 @@ module TypeScript.Parser {
             var allDiagnostics = this.source.tokenDiagnostics().concat(this.diagnostics);
             allDiagnostics.sort((a: Diagnostic, b: Diagnostic) => a.start() - b.start());
 
-            var syntaxTree = new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.lineMap, this.parseOptions);
+            var syntaxTree = new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.source.lineMap, this.parseOptions);
             sourceUnit._syntaxTree = syntaxTree;
 
             return syntaxTree;
@@ -1771,10 +1777,10 @@ module TypeScript.Parser {
             sourceUnit = <SourceUnitSyntax>this.addSkippedTokensBeforeNode(sourceUnit, result.skippedTokens);
 
             if (Debug.shouldAssert(AssertionLevel.Aggressive)) {
-                Debug.assert(sourceUnit.fullWidth() === this.text.length());
+                Debug.assert(sourceUnit.fullWidth() === this.source.fullText.length);
 
                 if (Debug.shouldAssert(AssertionLevel.VeryAggressive)) {
-                    Debug.assert(sourceUnit.fullText() === this.text.substr(0, this.text.length(), /*intern:*/ false));
+                    Debug.assert(sourceUnit.fullText() === this.source.fullText);
                 }
             }
 
@@ -2541,7 +2547,7 @@ module TypeScript.Parser {
                     // "function f() { return expr; }.
                     // 
                     // Detect if the user is typing this and attempt recovery.
-                    var diagnostic = new Diagnostic(this.fileName, this.lineMap,
+                    var diagnostic = new Diagnostic(this.fileName, this.source.lineMap,
                         token0.start(), token0.width(), DiagnosticCode.Unexpected_token_0_expected, [SyntaxFacts.getText(SyntaxKind.OpenBraceToken)]);
                     this.addDiagnostic(diagnostic);
 
@@ -3962,7 +3968,7 @@ module TypeScript.Parser {
 
             // We're synthesizing a new operator token.  We need to ensure it starts at 
             // the right position.
-            mergedToken.setFullStart(token0.fullStart());
+            mergedToken.setTextAndFullStart(this.source.fullText, token0.fullStart());
 
             return mergedToken;
         }
@@ -4190,7 +4196,7 @@ module TypeScript.Parser {
                 // as an arithmetic expression.
                 if (isDot) {
                     // A parameter list must follow a generic type argument list.
-                    var diagnostic = new Diagnostic(this.fileName, this.lineMap, token0.start(), token0.width(),
+                    var diagnostic = new Diagnostic(this.fileName, this.source.lineMap, token0.start(), token0.width(),
                         DiagnosticCode.A_parameter_list_must_follow_a_generic_type_argument_list_expected, null);
                     this.addDiagnostic(diagnostic);
 
@@ -4245,7 +4251,7 @@ module TypeScript.Parser {
                 inObjectCreation) {
 
                 var end = this.currentToken().start() + this.currentToken().width();
-                var diagnostic = new Diagnostic(this.fileName, this.lineMap,start, end - start,
+                var diagnostic = new Diagnostic(this.fileName, this.source.lineMap,start, end - start,
                     DiagnosticCode.new_T_cannot_be_used_to_create_an_array_Use_new_Array_T_instead, null);
                 this.addDiagnostic(diagnostic);
 
@@ -5466,7 +5472,7 @@ module TypeScript.Parser {
         private reportUnexpectedTokenDiagnostic(listType: ListParsingState): void {
             var token = this.currentToken();
 
-            var diagnostic = new Diagnostic(this.fileName, this.lineMap,
+            var diagnostic = new Diagnostic(this.fileName, this.source.lineMap,
                 token.start(), token.width(), DiagnosticCode.Unexpected_token_0_expected, [this.getExpectedListElementType(listType)]);
             this.addDiagnostic(diagnostic);
         }
@@ -5920,9 +5926,12 @@ module TypeScript.Parser {
                           text: ISimpleText,
                           isDeclaration: boolean,
                           options: ParseOptions): SyntaxTree {
-        var source = new NormalParserSource(fileName, text, options.languageVersion());
+        var fullText = text.substr(0, text.length(), false);
+        var lineMap = text.lineMap();
 
-        return new ParserImpl(fileName, text.lineMap(), source, options, text).parseSyntaxTree(isDeclaration);
+        var source = new NormalParserSource(fileName, options.languageVersion(), fullText, lineMap);
+
+        return new ParserImpl(fileName, source, options).parseSyntaxTree(isDeclaration);
     }
 
     export function incrementalParse(oldSyntaxTree: SyntaxTree,
@@ -5932,8 +5941,10 @@ module TypeScript.Parser {
             return oldSyntaxTree;
         }
 
-        var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText);
+        var fullText = newText.substr(0, newText.length(), false);
+        var lineMap = newText.lineMap();
+        var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, fullText, lineMap);
 
-        return new ParserImpl(oldSyntaxTree.fileName(), newText.lineMap(), source, oldSyntaxTree.parseOptions(), newText).parseSyntaxTree(oldSyntaxTree.isDeclaration());
+        return new ParserImpl(oldSyntaxTree.fileName(), source, oldSyntaxTree.parseOptions()).parseSyntaxTree(oldSyntaxTree.isDeclaration());
     }
 }

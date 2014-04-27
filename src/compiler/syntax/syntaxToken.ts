@@ -3,7 +3,7 @@
 module TypeScript {
     export interface ISyntaxToken extends ISyntaxNodeOrToken, INameSyntax, IPrimaryExpressionSyntax {
         // Adjusts the full start of this token.  Should only be called by the parser.
-        setFullStart(fullStart: number): void;
+        setTextAndFullStart(text: string, fullStart: number): void;
 
         // Text for this token, not including leading or trailing trivia.
         text(): string;
@@ -359,7 +359,7 @@ module TypeScript.Syntax {
             return this._syntaxID;
         }
 
-        public setFullStart(): void {
+        public setTextAndFullStart(): void {
             // An empty token is always at the -1 position.
         }
 
@@ -579,8 +579,8 @@ module TypeScript.Syntax {
             return this._syntaxID;
         }
 
-        public setFullStart(fullStart: number): void {
-            this._underlyingToken.setFullStart(fullStart);
+        public setTextAndFullStart(text: string, fullStart: number): void {
+            this._underlyingToken.setTextAndFullStart(text, fullStart);
         }
 
         public clone(): ISyntaxToken {
@@ -764,7 +764,7 @@ module TypeScript.Syntax {
             return this._syntaxID;
         }
 
-        public setFullStart(fullStart: number): void {
+        public setTextAndFullStart(text: string, fullStart: number): void {
             this._fullStart = fullStart;
         }
 
