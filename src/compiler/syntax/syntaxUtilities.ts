@@ -20,7 +20,7 @@ module TypeScript {
         public static getToken(list: ISyntaxList<ISyntaxToken>, kind: SyntaxKind): ISyntaxToken {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var token = list.childAt(i);
-                if (token.tokenKind === kind) {
+                if (token.kind() === kind) {
                     return token;
                 }
             }

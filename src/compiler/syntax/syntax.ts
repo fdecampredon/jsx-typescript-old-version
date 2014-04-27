@@ -567,7 +567,7 @@ module TypeScript.Syntax {
     }
 
     export function nextToken(token: ISyntaxToken, includeSkippedTokens: boolean = false): ISyntaxToken {
-        if (token.tokenKind === SyntaxKind.EndOfFileToken) {
+        if (token.kind() === SyntaxKind.EndOfFileToken) {
             return null;
         }
 

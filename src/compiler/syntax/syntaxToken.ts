@@ -2,9 +2,6 @@
 
 module TypeScript {
     export interface ISyntaxToken extends ISyntaxNodeOrToken, INameSyntax, IPrimaryExpressionSyntax {
-        // Same as kind(), just exposed through a property for perf.
-        tokenKind: SyntaxKind;
-
         // Adjusts the full start of this token.  Should only be called by the parser.
         setFullStart(fullStart: number): void;
 
@@ -58,7 +55,7 @@ module TypeScript {
 
 module TypeScript.Syntax {
     export function isPrimaryExpression(token: ISyntaxToken): boolean {
-        switch (token.tokenKind) {
+        switch (token.kind()) {
             case SyntaxKind.IdentifierName:
             case SyntaxKind.RegularExpressionLiteral:
             case SyntaxKind.NumericLiteral:
@@ -75,12 +72,12 @@ module TypeScript.Syntax {
     }
 
     export function realizeToken(token: ISyntaxToken): ISyntaxToken {
-        return new RealizedToken(token.fullStart(), token.tokenKind,
+        return new RealizedToken(token.fullStart(), token.kind(),
             token.leadingTrivia(), token.text(), token.value(), token.valueText(), token.trailingTrivia());
     }
 
     export function convertToIdentifierName(token: ISyntaxToken): ISyntaxToken {
-        Debug.assert(SyntaxFacts.isAnyKeyword(token.tokenKind));
+        Debug.assert(SyntaxFacts.isAnyKeyword(token.kind()));
         return new ConvertedIdentifierToken(token);
     }
 
@@ -157,7 +154,7 @@ module TypeScript.Syntax {
     }
 
     export function value(token: ISyntaxToken): any {
-        return value1(token.tokenKind, token.text());
+        return value1(token.kind(), token.text());
     }
 
     function hexValue(text: string, start: number, length: number): number {
