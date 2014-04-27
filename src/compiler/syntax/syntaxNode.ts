@@ -226,22 +226,25 @@ module TypeScript {
             var slotCount = this.childCount();
 
             var fullWidth = 0;
-            var childWidth = 0;
 
-            // If we're already set as incrementally unusable, then don't need to check children.
             // If we have no children (like an OmmittedExpressionSyntax), we're automatically not reusable.
-            var isIncrementallyUnusable = ((this._data & SyntaxConstants.NodeIncrementallyUnusableMask) !== 0) || slotCount === 0;
+            var isIncrementallyUnusable = slotCount === 0;
 
             for (var i = 0, n = slotCount; i < n; i++) {
                 var element = this.childAt(i);
 
                 if (element !== null) {
-                    childWidth = element.fullWidth();
-                    fullWidth += childWidth;
+                    fullWidth += element.fullWidth();
 
+                    /*
                     if (!isIncrementallyUnusable) {
-                        isIncrementallyUnusable = element.isIncrementallyUnusable();
+                        
+                        var childIsUnusable = element.isIncrementallyUnusable();
+                        isIncrementallyUnusable = childIsUnusable;
                     }
+                    /*/
+                    isIncrementallyUnusable = isIncrementallyUnusable || element.isIncrementallyUnusable();
+                    //*/
                 }
             }
 

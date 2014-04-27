@@ -2197,6 +2197,8 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 
     result += "        }\r\n\r\n";
 
+    result += "        public isKeywordConvertedToIdentifier(): boolean { return false; }\r\n\r\n"
+
     result += "        public syntaxID(): number {\r\n";
     result += "            if (this._syntaxID === 0) {\r\n";
     result += "                this._syntaxID = _nextSyntaxID++;\r\n";

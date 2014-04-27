@@ -14,6 +14,8 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
         }
 
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
+
         public syntaxID(): number {
             if (this._syntaxID === 0) {
                 this._syntaxID = _nextSyntaxID++;
@@ -154,6 +156,8 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
             this._leadingTriviaInfo = leadingTriviaInfo;
         }
+
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
 
         public syntaxID(): number {
             if (this._syntaxID === 0) {
@@ -296,6 +300,8 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
             this._trailingTriviaInfo = trailingTriviaInfo;
         }
+
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
 
         public syntaxID(): number {
             if (this._syntaxID === 0) {
@@ -441,6 +447,8 @@ module TypeScript.Syntax {
             this._trailingTriviaInfo = trailingTriviaInfo;
         }
 
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
+
         public syntaxID(): number {
             if (this._syntaxID === 0) {
                 this._syntaxID = _nextSyntaxID++;
@@ -580,6 +588,8 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
         }
 
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
+
         public syntaxID(): number {
             if (this._syntaxID === 0) {
                 this._syntaxID = _nextSyntaxID++;
@@ -705,6 +715,8 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
             this._leadingTriviaInfo = leadingTriviaInfo;
         }
+
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
 
         public syntaxID(): number {
             if (this._syntaxID === 0) {
@@ -833,6 +845,8 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
             this._trailingTriviaInfo = trailingTriviaInfo;
         }
+
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
 
         public syntaxID(): number {
             if (this._syntaxID === 0) {
@@ -963,6 +977,8 @@ module TypeScript.Syntax {
             this._leadingTriviaInfo = leadingTriviaInfo;
             this._trailingTriviaInfo = trailingTriviaInfo;
         }
+
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
 
         public syntaxID(): number {
             if (this._syntaxID === 0) {

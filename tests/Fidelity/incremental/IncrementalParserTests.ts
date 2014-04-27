@@ -241,7 +241,7 @@ module TypeScript {
             var oldText = TextFactory.createText(source);
             var newTextAndChange = withInsert(oldText, 0, "'strict';\r\n");
 
-            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 21);
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 25);
         }
 
         public static testStrictMode2() {
@@ -269,7 +269,7 @@ module TypeScript {
             var oldText = TextFactory.createText(source);
             var newTextAndChange = withDelete(oldText, 0, index);
 
-            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 20);
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 24);
         }
 
         public static testStrictMode4() {
@@ -614,6 +614,18 @@ module m3 { }\
             var oldText = TextFactory.createText(source);
             var index = source.indexOf("(");
             var newTextAndChange = withInsert(oldText, index, "while ");
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
+
+        public static testKeywordAsIdentifier1() {
+            // 'public' as a keyword should be incrementally unusable (because it has an 
+            // unterminated comment).  When we convert it to an identifier, that shouldn't
+            // change anything, and we should still get the same errors.
+            var source = "return; a.public /*"
+
+            var oldText = TextFactory.createText(source);
+            var newTextAndChange = withInsert(oldText, 0, "");
 
             compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
         }
