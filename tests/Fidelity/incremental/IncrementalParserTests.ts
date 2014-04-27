@@ -595,5 +595,27 @@ module m3 { }\
 
             compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
         }
+
+        public static testRegex1() {
+            // Regex should become arithmetic expression
+            var source = "return;\r\nwhile (true) /3/g;"
+
+            var oldText = TextFactory.createText(source);
+            var index = source.indexOf("while");
+            var newTextAndChange = withDelete(oldText, index, "while ".length);
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
+
+        public static testRegex2() {
+            // Arithmetic expressoin should become regex
+            var source = "return;\r\n(true) /3/g;"
+
+            var oldText = TextFactory.createText(source);
+            var index = source.indexOf("(");
+            var newTextAndChange = withInsert(oldText, index, "while ");
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
     }
 }
