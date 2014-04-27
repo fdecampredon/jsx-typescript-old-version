@@ -815,7 +815,6 @@ module TypeScript.Parser {
         public rewind(rewindPoint: IParserRewindPoint): void {
             // Restore our state to the values when the rewind point was created.
             this._changeRange = rewindPoint.changeRange;
-            this._changeRangeNewSpan = this._changeRange.newSpan();
             this._changeDelta = rewindPoint.changeDelta;
 
             // Reset the cursor to what it was when we got the rewind point.  Make sure to return 
@@ -1173,7 +1172,6 @@ module TypeScript.Parser {
                         // From now on we can check if we're past the change range just by seeing
                         // if this is null.
                         this._changeRange = null;
-                        this._changeRangeNewSpan = null;
                     }
                 }
             }
