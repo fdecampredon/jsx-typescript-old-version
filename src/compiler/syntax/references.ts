@@ -26,9 +26,9 @@
 ///<reference path='syntaxRewriter.generated.ts' />
 
 // SyntaxDedenter depends on SyntaxRewriter
-///<reference path='syntaxDedenter.ts' />
+// ///<reference path='syntaxDedenter.ts' />
 // SyntaxIndenter depends on SyntaxRewriter
-///<reference path='syntaxIndenter.ts' />
+// ///<reference path='syntaxIndenter.ts' />
 
 ///<reference path='syntaxToken.generated.ts' />
 ///<reference path='syntaxToken.ts' />

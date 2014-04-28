@@ -1,7 +1,6 @@
 /// <reference path='..\..\src\services\es5compat.ts' />
 
 ///<reference path='..\..\src\compiler\syntax\references.ts' />
-///<reference path='..\..\src\compiler\syntax\emitter.ts' />
 ///<reference path='..\..\src\compiler\syntax\prettyPrinter.ts' />
 ///<reference path='Test262.ts' />
 ///<reference path='incremental\IncrementalParserTests.ts' />
@@ -320,7 +319,7 @@ class Program {
                generateBaseline: boolean,
                justText: boolean): void {
         if (true) {
-            // return;
+            return;
         }
 
         if (!TypeScript.StringUtilities.endsWith(fileName, ".ts") && !TypeScript.StringUtilities.endsWith(fileName, ".js")) {
@@ -339,12 +338,12 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
 
                    var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
-        var emitted = TypeScript.Emitter1.emit(<TypeScript.SourceUnitSyntax>tree.sourceUnit());
+        //var emitted = TypeScript.Emitter1.emit(<TypeScript.SourceUnitSyntax>tree.sourceUnit());
 
-        var result = justText
-            ? <any>emitted.fullText()
-            : { fullText: emitted.fullText().split("\r\n"), sourceUnit: emitted };
-        this.checkResult(fileName, result, verify, generateBaseline, justText);
+        //var result = justText
+        //    ? <any>emitted.fullText()
+        //    : { fullText: emitted.fullText().split("\r\n"), sourceUnit: emitted };
+        //this.checkResult(fileName, result, verify, generateBaseline, justText);
     }
 
     runPrettyPrinter(fileName: string,

@@ -186,13 +186,13 @@ module TypeScript {
             return this.accept(new SyntaxTokenReplacer(token1, token2));
         }
 
-        public withLeadingTrivia(trivia: ISyntaxTriviaList): SyntaxNode {
-            return this.replaceToken(this.firstToken(), this.firstToken().withLeadingTrivia(trivia));
-        }
+        //public withLeadingTrivia(trivia: ISyntaxTriviaList): SyntaxNode {
+        //    return this.replaceToken(this.firstToken(), this.firstToken().withLeadingTrivia(trivia));
+        //}
 
-        public withTrailingTrivia(trivia: ISyntaxTriviaList): SyntaxNode {
-            return this.replaceToken(this.lastToken(), this.lastToken().withTrailingTrivia(trivia));
-        }
+        //public withTrailingTrivia(trivia: ISyntaxTriviaList): SyntaxNode {
+        //    return this.replaceToken(this.lastToken(), this.lastToken().withTrailingTrivia(trivia));
+        //}
 
         public hasLeadingTrivia(): boolean {
             return this.lastToken().hasLeadingTrivia();

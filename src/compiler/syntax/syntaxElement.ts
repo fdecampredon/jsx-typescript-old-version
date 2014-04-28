@@ -125,8 +125,6 @@ module TypeScript {
     export interface IExpressionSyntax extends ISyntaxNodeOrToken {
         isExpression(): boolean;
         isLeftHandSideExpression(): boolean;
-        withLeadingTrivia(trivia: ISyntaxTriviaList): IExpressionSyntax;
-        withTrailingTrivia(trivia: ISyntaxTriviaList): IExpressionSyntax;
     }
 
     export interface IUnaryExpressionSyntax extends IExpressionSyntax {
