@@ -1259,7 +1259,23 @@ function generateConstructor(definition: ITypeDefinition): string {
         }
     }
 
-    result += "            Syntax.setParentForChildren(this);\r\n";
+    for (i = 0; i < definition.children.length; i++) {
+        child = definition.children[i];
+
+        if (child.type !== "SyntaxKind") {
+            if (child.isOptional) {
+                result += "            " + getSafeName(child) + " && (" + getSafeName(child) + ".parent = this);\r\n";
+            }
+            else if (child.isList || child.isSeparatedList) {
+                result += "            !" + getSafeName(child) + ".isShared() && (" + getSafeName(child) + ".parent = this);\r\n";
+            }
+            else {
+                result += "            " + getSafeName(child) + ".parent = this;\r\n";
+            }
+        }
+    }
+
+    //result += "            Syntax.setParentForChildren(this);\r\n";
     result += "        }\r\n";
 
     return result;
