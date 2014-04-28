@@ -429,6 +429,7 @@ module TypeScript.Parser {
 
         fullText: string;
         lineMap: LineMap;
+        cachedDataSize: number;
 
         // The current syntax node the source is pointing at.  Only available in incremental settings.
         // The source can point at a node if that node doesn't intersect any of the text changes in
@@ -517,12 +518,17 @@ module TypeScript.Parser {
         private rewindPointPool: IParserRewindPoint[] = [];
         private rewindPointPoolCount = 0;
 
+        public cachedDataSize: number;
+
         constructor(fileName: string,
                     languageVersion: LanguageVersion,
                     public fullText: string,
                     public lineMap: LineMap) {
             this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 32, null), null);
             this.scanner = new Scanner(fileName, languageVersion, fullText, lineMap);
+
+            // The resultant tree will be caching this amount of data.
+            this.cachedDataSize = fullText.length;
         }
 
         public currentNode(): SyntaxNode {
@@ -718,8 +724,13 @@ module TypeScript.Parser {
         // The cursor we use to navigate through and retrieve nodes and tokens from the old tree.
         private _oldSourceUnitCursor: SyntaxCursor;
 
+        private clearCachedData: boolean;
+        public cachedDataSize: number;
+
         constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, public fullText: string, public lineMap: LineMap) {
             var newText = fullText;
+
+            this.initializeCacheData(oldSyntaxTree);
 
             var oldSourceUnit = oldSyntaxTree.sourceUnit();
             this._oldSourceUnitCursor = getSyntaxCursor();
@@ -745,6 +756,29 @@ module TypeScript.Parser {
 
             // Set up a scanner so that we can scan tokens out of the new text.
             this._normalParserSource = new NormalParserSource(oldSyntaxTree.fileName(), oldSyntaxTree.parseOptions().languageVersion(), newText, lineMap);
+        }
+
+        private initializeCacheData(oldSyntaxTree: SyntaxTree) {
+            // This is how much data is currently being held onto by the tree.
+            var currentCacheSize: number = (<any>oldSyntaxTree)._cachedDataSize;
+
+            // This is how big the cache will be once the tree holds onto this full text as well.
+            var newCacheSize = currentCacheSize + this.fullText.length;
+
+            // We allow up to 16 snapshots of text to be held onto by a syntax tree before we go
+            // through and clean them all out.  Note: if the file starts large, but then gets
+            // quite small, this will cause us to clear out the cache (good).  And if the file is
+            // small, but gets large, then we'll increase the cache size accordingly (also good).
+            var acceptableCacheSize = this.fullText.length * 16;
+
+            // If we would be caching more than the acceptable amount, then we need to clear the
+            // cached data in the tree.
+            this.clearCachedData = newCacheSize > acceptableCacheSize;
+
+            // if we're going to clear the cached data, then all we'll be holding onto is the full
+            // text, and that should be our cached size.  Otherwise, the size of the text has to
+            // added to the cache.
+            this.cachedDataSize = this.clearCachedData ? this.fullText.length : newCacheSize;
         }
 
         private static extendToAffectedRange(changeRange:TextChangeRange,
@@ -869,9 +903,7 @@ module TypeScript.Parser {
                    !this._oldSourceUnitCursor.isFinished();
         }
 
-        private setTokenPositionWalker = new SetTokenPositionWalker();
-
-        private updateTokenPositions(nodeOrToken: ISyntaxNodeOrToken): void {
+        private updateTokens(nodeOrToken: ISyntaxNodeOrToken): void {
             // If we got a node or token, and we're past the range of edited text, then walk its
             // constituent tokens, making sure all their positions are correct.  We don't need to
             // do this for the tokens before the edited range (since their positions couldn't have 
@@ -879,12 +911,17 @@ module TypeScript.Parser {
             // edited range, as their positions will be correct when the underlying parser source 
             // creates them.
 
-            var position = this.absolutePosition();
-            if (this.isPastChangeRange() && nodeOrToken.fullStart() !== position) {
-                this.setTokenPositionWalker.text = this.fullText;
-                this.setTokenPositionWalker.position = position;
+            // Also, if we think the tree's cache is getting to large, then just clear out its 
+            // cache now.
 
-                nodeOrToken.accept(this.setTokenPositionWalker);
+            var position = this.absolutePosition();
+            var tokenWasMoved = this.isPastChangeRange() && nodeOrToken.fullStart() !== position;
+
+            if (this.clearCachedData || tokenWasMoved) {
+                setTokenTextAndFullStartWalker.text = this.fullText;
+                setTokenTextAndFullStartWalker.position = position;
+
+                nodeOrToken.accept(setTokenTextAndFullStartWalker);
             }
         }
 
@@ -895,7 +932,7 @@ module TypeScript.Parser {
                 var node = this.tryGetNodeFromOldSourceUnit();
                 if (node !== null) {
                     // Make sure the positions for the tokens in this node are correct.
-                    this.updateTokenPositions(node);
+                    this.updateTokens(node);
                     return node;
                 }
             }
@@ -909,7 +946,7 @@ module TypeScript.Parser {
                 var token = this.tryGetTokenFromOldSourceUnit();
                 if (token !== null) {
                     // Make sure the token's position/text is correct.
-                    this.updateTokenPositions(token);
+                    this.updateTokens(token);
                     return token;
                 }
             }
@@ -1199,7 +1236,8 @@ module TypeScript.Parser {
 
     // A simple walker we use to hit all the tokens of a node and update their positions when they
     // are reused in a different location because of an incremental parse.
-    class SetTokenPositionWalker extends SyntaxWalker {
+
+    class SetTokenTextAndFullStartWalker extends SyntaxWalker {
         public position: number;
         public text: string;
 
@@ -1207,9 +1245,11 @@ module TypeScript.Parser {
             var position = this.position;
             token.setTextAndFullStart(this.text, position);
 
-            this.position += token.fullWidth();
+            this.position = position + token.fullWidth();
         }
     }
+
+    var setTokenTextAndFullStartWalker = new SetTokenTextAndFullStartWalker();
 
     var arrayPool: any[][] = [];
     var arrayPoolCount: number = 0;
@@ -1788,6 +1828,8 @@ module TypeScript.Parser {
 
             var syntaxTree = new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.source.lineMap, this.parseOptions);
             sourceUnit._syntaxTree = syntaxTree;
+
+            (<any>syntaxTree)._cachedDataSize = this.source.cachedDataSize;
 
             return syntaxTree;
         }
