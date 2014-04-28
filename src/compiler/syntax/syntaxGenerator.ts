@@ -1241,9 +1241,9 @@ function generateConstructor(definition: ITypeDefinition): string {
         result += ",\r\n                    ";
     }
 
-    result += "parsedInStrictMode: boolean) {\r\n";
+    result += "data: number) {\r\n";
     
-    result += "            super(parsedInStrictMode); \r\n";
+    result += "            super(data); \r\n";
 
     if (definition.children.length > 0) {
         result += "\r\n";
@@ -1325,7 +1325,7 @@ function generateFactory1Method(definition: ITypeDefinition): string {
         result += ", ";
     }
 
-    result += "/*parsedInStrictMode:*/ false);\r\n";
+    result += "/*parsedInStrictMode:*/ 0);\r\n";
     result += "        }\r\n";
 
     return result;
@@ -1433,7 +1433,7 @@ function generateFactory2Method(definition: ITypeDefinition): string {
         result += ", ";
     }
 
-    result += "/*parsedInStrictMode:*/ false);\r\n";
+    result += "/*parsedInStrictMode:*/ 0);\r\n";
     result += "        }\r\n";
 
     return result;
@@ -1842,7 +1842,7 @@ function generateUpdateMethod(definition: ITypeDefinition): string {
             result += ", ";
         }
 
-        result += "/*parsedInStrictMode:*/ this.parsedInStrictMode());\r\n";
+        result += "/*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);\r\n";
     }
 
     result += "        }\r\n";
@@ -2433,7 +2433,7 @@ function generateFactory(): string {
             result += ", ";
         }
 
-        result += "/*parsedInStrictMode:*/ false);\r\n";
+        result += "/*parsedInStrictMode:*/ 0);\r\n";
         result += "        }\r\n"
     }
 
@@ -2464,7 +2464,7 @@ function generateFactory(): string {
             result += ", ";
         }
 
-        result += "/*parsedInStrictMode:*/ true);\r\n";
+        result += "/*parsedInStrictMode:*/ SyntaxConstants.NodeParsedInStrictModeMask);\r\n";
 
         result += "        }\r\n"
     }
