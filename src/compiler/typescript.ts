@@ -264,7 +264,7 @@ module TypeScript {
 
     export class OperationCanceledException { }
 
-    export class CancellationToken implements ICancellationToken {
+    export class CancellationToken {
 
         public static None: CancellationToken = new CancellationToken(null)
 
