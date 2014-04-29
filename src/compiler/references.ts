@@ -34,5 +34,4 @@
 ///<reference path='typecheck\pullInstantiationHelpers.ts' />
 
 ///<reference path='typecheck\pullTypeInstantiation.ts' />
-///<reference path='syntaxTreeToAstVisitor.ts' />
 ///<reference path='typescript.ts' />

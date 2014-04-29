@@ -16,4 +16,4 @@ verify.currentLineContentIs("        i -= 2");
 goTo.marker("5");
 //bug 718362 expected result : "}" , actual result : "        }"
 //verify.currentLineContentIs("}");
-verify.currentLineContentIs("        }");
+verify.currentLineContentIs("}");

@@ -12,7 +12,6 @@
         "end": 505,
         "fullWidth": 505,
         "width": 212,
-        "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "IfStatement",
@@ -633,7 +632,6 @@
                 "end": 503,
                 "fullWidth": 139,
                 "width": 125,
-                "isIncrementallyUnusable": true,
                 "ifKeyword": {
                     "kind": "IfKeyword",
                     "fullStart": 365,
@@ -698,7 +696,6 @@
                     "end": 412,
                     "fullWidth": 30,
                     "width": 30,
-                    "isIncrementallyUnusable": true,
                     "left": {
                         "kind": "BitwiseNotExpression",
                         "fullStart": 382,
@@ -707,7 +704,6 @@
                         "end": 405,
                         "fullWidth": 24,
                         "width": 23,
-                        "isIncrementallyUnusable": true,
                         "operatorToken": {
                             "kind": "TildeToken",
                             "fullStart": 382,
@@ -728,7 +724,6 @@
                             "end": 405,
                             "fullWidth": 23,
                             "width": 22,
-                            "isIncrementallyUnusable": true,
                             "openParenToken": {
                                 "kind": "OpenParenToken",
                                 "fullStart": 383,
@@ -749,7 +744,6 @@
                                 "end": 404,
                                 "fullWidth": 20,
                                 "width": 20,
-                                "isIncrementallyUnusable": true,
                                 "functionKeyword": {
                                     "kind": "FunctionKeyword",
                                     "fullStart": 384,
@@ -813,7 +807,6 @@
                                     "end": 404,
                                     "fullWidth": 10,
                                     "width": 10,
-                                    "isIncrementallyUnusable": true,
                                     "openBraceToken": {
                                         "kind": "OpenBraceToken",
                                         "fullStart": 394,
@@ -835,7 +828,6 @@
                                             "end": 403,
                                             "fullWidth": 8,
                                             "width": 8,
-                                            "isIncrementallyUnusable": true,
                                             "returnKeyword": {
                                                 "kind": "ReturnKeyword",
                                                 "fullStart": 395,
@@ -868,16 +860,6 @@
                                                 "text": "1",
                                                 "value": 1,
                                                 "valueText": "1"
-                                            },
-                                            "semicolonToken": {
-                                                "kind": "SemicolonToken",
-                                                "fullStart": 403,
-                                                "fullEnd": 403,
-                                                "start": 403,
-                                                "end": 403,
-                                                "fullWidth": 0,
-                                                "width": 0,
-                                                "text": ""
                                             }
                                         }
                                     ],
@@ -1002,7 +984,6 @@
                     "end": 503,
                     "fullWidth": 90,
                     "width": 89,
-                    "isIncrementallyUnusable": true,
                     "openBraceToken": {
                         "kind": "OpenBraceToken",
                         "fullStart": 414,
@@ -1034,7 +1015,6 @@
                             "end": 501,
                             "fullWidth": 86,
                             "width": 83,
-                            "isIncrementallyUnusable": true,
                             "expression": {
                                 "kind": "InvocationExpression",
                                 "fullStart": 416,
@@ -1043,7 +1023,6 @@
                                 "end": 500,
                                 "fullWidth": 84,
                                 "width": 82,
-                                "isIncrementallyUnusable": true,
                                 "expression": {
                                     "kind": "IdentifierName",
                                     "fullStart": 416,
@@ -1073,7 +1052,6 @@
                                     "end": 500,
                                     "fullWidth": 76,
                                     "width": 76,
-                                    "isIncrementallyUnusable": true,
                                     "openParenToken": {
                                         "kind": "OpenParenToken",
                                         "fullStart": 424,
@@ -1095,7 +1073,6 @@
                                             "end": 499,
                                             "fullWidth": 74,
                                             "width": 74,
-                                            "isIncrementallyUnusable": true,
                                             "left": {
                                                 "kind": "StringLiteral",
                                                 "fullStart": 425,
@@ -1146,7 +1123,6 @@
                                                 "end": 499,
                                                 "fullWidth": 25,
                                                 "width": 25,
-                                                "isIncrementallyUnusable": true,
                                                 "openParenToken": {
                                                     "kind": "OpenParenToken",
                                                     "fullStart": 474,
@@ -1167,7 +1143,6 @@
                                                     "end": 498,
                                                     "fullWidth": 23,
                                                     "width": 23,
-                                                    "isIncrementallyUnusable": true,
                                                     "operatorToken": {
                                                         "kind": "TildeToken",
                                                         "fullStart": 475,
@@ -1188,7 +1163,6 @@
                                                         "end": 498,
                                                         "fullWidth": 22,
                                                         "width": 22,
-                                                        "isIncrementallyUnusable": true,
                                                         "openParenToken": {
                                                             "kind": "OpenParenToken",
                                                             "fullStart": 476,
@@ -1209,7 +1183,6 @@
                                                             "end": 497,
                                                             "fullWidth": 20,
                                                             "width": 20,
-                                                            "isIncrementallyUnusable": true,
                                                             "functionKeyword": {
                                                                 "kind": "FunctionKeyword",
                                                                 "fullStart": 477,
@@ -1273,7 +1246,6 @@
                                                                 "end": 497,
                                                                 "fullWidth": 10,
                                                                 "width": 10,
-                                                                "isIncrementallyUnusable": true,
                                                                 "openBraceToken": {
                                                                     "kind": "OpenBraceToken",
                                                                     "fullStart": 487,
@@ -1295,7 +1267,6 @@
                                                                         "end": 496,
                                                                         "fullWidth": 8,
                                                                         "width": 8,
-                                                                        "isIncrementallyUnusable": true,
                                                                         "returnKeyword": {
                                                                             "kind": "ReturnKeyword",
                                                                             "fullStart": 488,
@@ -1328,16 +1299,6 @@
                                                                             "text": "1",
                                                                             "value": 1,
                                                                             "valueText": "1"
-                                                                        },
-                                                                        "semicolonToken": {
-                                                                            "kind": "SemicolonToken",
-                                                                            "fullStart": 496,
-                                                                            "fullEnd": 496,
-                                                                            "start": 496,
-                                                                            "end": 496,
-                                                                            "fullWidth": 0,
-                                                                            "width": 0,
-                                                                            "text": ""
                                                                         }
                                                                     }
                                                                 ],

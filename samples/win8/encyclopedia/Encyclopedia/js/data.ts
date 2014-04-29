@@ -1,8 +1,4 @@
-﻿///<reference path='win.ts'/>
-///<reference path='topic.ts'/>
-///<reference path='navigator.ts'/>
-
-module Data {
+﻿module Data {
     "use strict";
 
     export interface UserData {

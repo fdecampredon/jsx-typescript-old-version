@@ -122,7 +122,7 @@ module TypeScript.WebTsc {
             stderr: stdErr,
             stdout: stdOut,
             watchFile: null,
-            run: function (source, fileName) {
+            run: function (source: any, fileName: any) {
                 try {
                     eval(source);
                 } catch (e) {
@@ -242,6 +242,9 @@ module TypeScript.WebTsc {
 
     export function prepareCompiler(currentDir: string, stdOut: ITextWriter, stdErr: ITextWriter) {
         var fso = new RealActiveXObject("Scripting.FileSystemObject");
+        var shell = new RealActiveXObject("WScript.Shell");
+        shell.CurrentDirectory = currentDir;
+
         var env = getBrowserEnv(currentDir, fso);
         var io = getBrowserIO(env, fso, currentDir, stdOut, stdErr);
         return function (commandLine: string) {

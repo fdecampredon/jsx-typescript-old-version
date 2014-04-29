@@ -31,6 +31,7 @@ module TypeScript.Services {
         getScriptSnapshot(fileName: string): TypeScript.IScriptSnapshot;
         getDiagnosticsObject(): TypeScript.Services.ILanguageServicesDiagnostics;
         getLocalizedDiagnosticMessages(): any;
+        getCancellationToken(): ICancellationToken;
     }
 
     //

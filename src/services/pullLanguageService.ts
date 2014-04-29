@@ -12,10 +12,12 @@ module TypeScript.Services {
         private formattingRulesProvider: TypeScript.Services.Formatting.RulesProvider;
 
         private activeCompletionSession: CompletionSession = null;
+        private cancellationToken: CancellationToken;
 
         constructor(public host: ILanguageServiceHost) {
             this.logger = this.host;
-            this.compiler = new LanguageServiceCompiler(this.host);
+            this.cancellationToken = new CancellationToken(this.host.getCancellationToken());
+            this.compiler = new LanguageServiceCompiler(this.host, this.cancellationToken);
             this._syntaxTreeCache = new SyntaxTreeCache(this.host);
 
             // Check if the localized messages json is set, otherwise query the host for it
@@ -93,6 +95,8 @@ module TypeScript.Services {
 
             var fileNames = this.compiler.fileNames();
             for (var i = 0, n = fileNames.length; i < n; i++) {
+                this.cancellationToken.throwIfCancellationRequested();
+
                 var tempFileName = fileNames[i];
 
                 if (containingASTOpt && fileName != tempFileName) {
@@ -204,9 +208,7 @@ module TypeScript.Services {
             if (typeSymbol.isClass() || typeSymbol.isInterface()) {
                 typesToSearch = typeSymbol.getTypesThatExtendThisType();
             }
-            else if (symbol.kind == TypeScript.PullElementKind.Property ||
-                symbol.kind == TypeScript.PullElementKind.Function ||
-                typeSymbol.isMethod() || typeSymbol.isProperty()) {
+            else if (symbol.kind == TypeScript.PullElementKind.Property || typeSymbol.isMethod() || typeSymbol.isProperty()) {
 
                 var declaration: TypeScript.PullDecl = symbol.getDeclarations()[0];
                 var classSymbol: TypeScript.PullTypeSymbol = declaration.getParentDecl().getSymbol().type;
@@ -321,6 +323,7 @@ module TypeScript.Services {
                 var sourceUnit = document.sourceUnit();
 
                 possiblePositions.forEach(p => {
+                    this.cancellationToken.throwIfCancellationRequested();
                     // If it's not in the bounds of the ISyntaxElement we're asking for, then this can't possibly be a hit.
                     if (containingASTOpt && (p < containingASTOpt.start() || p > containingASTOpt.end())) {
                         return;
@@ -426,12 +429,14 @@ module TypeScript.Services {
             }
 
             var sourceText = this.compiler.getScriptSnapshot(fileName);
+
             var sourceLength = sourceText.getLength();
             var text = sourceText.getText(0, sourceLength);
             var symbolNameLength = symbolName.length;
 
             var position = text.indexOf(symbolName);
             while (position >= 0) {
+                this.cancellationToken.throwIfCancellationRequested();
                 // We found a match.  Make sure it's not part of a larger word (i.e. the char 
                 // before and after it have to be a non-identifier char).
                 var endPosition = position + symbolNameLength;

@@ -1529,6 +1529,9 @@ module Harness {
 
         private fileNameToScript = new TypeScript.StringHashTable<ScriptInfo>();
 
+        constructor(private cancellationToken: TypeScript.ICancellationToken = TypeScript.CancellationToken.None) {
+        }
+
         public addDefaultLibrary() {
             this.addScript("lib.d.ts", Harness.Compiler.libText);
         }
@@ -1587,6 +1590,10 @@ module Harness {
 
         public getCompilationSettings(): string/*json for Tools.CompilationSettings*/ {
             return ""; // i.e. default settings
+        }
+
+        public getCancellationToken(): TypeScript.ICancellationToken {
+            return this.cancellationToken;
         }
 
         public getScriptFileNames(): string {

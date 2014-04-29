@@ -12,7 +12,6 @@
         "end": 303,
         "fullWidth": 303,
         "width": 10,
-        "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ExpressionStatement",
@@ -22,7 +21,6 @@
                 "end": 301,
                 "fullWidth": 302,
                 "width": 8,
-                "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "MultiplyExpression",
                     "fullStart": 0,
@@ -215,16 +213,6 @@
                             }
                         ]
                     }
-                },
-                "semicolonToken": {
-                    "kind": "SemicolonToken",
-                    "fullStart": 302,
-                    "fullEnd": 302,
-                    "start": 302,
-                    "end": 302,
-                    "fullWidth": 0,
-                    "width": 0,
-                    "text": ""
                 }
             }
         ],

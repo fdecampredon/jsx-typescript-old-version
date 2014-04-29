@@ -498,6 +498,16 @@ module FourSlashInterface {
             FourSlash.currentTestState.formatCodeOptions[name] = value;
         }
     }
+
+    export class cancellation {
+        public resetCancelled() {
+            FourSlash.currentTestState.cancellationToken.resetCancelled();
+        }
+
+        public setCancelled(numberOfCalls: number = 0) {
+            FourSlash.currentTestState.cancellationToken.setCancelled(numberOfCalls);
+        }
+    }
 }
 
 module fs {
@@ -508,6 +518,7 @@ module fs {
     export var debug = new FourSlashInterface.debug();
     export var format = new FourSlashInterface.format();
     export var diagnostics = new FourSlashInterface.diagnostics();
+    export var cancellation = new FourSlashInterface.cancellation();
 }
 
 var test = new FourSlashInterface.test();
@@ -517,3 +528,4 @@ var edit = new FourSlashInterface.edit();
 var debug = new FourSlashInterface.debug();
 var format = new FourSlashInterface.format();
 var diagnostics = new FourSlashInterface.diagnostics();
+var cancellation = new FourSlashInterface.cancellation();

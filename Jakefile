@@ -39,7 +39,6 @@ var compilerSources = [
 	"referenceResolver.ts",
 	"settings.ts",
 	"sourceMapping.ts",
-	"syntaxTreeToAstVisitor.ts",
 	"types.ts",
 	"core/arrayUtilities.ts",
 	"core/bitVector.ts",

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|AnyCPU">
       <Configuration>Debug</Configuration>
@@ -37,13 +37,17 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{cb97c74a-db4a-42fa-8b3b-ffed5198621b}</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).Default.props" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).props" />
   <PropertyGroup>
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
-    <TargetPlatformVersion>8.0</TargetPlatformVersion>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
+    <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest">
@@ -72,30 +76,9 @@
     <TypeScriptCompile Include="js\groupedItemsPage.ts" />
     <TypeScriptCompile Include="js\topic.ts" />
     <TypeScriptCompile Include="js\win.ts" />
-    <Content Include="js\groupDetailPage.js">
-      <DependentUpon>groupDetailPage.ts</DependentUpon>
-    </Content>
-    <Content Include="js\default.js">
-      <DependentUpon>default.ts</DependentUpon>
-    </Content>
-    <Content Include="js\navigator.js">
-      <DependentUpon>navigator.ts</DependentUpon>
-    </Content>
-    <Content Include="js\data.js">
-      <DependentUpon>data.ts</DependentUpon>
-    </Content>
-    <Content Include="js\itemDetailPage.js">
-      <DependentUpon>itemDetailPage.ts</DependentUpon>
-    </Content>
-    <Content Include="js\groupedItemsPage.js">
-      <DependentUpon>groupedItemsPage.ts</DependentUpon>
-    </Content>
-    <Content Include="js\topic.js">
-      <DependentUpon>topic.ts</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Microsoft.WinJS.1.0, Version=1.0" />
+    <SDKReference Include="Microsoft.WinJS.2.0, Version=1.0" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.VisualStudio.$(WMSJSProject).targets" />

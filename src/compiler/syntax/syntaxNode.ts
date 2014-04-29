@@ -109,27 +109,6 @@ module TypeScript {
             return null;
         }
 
-        public insertChildrenInto(array: ISyntaxElement[], index: number) {
-            for (var i = this.childCount() - 1; i >= 0; i--) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    if (element.isNode() || element.isToken()) {
-                        array.splice(index, 0, element);
-                    }
-                    else if (element.isList()) {
-                        (<ISyntaxList<ISyntaxNodeOrToken>>element).insertChildrenInto(array, index);
-                    }
-                    else if (element.isSeparatedList()) {
-                        (<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element).insertChildrenInto(array, index);
-                    }
-                    else {
-                        throw Errors.invalidOperation();
-                    }
-                }
-            }
-        }
-
         public leadingTrivia(): ISyntaxTriviaList {
             var firstToken = this.firstToken();
             return firstToken ? firstToken.leadingTrivia() : Syntax.emptyTriviaList;

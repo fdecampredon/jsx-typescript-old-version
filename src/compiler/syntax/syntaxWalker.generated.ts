@@ -77,14 +77,14 @@ module TypeScript {
             this.visitToken(node.identifier);
             this.visitToken(node.equalsToken);
             this.visitNodeOrToken(node.moduleReference);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitExportAssignment(node: ExportAssignmentSyntax): void {
             this.visitToken(node.exportKeyword);
             this.visitToken(node.equalsToken);
             this.visitToken(node.identifier);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitClassDeclaration(node: ClassDeclarationSyntax): void {
@@ -134,7 +134,7 @@ module TypeScript {
         public visitVariableStatement(node: VariableStatementSyntax): void {
             this.visitList(node.modifiers);
             this.visitNode(node.variableDeclaration);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitVariableDeclaration(node: VariableDeclarationSyntax): void {
@@ -368,7 +368,7 @@ module TypeScript {
 
         public visitExpressionStatement(node: ExpressionStatementSyntax): void {
             this.visitNodeOrToken(node.expression);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitConstructorDeclaration(node: ConstructorDeclarationSyntax): void {
@@ -407,25 +407,25 @@ module TypeScript {
         public visitMemberVariableDeclaration(node: MemberVariableDeclarationSyntax): void {
             this.visitList(node.modifiers);
             this.visitNode(node.variableDeclarator);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): void {
             this.visitList(node.modifiers);
             this.visitNode(node.indexSignature);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitThrowStatement(node: ThrowStatementSyntax): void {
             this.visitToken(node.throwKeyword);
             this.visitNodeOrToken(node.expression);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitReturnStatement(node: ReturnStatementSyntax): void {
             this.visitToken(node.returnKeyword);
             this.visitOptionalNodeOrToken(node.expression);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitObjectCreationExpression(node: ObjectCreationExpressionSyntax): void {
@@ -460,13 +460,13 @@ module TypeScript {
         public visitBreakStatement(node: BreakStatementSyntax): void {
             this.visitToken(node.breakKeyword);
             this.visitOptionalToken(node.identifier);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitContinueStatement(node: ContinueStatementSyntax): void {
             this.visitToken(node.continueKeyword);
             this.visitOptionalToken(node.identifier);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitForStatement(node: ForStatementSyntax): void {
@@ -593,7 +593,7 @@ module TypeScript {
             this.visitToken(node.openParenToken);
             this.visitNodeOrToken(node.condition);
             this.visitToken(node.closeParenToken);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
 
         public visitTypeOfExpression(node: TypeOfExpressionSyntax): void {
@@ -613,7 +613,7 @@ module TypeScript {
 
         public visitDebuggerStatement(node: DebuggerStatementSyntax): void {
             this.visitToken(node.debuggerKeyword);
-            this.visitToken(node.semicolonToken);
+            this.visitOptionalToken(node.semicolonToken);
         }
     }
 }
