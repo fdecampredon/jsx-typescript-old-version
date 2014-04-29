@@ -9860,14 +9860,6 @@ var TypeScript;
             return this.accept(new TypeScript.SyntaxTokenReplacer(token1, token2));
         };
 
-        SyntaxNode.prototype.withLeadingTrivia = function (trivia) {
-            return this.replaceToken(this.firstToken(), this.firstToken().withLeadingTrivia(trivia));
-        };
-
-        SyntaxNode.prototype.withTrailingTrivia = function (trivia) {
-            return this.replaceToken(this.lastToken(), this.lastToken().withTrailingTrivia(trivia));
-        };
-
         SyntaxNode.prototype.hasLeadingTrivia = function () {
             return this.lastToken().hasLeadingTrivia();
         };
@@ -10099,34 +10091,6 @@ var TypeScript;
             return new SourceUnitSyntax(moduleElements, endOfFileToken, this.parsedInStrictMode());
         };
 
-        SourceUnitSyntax.create = function (endOfFileToken) {
-            return new SourceUnitSyntax(TypeScript.Syntax.emptyList(), endOfFileToken, false);
-        };
-
-        SourceUnitSyntax.create1 = function (endOfFileToken) {
-            return new SourceUnitSyntax(TypeScript.Syntax.emptyList(), endOfFileToken, false);
-        };
-
-        SourceUnitSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        SourceUnitSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        SourceUnitSyntax.prototype.withModuleElements = function (moduleElements) {
-            return this.update(moduleElements, this.endOfFileToken);
-        };
-
-        SourceUnitSyntax.prototype.withModuleElement = function (moduleElement) {
-            return this.withModuleElements(TypeScript.Syntax.list([moduleElement]));
-        };
-
-        SourceUnitSyntax.prototype.withEndOfFileToken = function (endOfFileToken) {
-            return this.update(this.moduleElements, endOfFileToken);
-        };
-
         SourceUnitSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.moduleElements.isTypeScriptSpecific()) {
                 return true;
@@ -10187,34 +10151,6 @@ var TypeScript;
             return new ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, this.parsedInStrictMode());
         };
 
-        ExternalModuleReferenceSyntax.create1 = function (stringLiteral) {
-            return new ExternalModuleReferenceSyntax(TypeScript.Syntax.token(66 /* RequireKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), stringLiteral, TypeScript.Syntax.token(73 /* CloseParenToken */), false);
-        };
-
-        ExternalModuleReferenceSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ExternalModuleReferenceSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ExternalModuleReferenceSyntax.prototype.withRequireKeyword = function (requireKeyword) {
-            return this.update(requireKeyword, this.openParenToken, this.stringLiteral, this.closeParenToken);
-        };
-
-        ExternalModuleReferenceSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.requireKeyword, openParenToken, this.stringLiteral, this.closeParenToken);
-        };
-
-        ExternalModuleReferenceSyntax.prototype.withStringLiteral = function (stringLiteral) {
-            return this.update(this.requireKeyword, this.openParenToken, stringLiteral, this.closeParenToken);
-        };
-
-        ExternalModuleReferenceSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.requireKeyword, this.openParenToken, this.stringLiteral, closeParenToken);
-        };
-
         ExternalModuleReferenceSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -10261,18 +10197,6 @@ var TypeScript;
             }
 
             return new ModuleNameModuleReferenceSyntax(moduleName, this.parsedInStrictMode());
-        };
-
-        ModuleNameModuleReferenceSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ModuleNameModuleReferenceSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ModuleNameModuleReferenceSyntax.prototype.withModuleName = function (moduleName) {
-            return this.update(moduleName);
         };
 
         ModuleNameModuleReferenceSyntax.prototype.isTypeScriptSpecific = function () {
@@ -10338,50 +10262,6 @@ var TypeScript;
             return new ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, this.parsedInStrictMode());
         };
 
-        ImportDeclarationSyntax.create = function (importKeyword, identifier, equalsToken, moduleReference) {
-            return new ImportDeclarationSyntax(TypeScript.Syntax.emptyList(), importKeyword, identifier, equalsToken, moduleReference, null, false);
-        };
-
-        ImportDeclarationSyntax.create1 = function (identifier, moduleReference) {
-            return new ImportDeclarationSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(49 /* ImportKeyword */), identifier, TypeScript.Syntax.token(107 /* EqualsToken */), moduleReference, null, false);
-        };
-
-        ImportDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ImportDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ImportDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.importKeyword, this.identifier, this.equalsToken, this.moduleReference, this.semicolonToken);
-        };
-
-        ImportDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        ImportDeclarationSyntax.prototype.withImportKeyword = function (importKeyword) {
-            return this.update(this.modifiers, importKeyword, this.identifier, this.equalsToken, this.moduleReference, this.semicolonToken);
-        };
-
-        ImportDeclarationSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.modifiers, this.importKeyword, identifier, this.equalsToken, this.moduleReference, this.semicolonToken);
-        };
-
-        ImportDeclarationSyntax.prototype.withEqualsToken = function (equalsToken) {
-            return this.update(this.modifiers, this.importKeyword, this.identifier, equalsToken, this.moduleReference, this.semicolonToken);
-        };
-
-        ImportDeclarationSyntax.prototype.withModuleReference = function (moduleReference) {
-            return this.update(this.modifiers, this.importKeyword, this.identifier, this.equalsToken, moduleReference, this.semicolonToken);
-        };
-
-        ImportDeclarationSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.modifiers, this.importKeyword, this.identifier, this.equalsToken, this.moduleReference, semicolonToken);
-        };
-
         ImportDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -10437,38 +10317,6 @@ var TypeScript;
             }
 
             return new ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, this.parsedInStrictMode());
-        };
-
-        ExportAssignmentSyntax.create = function (exportKeyword, equalsToken, identifier) {
-            return new ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, null, false);
-        };
-
-        ExportAssignmentSyntax.create1 = function (identifier) {
-            return new ExportAssignmentSyntax(TypeScript.Syntax.token(47 /* ExportKeyword */), TypeScript.Syntax.token(107 /* EqualsToken */), identifier, null, false);
-        };
-
-        ExportAssignmentSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ExportAssignmentSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ExportAssignmentSyntax.prototype.withExportKeyword = function (exportKeyword) {
-            return this.update(exportKeyword, this.equalsToken, this.identifier, this.semicolonToken);
-        };
-
-        ExportAssignmentSyntax.prototype.withEqualsToken = function (equalsToken) {
-            return this.update(this.exportKeyword, equalsToken, this.identifier, this.semicolonToken);
-        };
-
-        ExportAssignmentSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.exportKeyword, this.equalsToken, identifier, this.semicolonToken);
-        };
-
-        ExportAssignmentSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.exportKeyword, this.equalsToken, this.identifier, semicolonToken);
         };
 
         ExportAssignmentSyntax.prototype.isTypeScriptSpecific = function () {
@@ -10540,66 +10388,6 @@ var TypeScript;
             return new ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, this.parsedInStrictMode());
         };
 
-        ClassDeclarationSyntax.create = function (classKeyword, identifier, openBraceToken, closeBraceToken) {
-            return new ClassDeclarationSyntax(TypeScript.Syntax.emptyList(), classKeyword, identifier, null, TypeScript.Syntax.emptyList(), openBraceToken, TypeScript.Syntax.emptyList(), closeBraceToken, false);
-        };
-
-        ClassDeclarationSyntax.create1 = function (identifier) {
-            return new ClassDeclarationSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(44 /* ClassKeyword */), identifier, null, TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(70 /* OpenBraceToken */), TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(71 /* CloseBraceToken */), false);
-        };
-
-        ClassDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ClassDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ClassDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.classKeyword, this.identifier, this.typeParameterList, this.heritageClauses, this.openBraceToken, this.classElements, this.closeBraceToken);
-        };
-
-        ClassDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        ClassDeclarationSyntax.prototype.withClassKeyword = function (classKeyword) {
-            return this.update(this.modifiers, classKeyword, this.identifier, this.typeParameterList, this.heritageClauses, this.openBraceToken, this.classElements, this.closeBraceToken);
-        };
-
-        ClassDeclarationSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.modifiers, this.classKeyword, identifier, this.typeParameterList, this.heritageClauses, this.openBraceToken, this.classElements, this.closeBraceToken);
-        };
-
-        ClassDeclarationSyntax.prototype.withTypeParameterList = function (typeParameterList) {
-            return this.update(this.modifiers, this.classKeyword, this.identifier, typeParameterList, this.heritageClauses, this.openBraceToken, this.classElements, this.closeBraceToken);
-        };
-
-        ClassDeclarationSyntax.prototype.withHeritageClauses = function (heritageClauses) {
-            return this.update(this.modifiers, this.classKeyword, this.identifier, this.typeParameterList, heritageClauses, this.openBraceToken, this.classElements, this.closeBraceToken);
-        };
-
-        ClassDeclarationSyntax.prototype.withHeritageClause = function (heritageClause) {
-            return this.withHeritageClauses(TypeScript.Syntax.list([heritageClause]));
-        };
-
-        ClassDeclarationSyntax.prototype.withOpenBraceToken = function (openBraceToken) {
-            return this.update(this.modifiers, this.classKeyword, this.identifier, this.typeParameterList, this.heritageClauses, openBraceToken, this.classElements, this.closeBraceToken);
-        };
-
-        ClassDeclarationSyntax.prototype.withClassElements = function (classElements) {
-            return this.update(this.modifiers, this.classKeyword, this.identifier, this.typeParameterList, this.heritageClauses, this.openBraceToken, classElements, this.closeBraceToken);
-        };
-
-        ClassDeclarationSyntax.prototype.withClassElement = function (classElement) {
-            return this.withClassElements(TypeScript.Syntax.list([classElement]));
-        };
-
-        ClassDeclarationSyntax.prototype.withCloseBraceToken = function (closeBraceToken) {
-            return this.update(this.modifiers, this.classKeyword, this.identifier, this.typeParameterList, this.heritageClauses, this.openBraceToken, this.classElements, closeBraceToken);
-        };
-
         ClassDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -10663,54 +10451,6 @@ var TypeScript;
             return new InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, this.parsedInStrictMode());
         };
 
-        InterfaceDeclarationSyntax.create = function (interfaceKeyword, identifier, body) {
-            return new InterfaceDeclarationSyntax(TypeScript.Syntax.emptyList(), interfaceKeyword, identifier, null, TypeScript.Syntax.emptyList(), body, false);
-        };
-
-        InterfaceDeclarationSyntax.create1 = function (identifier) {
-            return new InterfaceDeclarationSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(52 /* InterfaceKeyword */), identifier, null, TypeScript.Syntax.emptyList(), ObjectTypeSyntax.create1(), false);
-        };
-
-        InterfaceDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        InterfaceDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        InterfaceDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.interfaceKeyword, this.identifier, this.typeParameterList, this.heritageClauses, this.body);
-        };
-
-        InterfaceDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        InterfaceDeclarationSyntax.prototype.withInterfaceKeyword = function (interfaceKeyword) {
-            return this.update(this.modifiers, interfaceKeyword, this.identifier, this.typeParameterList, this.heritageClauses, this.body);
-        };
-
-        InterfaceDeclarationSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.modifiers, this.interfaceKeyword, identifier, this.typeParameterList, this.heritageClauses, this.body);
-        };
-
-        InterfaceDeclarationSyntax.prototype.withTypeParameterList = function (typeParameterList) {
-            return this.update(this.modifiers, this.interfaceKeyword, this.identifier, typeParameterList, this.heritageClauses, this.body);
-        };
-
-        InterfaceDeclarationSyntax.prototype.withHeritageClauses = function (heritageClauses) {
-            return this.update(this.modifiers, this.interfaceKeyword, this.identifier, this.typeParameterList, heritageClauses, this.body);
-        };
-
-        InterfaceDeclarationSyntax.prototype.withHeritageClause = function (heritageClause) {
-            return this.withHeritageClauses(TypeScript.Syntax.list([heritageClause]));
-        };
-
-        InterfaceDeclarationSyntax.prototype.withBody = function (body) {
-            return this.update(this.modifiers, this.interfaceKeyword, this.identifier, this.typeParameterList, this.heritageClauses, body);
-        };
-
         InterfaceDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -10757,30 +10497,6 @@ var TypeScript;
             }
 
             return new HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, this.parsedInStrictMode());
-        };
-
-        HeritageClauseSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        HeritageClauseSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        HeritageClauseSyntax.prototype.withKind = function (kind) {
-            return this.update(kind, this.extendsOrImplementsKeyword, this.typeNames);
-        };
-
-        HeritageClauseSyntax.prototype.withExtendsOrImplementsKeyword = function (extendsOrImplementsKeyword) {
-            return this.update(this._kind, extendsOrImplementsKeyword, this.typeNames);
-        };
-
-        HeritageClauseSyntax.prototype.withTypeNames = function (typeNames) {
-            return this.update(this._kind, this.extendsOrImplementsKeyword, typeNames);
-        };
-
-        HeritageClauseSyntax.prototype.withTypeName = function (typeName) {
-            return this.withTypeNames(TypeScript.Syntax.separatedList([typeName]));
         };
 
         HeritageClauseSyntax.prototype.isTypeScriptSpecific = function () {
@@ -10847,58 +10563,6 @@ var TypeScript;
             }
 
             return new ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, this.parsedInStrictMode());
-        };
-
-        ModuleDeclarationSyntax.create = function (moduleKeyword, openBraceToken, closeBraceToken) {
-            return new ModuleDeclarationSyntax(TypeScript.Syntax.emptyList(), moduleKeyword, null, null, openBraceToken, TypeScript.Syntax.emptyList(), closeBraceToken, false);
-        };
-
-        ModuleDeclarationSyntax.create1 = function () {
-            return new ModuleDeclarationSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(65 /* ModuleKeyword */), null, null, TypeScript.Syntax.token(70 /* OpenBraceToken */), TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(71 /* CloseBraceToken */), false);
-        };
-
-        ModuleDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ModuleDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ModuleDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.moduleKeyword, this.name, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
-        };
-
-        ModuleDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        ModuleDeclarationSyntax.prototype.withModuleKeyword = function (moduleKeyword) {
-            return this.update(this.modifiers, moduleKeyword, this.name, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
-        };
-
-        ModuleDeclarationSyntax.prototype.withName = function (name) {
-            return this.update(this.modifiers, this.moduleKeyword, name, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
-        };
-
-        ModuleDeclarationSyntax.prototype.withStringLiteral = function (stringLiteral) {
-            return this.update(this.modifiers, this.moduleKeyword, this.name, stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
-        };
-
-        ModuleDeclarationSyntax.prototype.withOpenBraceToken = function (openBraceToken) {
-            return this.update(this.modifiers, this.moduleKeyword, this.name, this.stringLiteral, openBraceToken, this.moduleElements, this.closeBraceToken);
-        };
-
-        ModuleDeclarationSyntax.prototype.withModuleElements = function (moduleElements) {
-            return this.update(this.modifiers, this.moduleKeyword, this.name, this.stringLiteral, this.openBraceToken, moduleElements, this.closeBraceToken);
-        };
-
-        ModuleDeclarationSyntax.prototype.withModuleElement = function (moduleElement) {
-            return this.withModuleElements(TypeScript.Syntax.list([moduleElement]));
-        };
-
-        ModuleDeclarationSyntax.prototype.withCloseBraceToken = function (closeBraceToken) {
-            return this.update(this.modifiers, this.moduleKeyword, this.name, this.stringLiteral, this.openBraceToken, this.moduleElements, closeBraceToken);
         };
 
         ModuleDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
@@ -10968,50 +10632,6 @@ var TypeScript;
             return new FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, this.parsedInStrictMode());
         };
 
-        FunctionDeclarationSyntax.create = function (functionKeyword, identifier, callSignature) {
-            return new FunctionDeclarationSyntax(TypeScript.Syntax.emptyList(), functionKeyword, identifier, callSignature, null, null, false);
-        };
-
-        FunctionDeclarationSyntax.create1 = function (identifier) {
-            return new FunctionDeclarationSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(27 /* FunctionKeyword */), identifier, CallSignatureSyntax.create1(), null, null, false);
-        };
-
-        FunctionDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        FunctionDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        FunctionDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.functionKeyword, this.identifier, this.callSignature, this.block, this.semicolonToken);
-        };
-
-        FunctionDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        FunctionDeclarationSyntax.prototype.withFunctionKeyword = function (functionKeyword) {
-            return this.update(this.modifiers, functionKeyword, this.identifier, this.callSignature, this.block, this.semicolonToken);
-        };
-
-        FunctionDeclarationSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.modifiers, this.functionKeyword, identifier, this.callSignature, this.block, this.semicolonToken);
-        };
-
-        FunctionDeclarationSyntax.prototype.withCallSignature = function (callSignature) {
-            return this.update(this.modifiers, this.functionKeyword, this.identifier, callSignature, this.block, this.semicolonToken);
-        };
-
-        FunctionDeclarationSyntax.prototype.withBlock = function (block) {
-            return this.update(this.modifiers, this.functionKeyword, this.identifier, this.callSignature, block, this.semicolonToken);
-        };
-
-        FunctionDeclarationSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.modifiers, this.functionKeyword, this.identifier, this.callSignature, this.block, semicolonToken);
-        };
-
         FunctionDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.modifiers.childCount() > 0) {
                 return true;
@@ -11079,38 +10699,6 @@ var TypeScript;
             return new VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, this.parsedInStrictMode());
         };
 
-        VariableStatementSyntax.create = function (variableDeclaration) {
-            return new VariableStatementSyntax(TypeScript.Syntax.emptyList(), variableDeclaration, null, false);
-        };
-
-        VariableStatementSyntax.create1 = function (variableDeclaration) {
-            return new VariableStatementSyntax(TypeScript.Syntax.emptyList(), variableDeclaration, null, false);
-        };
-
-        VariableStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        VariableStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        VariableStatementSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.variableDeclaration, this.semicolonToken);
-        };
-
-        VariableStatementSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        VariableStatementSyntax.prototype.withVariableDeclaration = function (variableDeclaration) {
-            return this.update(this.modifiers, variableDeclaration, this.semicolonToken);
-        };
-
-        VariableStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.modifiers, this.variableDeclaration, semicolonToken);
-        };
-
         VariableStatementSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.modifiers.childCount() > 0) {
                 return true;
@@ -11162,30 +10750,6 @@ var TypeScript;
             }
 
             return new VariableDeclarationSyntax(varKeyword, variableDeclarators, this.parsedInStrictMode());
-        };
-
-        VariableDeclarationSyntax.create1 = function (variableDeclarators) {
-            return new VariableDeclarationSyntax(TypeScript.Syntax.token(40 /* VarKeyword */), variableDeclarators, false);
-        };
-
-        VariableDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        VariableDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        VariableDeclarationSyntax.prototype.withVarKeyword = function (varKeyword) {
-            return this.update(varKeyword, this.variableDeclarators);
-        };
-
-        VariableDeclarationSyntax.prototype.withVariableDeclarators = function (variableDeclarators) {
-            return this.update(this.varKeyword, variableDeclarators);
-        };
-
-        VariableDeclarationSyntax.prototype.withVariableDeclarator = function (variableDeclarator) {
-            return this.withVariableDeclarators(TypeScript.Syntax.separatedList([variableDeclarator]));
         };
 
         VariableDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
@@ -11241,34 +10805,6 @@ var TypeScript;
             return new VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, this.parsedInStrictMode());
         };
 
-        VariableDeclaratorSyntax.create = function (propertyName) {
-            return new VariableDeclaratorSyntax(propertyName, null, null, false);
-        };
-
-        VariableDeclaratorSyntax.create1 = function (propertyName) {
-            return new VariableDeclaratorSyntax(propertyName, null, null, false);
-        };
-
-        VariableDeclaratorSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        VariableDeclaratorSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        VariableDeclaratorSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(propertyName, this.typeAnnotation, this.equalsValueClause);
-        };
-
-        VariableDeclaratorSyntax.prototype.withTypeAnnotation = function (typeAnnotation) {
-            return this.update(this.propertyName, typeAnnotation, this.equalsValueClause);
-        };
-
-        VariableDeclaratorSyntax.prototype.withEqualsValueClause = function (equalsValueClause) {
-            return this.update(this.propertyName, this.typeAnnotation, equalsValueClause);
-        };
-
         VariableDeclaratorSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.typeAnnotation !== null) {
                 return true;
@@ -11320,26 +10856,6 @@ var TypeScript;
             }
 
             return new EqualsValueClauseSyntax(equalsToken, value, this.parsedInStrictMode());
-        };
-
-        EqualsValueClauseSyntax.create1 = function (value) {
-            return new EqualsValueClauseSyntax(TypeScript.Syntax.token(107 /* EqualsToken */), value, false);
-        };
-
-        EqualsValueClauseSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        EqualsValueClauseSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        EqualsValueClauseSyntax.prototype.withEqualsToken = function (equalsToken) {
-            return this.update(equalsToken, this.value);
-        };
-
-        EqualsValueClauseSyntax.prototype.withValue = function (value) {
-            return this.update(this.equalsToken, value);
         };
 
         EqualsValueClauseSyntax.prototype.isTypeScriptSpecific = function () {
@@ -11399,26 +10915,6 @@ var TypeScript;
             }
 
             return new PrefixUnaryExpressionSyntax(kind, operatorToken, operand, this.parsedInStrictMode());
-        };
-
-        PrefixUnaryExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        PrefixUnaryExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        PrefixUnaryExpressionSyntax.prototype.withKind = function (kind) {
-            return this.update(kind, this.operatorToken, this.operand);
-        };
-
-        PrefixUnaryExpressionSyntax.prototype.withOperatorToken = function (operatorToken) {
-            return this.update(this._kind, operatorToken, this.operand);
-        };
-
-        PrefixUnaryExpressionSyntax.prototype.withOperand = function (operand) {
-            return this.update(this._kind, this.operatorToken, operand);
         };
 
         PrefixUnaryExpressionSyntax.prototype.isTypeScriptSpecific = function () {
@@ -11498,38 +10994,6 @@ var TypeScript;
             return new ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, this.parsedInStrictMode());
         };
 
-        ArrayLiteralExpressionSyntax.create = function (openBracketToken, closeBracketToken) {
-            return new ArrayLiteralExpressionSyntax(openBracketToken, TypeScript.Syntax.emptySeparatedList(), closeBracketToken, false);
-        };
-
-        ArrayLiteralExpressionSyntax.create1 = function () {
-            return new ArrayLiteralExpressionSyntax(TypeScript.Syntax.token(74 /* OpenBracketToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.token(75 /* CloseBracketToken */), false);
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.withOpenBracketToken = function (openBracketToken) {
-            return this.update(openBracketToken, this.expressions, this.closeBracketToken);
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.withExpressions = function (expressions) {
-            return this.update(this.openBracketToken, expressions, this.closeBracketToken);
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.withExpressions(TypeScript.Syntax.separatedList([expression]));
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.withCloseBracketToken = function (closeBracketToken) {
-            return this.update(this.openBracketToken, this.expressions, closeBracketToken);
-        };
-
         ArrayLiteralExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expressions.isTypeScriptSpecific()) {
                 return true;
@@ -11568,14 +11032,6 @@ var TypeScript;
 
         OmittedExpressionSyntax.prototype.update = function () {
             return this;
-        };
-
-        OmittedExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        OmittedExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
         };
 
         OmittedExpressionSyntax.prototype.isTypeScriptSpecific = function () {
@@ -11652,30 +11108,6 @@ var TypeScript;
             return new ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, this.parsedInStrictMode());
         };
 
-        ParenthesizedExpressionSyntax.create1 = function (expression) {
-            return new ParenthesizedExpressionSyntax(TypeScript.Syntax.token(72 /* OpenParenToken */), expression, TypeScript.Syntax.token(73 /* CloseParenToken */), false);
-        };
-
-        ParenthesizedExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ParenthesizedExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ParenthesizedExpressionSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(openParenToken, this.expression, this.closeParenToken);
-        };
-
-        ParenthesizedExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.openParenToken, expression, this.closeParenToken);
-        };
-
-        ParenthesizedExpressionSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.openParenToken, this.expression, closeParenToken);
-        };
-
         ParenthesizedExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -11744,38 +11176,6 @@ var TypeScript;
             return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, this.parsedInStrictMode());
         };
 
-        SimpleArrowFunctionExpressionSyntax.create = function (identifier, equalsGreaterThanToken) {
-            return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, null, null, false);
-        };
-
-        SimpleArrowFunctionExpressionSyntax.create1 = function (identifier) {
-            return new SimpleArrowFunctionExpressionSyntax(identifier, TypeScript.Syntax.token(85 /* EqualsGreaterThanToken */), null, null, false);
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(identifier, this.equalsGreaterThanToken, this.block, this.expression);
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.withEqualsGreaterThanToken = function (equalsGreaterThanToken) {
-            return this.update(this.identifier, equalsGreaterThanToken, this.block, this.expression);
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.withBlock = function (block) {
-            return this.update(this.identifier, this.equalsGreaterThanToken, block, this.expression);
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.identifier, this.equalsGreaterThanToken, this.block, expression);
-        };
-
         SimpleArrowFunctionExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -11841,38 +11241,6 @@ var TypeScript;
             return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, this.parsedInStrictMode());
         };
 
-        ParenthesizedArrowFunctionExpressionSyntax.create = function (callSignature, equalsGreaterThanToken) {
-            return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, null, null, false);
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.create1 = function () {
-            return new ParenthesizedArrowFunctionExpressionSyntax(CallSignatureSyntax.create1(), TypeScript.Syntax.token(85 /* EqualsGreaterThanToken */), null, null, false);
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.withCallSignature = function (callSignature) {
-            return this.update(callSignature, this.equalsGreaterThanToken, this.block, this.expression);
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.withEqualsGreaterThanToken = function (equalsGreaterThanToken) {
-            return this.update(this.callSignature, equalsGreaterThanToken, this.block, this.expression);
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.withBlock = function (block) {
-            return this.update(this.callSignature, this.equalsGreaterThanToken, block, this.expression);
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.callSignature, this.equalsGreaterThanToken, this.block, expression);
-        };
-
         ParenthesizedArrowFunctionExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -11931,30 +11299,6 @@ var TypeScript;
             return new QualifiedNameSyntax(left, dotToken, right, this.parsedInStrictMode());
         };
 
-        QualifiedNameSyntax.create1 = function (left, right) {
-            return new QualifiedNameSyntax(left, TypeScript.Syntax.token(76 /* DotToken */), right, false);
-        };
-
-        QualifiedNameSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        QualifiedNameSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        QualifiedNameSyntax.prototype.withLeft = function (left) {
-            return this.update(left, this.dotToken, this.right);
-        };
-
-        QualifiedNameSyntax.prototype.withDotToken = function (dotToken) {
-            return this.update(this.left, dotToken, this.right);
-        };
-
-        QualifiedNameSyntax.prototype.withRight = function (right) {
-            return this.update(this.left, this.dotToken, right);
-        };
-
         QualifiedNameSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -12003,38 +11347,6 @@ var TypeScript;
             }
 
             return new TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, this.parsedInStrictMode());
-        };
-
-        TypeArgumentListSyntax.create = function (lessThanToken, greaterThanToken) {
-            return new TypeArgumentListSyntax(lessThanToken, TypeScript.Syntax.emptySeparatedList(), greaterThanToken, false);
-        };
-
-        TypeArgumentListSyntax.create1 = function () {
-            return new TypeArgumentListSyntax(TypeScript.Syntax.token(80 /* LessThanToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.token(81 /* GreaterThanToken */), false);
-        };
-
-        TypeArgumentListSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        TypeArgumentListSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        TypeArgumentListSyntax.prototype.withLessThanToken = function (lessThanToken) {
-            return this.update(lessThanToken, this.typeArguments, this.greaterThanToken);
-        };
-
-        TypeArgumentListSyntax.prototype.withTypeArguments = function (typeArguments) {
-            return this.update(this.lessThanToken, typeArguments, this.greaterThanToken);
-        };
-
-        TypeArgumentListSyntax.prototype.withTypeArgument = function (typeArgument) {
-            return this.withTypeArguments(TypeScript.Syntax.separatedList([typeArgument]));
-        };
-
-        TypeArgumentListSyntax.prototype.withGreaterThanToken = function (greaterThanToken) {
-            return this.update(this.lessThanToken, this.typeArguments, greaterThanToken);
         };
 
         TypeArgumentListSyntax.prototype.isTypeScriptSpecific = function () {
@@ -12097,42 +11409,6 @@ var TypeScript;
             return new ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, this.parsedInStrictMode());
         };
 
-        ConstructorTypeSyntax.create = function (newKeyword, parameterList, equalsGreaterThanToken, type) {
-            return new ConstructorTypeSyntax(newKeyword, null, parameterList, equalsGreaterThanToken, type, false);
-        };
-
-        ConstructorTypeSyntax.create1 = function (type) {
-            return new ConstructorTypeSyntax(TypeScript.Syntax.token(31 /* NewKeyword */), null, ParameterListSyntax.create1(), TypeScript.Syntax.token(85 /* EqualsGreaterThanToken */), type, false);
-        };
-
-        ConstructorTypeSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ConstructorTypeSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ConstructorTypeSyntax.prototype.withNewKeyword = function (newKeyword) {
-            return this.update(newKeyword, this.typeParameterList, this.parameterList, this.equalsGreaterThanToken, this.type);
-        };
-
-        ConstructorTypeSyntax.prototype.withTypeParameterList = function (typeParameterList) {
-            return this.update(this.newKeyword, typeParameterList, this.parameterList, this.equalsGreaterThanToken, this.type);
-        };
-
-        ConstructorTypeSyntax.prototype.withParameterList = function (parameterList) {
-            return this.update(this.newKeyword, this.typeParameterList, parameterList, this.equalsGreaterThanToken, this.type);
-        };
-
-        ConstructorTypeSyntax.prototype.withEqualsGreaterThanToken = function (equalsGreaterThanToken) {
-            return this.update(this.newKeyword, this.typeParameterList, this.parameterList, equalsGreaterThanToken, this.type);
-        };
-
-        ConstructorTypeSyntax.prototype.withType = function (type) {
-            return this.update(this.newKeyword, this.typeParameterList, this.parameterList, this.equalsGreaterThanToken, type);
-        };
-
         ConstructorTypeSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -12190,38 +11466,6 @@ var TypeScript;
             return new FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, this.parsedInStrictMode());
         };
 
-        FunctionTypeSyntax.create = function (parameterList, equalsGreaterThanToken, type) {
-            return new FunctionTypeSyntax(null, parameterList, equalsGreaterThanToken, type, false);
-        };
-
-        FunctionTypeSyntax.create1 = function (type) {
-            return new FunctionTypeSyntax(null, ParameterListSyntax.create1(), TypeScript.Syntax.token(85 /* EqualsGreaterThanToken */), type, false);
-        };
-
-        FunctionTypeSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        FunctionTypeSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        FunctionTypeSyntax.prototype.withTypeParameterList = function (typeParameterList) {
-            return this.update(typeParameterList, this.parameterList, this.equalsGreaterThanToken, this.type);
-        };
-
-        FunctionTypeSyntax.prototype.withParameterList = function (parameterList) {
-            return this.update(this.typeParameterList, parameterList, this.equalsGreaterThanToken, this.type);
-        };
-
-        FunctionTypeSyntax.prototype.withEqualsGreaterThanToken = function (equalsGreaterThanToken) {
-            return this.update(this.typeParameterList, this.parameterList, equalsGreaterThanToken, this.type);
-        };
-
-        FunctionTypeSyntax.prototype.withType = function (type) {
-            return this.update(this.typeParameterList, this.parameterList, this.equalsGreaterThanToken, type);
-        };
-
         FunctionTypeSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -12274,38 +11518,6 @@ var TypeScript;
             }
 
             return new ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, this.parsedInStrictMode());
-        };
-
-        ObjectTypeSyntax.create = function (openBraceToken, closeBraceToken) {
-            return new ObjectTypeSyntax(openBraceToken, TypeScript.Syntax.emptySeparatedList(), closeBraceToken, false);
-        };
-
-        ObjectTypeSyntax.create1 = function () {
-            return new ObjectTypeSyntax(TypeScript.Syntax.token(70 /* OpenBraceToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.token(71 /* CloseBraceToken */), false);
-        };
-
-        ObjectTypeSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ObjectTypeSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ObjectTypeSyntax.prototype.withOpenBraceToken = function (openBraceToken) {
-            return this.update(openBraceToken, this.typeMembers, this.closeBraceToken);
-        };
-
-        ObjectTypeSyntax.prototype.withTypeMembers = function (typeMembers) {
-            return this.update(this.openBraceToken, typeMembers, this.closeBraceToken);
-        };
-
-        ObjectTypeSyntax.prototype.withTypeMember = function (typeMember) {
-            return this.withTypeMembers(TypeScript.Syntax.separatedList([typeMember]));
-        };
-
-        ObjectTypeSyntax.prototype.withCloseBraceToken = function (closeBraceToken) {
-            return this.update(this.openBraceToken, this.typeMembers, closeBraceToken);
         };
 
         ObjectTypeSyntax.prototype.isTypeScriptSpecific = function () {
@@ -12362,30 +11574,6 @@ var TypeScript;
             return new ArrayTypeSyntax(type, openBracketToken, closeBracketToken, this.parsedInStrictMode());
         };
 
-        ArrayTypeSyntax.create1 = function (type) {
-            return new ArrayTypeSyntax(type, TypeScript.Syntax.token(74 /* OpenBracketToken */), TypeScript.Syntax.token(75 /* CloseBracketToken */), false);
-        };
-
-        ArrayTypeSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ArrayTypeSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ArrayTypeSyntax.prototype.withType = function (type) {
-            return this.update(type, this.openBracketToken, this.closeBracketToken);
-        };
-
-        ArrayTypeSyntax.prototype.withOpenBracketToken = function (openBracketToken) {
-            return this.update(this.type, openBracketToken, this.closeBracketToken);
-        };
-
-        ArrayTypeSyntax.prototype.withCloseBracketToken = function (closeBracketToken) {
-            return this.update(this.type, this.openBracketToken, closeBracketToken);
-        };
-
         ArrayTypeSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -12435,26 +11623,6 @@ var TypeScript;
             }
 
             return new GenericTypeSyntax(name, typeArgumentList, this.parsedInStrictMode());
-        };
-
-        GenericTypeSyntax.create1 = function (name) {
-            return new GenericTypeSyntax(name, TypeArgumentListSyntax.create1(), false);
-        };
-
-        GenericTypeSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        GenericTypeSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        GenericTypeSyntax.prototype.withName = function (name) {
-            return this.update(name, this.typeArgumentList);
-        };
-
-        GenericTypeSyntax.prototype.withTypeArgumentList = function (typeArgumentList) {
-            return this.update(this.name, typeArgumentList);
         };
 
         GenericTypeSyntax.prototype.isTypeScriptSpecific = function () {
@@ -12508,26 +11676,6 @@ var TypeScript;
             return new TypeQuerySyntax(typeOfKeyword, name, this.parsedInStrictMode());
         };
 
-        TypeQuerySyntax.create1 = function (name) {
-            return new TypeQuerySyntax(TypeScript.Syntax.token(39 /* TypeOfKeyword */), name, false);
-        };
-
-        TypeQuerySyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        TypeQuerySyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        TypeQuerySyntax.prototype.withTypeOfKeyword = function (typeOfKeyword) {
-            return this.update(typeOfKeyword, this.name);
-        };
-
-        TypeQuerySyntax.prototype.withName = function (name) {
-            return this.update(this.typeOfKeyword, name);
-        };
-
         TypeQuerySyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -12573,26 +11721,6 @@ var TypeScript;
             }
 
             return new TypeAnnotationSyntax(colonToken, type, this.parsedInStrictMode());
-        };
-
-        TypeAnnotationSyntax.create1 = function (type) {
-            return new TypeAnnotationSyntax(TypeScript.Syntax.token(106 /* ColonToken */), type, false);
-        };
-
-        TypeAnnotationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        TypeAnnotationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        TypeAnnotationSyntax.prototype.withColonToken = function (colonToken) {
-            return this.update(colonToken, this.type);
-        };
-
-        TypeAnnotationSyntax.prototype.withType = function (type) {
-            return this.update(this.colonToken, type);
         };
 
         TypeAnnotationSyntax.prototype.isTypeScriptSpecific = function () {
@@ -12651,38 +11779,6 @@ var TypeScript;
             }
 
             return new BlockSyntax(openBraceToken, statements, closeBraceToken, this.parsedInStrictMode());
-        };
-
-        BlockSyntax.create = function (openBraceToken, closeBraceToken) {
-            return new BlockSyntax(openBraceToken, TypeScript.Syntax.emptyList(), closeBraceToken, false);
-        };
-
-        BlockSyntax.create1 = function () {
-            return new BlockSyntax(TypeScript.Syntax.token(70 /* OpenBraceToken */), TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(71 /* CloseBraceToken */), false);
-        };
-
-        BlockSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        BlockSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        BlockSyntax.prototype.withOpenBraceToken = function (openBraceToken) {
-            return this.update(openBraceToken, this.statements, this.closeBraceToken);
-        };
-
-        BlockSyntax.prototype.withStatements = function (statements) {
-            return this.update(this.openBraceToken, statements, this.closeBraceToken);
-        };
-
-        BlockSyntax.prototype.withStatement = function (statement) {
-            return this.withStatements(TypeScript.Syntax.list([statement]));
-        };
-
-        BlockSyntax.prototype.withCloseBraceToken = function (closeBraceToken) {
-            return this.update(this.openBraceToken, this.statements, closeBraceToken);
         };
 
         BlockSyntax.prototype.isTypeScriptSpecific = function () {
@@ -12745,50 +11841,6 @@ var TypeScript;
             }
 
             return new ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, this.parsedInStrictMode());
-        };
-
-        ParameterSyntax.create = function (identifier) {
-            return new ParameterSyntax(null, TypeScript.Syntax.emptyList(), identifier, null, null, null, false);
-        };
-
-        ParameterSyntax.create1 = function (identifier) {
-            return new ParameterSyntax(null, TypeScript.Syntax.emptyList(), identifier, null, null, null, false);
-        };
-
-        ParameterSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ParameterSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ParameterSyntax.prototype.withDotDotDotToken = function (dotDotDotToken) {
-            return this.update(dotDotDotToken, this.modifiers, this.identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
-        };
-
-        ParameterSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(this.dotDotDotToken, modifiers, this.identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
-        };
-
-        ParameterSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        ParameterSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.dotDotDotToken, this.modifiers, identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
-        };
-
-        ParameterSyntax.prototype.withQuestionToken = function (questionToken) {
-            return this.update(this.dotDotDotToken, this.modifiers, this.identifier, questionToken, this.typeAnnotation, this.equalsValueClause);
-        };
-
-        ParameterSyntax.prototype.withTypeAnnotation = function (typeAnnotation) {
-            return this.update(this.dotDotDotToken, this.modifiers, this.identifier, this.questionToken, typeAnnotation, this.equalsValueClause);
-        };
-
-        ParameterSyntax.prototype.withEqualsValueClause = function (equalsValueClause) {
-            return this.update(this.dotDotDotToken, this.modifiers, this.identifier, this.questionToken, this.typeAnnotation, equalsValueClause);
         };
 
         ParameterSyntax.prototype.isTypeScriptSpecific = function () {
@@ -12880,30 +11932,6 @@ var TypeScript;
             return new MemberAccessExpressionSyntax(expression, dotToken, name, this.parsedInStrictMode());
         };
 
-        MemberAccessExpressionSyntax.create1 = function (expression, name) {
-            return new MemberAccessExpressionSyntax(expression, TypeScript.Syntax.token(76 /* DotToken */), name, false);
-        };
-
-        MemberAccessExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        MemberAccessExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        MemberAccessExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(expression, this.dotToken, this.name);
-        };
-
-        MemberAccessExpressionSyntax.prototype.withDotToken = function (dotToken) {
-            return this.update(this.expression, dotToken, this.name);
-        };
-
-        MemberAccessExpressionSyntax.prototype.withName = function (name) {
-            return this.update(this.expression, this.dotToken, name);
-        };
-
         MemberAccessExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -12965,26 +11993,6 @@ var TypeScript;
             }
 
             return new PostfixUnaryExpressionSyntax(kind, operand, operatorToken, this.parsedInStrictMode());
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.withKind = function (kind) {
-            return this.update(kind, this.operand, this.operatorToken);
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.withOperand = function (operand) {
-            return this.update(this._kind, operand, this.operatorToken);
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.withOperatorToken = function (operatorToken) {
-            return this.update(this._kind, this.operand, operatorToken);
         };
 
         PostfixUnaryExpressionSyntax.prototype.isTypeScriptSpecific = function () {
@@ -13067,34 +12075,6 @@ var TypeScript;
             return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, this.parsedInStrictMode());
         };
 
-        ElementAccessExpressionSyntax.create1 = function (expression, argumentExpression) {
-            return new ElementAccessExpressionSyntax(expression, TypeScript.Syntax.token(74 /* OpenBracketToken */), argumentExpression, TypeScript.Syntax.token(75 /* CloseBracketToken */), false);
-        };
-
-        ElementAccessExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ElementAccessExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ElementAccessExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(expression, this.openBracketToken, this.argumentExpression, this.closeBracketToken);
-        };
-
-        ElementAccessExpressionSyntax.prototype.withOpenBracketToken = function (openBracketToken) {
-            return this.update(this.expression, openBracketToken, this.argumentExpression, this.closeBracketToken);
-        };
-
-        ElementAccessExpressionSyntax.prototype.withArgumentExpression = function (argumentExpression) {
-            return this.update(this.expression, this.openBracketToken, argumentExpression, this.closeBracketToken);
-        };
-
-        ElementAccessExpressionSyntax.prototype.withCloseBracketToken = function (closeBracketToken) {
-            return this.update(this.expression, this.openBracketToken, this.argumentExpression, closeBracketToken);
-        };
-
         ElementAccessExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -13172,26 +12152,6 @@ var TypeScript;
             return new InvocationExpressionSyntax(expression, argumentList, this.parsedInStrictMode());
         };
 
-        InvocationExpressionSyntax.create1 = function (expression) {
-            return new InvocationExpressionSyntax(expression, ArgumentListSyntax.create1(), false);
-        };
-
-        InvocationExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        InvocationExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        InvocationExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(expression, this.argumentList);
-        };
-
-        InvocationExpressionSyntax.prototype.withArgumentList = function (argumentList) {
-            return this.update(this.expression, argumentList);
-        };
-
         InvocationExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -13249,42 +12209,6 @@ var TypeScript;
             }
 
             return new ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, this.parsedInStrictMode());
-        };
-
-        ArgumentListSyntax.create = function (openParenToken, closeParenToken) {
-            return new ArgumentListSyntax(null, openParenToken, TypeScript.Syntax.emptySeparatedList(), closeParenToken, false);
-        };
-
-        ArgumentListSyntax.create1 = function () {
-            return new ArgumentListSyntax(null, TypeScript.Syntax.token(72 /* OpenParenToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.token(73 /* CloseParenToken */), false);
-        };
-
-        ArgumentListSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ArgumentListSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ArgumentListSyntax.prototype.withTypeArgumentList = function (typeArgumentList) {
-            return this.update(typeArgumentList, this.openParenToken, this.arguments, this.closeParenToken);
-        };
-
-        ArgumentListSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.typeArgumentList, openParenToken, this.arguments, this.closeParenToken);
-        };
-
-        ArgumentListSyntax.prototype.withArguments = function (_arguments) {
-            return this.update(this.typeArgumentList, this.openParenToken, _arguments, this.closeParenToken);
-        };
-
-        ArgumentListSyntax.prototype.withArgument = function (_argument) {
-            return this.withArguments(TypeScript.Syntax.separatedList([_argument]));
-        };
-
-        ArgumentListSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.typeArgumentList, this.openParenToken, this.arguments, closeParenToken);
         };
 
         ArgumentListSyntax.prototype.isTypeScriptSpecific = function () {
@@ -13346,30 +12270,6 @@ var TypeScript;
             }
 
             return new BinaryExpressionSyntax(kind, left, operatorToken, right, this.parsedInStrictMode());
-        };
-
-        BinaryExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        BinaryExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        BinaryExpressionSyntax.prototype.withKind = function (kind) {
-            return this.update(kind, this.left, this.operatorToken, this.right);
-        };
-
-        BinaryExpressionSyntax.prototype.withLeft = function (left) {
-            return this.update(this._kind, left, this.operatorToken, this.right);
-        };
-
-        BinaryExpressionSyntax.prototype.withOperatorToken = function (operatorToken) {
-            return this.update(this._kind, this.left, operatorToken, this.right);
-        };
-
-        BinaryExpressionSyntax.prototype.withRight = function (right) {
-            return this.update(this._kind, this.left, this.operatorToken, right);
         };
 
         BinaryExpressionSyntax.prototype.isTypeScriptSpecific = function () {
@@ -13438,38 +12338,6 @@ var TypeScript;
             return new ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, this.parsedInStrictMode());
         };
 
-        ConditionalExpressionSyntax.create1 = function (condition, whenTrue, whenFalse) {
-            return new ConditionalExpressionSyntax(condition, TypeScript.Syntax.token(105 /* QuestionToken */), whenTrue, TypeScript.Syntax.token(106 /* ColonToken */), whenFalse, false);
-        };
-
-        ConditionalExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ConditionalExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ConditionalExpressionSyntax.prototype.withCondition = function (condition) {
-            return this.update(condition, this.questionToken, this.whenTrue, this.colonToken, this.whenFalse);
-        };
-
-        ConditionalExpressionSyntax.prototype.withQuestionToken = function (questionToken) {
-            return this.update(this.condition, questionToken, this.whenTrue, this.colonToken, this.whenFalse);
-        };
-
-        ConditionalExpressionSyntax.prototype.withWhenTrue = function (whenTrue) {
-            return this.update(this.condition, this.questionToken, whenTrue, this.colonToken, this.whenFalse);
-        };
-
-        ConditionalExpressionSyntax.prototype.withColonToken = function (colonToken) {
-            return this.update(this.condition, this.questionToken, this.whenTrue, colonToken, this.whenFalse);
-        };
-
-        ConditionalExpressionSyntax.prototype.withWhenFalse = function (whenFalse) {
-            return this.update(this.condition, this.questionToken, this.whenTrue, this.colonToken, whenFalse);
-        };
-
         ConditionalExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.condition.isTypeScriptSpecific()) {
                 return true;
@@ -13530,26 +12398,6 @@ var TypeScript;
             return new ConstructSignatureSyntax(newKeyword, callSignature, this.parsedInStrictMode());
         };
 
-        ConstructSignatureSyntax.create1 = function () {
-            return new ConstructSignatureSyntax(TypeScript.Syntax.token(31 /* NewKeyword */), CallSignatureSyntax.create1(), false);
-        };
-
-        ConstructSignatureSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ConstructSignatureSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ConstructSignatureSyntax.prototype.withNewKeyword = function (newKeyword) {
-            return this.update(newKeyword, this.callSignature);
-        };
-
-        ConstructSignatureSyntax.prototype.withCallSignature = function (callSignature) {
-            return this.update(this.newKeyword, callSignature);
-        };
-
         ConstructSignatureSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -13602,34 +12450,6 @@ var TypeScript;
             }
 
             return new MethodSignatureSyntax(propertyName, questionToken, callSignature, this.parsedInStrictMode());
-        };
-
-        MethodSignatureSyntax.create = function (propertyName, callSignature) {
-            return new MethodSignatureSyntax(propertyName, null, callSignature, false);
-        };
-
-        MethodSignatureSyntax.create1 = function (propertyName) {
-            return new MethodSignatureSyntax(propertyName, null, CallSignatureSyntax.create1(), false);
-        };
-
-        MethodSignatureSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        MethodSignatureSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        MethodSignatureSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(propertyName, this.questionToken, this.callSignature);
-        };
-
-        MethodSignatureSyntax.prototype.withQuestionToken = function (questionToken) {
-            return this.update(this.propertyName, questionToken, this.callSignature);
-        };
-
-        MethodSignatureSyntax.prototype.withCallSignature = function (callSignature) {
-            return this.update(this.propertyName, this.questionToken, callSignature);
         };
 
         MethodSignatureSyntax.prototype.isTypeScriptSpecific = function () {
@@ -13692,38 +12512,6 @@ var TypeScript;
             return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, this.parsedInStrictMode());
         };
 
-        IndexSignatureSyntax.create = function (openBracketToken, parameter, closeBracketToken) {
-            return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, null, false);
-        };
-
-        IndexSignatureSyntax.create1 = function (parameter) {
-            return new IndexSignatureSyntax(TypeScript.Syntax.token(74 /* OpenBracketToken */), parameter, TypeScript.Syntax.token(75 /* CloseBracketToken */), null, false);
-        };
-
-        IndexSignatureSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        IndexSignatureSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        IndexSignatureSyntax.prototype.withOpenBracketToken = function (openBracketToken) {
-            return this.update(openBracketToken, this.parameter, this.closeBracketToken, this.typeAnnotation);
-        };
-
-        IndexSignatureSyntax.prototype.withParameter = function (parameter) {
-            return this.update(this.openBracketToken, parameter, this.closeBracketToken, this.typeAnnotation);
-        };
-
-        IndexSignatureSyntax.prototype.withCloseBracketToken = function (closeBracketToken) {
-            return this.update(this.openBracketToken, this.parameter, closeBracketToken, this.typeAnnotation);
-        };
-
-        IndexSignatureSyntax.prototype.withTypeAnnotation = function (typeAnnotation) {
-            return this.update(this.openBracketToken, this.parameter, this.closeBracketToken, typeAnnotation);
-        };
-
         IndexSignatureSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -13778,34 +12566,6 @@ var TypeScript;
             return new PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, this.parsedInStrictMode());
         };
 
-        PropertySignatureSyntax.create = function (propertyName) {
-            return new PropertySignatureSyntax(propertyName, null, null, false);
-        };
-
-        PropertySignatureSyntax.create1 = function (propertyName) {
-            return new PropertySignatureSyntax(propertyName, null, null, false);
-        };
-
-        PropertySignatureSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        PropertySignatureSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        PropertySignatureSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(propertyName, this.questionToken, this.typeAnnotation);
-        };
-
-        PropertySignatureSyntax.prototype.withQuestionToken = function (questionToken) {
-            return this.update(this.propertyName, questionToken, this.typeAnnotation);
-        };
-
-        PropertySignatureSyntax.prototype.withTypeAnnotation = function (typeAnnotation) {
-            return this.update(this.propertyName, this.questionToken, typeAnnotation);
-        };
-
         PropertySignatureSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -13858,34 +12618,6 @@ var TypeScript;
             }
 
             return new CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, this.parsedInStrictMode());
-        };
-
-        CallSignatureSyntax.create = function (parameterList) {
-            return new CallSignatureSyntax(null, parameterList, null, false);
-        };
-
-        CallSignatureSyntax.create1 = function () {
-            return new CallSignatureSyntax(null, ParameterListSyntax.create1(), null, false);
-        };
-
-        CallSignatureSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        CallSignatureSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        CallSignatureSyntax.prototype.withTypeParameterList = function (typeParameterList) {
-            return this.update(typeParameterList, this.parameterList, this.typeAnnotation);
-        };
-
-        CallSignatureSyntax.prototype.withParameterList = function (parameterList) {
-            return this.update(this.typeParameterList, parameterList, this.typeAnnotation);
-        };
-
-        CallSignatureSyntax.prototype.withTypeAnnotation = function (typeAnnotation) {
-            return this.update(this.typeParameterList, this.parameterList, typeAnnotation);
         };
 
         CallSignatureSyntax.prototype.isTypeScriptSpecific = function () {
@@ -13947,38 +12679,6 @@ var TypeScript;
             return new ParameterListSyntax(openParenToken, parameters, closeParenToken, this.parsedInStrictMode());
         };
 
-        ParameterListSyntax.create = function (openParenToken, closeParenToken) {
-            return new ParameterListSyntax(openParenToken, TypeScript.Syntax.emptySeparatedList(), closeParenToken, false);
-        };
-
-        ParameterListSyntax.create1 = function () {
-            return new ParameterListSyntax(TypeScript.Syntax.token(72 /* OpenParenToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.token(73 /* CloseParenToken */), false);
-        };
-
-        ParameterListSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ParameterListSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ParameterListSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(openParenToken, this.parameters, this.closeParenToken);
-        };
-
-        ParameterListSyntax.prototype.withParameters = function (parameters) {
-            return this.update(this.openParenToken, parameters, this.closeParenToken);
-        };
-
-        ParameterListSyntax.prototype.withParameter = function (parameter) {
-            return this.withParameters(TypeScript.Syntax.separatedList([parameter]));
-        };
-
-        ParameterListSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.openParenToken, this.parameters, closeParenToken);
-        };
-
         ParameterListSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.parameters.isTypeScriptSpecific()) {
                 return true;
@@ -14032,38 +12732,6 @@ var TypeScript;
             return new TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, this.parsedInStrictMode());
         };
 
-        TypeParameterListSyntax.create = function (lessThanToken, greaterThanToken) {
-            return new TypeParameterListSyntax(lessThanToken, TypeScript.Syntax.emptySeparatedList(), greaterThanToken, false);
-        };
-
-        TypeParameterListSyntax.create1 = function () {
-            return new TypeParameterListSyntax(TypeScript.Syntax.token(80 /* LessThanToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.token(81 /* GreaterThanToken */), false);
-        };
-
-        TypeParameterListSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        TypeParameterListSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        TypeParameterListSyntax.prototype.withLessThanToken = function (lessThanToken) {
-            return this.update(lessThanToken, this.typeParameters, this.greaterThanToken);
-        };
-
-        TypeParameterListSyntax.prototype.withTypeParameters = function (typeParameters) {
-            return this.update(this.lessThanToken, typeParameters, this.greaterThanToken);
-        };
-
-        TypeParameterListSyntax.prototype.withTypeParameter = function (typeParameter) {
-            return this.withTypeParameters(TypeScript.Syntax.separatedList([typeParameter]));
-        };
-
-        TypeParameterListSyntax.prototype.withGreaterThanToken = function (greaterThanToken) {
-            return this.update(this.lessThanToken, this.typeParameters, greaterThanToken);
-        };
-
         TypeParameterListSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -14109,30 +12777,6 @@ var TypeScript;
             }
 
             return new TypeParameterSyntax(identifier, constraint, this.parsedInStrictMode());
-        };
-
-        TypeParameterSyntax.create = function (identifier) {
-            return new TypeParameterSyntax(identifier, null, false);
-        };
-
-        TypeParameterSyntax.create1 = function (identifier) {
-            return new TypeParameterSyntax(identifier, null, false);
-        };
-
-        TypeParameterSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        TypeParameterSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        TypeParameterSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(identifier, this.constraint);
-        };
-
-        TypeParameterSyntax.prototype.withConstraint = function (constraint) {
-            return this.update(this.identifier, constraint);
         };
 
         TypeParameterSyntax.prototype.isTypeScriptSpecific = function () {
@@ -14182,26 +12826,6 @@ var TypeScript;
             return new ConstraintSyntax(extendsKeyword, type, this.parsedInStrictMode());
         };
 
-        ConstraintSyntax.create1 = function (type) {
-            return new ConstraintSyntax(TypeScript.Syntax.token(48 /* ExtendsKeyword */), type, false);
-        };
-
-        ConstraintSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ConstraintSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ConstraintSyntax.prototype.withExtendsKeyword = function (extendsKeyword) {
-            return this.update(extendsKeyword, this.type);
-        };
-
-        ConstraintSyntax.prototype.withType = function (type) {
-            return this.update(this.extendsKeyword, type);
-        };
-
         ConstraintSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -14247,26 +12871,6 @@ var TypeScript;
             }
 
             return new ElseClauseSyntax(elseKeyword, statement, this.parsedInStrictMode());
-        };
-
-        ElseClauseSyntax.create1 = function (statement) {
-            return new ElseClauseSyntax(TypeScript.Syntax.token(23 /* ElseKeyword */), statement, false);
-        };
-
-        ElseClauseSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ElseClauseSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ElseClauseSyntax.prototype.withElseKeyword = function (elseKeyword) {
-            return this.update(elseKeyword, this.statement);
-        };
-
-        ElseClauseSyntax.prototype.withStatement = function (statement) {
-            return this.update(this.elseKeyword, statement);
         };
 
         ElseClauseSyntax.prototype.isTypeScriptSpecific = function () {
@@ -14339,46 +12943,6 @@ var TypeScript;
             return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, this.parsedInStrictMode());
         };
 
-        IfStatementSyntax.create = function (ifKeyword, openParenToken, condition, closeParenToken, statement) {
-            return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, null, false);
-        };
-
-        IfStatementSyntax.create1 = function (condition, statement) {
-            return new IfStatementSyntax(TypeScript.Syntax.token(28 /* IfKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), condition, TypeScript.Syntax.token(73 /* CloseParenToken */), statement, null, false);
-        };
-
-        IfStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        IfStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        IfStatementSyntax.prototype.withIfKeyword = function (ifKeyword) {
-            return this.update(ifKeyword, this.openParenToken, this.condition, this.closeParenToken, this.statement, this.elseClause);
-        };
-
-        IfStatementSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.ifKeyword, openParenToken, this.condition, this.closeParenToken, this.statement, this.elseClause);
-        };
-
-        IfStatementSyntax.prototype.withCondition = function (condition) {
-            return this.update(this.ifKeyword, this.openParenToken, condition, this.closeParenToken, this.statement, this.elseClause);
-        };
-
-        IfStatementSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.ifKeyword, this.openParenToken, this.condition, closeParenToken, this.statement, this.elseClause);
-        };
-
-        IfStatementSyntax.prototype.withStatement = function (statement) {
-            return this.update(this.ifKeyword, this.openParenToken, this.condition, this.closeParenToken, statement, this.elseClause);
-        };
-
-        IfStatementSyntax.prototype.withElseClause = function (elseClause) {
-            return this.update(this.ifKeyword, this.openParenToken, this.condition, this.closeParenToken, this.statement, elseClause);
-        };
-
         IfStatementSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.condition.isTypeScriptSpecific()) {
                 return true;
@@ -14441,30 +13005,6 @@ var TypeScript;
             }
 
             return new ExpressionStatementSyntax(expression, semicolonToken, this.parsedInStrictMode());
-        };
-
-        ExpressionStatementSyntax.create = function (expression) {
-            return new ExpressionStatementSyntax(expression, null, false);
-        };
-
-        ExpressionStatementSyntax.create1 = function (expression) {
-            return new ExpressionStatementSyntax(expression, null, false);
-        };
-
-        ExpressionStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ExpressionStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ExpressionStatementSyntax.prototype.withExpression = function (expression) {
-            return this.update(expression, this.semicolonToken);
-        };
-
-        ExpressionStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.expression, semicolonToken);
         };
 
         ExpressionStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -14530,46 +13070,6 @@ var TypeScript;
             return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, this.parsedInStrictMode());
         };
 
-        ConstructorDeclarationSyntax.create = function (constructorKeyword, callSignature) {
-            return new ConstructorDeclarationSyntax(TypeScript.Syntax.emptyList(), constructorKeyword, callSignature, null, null, false);
-        };
-
-        ConstructorDeclarationSyntax.create1 = function () {
-            return new ConstructorDeclarationSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(62 /* ConstructorKeyword */), CallSignatureSyntax.create1(), null, null, false);
-        };
-
-        ConstructorDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ConstructorDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ConstructorDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.constructorKeyword, this.callSignature, this.block, this.semicolonToken);
-        };
-
-        ConstructorDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        ConstructorDeclarationSyntax.prototype.withConstructorKeyword = function (constructorKeyword) {
-            return this.update(this.modifiers, constructorKeyword, this.callSignature, this.block, this.semicolonToken);
-        };
-
-        ConstructorDeclarationSyntax.prototype.withCallSignature = function (callSignature) {
-            return this.update(this.modifiers, this.constructorKeyword, callSignature, this.block, this.semicolonToken);
-        };
-
-        ConstructorDeclarationSyntax.prototype.withBlock = function (block) {
-            return this.update(this.modifiers, this.constructorKeyword, this.callSignature, block, this.semicolonToken);
-        };
-
-        ConstructorDeclarationSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.modifiers, this.constructorKeyword, this.callSignature, this.block, semicolonToken);
-        };
-
         ConstructorDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -14632,46 +13132,6 @@ var TypeScript;
             }
 
             return new MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, this.parsedInStrictMode());
-        };
-
-        MemberFunctionDeclarationSyntax.create = function (propertyName, callSignature) {
-            return new MemberFunctionDeclarationSyntax(TypeScript.Syntax.emptyList(), propertyName, callSignature, null, null, false);
-        };
-
-        MemberFunctionDeclarationSyntax.create1 = function (propertyName) {
-            return new MemberFunctionDeclarationSyntax(TypeScript.Syntax.emptyList(), propertyName, CallSignatureSyntax.create1(), null, null, false);
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.propertyName, this.callSignature, this.block, this.semicolonToken);
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(this.modifiers, propertyName, this.callSignature, this.block, this.semicolonToken);
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.withCallSignature = function (callSignature) {
-            return this.update(this.modifiers, this.propertyName, callSignature, this.block, this.semicolonToken);
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.withBlock = function (block) {
-            return this.update(this.modifiers, this.propertyName, this.callSignature, block, this.semicolonToken);
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.modifiers, this.propertyName, this.callSignature, this.block, semicolonToken);
         };
 
         MemberFunctionDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
@@ -14743,50 +13203,6 @@ var TypeScript;
             }
 
             return new GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, this.parsedInStrictMode());
-        };
-
-        GetAccessorSyntax.create = function (getKeyword, propertyName, parameterList, block) {
-            return new GetAccessorSyntax(TypeScript.Syntax.emptyList(), getKeyword, propertyName, parameterList, null, block, false);
-        };
-
-        GetAccessorSyntax.create1 = function (propertyName) {
-            return new GetAccessorSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(64 /* GetKeyword */), propertyName, ParameterListSyntax.create1(), null, BlockSyntax.create1(), false);
-        };
-
-        GetAccessorSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        GetAccessorSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        GetAccessorSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.getKeyword, this.propertyName, this.parameterList, this.typeAnnotation, this.block);
-        };
-
-        GetAccessorSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        GetAccessorSyntax.prototype.withGetKeyword = function (getKeyword) {
-            return this.update(this.modifiers, getKeyword, this.propertyName, this.parameterList, this.typeAnnotation, this.block);
-        };
-
-        GetAccessorSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(this.modifiers, this.getKeyword, propertyName, this.parameterList, this.typeAnnotation, this.block);
-        };
-
-        GetAccessorSyntax.prototype.withParameterList = function (parameterList) {
-            return this.update(this.modifiers, this.getKeyword, this.propertyName, parameterList, this.typeAnnotation, this.block);
-        };
-
-        GetAccessorSyntax.prototype.withTypeAnnotation = function (typeAnnotation) {
-            return this.update(this.modifiers, this.getKeyword, this.propertyName, this.parameterList, typeAnnotation, this.block);
-        };
-
-        GetAccessorSyntax.prototype.withBlock = function (block) {
-            return this.update(this.modifiers, this.getKeyword, this.propertyName, this.parameterList, this.typeAnnotation, block);
         };
 
         GetAccessorSyntax.prototype.isTypeScriptSpecific = function () {
@@ -14869,46 +13285,6 @@ var TypeScript;
             return new SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, this.parsedInStrictMode());
         };
 
-        SetAccessorSyntax.create = function (setKeyword, propertyName, parameterList, block) {
-            return new SetAccessorSyntax(TypeScript.Syntax.emptyList(), setKeyword, propertyName, parameterList, block, false);
-        };
-
-        SetAccessorSyntax.create1 = function (propertyName) {
-            return new SetAccessorSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(68 /* SetKeyword */), propertyName, ParameterListSyntax.create1(), BlockSyntax.create1(), false);
-        };
-
-        SetAccessorSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        SetAccessorSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        SetAccessorSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.setKeyword, this.propertyName, this.parameterList, this.block);
-        };
-
-        SetAccessorSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        SetAccessorSyntax.prototype.withSetKeyword = function (setKeyword) {
-            return this.update(this.modifiers, setKeyword, this.propertyName, this.parameterList, this.block);
-        };
-
-        SetAccessorSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(this.modifiers, this.setKeyword, propertyName, this.parameterList, this.block);
-        };
-
-        SetAccessorSyntax.prototype.withParameterList = function (parameterList) {
-            return this.update(this.modifiers, this.setKeyword, this.propertyName, parameterList, this.block);
-        };
-
-        SetAccessorSyntax.prototype.withBlock = function (block) {
-            return this.update(this.modifiers, this.setKeyword, this.propertyName, this.parameterList, block);
-        };
-
         SetAccessorSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -14967,38 +13343,6 @@ var TypeScript;
             return new MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, this.parsedInStrictMode());
         };
 
-        MemberVariableDeclarationSyntax.create = function (variableDeclarator) {
-            return new MemberVariableDeclarationSyntax(TypeScript.Syntax.emptyList(), variableDeclarator, null, false);
-        };
-
-        MemberVariableDeclarationSyntax.create1 = function (variableDeclarator) {
-            return new MemberVariableDeclarationSyntax(TypeScript.Syntax.emptyList(), variableDeclarator, null, false);
-        };
-
-        MemberVariableDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        MemberVariableDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        MemberVariableDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.variableDeclarator, this.semicolonToken);
-        };
-
-        MemberVariableDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        MemberVariableDeclarationSyntax.prototype.withVariableDeclarator = function (variableDeclarator) {
-            return this.update(this.modifiers, variableDeclarator, this.semicolonToken);
-        };
-
-        MemberVariableDeclarationSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.modifiers, this.variableDeclarator, semicolonToken);
-        };
-
         MemberVariableDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -15051,38 +13395,6 @@ var TypeScript;
             }
 
             return new IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, this.parsedInStrictMode());
-        };
-
-        IndexMemberDeclarationSyntax.create = function (indexSignature) {
-            return new IndexMemberDeclarationSyntax(TypeScript.Syntax.emptyList(), indexSignature, null, false);
-        };
-
-        IndexMemberDeclarationSyntax.create1 = function (indexSignature) {
-            return new IndexMemberDeclarationSyntax(TypeScript.Syntax.emptyList(), indexSignature, null, false);
-        };
-
-        IndexMemberDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        IndexMemberDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        IndexMemberDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.indexSignature, this.semicolonToken);
-        };
-
-        IndexMemberDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        IndexMemberDeclarationSyntax.prototype.withIndexSignature = function (indexSignature) {
-            return this.update(this.modifiers, indexSignature, this.semicolonToken);
-        };
-
-        IndexMemberDeclarationSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.modifiers, this.indexSignature, semicolonToken);
         };
 
         IndexMemberDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
@@ -15141,34 +13453,6 @@ var TypeScript;
             }
 
             return new ThrowStatementSyntax(throwKeyword, expression, semicolonToken, this.parsedInStrictMode());
-        };
-
-        ThrowStatementSyntax.create = function (throwKeyword, expression) {
-            return new ThrowStatementSyntax(throwKeyword, expression, null, false);
-        };
-
-        ThrowStatementSyntax.create1 = function (expression) {
-            return new ThrowStatementSyntax(TypeScript.Syntax.token(36 /* ThrowKeyword */), expression, null, false);
-        };
-
-        ThrowStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ThrowStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ThrowStatementSyntax.prototype.withThrowKeyword = function (throwKeyword) {
-            return this.update(throwKeyword, this.expression, this.semicolonToken);
-        };
-
-        ThrowStatementSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.throwKeyword, expression, this.semicolonToken);
-        };
-
-        ThrowStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.throwKeyword, this.expression, semicolonToken);
         };
 
         ThrowStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -15230,34 +13514,6 @@ var TypeScript;
             }
 
             return new ReturnStatementSyntax(returnKeyword, expression, semicolonToken, this.parsedInStrictMode());
-        };
-
-        ReturnStatementSyntax.create = function (returnKeyword) {
-            return new ReturnStatementSyntax(returnKeyword, null, null, false);
-        };
-
-        ReturnStatementSyntax.create1 = function () {
-            return new ReturnStatementSyntax(TypeScript.Syntax.token(33 /* ReturnKeyword */), null, null, false);
-        };
-
-        ReturnStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ReturnStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ReturnStatementSyntax.prototype.withReturnKeyword = function (returnKeyword) {
-            return this.update(returnKeyword, this.expression, this.semicolonToken);
-        };
-
-        ReturnStatementSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.returnKeyword, expression, this.semicolonToken);
-        };
-
-        ReturnStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.returnKeyword, this.expression, semicolonToken);
         };
 
         ReturnStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -15337,34 +13593,6 @@ var TypeScript;
             return new ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, this.parsedInStrictMode());
         };
 
-        ObjectCreationExpressionSyntax.create = function (newKeyword, expression) {
-            return new ObjectCreationExpressionSyntax(newKeyword, expression, null, false);
-        };
-
-        ObjectCreationExpressionSyntax.create1 = function (expression) {
-            return new ObjectCreationExpressionSyntax(TypeScript.Syntax.token(31 /* NewKeyword */), expression, null, false);
-        };
-
-        ObjectCreationExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ObjectCreationExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ObjectCreationExpressionSyntax.prototype.withNewKeyword = function (newKeyword) {
-            return this.update(newKeyword, this.expression, this.argumentList);
-        };
-
-        ObjectCreationExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.newKeyword, expression, this.argumentList);
-        };
-
-        ObjectCreationExpressionSyntax.prototype.withArgumentList = function (argumentList) {
-            return this.update(this.newKeyword, this.expression, argumentList);
-        };
-
         ObjectCreationExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -15441,54 +13669,6 @@ var TypeScript;
             return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, this.parsedInStrictMode());
         };
 
-        SwitchStatementSyntax.create = function (switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, closeBraceToken) {
-            return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, TypeScript.Syntax.emptyList(), closeBraceToken, false);
-        };
-
-        SwitchStatementSyntax.create1 = function (expression) {
-            return new SwitchStatementSyntax(TypeScript.Syntax.token(34 /* SwitchKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), expression, TypeScript.Syntax.token(73 /* CloseParenToken */), TypeScript.Syntax.token(70 /* OpenBraceToken */), TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(71 /* CloseBraceToken */), false);
-        };
-
-        SwitchStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        SwitchStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        SwitchStatementSyntax.prototype.withSwitchKeyword = function (switchKeyword) {
-            return this.update(switchKeyword, this.openParenToken, this.expression, this.closeParenToken, this.openBraceToken, this.switchClauses, this.closeBraceToken);
-        };
-
-        SwitchStatementSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.switchKeyword, openParenToken, this.expression, this.closeParenToken, this.openBraceToken, this.switchClauses, this.closeBraceToken);
-        };
-
-        SwitchStatementSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.switchKeyword, this.openParenToken, expression, this.closeParenToken, this.openBraceToken, this.switchClauses, this.closeBraceToken);
-        };
-
-        SwitchStatementSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.switchKeyword, this.openParenToken, this.expression, closeParenToken, this.openBraceToken, this.switchClauses, this.closeBraceToken);
-        };
-
-        SwitchStatementSyntax.prototype.withOpenBraceToken = function (openBraceToken) {
-            return this.update(this.switchKeyword, this.openParenToken, this.expression, this.closeParenToken, openBraceToken, this.switchClauses, this.closeBraceToken);
-        };
-
-        SwitchStatementSyntax.prototype.withSwitchClauses = function (switchClauses) {
-            return this.update(this.switchKeyword, this.openParenToken, this.expression, this.closeParenToken, this.openBraceToken, switchClauses, this.closeBraceToken);
-        };
-
-        SwitchStatementSyntax.prototype.withSwitchClause = function (switchClause) {
-            return this.withSwitchClauses(TypeScript.Syntax.list([switchClause]));
-        };
-
-        SwitchStatementSyntax.prototype.withCloseBraceToken = function (closeBraceToken) {
-            return this.update(this.switchKeyword, this.openParenToken, this.expression, this.closeParenToken, this.openBraceToken, this.switchClauses, closeBraceToken);
-        };
-
         SwitchStatementSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -15552,42 +13732,6 @@ var TypeScript;
             return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, this.parsedInStrictMode());
         };
 
-        CaseSwitchClauseSyntax.create = function (caseKeyword, expression, colonToken) {
-            return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, TypeScript.Syntax.emptyList(), false);
-        };
-
-        CaseSwitchClauseSyntax.create1 = function (expression) {
-            return new CaseSwitchClauseSyntax(TypeScript.Syntax.token(16 /* CaseKeyword */), expression, TypeScript.Syntax.token(106 /* ColonToken */), TypeScript.Syntax.emptyList(), false);
-        };
-
-        CaseSwitchClauseSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        CaseSwitchClauseSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        CaseSwitchClauseSyntax.prototype.withCaseKeyword = function (caseKeyword) {
-            return this.update(caseKeyword, this.expression, this.colonToken, this.statements);
-        };
-
-        CaseSwitchClauseSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.caseKeyword, expression, this.colonToken, this.statements);
-        };
-
-        CaseSwitchClauseSyntax.prototype.withColonToken = function (colonToken) {
-            return this.update(this.caseKeyword, this.expression, colonToken, this.statements);
-        };
-
-        CaseSwitchClauseSyntax.prototype.withStatements = function (statements) {
-            return this.update(this.caseKeyword, this.expression, this.colonToken, statements);
-        };
-
-        CaseSwitchClauseSyntax.prototype.withStatement = function (statement) {
-            return this.withStatements(TypeScript.Syntax.list([statement]));
-        };
-
         CaseSwitchClauseSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -15646,38 +13790,6 @@ var TypeScript;
             }
 
             return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, this.parsedInStrictMode());
-        };
-
-        DefaultSwitchClauseSyntax.create = function (defaultKeyword, colonToken) {
-            return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, TypeScript.Syntax.emptyList(), false);
-        };
-
-        DefaultSwitchClauseSyntax.create1 = function () {
-            return new DefaultSwitchClauseSyntax(TypeScript.Syntax.token(20 /* DefaultKeyword */), TypeScript.Syntax.token(106 /* ColonToken */), TypeScript.Syntax.emptyList(), false);
-        };
-
-        DefaultSwitchClauseSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        DefaultSwitchClauseSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        DefaultSwitchClauseSyntax.prototype.withDefaultKeyword = function (defaultKeyword) {
-            return this.update(defaultKeyword, this.colonToken, this.statements);
-        };
-
-        DefaultSwitchClauseSyntax.prototype.withColonToken = function (colonToken) {
-            return this.update(this.defaultKeyword, colonToken, this.statements);
-        };
-
-        DefaultSwitchClauseSyntax.prototype.withStatements = function (statements) {
-            return this.update(this.defaultKeyword, this.colonToken, statements);
-        };
-
-        DefaultSwitchClauseSyntax.prototype.withStatement = function (statement) {
-            return this.withStatements(TypeScript.Syntax.list([statement]));
         };
 
         DefaultSwitchClauseSyntax.prototype.isTypeScriptSpecific = function () {
@@ -15741,34 +13853,6 @@ var TypeScript;
             return new BreakStatementSyntax(breakKeyword, identifier, semicolonToken, this.parsedInStrictMode());
         };
 
-        BreakStatementSyntax.create = function (breakKeyword) {
-            return new BreakStatementSyntax(breakKeyword, null, null, false);
-        };
-
-        BreakStatementSyntax.create1 = function () {
-            return new BreakStatementSyntax(TypeScript.Syntax.token(15 /* BreakKeyword */), null, null, false);
-        };
-
-        BreakStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        BreakStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        BreakStatementSyntax.prototype.withBreakKeyword = function (breakKeyword) {
-            return this.update(breakKeyword, this.identifier, this.semicolonToken);
-        };
-
-        BreakStatementSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.breakKeyword, identifier, this.semicolonToken);
-        };
-
-        BreakStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.breakKeyword, this.identifier, semicolonToken);
-        };
-
         BreakStatementSyntax.prototype.isTypeScriptSpecific = function () {
             return false;
         };
@@ -15825,34 +13909,6 @@ var TypeScript;
             }
 
             return new ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, this.parsedInStrictMode());
-        };
-
-        ContinueStatementSyntax.create = function (continueKeyword) {
-            return new ContinueStatementSyntax(continueKeyword, null, null, false);
-        };
-
-        ContinueStatementSyntax.create1 = function () {
-            return new ContinueStatementSyntax(TypeScript.Syntax.token(18 /* ContinueKeyword */), null, null, false);
-        };
-
-        ContinueStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ContinueStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ContinueStatementSyntax.prototype.withContinueKeyword = function (continueKeyword) {
-            return this.update(continueKeyword, this.identifier, this.semicolonToken);
-        };
-
-        ContinueStatementSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.continueKeyword, identifier, this.semicolonToken);
-        };
-
-        ContinueStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.continueKeyword, this.identifier, semicolonToken);
         };
 
         ContinueStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -15936,62 +13992,6 @@ var TypeScript;
             }
 
             return new ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, this.parsedInStrictMode());
-        };
-
-        ForStatementSyntax.create = function (forKeyword, openParenToken, firstSemicolonToken, secondSemicolonToken, closeParenToken, statement) {
-            return new ForStatementSyntax(forKeyword, openParenToken, null, null, firstSemicolonToken, null, secondSemicolonToken, null, closeParenToken, statement, false);
-        };
-
-        ForStatementSyntax.create1 = function (statement) {
-            return new ForStatementSyntax(TypeScript.Syntax.token(26 /* ForKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), null, null, TypeScript.Syntax.token(78 /* SemicolonToken */), null, TypeScript.Syntax.token(78 /* SemicolonToken */), null, TypeScript.Syntax.token(73 /* CloseParenToken */), statement, false);
-        };
-
-        ForStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ForStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ForStatementSyntax.prototype.withForKeyword = function (forKeyword) {
-            return this.update(forKeyword, this.openParenToken, this.variableDeclaration, this.initializer, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementor, this.closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.forKeyword, openParenToken, this.variableDeclaration, this.initializer, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementor, this.closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withVariableDeclaration = function (variableDeclaration) {
-            return this.update(this.forKeyword, this.openParenToken, variableDeclaration, this.initializer, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementor, this.closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withInitializer = function (initializer) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, initializer, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementor, this.closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withFirstSemicolonToken = function (firstSemicolonToken) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.initializer, firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementor, this.closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withCondition = function (condition) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.initializer, this.firstSemicolonToken, condition, this.secondSemicolonToken, this.incrementor, this.closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withSecondSemicolonToken = function (secondSemicolonToken) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.initializer, this.firstSemicolonToken, this.condition, secondSemicolonToken, this.incrementor, this.closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withIncrementor = function (incrementor) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.initializer, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, incrementor, this.closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.initializer, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementor, closeParenToken, this.statement);
-        };
-
-        ForStatementSyntax.prototype.withStatement = function (statement) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.initializer, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementor, this.closeParenToken, statement);
         };
 
         ForStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -16086,54 +14086,6 @@ var TypeScript;
             return new ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, this.parsedInStrictMode());
         };
 
-        ForInStatementSyntax.create = function (forKeyword, openParenToken, inKeyword, expression, closeParenToken, statement) {
-            return new ForInStatementSyntax(forKeyword, openParenToken, null, null, inKeyword, expression, closeParenToken, statement, false);
-        };
-
-        ForInStatementSyntax.create1 = function (expression, statement) {
-            return new ForInStatementSyntax(TypeScript.Syntax.token(26 /* ForKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), null, null, TypeScript.Syntax.token(29 /* InKeyword */), expression, TypeScript.Syntax.token(73 /* CloseParenToken */), statement, false);
-        };
-
-        ForInStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ForInStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ForInStatementSyntax.prototype.withForKeyword = function (forKeyword) {
-            return this.update(forKeyword, this.openParenToken, this.variableDeclaration, this.left, this.inKeyword, this.expression, this.closeParenToken, this.statement);
-        };
-
-        ForInStatementSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.forKeyword, openParenToken, this.variableDeclaration, this.left, this.inKeyword, this.expression, this.closeParenToken, this.statement);
-        };
-
-        ForInStatementSyntax.prototype.withVariableDeclaration = function (variableDeclaration) {
-            return this.update(this.forKeyword, this.openParenToken, variableDeclaration, this.left, this.inKeyword, this.expression, this.closeParenToken, this.statement);
-        };
-
-        ForInStatementSyntax.prototype.withLeft = function (left) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, left, this.inKeyword, this.expression, this.closeParenToken, this.statement);
-        };
-
-        ForInStatementSyntax.prototype.withInKeyword = function (inKeyword) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.left, inKeyword, this.expression, this.closeParenToken, this.statement);
-        };
-
-        ForInStatementSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.left, this.inKeyword, expression, this.closeParenToken, this.statement);
-        };
-
-        ForInStatementSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.left, this.inKeyword, this.expression, closeParenToken, this.statement);
-        };
-
-        ForInStatementSyntax.prototype.withStatement = function (statement) {
-            return this.update(this.forKeyword, this.openParenToken, this.variableDeclaration, this.left, this.inKeyword, this.expression, this.closeParenToken, statement);
-        };
-
         ForInStatementSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.variableDeclaration !== null && this.variableDeclaration.isTypeScriptSpecific()) {
                 return true;
@@ -16214,38 +14166,6 @@ var TypeScript;
             return new WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, this.parsedInStrictMode());
         };
 
-        WhileStatementSyntax.create1 = function (condition, statement) {
-            return new WhileStatementSyntax(TypeScript.Syntax.token(42 /* WhileKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), condition, TypeScript.Syntax.token(73 /* CloseParenToken */), statement, false);
-        };
-
-        WhileStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        WhileStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        WhileStatementSyntax.prototype.withWhileKeyword = function (whileKeyword) {
-            return this.update(whileKeyword, this.openParenToken, this.condition, this.closeParenToken, this.statement);
-        };
-
-        WhileStatementSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.whileKeyword, openParenToken, this.condition, this.closeParenToken, this.statement);
-        };
-
-        WhileStatementSyntax.prototype.withCondition = function (condition) {
-            return this.update(this.whileKeyword, this.openParenToken, condition, this.closeParenToken, this.statement);
-        };
-
-        WhileStatementSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.whileKeyword, this.openParenToken, this.condition, closeParenToken, this.statement);
-        };
-
-        WhileStatementSyntax.prototype.withStatement = function (statement) {
-            return this.update(this.whileKeyword, this.openParenToken, this.condition, this.closeParenToken, statement);
-        };
-
         WhileStatementSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.condition.isTypeScriptSpecific()) {
                 return true;
@@ -16314,38 +14234,6 @@ var TypeScript;
             }
 
             return new WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, this.parsedInStrictMode());
-        };
-
-        WithStatementSyntax.create1 = function (condition, statement) {
-            return new WithStatementSyntax(TypeScript.Syntax.token(43 /* WithKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), condition, TypeScript.Syntax.token(73 /* CloseParenToken */), statement, false);
-        };
-
-        WithStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        WithStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        WithStatementSyntax.prototype.withWithKeyword = function (withKeyword) {
-            return this.update(withKeyword, this.openParenToken, this.condition, this.closeParenToken, this.statement);
-        };
-
-        WithStatementSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.withKeyword, openParenToken, this.condition, this.closeParenToken, this.statement);
-        };
-
-        WithStatementSyntax.prototype.withCondition = function (condition) {
-            return this.update(this.withKeyword, this.openParenToken, condition, this.closeParenToken, this.statement);
-        };
-
-        WithStatementSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.withKeyword, this.openParenToken, this.condition, closeParenToken, this.statement);
-        };
-
-        WithStatementSyntax.prototype.withStatement = function (statement) {
-            return this.update(this.withKeyword, this.openParenToken, this.condition, this.closeParenToken, statement);
         };
 
         WithStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -16417,54 +14305,6 @@ var TypeScript;
             return new EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, this.parsedInStrictMode());
         };
 
-        EnumDeclarationSyntax.create = function (enumKeyword, identifier, openBraceToken, closeBraceToken) {
-            return new EnumDeclarationSyntax(TypeScript.Syntax.emptyList(), enumKeyword, identifier, openBraceToken, TypeScript.Syntax.emptySeparatedList(), closeBraceToken, false);
-        };
-
-        EnumDeclarationSyntax.create1 = function (identifier) {
-            return new EnumDeclarationSyntax(TypeScript.Syntax.emptyList(), TypeScript.Syntax.token(46 /* EnumKeyword */), identifier, TypeScript.Syntax.token(70 /* OpenBraceToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.token(71 /* CloseBraceToken */), false);
-        };
-
-        EnumDeclarationSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        EnumDeclarationSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        EnumDeclarationSyntax.prototype.withModifiers = function (modifiers) {
-            return this.update(modifiers, this.enumKeyword, this.identifier, this.openBraceToken, this.enumElements, this.closeBraceToken);
-        };
-
-        EnumDeclarationSyntax.prototype.withModifier = function (modifier) {
-            return this.withModifiers(TypeScript.Syntax.list([modifier]));
-        };
-
-        EnumDeclarationSyntax.prototype.withEnumKeyword = function (enumKeyword) {
-            return this.update(this.modifiers, enumKeyword, this.identifier, this.openBraceToken, this.enumElements, this.closeBraceToken);
-        };
-
-        EnumDeclarationSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.modifiers, this.enumKeyword, identifier, this.openBraceToken, this.enumElements, this.closeBraceToken);
-        };
-
-        EnumDeclarationSyntax.prototype.withOpenBraceToken = function (openBraceToken) {
-            return this.update(this.modifiers, this.enumKeyword, this.identifier, openBraceToken, this.enumElements, this.closeBraceToken);
-        };
-
-        EnumDeclarationSyntax.prototype.withEnumElements = function (enumElements) {
-            return this.update(this.modifiers, this.enumKeyword, this.identifier, this.openBraceToken, enumElements, this.closeBraceToken);
-        };
-
-        EnumDeclarationSyntax.prototype.withEnumElement = function (enumElement) {
-            return this.withEnumElements(TypeScript.Syntax.separatedList([enumElement]));
-        };
-
-        EnumDeclarationSyntax.prototype.withCloseBraceToken = function (closeBraceToken) {
-            return this.update(this.modifiers, this.enumKeyword, this.identifier, this.openBraceToken, this.enumElements, closeBraceToken);
-        };
-
         EnumDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
             return true;
         };
@@ -16510,30 +14350,6 @@ var TypeScript;
             }
 
             return new EnumElementSyntax(propertyName, equalsValueClause, this.parsedInStrictMode());
-        };
-
-        EnumElementSyntax.create = function (propertyName) {
-            return new EnumElementSyntax(propertyName, null, false);
-        };
-
-        EnumElementSyntax.create1 = function (propertyName) {
-            return new EnumElementSyntax(propertyName, null, false);
-        };
-
-        EnumElementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        EnumElementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        EnumElementSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(propertyName, this.equalsValueClause);
-        };
-
-        EnumElementSyntax.prototype.withEqualsValueClause = function (equalsValueClause) {
-            return this.update(this.propertyName, equalsValueClause);
         };
 
         EnumElementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -16598,34 +14414,6 @@ var TypeScript;
             }
 
             return new CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, this.parsedInStrictMode());
-        };
-
-        CastExpressionSyntax.create1 = function (type, expression) {
-            return new CastExpressionSyntax(TypeScript.Syntax.token(80 /* LessThanToken */), type, TypeScript.Syntax.token(81 /* GreaterThanToken */), expression, false);
-        };
-
-        CastExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        CastExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        CastExpressionSyntax.prototype.withLessThanToken = function (lessThanToken) {
-            return this.update(lessThanToken, this.type, this.greaterThanToken, this.expression);
-        };
-
-        CastExpressionSyntax.prototype.withType = function (type) {
-            return this.update(this.lessThanToken, type, this.greaterThanToken, this.expression);
-        };
-
-        CastExpressionSyntax.prototype.withGreaterThanToken = function (greaterThanToken) {
-            return this.update(this.lessThanToken, this.type, greaterThanToken, this.expression);
-        };
-
-        CastExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.lessThanToken, this.type, this.greaterThanToken, expression);
         };
 
         CastExpressionSyntax.prototype.isTypeScriptSpecific = function () {
@@ -16702,38 +14490,6 @@ var TypeScript;
             return new ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, this.parsedInStrictMode());
         };
 
-        ObjectLiteralExpressionSyntax.create = function (openBraceToken, closeBraceToken) {
-            return new ObjectLiteralExpressionSyntax(openBraceToken, TypeScript.Syntax.emptySeparatedList(), closeBraceToken, false);
-        };
-
-        ObjectLiteralExpressionSyntax.create1 = function () {
-            return new ObjectLiteralExpressionSyntax(TypeScript.Syntax.token(70 /* OpenBraceToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.token(71 /* CloseBraceToken */), false);
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.withOpenBraceToken = function (openBraceToken) {
-            return this.update(openBraceToken, this.propertyAssignments, this.closeBraceToken);
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.withPropertyAssignments = function (propertyAssignments) {
-            return this.update(this.openBraceToken, propertyAssignments, this.closeBraceToken);
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.withPropertyAssignment = function (propertyAssignment) {
-            return this.withPropertyAssignments(TypeScript.Syntax.separatedList([propertyAssignment]));
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.withCloseBraceToken = function (closeBraceToken) {
-            return this.update(this.openBraceToken, this.propertyAssignments, closeBraceToken);
-        };
-
         ObjectLiteralExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.propertyAssignments.isTypeScriptSpecific()) {
                 return true;
@@ -16791,30 +14547,6 @@ var TypeScript;
             return new SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, this.parsedInStrictMode());
         };
 
-        SimplePropertyAssignmentSyntax.create1 = function (propertyName, expression) {
-            return new SimplePropertyAssignmentSyntax(propertyName, TypeScript.Syntax.token(106 /* ColonToken */), expression, false);
-        };
-
-        SimplePropertyAssignmentSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        SimplePropertyAssignmentSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        SimplePropertyAssignmentSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(propertyName, this.colonToken, this.expression);
-        };
-
-        SimplePropertyAssignmentSyntax.prototype.withColonToken = function (colonToken) {
-            return this.update(this.propertyName, colonToken, this.expression);
-        };
-
-        SimplePropertyAssignmentSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.propertyName, this.colonToken, expression);
-        };
-
         SimplePropertyAssignmentSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -16870,30 +14602,6 @@ var TypeScript;
             }
 
             return new FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, this.parsedInStrictMode());
-        };
-
-        FunctionPropertyAssignmentSyntax.create1 = function (propertyName) {
-            return new FunctionPropertyAssignmentSyntax(propertyName, CallSignatureSyntax.create1(), BlockSyntax.create1(), false);
-        };
-
-        FunctionPropertyAssignmentSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        FunctionPropertyAssignmentSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        FunctionPropertyAssignmentSyntax.prototype.withPropertyName = function (propertyName) {
-            return this.update(propertyName, this.callSignature, this.block);
-        };
-
-        FunctionPropertyAssignmentSyntax.prototype.withCallSignature = function (callSignature) {
-            return this.update(this.propertyName, callSignature, this.block);
-        };
-
-        FunctionPropertyAssignmentSyntax.prototype.withBlock = function (block) {
-            return this.update(this.propertyName, this.callSignature, block);
         };
 
         FunctionPropertyAssignmentSyntax.prototype.isTypeScriptSpecific = function () {
@@ -16979,38 +14687,6 @@ var TypeScript;
             return new FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, this.parsedInStrictMode());
         };
 
-        FunctionExpressionSyntax.create = function (functionKeyword, callSignature, block) {
-            return new FunctionExpressionSyntax(functionKeyword, null, callSignature, block, false);
-        };
-
-        FunctionExpressionSyntax.create1 = function () {
-            return new FunctionExpressionSyntax(TypeScript.Syntax.token(27 /* FunctionKeyword */), null, CallSignatureSyntax.create1(), BlockSyntax.create1(), false);
-        };
-
-        FunctionExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        FunctionExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        FunctionExpressionSyntax.prototype.withFunctionKeyword = function (functionKeyword) {
-            return this.update(functionKeyword, this.identifier, this.callSignature, this.block);
-        };
-
-        FunctionExpressionSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.functionKeyword, identifier, this.callSignature, this.block);
-        };
-
-        FunctionExpressionSyntax.prototype.withCallSignature = function (callSignature) {
-            return this.update(this.functionKeyword, this.identifier, callSignature, this.block);
-        };
-
-        FunctionExpressionSyntax.prototype.withBlock = function (block) {
-            return this.update(this.functionKeyword, this.identifier, this.callSignature, block);
-        };
-
         FunctionExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.callSignature.isTypeScriptSpecific()) {
                 return true;
@@ -17067,22 +14743,6 @@ var TypeScript;
             }
 
             return new EmptyStatementSyntax(semicolonToken, this.parsedInStrictMode());
-        };
-
-        EmptyStatementSyntax.create1 = function () {
-            return new EmptyStatementSyntax(TypeScript.Syntax.token(78 /* SemicolonToken */), false);
-        };
-
-        EmptyStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        EmptyStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        EmptyStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(semicolonToken);
         };
 
         EmptyStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -17144,38 +14804,6 @@ var TypeScript;
             }
 
             return new TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, this.parsedInStrictMode());
-        };
-
-        TryStatementSyntax.create = function (tryKeyword, block) {
-            return new TryStatementSyntax(tryKeyword, block, null, null, false);
-        };
-
-        TryStatementSyntax.create1 = function () {
-            return new TryStatementSyntax(TypeScript.Syntax.token(38 /* TryKeyword */), BlockSyntax.create1(), null, null, false);
-        };
-
-        TryStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        TryStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        TryStatementSyntax.prototype.withTryKeyword = function (tryKeyword) {
-            return this.update(tryKeyword, this.block, this.catchClause, this.finallyClause);
-        };
-
-        TryStatementSyntax.prototype.withBlock = function (block) {
-            return this.update(this.tryKeyword, block, this.catchClause, this.finallyClause);
-        };
-
-        TryStatementSyntax.prototype.withCatchClause = function (catchClause) {
-            return this.update(this.tryKeyword, this.block, catchClause, this.finallyClause);
-        };
-
-        TryStatementSyntax.prototype.withFinallyClause = function (finallyClause) {
-            return this.update(this.tryKeyword, this.block, this.catchClause, finallyClause);
         };
 
         TryStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -17246,46 +14874,6 @@ var TypeScript;
             return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, this.parsedInStrictMode());
         };
 
-        CatchClauseSyntax.create = function (catchKeyword, openParenToken, identifier, closeParenToken, block) {
-            return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, null, closeParenToken, block, false);
-        };
-
-        CatchClauseSyntax.create1 = function (identifier) {
-            return new CatchClauseSyntax(TypeScript.Syntax.token(17 /* CatchKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), identifier, null, TypeScript.Syntax.token(73 /* CloseParenToken */), BlockSyntax.create1(), false);
-        };
-
-        CatchClauseSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        CatchClauseSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        CatchClauseSyntax.prototype.withCatchKeyword = function (catchKeyword) {
-            return this.update(catchKeyword, this.openParenToken, this.identifier, this.typeAnnotation, this.closeParenToken, this.block);
-        };
-
-        CatchClauseSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.catchKeyword, openParenToken, this.identifier, this.typeAnnotation, this.closeParenToken, this.block);
-        };
-
-        CatchClauseSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(this.catchKeyword, this.openParenToken, identifier, this.typeAnnotation, this.closeParenToken, this.block);
-        };
-
-        CatchClauseSyntax.prototype.withTypeAnnotation = function (typeAnnotation) {
-            return this.update(this.catchKeyword, this.openParenToken, this.identifier, typeAnnotation, this.closeParenToken, this.block);
-        };
-
-        CatchClauseSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.catchKeyword, this.openParenToken, this.identifier, this.typeAnnotation, closeParenToken, this.block);
-        };
-
-        CatchClauseSyntax.prototype.withBlock = function (block) {
-            return this.update(this.catchKeyword, this.openParenToken, this.identifier, this.typeAnnotation, this.closeParenToken, block);
-        };
-
         CatchClauseSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.typeAnnotation !== null && this.typeAnnotation.isTypeScriptSpecific()) {
                 return true;
@@ -17337,26 +14925,6 @@ var TypeScript;
             }
 
             return new FinallyClauseSyntax(finallyKeyword, block, this.parsedInStrictMode());
-        };
-
-        FinallyClauseSyntax.create1 = function () {
-            return new FinallyClauseSyntax(TypeScript.Syntax.token(25 /* FinallyKeyword */), BlockSyntax.create1(), false);
-        };
-
-        FinallyClauseSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        FinallyClauseSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        FinallyClauseSyntax.prototype.withFinallyKeyword = function (finallyKeyword) {
-            return this.update(finallyKeyword, this.block);
-        };
-
-        FinallyClauseSyntax.prototype.withBlock = function (block) {
-            return this.update(this.finallyKeyword, block);
         };
 
         FinallyClauseSyntax.prototype.isTypeScriptSpecific = function () {
@@ -17418,30 +14986,6 @@ var TypeScript;
             }
 
             return new LabeledStatementSyntax(identifier, colonToken, statement, this.parsedInStrictMode());
-        };
-
-        LabeledStatementSyntax.create1 = function (identifier, statement) {
-            return new LabeledStatementSyntax(identifier, TypeScript.Syntax.token(106 /* ColonToken */), statement, false);
-        };
-
-        LabeledStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        LabeledStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        LabeledStatementSyntax.prototype.withIdentifier = function (identifier) {
-            return this.update(identifier, this.colonToken, this.statement);
-        };
-
-        LabeledStatementSyntax.prototype.withColonToken = function (colonToken) {
-            return this.update(this.identifier, colonToken, this.statement);
-        };
-
-        LabeledStatementSyntax.prototype.withStatement = function (statement) {
-            return this.update(this.identifier, this.colonToken, statement);
         };
 
         LabeledStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -17521,50 +15065,6 @@ var TypeScript;
             return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, this.parsedInStrictMode());
         };
 
-        DoStatementSyntax.create = function (doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken) {
-            return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, null, false);
-        };
-
-        DoStatementSyntax.create1 = function (statement, condition) {
-            return new DoStatementSyntax(TypeScript.Syntax.token(22 /* DoKeyword */), statement, TypeScript.Syntax.token(42 /* WhileKeyword */), TypeScript.Syntax.token(72 /* OpenParenToken */), condition, TypeScript.Syntax.token(73 /* CloseParenToken */), null, false);
-        };
-
-        DoStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        DoStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        DoStatementSyntax.prototype.withDoKeyword = function (doKeyword) {
-            return this.update(doKeyword, this.statement, this.whileKeyword, this.openParenToken, this.condition, this.closeParenToken, this.semicolonToken);
-        };
-
-        DoStatementSyntax.prototype.withStatement = function (statement) {
-            return this.update(this.doKeyword, statement, this.whileKeyword, this.openParenToken, this.condition, this.closeParenToken, this.semicolonToken);
-        };
-
-        DoStatementSyntax.prototype.withWhileKeyword = function (whileKeyword) {
-            return this.update(this.doKeyword, this.statement, whileKeyword, this.openParenToken, this.condition, this.closeParenToken, this.semicolonToken);
-        };
-
-        DoStatementSyntax.prototype.withOpenParenToken = function (openParenToken) {
-            return this.update(this.doKeyword, this.statement, this.whileKeyword, openParenToken, this.condition, this.closeParenToken, this.semicolonToken);
-        };
-
-        DoStatementSyntax.prototype.withCondition = function (condition) {
-            return this.update(this.doKeyword, this.statement, this.whileKeyword, this.openParenToken, condition, this.closeParenToken, this.semicolonToken);
-        };
-
-        DoStatementSyntax.prototype.withCloseParenToken = function (closeParenToken) {
-            return this.update(this.doKeyword, this.statement, this.whileKeyword, this.openParenToken, this.condition, closeParenToken, this.semicolonToken);
-        };
-
-        DoStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.doKeyword, this.statement, this.whileKeyword, this.openParenToken, this.condition, this.closeParenToken, semicolonToken);
-        };
-
         DoStatementSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.statement.isTypeScriptSpecific()) {
                 return true;
@@ -17626,26 +15126,6 @@ var TypeScript;
             return new TypeOfExpressionSyntax(typeOfKeyword, expression, this.parsedInStrictMode());
         };
 
-        TypeOfExpressionSyntax.create1 = function (expression) {
-            return new TypeOfExpressionSyntax(TypeScript.Syntax.token(39 /* TypeOfKeyword */), expression, false);
-        };
-
-        TypeOfExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        TypeOfExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        TypeOfExpressionSyntax.prototype.withTypeOfKeyword = function (typeOfKeyword) {
-            return this.update(typeOfKeyword, this.expression);
-        };
-
-        TypeOfExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.typeOfKeyword, expression);
-        };
-
         TypeOfExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -17702,26 +15182,6 @@ var TypeScript;
             }
 
             return new DeleteExpressionSyntax(deleteKeyword, expression, this.parsedInStrictMode());
-        };
-
-        DeleteExpressionSyntax.create1 = function (expression) {
-            return new DeleteExpressionSyntax(TypeScript.Syntax.token(21 /* DeleteKeyword */), expression, false);
-        };
-
-        DeleteExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        DeleteExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        DeleteExpressionSyntax.prototype.withDeleteKeyword = function (deleteKeyword) {
-            return this.update(deleteKeyword, this.expression);
-        };
-
-        DeleteExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.deleteKeyword, expression);
         };
 
         DeleteExpressionSyntax.prototype.isTypeScriptSpecific = function () {
@@ -17782,26 +15242,6 @@ var TypeScript;
             return new VoidExpressionSyntax(voidKeyword, expression, this.parsedInStrictMode());
         };
 
-        VoidExpressionSyntax.create1 = function (expression) {
-            return new VoidExpressionSyntax(TypeScript.Syntax.token(41 /* VoidKeyword */), expression, false);
-        };
-
-        VoidExpressionSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        VoidExpressionSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        VoidExpressionSyntax.prototype.withVoidKeyword = function (voidKeyword) {
-            return this.update(voidKeyword, this.expression);
-        };
-
-        VoidExpressionSyntax.prototype.withExpression = function (expression) {
-            return this.update(this.voidKeyword, expression);
-        };
-
         VoidExpressionSyntax.prototype.isTypeScriptSpecific = function () {
             if (this.expression.isTypeScriptSpecific()) {
                 return true;
@@ -17858,30 +15298,6 @@ var TypeScript;
             }
 
             return new DebuggerStatementSyntax(debuggerKeyword, semicolonToken, this.parsedInStrictMode());
-        };
-
-        DebuggerStatementSyntax.create = function (debuggerKeyword) {
-            return new DebuggerStatementSyntax(debuggerKeyword, null, false);
-        };
-
-        DebuggerStatementSyntax.create1 = function () {
-            return new DebuggerStatementSyntax(TypeScript.Syntax.token(19 /* DebuggerKeyword */), null, false);
-        };
-
-        DebuggerStatementSyntax.prototype.withLeadingTrivia = function (trivia) {
-            return _super.prototype.withLeadingTrivia.call(this, trivia);
-        };
-
-        DebuggerStatementSyntax.prototype.withTrailingTrivia = function (trivia) {
-            return _super.prototype.withTrailingTrivia.call(this, trivia);
-        };
-
-        DebuggerStatementSyntax.prototype.withDebuggerKeyword = function (debuggerKeyword) {
-            return this.update(debuggerKeyword, this.semicolonToken);
-        };
-
-        DebuggerStatementSyntax.prototype.withSemicolonToken = function (semicolonToken) {
-            return this.update(this.debuggerKeyword, semicolonToken);
         };
 
         DebuggerStatementSyntax.prototype.isTypeScriptSpecific = function () {
@@ -18294,282 +15710,6 @@ var TypeScript;
         return SyntaxRewriter;
     })();
     TypeScript.SyntaxRewriter = SyntaxRewriter;
-})(TypeScript || (TypeScript = {}));
-var TypeScript;
-(function (TypeScript) {
-    var SyntaxDedenter = (function (_super) {
-        __extends(SyntaxDedenter, _super);
-        function SyntaxDedenter(dedentFirstToken, dedentationAmount, minimumIndent, options) {
-            _super.call(this);
-            this.dedentationAmount = dedentationAmount;
-            this.minimumIndent = minimumIndent;
-            this.options = options;
-            this.lastTriviaWasNewLine = dedentFirstToken;
-        }
-        SyntaxDedenter.prototype.abort = function () {
-            this.lastTriviaWasNewLine = false;
-            this.dedentationAmount = 0;
-        };
-
-        SyntaxDedenter.prototype.isAborted = function () {
-            return this.dedentationAmount === 0;
-        };
-
-        SyntaxDedenter.prototype.visitToken = function (token) {
-            if (token.width() === 0) {
-                return token;
-            }
-
-            var result = token;
-            if (this.lastTriviaWasNewLine) {
-                result = token.withLeadingTrivia(this.dedentTriviaList(token.leadingTrivia()));
-            }
-
-            if (this.isAborted()) {
-                return token;
-            }
-
-            this.lastTriviaWasNewLine = token.hasTrailingNewLine();
-            return result;
-        };
-
-        SyntaxDedenter.prototype.dedentTriviaList = function (triviaList) {
-            var result = [];
-            var dedentNextWhitespace = true;
-
-            for (var i = 0, n = triviaList.count(); i < n && !this.isAborted(); i++) {
-                var trivia = triviaList.syntaxTriviaAt(i);
-
-                var dedentThisTrivia = dedentNextWhitespace;
-                dedentNextWhitespace = false;
-
-                if (dedentThisTrivia) {
-                    if (trivia.kind() === 4 /* WhitespaceTrivia */) {
-                        var hasFollowingNewLine = (i < triviaList.count() - 1) && triviaList.syntaxTriviaAt(i + 1).kind() === 5 /* NewLineTrivia */;
-                        result.push(this.dedentWhitespace(trivia, hasFollowingNewLine));
-                        continue;
-                    } else if (trivia.kind() !== 5 /* NewLineTrivia */) {
-                        this.abort();
-                        break;
-                    }
-                }
-
-                if (trivia.kind() === 6 /* MultiLineCommentTrivia */) {
-                    result.push(this.dedentMultiLineComment(trivia));
-                    continue;
-                }
-
-                result.push(trivia);
-                if (trivia.kind() === 5 /* NewLineTrivia */) {
-                    dedentNextWhitespace = true;
-                }
-            }
-
-            if (dedentNextWhitespace) {
-                this.abort();
-            }
-
-            if (this.isAborted()) {
-                return triviaList;
-            }
-
-            return TypeScript.Syntax.triviaList(result);
-        };
-
-        SyntaxDedenter.prototype.dedentSegment = function (segment, hasFollowingNewLineTrivia) {
-            var firstNonWhitespacePosition = TypeScript.Indentation.firstNonWhitespacePosition(segment);
-
-            if (firstNonWhitespacePosition === segment.length) {
-                if (hasFollowingNewLineTrivia) {
-                    return "";
-                }
-            } else if (TypeScript.CharacterInfo.isLineTerminator(segment.charCodeAt(firstNonWhitespacePosition))) {
-                return segment.substring(firstNonWhitespacePosition);
-            }
-
-            var firstNonWhitespaceColumn = TypeScript.Indentation.columnForPositionInString(segment, firstNonWhitespacePosition, this.options);
-
-            var newFirstNonWhitespaceColumn = TypeScript.MathPrototype.min(firstNonWhitespaceColumn, TypeScript.MathPrototype.max(firstNonWhitespaceColumn - this.dedentationAmount, this.minimumIndent));
-
-            if (newFirstNonWhitespaceColumn === firstNonWhitespaceColumn) {
-                this.abort();
-                return segment;
-            }
-
-            this.dedentationAmount = firstNonWhitespaceColumn - newFirstNonWhitespaceColumn;
-            TypeScript.Debug.assert(this.dedentationAmount >= 0);
-
-            var indentationString = TypeScript.Indentation.indentationString(newFirstNonWhitespaceColumn, this.options);
-
-            return indentationString + segment.substring(firstNonWhitespacePosition);
-        };
-
-        SyntaxDedenter.prototype.dedentWhitespace = function (trivia, hasFollowingNewLineTrivia) {
-            var newIndentation = this.dedentSegment(trivia.fullText(), hasFollowingNewLineTrivia);
-            return TypeScript.Syntax.whitespace(newIndentation);
-        };
-
-        SyntaxDedenter.prototype.dedentMultiLineComment = function (trivia) {
-            var segments = TypeScript.Syntax.splitMultiLineCommentTriviaIntoMultipleLines(trivia);
-            if (segments.length === 1) {
-                return trivia;
-            }
-
-            for (var i = 1; i < segments.length; i++) {
-                var segment = segments[i];
-                segments[i] = this.dedentSegment(segment, false);
-            }
-
-            var result = segments.join("");
-
-            return TypeScript.Syntax.multiLineComment(result);
-        };
-
-        SyntaxDedenter.dedentNode = function (node, dedentFirstToken, dedentAmount, minimumIndent, options) {
-            var dedenter = new SyntaxDedenter(dedentFirstToken, dedentAmount, minimumIndent, options);
-            var result = node.accept(dedenter);
-
-            if (dedenter.isAborted()) {
-                return node;
-            }
-
-            return result;
-        };
-        return SyntaxDedenter;
-    })(TypeScript.SyntaxRewriter);
-    TypeScript.SyntaxDedenter = SyntaxDedenter;
-})(TypeScript || (TypeScript = {}));
-var TypeScript;
-(function (TypeScript) {
-    var SyntaxIndenter = (function (_super) {
-        __extends(SyntaxIndenter, _super);
-        function SyntaxIndenter(indentFirstToken, indentationAmount, options) {
-            _super.call(this);
-            this.indentationAmount = indentationAmount;
-            this.options = options;
-            this.lastTriviaWasNewLine = indentFirstToken;
-            this.indentationTrivia = TypeScript.Indentation.indentationTrivia(this.indentationAmount, this.options);
-        }
-        SyntaxIndenter.prototype.visitToken = function (token) {
-            if (token.width() === 0) {
-                return token;
-            }
-
-            var result = token;
-            if (this.lastTriviaWasNewLine) {
-                result = token.withLeadingTrivia(this.indentTriviaList(token.leadingTrivia()));
-            }
-
-            this.lastTriviaWasNewLine = token.hasTrailingNewLine();
-            return result;
-        };
-
-        SyntaxIndenter.prototype.indentTriviaList = function (triviaList) {
-            var result = [];
-
-            var indentNextTrivia = true;
-            for (var i = 0, n = triviaList.count(); i < n; i++) {
-                var trivia = triviaList.syntaxTriviaAt(i);
-
-                var indentThisTrivia = indentNextTrivia;
-                indentNextTrivia = false;
-
-                switch (trivia.kind()) {
-                    case 6 /* MultiLineCommentTrivia */:
-                        this.indentMultiLineComment(trivia, indentThisTrivia, result);
-                        continue;
-
-                    case 7 /* SingleLineCommentTrivia */:
-                    case 8 /* SkippedTokenTrivia */:
-                        this.indentSingleLineOrSkippedText(trivia, indentThisTrivia, result);
-                        continue;
-
-                    case 4 /* WhitespaceTrivia */:
-                        this.indentWhitespace(trivia, indentThisTrivia, result);
-                        continue;
-
-                    case 5 /* NewLineTrivia */:
-                        result.push(trivia);
-                        indentNextTrivia = true;
-                        continue;
-
-                    default:
-                        throw TypeScript.Errors.invalidOperation();
-                }
-            }
-
-            if (indentNextTrivia) {
-                result.push(this.indentationTrivia);
-            }
-
-            return TypeScript.Syntax.triviaList(result);
-        };
-
-        SyntaxIndenter.prototype.indentSegment = function (segment) {
-            var firstNonWhitespacePosition = TypeScript.Indentation.firstNonWhitespacePosition(segment);
-
-            if (firstNonWhitespacePosition < segment.length && TypeScript.CharacterInfo.isLineTerminator(segment.charCodeAt(firstNonWhitespacePosition))) {
-                return segment;
-            }
-
-            var firstNonWhitespaceColumn = TypeScript.Indentation.columnForPositionInString(segment, firstNonWhitespacePosition, this.options);
-
-            var newFirstNonWhitespaceColumn = firstNonWhitespaceColumn + this.indentationAmount;
-
-            var indentationString = TypeScript.Indentation.indentationString(newFirstNonWhitespaceColumn, this.options);
-
-            return indentationString + segment.substring(firstNonWhitespacePosition);
-        };
-
-        SyntaxIndenter.prototype.indentWhitespace = function (trivia, indentThisTrivia, result) {
-            if (!indentThisTrivia) {
-                result.push(trivia);
-                return;
-            }
-
-            var newIndentation = this.indentSegment(trivia.fullText());
-            result.push(TypeScript.Syntax.whitespace(newIndentation));
-        };
-
-        SyntaxIndenter.prototype.indentSingleLineOrSkippedText = function (trivia, indentThisTrivia, result) {
-            if (indentThisTrivia) {
-                result.push(this.indentationTrivia);
-            }
-
-            result.push(trivia);
-        };
-
-        SyntaxIndenter.prototype.indentMultiLineComment = function (trivia, indentThisTrivia, result) {
-            if (indentThisTrivia) {
-                result.push(this.indentationTrivia);
-            }
-
-            var segments = TypeScript.Syntax.splitMultiLineCommentTriviaIntoMultipleLines(trivia);
-
-            for (var i = 1; i < segments.length; i++) {
-                segments[i] = this.indentSegment(segments[i]);
-            }
-
-            var newText = segments.join("");
-            result.push(TypeScript.Syntax.multiLineComment(newText));
-        };
-
-        SyntaxIndenter.indentNode = function (node, indentFirstToken, indentAmount, options) {
-            var indenter = new SyntaxIndenter(indentFirstToken, indentAmount, options);
-            return node.accept(indenter);
-        };
-
-        SyntaxIndenter.indentNodes = function (nodes, indentFirstToken, indentAmount, options) {
-            var indenter = new SyntaxIndenter(indentFirstToken, indentAmount, options);
-            var result = TypeScript.ArrayUtilities.select(nodes, function (n) {
-                return n.accept(indenter);
-            });
-
-            return result;
-        };
-        return SyntaxIndenter;
-    })(TypeScript.SyntaxRewriter);
-    TypeScript.SyntaxIndenter = SyntaxIndenter;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
