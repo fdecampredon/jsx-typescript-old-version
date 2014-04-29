@@ -5,8 +5,8 @@ module TypeScript {
         public _syntaxTree: SyntaxTree = null;
         constructor(public moduleElements: ISyntaxList<IModuleElementSyntax>,
                     public endOfFileToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -41,7 +41,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SourceUnitSyntax(moduleElements, endOfFileToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new SourceUnitSyntax(moduleElements, endOfFileToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -55,8 +55,8 @@ module TypeScript {
                     public openParenToken: ISyntaxToken,
                     public stringLiteral: ISyntaxToken,
                     public closeParenToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -95,7 +95,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -105,8 +105,8 @@ module TypeScript {
 
     export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
         constructor(public moduleName: INameSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -139,7 +139,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ModuleNameModuleReferenceSyntax(moduleName, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ModuleNameModuleReferenceSyntax(moduleName, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -154,8 +154,8 @@ module TypeScript {
                     public equalsToken: ISyntaxToken,
                     public moduleReference: IModuleReferenceSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -198,7 +198,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -211,8 +211,8 @@ module TypeScript {
                     public equalsToken: ISyntaxToken,
                     public identifier: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -251,7 +251,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -268,8 +268,8 @@ module TypeScript {
                     public openBraceToken: ISyntaxToken,
                     public classElements: ISyntaxList<IClassElementSyntax>,
                     public closeBraceToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -316,7 +316,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -331,8 +331,8 @@ module TypeScript {
                     public typeParameterList: TypeParameterListSyntax,
                     public heritageClauses: ISyntaxList<HeritageClauseSyntax>,
                     public body: ObjectTypeSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -375,7 +375,7 @@ module TypeScript {
                 return this;
             }
 
-            return new InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -389,8 +389,8 @@ module TypeScript {
         constructor(kind: SyntaxKind,
                     public extendsOrImplementsKeyword: ISyntaxToken,
                     public typeNames: ISeparatedSyntaxList<INameSyntax>,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             this._kind = kind;
             Syntax.setParentForChildren(this);
@@ -423,7 +423,7 @@ module TypeScript {
                 return this;
             }
 
-            return new HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -439,8 +439,8 @@ module TypeScript {
                     public openBraceToken: ISyntaxToken,
                     public moduleElements: ISyntaxList<IModuleElementSyntax>,
                     public closeBraceToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -485,7 +485,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -500,8 +500,8 @@ module TypeScript {
                     public callSignature: CallSignatureSyntax,
                     public block: BlockSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -548,7 +548,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -563,8 +563,8 @@ module TypeScript {
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public variableDeclaration: VariableDeclarationSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -605,7 +605,7 @@ module TypeScript {
                 return this;
             }
 
-            return new VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -618,8 +618,8 @@ module TypeScript {
     export class VariableDeclarationSyntax extends SyntaxNode {
         constructor(public varKeyword: ISyntaxToken,
                     public variableDeclarators: ISeparatedSyntaxList<VariableDeclaratorSyntax>,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -650,7 +650,7 @@ module TypeScript {
                 return this;
             }
 
-            return new VariableDeclarationSyntax(varKeyword, variableDeclarators, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new VariableDeclarationSyntax(varKeyword, variableDeclarators, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -663,8 +663,8 @@ module TypeScript {
         constructor(public propertyName: ISyntaxToken,
                     public typeAnnotation: TypeAnnotationSyntax,
                     public equalsValueClause: EqualsValueClauseSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -697,7 +697,7 @@ module TypeScript {
                 return this;
             }
 
-            return new VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -710,8 +710,8 @@ module TypeScript {
     export class EqualsValueClauseSyntax extends SyntaxNode {
         constructor(public equalsToken: ISyntaxToken,
                     public value: IExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -742,7 +742,7 @@ module TypeScript {
                 return this;
             }
 
-            return new EqualsValueClauseSyntax(equalsToken, value, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new EqualsValueClauseSyntax(equalsToken, value, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -757,8 +757,8 @@ module TypeScript {
         constructor(kind: SyntaxKind,
                     public operatorToken: ISyntaxToken,
                     public operand: IUnaryExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             this._kind = kind;
             Syntax.setParentForChildren(this);
@@ -799,7 +799,7 @@ module TypeScript {
                 return this;
             }
 
-            return new PrefixUnaryExpressionSyntax(kind, operatorToken, operand, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new PrefixUnaryExpressionSyntax(kind, operatorToken, operand, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -812,8 +812,8 @@ module TypeScript {
         constructor(public openBracketToken: ISyntaxToken,
                     public expressions: ISeparatedSyntaxList<IExpressionSyntax>,
                     public closeBracketToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -870,7 +870,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -880,8 +880,8 @@ module TypeScript {
     }
 
     export class OmittedExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
-        constructor(parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+        constructor(data: number) {
+            super(data); 
             Syntax.setParentForChildren(this);
         }
 
@@ -918,8 +918,8 @@ module TypeScript {
         constructor(public openParenToken: ISyntaxToken,
                     public expression: IExpressionSyntax,
                     public closeParenToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -976,7 +976,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -990,8 +990,8 @@ module TypeScript {
                     public equalsGreaterThanToken: ISyntaxToken,
                     public block: BlockSyntax,
                     public expression: IExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1038,7 +1038,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1051,8 +1051,8 @@ module TypeScript {
                     public equalsGreaterThanToken: ISyntaxToken,
                     public block: BlockSyntax,
                     public expression: IExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1099,7 +1099,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1111,8 +1111,8 @@ module TypeScript {
         constructor(public left: INameSyntax,
                     public dotToken: ISyntaxToken,
                     public right: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1153,7 +1153,7 @@ module TypeScript {
                 return this;
             }
 
-            return new QualifiedNameSyntax(left, dotToken, right, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new QualifiedNameSyntax(left, dotToken, right, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1165,8 +1165,8 @@ module TypeScript {
         constructor(public lessThanToken: ISyntaxToken,
                     public typeArguments: ISeparatedSyntaxList<ITypeSyntax>,
                     public greaterThanToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1199,7 +1199,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1213,8 +1213,8 @@ module TypeScript {
                     public parameterList: ParameterListSyntax,
                     public equalsGreaterThanToken: ISyntaxToken,
                     public type: ITypeSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1255,7 +1255,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1268,8 +1268,8 @@ module TypeScript {
                     public parameterList: ParameterListSyntax,
                     public equalsGreaterThanToken: ISyntaxToken,
                     public type: ITypeSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1308,7 +1308,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1320,8 +1320,8 @@ module TypeScript {
         constructor(public openBraceToken: ISyntaxToken,
                     public typeMembers: ISeparatedSyntaxList<ITypeMemberSyntax>,
                     public closeBraceToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1358,7 +1358,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1370,8 +1370,8 @@ module TypeScript {
         constructor(public type: ITypeSyntax,
                     public openBracketToken: ISyntaxToken,
                     public closeBracketToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1408,7 +1408,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ArrayTypeSyntax(type, openBracketToken, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ArrayTypeSyntax(type, openBracketToken, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1419,8 +1419,8 @@ module TypeScript {
     export class GenericTypeSyntax extends SyntaxNode implements ITypeSyntax {
         constructor(public name: INameSyntax,
                     public typeArgumentList: TypeArgumentListSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1455,7 +1455,7 @@ module TypeScript {
                 return this;
             }
 
-            return new GenericTypeSyntax(name, typeArgumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new GenericTypeSyntax(name, typeArgumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1466,8 +1466,8 @@ module TypeScript {
     export class TypeQuerySyntax extends SyntaxNode implements ITypeSyntax {
         constructor(public typeOfKeyword: ISyntaxToken,
                     public name: INameSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1502,7 +1502,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeQuerySyntax(typeOfKeyword, name, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new TypeQuerySyntax(typeOfKeyword, name, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1513,8 +1513,8 @@ module TypeScript {
     export class TypeAnnotationSyntax extends SyntaxNode {
         constructor(public colonToken: ISyntaxToken,
                     public type: ITypeSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1545,7 +1545,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeAnnotationSyntax(colonToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new TypeAnnotationSyntax(colonToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1557,8 +1557,8 @@ module TypeScript {
         constructor(public openBraceToken: ISyntaxToken,
                     public statements: ISyntaxList<IStatementSyntax>,
                     public closeBraceToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1599,7 +1599,7 @@ module TypeScript {
                 return this;
             }
 
-            return new BlockSyntax(openBraceToken, statements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new BlockSyntax(openBraceToken, statements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1615,8 +1615,8 @@ module TypeScript {
                     public questionToken: ISyntaxToken,
                     public typeAnnotation: TypeAnnotationSyntax,
                     public equalsValueClause: EqualsValueClauseSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1655,7 +1655,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1672,8 +1672,8 @@ module TypeScript {
         constructor(public expression: ILeftHandSideExpressionSyntax,
                     public dotToken: ISyntaxToken,
                     public name: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1730,7 +1730,7 @@ module TypeScript {
                 return this;
             }
 
-            return new MemberAccessExpressionSyntax(expression, dotToken, name, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new MemberAccessExpressionSyntax(expression, dotToken, name, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1745,8 +1745,8 @@ module TypeScript {
         constructor(kind: SyntaxKind,
                     public operand: ILeftHandSideExpressionSyntax,
                     public operatorToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             this._kind = kind;
             Syntax.setParentForChildren(this);
@@ -1791,7 +1791,7 @@ module TypeScript {
                 return this;
             }
 
-            return new PostfixUnaryExpressionSyntax(kind, operand, operatorToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new PostfixUnaryExpressionSyntax(kind, operand, operatorToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1805,8 +1805,8 @@ module TypeScript {
                     public openBracketToken: ISyntaxToken,
                     public argumentExpression: IExpressionSyntax,
                     public closeBracketToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1865,7 +1865,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1878,8 +1878,8 @@ module TypeScript {
     export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax, IExpressionWithArgumentListSyntax {
         constructor(public expression: ILeftHandSideExpressionSyntax,
                     public argumentList: ArgumentListSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -1934,7 +1934,7 @@ module TypeScript {
                 return this;
             }
 
-            return new InvocationExpressionSyntax(expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new InvocationExpressionSyntax(expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -1950,8 +1950,8 @@ module TypeScript {
                     public openParenToken: ISyntaxToken,
                     _arguments: ISeparatedSyntaxList<IExpressionSyntax>,
                     public closeParenToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             this.arguments = _arguments;
             Syntax.setParentForChildren(this);
@@ -1987,7 +1987,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2004,8 +2004,8 @@ module TypeScript {
                     public left: IExpressionSyntax,
                     public operatorToken: ISyntaxToken,
                     public right: IExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             this._kind = kind;
             Syntax.setParentForChildren(this);
@@ -2044,7 +2044,7 @@ module TypeScript {
                 return this;
             }
 
-            return new BinaryExpressionSyntax(kind, left, operatorToken, right, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new BinaryExpressionSyntax(kind, left, operatorToken, right, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2060,8 +2060,8 @@ module TypeScript {
                     public whenTrue: IExpressionSyntax,
                     public colonToken: ISyntaxToken,
                     public whenFalse: IExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2102,7 +2102,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2116,8 +2116,8 @@ module TypeScript {
     export class ConstructSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         constructor(public newKeyword: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2152,7 +2152,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConstructSignatureSyntax(newKeyword, callSignature, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ConstructSignatureSyntax(newKeyword, callSignature, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2164,8 +2164,8 @@ module TypeScript {
         constructor(public propertyName: ISyntaxToken,
                     public questionToken: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2202,7 +2202,7 @@ module TypeScript {
                 return this;
             }
 
-            return new MethodSignatureSyntax(propertyName, questionToken, callSignature, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new MethodSignatureSyntax(propertyName, questionToken, callSignature, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2216,8 +2216,8 @@ module TypeScript {
                     public parameter: ParameterSyntax,
                     public closeBracketToken: ISyntaxToken,
                     public typeAnnotation: TypeAnnotationSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2256,7 +2256,7 @@ module TypeScript {
                 return this;
             }
 
-            return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2268,8 +2268,8 @@ module TypeScript {
         constructor(public propertyName: ISyntaxToken,
                     public questionToken: ISyntaxToken,
                     public typeAnnotation: TypeAnnotationSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2306,7 +2306,7 @@ module TypeScript {
                 return this;
             }
 
-            return new PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2318,8 +2318,8 @@ module TypeScript {
         constructor(public typeParameterList: TypeParameterListSyntax,
                     public parameterList: ParameterListSyntax,
                     public typeAnnotation: TypeAnnotationSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2356,7 +2356,7 @@ module TypeScript {
                 return this;
             }
 
-            return new CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2371,8 +2371,8 @@ module TypeScript {
         constructor(public openParenToken: ISyntaxToken,
                     public parameters: ISeparatedSyntaxList<ParameterSyntax>,
                     public closeParenToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2405,7 +2405,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ParameterListSyntax(openParenToken, parameters, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ParameterListSyntax(openParenToken, parameters, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2418,8 +2418,8 @@ module TypeScript {
         constructor(public lessThanToken: ISyntaxToken,
                     public typeParameters: ISeparatedSyntaxList<TypeParameterSyntax>,
                     public greaterThanToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2452,7 +2452,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2463,8 +2463,8 @@ module TypeScript {
     export class TypeParameterSyntax extends SyntaxNode {
         constructor(public identifier: ISyntaxToken,
                     public constraint: ConstraintSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2495,7 +2495,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeParameterSyntax(identifier, constraint, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new TypeParameterSyntax(identifier, constraint, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2506,8 +2506,8 @@ module TypeScript {
     export class ConstraintSyntax extends SyntaxNode {
         constructor(public extendsKeyword: ISyntaxToken,
                     public type: ITypeSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2538,7 +2538,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConstraintSyntax(extendsKeyword, type, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ConstraintSyntax(extendsKeyword, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2549,8 +2549,8 @@ module TypeScript {
     export class ElseClauseSyntax extends SyntaxNode {
         constructor(public elseKeyword: ISyntaxToken,
                     public statement: IStatementSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2581,7 +2581,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ElseClauseSyntax(elseKeyword, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ElseClauseSyntax(elseKeyword, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2597,8 +2597,8 @@ module TypeScript {
                     public closeParenToken: ISyntaxToken,
                     public statement: IStatementSyntax,
                     public elseClause: ElseClauseSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2645,7 +2645,7 @@ module TypeScript {
                 return this;
             }
 
-            return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2659,8 +2659,8 @@ module TypeScript {
     export class ExpressionStatementSyntax extends SyntaxNode implements IStatementSyntax {
         constructor(public expression: IExpressionSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2699,7 +2699,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ExpressionStatementSyntax(expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ExpressionStatementSyntax(expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2714,8 +2714,8 @@ module TypeScript {
                     public callSignature: CallSignatureSyntax,
                     public block: BlockSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2756,7 +2756,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2770,8 +2770,8 @@ module TypeScript {
                     public callSignature: CallSignatureSyntax,
                     public block: BlockSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2816,7 +2816,7 @@ module TypeScript {
                 return this;
             }
 
-            return new MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2831,8 +2831,8 @@ module TypeScript {
                     public parameterList: ParameterListSyntax,
                     public typeAnnotation: TypeAnnotationSyntax,
                     public block: BlockSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2883,7 +2883,7 @@ module TypeScript {
                 return this;
             }
 
-            return new GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2901,8 +2901,8 @@ module TypeScript {
                     public propertyName: ISyntaxToken,
                     public parameterList: ParameterListSyntax,
                     public block: BlockSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -2951,7 +2951,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -2963,8 +2963,8 @@ module TypeScript {
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public variableDeclarator: VariableDeclaratorSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3005,7 +3005,7 @@ module TypeScript {
                 return this;
             }
 
-            return new MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3017,8 +3017,8 @@ module TypeScript {
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public indexSignature: IndexSignatureSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3055,7 +3055,7 @@ module TypeScript {
                 return this;
             }
 
-            return new IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3067,8 +3067,8 @@ module TypeScript {
         constructor(public throwKeyword: ISyntaxToken,
                     public expression: IExpressionSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3109,7 +3109,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ThrowStatementSyntax(throwKeyword, expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ThrowStatementSyntax(throwKeyword, expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3122,8 +3122,8 @@ module TypeScript {
         constructor(public returnKeyword: ISyntaxToken,
                     public expression: IExpressionSyntax,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3164,7 +3164,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ReturnStatementSyntax(returnKeyword, expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ReturnStatementSyntax(returnKeyword, expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3177,8 +3177,8 @@ module TypeScript {
         constructor(public newKeyword: ISyntaxToken,
                     public expression: IMemberExpressionSyntax,
                     public argumentList: ArgumentListSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3235,7 +3235,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3253,8 +3253,8 @@ module TypeScript {
                     public openBraceToken: ISyntaxToken,
                     public switchClauses: ISyntaxList<ISwitchClauseSyntax>,
                     public closeBraceToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3303,7 +3303,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3318,8 +3318,8 @@ module TypeScript {
                     public expression: IExpressionSyntax,
                     public colonToken: ISyntaxToken,
                     public statements: ISyntaxList<IStatementSyntax>,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3358,7 +3358,7 @@ module TypeScript {
                 return this;
             }
 
-            return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3372,8 +3372,8 @@ module TypeScript {
         constructor(public defaultKeyword: ISyntaxToken,
                     public colonToken: ISyntaxToken,
                     public statements: ISyntaxList<IStatementSyntax>,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3410,7 +3410,7 @@ module TypeScript {
                 return this;
             }
 
-            return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3423,8 +3423,8 @@ module TypeScript {
         constructor(public breakKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3465,7 +3465,7 @@ module TypeScript {
                 return this;
             }
 
-            return new BreakStatementSyntax(breakKeyword, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new BreakStatementSyntax(breakKeyword, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3477,8 +3477,8 @@ module TypeScript {
         constructor(public continueKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3519,7 +3519,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3538,8 +3538,8 @@ module TypeScript {
                     public incrementor: IExpressionSyntax,
                     public closeParenToken: ISyntaxToken,
                     public statement: IStatementSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3598,7 +3598,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3620,8 +3620,8 @@ module TypeScript {
                     public expression: IExpressionSyntax,
                     public closeParenToken: ISyntaxToken,
                     public statement: IStatementSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3676,7 +3676,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3694,8 +3694,8 @@ module TypeScript {
                     public condition: IExpressionSyntax,
                     public closeParenToken: ISyntaxToken,
                     public statement: IStatementSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3744,7 +3744,7 @@ module TypeScript {
                 return this;
             }
 
-            return new WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3760,8 +3760,8 @@ module TypeScript {
                     public condition: IExpressionSyntax,
                     public closeParenToken: ISyntaxToken,
                     public statement: IStatementSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3806,7 +3806,7 @@ module TypeScript {
                 return this;
             }
 
-            return new WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3823,8 +3823,8 @@ module TypeScript {
                     public openBraceToken: ISyntaxToken,
                     public enumElements: ISeparatedSyntaxList<EnumElementSyntax>,
                     public closeBraceToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3867,7 +3867,7 @@ module TypeScript {
                 return this;
             }
 
-            return new EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3878,8 +3878,8 @@ module TypeScript {
     export class EnumElementSyntax extends SyntaxNode {
         constructor(public propertyName: ISyntaxToken,
                     public equalsValueClause: EqualsValueClauseSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3910,7 +3910,7 @@ module TypeScript {
                 return this;
             }
 
-            return new EnumElementSyntax(propertyName, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new EnumElementSyntax(propertyName, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3924,8 +3924,8 @@ module TypeScript {
                     public type: ITypeSyntax,
                     public greaterThanToken: ISyntaxToken,
                     public expression: IUnaryExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -3968,7 +3968,7 @@ module TypeScript {
                 return this;
             }
 
-            return new CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -3980,8 +3980,8 @@ module TypeScript {
         constructor(public openBraceToken: ISyntaxToken,
                     public propertyAssignments: ISeparatedSyntaxList<IPropertyAssignmentSyntax>,
                     public closeBraceToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4038,7 +4038,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4051,8 +4051,8 @@ module TypeScript {
         constructor(public propertyName: ISyntaxToken,
                     public colonToken: ISyntaxToken,
                     public expression: IExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4089,7 +4089,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4102,8 +4102,8 @@ module TypeScript {
         constructor(public propertyName: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
                     public block: BlockSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4140,7 +4140,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4155,8 +4155,8 @@ module TypeScript {
                     public identifier: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
                     public block: BlockSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4215,7 +4215,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4227,8 +4227,8 @@ module TypeScript {
 
     export class EmptyStatementSyntax extends SyntaxNode implements IStatementSyntax {
         constructor(public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4265,7 +4265,7 @@ module TypeScript {
                 return this;
             }
 
-            return new EmptyStatementSyntax(semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new EmptyStatementSyntax(semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4278,8 +4278,8 @@ module TypeScript {
                     public block: BlockSyntax,
                     public catchClause: CatchClauseSyntax,
                     public finallyClause: FinallyClauseSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4322,7 +4322,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4340,8 +4340,8 @@ module TypeScript {
                     public typeAnnotation: TypeAnnotationSyntax,
                     public closeParenToken: ISyntaxToken,
                     public block: BlockSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4380,7 +4380,7 @@ module TypeScript {
                 return this;
             }
 
-            return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4393,8 +4393,8 @@ module TypeScript {
     export class FinallyClauseSyntax extends SyntaxNode {
         constructor(public finallyKeyword: ISyntaxToken,
                     public block: BlockSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4425,7 +4425,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FinallyClauseSyntax(finallyKeyword, block, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new FinallyClauseSyntax(finallyKeyword, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4438,8 +4438,8 @@ module TypeScript {
         constructor(public identifier: ISyntaxToken,
                     public colonToken: ISyntaxToken,
                     public statement: IStatementSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4480,7 +4480,7 @@ module TypeScript {
                 return this;
             }
 
-            return new LabeledStatementSyntax(identifier, colonToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new LabeledStatementSyntax(identifier, colonToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4497,8 +4497,8 @@ module TypeScript {
                     public condition: IExpressionSyntax,
                     public closeParenToken: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4551,7 +4551,7 @@ module TypeScript {
                 return this;
             }
 
-            return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4564,8 +4564,8 @@ module TypeScript {
     export class TypeOfExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         constructor(public typeOfKeyword: ISyntaxToken,
                     public expression: IUnaryExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4604,7 +4604,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeOfExpressionSyntax(typeOfKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new TypeOfExpressionSyntax(typeOfKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4616,8 +4616,8 @@ module TypeScript {
     export class DeleteExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         constructor(public deleteKeyword: ISyntaxToken,
                     public expression: IUnaryExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4656,7 +4656,7 @@ module TypeScript {
                 return this;
             }
 
-            return new DeleteExpressionSyntax(deleteKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new DeleteExpressionSyntax(deleteKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4668,8 +4668,8 @@ module TypeScript {
     export class VoidExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         constructor(public voidKeyword: ISyntaxToken,
                     public expression: IUnaryExpressionSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4708,7 +4708,7 @@ module TypeScript {
                 return this;
             }
 
-            return new VoidExpressionSyntax(voidKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new VoidExpressionSyntax(voidKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {
@@ -4720,8 +4720,8 @@ module TypeScript {
     export class DebuggerStatementSyntax extends SyntaxNode implements IStatementSyntax {
         constructor(public debuggerKeyword: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
+                    data: number) {
+            super(data); 
 
             Syntax.setParentForChildren(this);
         }
@@ -4760,7 +4760,7 @@ module TypeScript {
                 return this;
             }
 
-            return new DebuggerStatementSyntax(debuggerKeyword, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new DebuggerStatementSyntax(debuggerKeyword, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
 
         public isTypeScriptSpecific(): boolean {

@@ -3,11 +3,10 @@
 module TypeScript {
     export class SyntaxNode implements ISyntaxNodeOrToken {
         public parent: ISyntaxElement = null;
-        private _data: number;
-        private _syntaxID: number = 0;
+        private _syntaxID: number;
 
-        constructor(parsedInStrictMode: boolean) {
-            this._data = parsedInStrictMode ? SyntaxConstants.NodeParsedInStrictModeMask : 0;
+        constructor(private _data: number) {
+            // this._data = parsedInStrictMode ? SyntaxConstants.NodeParsedInStrictModeMask : 0;
         }
 
         public syntaxTree(): SyntaxTree {
@@ -19,7 +18,7 @@ module TypeScript {
         }
 
         public syntaxID(): number {
-            if (this._syntaxID === 0) {
+            if (this._syntaxID === undefined) {
                 this._syntaxID = TypeScript.Syntax._nextSyntaxID++;
             }
 
