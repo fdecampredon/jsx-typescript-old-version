@@ -120,7 +120,7 @@ module TypeScript.TextFactory {
             return new SubText(this, span);
         }
 
-        public substr(start: number, length: number, intern: boolean): string {
+        public substr(start: number, length: number): string {
             throw Errors.abstract();
         }
 
@@ -284,9 +284,9 @@ module TypeScript.TextFactory {
             this.text.copyTo(span.start(), destination, destinationIndex, span.length());
         }
 
-        public substr(start: number, length: number, intern: boolean): string {
+        public substr(start: number, length: number): string {
             var startInOriginalText = this.span.start() + start;
-            return this.text.substr(startInOriginalText, length, intern);
+            return this.text.substr(startInOriginalText, length);
         }
 
         private getCompositeSpan(start: number, length: number): TextSpan {
@@ -351,7 +351,7 @@ module TypeScript.TextFactory {
             return this.source.charCodeAt(position);
         }
 
-        public substr(start: number, length: number, intern: boolean) {
+        public substr(start: number, length: number) {
             return this.source.substr(start, length);
         }
 
@@ -397,6 +397,7 @@ module TypeScript.SimpleText {
     class SimpleSubText implements ISimpleText {
         private text: ISimpleText = null;
         private span: TextSpan = null;
+        private _lineMap: LineMap = null;
 
         constructor(text: ISimpleText, span: TextSpan) {
             if (text === null) {
@@ -441,9 +442,9 @@ module TypeScript.SimpleText {
             this.text.copyTo(span.start(), destination, destinationIndex, span.length());
         }
 
-        public substr(start: number, length: number, intern: boolean): string {
+        public substr(start: number, length: number): string {
             var span = this.getCompositeSpan(start, length);
-            return this.text.substr(span.start(), span.length(), intern);
+            return this.text.substr(span.start(), span.length());
         }
 
         private getCompositeSpan(start: number, length: number): TextSpan {
@@ -458,7 +459,11 @@ module TypeScript.SimpleText {
         }
 
         public lineMap(): LineMap {
-            return LineMap1.fromSimpleText(this);
+            if (this._lineMap === null) {
+                this._lineMap = LineMap1.fromSimpleText(this);
+            }
+
+            return this._lineMap;
         }
     }
 
@@ -476,18 +481,7 @@ module TypeScript.SimpleText {
             StringUtilities.copyTo(this.value, sourceIndex, destination, destinationIndex, count);
         }
 
-        private static charArray: number[] = ArrayUtilities.createArray<number>(1024, 0);
-
-        public substr(start: number, length: number, intern: boolean): string {
-            if (intern) {
-                // use a shared array instance of the length of this substring isn't too large.
-                var array: number[] = length <= SimpleStringText.charArray.length
-                    ? SimpleStringText.charArray
-                    : ArrayUtilities.createArray<number>(length, /*defaultValue:*/0);
-                this.copyTo(start, array, 0, length);
-                return Collections.DefaultStringTable.addCharArray(array, 0, length);
-            }
-
+        public substr(start: number, length: number): string {
             return this.value.substr(start, length);
         }
 
@@ -524,11 +518,7 @@ module TypeScript.SimpleText {
 
         private static charArray: number[] = ArrayUtilities.createArray<number>(1024, 0);
 
-        public substr(start: number, length: number, intern: boolean): string {
-            if (intern) {
-                throw Errors.notYetImplemented();
-            }
-
+        public substr(start: number, length: number): string {
             return this.value.substr(start + this._from, length);
         }
 
@@ -551,6 +541,7 @@ module TypeScript.SimpleText {
 
     // Class which wraps a host IScriptSnapshot and exposes an ISimpleText for newer compiler code. 
     class SimpleScriptSnapshotText implements ISimpleText {
+        private _lineMap: LineMap = null;
 
         constructor(public scriptSnapshot: IScriptSnapshot) {
         }
@@ -568,7 +559,7 @@ module TypeScript.SimpleText {
             StringUtilities.copyTo(text, 0, destination, destinationIndex, count);
         }
 
-        public substr(start: number, length: number, intern: boolean): string {
+        public substr(start: number, length: number): string {
             return this.scriptSnapshot.getText(start, start + length);
         }
 
@@ -577,7 +568,11 @@ module TypeScript.SimpleText {
         }
 
         public lineMap(): LineMap {
-            return new LineMap(() => this.scriptSnapshot.getLineStartPositions(), this.length());
+            if (this._lineMap === null) {
+                this._lineMap = new LineMap(() => this.scriptSnapshot.getLineStartPositions(), this.length());
+            }
+
+            return this._lineMap;
         }
     }
 
@@ -593,4 +588,3 @@ module TypeScript.SimpleText {
         return new SimpleScriptSnapshotText(scriptSnapshot);
     }
 }
-   

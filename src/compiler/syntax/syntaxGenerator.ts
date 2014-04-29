@@ -1639,35 +1639,6 @@ function generateLastTokenMethod(definition: ITypeDefinition): string {
     return result;
 }
 
-function generateInsertChildrenIntoMethod(definition: ITypeDefinition): string {
-    var result = "";
-
-    result += "\r\n";
-    result += "    public insertChildrenInto(array: ISyntaxElement[], index: number) {\r\n";
-
-    for (var i = definition.children.length - 1; i >= 0; i--) {
-        var child = definition.children[i];
-
-        if (child.type === "SyntaxKind") {
-            continue;
-        }
-
-        if (child.isList || child.isSeparatedList) {
-            result += "        " + getPropertyAccess(child) + ".insertChildrenInto(array, index);\r\n";
-        }
-        else if (child.isOptional) {
-            result += "        if (" + getPropertyAccess(child) + " !== null) { array.splice(index, 0, " + getPropertyAccess(child) + "); }\r\n";
-        }
-        else {
-            result += "        array.splice(index, 0, " + getPropertyAccess(child) + ");\r\n";
-        }
-    }
-
-    result += "    }\r\n";
-
-    return result;
-}
-
 function baseType(definition: ITypeDefinition): ITypeDefinition {
     return TypeScript.ArrayUtilities.firstOrDefault(definitions, d => d.name === definition.baseType);
 }
@@ -1975,11 +1946,9 @@ function generateNode(definition: ITypeDefinition): string {
     // result += generateIsMissingMethod(definition);
     // result += generateFirstTokenMethod(definition);
     // result += generateLastTokenMethod(definition);
-    // result += generateInsertChildrenIntoMethod(definition);
     // result += generateCollectTextElementsMethod(definition);
     // result += generateFindTokenInternalMethod(definition);
     // result += generateStructuralEqualsMethod(definition);
-
     result += "    }";
 
     return result;
@@ -2137,336 +2106,6 @@ function generateRewriter(): string {
     return result;
 }
 
-function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolean): string {
-    var isVariableWidth = !isFixedWidth;
-    var hasAnyTrivia = leading || trailing;
-
-    var result = "    export class ";
-    var needsText = hasAnyTrivia || isVariableWidth;
-
-    var className = isFixedWidth ? "FixedWidthToken" : "VariableWidthToken";
-    className += leading && trailing ? "WithLeadingAndTrailingTrivia" :
-             leading && !trailing ? "WithLeadingTrivia" :
-             !leading && trailing ? "WithTrailingTrivia" : "WithNoTrivia";
-
-    result += className;
-    result += " implements ISyntaxToken {\r\n";
-
-    if (needsText) {
-        result += "        private _fullText: string;\r\n";
-    }
-
-    result += "        private _fullStart: number;\r\n";
-    result += "        public tokenKind: SyntaxKind;\r\n";
-    // result += "        public tokenKeywordKind: SyntaxKind;\r\n";
-
-    if (leading) {
-        result += "        private _leadingTriviaInfo: number;\r\n";
-    }
-
-    if (trailing) {
-        result += "        private _trailingTriviaInfo: number;\r\n";
-    }
-
-    result += "        public parent: ISyntaxElement = null;\r\n";
-    result += "        private _syntaxID: number = 0;\r\n";
-    result += "\r\n";
-
-    result += "        constructor(";
-
-    if (needsText) {
-        result += "fullText: string, ";
-    }
-
-    result += "fullStart: number, ";
-    result += "kind: SyntaxKind";
-
-    if (leading) {
-        result += ", leadingTriviaInfo: number";
-    }
-
-    if (trailing) {
-        result += ", trailingTriviaInfo: number";
-    }
-
-    result += ") {\r\n";
-
-    if (needsText) {
-        result += "            this._fullText = fullText;\r\n";
-    }
-
-    result += "            this._fullStart = fullStart;\r\n";
-    result += "            this.tokenKind = kind;\r\n";
-
-    if (leading) {
-        result += "            this._leadingTriviaInfo = leadingTriviaInfo;\r\n";
-    }
-
-    if (trailing) {
-        result += "            this._trailingTriviaInfo = trailingTriviaInfo;\r\n";
-    }
-
-    result += "        }\r\n\r\n";
-
-    result += "        public isKeywordConvertedToIdentifier(): boolean { return false; }\r\n\r\n"
-
-    result += "        public syntaxID(): number {\r\n";
-    result += "            if (this._syntaxID === 0) {\r\n";
-    result += "                this._syntaxID = _nextSyntaxID++;\r\n";
-    result += "            }\r\n\r\n";
-    result += "            return this._syntaxID;\r\n";
-    result += "        }\r\n\r\n";
-
-    result += "        public clone(): ISyntaxToken {\r\n";
-    result += "            return new " + className + "(\r\n";
-
-    if (needsText) {
-        result += "                this._fullText,\r\n";
-    }
-
-    result += "                this._fullStart,\r\n";
-    result += "                this.tokenKind";
-
-    if (leading) {
-        result += ",\r\n                this._leadingTriviaInfo";
-    }
-
-    if (trailing) {
-        result += ",\r\n                this._trailingTriviaInfo";
-    }
-
-    result += ");\r\n";
-    result += "        }\r\n\r\n";
-
-    //if (needsSourcetext) {
-    //    result += "        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {\r\n";
-    //    result += "            this._fullStart = fullStart;\r\n";
-    //    result += "            this._sourceText = sourceText;\r\n";
-    //    result += "        }\r\n\r\n";
-    //}
-    //else {
-        result += "        public setFullStart(fullStart: number): void {\r\n";
-        result += "            this._fullStart = fullStart;\r\n";
-        result += "        }\r\n\r\n";
-    //}
-
-    result += "        public syntaxTree(): SyntaxTree {\r\n";
-    result += "            return this.parent.syntaxTree();\r\n";
-    result += "        }\r\n\r\n";
-
-    result += "        public fileName(): string {\r\n";
-    result += "            return this.parent.fileName();\r\n";
-    result += "        }\r\n\r\n";
-
-
-    result +=
-"        public isShared(): boolean { return false; }\r\n" +
-"        public isNode(): boolean { return false; }\r\n" +
-"        public isToken(): boolean { return true; }\r\n" +
-"        public isTrivia(): boolean { return true; }\r\n" +
-"        public isList(): boolean { return false; }\r\n" +
-"        public isSeparatedList(): boolean { return false; }\r\n"+
-"        public isTriviaList(): boolean { return false; }\r\n\r\n";
-
-    result += "        public kind(): SyntaxKind { return this.tokenKind; }\r\n\r\n";
-
-    result += "        public childCount(): number { return 0; }\r\n";
-    result += "        public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }\r\n\r\n";
-
-    var leadingTriviaWidth = leading ? "getTriviaWidth(this._leadingTriviaInfo)" : "0";
-    var trailingTriviaWidth = trailing ? "getTriviaWidth(this._trailingTriviaInfo)" : "0";
-
-    result += "        public fullWidth(): number { return this.fullText().length; }\r\n";
-
-    /*
-    if (leading && trailing) {
-        result += "        public fullWidth(): number { return " + leadingTriviaWidth + " + this.width() + " + trailingTriviaWidth + "; }\r\n";
-    }
-    else if (leading) {
-        result += "        public fullWidth(): number { return " + leadingTriviaWidth + " + this.width(); }\r\n";
-    }
-    else if (trailing) {
-        result += "        public fullWidth(): number { return this.width() + " + trailingTriviaWidth + "; }\r\n";
-    }
-    else {
-        result += "        public fullWidth(): number { return this.width(); }\r\n";
-    }
-    */
-
-    result += "        public fullStart(): number { return this._fullStart; }\r\n";
-
-    if (leading) {
-        result += "        public start(): number { return this._fullStart + " + leadingTriviaWidth + "; }\r\n";
-    }
-    else {
-        result += "        public start(): number { return this._fullStart; }\r\n";
-    }
-
-    if (isFixedWidth) {
-        result += "        public width(): number { return this.text().length; }\r\n\r\n";
-    }
-    else {
-        result += "        public width(): number { return this.fullWidth() - this.leadingTriviaWidth() - this.trailingTriviaWidth(); }\r\n\r\n";
-    }
-
-    result += "        public end(): number { return this.start() + this.width(); }\r\n";
-    result += "        public fullEnd(): number { return this._fullStart + this.fullWidth(); } \r\n\r\n";
-
-    if (isFixedWidth) {
-        result += "        public text(): string { return SyntaxFacts.getText(this.tokenKind); }\r\n";
-    }
-    else {
-        result += "        public text(): string { return this.fullText().substr(this.leadingTriviaWidth(), this.width()); }\r\n";
-    }
-
-    if (needsText) {
-        result += "        public fullText(): string { return this._fullText; }\r\n\r\n";
-    }
-    else {
-        result += "        public fullText(): string { return this.text(); }\r\n\r\n";
-    }
-
-    if (isFixedWidth) {
-        result += "        public value(): any { return value(this); }\r\n";
-        result += "        public valueText(): string { return valueText(this); }\r\n";
-    }
-    else {
-        result += "        public value(): any {\r\n" +
-                  "            if ((<any>this)._value === undefined) {\r\n" +
-                  "                (<any>this)._value = value(this);\r\n" +
-                  "            }\r\n" +
-                  "\r\n" +
-                  "            return (<any>this)._value;\r\n" +
-                  "        }\r\n\r\n";
-        result += "        public valueText(): string {\r\n" +
-                  "            if ((<any>this)._valueText === undefined) {\r\n" +
-                  "                (<any>this)._valueText = valueText(this);\r\n" +
-                  "            }\r\n" +
-                  "\r\n" +
-                  "            return (<any>this)._valueText;\r\n" +
-                  "        }\r\n\r\n";
-    }
-
-    result += "        public hasLeadingTrivia(): boolean { return " + (leading ? "true" : "false") + "; }\r\n";
-    result += "        public hasLeadingComment(): boolean { return " + (leading ? "hasTriviaComment(this._leadingTriviaInfo)" : "false") + "; }\r\n";
-    result += "        public hasLeadingNewLine(): boolean { return " + (leading ? "hasTriviaNewLine(this._leadingTriviaInfo)" : "false") + "; }\r\n";
-    result += "        public hasLeadingSkippedText(): boolean { return false; }\r\n";
-    result += "        public leadingTriviaWidth(): number { return " + (leading ? "getTriviaWidth(this._leadingTriviaInfo)" : "0") + "; }\r\n";
-    result += "        public leadingTrivia(): ISyntaxTriviaList { return " + (leading
-        ? "Scanner.scanTrivia(this, this._fullText, this._fullStart, 0, this.leadingTriviaWidth(), /*isTrailing:*/ false)"
-        : "Syntax.emptyTriviaList") + "; }\r\n\r\n";
-
-    result += "        public hasTrailingTrivia(): boolean { return " + (trailing ? "true" : "false") + "; }\r\n";
-    result += "        public hasTrailingComment(): boolean { return " + (trailing ? "hasTriviaComment(this._trailingTriviaInfo)" : "false") + "; }\r\n";
-    result += "        public hasTrailingNewLine(): boolean { return " + (trailing ? "hasTriviaNewLine(this._trailingTriviaInfo)" : "false") + "; }\r\n";
-    result += "        public hasTrailingSkippedText(): boolean { return false; }\r\n";
-    result += "        public trailingTriviaWidth(): number { return " + (trailing ? "getTriviaWidth(this._trailingTriviaInfo)" : "0") + "; }\r\n";
-    result += "        public trailingTrivia(): ISyntaxTriviaList { return " + (trailing
-        ? "Scanner.scanTrivia(this, this._fullText, this._fullStart, this.leadingTriviaWidth() + this.width(), this.trailingTriviaWidth(), /*isTrailing:*/ true)"
-        : "Syntax.emptyTriviaList") + "; }\r\n\r\n";
-    result += "        public hasSkippedToken(): boolean { return false; }\r\n";
-
-    result +=
-"        public toJSON(key: any): any { return tokenToJSON(this); }\r\n" +
-"        public firstToken(): ISyntaxToken { return this; }\r\n" +
-"        public lastToken(): ISyntaxToken { return this; }\r\n" +
-"        public isTypeScriptSpecific(): boolean { return false; }\r\n" +
-"        public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }\r\n" +
-"        public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }\r\n" +
-"        private realize(): ISyntaxToken { return realizeToken(this); }\r\n" +
-"        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }\r\n" +
-"        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }\r\n" +
-"        public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }\r\n\r\n";
-
-    result +=
-"        public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {\r\n" +
-"            return this.realize().withLeadingTrivia(leadingTrivia);\r\n" +
-"        }\r\n" +
-"\r\n" +
-"        public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {\r\n" +
-"            return this.realize().withTrailingTrivia(trailingTrivia);\r\n" +
-"        }\r\n" +
-"\r\n" +
-"        public isPrimaryExpression(): boolean {\r\n" +
-"            return isPrimaryExpression(this);\r\n" +
-"        }\r\n" +
-"\r\n" +
-"        public isExpression(): boolean {\r\n" +
-"            return this.isPrimaryExpression();\r\n" +
-"        }\r\n" +
-"\r\n" +
-"        public isMemberExpression(): boolean {\r\n" +
-"            return this.isPrimaryExpression();\r\n" +
-"        }\r\n" +
-"\r\n" +
-"        public isLeftHandSideExpression(): boolean {\r\n" +
-"            return this.isPrimaryExpression();\r\n" +
-"        }\r\n" +
-"\r\n" +
-"        public isPostfixExpression(): boolean {\r\n" +
-"            return this.isPrimaryExpression();\r\n" +
-"        }\r\n" +
-"\r\n" +
-"        public isUnaryExpression(): boolean {\r\n" +
-"            return this.isPrimaryExpression();\r\n" +
-"        }\r\n"
-
-
-    result += "    }\r\n";
-
-    return result;
-}
-
-function generateTokens(): string {
-    var result = 
-        "///<reference path='references.ts' />\r\n" +
-        "\r\n" +
-        "module TypeScript.Syntax {\r\n";
-
-    result += generateToken(/*isFixedWidth:*/ false, /*leading:*/ false, /*trailing:*/ false);
-    result += "\r\n";
-    result += generateToken(/*isFixedWidth:*/ false, /*leading:*/ true, /*trailing:*/ false);
-    result += "\r\n";
-    result += generateToken(/*isFixedWidth:*/ false, /*leading:*/ false, /*trailing:*/ true);
-    result += "\r\n";
-    result += generateToken(/*isFixedWidth:*/ false, /*leading:*/ true, /*trailing:*/ true);
-    result += "\r\n";
-
-    result += generateToken(/*isFixedWidth:*/ true, /*leading:*/ false, /*trailing:*/ false);
-    result += "\r\n";
-    result += generateToken(/*isFixedWidth:*/ true, /*leading:*/ true, /*trailing:*/ false);
-    result += "\r\n";
-    result += generateToken(/*isFixedWidth:*/ true, /*leading:*/ false, /*trailing:*/ true);
-    result += "\r\n";
-    result += generateToken(/*isFixedWidth:*/ true, /*leading:*/ true, /*trailing:*/ true);
-    result += "\r\n";
-
-    result +=
-    "    function collectTokenTextElements(token: ISyntaxToken, elements: string[]): void {\r\n" +
-    "        token.leadingTrivia().collectTextElements(elements);\r\n" +
-    "        elements.push(token.text());\r\n" +
-    "        token.trailingTrivia().collectTextElements(elements);\r\n" +
-    "    }\r\n" +
-    "\r\n";
-
-    result += 
-"    function getTriviaWidth(value: number): number {\r\n" +
-"        return value >>> SyntaxConstants.TriviaFullWidthShift;\r\n" +
-"    }\r\n" +
-"\r\n" +
-"    function hasTriviaComment(value: number): boolean {\r\n" +
-"        return (value & SyntaxConstants.TriviaCommentMask) !== 0;\r\n" +
-"    }\r\n" +
-"\r\n" +
-"    function hasTriviaNewLine(value: number): boolean {\r\n" +
-"        return (value & SyntaxConstants.TriviaNewLineMask) !== 0;\r\n" +
-"    }\r\n";
-
-    result += "}";
-
-    return result;
-}
-
 function generateWalker(): string {
     var result = "";
 
@@ -2607,14 +2246,14 @@ function generateKeywordCondition(keywords: { text: string; kind: TypeScript.Syn
             }
 
             index = i === 0 ? "startIndex" : ("startIndex + " + i);
-            result += "array[" + index + "] === CharacterCodes." + keywordText.substr(i, 1);
+            result += "array.charCodeAt(" + index + ") === CharacterCodes." + keywordText.substr(i, 1);
         }
 
         result += ") ? SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + " : SyntaxKind.IdentifierName;\r\n";
     }
     else {
         index = currentCharacter === 0 ? "startIndex" : ("startIndex + " + currentCharacter);
-        result += indent + "switch(array[" + index + "]) {\r\n"
+        result += indent + "switch(array.charCodeAt(" + index + ")) {\r\n"
 
         var groupedKeywords = TypeScript.ArrayUtilities.groupBy(keywords, k => k.text.substr(currentCharacter, 1));
 
@@ -2647,7 +2286,7 @@ function generateScannerUtilities(): string {
         keywords.push({ kind: i, text: TypeScript.SyntaxFacts.getText(i) });
     }
 
-    result += "        public static identifierKind(array: number[], startIndex: number, length: number): SyntaxKind {\r\n";
+    result += "        public static identifierKind(array: string, startIndex: number, length: number): SyntaxKind {\r\n";
 
     var minTokenLength = TypeScript.ArrayUtilities.min(keywords, k => k.text.length);
     var maxTokenLength = TypeScript.ArrayUtilities.max(keywords, k => k.text.length);
@@ -2822,7 +2461,6 @@ function generateFactory(): string {
 
 var syntaxNodes = generateNodes();
 var rewriter = generateRewriter();
-var tokens = generateTokens();
 var walker = generateWalker();
 var scannerUtilities = generateScannerUtilities();
 var visitor = generateVisitor();
@@ -2830,7 +2468,6 @@ var factory = generateFactory();
 
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxNodes.generated.ts", syntaxNodes, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxRewriter.generated.ts", rewriter, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxToken.generated.ts", tokens, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxWalker.generated.ts", walker, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\scannerUtilities.generated.ts", scannerUtilities, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxVisitor.generated.ts", visitor, false);

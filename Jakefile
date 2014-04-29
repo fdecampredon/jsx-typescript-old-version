@@ -90,7 +90,6 @@ var compilerSources = [
 	"syntax/syntaxNodeOrToken.ts",
 	"syntax/syntaxNodes.generated.ts",
 	"syntax/syntaxRewriter.generated.ts",
-	"syntax/syntaxToken.generated.ts",
 	"syntax/syntaxToken.ts",
 	"syntax/syntaxTokenReplacer.ts",
 	"syntax/syntaxTree.ts",

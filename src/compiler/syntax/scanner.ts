@@ -1,6 +1,63 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    // To save space in a token we use 60 bits to encode the following.
+    //
+    //   _packedFullStartAndTriviaInfo:
+    //
+    //      0000 0000 0000 0000 0000 0000 0000 0xxx    <-- Leading trivia info.
+    //      0000 0000 0000 0000 0000 0000 00xx x000    <-- Trailing trivia info.
+    //      0xxx xxxx xxxx xxxx xxxx xxxx xx00 0000    <-- Full start.
+    //
+    //  _packedFullWidthAndKind:
+    //
+    //      0000 0000 0000 0000 0000 0000 0xxx xxxx    <-- Kind.
+    //      0xxx xxxx xxxx xxxx xxxx xxxx x000 0000    <-- Full width.
+
+    enum ScannerConstants {
+        LeadingTriviaShift      = 0,
+        TrailingTriviaShift     = 3,
+        FullStartShift          = 6,
+
+        KindShift               = 0,
+        FullWidthShift          = 7,
+
+        KindBitMask             = 0x7F, // 01111111
+        TriviaBitMask           = 0x07, // 00000111
+        CommentTriviaBitMask    = 0x01, // 00000001
+        NewLineTriviaBitMask    = 0x02, // 00000010
+        WhitespaceTriviaBitMask = 0x04, // 00000100
+    }
+
+    function unpackKind(_packedFullWidthAndKind: number): SyntaxKind {
+        return <SyntaxKind>((_packedFullWidthAndKind >> ScannerConstants.KindShift) & ScannerConstants.KindBitMask);
+    }
+
+    function unpackFullWidth(_packedFullWidthAndKind: number): number {
+        return _packedFullWidthAndKind >> ScannerConstants.FullWidthShift;
+    }
+
+    function unpackFullStart(_packedFullStartAndTriviaInfo: number): number {
+        return _packedFullStartAndTriviaInfo >> ScannerConstants.FullStartShift;
+    }
+
+    function unpackLeadingTriviaInfo(_packedFullStartAndTriviaInfo: number): number {
+        return (_packedFullStartAndTriviaInfo >> ScannerConstants.LeadingTriviaShift) & ScannerConstants.TriviaBitMask;
+    }
+
+    function unpackTrailingTriviaInfo(_packedFullStartAndTriviaInfo: number): number {
+        // The next two bits following the leading trivia are the trailing trivia info.
+        return (_packedFullStartAndTriviaInfo >> ScannerConstants.TrailingTriviaShift) & ScannerConstants.TriviaBitMask;
+    }
+
+    function packFullStartAndTriviaInfo(fullStart: number, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
+        return (fullStart << ScannerConstants.FullStartShift) | (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
+    }
+
+    function packFullWidthAndKind(fullWidth: number, kind: SyntaxKind): number {
+        return (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
+    }
+
     var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
     var isIdentifierStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
     var isIdentifierPartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
@@ -30,65 +87,91 @@ module TypeScript {
         isKeywordStartCharacter[keyword.charCodeAt(0)] = true;
     }
 
-    export class Scanner implements ISlidingWindowSource {
-        private slidingWindow: SlidingWindow;
+    export class Scanner {
+        private _index: number = 0;
+        private _length: number;
 
-        private fileName: string;
-        private text: ISimpleText;
-        private _languageVersion: LanguageVersion;
+        // Operate on an actual string for perf.
+        private _string: string;
+        private _lineMap: LineMap
 
-        constructor(fileName: string,
-                    text: ISimpleText,
-                    languageVersion: LanguageVersion,
-                    window: number[] = ArrayUtilities.createArray<number>(2048, 0)) {
-            this.slidingWindow = new SlidingWindow(this, window, 0, text.length());
-            this.fileName = fileName;
-            this.text = text;
-            this._languageVersion = languageVersion;
+        constructor(private fileName: string,
+                    private _languageVersion: LanguageVersion,
+                    private _fullText: ISimpleText) {
+
+            if (_fullText !== null) {
+                this.reset(_fullText, 0, _fullText.length());
+            }
+        }
+
+        public reset(fullText: ISimpleText, index: number, textEnd: number) {
+            Debug.assert(index <= fullText.length());
+            Debug.assert(textEnd <= fullText.length());
+            this._index = index;
+            this._fullText = fullText;
+            this._length = textEnd;
+            this._lineMap = fullText.lineMap();
+
+            this._string = fullText.substr(0, fullText.length());
         }
 
         public languageVersion(): LanguageVersion {
             return this._languageVersion;
         }
 
-        public fetchMoreItems(argument: any, sourceIndex: number, window: number[], destinationIndex: number, spaceAvailable: number): number {
-            var charactersRemaining = this.text.length() - sourceIndex;
-            var amountToRead = MathPrototype.min(charactersRemaining, spaceAvailable);
-            this.text.copyTo(sourceIndex, window, destinationIndex, amountToRead);
-            return amountToRead;
-        }
-
         private currentCharCode(): number {
-            return this.slidingWindow.currentItem(/*argument:*/ null);
+            return this._string.charCodeAt(this._index);
         }
 
         public absoluteIndex(): number {
-            return this.slidingWindow.absoluteIndex();
+            return this._index;
+        }
+
+        private isAtEndOfSource(): boolean {
+            return this._index >= this._length;
         }
 
         // Set's the scanner to a specific position in the text.
         public setAbsoluteIndex(index: number): void {
-            this.slidingWindow.setAbsoluteIndex(index);
+            this._index = index;
+        }
+
+        private peekCharCodeN(n: number): number {
+            var index = this._index + n;
+            if (index >= this._length) {
+                return 0;
+            }
+
+            return this._string.charCodeAt(index);
+        }
+
+        public fillSizeInfo(allowRegularExpression: boolean): void {
+            var fullStart = this.absoluteIndex();
+            var leadingTriviaInfo = this.scanTriviaInfo(null, /*isTrailing: */ false);
+
+            var start = this.absoluteIndex();
+            this.scanSyntaxToken(null, allowRegularExpression);
+            var end = this.absoluteIndex();
+
+            sizeInfo.leadingTriviaWidth = start - fullStart;
+            sizeInfo.width = end - start;
         }
 
         // Scans a token starting at the current position.  Any errors encountered will be added to 
         // 'diagnostics'.
         public scan(diagnostics: Diagnostic[], allowRegularExpression: boolean): ISyntaxToken {
             var diagnosticsLength = diagnostics.length;
-            var fullStart = this.slidingWindow.absoluteIndex();
+            var fullStart = this.absoluteIndex();
+
             var leadingTriviaInfo = this.scanTriviaInfo(diagnostics, /*isTrailing: */ false);
-
-            var start = this.slidingWindow.absoluteIndex();
-            var kindAndFlags = this.scanSyntaxToken(diagnostics, allowRegularExpression);
-            var end = this.slidingWindow.absoluteIndex();
-
+            var kind = this.scanSyntaxToken(diagnostics, allowRegularExpression);
             var trailingTriviaInfo = this.scanTriviaInfo(diagnostics,/*isTrailing: */true);
-            var fullEnd = this.slidingWindow.absoluteIndex();
 
-            var isVariableWidthKeyword = (kindAndFlags & SyntaxConstants.IsVariableWidthKeyword) !== 0;
-            var kind = kindAndFlags & ~SyntaxConstants.IsVariableWidthKeyword;
+            var fullEnd = MathPrototype.min(this.absoluteIndex(), this._length);
 
-            var token = this.createToken(fullStart, leadingTriviaInfo, start, kind, end, fullEnd, trailingTriviaInfo, isVariableWidthKeyword);
+            var token = new ScannerToken(this._fullText,
+                packFullStartAndTriviaInfo(fullStart, leadingTriviaInfo, trailingTriviaInfo),
+                packFullWidthAndKind(fullEnd - fullStart, kind));
 
             // If we produced any diagnostics while creating this token, then realize the token so 
             // it won't be reused in incremental scenarios.
@@ -97,79 +180,15 @@ module TypeScript {
                 : token;
         }
 
-        private createToken(
-            fullStart: number,
-            leadingTriviaInfo: number,
-            start: number,
-            kind: SyntaxKind,
-            end: number,
-            fullEnd: number,
-            trailingTriviaInfo: number,
-            isVariableWidthKeyword: boolean): ISyntaxToken {
-
-            if (!isVariableWidthKeyword && kind >= SyntaxKind.FirstFixedWidth) {
-                if (leadingTriviaInfo === 0) {
-                    if (trailingTriviaInfo === 0) {
-                        return new Syntax.FixedWidthTokenWithNoTrivia(fullStart, kind);
-                    }
-                    else {
-                        var fullText = this.text.substr(fullStart, fullEnd - fullStart, false);
-                        return new Syntax.FixedWidthTokenWithTrailingTrivia(fullText, fullStart, kind, trailingTriviaInfo);
-                    }
-                }
-                else if (trailingTriviaInfo === 0) {
-                    var fullText = this.text.substr(fullStart, fullEnd - fullStart, false);
-                    return new Syntax.FixedWidthTokenWithLeadingTrivia(fullText, fullStart, kind, leadingTriviaInfo);
-                }
-                else {
-                    var fullText = this.text.substr(fullStart, fullEnd - fullStart, false);
-                    return new Syntax.FixedWidthTokenWithLeadingAndTrailingTrivia(fullText, fullStart, kind, leadingTriviaInfo, trailingTriviaInfo);
-                }
-            }
-            else {
-                var width = end - start;
-
-                var fullText = this.text.substr(fullStart, fullEnd - fullStart, false);
-
-                if (leadingTriviaInfo === 0) {
-                    if (trailingTriviaInfo === 0) {
-                        return new Syntax.VariableWidthTokenWithNoTrivia(fullText, fullStart, kind);
-                    }
-                    else {
-                        return new Syntax.VariableWidthTokenWithTrailingTrivia(fullText, fullStart, kind, trailingTriviaInfo);
-                    }
-                }
-                else if (trailingTriviaInfo === 0) {
-                    return new Syntax.VariableWidthTokenWithLeadingTrivia(fullText, fullStart, kind, leadingTriviaInfo);
-                }
-                else {
-                    return new Syntax.VariableWidthTokenWithLeadingAndTrailingTrivia(fullText, fullStart, kind, leadingTriviaInfo, trailingTriviaInfo);
-                }
-            }
-        }
-
-        private static triviaWindow: number[] = ArrayUtilities.createArray<number>(2048, 0);
-
         // Scans a subsection of 'text' as trivia.
-        public static scanTrivia(parent: ISyntaxToken, tokenText: string, tokenFullStart: number, firstTriviaStartInToken: number, triviaLength: number, isTrailing: boolean): ISyntaxTriviaList {
+        public scanTrivia(parent: ISyntaxToken, isTrailing: boolean): ISyntaxTriviaList {
             // Debug.assert(length > 0);
 
-            // Note: the scanner operates upon a subrange of the text passed in. However, we also
-            // pass hte originl text along to 'scanTrivia' so the trivia can point back at it
-            // directly (and not at the subtext wrapper).  This allows the subtext to get GC'ed
-            // and means trivia can be represented with only a single allocation.
-            var scanner = new Scanner(/*fileName:*/ null,
-                SimpleText.fromSubstr(tokenText, firstTriviaStartInToken, triviaLength), LanguageVersion.EcmaScript5, Scanner.triviaWindow);
-
-            return scanner.scanTrivia(parent, tokenText, tokenFullStart, firstTriviaStartInToken, isTrailing);
-        }
-
-        private scanTrivia(parent: ISyntaxToken, tokenText: string, tokenFullStart: number, triviaStartInToken: number, isTrailing: boolean): ISyntaxTriviaList {
             // Keep this exactly in sync with scanTriviaInfo
             var trivia = new Array<ISyntaxTrivia>();
 
             while (true) {
-                if (!this.slidingWindow.isAtEndOfSource()) {
+                if (!this.isAtEndOfSource()) {
                     var ch = this.currentCharCode();
 
                     switch (ch) {
@@ -196,19 +215,19 @@ module TypeScript {
                         case CharacterCodes.formFeed:
                         case CharacterCodes.byteOrderMark:
                             // Normal whitespace.  Consume and continue.
-                            trivia.push(this.scanWhitespaceTrivia(tokenText, tokenFullStart, triviaStartInToken));
+                            trivia.push(this.scanWhitespaceTrivia());
                             continue;
 
                         case CharacterCodes.slash:
                             // Potential comment.  Consume if so.  Otherwise, break out and return.
-                            var ch2 = this.slidingWindow.peekItemN(1);
+                            var ch2 = this.peekCharCodeN(1);
                             if (ch2 === CharacterCodes.slash) {
-                                trivia.push(this.scanSingleLineCommentTrivia(tokenText, tokenFullStart, triviaStartInToken));
+                                trivia.push(this.scanSingleLineCommentTrivia());
                                 continue;
                             }
 
                             if (ch2 === CharacterCodes.asterisk) {
-                                trivia.push(this.scanMultiLineCommentTrivia(tokenText, tokenFullStart, triviaStartInToken));
+                                trivia.push(this.scanMultiLineCommentTrivia());
                                 continue;
                             }
 
@@ -219,7 +238,7 @@ module TypeScript {
                         case CharacterCodes.lineFeed:
                         case CharacterCodes.paragraphSeparator:
                         case CharacterCodes.lineSeparator:
-                            trivia.push(this.scanLineTerminatorSequenceTrivia(tokenText, tokenFullStart, triviaStartInToken, ch));
+                            trivia.push(this.scanLineTerminatorSequenceTrivia(ch));
 
                             // If we're consuming leading trivia, then we will continue consuming more 
                             // trivia (including newlines) up to the first token we see.  If we're 
@@ -245,8 +264,9 @@ module TypeScript {
 
         private scanTriviaInfo(diagnostics: Diagnostic[], isTrailing: boolean): number {
             // Keep this exactly in sync with scanTrivia
-            var width = 0;
-            var hasCommentOrNewLine = 0;
+            var commentInfo = 0;
+            var whitespaceInfo = 0;
+            var newLineInfo = 0;
 
             while (true) {
                 var ch = this.currentCharCode();
@@ -275,22 +295,22 @@ module TypeScript {
                     case CharacterCodes.formFeed:
                     case CharacterCodes.byteOrderMark:
                         // Normal whitespace.  Consume and continue.
-                        this.slidingWindow.moveToNextItem();
-                        width++;
+                        whitespaceInfo = ScannerConstants.WhitespaceTriviaBitMask;
+                        this._index++;
                         continue;
 
                     case CharacterCodes.slash:
                         // Potential comment.  Consume if so.  Otherwise, break out and return.
-                        var ch2 = this.slidingWindow.peekItemN(1);
+                        var ch2 = this.peekCharCodeN(1);
                         if (ch2 === CharacterCodes.slash) {
-                            hasCommentOrNewLine |= SyntaxConstants.TriviaCommentMask;
-                            width += this.scanSingleLineCommentTriviaLength();
+                            commentInfo = ScannerConstants.CommentTriviaBitMask;
+                            this.scanSingleLineCommentTriviaLength();
                             continue;
                         }
 
                         if (ch2 === CharacterCodes.asterisk) {
-                            hasCommentOrNewLine |= SyntaxConstants.TriviaCommentMask;
-                            width += this.scanMultiLineCommentTriviaLength(diagnostics);
+                            commentInfo = ScannerConstants.CommentTriviaBitMask;
+                            this.scanMultiLineCommentTriviaLength(diagnostics);
                             continue;
                         }
 
@@ -301,8 +321,8 @@ module TypeScript {
                     case CharacterCodes.lineFeed:
                     case CharacterCodes.paragraphSeparator:
                     case CharacterCodes.lineSeparator:
-                        hasCommentOrNewLine |= SyntaxConstants.TriviaNewLineMask;
-                        width += this.scanLineTerminatorSequenceLength(ch);
+                        newLineInfo = ScannerConstants.NewLineTriviaBitMask;
+                        this.scanLineTerminatorSequenceLength(ch);
 
                         // If we're consuming leading trivia, then we will continue consuming more 
                         // trivia (including newlines) up to the first token we see.  If we're 
@@ -314,7 +334,7 @@ module TypeScript {
                         break;
                 }
 
-                return (width << SyntaxConstants.TriviaFullWidthShift) | hasCommentOrNewLine;
+                return commentInfo + newLineInfo + whitespaceInfo;
             }
         }
 
@@ -330,7 +350,7 @@ module TypeScript {
             }
         }
 
-        private scanWhitespaceTrivia(tokenText: string, tokenFullStart: number, firstTriviaStartInToken: number): ISyntaxTrivia {
+        private scanWhitespaceTrivia(): ISyntaxTrivia {
             // We're going to be extracting text out of sliding window.  Make sure it can't move past
             // this point.
             var absoluteStartIndex = this.absoluteIndex();
@@ -362,100 +382,93 @@ module TypeScript {
                     case CharacterCodes.formFeed:
                     case CharacterCodes.byteOrderMark:
                         // Normal whitespace.  Consume and continue.
-                        this.slidingWindow.moveToNextItem();
+                        this._index++;
                         continue;
                 }
 
                 break;
             }
 
-            return this.createTrivia(SyntaxKind.WhitespaceTrivia, tokenText, tokenFullStart, firstTriviaStartInToken, absoluteStartIndex);
+            return this.createTrivia(SyntaxKind.WhitespaceTrivia, absoluteStartIndex);
         }
 
-        private createTrivia(kind: SyntaxKind, tokenText: string, tokenFullStart: number, firstTriviaStartInToken: number, absoluteStartIndex: number): ISyntaxTrivia {
-            var thisTriviaStartInToken = firstTriviaStartInToken + absoluteStartIndex;
-            return Syntax.deferredTrivia(kind,
-                /*fullStart:*/ tokenFullStart + thisTriviaStartInToken,
-                tokenText,
-                /*startInTokenText:*/ thisTriviaStartInToken,
-                /*fullWidth:*/ this.absoluteIndex() - absoluteStartIndex);
+        private createTrivia(kind: SyntaxKind, absoluteStartIndex: number): ISyntaxTrivia {
+            var fullWidth = this.absoluteIndex() - absoluteStartIndex;
+            return Syntax.deferredTrivia(kind, this._fullText, absoluteStartIndex, fullWidth);
         }
 
-        private scanSingleLineCommentTrivia(tokenText: string, tokenFullStart: number, firstTriviaStartInToken: number): ISyntaxTrivia {
+        private scanSingleLineCommentTrivia(): ISyntaxTrivia {
             var absoluteStartIndex = this.absoluteIndex();
             this.scanSingleLineCommentTriviaLength();
 
-            return this.createTrivia(SyntaxKind.SingleLineCommentTrivia, tokenText, tokenFullStart, firstTriviaStartInToken, absoluteStartIndex);
+            return this.createTrivia(SyntaxKind.SingleLineCommentTrivia, absoluteStartIndex);
         }
 
         private scanSingleLineCommentTriviaLength(): number {
-            this.slidingWindow.moveToNextItem();
-            this.slidingWindow.moveToNextItem();
+            this._index += 2;
 
             // The '2' is for the "//" we consumed.
             var width = 2;
             while (true) {
-                if (this.slidingWindow.isAtEndOfSource() || this.isNewLineCharacter(this.currentCharCode())) {
+                if (this.isAtEndOfSource() || this.isNewLineCharacter(this.currentCharCode())) {
                     return width;
                 }
 
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 width++;
             }
         }
 
-        private scanMultiLineCommentTrivia(tokenText: string, tokenFullStart: number, firstTriviaStartInToken: number): ISyntaxTrivia {
+        private scanMultiLineCommentTrivia(): ISyntaxTrivia {
             var absoluteStartIndex = this.absoluteIndex();
             this.scanMultiLineCommentTriviaLength(null);
 
-            return this.createTrivia(SyntaxKind.MultiLineCommentTrivia, tokenText, tokenFullStart, firstTriviaStartInToken, absoluteStartIndex);
+            return this.createTrivia(SyntaxKind.MultiLineCommentTrivia, absoluteStartIndex);
         }
 
         private scanMultiLineCommentTriviaLength(diagnostics: Diagnostic[]): number {
-            this.slidingWindow.moveToNextItem();
-            this.slidingWindow.moveToNextItem();
+            this._index += 2;
 
             // The '2' is for the "/*" we consumed.
             var width = 2;
             while (true) {
-                if (this.slidingWindow.isAtEndOfSource()) {
+                if (this.isAtEndOfSource()) {
                     if (diagnostics !== null) {
                         diagnostics.push(new Diagnostic(
                             this.fileName,
-                            this.text.lineMap(),
-                            this.slidingWindow.absoluteIndex(), 0, DiagnosticCode.AsteriskSlash_expected, null));
+                            this._lineMap,
+                            this._length, 0, DiagnosticCode.AsteriskSlash_expected, null));
                     }
 
                     return width;
                 }
 
                 var ch = this.currentCharCode();
-                if (ch === CharacterCodes.asterisk && this.slidingWindow.peekItemN(1) === CharacterCodes.slash) {
-                    this.slidingWindow.moveToNextItem();
-                    this.slidingWindow.moveToNextItem();
+                if (ch === CharacterCodes.asterisk && this.peekCharCodeN(1) === CharacterCodes.slash) {
+                    this._index += 2;
                     width += 2;
                     return width;
                 }
 
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 width++;
             }
         }
 
-        private scanLineTerminatorSequenceTrivia(tokenText: string, tokenFullStart: number, firstTriviaStartInToken: number, ch: number): ISyntaxTrivia {
+        private scanLineTerminatorSequenceTrivia(ch: number): ISyntaxTrivia {
             var absoluteStartIndex = this.absoluteIndex();
             this.scanLineTerminatorSequenceLength(ch);
 
-            return this.createTrivia(SyntaxKind.NewLineTrivia, tokenText, tokenFullStart, firstTriviaStartInToken, absoluteStartIndex);
+            return this.createTrivia(SyntaxKind.NewLineTrivia, absoluteStartIndex);
         }
 
         private scanLineTerminatorSequenceLength(ch: number): number {
             // Consume the first of the line terminator we saw.
-            this.slidingWindow.moveToNextItem();
+            this._index++;
 
             // If it happened to be a \r and there's a following \n, then consume both.
             if (ch === CharacterCodes.carriageReturn && this.currentCharCode() === CharacterCodes.lineFeed) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return 2;
             }
             else {
@@ -464,7 +477,7 @@ module TypeScript {
         }
 
         private scanSyntaxToken(diagnostics: Diagnostic[], allowRegularExpression: boolean): SyntaxKind {
-            if (this.slidingWindow.isAtEndOfSource()) {
+            if (this.isAtEndOfSource()) {
                 return SyntaxKind.EndOfFileToken;
             }
 
@@ -589,53 +602,42 @@ module TypeScript {
         }
 
         private tryFastScanIdentifierOrKeyword(firstCharacter: number): SyntaxKind {
-            var slidingWindow = this.slidingWindow;
-            var window: number[] = slidingWindow.window;
-
-            var startIndex = slidingWindow.currentRelativeItemIndex;
-            var endIndex = slidingWindow.windowCount;
-            var currentIndex = startIndex;
+            var startIndex = this._index;
             var character: number = 0;
 
             // Note that we go up to the windowCount-1 so that we can read the character at the end
             // of the window and check if it's *not* an identifier part character.
-            while (currentIndex < endIndex) {
-                character = window[currentIndex];
+            while (this._index < this._length) {
+                character = this._string.charCodeAt(this._index);
                 if (!isIdentifierPartCharacter[character]) {
                     break;
                 }
 
-                currentIndex++;
+                this._index++;
             }
 
-            if (currentIndex === endIndex) {
-                // We reached the end of the characters in the sliding window.  They were all 
-                // identifier characters.  Since we don't know what the next character is, we can't
-                // tell what we've got here.  So just bail out to the slow path.
-                return SyntaxKind.None;
-            }
-            else if (character === CharacterCodes.backslash || character > CharacterCodes.maxAsciiCharacter) {
+
+
+            if (this._index < this._length && (character === CharacterCodes.backslash || character > CharacterCodes.maxAsciiCharacter)) {
                 // We saw a \ (which could start a unicode escape), or we saw a unicode character.
                 // This can't be scanned quickly.  Don't update the window position and just bail out
                 // to the slow path.
+                this._index = startIndex;
                 return SyntaxKind.None;
             }
             else {
                 // Saw an ascii character that wasn't a backslash and wasn't an identifier 
-                // character.  This identifier is done.
+                // character.  Or we hit the end of the file  This identifier is done.
 
                 // Also check if it a keyword if it started with a lowercase letter.
                 var kind: SyntaxKind;
-                var identifierLength = currentIndex - startIndex;
+                var identifierLength = this._index - startIndex;
                 if (isKeywordStartCharacter[firstCharacter]) {
-                    kind = ScannerUtilities.identifierKind(window, startIndex, identifierLength);
+                    kind = ScannerUtilities.identifierKind(this._string, startIndex, identifierLength);
                 }
                 else {
                     kind = SyntaxKind.IdentifierName;
                 }
-
-                // Now, update the position of the sliding window so it's pointing at the right place.
-                slidingWindow.setAbsoluteIndex(slidingWindow.absoluteIndex() + identifierLength);
 
                 return kind;
             }
@@ -644,12 +646,10 @@ module TypeScript {
         // A slow path for scanning identifiers.  Called when we run into a unicode character or 
         // escape sequence while processing the fast path.
         private slowScanIdentifierOrKeyword(diagnostics: Diagnostic[]): SyntaxKind {
-            var startIndex = this.slidingWindow.absoluteIndex();
-            var sawUnicodeEscape = false;
+            var startIndex = this._index;
 
             do {
-                var unicodeEscape = this.scanCharOrUnicodeEscape(diagnostics);
-                sawUnicodeEscape = sawUnicodeEscape || unicodeEscape;
+                this.scanCharOrUnicodeEscape(diagnostics);
             }
             while (this.isIdentifierPart(this.peekCharOrUnicodeEscape()));
 
@@ -661,18 +661,13 @@ module TypeScript {
             // of the ReservedWord.
             //
             // i.e. "\u0076ar" is the keyword 'var'.  Check for that here.
-            var length = this.slidingWindow.absoluteIndex() - startIndex;
-            var text = this.text.substr(startIndex, length, /*intern:*/ false);
+            var length = this._index - startIndex;
+            var text = this._string.substr(startIndex, length);
             var valueText = Syntax.massageEscapes(text);
 
             var keywordKind = SyntaxFacts.getTokenKind(valueText);
             if (keywordKind >= SyntaxKind.FirstKeyword && keywordKind <= SyntaxKind.LastKeyword) {
-                if (sawUnicodeEscape) {
-                    return keywordKind | SyntaxConstants.IsVariableWidthKeyword;
-                }
-                else {
-                    return keywordKind;
-                }
+                return keywordKind;
             }
 
             return SyntaxKind.IdentifierName;
@@ -693,25 +688,25 @@ module TypeScript {
         }
 
         private isOctalNumericLiteral(): boolean {
-            return this.currentCharCode() === CharacterCodes._0 && CharacterInfo.isOctalDigit(this.slidingWindow.peekItemN(1));
+            return this.currentCharCode() === CharacterCodes._0 && CharacterInfo.isOctalDigit(this.peekCharCodeN(1));
         }
 
         private scanOctalNumericLiteral(diagnostics: Diagnostic[]): void {
             var position = this.absoluteIndex();
 
             while (CharacterInfo.isOctalDigit(this.currentCharCode())) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
             }
 
-            if (this.languageVersion() >= LanguageVersion.EcmaScript5) {
-                diagnostics.push(new Diagnostic(this.fileName, this.text.lineMap(),
+            if (this.languageVersion() >= LanguageVersion.EcmaScript5 && diagnostics !== null) {
+                diagnostics.push(new Diagnostic(this.fileName, this._lineMap,
                     position, this.absoluteIndex() - position, DiagnosticCode.Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher, null));
             }
         }
 
         private scanDecimalDigits(): void {
             while (CharacterInfo.isDecimalDigit(this.currentCharCode())) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
             }
         }
 
@@ -719,7 +714,7 @@ module TypeScript {
             this.scanDecimalDigits();
 
             if (this.currentCharCode() === CharacterCodes.dot) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
             }
 
             this.scanDecimalDigits();
@@ -731,22 +726,21 @@ module TypeScript {
             var ch = this.currentCharCode();
             if (ch === CharacterCodes.e || ch === CharacterCodes.E) {
                 // Ok, we've got 'e' or 'E'.  Make sure it's followed correctly.
-                var nextChar1 = this.slidingWindow.peekItemN(1);
+                var nextChar1 = this.peekCharCodeN(1);
 
                 if (CharacterInfo.isDecimalDigit(nextChar1)) {
                     // e<number> or E<number>
                     // Consume 'e' or 'E' and the number portion.
-                    this.slidingWindow.moveToNextItem();
+                    this._index++;
                     this.scanDecimalDigits();
                 }
                 else if (nextChar1 === CharacterCodes.minus || nextChar1 === CharacterCodes.plus) {
                     // e+ or E+ or e- or E-
-                    var nextChar2 = this.slidingWindow.peekItemN(2);
+                    var nextChar2 = this.peekCharCodeN(2);
                     if (CharacterInfo.isDecimalDigit(nextChar2)) {
                         // e+<number> or E+<number> or e-<number> or E-<number>
                         // Consume first two characters and the number portion.
-                        this.slidingWindow.moveToNextItem();
-                        this.slidingWindow.moveToNextItem();
+                        this._index += 2;
                         this.scanDecimalDigits();
                     }
                 }
@@ -757,20 +751,19 @@ module TypeScript {
             // Debug.assert(this.isHexNumericLiteral());
 
             // Move past the 0x.
-            this.slidingWindow.moveToNextItem();
-            this.slidingWindow.moveToNextItem();
+            this._index += 2;
 
             while (CharacterInfo.isHexDigit(this.currentCharCode())) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
             }
         }
 
         private isHexNumericLiteral(): boolean {
             if (this.currentCharCode() === CharacterCodes._0) {
-                var ch = this.slidingWindow.peekItemN(1);
+                var ch = this.peekCharCodeN(1);
 
                 if (ch === CharacterCodes.x || ch === CharacterCodes.X) {
-                    ch = this.slidingWindow.peekItemN(2);
+                    ch = this.peekCharCodeN(2);
 
                     return CharacterInfo.isHexDigit(ch);
                 }
@@ -780,20 +773,20 @@ module TypeScript {
         }
 
         private advanceAndSetTokenKind(kind: SyntaxKind): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             return kind;
         }
 
         private scanLessThanToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             if (this.currentCharCode() === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.LessThanEqualsToken;
             }
             else if (this.currentCharCode() === CharacterCodes.lessThan) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 if (this.currentCharCode() === CharacterCodes.equals) {
-                    this.slidingWindow.moveToNextItem();
+                    this._index++;
                     return SyntaxKind.LessThanLessThanEqualsToken;
                 }
                 else {
@@ -806,13 +799,13 @@ module TypeScript {
         }
 
         private scanBarToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             if (this.currentCharCode() === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.BarEqualsToken;
             }
             else if (this.currentCharCode() === CharacterCodes.bar) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.BarBarToken;
             }
             else {
@@ -821,9 +814,9 @@ module TypeScript {
         }
 
         private scanCaretToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             if (this.currentCharCode() === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.CaretEqualsToken;
             }
             else {
@@ -832,14 +825,14 @@ module TypeScript {
         }
 
         private scanAmpersandToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             var character = this.currentCharCode();
             if (character === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.AmpersandEqualsToken;
             }
             else if (this.currentCharCode() === CharacterCodes.ampersand) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.AmpersandAmpersandToken;
             }
             else {
@@ -848,9 +841,9 @@ module TypeScript {
         }
 
         private scanPercentToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             if (this.currentCharCode() === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.PercentEqualsToken;
             }
             else {
@@ -859,15 +852,15 @@ module TypeScript {
         }
 
         private scanMinusToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             var character = this.currentCharCode();
 
             if (character === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.MinusEqualsToken;
             }
             else if (character === CharacterCodes.minus) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.MinusMinusToken;
             }
             else {
@@ -876,14 +869,14 @@ module TypeScript {
         }
 
         private scanPlusToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             var character = this.currentCharCode();
             if (character === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.PlusEqualsToken;
             }
             else if (character === CharacterCodes.plus) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.PlusPlusToken;
             }
             else {
@@ -892,9 +885,9 @@ module TypeScript {
         }
 
         private scanAsteriskToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             if (this.currentCharCode() === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.AsteriskEqualsToken;
             }
             else {
@@ -903,13 +896,13 @@ module TypeScript {
         }
 
         private scanEqualsToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             var character = this.currentCharCode();
             if (character === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
 
                 if (this.currentCharCode() === CharacterCodes.equals) {
-                    this.slidingWindow.moveToNextItem();
+                    this._index++;
 
                     return SyntaxKind.EqualsEqualsEqualsToken;
                 }
@@ -918,7 +911,7 @@ module TypeScript {
                 }
             }
             else if (character === CharacterCodes.greaterThan) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.EqualsGreaterThanToken;
             }
             else {
@@ -928,7 +921,7 @@ module TypeScript {
 
         private isDotPrefixedNumericLiteral(): boolean {
             if (this.currentCharCode() === CharacterCodes.dot) {
-                var ch = this.slidingWindow.peekItemN(1);
+                var ch = this.peekCharCodeN(1);
                 return CharacterInfo.isDecimalDigit(ch);
             }
 
@@ -940,12 +933,11 @@ module TypeScript {
                 return this.scanNumericLiteral(diagnostics);
             }
 
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             if (this.currentCharCode() === CharacterCodes.dot &&
-                this.slidingWindow.peekItemN(1) === CharacterCodes.dot) {
+                this.peekCharCodeN(1) === CharacterCodes.dot) {
 
-                this.slidingWindow.moveToNextItem();
-                this.slidingWindow.moveToNextItem();
+                this._index += 2;
                 return SyntaxKind.DotDotDotToken;
             }
             else {
@@ -965,9 +957,9 @@ module TypeScript {
                 }
             }
 
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             if (this.currentCharCode() === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 return SyntaxKind.SlashEqualsToken;
             }
             else {
@@ -978,22 +970,21 @@ module TypeScript {
         private tryScanRegularExpressionToken(): SyntaxKind {
             // Debug.assert(this.currentCharCode() === CharacterCodes.slash);
 
-            var startIndex = this.slidingWindow.getAndPinAbsoluteIndex();
+            var startIndex = this.absoluteIndex();
 
-            this.slidingWindow.moveToNextItem();
+            this._index++;
 
             var inEscape = false;
             var inCharacterClass = false;
             while (true) {
                 var ch = this.currentCharCode();
 
-                if (this.isNewLineCharacter(ch) || this.slidingWindow.isAtEndOfSource()) {
-                    this.slidingWindow.rewindToPinnedIndex(startIndex);
-                    this.slidingWindow.releaseAndUnpinAbsoluteIndex(startIndex);
+                if (this.isNewLineCharacter(ch) || this.isAtEndOfSource()) {
+                    this.setAbsoluteIndex(startIndex);
                     return SyntaxKind.None;
                 }
 
-                this.slidingWindow.moveToNextItem();
+                this._index++;
                 if (inEscape) {
                     inEscape = false;
                     continue;
@@ -1041,20 +1032,19 @@ module TypeScript {
             // TODO: The grammar says any identifier part is allowed here.  Do we need to support
             // \u identifiers here?  The existing typescript parser does not.  
             while (isIdentifierPartCharacter[this.currentCharCode()]) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
             }
 
-            this.slidingWindow.releaseAndUnpinAbsoluteIndex(startIndex);
             return SyntaxKind.RegularExpressionLiteral;
         }
 
         private scanExclamationToken(): SyntaxKind {
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             if (this.currentCharCode() === CharacterCodes.equals) {
-                this.slidingWindow.moveToNextItem();
+                this._index++;
 
                 if (this.currentCharCode() === CharacterCodes.equals) {
-                    this.slidingWindow.moveToNextItem();
+                    this._index++;
 
                     return SyntaxKind.ExclamationEqualsEqualsToken;
                 }
@@ -1068,13 +1058,15 @@ module TypeScript {
         }
 
         private scanDefaultCharacter(character: number, diagnostics: Diagnostic[]): SyntaxKind {
-            var position = this.slidingWindow.absoluteIndex();
-            this.slidingWindow.moveToNextItem();
+            var position = this.absoluteIndex();
+            this._index++;
 
-            var text = String.fromCharCode(character);
-            var messageText = this.getErrorMessageText(text);
-            diagnostics.push(new Diagnostic(this.fileName, this.text.lineMap(),
-                position, 1, DiagnosticCode.Unexpected_character_0, [messageText]));
+            if (diagnostics !== null) {
+                var text = String.fromCharCode(character);
+                var messageText = this.getErrorMessageText(text);
+                diagnostics.push(new Diagnostic(this.fileName, this._lineMap,
+                    position, 1, DiagnosticCode.Unexpected_character_0, [messageText]));
+            }
 
             return SyntaxKind.ErrorToken;
         }
@@ -1094,25 +1086,25 @@ module TypeScript {
         private skipEscapeSequence(diagnostics: Diagnostic[]): void {
             // Debug.assert(this.currentCharCode() === CharacterCodes.backslash);
 
-            var rewindPoint = this.slidingWindow.getAndPinAbsoluteIndex();
+            var rewindPoint = this._index;
 
             // Consume the backslash.
-            this.slidingWindow.moveToNextItem();
+            this._index++;
 
             // Get the char after the backslash
             var ch = this.currentCharCode();
-            this.slidingWindow.moveToNextItem();
+            this._index++;
             switch (ch) {
                 case CharacterCodes.x:
                 case CharacterCodes.u:
-                    this.slidingWindow.rewindToPinnedIndex(rewindPoint);
+                    this.setAbsoluteIndex(rewindPoint);
                     var value = this.scanUnicodeOrHexEscape(diagnostics);
                     break;
 
                 case CharacterCodes.carriageReturn:
                     // If it's \r\n then consume both characters.
                     if (this.currentCharCode() === CharacterCodes.lineFeed) {
-                        this.slidingWindow.moveToNextItem();
+                        this._index++;
                     }
                     break;
 
@@ -1138,8 +1130,6 @@ module TypeScript {
                     // NonEscapeCharacter :: SourceCharacter but notEscapeCharacter or LineTerminator
                     break;
             }
-
-            this.slidingWindow.releaseAndUnpinAbsoluteIndex(rewindPoint);
         }
 
         private scanStringLiteral(diagnostics: Diagnostic[]): SyntaxKind {
@@ -1147,7 +1137,7 @@ module TypeScript {
 
             // Debug.assert(quoteCharacter === CharacterCodes.singleQuote || quoteCharacter === CharacterCodes.doubleQuote);
 
-            this.slidingWindow.moveToNextItem();
+            this._index++;
 
             while (true) {
                 var ch = this.currentCharCode();
@@ -1155,16 +1145,18 @@ module TypeScript {
                     this.skipEscapeSequence(diagnostics);
                 }
                 else if (ch === quoteCharacter) {
-                    this.slidingWindow.moveToNextItem();
+                    this._index++;
                     break;
                 }
-                else if (this.isNewLineCharacter(ch) || this.slidingWindow.isAtEndOfSource()) {
-                    diagnostics.push(new Diagnostic(this.fileName, this.text.lineMap(),
-                        MathPrototype.min(this.slidingWindow.absoluteIndex(), this.text.length()), 1, DiagnosticCode.Missing_close_quote_character, null));
+                else if (this.isNewLineCharacter(ch) || this.isAtEndOfSource()) {
+                    if (diagnostics !== null) {
+                        diagnostics.push(new Diagnostic(this.fileName, this._lineMap,
+                            MathPrototype.min(this._index, this._length), 1, DiagnosticCode.Missing_close_quote_character, null));
+                    }
                     break;
                 }
                 else {
-                    this.slidingWindow.moveToNextItem();
+                    this._index++;
                 }
             }
 
@@ -1173,7 +1165,7 @@ module TypeScript {
 
         private isUnicodeEscape(character: number): boolean {
             if (character === CharacterCodes.backslash) {
-                var ch2 = this.slidingWindow.peekItemN(1);
+                var ch2 = this.peekCharCodeN(1);
                 if (ch2 === CharacterCodes.u) {
                     return true;
                 }
@@ -1193,43 +1185,41 @@ module TypeScript {
         }
 
         private peekUnicodeOrHexEscape(): number {
-            var startIndex = this.slidingWindow.getAndPinAbsoluteIndex();
+            var startIndex = this._index;
 
             // if we're peeking, then we don't want to change the position
             var ch = this.scanUnicodeOrHexEscape(/*errors:*/ null);
 
-            this.slidingWindow.rewindToPinnedIndex(startIndex);
-            this.slidingWindow.releaseAndUnpinAbsoluteIndex(startIndex);
+            this._index = startIndex;
 
             return ch;
         }
 
         // Returns true if this was a unicode escape.
-        private scanCharOrUnicodeEscape(errors: Diagnostic[]): boolean {
+        private scanCharOrUnicodeEscape(errors: Diagnostic[]): void {
             var ch = this.currentCharCode();
             if (ch === CharacterCodes.backslash) {
-                var ch2 = this.slidingWindow.peekItemN(1);
+                var ch2 = this.peekCharCodeN(1);
                 if (ch2 === CharacterCodes.u) {
                     this.scanUnicodeOrHexEscape(errors);
-                    return true;
+                    return;
                 }
             }
 
-            this.slidingWindow.moveToNextItem();
-            return false;
+            this._index++;
         }
 
         private scanUnicodeOrHexEscape(errors: Diagnostic[]): number {
-            var start = this.slidingWindow.absoluteIndex();
+            var start = this._index;
             var character = this.currentCharCode();
             // Debug.assert(character === CharacterCodes.backslash);
-            this.slidingWindow.moveToNextItem();
+            this._index++;
 
             character = this.currentCharCode();
             // Debug.assert(character === CharacterCodes.u || character === CharacterCodes.x);
 
             var intChar = 0;
-            this.slidingWindow.moveToNextItem();
+            this._index++;
 
             var count = character === CharacterCodes.u ? 4 : 2;
 
@@ -1237,7 +1227,7 @@ module TypeScript {
                 var ch2 = this.currentCharCode();
                 if (!CharacterInfo.isHexDigit(ch2)) {
                     if (errors !== null) {
-                        var end = this.slidingWindow.absoluteIndex();
+                        var end = this._index;
                         var info = this.createIllegalEscapeDiagnostic(start, end);
                         errors.push(info);
                     }
@@ -1246,36 +1236,234 @@ module TypeScript {
                 }
 
                 intChar = (intChar << 4) + CharacterInfo.hexValue(ch2);
-                this.slidingWindow.moveToNextItem();
+                this._index++;
             }
 
             return intChar;
         }
 
-        public substring(start: number, end: number, intern: boolean): string {
-            var length = end - start;
-            var offset = start - this.slidingWindow.windowAbsoluteStartIndex;
-
-            // Debug.assert(offset >= 0);
-            if (intern) {
-                return Collections.DefaultStringTable.addCharArray(this.slidingWindow.window, offset, length);
-            }
-            else {
-                return StringUtilities.fromCharCodeArray(<number[]>this.slidingWindow.window.slice(offset, offset + length));
-            }
-        }
-
         private createIllegalEscapeDiagnostic(start: number, end: number): Diagnostic {
-            return new Diagnostic(this.fileName, this.text.lineMap(),start, end - start,
+            return new Diagnostic(this.fileName, this._lineMap, start, end - start,
                 DiagnosticCode.Unrecognized_escape_sequence, null);
         }
 
         public static isValidIdentifier(text: ISimpleText, languageVersion: LanguageVersion): boolean {
-            var scanner = new Scanner(/*fileName:*/ null, text, languageVersion, Scanner.triviaWindow);
+            var scanner = new Scanner(/*fileName:*/ null, languageVersion, text);
             var errors = new Array<Diagnostic>();
             var token = scanner.scan(errors, false);
 
             return errors.length === 0 && SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && token.width() === text.length();
         }
+    }
+
+    var triviaScanner = new Scanner(null, LanguageVersion.EcmaScript5, null);
+
+    var sizeInfo = { leadingTriviaWidth: -1, width: -1 };
+    var sizeInfoToken: ScannerToken = null;
+
+    class ScannerToken implements ISyntaxToken {
+        public parent: ISyntaxElement = null;
+        private _syntaxID: number;
+
+        constructor(private _text: ISimpleText,
+                    private _packedFullStartAndTriviaInfo: number,
+                    private _packedFullWidthAndKind: number) {
+        }
+
+        public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
+            this._text = text;
+            this._packedFullStartAndTriviaInfo = packFullStartAndTriviaInfo(fullStart,
+                unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo),
+                unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo));
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === undefined) {
+                this._syntaxID = Syntax._nextSyntaxID++;
+            }
+
+            return this._syntaxID;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
+        public kind(): SyntaxKind {
+            return unpackKind(this._packedFullWidthAndKind);
+        }
+
+        public isNode(): boolean { return false; }
+        public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return false; }
+        public isList(): boolean { return false; }
+        public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
+
+        public childCount(): number { return 0; }
+        public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
+
+        public isShared(): boolean { return false; }
+
+        public isTypeScriptSpecific(): boolean { return false; }
+
+        public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind()); }
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
+
+        public fullWidth(): number { return unpackFullWidth(this._packedFullWidthAndKind); }
+        public fullStart(): number { return unpackFullStart(this._packedFullStartAndTriviaInfo); }
+        public fullEnd(): number { return this.fullStart() + this.fullWidth(); }
+
+        public fillSizeInfo(): void {
+            if (sizeInfoToken !== this) {
+                // TODO: share this scanner instance.
+                triviaScanner.reset(this._text, this.fullStart(), this.fullEnd());
+                triviaScanner.fillSizeInfo(this.kind() === SyntaxKind.RegularExpressionLiteral);
+
+                sizeInfoToken = this;
+            }
+        }
+
+        public width(): number {
+            this.fillSizeInfo();
+            return sizeInfo.width;
+        }
+
+        public start(): number {
+            this.fillSizeInfo();
+            return this.fullStart() + sizeInfo.leadingTriviaWidth;
+        }
+
+        public end(): number {
+            this.fillSizeInfo();
+            return this.fullStart() + sizeInfo.leadingTriviaWidth + sizeInfo.width;
+        }
+
+        public fullText(): string {
+            return this._text.substr(this.fullStart(), this.fullWidth());
+        }
+
+        public text(): string {
+            this.fillSizeInfo();
+            return this._text.substr(this.fullStart() + sizeInfo.leadingTriviaWidth, sizeInfo.width);
+        }
+
+        public value(): any { return Syntax.value(this); }
+        public valueText(): string { return Syntax.valueText(this); }
+
+        public toJSON(key: any): any { return Syntax.tokenToJSON(this); }
+
+        public leadingTrivia(): ISyntaxTriviaList {
+            if (!this.hasLeadingTrivia()) {
+                return Syntax.emptyTriviaList;
+            }
+
+            this.fillSizeInfo();
+
+            var fullStart = this.fullStart();
+            triviaScanner.reset(this._text, fullStart, fullStart + sizeInfo.leadingTriviaWidth);
+            return triviaScanner.scanTrivia(this, /*isTrailing:*/ false);
+        }
+
+        public trailingTrivia(): ISyntaxTriviaList {
+            if (!this.hasTrailingTrivia()) {
+                return Syntax.emptyTriviaList;
+            }
+
+            this.fillSizeInfo();
+            var triviaStart = this.fullStart() + sizeInfo.leadingTriviaWidth + sizeInfo.width;
+            var fullEnd = this.fullEnd();
+            var triviaWidth = fullEnd - triviaStart;
+
+            triviaScanner.reset(this._text, triviaStart, fullEnd);
+            return triviaScanner.scanTrivia(this, /*isTrailing:*/ true);
+        }
+
+        public leadingTriviaWidth(): number {
+            if (!this.hasLeadingTrivia()) {
+                return 0;
+            }
+
+            this.fillSizeInfo();
+            return sizeInfo.leadingTriviaWidth;
+        }
+
+        public trailingTriviaWidth(): number {
+            if (!this.hasTrailingTrivia()) {
+                return 0;
+            }
+
+            this.fillSizeInfo();
+            return this.fullWidth() - sizeInfo.leadingTriviaWidth - sizeInfo.width;
+        }
+
+        public firstToken(): ISyntaxToken { return this; }
+        public lastToken(): ISyntaxToken { return this; }
+
+        public collectTextElements(elements: string[]): void {
+            elements.push(this.fullText());
+        }
+
+        public hasLeadingTrivia(): boolean {
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            return info !== 0;
+        }
+
+        public hasLeadingComment(): boolean {
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
+        }
+
+        public hasLeadingNewLine(): boolean {
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
+        }
+
+        public hasTrailingTrivia(): boolean {
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            return info !== 0;
+        }
+
+        public hasTrailingComment(): boolean {
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
+        }
+
+        public hasTrailingNewLine(): boolean {
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
+        }
+
+        public hasLeadingSkippedText(): boolean { return false; }
+        public hasTrailingSkippedText(): boolean { return false; }
+        public hasSkippedToken(): boolean { return false; }
+
+        public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
+            return Syntax.realizeToken(this).withLeadingTrivia(leadingTrivia);
+        }
+
+        public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
+            return Syntax.realizeToken(this).withTrailingTrivia(trailingTrivia);
+        }
+
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
+
+        public clone(): ISyntaxToken {
+            return new ScannerToken(this._text, this._packedFullStartAndTriviaInfo, this._packedFullWidthAndKind);
+        }
+
+        public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
+
+        public isPrimaryExpression(): boolean { return Syntax.isPrimaryExpression(this); }
+        public isExpression(): boolean { return this.isPrimaryExpression(); }
+        public isMemberExpression(): boolean { return this.isPrimaryExpression(); }
+        public isLeftHandSideExpression(): boolean { return this.isPrimaryExpression(); }
+        public isPostfixExpression(): boolean { return this.isPrimaryExpression(); }
+        public isUnaryExpression(): boolean { return this.isPrimaryExpression(); }
     }
 }

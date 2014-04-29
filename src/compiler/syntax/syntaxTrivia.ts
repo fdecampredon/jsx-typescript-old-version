@@ -186,16 +186,12 @@ module TypeScript.Syntax {
     }
 
     class DeferredTrivia extends AbstractTrivia {
-        private _fullText: string = null;
-
-        constructor(kind: SyntaxKind, private _fullStart: number, private _tokenText: string, private _startInTokenText: number, private _fullWidth: number) {
+        constructor(kind: SyntaxKind, private _text: ISimpleText, private _fullStart: number, private _fullWidth: number) {
             super(kind);
         }
 
         public clone(): ISyntaxTrivia {
-            var result = new DeferredTrivia(this.kind(), this._fullStart, this._tokenText, this._startInTokenText, this._fullWidth);
-            result._fullText = this._fullText;
-            return result;
+            return new DeferredTrivia(this.kind(), this._text, this._fullStart, this._fullWidth);
         }
 
         public fullStart(): number {
@@ -211,12 +207,7 @@ module TypeScript.Syntax {
         }
 
         public fullText(): string {
-            if (!this._fullText) {
-                this._fullText = this._tokenText.substr(this._startInTokenText, this._fullWidth);
-                this._tokenText = null;
-            }
-
-            return this._fullText;
+            return this._text.substr(this._fullStart, this._fullWidth);
         }
 
         public skippedToken(): ISyntaxToken {
@@ -224,8 +215,8 @@ module TypeScript.Syntax {
         }
     }
 
-    export function deferredTrivia(kind: SyntaxKind, fullStart: number, tokenText: string, startInTokenText: number, fullWidth: number): ISyntaxTrivia {
-        return new DeferredTrivia(kind, fullStart, tokenText, startInTokenText, fullWidth);
+    export function deferredTrivia(kind: SyntaxKind, text: ISimpleText, fullStart: number, fullWidth: number): ISyntaxTrivia {
+        return new DeferredTrivia(kind, text, fullStart, fullWidth);
     }
 
     export function trivia(kind: SyntaxKind, text: string, fullStart: number): ISyntaxTrivia {

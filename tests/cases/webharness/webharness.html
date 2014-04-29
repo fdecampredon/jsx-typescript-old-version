@@ -85,7 +85,7 @@
         function newIncrementalParse2() {
             run(function () {
                 var start = new Date().getTime();
-                tree = batch.newIncrementalParse2(tree2);
+                tree2 = batch.newIncrementalParse2(tree2);
                 var end = new Date().getTime();
                 appendTime("Incremental Parse", end - start);
             });

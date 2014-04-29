@@ -92,7 +92,7 @@ class Program {
 
         TypeScript.Environment.standardOut.WriteLine("Testing against 262.");
         this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\test262",
-            fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, /*verify:*/ true, /*generateBaselines:*/ generate));
+            fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
     }
 
     private static reusedElements(oldNode: TypeScript.SourceUnitSyntax, newNode: TypeScript.SourceUnitSyntax, key: any): { originalElements: number; reusedElements: number; } {
@@ -510,9 +510,8 @@ class Program {
         }
 
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
-
-        var text = TypeScript.TextFactory.createText(contents);
-        var scanner = new TypeScript.Scanner(fileName, text, languageVersion);
+        var text = TypeScript.SimpleText.fromString(contents);
+        var scanner = new TypeScript.Scanner(fileName, languageVersion, text);
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var textArray: string[] = [];
@@ -537,8 +536,8 @@ class Program {
 
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
 
-        var text = TypeScript.TextFactory.createText(contents);
-        var scanner = new TypeScript.Scanner(fileName, text, languageVersion);
+        var text = TypeScript.SimpleText.fromString(contents);
+        var scanner = new TypeScript.Scanner(fileName, languageVersion, text);
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var textArray: string[] = [];
