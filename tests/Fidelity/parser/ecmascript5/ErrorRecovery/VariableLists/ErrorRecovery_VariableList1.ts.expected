@@ -8,10 +8,7 @@
         {
             "start": 8,
             "length": 6,
-            "diagnosticCode": "Unexpected token; '{0}' expected.",
-            "arguments": [
-                "identifier"
-            ]
+            "diagnosticCode": "Identifier expected."
         }
     ],
     "sourceUnit": {
@@ -32,7 +29,6 @@
                 "end": 6,
                 "fullWidth": 8,
                 "width": 6,
-                "isIncrementallyUnusable": true,
                 "modifiers": [],
                 "variableDeclaration": {
                     "kind": "VariableDeclaration",
@@ -108,16 +104,6 @@
                             ]
                         }
                     ]
-                },
-                "semicolonToken": {
-                    "kind": "SemicolonToken",
-                    "fullStart": 8,
-                    "fullEnd": 8,
-                    "start": 8,
-                    "end": 8,
-                    "fullWidth": 0,
-                    "width": 0,
-                    "text": ""
                 }
             },
             {

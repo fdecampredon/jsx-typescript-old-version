@@ -208,9 +208,7 @@ module TypeScript.Services {
             if (typeSymbol.isClass() || typeSymbol.isInterface()) {
                 typesToSearch = typeSymbol.getTypesThatExtendThisType();
             }
-            else if (symbol.kind == TypeScript.PullElementKind.Property ||
-                symbol.kind == TypeScript.PullElementKind.Function ||
-                typeSymbol.isMethod() || typeSymbol.isProperty()) {
+            else if (symbol.kind == TypeScript.PullElementKind.Property || typeSymbol.isMethod() || typeSymbol.isProperty()) {
 
                 var declaration: TypeScript.PullDecl = symbol.getDeclarations()[0];
                 var classSymbol: TypeScript.PullTypeSymbol = declaration.getParentDecl().getSymbol().type;

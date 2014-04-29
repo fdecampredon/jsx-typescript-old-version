@@ -6,7 +6,7 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.js"></script>
     <script src='perfCompiler.js'></script>
     <script>
-        var repeat = 10;
+        var repeat = 1;
         var batch;
 
         if (!batch) {
@@ -79,6 +79,18 @@
             });
         }
 
+        var batch = new BatchCompiler();
+        var tree2 = batch.newParse2();
+
+        function newIncrementalParse2() {
+            run(function () {
+                var start = new Date().getTime();
+                tree = batch.newIncrementalParse2(tree2);
+                var end = new Date().getTime();
+                appendTime("Incremental Parse", end - start);
+            });
+        }
+
         function newIncrementalParseAndAST() {
             var batch = new BatchCompiler();
             var tree = batch.newParse();
@@ -107,6 +119,7 @@
     <button onclick="newParse()">Parse</button>
     <button onclick="newParseAndAST()">Parse + AST</button>
     <button onclick="newIncrementalParse()">Incremental Parse</button>
+    <button onclick="newIncrementalParse2()">Incremental Parse 2</button>
     <button onclick="newIncrementalParseAndAST()">Incremental Parse + AST</button>
     <button onclick="fullCompile()">Compile</button>
     <button onclick="clear1()">Clear</button>

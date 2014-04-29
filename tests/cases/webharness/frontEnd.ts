@@ -22,6 +22,7 @@ var compilerFileName = "compiler.ts";
 class BatchCompiler {
     public compiler: TypeScript.TypeScriptCompiler;
     private simpleText = TypeScript.SimpleText.fromString(compilerString);
+    private libSimpleText = TypeScript.SimpleText.fromString(libString);
     private libScriptSnapshot = TypeScript.ScriptSnapshot.fromString(libString);
     private compilerScriptSnapshot = TypeScript.ScriptSnapshot.fromString(compilerString);
 
@@ -46,11 +47,23 @@ class BatchCompiler {
             TypeScript.getParseOptions(TypeScript.ImmutableCompilationSettings.defaultSettings()));
     }
 
+    public newParse2(): TypeScript.SyntaxTree {
+        return TypeScript.Parser.parse(libraryFileName, this.libSimpleText, false,
+            TypeScript.getParseOptions(TypeScript.ImmutableCompilationSettings.defaultSettings()));
+    }
+
     public newIncrementalParse(tree: TypeScript.SyntaxTree): TypeScript.SyntaxTree {
         var width = 100;
         var span = new TypeScript.TextSpan(TypeScript.IntegerUtilities.integerDivide(compilerString.length - width, 2), width);
         var range = new TypeScript.TextChangeRange(span, width);
         return TypeScript.Parser.incrementalParse(tree, range, this.simpleText);
+    }
+
+    public newIncrementalParse2(tree: TypeScript.SyntaxTree): TypeScript.SyntaxTree {
+        var width = 1;
+        var span = new TypeScript.TextSpan(TypeScript.IntegerUtilities.integerDivide(libString.length - width, 2), width);
+        var range = new TypeScript.TextChangeRange(span, width);
+        return TypeScript.Parser.incrementalParse(tree, range, this.libSimpleText);
     }
 }
 

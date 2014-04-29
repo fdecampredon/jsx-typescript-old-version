@@ -573,14 +573,11 @@ module TypeScript.Syntax {
 
         var triviaList = token.trailingTrivia();
         if (includeSkippedTokens && triviaList && triviaList.hasSkippedToken()) {
-            var fullStart = token.end();
             for (var i = 0, n = triviaList.count(); i < n; i++) {
                 var trivia = triviaList.syntaxTriviaAt(i);
                 if (trivia.isSkippedToken()) {
                     return trivia.skippedToken();
                 }
-
-                fullStart += trivia.fullWidth();
             }
         }
 
@@ -615,8 +612,14 @@ module TypeScript.Syntax {
             var child = element.childAt(i);
 
             if (child !== null && child.fullWidth() > 0) {
-                if (position >= child.fullStart() && position < child.fullEnd()) {
-                    return findToken(child, position);
+                var childFullStart = child.fullStart();
+
+                if (position >= childFullStart) {
+                    var childFullEnd = childFullStart + child.fullWidth();
+
+                    if (position < childFullEnd) {
+                        return findToken(child, position);
+                    }
                 }
             }
         }

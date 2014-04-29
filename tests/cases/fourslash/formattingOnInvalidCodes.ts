@@ -172,7 +172,7 @@ verify.currentLineContentIs("                                    a++");
 goTo.marker("38");
 //bug 697788 expect result : "                                }", actual result : "                    }"
 //verify.currentLineContentIs("                                }");
-verify.currentLineContentIs("                    }");
+verify.currentLineContentIs("                                }");
 goTo.marker("39");
 verify.currentLineContentIs("                            }");
 goTo.marker("40");

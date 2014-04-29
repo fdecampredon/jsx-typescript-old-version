@@ -69,8 +69,6 @@ module TypeScript {
 
         // Begin batch compilation
         public batchCompile() {
-            var start = new Date().getTime();
-
             CompilerDiagnostics.diagnosticWriter = { Alert: (s: string) => { this.ioHost.printLine(s); } };
 
             // Parse command line options
@@ -708,8 +706,6 @@ module TypeScript {
         }
 
         resolveRelativePath(path: string, directory: string): string {
-            var start = new Date().getTime();
-
             var unQuotedPath = stripStartAndEndQuotes(path);
             var normalizedPath: string;
 

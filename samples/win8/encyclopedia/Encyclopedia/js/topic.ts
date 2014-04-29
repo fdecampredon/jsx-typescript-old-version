@@ -1,6 +1,3 @@
-///<reference path='win.ts'/>
-///<reference path='data.ts'/>
-
 interface Topic {
     group: any;
     title: string;
