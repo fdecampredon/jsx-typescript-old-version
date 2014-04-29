@@ -295,7 +295,7 @@ module TypeScript.Services {
         }
         catch (err) {
             if (err instanceof OperationCanceledException) {
-                return JSON.stringify({ cancelled: true });
+                return JSON.stringify({ canceled: true });
             }
             TypeScript.Services.logInternalError(logger, err);
             err.description = actionDescription;

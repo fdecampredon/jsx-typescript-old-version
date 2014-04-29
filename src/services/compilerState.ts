@@ -284,6 +284,9 @@ module TypeScript.Services {
             // Now, remove any files from the compiler that are no longer in hte host.
             var compilerFileNames = this.compiler.fileNames();
             for (var i = 0, n = compilerFileNames.length; i < n; i++) {
+
+                this.cancellationToken.throwIfCancellationRequested();
+
                 var fileName = compilerFileNames[i];
 
                 if (!this.hostCache.contains(fileName)) {
