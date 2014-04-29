@@ -158,7 +158,62 @@ module TypeScript {
         }
     }
 
-    export class DocumentRegistry {
+    export interface IDocumentRegistry {
+        acquireDocument(
+            fileName: string,
+            compilationSettings: ImmutableCompilationSettings,
+            scriptSnapshot: IScriptSnapshot,
+            byteOrderMark: ByteOrderMark,
+            version: number,
+            isOpen: boolean,
+            referencedFiles: string[]): TypeScript.Document;
+
+        updateDocument(
+            document: Document,
+            fileName: string,
+            compilationSettings: ImmutableCompilationSettings,
+            scriptSnapshot: IScriptSnapshot,
+            version: number,
+            isOpen: boolean,
+            textChangeRange: TextChangeRange
+            ): TypeScript.Document;
+
+        releaseDocument(fileName: string, compilationSettings: ImmutableCompilationSettings): void
+    }
+
+    export class NonCachingDocumentRegistry implements IDocumentRegistry {
+
+        public static Instance: IDocumentRegistry = new NonCachingDocumentRegistry();
+
+        public acquireDocument(
+            fileName: string,
+            compilationSettings: ImmutableCompilationSettings,
+            scriptSnapshot: IScriptSnapshot,
+            byteOrderMark: ByteOrderMark,
+            version: number,
+            isOpen: boolean,
+            referencedFiles: string[]= []): TypeScript.Document {
+            return Document.create(compilationSettings, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
+        }
+
+        public updateDocument(
+            document: Document,
+            fileName: string,
+            compilationSettings: ImmutableCompilationSettings,
+            scriptSnapshot: IScriptSnapshot,
+            version: number,
+            isOpen: boolean,
+            textChangeRange: TextChangeRange
+            ): TypeScript.Document {
+            return document.update(scriptSnapshot, version, isOpen, textChangeRange);
+        }
+
+        public releaseDocument(fileName: string, compilationSettings: ImmutableCompilationSettings): void {
+            // no op since this class doesn't cache anything
+        }
+    }
+
+    export class DocumentRegistry implements IDocumentRegistry {
         private buckets: StringHashTable <DocumentRegistryEntry> [] = [];
 
         private getKeyFromCompilationSettings(settings: ImmutableCompilationSettings): number {
@@ -201,7 +256,6 @@ module TypeScript {
             byteOrderMark: ByteOrderMark,
             version: number,
             isOpen: boolean,
-            owner: string,
             referencedFiles: string[]= []): TypeScript.Document {
 
             var bucket = this.getBucketForCompilationSettings(compilationSettings, /*createIfMissing*/ true);
@@ -214,11 +268,11 @@ module TypeScript {
             }
             entry.refCount++;
 
-            entry.owners.push(owner);
             return entry.document;
         }
 
         public updateDocument(
+            document: Document,
             fileName: string,
             compilationSettings: ImmutableCompilationSettings,
             scriptSnapshot: IScriptSnapshot,
@@ -240,16 +294,12 @@ module TypeScript {
             return entry.document;
         }
 
-        public releaseDocument(fileName: string, compilationSettings: ImmutableCompilationSettings, owner: string): void {
+        public releaseDocument(fileName: string, compilationSettings: ImmutableCompilationSettings): void {
             var bucket = this.getBucketForCompilationSettings(compilationSettings, false);
             Debug.assert(bucket);
 
             var entry = bucket.lookup(fileName);
             entry.refCount--;
-
-            var ownerIndex = entry.owners.indexOf(owner);
-            Debug.assert(ownerIndex !== -1);
-            entry.owners.splice(ownerIndex, 1)
 
             Debug.assert(entry.refCount >= 0);
             if (entry.refCount === 0) {
@@ -257,31 +307,6 @@ module TypeScript {
             }
         }
     }
-    
-    export interface ICancellationToken {
-        isCancellationRequested(): boolean;
-    }
-
-    export class OperationCanceledException { }
-
-    export class CancellationToken {
-
-        public static None: CancellationToken = new CancellationToken(null)
-
-        constructor(private cancellationToken: ICancellationToken) {
-        }
-
-        public isCancellationRequested() {
-            return this.cancellationToken && this.cancellationToken.isCancellationRequested();
-        }
-
-        public throwIfCancellationRequested(): void {
-            if (this.isCancellationRequested()) {
-                throw new OperationCanceledException();
-            }
-        }
-    }
-    
 
     export class TypeScriptCompiler {
         private semanticInfoChain: SemanticInfoChain = null;

@@ -14,7 +14,7 @@ module TypeScript.Services {
         private activeCompletionSession: CompletionSession = null;        
         private cancellationToken: CancellationToken;
 
-        constructor(public host: ILanguageServiceHost, documentRegistry: DocumentRegistry) {
+        constructor(public host: ILanguageServiceHost, documentRegistry: IDocumentRegistry) {
             this.logger = this.host;
             this.cancellationToken = new CancellationToken(this.host.getCancellationToken());
             this.compiler = new LanguageServiceCompiler(this.host, documentRegistry, this.cancellationToken);

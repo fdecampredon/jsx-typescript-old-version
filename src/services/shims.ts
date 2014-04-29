@@ -175,9 +175,7 @@ module TypeScript.Services {
     }
 
     export class LanguageServiceShimHostAdapter implements TypeScript.Services.ILanguageServiceHost {
-        private hostIdentifier: string;
         constructor(private shimHost: ILanguageServiceShimHost) {
-            this.hostIdentifier = shimHost.getHostIdentifier();
         }
 
         public information(): boolean {
@@ -271,10 +269,6 @@ module TypeScript.Services {
 
         public getParentDirectory(path: string): string {
             return this.shimHost.getParentDirectory(path);
-        }
-
-        public getHostIdentifier(): string {
-            return this.hostIdentifier;
         }
     }
 

@@ -969,7 +969,7 @@ module TypeScript {
         }
 
         constructor(rootSignature: PullSignatureSymbol, private _typeParameterSubstitutionMap: TypeSubstitutionMap) {
-            super(rootSignature.kind, rootSignature.isDefinition());
+            super(rootSignature.kind, rootSignature.semanticInfoChain, rootSignature.isDefinition());
             this.setRootSymbol(rootSignature);
             nSpecializedSignaturesCreated++;
 
@@ -1037,7 +1037,7 @@ module TypeScript {
         // We specifically do not set a root symbol here. Root symbols are only for instantiation.
         // This is distinct from instantiation.
         constructor(private originalTypeParameter: PullTypeParameterSymbol, private _typeParameterSubstitutionMapForConstraint: TypeSubstitutionMap) {
-            super(originalTypeParameter.name);
+            super(originalTypeParameter.name, originalTypeParameter.semanticInfoChain);
             var originalTypeParameterDeclarations = originalTypeParameter.getDeclarations();
             for (var i = 0; i < originalTypeParameterDeclarations.length; i++) {
                 this.addDeclaration(originalTypeParameterDeclarations[i]);

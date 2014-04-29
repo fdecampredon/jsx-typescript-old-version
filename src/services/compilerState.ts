@@ -297,7 +297,7 @@ module TypeScript.Services {
 
                 if (!this.hostCache.contains(fileName) || changesInCompilationSettingsAffectSyntax) {
                     this.compiler.removeFile(fileName);
-                    this.documentRegistry.releaseDocument(fileName, oldSettings, this.host.getHostIdentifier());
+                    this.documentRegistry.releaseDocument(fileName, oldSettings);
                 }
             }
 
@@ -333,10 +333,10 @@ module TypeScript.Services {
                         textChangeRange = this.hostCache.getScriptTextChangeRangeSinceVersion(fileName, document.version);
                     }
 
-                    document = this.documentRegistry.updateDocument(fileName, compilationSettings, scriptSnapshot, version, isOpen, textChangeRange);
+                    document = this.documentRegistry.updateDocument(document, fileName, compilationSettings, scriptSnapshot, version, isOpen, textChangeRange);
                 }
                 else {
-                    document = this.documentRegistry.acquireDocument(fileName, compilationSettings, scriptSnapshot, this.hostCache.getByteOrderMark(fileName), version, isOpen, this.host.getHostIdentifier())
+                    document = this.documentRegistry.acquireDocument(fileName, compilationSettings, scriptSnapshot, this.hostCache.getByteOrderMark(fileName), version, isOpen, []);
                 }
 
                 this.compiler.addOrUpdateFile(document);
@@ -467,7 +467,7 @@ module TypeScript.Services {
             if (this.compiler) {
                 var fileNames = this.compiler.fileNames();
                 for (var i = 0; i < fileNames.length; ++i) {
-                    this.documentRegistry.releaseDocument(fileNames[i], this.compiler.compilationSettings(), this.host.getHostIdentifier());
+                    this.documentRegistry.releaseDocument(fileNames[i], this.compiler.compilationSettings());
                 }
             }
         }
