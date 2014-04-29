@@ -1224,13 +1224,16 @@ module TypeScript {
 
             this.emitComments(varDecl, true);
             this.recordSourceMappingStart(varDecl);
-            var name = varDecl.propertyName.text();
-            var quoted = isQuoted(name);
+
+            var representation = (varDecl.propertyName.kind() === SyntaxKind.StringLiteral)
+                ? varDecl.propertyName.text()
+                : ('"' + varDecl.propertyName.valueText() + '"');
+
             this.writeToOutput(this.moduleName);
             this.writeToOutput('[');
             this.writeToOutput(this.moduleName);
             this.writeToOutput('[');
-            this.writeToOutput(quoted ? name : '"' + name + '"');
+            this.writeToOutput(representation);
             this.writeToOutput(']');
 
             if (varDecl.equalsValueClause) {
@@ -1245,7 +1248,7 @@ module TypeScript {
             }
 
             this.writeToOutput('] = ');
-            this.writeToOutput(quoted ? name : '"' + name + '"');
+            this.writeToOutput(representation);
             this.recordSourceMappingEnd(varDecl);
             this.emitComments(varDecl, false);
             this.writeToOutput(';');
