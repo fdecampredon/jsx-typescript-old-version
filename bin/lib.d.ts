@@ -4982,6 +4982,45 @@ declare var TextMetrics: {
 }
 
 interface DocumentEvent {
+    createEvent(eventInterface: "AnimationEvent"): AnimationEvent;
+    createEvent(eventInterface: "CloseEvent"): CloseEvent;
+    createEvent(eventInterface: "CompositionEvent"): CompositionEvent;
+    createEvent(eventInterface: "CustomEvent"): CustomEvent;
+    createEvent(eventInterface: "DeviceMotionEvent"): DeviceMotionEvent;
+    createEvent(eventInterface: "DeviceOrientationEvent"): DeviceOrientationEvent;
+    createEvent(eventInterface: "DragEvent"): DragEvent;
+    createEvent(eventInterface: "ErrorEvent"): ErrorEvent;
+    createEvent(eventInterface: "Event"): Event;
+    createEvent(eventInterface: "Events"): Event;
+    createEvent(eventInterface: "FocusEvent"): FocusEvent;
+    createEvent(eventInterface: "HTMLEvents"): Event;
+    createEvent(eventInterface: "IDBVersionChangeEvent"): IDBVersionChangeEvent;
+    createEvent(eventInterface: "KeyboardEvent"): KeyboardEvent;
+    createEvent(eventInterface: "LongRunningScriptDetectedEvent"): LongRunningScriptDetectedEvent;
+    createEvent(eventInterface: "MessageEvent"): MessageEvent;
+    createEvent(eventInterface: "MouseEvent"): MouseEvent;
+    createEvent(eventInterface: "MouseEvents"): MouseEvent;
+    createEvent(eventInterface: "MouseWheelEvent"): MouseWheelEvent;
+    createEvent(eventInterface: "MSGestureEvent"): MSGestureEvent;
+    createEvent(eventInterface: "MSPointerEvent"): MSPointerEvent;
+    createEvent(eventInterface: "MutationEvent"): MutationEvent;
+    createEvent(eventInterface: "MutationEvents"): MutationEvent;
+    createEvent(eventInterface: "NavigationCompletedEvent"): NavigationCompletedEvent;
+    createEvent(eventInterface: "NavigationEvent"): NavigationEvent;
+    createEvent(eventInterface: "PageTransitionEvent"): PageTransitionEvent;
+    createEvent(eventInterface: "PointerEvent"): MSPointerEvent;
+    createEvent(eventInterface: "PopStateEvent"): PopStateEvent;
+    createEvent(eventInterface: "ProgressEvent"): ProgressEvent;
+    createEvent(eventInterface: "StorageEvent"): StorageEvent;
+    createEvent(eventInterface: "SVGZoomEvents"): SVGZoomEvent;
+    createEvent(eventInterface: "TextEvent"): TextEvent;
+    createEvent(eventInterface: "TrackEvent"): TrackEvent;
+    createEvent(eventInterface: "TransitionEvent"): TransitionEvent;
+    createEvent(eventInterface: "UIEvent"): UIEvent;
+    createEvent(eventInterface: "UIEvents"): UIEvent;
+    createEvent(eventInterface: "UnviewableContentIdentifiedEvent"): UnviewableContentIdentifiedEvent;
+    createEvent(eventInterface: "WebGLContextEvent"): WebGLContextEvent;
+    createEvent(eventInterface: "WheelEvent"): WheelEvent;
     createEvent(eventInterface: string): Event;
 }
 
