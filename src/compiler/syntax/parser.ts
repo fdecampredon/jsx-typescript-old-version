@@ -600,6 +600,9 @@ module TypeScript.Parser {
                 return token;
             }
 
+            // If we produced any diagnostics while creating this token, then realize the token so 
+            // it won't be reused in incremental scenarios.
+
             this._tokenDiagnostics.push(lastDiagnostic);
             this.lastDiagnostic = null;
             return Syntax.realizeToken(token);

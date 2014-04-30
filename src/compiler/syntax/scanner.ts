@@ -168,12 +168,6 @@ module TypeScript {
             var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.FullStartShift) | leadingTriviaInfo | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
             var packedFullWidthAndKind = (fullWidth << ScannerConstants.FullWidthShift) | kind;
             return new ScannerToken(this._fullText, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
-
-            // If we produced any diagnostics while creating this token, then realize the token so 
-            // it won't be reused in incremental scenarios.
-            //return diagnosticsLength !== diagnostics.length
-            //    ? Syntax.realizeToken(token)
-            //    : token;
         }
 
         // Scans a subsection of 'text' as trivia.
