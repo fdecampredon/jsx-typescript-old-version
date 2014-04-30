@@ -50,13 +50,13 @@ module TypeScript {
         return (_packedFullStartAndTriviaInfo >> ScannerConstants.TrailingTriviaShift) & ScannerConstants.TriviaBitMask;
     }
 
-    function packFullStartAndTriviaInfo(fullStart: number, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
-        return (fullStart << ScannerConstants.FullStartShift) | (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
-    }
+    //function packFullStartAndTriviaInfo(fullStart: number, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
+    //    return (fullStart << ScannerConstants.FullStartShift) | (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
+    //}
 
-    function packFullWidthAndKind(fullWidth: number, kind: SyntaxKind): number {
-        return (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
-    }
+    //function packFullWidthAndKind(fullWidth: number, kind: SyntaxKind): number {
+    //    return (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
+    //}
 
     var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
     var isIdentifierStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
@@ -154,11 +154,23 @@ module TypeScript {
             var kind = this.scanSyntaxToken(diagnostics, allowRegularExpression);
             var trailingTriviaInfo = this.scanTriviaInfo(diagnostics,/*isTrailing: */true);
 
-            var fullEnd = MathPrototype.min(this.absoluteIndex(), this._length);
+            var fullEnd = this.absoluteIndex();
+            if (this._length < fullEnd) {
+                fullEnd = this._length;
+            }
 
-            var token = new ScannerToken(this._fullText,
-                packFullStartAndTriviaInfo(fullStart, leadingTriviaInfo, trailingTriviaInfo),
-                packFullWidthAndKind(fullEnd - fullStart, kind));
+            //function packFullStartAndTriviaInfo(fullStart: number, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
+            //    return ;
+            //}
+
+            //function packFullWidthAndKind(fullWidth: number, kind: SyntaxKind): number {
+            //    return (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
+            //}
+
+            var fullWidth = fullEnd - fullStart;
+            var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.FullStartShift) | (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
+            var packedFullWidthAndKind = (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
+            var token = new ScannerToken(this._fullText, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
 
             // If we produced any diagnostics while creating this token, then realize the token so 
             // it won't be reused in incremental scenarios.
@@ -1244,9 +1256,11 @@ module TypeScript {
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
             this._text = text;
-            this._packedFullStartAndTriviaInfo = packFullStartAndTriviaInfo(fullStart,
-                unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo),
-                unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo));
+
+            this._packedFullStartAndTriviaInfo =
+                (fullStart << ScannerConstants.FullStartShift) |
+                (unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo) << ScannerConstants.LeadingTriviaShift) |
+                (unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo) << ScannerConstants.TrailingTriviaShift);
         }
 
         public syntaxID(): number {
