@@ -526,7 +526,7 @@ module TypeScript.Parser {
                     languageVersion: LanguageVersion,
                     public text: ISimpleText) {
             this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 32, null), null);
-            this.scanner = new Scanner(fileName, languageVersion, text);
+            this.scanner = new Scanner(languageVersion, text);
         }
 
         public currentNode(): SyntaxNode {

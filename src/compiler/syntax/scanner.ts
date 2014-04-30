@@ -93,10 +93,8 @@ module TypeScript {
 
         // Operate on an actual string for perf.
         private _string: string;
-        private _lineMap: LineMap
 
-        constructor(private fileName: string,
-                    private _languageVersion: LanguageVersion,
+        constructor(private _languageVersion: LanguageVersion,
                     private _fullText: ISimpleText) {
 
             if (_fullText !== null) {
@@ -110,7 +108,6 @@ module TypeScript {
             this._index = index;
             this._fullText = fullText;
             this._length = textEnd;
-            this._lineMap = fullText.lineMap();
 
             this._string = fullText.substr(0, fullText.length());
         }
@@ -1217,7 +1214,7 @@ module TypeScript {
         }
 
         public static isValidIdentifier(text: ISimpleText, languageVersion: LanguageVersion): boolean {
-            var scanner = new Scanner(/*fileName:*/ null, languageVersion, text);
+            var scanner = new Scanner(languageVersion, text);
 
             var hadError = false;
             var token = scanner.scan(false, () => hadError = true);
@@ -1226,7 +1223,7 @@ module TypeScript {
         }
     }
 
-    var triviaScanner = new Scanner(null, LanguageVersion.EcmaScript5, null);
+    var triviaScanner = new Scanner(LanguageVersion.EcmaScript5, null);
 
     var sizeInfo = { leadingTriviaWidth: -1, width: -1 };
     var sizeInfoToken: ScannerToken = null;

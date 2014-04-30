@@ -82,7 +82,7 @@ module TypeScript.Services {
             }
 
             var result = new ClassificationResult();
-            this.scanner = new TypeScript.Scanner("", TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text));
+            this.scanner = new TypeScript.Scanner(TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text));
 
             var lastTokenKind = TypeScript.SyntaxKind.None;
 
