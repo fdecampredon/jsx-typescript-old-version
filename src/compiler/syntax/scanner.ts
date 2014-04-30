@@ -119,10 +119,6 @@ module TypeScript {
             return this._languageVersion;
         }
 
-        private currentCharCode(): number {
-            return this._string.charCodeAt(this._index);
-        }
-
         public absoluteIndex(): number {
             return this._index;
         }
@@ -134,15 +130,6 @@ module TypeScript {
         // Set's the scanner to a specific position in the text.
         public setAbsoluteIndex(index: number): void {
             this._index = index;
-        }
-
-        private peekCharCodeN(n: number): number {
-            var index = this._index + n;
-            if (index >= this._length) {
-                return 0;
-            }
-
-            return this._string.charCodeAt(index);
         }
 
         public fillSizeInfo(allowRegularExpression: boolean): void {
@@ -189,8 +176,7 @@ module TypeScript {
 
             while (true) {
                 if (!this.isAtEndOfSource()) {
-                    var ch = this.currentCharCode();
-
+                    var ch = this._string.charCodeAt(this._index);
                     switch (ch) {
                         // Unicode 3.0 space characters
                         case CharacterCodes.space:
@@ -220,7 +206,7 @@ module TypeScript {
 
                         case CharacterCodes.slash:
                             // Potential comment.  Consume if so.  Otherwise, break out and return.
-                            var ch2 = this.peekCharCodeN(1);
+                            var ch2 = this._string.charCodeAt(this._index + 1);
                             if (ch2 === CharacterCodes.slash) {
                                 trivia.push(this.scanSingleLineCommentTrivia());
                                 continue;
@@ -269,7 +255,7 @@ module TypeScript {
             var newLineInfo = 0;
 
             while (true) {
-                var ch = this.currentCharCode();
+                var ch = this._string.charCodeAt(this._index);
 
                 switch (ch) {
                     // Unicode 3.0 space characters
@@ -301,16 +287,16 @@ module TypeScript {
 
                     case CharacterCodes.slash:
                         // Potential comment.  Consume if so.  Otherwise, break out and return.
-                        var ch2 = this.peekCharCodeN(1);
+                        var ch2 = this._string.charCodeAt(this._index + 1);
                         if (ch2 === CharacterCodes.slash) {
                             commentInfo = ScannerConstants.CommentTriviaBitMask;
-                            this.scanSingleLineCommentTriviaLength();
+                            this.skipSingleLineCommentTrivia();
                             continue;
                         }
 
                         if (ch2 === CharacterCodes.asterisk) {
                             commentInfo = ScannerConstants.CommentTriviaBitMask;
-                            this.scanMultiLineCommentTriviaLength(diagnostics);
+                            this.skipMultiLineCommentTrivia(diagnostics);
                             continue;
                         }
 
@@ -322,7 +308,7 @@ module TypeScript {
                     case CharacterCodes.paragraphSeparator:
                     case CharacterCodes.lineSeparator:
                         newLineInfo = ScannerConstants.NewLineTriviaBitMask;
-                        this.scanLineTerminatorSequenceLength(ch);
+                        this.skipLineTerminatorSequence(ch);
 
                         // If we're consuming leading trivia, then we will continue consuming more 
                         // trivia (including newlines) up to the first token we see.  If we're 
@@ -356,7 +342,7 @@ module TypeScript {
             var absoluteStartIndex = this.absoluteIndex();
 
             while (true) {
-                var ch = this.currentCharCode();
+                var ch = this._string.charCodeAt(this._index);
 
                 switch (ch) {
                     // Unicode 3.0 space characters
@@ -399,38 +385,36 @@ module TypeScript {
 
         private scanSingleLineCommentTrivia(): ISyntaxTrivia {
             var absoluteStartIndex = this.absoluteIndex();
-            this.scanSingleLineCommentTriviaLength();
+            this.skipSingleLineCommentTrivia();
 
             return this.createTrivia(SyntaxKind.SingleLineCommentTrivia, absoluteStartIndex);
         }
 
-        private scanSingleLineCommentTriviaLength(): number {
+        private skipSingleLineCommentTrivia(): void {
             this._index += 2;
 
             // The '2' is for the "//" we consumed.
-            var width = 2;
             while (true) {
-                if (this.isAtEndOfSource() || this.isNewLineCharacter(this.currentCharCode())) {
-                    return width;
+                var ch = this._string.charCodeAt(this._index);
+                if (isNaN(ch) || this.isNewLineCharacter(ch)) {
+                    return;
                 }
 
                 this._index++;
-                width++;
             }
         }
 
         private scanMultiLineCommentTrivia(): ISyntaxTrivia {
             var absoluteStartIndex = this.absoluteIndex();
-            this.scanMultiLineCommentTriviaLength(null);
+            this.skipMultiLineCommentTrivia(null);
 
             return this.createTrivia(SyntaxKind.MultiLineCommentTrivia, absoluteStartIndex);
         }
 
-        private scanMultiLineCommentTriviaLength(diagnostics: Diagnostic[]): number {
+        private skipMultiLineCommentTrivia(diagnostics: Diagnostic[]): number {
+            // The '2' is for the "/*" we consumed.
             this._index += 2;
 
-            // The '2' is for the "/*" we consumed.
-            var width = 2;
             while (true) {
                 if (this.isAtEndOfSource()) {
                     if (diagnostics !== null) {
@@ -440,39 +424,34 @@ module TypeScript {
                             this._length, 0, DiagnosticCode.AsteriskSlash_expected, null));
                     }
 
-                    return width;
+                    return;
                 }
 
-                var ch = this.currentCharCode();
-                if (ch === CharacterCodes.asterisk && this.peekCharCodeN(1) === CharacterCodes.slash) {
+                if (this._string.charCodeAt(this._index) === CharacterCodes.asterisk &&
+                    this._string.charCodeAt(this._index + 1) === CharacterCodes.slash) {
+
                     this._index += 2;
-                    width += 2;
-                    return width;
+                    return;
                 }
 
                 this._index++;
-                width++;
             }
         }
 
         private scanLineTerminatorSequenceTrivia(ch: number): ISyntaxTrivia {
             var absoluteStartIndex = this.absoluteIndex();
-            this.scanLineTerminatorSequenceLength(ch);
+            this.skipLineTerminatorSequence(ch);
 
             return this.createTrivia(SyntaxKind.NewLineTrivia, absoluteStartIndex);
         }
 
-        private scanLineTerminatorSequenceLength(ch: number): number {
+        private skipLineTerminatorSequence(ch: number): void {
             // Consume the first of the line terminator we saw.
             this._index++;
 
             // If it happened to be a \r and there's a following \n, then consume both.
-            if (ch === CharacterCodes.carriageReturn && this.currentCharCode() === CharacterCodes.lineFeed) {
+            if (ch === CharacterCodes.carriageReturn && this._string.charCodeAt(this._index) === CharacterCodes.lineFeed) {
                 this._index++;
-                return 2;
-            }
-            else {
-                return 1;
             }
         }
 
@@ -481,7 +460,7 @@ module TypeScript {
                 return SyntaxKind.EndOfFileToken;
             }
 
-            var character = this.currentCharCode();
+            var character = this._string.charCodeAt(this._index);
 
             switch (character) {
                 case CharacterCodes.doubleQuote:
@@ -616,8 +595,6 @@ module TypeScript {
                 this._index++;
             }
 
-
-
             if (this._index < this._length && (character === CharacterCodes.backslash || character > CharacterCodes.maxAsciiCharacter)) {
                 // We saw a \ (which could start a unicode escape), or we saw a unicode character.
                 // This can't be scanned quickly.  Don't update the window position and just bail out
@@ -688,13 +665,14 @@ module TypeScript {
         }
 
         private isOctalNumericLiteral(): boolean {
-            return this.currentCharCode() === CharacterCodes._0 && CharacterInfo.isOctalDigit(this.peekCharCodeN(1));
+            return this._string.charCodeAt(this._index) === CharacterCodes._0 &&
+                   CharacterInfo.isOctalDigit(this._string.charCodeAt(this._index + 1));
         }
 
         private scanOctalNumericLiteral(diagnostics: Diagnostic[]): void {
             var position = this.absoluteIndex();
 
-            while (CharacterInfo.isOctalDigit(this.currentCharCode())) {
+            while (CharacterInfo.isOctalDigit(this._string.charCodeAt(this._index))) {
                 this._index++;
             }
 
@@ -705,7 +683,7 @@ module TypeScript {
         }
 
         private scanDecimalDigits(): void {
-            while (CharacterInfo.isDecimalDigit(this.currentCharCode())) {
+            while (CharacterInfo.isDecimalDigit(this._string.charCodeAt(this._index))) {
                 this._index++;
             }
         }
@@ -713,7 +691,7 @@ module TypeScript {
         private scanDecimalNumericLiteral(): void {
             this.scanDecimalDigits();
 
-            if (this.currentCharCode() === CharacterCodes.dot) {
+            if (this._string.charCodeAt(this._index) === CharacterCodes.dot) {
                 this._index++;
             }
 
@@ -723,10 +701,10 @@ module TypeScript {
             // e<number> or E<number> 
             // e+<number>   E+<number>
             // e-<number>   E-<number>
-            var ch = this.currentCharCode();
+            var ch = this._string.charCodeAt(this._index);
             if (ch === CharacterCodes.e || ch === CharacterCodes.E) {
                 // Ok, we've got 'e' or 'E'.  Make sure it's followed correctly.
-                var nextChar1 = this.peekCharCodeN(1);
+                var nextChar1 = this._string.charCodeAt(this._index + 1);
 
                 if (CharacterInfo.isDecimalDigit(nextChar1)) {
                     // e<number> or E<number>
@@ -736,7 +714,7 @@ module TypeScript {
                 }
                 else if (nextChar1 === CharacterCodes.minus || nextChar1 === CharacterCodes.plus) {
                     // e+ or E+ or e- or E-
-                    var nextChar2 = this.peekCharCodeN(2);
+                    var nextChar2 = this._string.charCodeAt(this._index + 2);
                     if (CharacterInfo.isDecimalDigit(nextChar2)) {
                         // e+<number> or E+<number> or e-<number> or E-<number>
                         // Consume first two characters and the number portion.
@@ -753,17 +731,17 @@ module TypeScript {
             // Move past the 0x.
             this._index += 2;
 
-            while (CharacterInfo.isHexDigit(this.currentCharCode())) {
+            while (CharacterInfo.isHexDigit(this._string.charCodeAt(this._index))) {
                 this._index++;
             }
         }
 
         private isHexNumericLiteral(): boolean {
-            if (this.currentCharCode() === CharacterCodes._0) {
-                var ch = this.peekCharCodeN(1);
+            if (this._string.charCodeAt(this._index) === CharacterCodes._0) {
+                var ch = this._string.charCodeAt(this._index + 1);
 
                 if (ch === CharacterCodes.x || ch === CharacterCodes.X) {
-                    ch = this.peekCharCodeN(2);
+                    ch = this._string.charCodeAt(this._index + 2);
 
                     return CharacterInfo.isHexDigit(ch);
                 }
@@ -779,13 +757,14 @@ module TypeScript {
 
         private scanLessThanToken(): SyntaxKind {
             this._index++;
-            if (this.currentCharCode() === CharacterCodes.equals) {
+            var ch0 = this._string.charCodeAt(this._index);
+            if (ch0 === CharacterCodes.equals) {
                 this._index++;
                 return SyntaxKind.LessThanEqualsToken;
             }
-            else if (this.currentCharCode() === CharacterCodes.lessThan) {
+            else if (ch0 === CharacterCodes.lessThan) {
                 this._index++;
-                if (this.currentCharCode() === CharacterCodes.equals) {
+                if (this._string.charCodeAt(this._index) === CharacterCodes.equals) {
                     this._index++;
                     return SyntaxKind.LessThanLessThanEqualsToken;
                 }
@@ -800,11 +779,12 @@ module TypeScript {
 
         private scanBarToken(): SyntaxKind {
             this._index++;
-            if (this.currentCharCode() === CharacterCodes.equals) {
+            var ch = this._string.charCodeAt(this._index);
+            if (ch === CharacterCodes.equals) {
                 this._index++;
                 return SyntaxKind.BarEqualsToken;
             }
-            else if (this.currentCharCode() === CharacterCodes.bar) {
+            else if (ch === CharacterCodes.bar) {
                 this._index++;
                 return SyntaxKind.BarBarToken;
             }
@@ -815,7 +795,7 @@ module TypeScript {
 
         private scanCaretToken(): SyntaxKind {
             this._index++;
-            if (this.currentCharCode() === CharacterCodes.equals) {
+            if (this._string.charCodeAt(this._index) === CharacterCodes.equals) {
                 this._index++;
                 return SyntaxKind.CaretEqualsToken;
             }
@@ -826,12 +806,12 @@ module TypeScript {
 
         private scanAmpersandToken(): SyntaxKind {
             this._index++;
-            var character = this.currentCharCode();
+            var character = this._string.charCodeAt(this._index);
             if (character === CharacterCodes.equals) {
                 this._index++;
                 return SyntaxKind.AmpersandEqualsToken;
             }
-            else if (this.currentCharCode() === CharacterCodes.ampersand) {
+            else if (character === CharacterCodes.ampersand) {
                 this._index++;
                 return SyntaxKind.AmpersandAmpersandToken;
             }
@@ -842,7 +822,7 @@ module TypeScript {
 
         private scanPercentToken(): SyntaxKind {
             this._index++;
-            if (this.currentCharCode() === CharacterCodes.equals) {
+            if (this._string.charCodeAt(this._index) === CharacterCodes.equals) {
                 this._index++;
                 return SyntaxKind.PercentEqualsToken;
             }
@@ -853,7 +833,7 @@ module TypeScript {
 
         private scanMinusToken(): SyntaxKind {
             this._index++;
-            var character = this.currentCharCode();
+            var character = this._string.charCodeAt(this._index);
 
             if (character === CharacterCodes.equals) {
                 this._index++;
@@ -870,7 +850,7 @@ module TypeScript {
 
         private scanPlusToken(): SyntaxKind {
             this._index++;
-            var character = this.currentCharCode();
+            var character = this._string.charCodeAt(this._index);
             if (character === CharacterCodes.equals) {
                 this._index++;
                 return SyntaxKind.PlusEqualsToken;
@@ -886,7 +866,7 @@ module TypeScript {
 
         private scanAsteriskToken(): SyntaxKind {
             this._index++;
-            if (this.currentCharCode() === CharacterCodes.equals) {
+            if (this._string.charCodeAt(this._index) === CharacterCodes.equals) {
                 this._index++;
                 return SyntaxKind.AsteriskEqualsToken;
             }
@@ -897,11 +877,11 @@ module TypeScript {
 
         private scanEqualsToken(): SyntaxKind {
             this._index++;
-            var character = this.currentCharCode();
+            var character = this._string.charCodeAt(this._index);
             if (character === CharacterCodes.equals) {
                 this._index++;
 
-                if (this.currentCharCode() === CharacterCodes.equals) {
+                if (this._string.charCodeAt(this._index) === CharacterCodes.equals) {
                     this._index++;
 
                     return SyntaxKind.EqualsEqualsEqualsToken;
@@ -920,8 +900,8 @@ module TypeScript {
         }
 
         private isDotPrefixedNumericLiteral(): boolean {
-            if (this.currentCharCode() === CharacterCodes.dot) {
-                var ch = this.peekCharCodeN(1);
+            if (this._string.charCodeAt(this._index) === CharacterCodes.dot) {
+                var ch = this._string.charCodeAt(this._index + 1);
                 return CharacterInfo.isDecimalDigit(ch);
             }
 
@@ -934,8 +914,8 @@ module TypeScript {
             }
 
             this._index++;
-            if (this.currentCharCode() === CharacterCodes.dot &&
-                this.peekCharCodeN(1) === CharacterCodes.dot) {
+            if (this._string.charCodeAt(this._index) === CharacterCodes.dot &&
+                this._string.charCodeAt(this._index + 1) === CharacterCodes.dot) {
 
                 this._index += 2;
                 return SyntaxKind.DotDotDotToken;
@@ -958,7 +938,7 @@ module TypeScript {
             }
 
             this._index++;
-            if (this.currentCharCode() === CharacterCodes.equals) {
+            if (this._string.charCodeAt(this._index) === CharacterCodes.equals) {
                 this._index++;
                 return SyntaxKind.SlashEqualsToken;
             }
@@ -977,9 +957,9 @@ module TypeScript {
             var inEscape = false;
             var inCharacterClass = false;
             while (true) {
-                var ch = this.currentCharCode();
+                var ch = this._string.charCodeAt(this._index);
 
-                if (this.isNewLineCharacter(ch) || this.isAtEndOfSource()) {
+                if (isNaN(ch) || this.isNewLineCharacter(ch)) {
                     this.setAbsoluteIndex(startIndex);
                     return SyntaxKind.None;
                 }
@@ -1031,7 +1011,7 @@ module TypeScript {
 
             // TODO: The grammar says any identifier part is allowed here.  Do we need to support
             // \u identifiers here?  The existing typescript parser does not.  
-            while (isIdentifierPartCharacter[this.currentCharCode()]) {
+            while (isIdentifierPartCharacter[this._string.charCodeAt(this._index)]) {
                 this._index++;
             }
 
@@ -1040,10 +1020,10 @@ module TypeScript {
 
         private scanExclamationToken(): SyntaxKind {
             this._index++;
-            if (this.currentCharCode() === CharacterCodes.equals) {
+            if (this._string.charCodeAt(this._index) === CharacterCodes.equals) {
                 this._index++;
 
-                if (this.currentCharCode() === CharacterCodes.equals) {
+                if (this._string.charCodeAt(this._index) === CharacterCodes.equals) {
                     this._index++;
 
                     return SyntaxKind.ExclamationEqualsEqualsToken;
@@ -1092,7 +1072,7 @@ module TypeScript {
             this._index++;
 
             // Get the char after the backslash
-            var ch = this.currentCharCode();
+            var ch = this._string.charCodeAt(this._index);
             this._index++;
             switch (ch) {
                 case CharacterCodes.x:
@@ -1103,7 +1083,7 @@ module TypeScript {
 
                 case CharacterCodes.carriageReturn:
                     // If it's \r\n then consume both characters.
-                    if (this.currentCharCode() === CharacterCodes.lineFeed) {
+                    if (this._string.charCodeAt(this._index) === CharacterCodes.lineFeed) {
                         this._index++;
                     }
                     break;
@@ -1133,14 +1113,14 @@ module TypeScript {
         }
 
         private scanStringLiteral(diagnostics: Diagnostic[]): SyntaxKind {
-            var quoteCharacter = this.currentCharCode();
+            var quoteCharacter = this._string.charCodeAt(this._index);
 
             // Debug.assert(quoteCharacter === CharacterCodes.singleQuote || quoteCharacter === CharacterCodes.doubleQuote);
 
             this._index++;
 
             while (true) {
-                var ch = this.currentCharCode();
+                var ch = this._string.charCodeAt(this._index);
                 if (ch === CharacterCodes.backslash) {
                     this.skipEscapeSequence(diagnostics);
                 }
@@ -1148,7 +1128,7 @@ module TypeScript {
                     this._index++;
                     break;
                 }
-                else if (this.isNewLineCharacter(ch) || this.isAtEndOfSource()) {
+                else if (isNaN(ch) || this.isNewLineCharacter(ch)) {
                     if (diagnostics !== null) {
                         diagnostics.push(new Diagnostic(this.fileName, this._lineMap,
                             MathPrototype.min(this._index, this._length), 1, DiagnosticCode.Missing_close_quote_character, null));
@@ -1164,18 +1144,12 @@ module TypeScript {
         }
 
         private isUnicodeEscape(character: number): boolean {
-            if (character === CharacterCodes.backslash) {
-                var ch2 = this.peekCharCodeN(1);
-                if (ch2 === CharacterCodes.u) {
-                    return true;
-                }
-            }
-
-            return false;
+            return character === CharacterCodes.backslash &&
+                this._string.charCodeAt(this._index + 1) === CharacterCodes.u;
         }
 
         private peekCharOrUnicodeEscape(): number {
-            var character = this.currentCharCode();
+            var character = this._string.charCodeAt(this._index);
             if (this.isUnicodeEscape(character)) {
                 return this.peekUnicodeOrHexEscape();
             }
@@ -1197,25 +1171,23 @@ module TypeScript {
 
         // Returns true if this was a unicode escape.
         private scanCharOrUnicodeEscape(errors: Diagnostic[]): void {
-            var ch = this.currentCharCode();
-            if (ch === CharacterCodes.backslash) {
-                var ch2 = this.peekCharCodeN(1);
-                if (ch2 === CharacterCodes.u) {
-                    this.scanUnicodeOrHexEscape(errors);
-                    return;
-                }
-            }
+            if (this._string.charCodeAt(this._index) === CharacterCodes.backslash &&
+                this._string.charCodeAt(this._index + 1) === CharacterCodes.u) {
 
-            this._index++;
+                this.scanUnicodeOrHexEscape(errors);
+            }
+            else {
+                this._index++;
+            }
         }
 
         private scanUnicodeOrHexEscape(errors: Diagnostic[]): number {
             var start = this._index;
-            var character = this.currentCharCode();
+            var character = this._string.charCodeAt(this._index);
             // Debug.assert(character === CharacterCodes.backslash);
             this._index++;
 
-            character = this.currentCharCode();
+            character = this._string.charCodeAt(this._index);
             // Debug.assert(character === CharacterCodes.u || character === CharacterCodes.x);
 
             var intChar = 0;
@@ -1224,7 +1196,7 @@ module TypeScript {
             var count = character === CharacterCodes.u ? 4 : 2;
 
             for (var i = 0; i < count; i++) {
-                var ch2 = this.currentCharCode();
+                var ch2 = this._string.charCodeAt(this._index);
                 if (!CharacterInfo.isHexDigit(ch2)) {
                     if (errors !== null) {
                         var end = this._index;
