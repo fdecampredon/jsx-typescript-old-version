@@ -11,7 +11,7 @@ module TypeScript {
         private tokenTable = Collections.createHashTable(Collections.DefaultHashTableCapacity, Collections.identityHashCode);
 
         public static checkInvariants(node: SyntaxNode): void {
-            node.accept(new SyntaxNodeInvariantsChecker());
+            visitNodeOrToken(new SyntaxNodeInvariantsChecker(), node);
         }
 
         public visitNode(node: SyntaxNode): void {

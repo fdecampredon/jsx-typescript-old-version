@@ -1426,8 +1426,6 @@ module TypeScript {
             return new ScannerToken(this._text, this._packedFullStartAndTriviaInfo, this._packedFullWidthAndKind);
         }
 
-        public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
-
         public isPrimaryExpression(): boolean { return Syntax.isPrimaryExpression(this); }
         public isExpression(): boolean { return this.isPrimaryExpression(); }
         public isMemberExpression(): boolean { return this.isPrimaryExpression(); }

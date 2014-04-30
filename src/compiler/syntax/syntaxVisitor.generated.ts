@@ -3,7 +3,7 @@
 module TypeScript {
     export function visitNodeOrToken(visitor: ISyntaxVisitor, element: ISyntaxNodeOrToken): any {
         if (element === null) { return null; }
-        if (element.isToken()) { visitor.visitToken(<ISyntaxToken>element); }
+        if (element.isToken()) { return visitor.visitToken(<ISyntaxToken>element); }
         switch (element.kind()) {
             case SyntaxKind.SourceUnit:
                 return visitor.visitSourceUnit(<SourceUnitSyntax>element);

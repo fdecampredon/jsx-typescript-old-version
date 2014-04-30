@@ -1476,17 +1476,6 @@ function generateFactoryMethod(definition: ITypeDefinition): string {
     return generateFactory1Method(definition) + generateFactory2Method(definition);
 }
 
-function generateAcceptMethods(definition: ITypeDefinition): string {
-    var result = "";
-
-    result += "\r\n";
-    result += "        public accept(visitor: ISyntaxVisitor): any {\r\n";
-    result += "            return visitor.visit" + getNameWithoutSuffix(definition) + "(this);\r\n";
-    result += "        }\r\n";
-
-    return result;
-}
-
 function generateIsMethod(definition: ITypeDefinition): string {
     var result = "";
 
@@ -1958,7 +1947,6 @@ function generateNode(definition: ITypeDefinition): string {
 
     result += generateProperties(definition);
     result += generateConstructor(definition);
-    result += generateAcceptMethods(definition);
     result += generateKindMethod(definition);
     result += generateSlotMethods(definition);
     result += generateIsMethod(definition);
@@ -2022,7 +2010,7 @@ function generateRewriter(): string {
 "        }\r\n" +
 "\r\n" +
 "        public visitNode(node: SyntaxNode): SyntaxNode {\r\n" +
-"            return node.accept(this);\r\n" +
+"            return visitNodeOrToken(this, node);\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public visitNodeOrToken(node: ISyntaxNodeOrToken): ISyntaxNodeOrToken {\r\n" +
@@ -2147,7 +2135,7 @@ function generateWalker(): string {
 "        }\r\n" +
 "\r\n" +
 "        public visitNode(node: SyntaxNode): void {\r\n" +
-"            node.accept(this);\r\n" +
+"            visitNodeOrToken(this, node);\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public visitNodeOrToken(nodeOrToken: ISyntaxNodeOrToken): void {\r\n" +
@@ -2355,7 +2343,7 @@ function generateVisitor(): string {
     result += "module TypeScript {\r\n";
     result += "    export function visitNodeOrToken(visitor: ISyntaxVisitor, element: ISyntaxNodeOrToken): any {\r\n";
     result += "        if (element === null) { return null; }\r\n";
-    result += "        if (element.isToken()) { visitor.visitToken(<ISyntaxToken>element); }\r\n";
+    result += "        if (element.isToken()) { return visitor.visitToken(<ISyntaxToken>element); }\r\n";
     result += "        switch (element.kind()) {\r\n";
 
     for (var i = 0; i < definitions.length; i++) {

@@ -401,7 +401,6 @@ module TypeScript.Syntax {
         }
 
         public toJSON(key: any): any { return tokenToJSON(this); }
-        public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
 
         private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             return this;
@@ -620,8 +619,6 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable() { return this._underlyingToken.isIncrementallyUnusable(); }
         public isKeywordConvertedToIdentifier() { return true; }
 
-        public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
-
         public childCount(): number {
             return 0;
         }
@@ -807,8 +804,6 @@ module TypeScript.Syntax {
         // Realized tokens are created from the parser.  They are *never* incrementally reusable.
         public isIncrementallyUnusable() { return true; }
         public isKeywordConvertedToIdentifier() { return false; }
-
-        public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
 
         public childCount(): number {
             return 0;

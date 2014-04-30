@@ -28,7 +28,7 @@ module TypeScript.Services.Formatting {
 
         public static getIndentationAmount(position: number, sourceUnit: SourceUnitSyntax, snapshot: ITextSnapshot, options: FormattingOptions): number {
             var walker = new SingleTokenIndenter(position, sourceUnit, snapshot, true, options);
-            sourceUnit.accept(walker);
+            visitNodeOrToken(walker, sourceUnit);
             return walker.indentationAmount;
         }
 

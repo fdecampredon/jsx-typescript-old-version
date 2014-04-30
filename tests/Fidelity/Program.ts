@@ -439,7 +439,7 @@ class Program {
 
         if (verify) {
             TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
-            tree.sourceUnit().accept(new PositionValidatingWalker());
+            TypeScript.visitNodeOrToken(new PositionValidatingWalker(), tree.sourceUnit());
 
             this.checkResult(fileName, tree, verify, generateBaseline, /*justText:*/ false);
         }

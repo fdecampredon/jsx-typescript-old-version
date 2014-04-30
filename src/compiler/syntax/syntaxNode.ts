@@ -157,10 +157,6 @@ module TypeScript {
             return result;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            throw Errors.abstract();
-        }
-
         public fullText(): string {
             var elements: string[] = [];
             this.collectTextElements(elements);
@@ -182,7 +178,7 @@ module TypeScript {
                 return this;
             }
 
-            return this.accept(new SyntaxTokenReplacer(token1, token2));
+            return visitNodeOrToken(new SyntaxTokenReplacer(token1, token2), this);
         }
 
         //public withLeadingTrivia(trivia: ISyntaxTriviaList): SyntaxNode {

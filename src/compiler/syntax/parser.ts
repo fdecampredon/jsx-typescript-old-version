@@ -898,7 +898,7 @@ module TypeScript.Parser {
                 setTokenTextAndFullStartWalker.text = this.text;
                 setTokenTextAndFullStartWalker.position = position;
 
-                nodeOrToken.accept(setTokenTextAndFullStartWalker);
+                visitNodeOrToken(setTokenTextAndFullStartWalker, nodeOrToken);
             }
         }
 

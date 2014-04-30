@@ -56,7 +56,7 @@ module TypeScript {
 
             // No parser reported diagnostics.  Check for any additional grammar diagnostics.
             var diagnostics: Diagnostic[] = [];
-            this.sourceUnit().accept(new GrammarCheckerWalker(this, diagnostics));
+            visitNodeOrToken(new GrammarCheckerWalker(this, diagnostics), this.sourceUnit());
 
             return diagnostics;
         }

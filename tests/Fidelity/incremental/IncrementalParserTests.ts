@@ -30,7 +30,7 @@ module TypeScript {
 
         public static collectElements(node: SourceUnitSyntax): ISyntaxElement[] {
             var collector = new SyntaxElementsCollector();
-            node.accept(collector);
+            TypeScript.visitNodeOrToken(collector, node);
             return collector.elements;
         }
     }
@@ -56,13 +56,13 @@ module TypeScript {
     // unavoidable.  If it does decrease an investigation 
     function compareTrees(oldText: IText, newText: IText, textChangeRange: TextChangeRange, reusedElements: number = -1): void {
         var oldTree = Parser.parse("", oldText, false, new ParseOptions(LanguageVersion.EcmaScript5, true));
-        oldTree.sourceUnit().accept(new PositionValidatingWalker());
+        TypeScript.visitNodeOrToken(new PositionValidatingWalker(), oldTree.sourceUnit());
 
         var newTree = Parser.parse("", newText, false, new ParseOptions(LanguageVersion.EcmaScript5, true));
-        newTree.sourceUnit().accept(new PositionValidatingWalker());
+        TypeScript.visitNodeOrToken(new PositionValidatingWalker(), newTree.sourceUnit());
 
         var incrementalNewTree = Parser.incrementalParse(oldTree, textChangeRange, newText);
-        incrementalNewTree.sourceUnit().accept(new PositionValidatingWalker());
+        TypeScript.visitNodeOrToken(new PositionValidatingWalker(), incrementalNewTree.sourceUnit());
 
         // We should get the same tree when doign a full or incremental parse.
         Debug.assert(newTree.structuralEquals(incrementalNewTree));

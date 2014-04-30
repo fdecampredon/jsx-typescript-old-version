@@ -68,7 +68,7 @@ module TypeScript.Services {
 
         static getListsOfAllScriptLexicalStructure(items: NavigateToItem[], fileName: string, unit: TypeScript.SourceUnitSyntax) {
             var visitor = new GetScriptLexicalStructureWalker(fileName);
-            unit.accept(visitor);
+            visitNodeOrToken(visitor, unit);
             visitor.collectItems(items);
         }
 

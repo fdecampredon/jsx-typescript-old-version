@@ -102,7 +102,7 @@ module TypeScript.Services {
 
         public static collectElements(node: TypeScript.SourceUnitSyntax): TypeScript.TextSpan[] {
             var collector = new OutliningElementsCollector();
-            node.accept(collector);
+            visitNodeOrToken(collector, node);
             return collector.elements;
         }
     }

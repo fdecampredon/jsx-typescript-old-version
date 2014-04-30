@@ -12,10 +12,6 @@ module TypeScript {
             endOfFileToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitSourceUnit(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.SourceUnit;
         }
@@ -65,10 +61,6 @@ module TypeScript {
             closeParenToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitExternalModuleReference(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ExternalModuleReference;
         }
@@ -113,10 +105,6 @@ module TypeScript {
             super(data); 
 
             moduleName.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitModuleNameModuleReference(this);
         }
 
         public kind(): SyntaxKind {
@@ -167,10 +155,6 @@ module TypeScript {
             equalsToken.parent = this;
             moduleReference.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitImportDeclaration(this);
         }
 
         public kind(): SyntaxKind {
@@ -227,10 +211,6 @@ module TypeScript {
             equalsToken.parent = this;
             identifier.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitExportAssignment(this);
         }
 
         public kind(): SyntaxKind {
@@ -291,10 +271,6 @@ module TypeScript {
             openBraceToken.parent = this;
             !classElements.isShared() && (classElements.parent = this);
             closeBraceToken.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitClassDeclaration(this);
         }
 
         public kind(): SyntaxKind {
@@ -361,10 +337,6 @@ module TypeScript {
             body.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitInterfaceDeclaration(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.InterfaceDeclaration;
         }
@@ -421,10 +393,6 @@ module TypeScript {
             !typeNames.isShared() && (typeNames.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitHeritageClause(this);
-        }
-
         public childCount(): number {
             return 2;
         }
@@ -474,10 +442,6 @@ module TypeScript {
             openBraceToken.parent = this;
             !moduleElements.isShared() && (moduleElements.parent = this);
             closeBraceToken.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitModuleDeclaration(this);
         }
 
         public kind(): SyntaxKind {
@@ -542,10 +506,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitFunctionDeclaration(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.FunctionDeclaration;
         }
@@ -607,10 +567,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitVariableStatement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.VariableStatement;
         }
@@ -663,10 +619,6 @@ module TypeScript {
             !variableDeclarators.isShared() && (variableDeclarators.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitVariableDeclaration(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.VariableDeclaration;
         }
@@ -708,10 +660,6 @@ module TypeScript {
             propertyName.parent = this;
             typeAnnotation && (typeAnnotation.parent = this);
             equalsValueClause && (equalsValueClause.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitVariableDeclarator(this);
         }
 
         public kind(): SyntaxKind {
@@ -758,10 +706,6 @@ module TypeScript {
             value.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitEqualsValueClause(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.EqualsValueClause;
         }
@@ -805,10 +749,6 @@ module TypeScript {
             this._kind = kind;
             operatorToken.parent = this;
             operand.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitPrefixUnaryExpression(this);
         }
 
         public childCount(): number {
@@ -861,10 +801,6 @@ module TypeScript {
             openBracketToken.parent = this;
             !expressions.isShared() && (expressions.parent = this);
             closeBracketToken.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitArrayLiteralExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -929,10 +865,6 @@ module TypeScript {
             super(data); 
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitOmittedExpression(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.OmittedExpression;
         }
@@ -968,10 +900,6 @@ module TypeScript {
             openParenToken.parent = this;
             expression.parent = this;
             closeParenToken.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitParenthesizedExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -1045,10 +973,6 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitSimpleArrowFunctionExpression(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.SimpleArrowFunctionExpression;
         }
@@ -1109,10 +1033,6 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitParenthesizedArrowFunctionExpression(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ParenthesizedArrowFunctionExpression;
         }
@@ -1171,10 +1091,6 @@ module TypeScript {
             right.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitQualifiedName(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.QualifiedName;
         }
@@ -1227,10 +1143,6 @@ module TypeScript {
             greaterThanToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitTypeArgumentList(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.TypeArgumentList;
         }
@@ -1277,10 +1189,6 @@ module TypeScript {
             parameterList.parent = this;
             equalsGreaterThanToken.parent = this;
             type.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitConstructorType(this);
         }
 
         public kind(): SyntaxKind {
@@ -1337,10 +1245,6 @@ module TypeScript {
             type.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitFunctionType(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.FunctionType;
         }
@@ -1391,10 +1295,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitObjectType(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ObjectType;
         }
@@ -1443,10 +1343,6 @@ module TypeScript {
             closeBracketToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitArrayType(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ArrayType;
         }
@@ -1493,10 +1389,6 @@ module TypeScript {
             typeArgumentList.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitGenericType(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.GenericType;
         }
@@ -1539,10 +1431,6 @@ module TypeScript {
 
             typeOfKeyword.parent = this;
             name.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitTypeQuery(this);
         }
 
         public kind(): SyntaxKind {
@@ -1589,10 +1477,6 @@ module TypeScript {
             type.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitTypeAnnotation(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.TypeAnnotation;
         }
@@ -1633,10 +1517,6 @@ module TypeScript {
             openBraceToken.parent = this;
             !statements.isShared() && (statements.parent = this);
             closeBraceToken.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitBlock(this);
         }
 
         public kind(): SyntaxKind {
@@ -1698,10 +1578,6 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitParameter(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.Parameter;
         }
@@ -1755,10 +1631,6 @@ module TypeScript {
             expression.parent = this;
             dotToken.parent = this;
             name.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitMemberAccessExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -1832,10 +1704,6 @@ module TypeScript {
             operatorToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitPostfixUnaryExpression(this);
-        }
-
         public childCount(): number {
             return 2;
         }
@@ -1892,10 +1760,6 @@ module TypeScript {
             openBracketToken.parent = this;
             argumentExpression.parent = this;
             closeBracketToken.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitElementAccessExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -1966,10 +1830,6 @@ module TypeScript {
 
             expression.parent = this;
             argumentList.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitInvocationExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -2044,10 +1904,6 @@ module TypeScript {
             closeParenToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitArgumentList(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ArgumentList;
         }
@@ -2098,10 +1954,6 @@ module TypeScript {
             left.parent = this;
             operatorToken.parent = this;
             right.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitBinaryExpression(this);
         }
 
         public childCount(): number {
@@ -2159,10 +2011,6 @@ module TypeScript {
             whenFalse.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitConditionalExpression(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ConditionalExpression;
         }
@@ -2216,10 +2064,6 @@ module TypeScript {
             callSignature.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitConstructSignature(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ConstructSignature;
         }
@@ -2264,10 +2108,6 @@ module TypeScript {
             propertyName.parent = this;
             questionToken && (questionToken.parent = this);
             callSignature.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitMethodSignature(this);
         }
 
         public kind(): SyntaxKind {
@@ -2321,10 +2161,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitIndexSignature(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.IndexSignature;
         }
@@ -2375,10 +2211,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitPropertySignature(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.PropertySignature;
         }
@@ -2425,10 +2257,6 @@ module TypeScript {
             typeParameterList && (typeParameterList.parent = this);
             parameterList.parent = this;
             typeAnnotation && (typeAnnotation.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitCallSignature(this);
         }
 
         public kind(): SyntaxKind {
@@ -2482,10 +2310,6 @@ module TypeScript {
             closeParenToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitParameterList(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ParameterList;
         }
@@ -2531,10 +2355,6 @@ module TypeScript {
             greaterThanToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitTypeParameterList(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.TypeParameterList;
         }
@@ -2577,10 +2397,6 @@ module TypeScript {
             constraint && (constraint.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitTypeParameter(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.TypeParameter;
         }
@@ -2621,10 +2437,6 @@ module TypeScript {
             type.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitConstraint(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.Constraint;
         }
@@ -2663,10 +2475,6 @@ module TypeScript {
 
             elseKeyword.parent = this;
             statement.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitElseClause(this);
         }
 
         public kind(): SyntaxKind {
@@ -2716,10 +2524,6 @@ module TypeScript {
             closeParenToken.parent = this;
             statement.parent = this;
             elseClause && (elseClause.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitIfStatement(this);
         }
 
         public kind(): SyntaxKind {
@@ -2781,10 +2585,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitExpressionStatement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ExpressionStatement;
         }
@@ -2838,10 +2638,6 @@ module TypeScript {
             callSignature.parent = this;
             block && (block.parent = this);
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitConstructorDeclaration(this);
         }
 
         public kind(): SyntaxKind {
@@ -2898,10 +2694,6 @@ module TypeScript {
             callSignature.parent = this;
             block && (block.parent = this);
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitMemberFunctionDeclaration(this);
         }
 
         public kind(): SyntaxKind {
@@ -2964,10 +2756,6 @@ module TypeScript {
             parameterList.parent = this;
             typeAnnotation && (typeAnnotation.parent = this);
             block.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitGetAccessor(this);
         }
 
         public kind(): SyntaxKind {
@@ -3040,10 +2828,6 @@ module TypeScript {
             block.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitSetAccessor(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.SetAccessor;
         }
@@ -3104,10 +2888,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitMemberVariableDeclaration(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.MemberVariableDeclaration;
         }
@@ -3160,10 +2940,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitIndexMemberDeclaration(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.IndexMemberDeclaration;
         }
@@ -3210,10 +2986,6 @@ module TypeScript {
             throwKeyword.parent = this;
             expression.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitThrowStatement(this);
         }
 
         public kind(): SyntaxKind {
@@ -3269,10 +3041,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitReturnStatement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ReturnStatement;
         }
@@ -3324,10 +3092,6 @@ module TypeScript {
             newKeyword.parent = this;
             expression.parent = this;
             argumentList && (argumentList.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitObjectCreationExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -3408,10 +3172,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitSwitchStatement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.SwitchStatement;
         }
@@ -3476,10 +3236,6 @@ module TypeScript {
             !statements.isShared() && (statements.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitCaseSwitchClause(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.CaseSwitchClause;
         }
@@ -3532,10 +3288,6 @@ module TypeScript {
             !statements.isShared() && (statements.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitDefaultSwitchClause(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.DefaultSwitchClause;
         }
@@ -3583,10 +3335,6 @@ module TypeScript {
             breakKeyword.parent = this;
             identifier && (identifier.parent = this);
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitBreakStatement(this);
         }
 
         public kind(): SyntaxKind {
@@ -3639,10 +3387,6 @@ module TypeScript {
             continueKeyword.parent = this;
             identifier && (identifier.parent = this);
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitContinueStatement(this);
         }
 
         public kind(): SyntaxKind {
@@ -3709,10 +3453,6 @@ module TypeScript {
             incrementor && (incrementor.parent = this);
             closeParenToken.parent = this;
             statement.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitForStatement(this);
         }
 
         public kind(): SyntaxKind {
@@ -3800,10 +3540,6 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitForInStatement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.ForInStatement;
         }
@@ -3878,10 +3614,6 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitWhileStatement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.WhileStatement;
         }
@@ -3948,10 +3680,6 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitWithStatement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.WithStatement;
         }
@@ -4016,10 +3744,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitEnumDeclaration(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.EnumDeclaration;
         }
@@ -4072,10 +3796,6 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitEnumElement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.EnumElement;
         }
@@ -4119,10 +3839,6 @@ module TypeScript {
             type.parent = this;
             greaterThanToken.parent = this;
             expression.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitCastExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -4177,10 +3893,6 @@ module TypeScript {
             openBraceToken.parent = this;
             !propertyAssignments.isShared() && (propertyAssignments.parent = this);
             closeBraceToken.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitObjectLiteralExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -4252,10 +3964,6 @@ module TypeScript {
             expression.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitSimplePropertyAssignment(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.SimplePropertyAssignment;
         }
@@ -4303,10 +4011,6 @@ module TypeScript {
             propertyName.parent = this;
             callSignature.parent = this;
             block.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitFunctionPropertyAssignment(this);
         }
 
         public kind(): SyntaxKind {
@@ -4359,10 +4063,6 @@ module TypeScript {
             identifier && (identifier.parent = this);
             callSignature.parent = this;
             block.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitFunctionExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -4433,10 +4133,6 @@ module TypeScript {
             semicolonToken.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitEmptyStatement(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.EmptyStatement;
         }
@@ -4485,10 +4181,6 @@ module TypeScript {
             block.parent = this;
             catchClause && (catchClause.parent = this);
             finallyClause && (finallyClause.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitTryStatement(this);
         }
 
         public kind(): SyntaxKind {
@@ -4554,10 +4246,6 @@ module TypeScript {
             block.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitCatchClause(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.CatchClause;
         }
@@ -4608,10 +4296,6 @@ module TypeScript {
             block.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitFinallyClause(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.FinallyClause;
         }
@@ -4653,10 +4337,6 @@ module TypeScript {
             identifier.parent = this;
             colonToken.parent = this;
             statement.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitLabeledStatement(this);
         }
 
         public kind(): SyntaxKind {
@@ -4718,10 +4398,6 @@ module TypeScript {
             condition.parent = this;
             closeParenToken.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitDoStatement(this);
         }
 
         public kind(): SyntaxKind {
@@ -4788,10 +4464,6 @@ module TypeScript {
             expression.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitTypeOfExpression(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.TypeOfExpression;
         }
@@ -4839,10 +4511,6 @@ module TypeScript {
 
             deleteKeyword.parent = this;
             expression.parent = this;
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitDeleteExpression(this);
         }
 
         public kind(): SyntaxKind {
@@ -4894,10 +4562,6 @@ module TypeScript {
             expression.parent = this;
         }
 
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitVoidExpression(this);
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.VoidExpression;
         }
@@ -4945,10 +4609,6 @@ module TypeScript {
 
             debuggerKeyword.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public accept(visitor: ISyntaxVisitor): any {
-            return visitor.visitDebuggerStatement(this);
         }
 
         public kind(): SyntaxKind {

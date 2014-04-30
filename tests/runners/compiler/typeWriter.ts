@@ -20,7 +20,7 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
     }
 
     public run() {
-        this.syntaxTree.sourceUnit().accept(this);
+        TypeScript.visitNodeOrToken(this, this.syntaxTree.sourceUnit());
     }
 
     private isName(token: TypeScript.ISyntaxToken) {

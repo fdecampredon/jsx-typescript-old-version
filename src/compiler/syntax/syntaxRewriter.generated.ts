@@ -7,7 +7,7 @@ module TypeScript {
         }
 
         public visitNode(node: SyntaxNode): SyntaxNode {
-            return node.accept(this);
+            return visitNodeOrToken(this, node);
         }
 
         public visitNodeOrToken(node: ISyntaxNodeOrToken): ISyntaxNodeOrToken {

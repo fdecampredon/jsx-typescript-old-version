@@ -110,7 +110,7 @@ module TypeScript.Services.Formatting {
                 this._parent = this._indentationNodeContextPool.getNode(currentParent, node, this._position, indentation.indentationAmount, indentation.indentationAmountDelta);
 
                 // Visit node
-                node.accept(this);
+                visitNodeOrToken(this, node);
 
                 // Reset state
                 this._indentationNodeContextPool.releaseNode(this._parent);

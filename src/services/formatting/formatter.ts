@@ -52,7 +52,7 @@ module TypeScript.Services.Formatting {
             rulesProvider: RulesProvider,
             formattingRequestKind: FormattingRequestKind): TextEditInfo[] {
             var walker = new Formatter(textSpan, sourceUnit, indentFirstToken, options, snapshot, rulesProvider, formattingRequestKind);
-            sourceUnit.accept(walker);
+            visitNodeOrToken(walker, sourceUnit);
             return walker.edits();
         }
 
