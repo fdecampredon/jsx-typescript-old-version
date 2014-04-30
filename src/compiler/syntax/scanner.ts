@@ -148,16 +148,14 @@ module TypeScript {
         // 'diagnostics'.
         public scan(diagnostics: Diagnostic[], allowRegularExpression: boolean): ISyntaxToken {
             var diagnosticsLength = diagnostics.length;
-            var fullStart = this.absoluteIndex();
+            var fullStart = this._index;
 
             var leadingTriviaInfo = this.scanTriviaInfo(diagnostics, /*isTrailing: */ false);
             var kind = this.scanSyntaxToken(diagnostics, allowRegularExpression);
             var trailingTriviaInfo = this.scanTriviaInfo(diagnostics,/*isTrailing: */true);
 
-            var fullEnd = this.absoluteIndex();
-            if (this._length < fullEnd) {
-                fullEnd = this._length;
-            }
+            var fullEnd = this._index;
+            // Debug.assert(fullEnd <= this._length);
 
             //function packFullStartAndTriviaInfo(fullStart: number, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
             //    return ;
@@ -168,8 +166,8 @@ module TypeScript {
             //}
 
             var fullWidth = fullEnd - fullStart;
-            var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.FullStartShift) | (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
-            var packedFullWidthAndKind = (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
+            var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.FullStartShift) | leadingTriviaInfo | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
+            var packedFullWidthAndKind = (fullWidth << ScannerConstants.FullWidthShift) | kind;
             var token = new ScannerToken(this._fullText, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
 
             // If we produced any diagnostics while creating this token, then realize the token so 
@@ -1085,6 +1083,12 @@ module TypeScript {
 
             // Get the char after the backslash
             var ch = this._string.charCodeAt(this._index);
+            if (isNaN(ch)) {
+                // if we're at teh end of the file, just return, the string scanning code will 
+                // report an appropriate error.
+                return;
+            }
+
             this._index++;
             switch (ch) {
                 case CharacterCodes.x:
