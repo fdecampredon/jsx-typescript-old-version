@@ -7,6 +7,7 @@
 ///<reference path='..\..\src\compiler\core\environment.ts' />
 ///<reference path='..\..\src\harness\diff.ts' />
 ///<reference path='..\..\src\compiler\references.ts' />
+///<reference path='anders\parser.ts' />
 
 var timer = new TypeScript.Timer();
 
@@ -31,6 +32,31 @@ class PositionValidatingWalker extends TypeScript.SyntaxWalker {
 class Program {
     runAllTests(verify: boolean): void {
         TypeScript.Environment.standardOut.WriteLine("");
+
+
+        var libdts = TypeScript.Environment.readFile("built\\local\\lib.d.ts", null);
+
+        TypeScript.Environment.standardOut.WriteLine("size: " + libdts.contents.length);
+        var libsource = ts.createSourceFile("lib.d.ts", libdts.contents);
+        ts.parseSourceFile(libsource);
+
+        var reps = 10;
+        timer.start();
+        for (var i = 0; i < reps; i++) {
+            var libsource = ts.createSourceFile("lib.d.ts", libdts.contents);
+            ts.parseSourceFile(libsource);
+        }
+        timer.end();
+        TypeScript.Environment.standardOut.WriteLine("Anders Parse: " + (timer.time / reps));
+
+        var txt = TypeScript.SimpleText.fromString(libdts.contents);
+        timer.start();
+        for (var i = 0; i < reps; i++) {
+            TypeScript.Parser.parse("lib.d.ts.", txt, true, new TypeScript.ParseOptions(TypeScript.LanguageVersion.EcmaScript5, true));
+        }
+        timer.end();
+        TypeScript.Environment.standardOut.WriteLine("Anders Parse: " + (timer.time / reps));
+
 
         if (generate) {
             TypeScript.Environment.standardOut.WriteLine("!!!!!!!!!! WARNING - GENERATING !!!!!!!!!");
@@ -393,10 +419,18 @@ class Program {
 
         var text = TypeScript.TextFactory.createText(contents);
 
+        var andersText = ts.createSourceFile(fileName, contents);
+        timer.start();
+        var andersTree = ts.parseSourceFile(andersText);
+        timer.end();
+        andersTime += timer.time;
+
         timer.start();
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
         timer.end();
-        
+
+        cyrusTime += timer.time;
+
         if (!allowErrors) {
             var diagnostics = tree.diagnostics();
             if (diagnostics.length > 0) {
@@ -518,7 +552,7 @@ class Program {
         var diagnostics: TypeScript.Diagnostic[] = [];
 
         while (true) {
-            var token = scanner.scan(diagnostics, /*allowRegularExpression:*/ false);
+            var token = scanner.scan(/*allowRegularExpression:*/ false, () => { });
             tokens.push(token);
 
             if (token.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
@@ -543,9 +577,12 @@ class Program {
         var textArray: string[] = [];
         var diagnostics: TypeScript.Diagnostic[] = [];
         var position = 0;
+        var reportDiagnostic = (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => {
+            diagnostics.push(new TypeScript.Diagnostic(fileName, text.lineMap(), position, fullWidth, diagnosticKey, args));
+        };
 
         while (true) {
-            var token = scanner.scan(diagnostics, /*allowRegularExpression:*/ false);
+            var token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
             tokens.push(token);
 
             TypeScript.Debug.assert(position === token.fullStart());
@@ -659,9 +696,11 @@ for (var d in TypeScript.LocalizedDiagnosticMessages) {
         diagnostics[info.message] = { category: TypeScript.DiagnosticCategory[info.category], code: info.code };
     }
 }
- 
+
 var whatever = JSON.stringify(diagnostics, null, 4);
 
+var andersTime = 0;
+var cyrusTime = 0;
 var totalTime = 0;
 var totalSize = 0;
 var program = new Program();
@@ -679,3 +718,5 @@ var count = 1;
 
 TypeScript.Environment.standardOut.WriteLine("Total time: " + (totalTime / count));
 TypeScript.Environment.standardOut.WriteLine("Total size: " + (totalSize / count));
+TypeScript.Environment.standardOut.WriteLine("Anders time: " + andersTime);
+TypeScript.Environment.standardOut.WriteLine("Cyrus time : " + cyrusTime);

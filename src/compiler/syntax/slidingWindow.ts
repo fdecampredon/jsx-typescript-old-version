@@ -5,7 +5,7 @@ module TypeScript {
         // Asks the source to copy items starting at sourceIndex into the window at 'destinationIndex'
         // with up to 'spaceAvailable' items.  The actual number of items fetched should be given as 
         // the return value.
-        fetchMoreItems(argument: any, sourceIndex: number, window: any[], destinationIndex: number, spaceAvailable: number): number;
+        fetchNextItem(argument: any): any;
     }
 
     export class SlidingWindow {
@@ -57,13 +57,14 @@ module TypeScript {
                 this.tryShiftOrGrowWindow();
             }
 
-            var spaceAvailable = this.window.length - this.windowCount;
-            var amountFetched = this.source.fetchMoreItems(argument, this.windowAbsoluteEndIndex(), this.window, this.windowCount, spaceAvailable);
+            var item = this.source.fetchNextItem(argument);
+
+            this.window[this.windowCount] = item;
 
             // Assert disabled because it is actually expensive enugh to affect perf.
 
-            this.windowCount += amountFetched;
-            return amountFetched > 0;
+            this.windowCount++;
+            return true;
         }
 
         private tryShiftOrGrowWindow(): void {

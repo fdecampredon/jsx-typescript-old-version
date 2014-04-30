@@ -146,13 +146,12 @@ module TypeScript {
 
         // Scans a token starting at the current position.  Any errors encountered will be added to 
         // 'diagnostics'.
-        public scan(diagnostics: Diagnostic[], allowRegularExpression: boolean): ISyntaxToken {
-            var diagnosticsLength = diagnostics.length;
+        public scan(allowRegularExpression: boolean, reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): ISyntaxToken {
             var fullStart = this._index;
 
-            var leadingTriviaInfo = this.scanTriviaInfo(diagnostics, /*isTrailing: */ false);
-            var kind = this.scanSyntaxToken(diagnostics, allowRegularExpression);
-            var trailingTriviaInfo = this.scanTriviaInfo(diagnostics,/*isTrailing: */true);
+            var leadingTriviaInfo = this.scanTriviaInfo(reportDiagnostic, /*isTrailing: */ false);
+            var kind = this.scanSyntaxToken(reportDiagnostic, allowRegularExpression);
+            var trailingTriviaInfo = this.scanTriviaInfo(reportDiagnostic,/*isTrailing: */true);
 
             var fullEnd = this._index;
             // Debug.assert(fullEnd <= this._length);
@@ -168,13 +167,13 @@ module TypeScript {
             var fullWidth = fullEnd - fullStart;
             var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.FullStartShift) | leadingTriviaInfo | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
             var packedFullWidthAndKind = (fullWidth << ScannerConstants.FullWidthShift) | kind;
-            var token = new ScannerToken(this._fullText, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
+            return new ScannerToken(this._fullText, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
 
             // If we produced any diagnostics while creating this token, then realize the token so 
             // it won't be reused in incremental scenarios.
-            return diagnosticsLength !== diagnostics.length
-                ? Syntax.realizeToken(token)
-                : token;
+            //return diagnosticsLength !== diagnostics.length
+            //    ? Syntax.realizeToken(token)
+            //    : token;
         }
 
         // Scans a subsection of 'text' as trivia.
@@ -258,7 +257,7 @@ module TypeScript {
             }
         }
 
-        private scanTriviaInfo(diagnostics: Diagnostic[], isTrailing: boolean): number {
+        private scanTriviaInfo(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void, isTrailing: boolean): number {
             // Keep this exactly in sync with scanTrivia
             var commentInfo = 0;
             var whitespaceInfo = 0;
@@ -306,7 +305,7 @@ module TypeScript {
 
                         if (ch2 === CharacterCodes.asterisk) {
                             commentInfo = ScannerConstants.CommentTriviaBitMask;
-                            this.skipMultiLineCommentTrivia(diagnostics);
+                            this.skipMultiLineCommentTrivia(reportDiagnostic);
                             continue;
                         }
 
@@ -421,17 +420,14 @@ module TypeScript {
             return this.createTrivia(SyntaxKind.MultiLineCommentTrivia, absoluteStartIndex);
         }
 
-        private skipMultiLineCommentTrivia(diagnostics: Diagnostic[]): number {
+        private skipMultiLineCommentTrivia(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): number {
             // The '2' is for the "/*" we consumed.
             this._index += 2;
 
             while (true) {
                 if (this.isAtEndOfSource()) {
-                    if (diagnostics !== null) {
-                        diagnostics.push(new Diagnostic(
-                            this.fileName,
-                            this._lineMap,
-                            this._length, 0, DiagnosticCode.AsteriskSlash_expected, null));
+                    if (reportDiagnostic !== null) {
+                        reportDiagnostic(this._length, 0, DiagnosticCode.AsteriskSlash_expected, null);
                     }
 
                     return;
@@ -465,7 +461,7 @@ module TypeScript {
             }
         }
 
-        private scanSyntaxToken(diagnostics: Diagnostic[], allowRegularExpression: boolean): SyntaxKind {
+        private scanSyntaxToken(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void, allowRegularExpression: boolean): SyntaxKind {
             if (this.isAtEndOfSource()) {
                 return SyntaxKind.EndOfFileToken;
             }
@@ -475,14 +471,14 @@ module TypeScript {
             switch (character) {
                 case CharacterCodes.doubleQuote:
                 case CharacterCodes.singleQuote:
-                    return this.scanStringLiteral(diagnostics);
+                    return this.scanStringLiteral(reportDiagnostic);
 
                 // These are the set of variable width punctuation tokens.
                 case CharacterCodes.slash:
                     return this.scanSlashToken(allowRegularExpression);
 
                 case CharacterCodes.dot:
-                    return this.scanDotToken(diagnostics);
+                    return this.scanDotToken(reportDiagnostic);
 
                 case CharacterCodes.minus:
                     return this.scanMinusToken();
@@ -554,7 +550,7 @@ module TypeScript {
             }
 
             if (isNumericLiteralStart[character]) {
-                return this.scanNumericLiteral(diagnostics);
+                return this.scanNumericLiteral(reportDiagnostic);
             }
 
             // We run into so many identifiers (and keywords) when scanning, that we want the code to
@@ -568,10 +564,10 @@ module TypeScript {
             }
 
             if (this.isIdentifierStart(this.peekCharOrUnicodeEscape())) {
-                return this.slowScanIdentifierOrKeyword(diagnostics);
+                return this.slowScanIdentifierOrKeyword(reportDiagnostic);
             }
 
-            return this.scanDefaultCharacter(character, diagnostics);
+            return this.scanDefaultCharacter(character, reportDiagnostic);
         }
 
         private isIdentifierStart(interpretedChar: number): boolean {
@@ -632,11 +628,11 @@ module TypeScript {
 
         // A slow path for scanning identifiers.  Called when we run into a unicode character or 
         // escape sequence while processing the fast path.
-        private slowScanIdentifierOrKeyword(diagnostics: Diagnostic[]): SyntaxKind {
+        private slowScanIdentifierOrKeyword(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): SyntaxKind {
             var startIndex = this._index;
 
             do {
-                this.scanCharOrUnicodeEscape(diagnostics);
+                this.scanCharOrUnicodeEscape(reportDiagnostic);
             }
             while (this.isIdentifierPart(this.peekCharOrUnicodeEscape()));
 
@@ -660,12 +656,12 @@ module TypeScript {
             return SyntaxKind.IdentifierName;
         }
 
-        private scanNumericLiteral(diagnostics: Diagnostic[]): SyntaxKind {
+        private scanNumericLiteral(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): SyntaxKind {
             if (this.isHexNumericLiteral()) {
                 this.scanHexNumericLiteral();
             }
             else if (this.isOctalNumericLiteral()) {
-                this.scanOctalNumericLiteral(diagnostics);
+                this.scanOctalNumericLiteral(reportDiagnostic);
             }
             else {
                 this.scanDecimalNumericLiteral();
@@ -679,16 +675,16 @@ module TypeScript {
                    CharacterInfo.isOctalDigit(this._string.charCodeAt(this._index + 1));
         }
 
-        private scanOctalNumericLiteral(diagnostics: Diagnostic[]): void {
+        private scanOctalNumericLiteral(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): void {
             var position = this.absoluteIndex();
 
             while (CharacterInfo.isOctalDigit(this._string.charCodeAt(this._index))) {
                 this._index++;
             }
 
-            if (this.languageVersion() >= LanguageVersion.EcmaScript5 && diagnostics !== null) {
-                diagnostics.push(new Diagnostic(this.fileName, this._lineMap,
-                    position, this.absoluteIndex() - position, DiagnosticCode.Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher, null));
+            if (this.languageVersion() >= LanguageVersion.EcmaScript5 && reportDiagnostic !== null) {
+                reportDiagnostic(
+                    position, this._index - position, DiagnosticCode.Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher, null);
             }
         }
 
@@ -918,9 +914,9 @@ module TypeScript {
             return false;
         }
 
-        private scanDotToken(diagnostics: Diagnostic[]): SyntaxKind {
+        private scanDotToken(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): SyntaxKind {
             if (this.isDotPrefixedNumericLiteral()) {
-                return this.scanNumericLiteral(diagnostics);
+                return this.scanNumericLiteral(reportDiagnostic);
             }
 
             this._index++;
@@ -1047,15 +1043,14 @@ module TypeScript {
             }
         }
 
-        private scanDefaultCharacter(character: number, diagnostics: Diagnostic[]): SyntaxKind {
+        private scanDefaultCharacter(character: number, reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): SyntaxKind {
             var position = this.absoluteIndex();
             this._index++;
 
-            if (diagnostics !== null) {
+            if (reportDiagnostic !== null) {
                 var text = String.fromCharCode(character);
                 var messageText = this.getErrorMessageText(text);
-                diagnostics.push(new Diagnostic(this.fileName, this._lineMap,
-                    position, 1, DiagnosticCode.Unexpected_character_0, [messageText]));
+                reportDiagnostic(position, 1, DiagnosticCode.Unexpected_character_0, [messageText]);
             }
 
             return SyntaxKind.ErrorToken;
@@ -1073,7 +1068,7 @@ module TypeScript {
             return JSON.stringify(text);
         }
 
-        private skipEscapeSequence(diagnostics: Diagnostic[]): void {
+        private skipEscapeSequence(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): void {
             // Debug.assert(this.currentCharCode() === CharacterCodes.backslash);
 
             var rewindPoint = this._index;
@@ -1094,7 +1089,7 @@ module TypeScript {
                 case CharacterCodes.x:
                 case CharacterCodes.u:
                     this.setAbsoluteIndex(rewindPoint);
-                    var value = this.scanUnicodeOrHexEscape(diagnostics);
+                    var value = this.scanUnicodeOrHexEscape(reportDiagnostic);
                     break;
 
                 case CharacterCodes.carriageReturn:
@@ -1128,7 +1123,7 @@ module TypeScript {
             }
         }
 
-        private scanStringLiteral(diagnostics: Diagnostic[]): SyntaxKind {
+        private scanStringLiteral(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): SyntaxKind {
             var quoteCharacter = this._string.charCodeAt(this._index);
 
             // Debug.assert(quoteCharacter === CharacterCodes.singleQuote || quoteCharacter === CharacterCodes.doubleQuote);
@@ -1138,16 +1133,15 @@ module TypeScript {
             while (true) {
                 var ch = this._string.charCodeAt(this._index);
                 if (ch === CharacterCodes.backslash) {
-                    this.skipEscapeSequence(diagnostics);
+                    this.skipEscapeSequence(reportDiagnostic);
                 }
                 else if (ch === quoteCharacter) {
                     this._index++;
                     break;
                 }
                 else if (isNaN(ch) || this.isNewLineCharacter(ch)) {
-                    if (diagnostics !== null) {
-                        diagnostics.push(new Diagnostic(this.fileName, this._lineMap,
-                            MathPrototype.min(this._index, this._length), 1, DiagnosticCode.Missing_close_quote_character, null));
+                    if (reportDiagnostic) {
+                        reportDiagnostic(MathPrototype.min(this._index, this._length), 1, DiagnosticCode.Missing_close_quote_character, null);
                     }
                     break;
                 }
@@ -1186,18 +1180,18 @@ module TypeScript {
         }
 
         // Returns true if this was a unicode escape.
-        private scanCharOrUnicodeEscape(errors: Diagnostic[]): void {
+        private scanCharOrUnicodeEscape(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): void {
             if (this._string.charCodeAt(this._index) === CharacterCodes.backslash &&
                 this._string.charCodeAt(this._index + 1) === CharacterCodes.u) {
 
-                this.scanUnicodeOrHexEscape(errors);
+                this.scanUnicodeOrHexEscape(reportDiagnostic);
             }
             else {
                 this._index++;
             }
         }
 
-        private scanUnicodeOrHexEscape(errors: Diagnostic[]): number {
+        private scanUnicodeOrHexEscape(reportDiagnostic: (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => void): number {
             var start = this._index;
             var character = this._string.charCodeAt(this._index);
             // Debug.assert(character === CharacterCodes.backslash);
@@ -1214,10 +1208,8 @@ module TypeScript {
             for (var i = 0; i < count; i++) {
                 var ch2 = this._string.charCodeAt(this._index);
                 if (!CharacterInfo.isHexDigit(ch2)) {
-                    if (errors !== null) {
-                        var end = this._index;
-                        var info = this.createIllegalEscapeDiagnostic(start, end);
-                        errors.push(info);
+                    if (reportDiagnostic !== null) {
+                        reportDiagnostic(start, this._index - start, DiagnosticCode.Unrecognized_escape_sequence, null)
                     }
 
                     break;
@@ -1230,17 +1222,13 @@ module TypeScript {
             return intChar;
         }
 
-        private createIllegalEscapeDiagnostic(start: number, end: number): Diagnostic {
-            return new Diagnostic(this.fileName, this._lineMap, start, end - start,
-                DiagnosticCode.Unrecognized_escape_sequence, null);
-        }
-
         public static isValidIdentifier(text: ISimpleText, languageVersion: LanguageVersion): boolean {
             var scanner = new Scanner(/*fileName:*/ null, languageVersion, text);
-            var errors = new Array<Diagnostic>();
-            var token = scanner.scan(errors, false);
 
-            return errors.length === 0 && SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && token.width() === text.length();
+            var hadError = false;
+            var token = scanner.scan(false, () => hadError = true);
+
+            return !hadError && SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && token.width() === text.length();
         }
     }
 

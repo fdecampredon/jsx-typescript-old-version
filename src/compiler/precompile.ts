@@ -80,7 +80,7 @@ module TypeScript {
         return null;
     }
 
-    var scannerDiagnostics: any[] = [];
+    var reportDiagnostic = () => { };
 
     function processImports(lineMap: LineMap, scanner: Scanner, token: ISyntaxToken, importedFiles: IFileReference[]): void {
         var position = 0;
@@ -92,20 +92,20 @@ module TypeScript {
         while (token.kind() !== SyntaxKind.EndOfFileToken) {
             if (token.kind() === SyntaxKind.ImportKeyword) {
                 var importStart = position + token.leadingTriviaWidth();
-                token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
+                token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
                 if (SyntaxFacts.isIdentifierNameOrAnyKeyword(token)) {
-                    token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
+                    token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
                     if (token.kind() === SyntaxKind.EqualsToken) {
-                        token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
+                        token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
                         if (token.kind() === SyntaxKind.ModuleKeyword || token.kind() === SyntaxKind.RequireKeyword) {
-                            token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
+                            token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
                             if (token.kind() === SyntaxKind.OpenParenToken) {
                                 var afterOpenParenPosition = scanner.absoluteIndex();
-                                token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
+                                token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
                                 lineMap.fillLineAndCharacterFromPosition(importStart, lineChar);
 
@@ -127,7 +127,7 @@ module TypeScript {
             }
 
             position = scanner.absoluteIndex();
-            token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
+            token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
         }
 
         var totalTime = new Date().getTime() - start;
@@ -177,7 +177,7 @@ module TypeScript {
         var text = SimpleText.fromScriptSnapshot(sourceText);
         var scanner = new Scanner(fileName, LanguageVersion.EcmaScript5, text);
 
-        var firstToken = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
+        var firstToken = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
         // only search out dynamic mods
         // if you find a dynamic mod, ignore every other mod inside, until you balance rcurlies
@@ -190,7 +190,6 @@ module TypeScript {
 
         var properties = processTripleSlashDirectives(fileName, text.lineMap(), firstToken);
 
-        scannerDiagnostics.length = 0;
         return { referencedFiles: properties.referencedFiles, importedFiles: importedFiles, isLibFile: properties.noDefaultLib, diagnostics: properties.diagnostics };
     }
 

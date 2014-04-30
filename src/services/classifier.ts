@@ -51,8 +51,10 @@ module TypeScript.Services {
 
     export class Classifier {
         private scanner: TypeScript.Scanner;
-        private characterWindow: number[] = TypeScript.ArrayUtilities.createArray<number>(2048, 0);
-        private diagnostics: TypeScript.Diagnostic[] = [];
+        private lastDiagnosticKey: string = null;
+        private reportDiagnostic = (position: number, fullWidth: number, key: string, args: any[]) => {
+            this.lastDiagnosticKey = key;
+        };
 
         constructor(public host: IClassifierHost) {
         }
@@ -85,13 +87,15 @@ module TypeScript.Services {
             var lastTokenKind = TypeScript.SyntaxKind.None;
 
             while (this.scanner.absoluteIndex() < text.length) {
-                this.diagnostics.length = 0;
-                var token = this.scanner.scan(this.diagnostics, !noRegexTable[lastTokenKind]);
+                this.lastDiagnosticKey = null;
+
+                var token = this.scanner.scan(!noRegexTable[lastTokenKind], this.reportDiagnostic);
                 lastTokenKind = token.kind();
 
                 this.processToken(text, offset, token, result);
             }
 
+            this.lastDiagnosticKey = null;
             return result;
         }
 
@@ -102,11 +106,9 @@ module TypeScript.Services {
 
             if (this.scanner.absoluteIndex() >= text.length) {
                 // We're at the end.
-                if (this.diagnostics.length > 0) {
-                    if (this.diagnostics[this.diagnostics.length - 1].diagnosticKey() === TypeScript.DiagnosticCode.AsteriskSlash_expected) {
-                        result.finalLexState = EndOfLineState.InMultiLineCommentTrivia;
-                        return;
-                    }
+                if (this.lastDiagnosticKey === TypeScript.DiagnosticCode.AsteriskSlash_expected) {
+                    result.finalLexState = EndOfLineState.InMultiLineCommentTrivia;
+                    return;
                 }
 
                 if (token.kind() === TypeScript.SyntaxKind.StringLiteral) {

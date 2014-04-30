@@ -517,7 +517,12 @@ module TypeScript.Parser {
         private rewindPointPool: IParserRewindPoint[] = [];
         private rewindPointPoolCount = 0;
 
-        constructor(fileName: string,
+        private lastDiagnostic: Diagnostic = null;
+        private reportDiagnostic = (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => {
+            this.lastDiagnostic = new Diagnostic(this.fileName, this.text.lineMap(), position, fullWidth, diagnosticKey, args);
+        }
+
+        constructor(private fileName: string,
                     languageVersion: LanguageVersion,
                     public text: ISimpleText) {
             this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 32, null), null);
@@ -585,11 +590,19 @@ module TypeScript.Parser {
             this.rewindPointPoolCount++;
         }
 
-        public fetchMoreItems(allowRegularExpression: boolean, sourceIndex: number, window: any[], destinationIndex: number, spaceAvailable: number): number {
+        public fetchNextItem(allowRegularExpression: boolean): ISyntaxToken {
             // Assert disabled because it is actually expensive enugh to affect perf.
             // Debug.assert(spaceAvailable > 0);
-            window[destinationIndex] = this.scanner.scan(this._tokenDiagnostics, allowRegularExpression);
-            return 1;
+            var token = this.scanner.scan(allowRegularExpression, this.reportDiagnostic);
+
+            var lastDiagnostic = this.lastDiagnostic;
+            if (lastDiagnostic === null) {
+                return token;
+            }
+
+            this._tokenDiagnostics.push(lastDiagnostic);
+            this.lastDiagnostic = null;
+            return Syntax.realizeToken(token);
         }
 
         public peekToken(n: number): ISyntaxToken {
