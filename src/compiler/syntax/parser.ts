@@ -2150,7 +2150,7 @@ module TypeScript.Parser {
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
             var enumElements = Syntax.emptySeparatedList<EnumElementSyntax>();
 
-            if (openBraceToken.width() > 0) {
+            if (openBraceToken.fullWidth() > 0) {
                 var result = this.parseSeparatedSyntaxList<EnumElementSyntax>(ListParsingState.EnumDeclaration_EnumElements);
                 enumElements = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
@@ -2274,7 +2274,7 @@ module TypeScript.Parser {
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
             var classElements = Syntax.emptyList<IClassElementSyntax>();
 
-            if (openBraceToken.width() > 0) {
+            if (openBraceToken.fullWidth() > 0) {
                 var result = this.parseSyntaxList<IClassElementSyntax>(ListParsingState.ClassDeclaration_ClassElements);
 
                 classElements = result.list;
@@ -2685,7 +2685,7 @@ module TypeScript.Parser {
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
 
             var moduleElements = Syntax.emptyList<IModuleElementSyntax>();
-            if (openBraceToken.width() > 0) {
+            if (openBraceToken.fullWidth() > 0) {
                 var result = this.parseSyntaxList<IModuleElementSyntax>(ListParsingState.ModuleDeclaration_ModuleElements);
                 moduleElements = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
@@ -2730,7 +2730,7 @@ module TypeScript.Parser {
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
 
             var typeMembers = Syntax.emptySeparatedList<ITypeMemberSyntax>();
-            if (openBraceToken.width() > 0) {
+            if (openBraceToken.fullWidth() > 0) {
                 var result = this.parseSeparatedSyntaxList<ITypeMemberSyntax>(ListParsingState.ObjectType_TypeMembers);
                 typeMembers = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
@@ -3334,7 +3334,7 @@ module TypeScript.Parser {
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
 
             var switchClauses = Syntax.emptyList<ISwitchClauseSyntax>();
-            if (openBraceToken.width() > 0) {
+            if (openBraceToken.fullWidth() > 0) {
                 var result = this.parseSyntaxList<ISwitchClauseSyntax>(ListParsingState.SwitchStatement_SwitchClauses);
                 switchClauses = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
@@ -3668,7 +3668,7 @@ module TypeScript.Parser {
             var equalsValueClause: EqualsValueClauseSyntax = null;
             var typeAnnotation: TypeAnnotationSyntax = null;
 
-            if (propertyName.width() > 0) {
+            if (propertyName.fullWidth() > 0) {
                 typeAnnotation = this.parseOptionalTypeAnnotation(/*allowStringLiteral:*/ false);
 
                 if (this.isEqualsValueClause(/*inParameter*/ false)) {
@@ -4892,7 +4892,7 @@ module TypeScript.Parser {
 
             var statements = Syntax.emptyList<IStatementSyntax>();
 
-            if (parseBlockEvenWithNoOpenBrace || openBraceToken.width() > 0) {
+            if (parseBlockEvenWithNoOpenBrace || openBraceToken.fullWidth() > 0) {
                 var savedIsInStrictMode = this.isInStrictMode;
                 
                 var processItems = checkForStrictMode ? ParserImpl.updateStrictModeState : null;
@@ -4973,7 +4973,7 @@ module TypeScript.Parser {
             var openParenToken = this.eatToken(SyntaxKind.OpenParenToken);
             var parameters = Syntax.emptySeparatedList<ParameterSyntax>();
 
-            if (openParenToken.width() > 0) {
+            if (openParenToken.fullWidth() > 0) {
                 var result = this.parseSeparatedSyntaxList<ParameterSyntax>(ListParsingState.ParameterList_Parameters);
                 parameters = result.list;
                 openParenToken = this.addSkippedTokensAfterToken(openParenToken, result.skippedTokens);
