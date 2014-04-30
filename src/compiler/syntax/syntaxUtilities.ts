@@ -1,6 +1,13 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    //export function visitSyntaxElement(visitor: ISyntaxVisitor, element: ISyntaxElement): any {
+    //    if (element === null) { return null; }
+    //    switch (element.kind()) {
+
+    //    }
+    //}
+
     export class SyntaxUtilities {
         public static isAngleBracket(positionedElement: ISyntaxElement): boolean {
             var element = positionedElement;

@@ -13,6 +13,7 @@ interface ITypeDefinition {
     baseType: string;
     interfaces?: string[];
     children: IMemberDefinition[];
+    syntaxKinds?: string[];
     isTypeScriptSpecific: boolean;
 }
 
@@ -139,6 +140,7 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'extendsOrImplementsKeyword', isToken: true, tokenKinds: ['ExtendsKeyword', 'ImplementsKeyword'] },
             <any>{ name: 'typeNames', isSeparatedList: true, requiresAtLeastOneItem: true, elementType: 'INameSyntax' }
         ],
+        syntaxKinds: ["ExtendsHeritageClause", "ImplementsHeritageClause"],
         isTypeScriptSpecific: true
     },
     <any>{
@@ -212,7 +214,8 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'kind', type: 'SyntaxKind' },
             <any>{ name: 'operatorToken', isToken: true, tokenKinds: ['PlusPlusToken', 'MinusMinusToken', 'PlusToken', 'MinusToken', 'TildeToken', 'ExclamationToken'] },
             <any>{ name: 'operand', type: 'IUnaryExpressionSyntax' }
-        ]
+        ],
+        syntaxKinds: ["PreIncrementExpression", "PreDecrementExpression", "PlusExpression", "NegateExpression", "BitwiseNotExpression", "LogicalNotExpression"],
     },
     <any>{
         name: 'ArrayLiteralExpressionSyntax',
@@ -403,7 +406,8 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'kind', type: 'SyntaxKind' },
             <any>{ name: 'operand', type: 'ILeftHandSideExpressionSyntax' },
             <any>{ name: 'operatorToken', isToken: true, tokenKinds:['PlusPlusToken', 'MinusMinusToken'] }
-        ]
+        ],
+        syntaxKinds: ["PostIncrementExpression", "PostDecrementExpression"],
     },
     <any>{
         name: 'ElementAccessExpressionSyntax',
@@ -443,7 +447,7 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'kind', type: 'SyntaxKind' },
             <any>{ name: 'left', type: 'IExpressionSyntax' },
             <any>{ name: 'operatorToken', isToken: true,
-                   tokenKinds:['AsteriskToken',  'SlashToken',  'PercentToken', 'PlusToken', 'MinusToken',  'LessThanLessThanToken',
+                   tokenKinds:['AsteriskToken',  'SlashToken',  'PercentToken', 'PlusToken', 'MinusToken', 'LessThanLessThanToken',
                                'GreaterThanGreaterThanToken', 'GreaterThanGreaterThanGreaterThanToken', 'LessThanToken',
                                'GreaterThanToken', 'LessThanEqualsToken', 'GreaterThanEqualsToken', 'InstanceOfKeyword',
                                'InKeyword', 'EqualsEqualsToken', 'ExclamationEqualsToken', 'EqualsEqualsEqualsToken',
@@ -453,7 +457,16 @@ var definitions:ITypeDefinition[] = [
                                'MinusEqualsToken', 'AsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'EqualsToken',
                                'CommaToken'] },
             <any>{ name: 'right', type: 'IExpressionSyntax' }
-        ]
+        ],
+        syntaxKinds: ["MultiplyExpression", "DivideExpression", "ModuloExpression", "AddExpression", "SubtractExpression", "LeftShiftExpression",
+            "SignedRightShiftExpression", "UnsignedRightShiftExpression", "LessThanExpression",
+            "GreaterThanExpression", "LessThanOrEqualExpression", "GreaterThanOrEqualExpression", "InstanceOfExpression",
+            "InExpression", "EqualsWithTypeConversionExpression", "NotEqualsWithTypeConversionExpression", "EqualsExpression",
+            "NotEqualsExpression", "BitwiseAndExpression", "BitwiseExclusiveOrExpression", "BitwiseOrExpression", "LogicalAndExpression",
+            "LogicalOrExpression", "OrAssignmentExpression", "AndAssignmentExpression", "ExclusiveOrAssignmentExpression", "LeftShiftAssignmentExpression",
+            "SignedRightShiftAssignmentExpression", "UnsignedRightShiftAssignmentExpression", "AddAssignmentExpression",
+            "SubtractAssignmentExpression", "MultiplyAssignmentExpression", "DivideAssignmentExpression", "ModuloAssignmentExpression", "AssignmentExpression",
+            "CommaExpression"]
     },
     <any>{
         name: 'ConditionalExpressionSyntax',
@@ -2340,6 +2353,32 @@ function generateVisitor(): string {
     result += "///<reference path='references.ts' />\r\n\r\n";
 
     result += "module TypeScript {\r\n";
+    result += "    export function visitNodeOrToken(visitor: ISyntaxVisitor, element: ISyntaxNodeOrToken): any {\r\n";
+    result += "        if (element === null) { return null; }\r\n";
+    result += "        if (element.isToken()) { visitor.visitToken(<ISyntaxToken>element); }\r\n";
+    result += "        switch (element.kind()) {\r\n";
+
+    for (var i = 0; i < definitions.length; i++) {
+        var definition = definitions[i];
+
+        if (definition.syntaxKinds) {
+            result += "           ";
+            for (var j = 0; j < definition.syntaxKinds.length; j++) {
+                result += " case SyntaxKind." + definition.syntaxKinds[j] + ":"
+            }
+            result += "\r\n";
+        }
+        else {
+            result += "            case SyntaxKind." + getNameWithoutSuffix(definition) + ":\r\n";
+        }
+
+        result += "                return visitor.visit" + getNameWithoutSuffix(definition) + "(<" + definition.name + ">element);\r\n";
+    }
+
+    result += "        }\r\n\r\n";
+    result += "        throw Errors.invalidOperation();\r\n";
+    result += "    }\r\n\r\n";
+
     result += "    export interface ISyntaxVisitor {\r\n";
     result += "        visitToken(token: ISyntaxToken): any;\r\n";
 
