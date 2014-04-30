@@ -486,7 +486,7 @@ module TypeScript.Parser {
         rewind(rewindPoint: IParserRewindPoint): void;
 
         // Called when the parser is done speculative parsing and no longer needs the rewind point.
-        // Must be called for every rewing point retrived.
+        // Must be called for every rewind point retrived.
         releaseRewindPoint(rewindPoint: IParserRewindPoint): void;
 
         // Retrieves the diagnostics generated while the source was producing nodes or tokens. 
@@ -701,8 +701,7 @@ module TypeScript.Parser {
         // and can read in subsequent data from the old tree.
         //
         // This parser source also keeps track of the absolute position in the text that we're in,
-        // the previous token, and any token diagnostics produced.  That way we dont' have to track
-        // that ourselves.
+        // and any token diagnostics produced.  That way we dont' have to track that ourselves.
         private _normalParserSource: NormalParserSource;
 
         // The range of text in the *original* text that was changed, and the new length of it after
