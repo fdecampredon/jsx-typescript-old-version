@@ -2315,7 +2315,7 @@ function generateScannerUtilities(): string {
             result += "            case " + i + ":\r\n";
             result += "                // " + TypeScript.ArrayUtilities.select(keywordsOfLengthI, k => k.text).join(", ") + "\r\n";
 
-            result += generateKeywordCondition(keywordsOfLengthI, 0, "            ");
+            result += generateKeywordCondition(keywordsOfLengthI, 0, "                ");
 
             // result += "            return SyntaxKind.None;\r\n\r\n";
         }
