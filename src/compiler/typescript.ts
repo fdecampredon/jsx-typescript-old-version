@@ -214,13 +214,10 @@ module TypeScript {
     }
 
     export class DocumentRegistry implements IDocumentRegistry {
-        private buckets: StringHashTable <DocumentRegistryEntry> [] = [];
+        private buckets: IIndexable<StringHashTable<DocumentRegistryEntry>> = {};
 
-        private getKeyFromCompilationSettings(settings: ImmutableCompilationSettings): number {
-            var propagateEnumConstants = settings.propagateEnumConstants() ? 1 : 0;
-            var allowAutomaticSemicolonInsertion = settings.allowAutomaticSemicolonInsertion() ? 1 : 0;
-            
-            return propagateEnumConstants << 2 | allowAutomaticSemicolonInsertion << 1 | settings.codeGenTarget() 
+        private getKeyFromCompilationSettings(settings: ImmutableCompilationSettings): string {
+            return "_" + settings.propagateEnumConstants().toString() + "|" + settings.allowAutomaticSemicolonInsertion().toString() + "|" + LanguageVersion[settings.codeGenTarget()];
         }
 
         private getBucketForCompilationSettings(settings: ImmutableCompilationSettings, createIfMissing: boolean): StringHashTable<DocumentRegistryEntry> {
@@ -233,8 +230,8 @@ module TypeScript {
         }
 
         public reportStats() {
-            var bucketInfoArray = this.buckets.filter((entries) => !!entries).map((entries, i) => {
-                var bucket = { propagateEnumConstants: !!(i & (1 << 2)), allowAutomaticSemicolonInsertion: !!(i & (1 << 1)), codeGenTarget: TypeScript.LanguageVersion[i & 1] };
+            var bucketInfoArray = Object.keys(this.buckets).filter(name => name && name.charAt(0) === '_').map(name => {
+                var entries = this.buckets[name];
                 var documents = entries.getAllKeys().map((name) => {
                     var entry = entries.lookup(name);
                     return {
@@ -244,7 +241,7 @@ module TypeScript {
                     };
                 });
                 documents.sort((x, y) => y.refCount - x.refCount);
-                return { bucket: bucket, documents: documents }
+                return { bucket: name, documents: documents }
             });
             return JSON.stringify(bucketInfoArray, null, 2);
         }
