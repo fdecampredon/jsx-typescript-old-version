@@ -11,13 +11,13 @@ module TypeScript.Services {
         private _syntaxTreeCache: SyntaxTreeCache;
         private formattingRulesProvider: TypeScript.Services.Formatting.RulesProvider;
 
-        private activeCompletionSession: CompletionSession = null;
+        private activeCompletionSession: CompletionSession = null;        
         private cancellationToken: CancellationToken;
 
-        constructor(public host: ILanguageServiceHost) {
+        constructor(public host: ILanguageServiceHost, documentRegistry: IDocumentRegistry) {
             this.logger = this.host;
             this.cancellationToken = new CancellationToken(this.host.getCancellationToken());
-            this.compiler = new LanguageServiceCompiler(this.host, this.cancellationToken);
+            this.compiler = new LanguageServiceCompiler(this.host, documentRegistry, this.cancellationToken);
             this._syntaxTreeCache = new SyntaxTreeCache(this.host);
 
             // Check if the localized messages json is set, otherwise query the host for it
@@ -26,12 +26,20 @@ module TypeScript.Services {
             }
         }
 
+        public dispose() {
+            this.compiler.dispose();
+        }
+
         public cleanupSemanticCache(): void {
             this.compiler.cleanupSemanticCache();
         }
 
         public refresh(): void {
             // No-op.  Only kept around for compatability with the interface we shipped.
+        }
+
+        private getSemanticInfoChain(): SemanticInfoChain {
+            return this.compiler.getSemanticInfoChain();
         }
 
         private getSymbolInfoAtPosition(fileName: string, pos: number, requireName: boolean): { symbol: TypeScript.PullSymbol; containingASTOpt: TypeScript.ISyntaxElement } {
@@ -211,7 +219,7 @@ module TypeScript.Services {
             else if (symbol.kind == TypeScript.PullElementKind.Property || typeSymbol.isMethod() || typeSymbol.isProperty()) {
 
                 var declaration: TypeScript.PullDecl = symbol.getDeclarations()[0];
-                var classSymbol: TypeScript.PullTypeSymbol = declaration.getParentDecl().getSymbol().type;
+                var classSymbol: TypeScript.PullTypeSymbol = declaration.getParentDecl().getSymbol(symbol.semanticInfoChain).type;
 
                 typesToSearch = [];
                 var extendingTypes = classSymbol.getTypesThatExtendThisType();
@@ -297,7 +305,7 @@ module TypeScript.Services {
                         }
                         else {
                             var declaration = searchSymbolInfoAtPosition.symbol.getDeclarations()[0];
-                            normalizedSymbol = declaration.getSymbol();
+                            normalizedSymbol = declaration.getSymbol(symbol.semanticInfoChain);
                         }
 
                         if (normalizedSymbol === symbol) {
@@ -661,7 +669,7 @@ module TypeScript.Services {
         private tryAddDefinition(symbolKind: string, symbolName: string, containerKind: string, containerName: string, declarations: TypeScript.PullDecl[], result: DefinitionInfo[]): boolean {
             // First, if there are definitions and signatures, then just pick the definition.
             var definitionDeclaration = TypeScript.ArrayUtilities.firstOrDefault(declarations, d => {
-                var signature = d.getSignatureSymbol();
+                var signature = d.getSignatureSymbol(this.getSemanticInfoChain());
                 return signature && signature.isDefinition();
             });
 
@@ -677,7 +685,7 @@ module TypeScript.Services {
             // We didn't have a definition.  Check and see if we have any signatures.  If so, just
             // add the last one.
             var signatureDeclarations = TypeScript.ArrayUtilities.where(declarations, d => {
-                var signature = d.getSignatureSymbol();
+                var signature = d.getSignatureSymbol(this.getSemanticInfoChain());
                 return signature && !signature.isDefinition();
             });
 
@@ -1081,7 +1089,7 @@ module TypeScript.Services {
                     TypeScript.ASTHelpers.isNameOfMemberFunction(node)) {
                     var funcDecl = node.kind() === TypeScript.SyntaxKind.IdentifierName ? node.parent : node;
                     if (symbol && symbol.kind != TypeScript.PullElementKind.Property) {
-                        var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(this.compiler.getDeclForAST(funcDecl));
+                        var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(this.compiler.getDeclForAST(funcDecl), symbol.semanticInfoChain);
                         _isCallExpression = true;
                         candidateSignature = signatureInfo.signature;
                         resolvedSignatures = signatureInfo.allSignatures;
@@ -1334,6 +1342,7 @@ module TypeScript.Services {
         }
 
         private getCompletionEntriesFromDecls(decls: TypeScript.PullDecl[], result: TypeScript.IdentiferNameHashTable<CachedCompletionEntryDetails>): void {
+            var semanticInfoChain = this.getSemanticInfoChain();
             for (var i = 0, n = decls ? decls.length : 0; i < n; i++) {
                 var decl = decls[i];
 
@@ -1358,10 +1367,10 @@ module TypeScript.Services {
                 // Do not call getSymbol if the decl is not already bound. This would force a bind,
                 // which is too expensive to do for every completion item when we are building the
                 // list.
-                var symbol = decl.hasSymbol() && decl.getSymbol();
+                var symbol = decl.hasSymbol(semanticInfoChain) && decl.getSymbol(semanticInfoChain);
                 // If the symbol has already been resolved, cache the needed information for completion details.
                 var enclosingDecl = decl.getEnclosingDecl();
-                var enclosingScopeSymbol = (enclosingDecl && enclosingDecl.hasSymbol()) ? enclosingDecl.getSymbol() : null;
+                var enclosingScopeSymbol = (enclosingDecl && enclosingDecl.hasSymbol(semanticInfoChain)) ? enclosingDecl.getSymbol(semanticInfoChain) : null;
 
                 if (symbol && symbol.isResolved && enclosingScopeSymbol && enclosingScopeSymbol.isResolved) {
                     var completionInfo = this.getResolvedCompletionEntryDetailsFromSymbol(symbol, enclosingScopeSymbol);

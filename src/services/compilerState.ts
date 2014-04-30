@@ -257,7 +257,7 @@ module TypeScript.Services {
         // A cache of all the information about the files on the host side.
         private hostCache: HostCache = null;
 
-        constructor(private host: ILanguageServiceHost, private cancellationToken: CancellationToken) {
+        constructor(private host: ILanguageServiceHost, private documentRegistry: IDocumentRegistry, private cancellationToken: CancellationToken) {
             this.logger = this.host;
         }
 
@@ -278,64 +278,69 @@ module TypeScript.Services {
                 this.compiler = new TypeScript.TypeScriptCompiler(this.logger, compilationSettings);
             }
 
+            var oldSettings = this.compiler.compilationSettings();
+
+            var changesInCompilationSettingsAffectSyntax =
+                oldSettings && compilationSettings && !compareDataObjects(oldSettings, compilationSettings) && settingsChangeAffectsSyntax(oldSettings, compilationSettings);
+
             // let the compiler know about the current compilation settings.  
             this.compiler.setCompilationSettings(compilationSettings);
 
-            // Now, remove any files from the compiler that are no longer in hte host.
+            // Now, remove any files from the compiler that are no longer in the host.
             var compilerFileNames = this.compiler.fileNames();
+
             for (var i = 0, n = compilerFileNames.length; i < n; i++) {
 
                 this.cancellationToken.throwIfCancellationRequested();
 
                 var fileName = compilerFileNames[i];
 
-                if (!this.hostCache.contains(fileName)) {
+                if (!this.hostCache.contains(fileName) || changesInCompilationSettingsAffectSyntax) {
                     this.compiler.removeFile(fileName);
+                    this.documentRegistry.releaseDocument(fileName, oldSettings);
                 }
             }
 
             // Now, for every file the host knows about, either add the file (if the compiler
             // doesn't know about it.).  Or notify the compiler about any changes (if it does
             // know about it.)
-            var cache = this.hostCache;
-            var hostFileNames = cache.getFileNames();
+            var hostFileNames = this.hostCache.getFileNames();
+
             for (var i = 0, n = hostFileNames.length; i < n; i++) {
                 var fileName = hostFileNames[i];
 
-                if (this.compiler.getDocument(fileName)) {
-                    this.tryUpdateFile(this.compiler, fileName);
+                var version = this.hostCache.getVersion(fileName);
+                var isOpen = this.hostCache.isOpen(fileName);
+                var scriptSnapshot = this.hostCache.getScriptSnapshot(fileName);
+
+                var document: Document = this.compiler.getDocument(fileName)
+                if (document) {
+                    //
+                    // If the document is the same, assume no update
+                    //
+                    if (document.version === version && document.isOpen === isOpen) {
+                        continue;
+                    }
+
+                    // Only perform incremental parsing on open files that are being edited.  If a file was
+                    // open, but is now closed, we want to reparse entirely so we don't have any tokens that
+                    // are holding onto expensive script snapshot instances on the host.  Similarly, if a 
+                    // file was closed, then we always want to reparse.  This is so our tree doesn't keep 
+                    // the old buffer alive that represented the file on disk (as the host has moved to a 
+                    // new text buffer).
+                    var textChangeRange: TextChangeRange = null;
+                    if (document.isOpen && isOpen) {
+                        textChangeRange = this.hostCache.getScriptTextChangeRangeSinceVersion(fileName, document.version);
+                    }
+
+                    document = this.documentRegistry.updateDocument(document, fileName, compilationSettings, scriptSnapshot, version, isOpen, textChangeRange);
                 }
                 else {
-                    this.compiler.addFile(fileName,
-                        cache.getScriptSnapshot(fileName), cache.getByteOrderMark(fileName), cache.getVersion(fileName), cache.isOpen(fileName));
+                    document = this.documentRegistry.acquireDocument(fileName, compilationSettings, scriptSnapshot, this.hostCache.getByteOrderMark(fileName), version, isOpen, []);
                 }
+
+                this.compiler.addOrUpdateFile(document);
             }
-        }
-
-        private tryUpdateFile(compiler: TypeScript.TypeScriptCompiler, fileName: string): void {
-            var document: TypeScript.Document = this.compiler.getDocument(fileName);
-
-            //
-            // If the document is the same, assume no update
-            //
-            var version = this.hostCache.getVersion(fileName);
-            var isOpen = this.hostCache.isOpen(fileName);
-            if (document.version === version && document.isOpen === isOpen) {
-                return;
-            }
-
-            // Only perform incremental parsing on open files that are being edited.  If a file was
-            // open, but is now closed, we want to reparse entirely so we don't have any tokens that
-            // are holding onto expensive script snapshot instances on the host.  Similarly, if a 
-            // file was closed, then we always want to reparse.  This is so our tree doesn't keep 
-            // the old buffer alive that represented the file on disk (as the host has moved to a 
-            // new text buffer).
-            var textChangeRange: TextChangeRange = null;
-            if (document.isOpen && isOpen) {
-                textChangeRange = this.hostCache.getScriptTextChangeRangeSinceVersion(fileName, document.version);
-            }
-
-            compiler.updateFile(fileName, this.hostCache.getScriptSnapshot(fileName), version, isOpen, textChangeRange);
         }
 
         // Methods that defer to the host cache to get the result.
@@ -381,6 +386,11 @@ module TypeScript.Services {
         public getDocument(fileName: string): TypeScript.Document {
             this.synchronizeHostData();
             return this.compiler.getDocument(fileName);
+        }
+
+        public getSemanticInfoChain(): SemanticInfoChain {
+            this.synchronizeHostData();
+            return this.compiler.getSemanticInfoChain();
         }
 
         public getSyntacticDiagnostics(fileName: string): TypeScript.Diagnostic[] {
@@ -451,6 +461,15 @@ module TypeScript.Services {
         public canEmitDeclarations(fileName: string) {
             this.synchronizeHostData();
             return this.compiler.canEmitDeclarations(fileName);
+        }
+
+        public dispose(): void {
+            if (this.compiler) {
+                var fileNames = this.compiler.fileNames();
+                for (var i = 0; i < fileNames.length; ++i) {
+                    this.documentRegistry.releaseDocument(fileNames[i], this.compiler.compilationSettings());
+                }
+            }
         }
     }
 }

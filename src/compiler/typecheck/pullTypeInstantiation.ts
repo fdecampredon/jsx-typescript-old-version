@@ -34,7 +34,7 @@ module TypeScript {
         // use the root symbol to model the actual type
         // do not call this directly!
         constructor(public referencedTypeSymbol: PullTypeSymbol) {
-            super(referencedTypeSymbol.name, referencedTypeSymbol.kind);
+            super(referencedTypeSymbol.name, referencedTypeSymbol.kind, referencedTypeSymbol.semanticInfoChain);
 
             Debug.assert(referencedTypeSymbol !== null, "Type root symbol may not be null");
 
@@ -562,7 +562,7 @@ module TypeScript {
                 instantiatedMember = referencedMember;
             }
             else {
-                instantiatedMember = new PullSymbol(referencedMember.name, referencedMember.kind);
+                instantiatedMember = new PullSymbol(referencedMember.name, referencedMember.kind, referencedMember.semanticInfoChain);
                 instantiatedMember.setRootSymbol(referencedMember);
                 instantiatedMember.type = this._getResolver().instantiateType(referencedMember.type, this._typeParameterSubstitutionMap);
                 instantiatedMember.isOptional = referencedMember.isOptional;
@@ -676,7 +676,7 @@ module TypeScript {
                         requestedMembers[requestedMembers.length] = referencedMember;
                     }
                     else {
-                        requestedMember = new PullSymbol(referencedMember.name, referencedMember.kind);
+                        requestedMember = new PullSymbol(referencedMember.name, referencedMember.kind, referencedMember.semanticInfoChain);
                         requestedMember.setRootSymbol(referencedMember);
 
                         requestedMember.type = this._getResolver().instantiateType(referencedMember.type, this._typeParameterSubstitutionMap);
@@ -699,7 +699,7 @@ module TypeScript {
 
             if (!this._instantiatedConstructorMethod) {
                 var referencedConstructorMethod = this.referencedTypeSymbol.getConstructorMethod();
-                this._instantiatedConstructorMethod = new PullSymbol(referencedConstructorMethod.name, referencedConstructorMethod.kind);
+                this._instantiatedConstructorMethod = new PullSymbol(referencedConstructorMethod.name, referencedConstructorMethod.kind, referencedConstructorMethod.semanticInfoChain);
                 this._instantiatedConstructorMethod.setRootSymbol(referencedConstructorMethod);
                 this._instantiatedConstructorMethod.setResolved();
 
@@ -923,7 +923,7 @@ module TypeScript {
         }
 
         constructor(rootSignature: PullSignatureSymbol, private _typeParameterSubstitutionMap: TypeSubstitutionMap) {
-            super(rootSignature.kind, rootSignature.isDefinition());
+            super(rootSignature.kind, rootSignature.semanticInfoChain, rootSignature.isDefinition());
             this.setRootSymbol(rootSignature);
             nSpecializedSignaturesCreated++;
             
@@ -969,7 +969,7 @@ module TypeScript {
         }
 
         constructor(rootSignature: PullSignatureSymbol, private _typeParameterSubstitutionMap: TypeSubstitutionMap) {
-            super(rootSignature.kind, rootSignature.isDefinition());
+            super(rootSignature.kind, rootSignature.semanticInfoChain, rootSignature.isDefinition());
             this.setRootSymbol(rootSignature);
             nSpecializedSignaturesCreated++;
 
@@ -1037,7 +1037,7 @@ module TypeScript {
         // We specifically do not set a root symbol here. Root symbols are only for instantiation.
         // This is distinct from instantiation.
         constructor(private originalTypeParameter: PullTypeParameterSymbol, private _typeParameterSubstitutionMapForConstraint: TypeSubstitutionMap) {
-            super(originalTypeParameter.name);
+            super(originalTypeParameter.name, originalTypeParameter.semanticInfoChain);
             var originalTypeParameterDeclarations = originalTypeParameter.getDeclarations();
             for (var i = 0; i < originalTypeParameterDeclarations.length; i++) {
                 this.addDeclaration(originalTypeParameterDeclarations[i]);

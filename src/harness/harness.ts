@@ -1536,6 +1536,10 @@ module Harness {
             this.addScript("lib.d.ts", Harness.Compiler.libText);
         }
 
+        public getHostIdentifier(): string {
+            return "TypeScriptLS";
+        }
+
         public addFile(fileName: string) {
             var code = readFile(fileName).contents;
             this.addScript(fileName, code);

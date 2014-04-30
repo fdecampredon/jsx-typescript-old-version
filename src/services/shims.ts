@@ -322,6 +322,7 @@ module TypeScript.Services {
         // some external native objects holds onto us (e.g. Com/Interop).
         public dispose(dummy: any): void {
             this.logger.log("dispose()");
+            this.languageService.dispose();
             this.languageService = null;
 
             // force a GC

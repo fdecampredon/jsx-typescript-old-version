@@ -7,12 +7,15 @@ module TypeScript {
     var pullDeclID = 0;
     var sentinelEmptyPullDeclArray: any[] = [];
 
+    export interface IASTForDeclMap {
+        _getASTForDecl(decl: PullDecl): ISyntaxElement;
+    }
+
     export class PullDecl {
         // Properties that will not change over the lifetime of the decl
         public kind: PullElementKind;
         public name: string;
         private declDisplayName: string;
-        public semanticInfoChain: SemanticInfoChain;
 
         public declID = pullDeclID++;
         public flags: PullElementFlags = PullElementFlags.None;
@@ -36,15 +39,18 @@ module TypeScript {
         public childDeclNamespaceCache: IIndexable<PullDecl[]> = null;
         public childDeclTypeParameterCache: IIndexable<PullDecl[]> = null;
 
-        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, semanticInfoChain: SemanticInfoChain) {
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags) {
             this.name = declName;
             this.kind = kind;
             this.flags = declFlags;
-            this.semanticInfoChain = semanticInfoChain;
 
             if (displayName !== this.name) {
                 this.declDisplayName = displayName;
             }
+        }
+
+        public getASTForDeclMap(): IASTForDeclMap {
+            throw Errors.abstract();
         }
 
         public fileName(): string {
@@ -101,43 +107,43 @@ module TypeScript {
             return this.declDisplayName === undefined ? this.name : this.declDisplayName;
         }
 
-        public setSymbol(symbol: PullSymbol) {
-            this.semanticInfoChain.setSymbolForDecl(this, symbol);
+        public setSymbol(symbol: PullSymbol, semanticInfoChain: SemanticInfoChain): void {
+            semanticInfoChain.setSymbolForDecl(this, symbol);
         }
 
-        public ensureSymbolIsBound() {
-            if (!this.hasBeenBound() && this.kind !== PullElementKind.Script) {
-                var binder = this.semanticInfoChain.getBinder();
+        public ensureSymbolIsBound(semanticInfoChain: SemanticInfoChain) {
+            if (!this.hasBeenBound(semanticInfoChain) && this.kind !== PullElementKind.Script) {
+                var binder = semanticInfoChain.getBinder();
                 binder.bindDeclToPullSymbol(this);
             }
         }
 
-        public getSymbol(): PullSymbol {
+        public getSymbol(semanticInfoChain: SemanticInfoChain): PullSymbol {
             if (this.kind === PullElementKind.Script) {
                 return null;
             }
 
-            this.ensureSymbolIsBound();
+            this.ensureSymbolIsBound(semanticInfoChain);
 
-            return this.semanticInfoChain.getSymbolForDecl(this);
+            return semanticInfoChain.getSymbolForDecl(this);
         }
 
-        public hasSymbol() {
-            var symbol = this.semanticInfoChain.getSymbolForDecl(this);
+        public hasSymbol(semanticInfoChain: SemanticInfoChain) {
+            var symbol = semanticInfoChain.getSymbolForDecl(this);
             return !!symbol;
         }
 
-        public setSignatureSymbol(signatureSymbol: PullSignatureSymbol): void {
-            this.semanticInfoChain.setSignatureSymbolForDecl(this, signatureSymbol);
+        public setSignatureSymbol(signatureSymbol: PullSignatureSymbol, semanticInfoChain: SemanticInfoChain): void {
+            semanticInfoChain.setSignatureSymbolForDecl(this, signatureSymbol);
         }
 
-        public getSignatureSymbol(): PullSignatureSymbol { 
-            this.ensureSymbolIsBound();
-            return this.semanticInfoChain.getSignatureSymbolForDecl(this);
+        public getSignatureSymbol(semanticInfoChain: SemanticInfoChain): PullSignatureSymbol { 
+            this.ensureSymbolIsBound(semanticInfoChain);
+            return semanticInfoChain.getSignatureSymbolForDecl(this);
         }
 
-        public hasSignatureSymbol() {
-            var signatureSymbol = this.semanticInfoChain.getSignatureSymbolForDecl(this);
+        public hasSignatureSymbol(semanticInfoChain: SemanticInfoChain) {
+            var signatureSymbol = semanticInfoChain.getSignatureSymbolForDecl(this);
             return !!signatureSymbol;
         }
 
@@ -293,8 +299,8 @@ module TypeScript {
             return declGroups || sentinelEmptyPullDeclArray;
         }
 
-        public hasBeenBound() {
-            return this.hasSymbol() || this.hasSignatureSymbol();
+        public hasBeenBound(semanticInfoChain: SemanticInfoChain) {
+            return this.hasSymbol(semanticInfoChain) || this.hasSignatureSymbol(semanticInfoChain);
         }
 
         public isSynthesized(): boolean {
@@ -302,7 +308,7 @@ module TypeScript {
         }
 
         public ast(): ISyntaxElement {
-            return this.semanticInfoChain.getASTForDecl(this);
+            return this.isSynthesized() ? null : this.getASTForDeclMap()._getASTForDecl(this);
         }
 
         public isRootDecl() {
@@ -320,15 +326,18 @@ module TypeScript {
         private _isExternalModule: boolean;
         private _fileName: string;
 
-        constructor(name: string, fileName: string, kind: PullElementKind, declFlags: PullElementFlags, semanticInfoChain: SemanticInfoChain, isExternalModule: boolean) {
-            super(name, name, kind, declFlags, semanticInfoChain);
-            this.semanticInfoChain = semanticInfoChain;
+        constructor(private astToDeclMap: IASTForDeclMap, name: string, fileName: string, kind: PullElementKind, declFlags: PullElementFlags, isExternalModule: boolean) {
+            super(name, name, kind, declFlags);
             this._isExternalModule = isExternalModule;
             this._fileName = fileName;
         }
 
         public fileName(): string {
             return this._fileName;
+        }
+
+        public getASTForDeclMap(): IASTForDeclMap {
+            return this.astToDeclMap;
         }
 
         public getParentPath(): PullDecl[]{
@@ -359,7 +368,7 @@ module TypeScript {
         private parentPath: PullDecl[] = null;
 
         constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, addToParent = true) {
-            super(declName, displayName, kind, declFlags, parentDecl ? parentDecl.semanticInfoChain : null);
+            super(declName, displayName, kind, declFlags);
 
             // Link to parent
             this.parentDecl = parentDecl;
@@ -387,6 +396,10 @@ module TypeScript {
 
         public fileName(): string {
             return this._rootDecl.fileName();
+        }
+
+        public getASTForDeclMap(): IASTForDeclMap {
+            return this._rootDecl.getASTForDeclMap();
         }
 
         public getParentDecl(): PullDecl {
@@ -451,9 +464,8 @@ module TypeScript {
         // This is a synthesized decl; its life time should match that of the symbol using it, and 
         // not that of its parent decl. To enforce this we are not making it reachable from its 
         // parent, but will set the parent link.
-        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, semanticInfoChain: SemanticInfoChain) {
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl) {
             super(declName, displayName, kind, declFlags, parentDecl, /*addToParent*/ false);
-            this.semanticInfoChain = semanticInfoChain;
         }
 
         public isSynthesized(): boolean {

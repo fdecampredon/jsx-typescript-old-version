@@ -48,10 +48,11 @@ module TypeScript.Services {
 
     export class TypeScriptServicesFactory implements IShimFactory {
         private _shims: IShim[] = [];
+        private documentRegistry: DocumentRegistry = new DocumentRegistry();
 
         public createPullLanguageService(host: TypeScript.Services.ILanguageServiceHost): TypeScript.Services.ILanguageService {
             try {
-                return new TypeScript.Services.LanguageService(host);
+                return new TypeScript.Services.LanguageService(host, this.documentRegistry);
             }
             catch (err) {
                 TypeScript.Services.logInternalError(host, err);
@@ -114,6 +115,7 @@ module TypeScript.Services {
         public close(): void {
             // Forget all the registered shims
             this._shims = [];
+            this.documentRegistry = new DocumentRegistry();
         }
 
         public registerShim(shim: IShim): void {

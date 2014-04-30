@@ -282,7 +282,7 @@ module TypeScript {
                 return false;
             }
   
-            var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol();
+            var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol(this.semanticInfoChain);
             if (importSymbol.isUsedAsValue()) {
                 return true;
             }
@@ -317,7 +317,7 @@ module TypeScript {
 
             this.emitComments(importDeclAST, true);
 
-            var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol();
+            var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol(this.semanticInfoChain);
 
             var parentSymbol = importSymbol.getContainer();
             var parentKind = parentSymbol ? parentSymbol.kind : PullElementKind.None;
@@ -848,7 +848,7 @@ module TypeScript {
                 if (decl.kind & PullElementKind.TypeAlias) {
                     var importStatementAST = <ImportDeclarationSyntax>this.semanticInfoChain.getASTForDecl(decl);
                     if (importStatementAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference) { // external module
-                        var symbol = decl.getSymbol();
+                        var symbol = decl.getSymbol(this.semanticInfoChain);
                         var typeSymbol = symbol && symbol.type;
                         if (typeSymbol && typeSymbol !== this.semanticInfoChain.anyTypeSymbol && !typeSymbol.isError()) {
                             result.push(decl);
@@ -870,7 +870,7 @@ module TypeScript {
             if (importDecls.length) {
                 for (var i = 0; i < importDecls.length; i++) {
                     var importStatementDecl = importDecls[i];
-                    var importStatementSymbol = <PullTypeAliasSymbol>importStatementDecl.getSymbol();
+                    var importStatementSymbol = <PullTypeAliasSymbol>importStatementDecl.getSymbol(this.semanticInfoChain);
                     var importStatementAST = <ImportDeclarationSyntax>this.semanticInfoChain.getASTForDecl(importStatementDecl);
 
                     if (importStatementSymbol.isUsedAsValue()) {
@@ -1003,7 +1003,7 @@ module TypeScript {
             else if (changeNameIfAnyDeclarationInContext) {
                 // Check if any other declaration of the given symbol is in scope 
                 // (eg. when emitting expression of type defined from different declaration in reopened module)
-                var symbol = moduleDecl.getSymbol();
+                var symbol = moduleDecl.getSymbol(this.semanticInfoChain);
                 if (symbol) {
                     var otherDecls = symbol.getDeclarations();
                     for (var i = 0; i < otherDecls.length; i++) {
@@ -2278,7 +2278,7 @@ module TypeScript {
                 if (isNonElidedExternalModule) {
                     var exportAssignment = this.getExportAssignment();
                     var exportAssignmentIdentifierText = exportAssignment ? exportAssignment.identifier.text() : null;
-                    var exportAssignmentValueSymbol = (<PullContainerSymbol>externalModule.getSymbol()).getExportAssignedValueSymbol();
+                    var exportAssignmentValueSymbol = (<PullContainerSymbol>externalModule.getSymbol(this.semanticInfoChain)).getExportAssignedValueSymbol();
 
                     if (this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous) { // AMD
                         if (exportAssignmentIdentifierText && exportAssignmentValueSymbol && !(exportAssignmentValueSymbol.kind & PullElementKind.SomeTypeReference)) {

@@ -1,7 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export class Document {
+    export class Document implements IASTForDeclMap {
         private _diagnostics: Diagnostic[] = null;
         private _bloomFilter: BloomFilter = null;
         private _lineMap: LineMap = null;
@@ -12,8 +12,7 @@ module TypeScript {
 
         private _externalModuleIndicatorSpan: TextSpan = undefined;
 
-        constructor(private _compiler: TypeScriptCompiler,
-                    private _semanticInfoChain: SemanticInfoChain,
+        constructor(private compilationSettings: ImmutableCompilationSettings,
                     public fileName: string,
                     public referencedFiles: string[],
                     private _scriptSnapshot: IScriptSnapshot,
@@ -187,7 +186,7 @@ module TypeScript {
                     this.fileName,
                     SimpleText.fromScriptSnapshot(this._scriptSnapshot),
                     TypeScript.isDTSFile(this.fileName),
-                    getParseOptions(this._compiler.compilationSettings()));
+                    getParseOptions(this.compilationSettings));
 
                 var time = new Date().getTime() - start;
 
@@ -235,7 +234,7 @@ module TypeScript {
             // If we haven't specified an output file in our settings, then we're definitely 
             // emitting to our own file.  Also, if we're an external module, then we're 
             // definitely emitting to our own file.
-            return !this._compiler.compilationSettings().outFileOption() || this.isExternalModule();
+            return !this.compilationSettings.outFileOption() || this.isExternalModule();
         }
 
         public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): Document {
@@ -267,19 +266,19 @@ module TypeScript {
             // If we don't have a text change, or we don't have an old syntax tree, then do a full
             // parse.  Otherwise, do an incremental parse.
             var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null
-                ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), getParseOptions(this._compiler.compilationSettings()))
+                ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), getParseOptions(this.compilationSettings))
                 : TypeScript.Parser.incrementalParse(oldSyntaxTree, textChangeRange, text);
 
-            return new Document(this._compiler, this._semanticInfoChain, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree, /*topLevelDecl:*/ null);
+            return new Document(this.compilationSettings, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree, /*topLevelDecl:*/ null);
         }
 
-        public static create(compiler: TypeScriptCompiler, semanticInfoChain: SemanticInfoChain, fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[]): Document {
-            return new Document(compiler, semanticInfoChain, fileName, referencedFiles, scriptSnapshot, byteOrderMark, version, isOpen, /*syntaxTree:*/ null, /*topLevelDecl:*/ null);
+        public static create(compilationSettings: ImmutableCompilationSettings, fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[]): Document {
+            return new Document(compilationSettings, fileName, referencedFiles, scriptSnapshot, byteOrderMark, version, isOpen, /*syntaxTree:*/ null, /*topLevelDecl:*/ null);
         }
 
         public topLevelDecl(): PullDecl {
             if (this._topLevelDecl === null) {
-                this._topLevelDecl = DeclarationCreator.create(this, this._semanticInfoChain, this._compiler.compilationSettings());
+                this._topLevelDecl = DeclarationCreator.create(this, this.compilationSettings);
             }
 
             return this._topLevelDecl;
@@ -306,7 +305,7 @@ module TypeScript {
                 //    decl = this._getDeclForAST(<ISyntaxElement>moduleDecl.stringLiteral || ArrayUtilities.last(getModuleNames(moduleDecl.name)));
                 //}
                 //else {
-                    decl = this._getDeclForAST(ast);
+                decl = this._getDeclForAST(ast);
                 //}
 
                 if (decl) {

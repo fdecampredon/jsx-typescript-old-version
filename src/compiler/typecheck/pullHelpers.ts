@@ -6,10 +6,6 @@
 module TypeScript {
 
     export module PullHelpers {
-        export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
-            var ast = decl.ast();
-            return decl.semanticInfoChain.diagnosticFromAST(ast, diagnosticKey, _arguments, additionalLocations);
-        }
 
         // This helps in case we would like to make sure we have type while we are resolving/infering types for it
         // without infering back to any because we incorrectly detected recursive resolution of function
@@ -29,12 +25,12 @@ module TypeScript {
             allSignatures: PullSignatureSymbol[];
         }
 
-        export function getSignatureForFuncDecl(functionDecl: PullDecl) {
+        export function getSignatureForFuncDecl(functionDecl: PullDecl, semanticInfoChain: SemanticInfoChain) {
             var funcDecl = functionDecl.ast();
-            var funcSymbol = functionDecl.getSymbol();
+            var funcSymbol = functionDecl.getSymbol(semanticInfoChain);
 
             if (!funcSymbol) {
-                funcSymbol = functionDecl.getSignatureSymbol();
+                funcSymbol = functionDecl.getSignatureSymbol(semanticInfoChain);
             }
 
             var functionSignature: PullSignatureSymbol = null;
@@ -42,10 +38,10 @@ module TypeScript {
             if (funcSymbol.isSignature()) {
                 functionSignature = <PullSignatureSymbol>funcSymbol;
                 var parent = functionDecl.getParentDecl();
-                typeSymbolWithAllSignatures = parent.getSymbol().type;
+                typeSymbolWithAllSignatures = parent.getSymbol(semanticInfoChain).type;
             }
             else {
-                functionSignature = functionDecl.getSignatureSymbol();
+                functionSignature = functionDecl.getSignatureSymbol(semanticInfoChain);
                 typeSymbolWithAllSignatures = funcSymbol.type;
             }
             var signatures: PullSignatureSymbol[];
@@ -68,7 +64,7 @@ module TypeScript {
 
         export function getAccessorSymbol(getterOrSetter: ISyntaxElement, semanticInfoChain: SemanticInfoChain): PullAccessorSymbol {
             var functionDecl = semanticInfoChain.getDeclForAST(getterOrSetter);
-            var getterOrSetterSymbol = functionDecl.getSymbol();
+            var getterOrSetterSymbol = functionDecl.getSymbol(semanticInfoChain);
 
             return <PullAccessorSymbol>getterOrSetterSymbol;
         }
