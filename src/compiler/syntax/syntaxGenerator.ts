@@ -422,7 +422,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'InvocationExpressionSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['ICallExpressionSyntax', 'IExpressionWithArgumentListSyntax'],
+        interfaces: ['ICallExpressionSyntax'],
         children: [
             <any>{ name: 'expression', type: 'ILeftHandSideExpressionSyntax' },
             <any>{ name: 'argumentList', type: 'ArgumentListSyntax' }
@@ -696,7 +696,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'ObjectCreationExpressionSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IMemberExpressionSyntax', 'IExpressionWithArgumentListSyntax'],
+        interfaces: ['IMemberExpressionSyntax'],
         children: [
             <any>{ name: 'newKeyword', isToken: true },
             <any>{ name: 'expression', type: 'IMemberExpressionSyntax' },

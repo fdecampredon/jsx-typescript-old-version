@@ -1663,7 +1663,7 @@ module TypeScript {
         }
     }
 
-    export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax, IExpressionWithArgumentListSyntax {
+    export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax {
         constructor(public expression: ILeftHandSideExpressionSyntax,
                     public argumentList: ArgumentListSyntax,
                     data: number) {
@@ -1690,10 +1690,6 @@ module TypeScript {
         }
 
         public isCallExpression(): boolean {
-            return true;
-        }
-
-        public isExpressionWithArgumentList(): boolean {
             return true;
         }
 
@@ -2802,7 +2798,7 @@ module TypeScript {
         }
     }
 
-    export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, IExpressionWithArgumentListSyntax {
+    export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
         constructor(public newKeyword: ISyntaxToken,
                     public expression: IMemberExpressionSyntax,
                     public argumentList: ArgumentListSyntax,
@@ -2832,10 +2828,6 @@ module TypeScript {
         }
 
         public isMemberExpression(): boolean {
-            return true;
-        }
-
-        public isExpressionWithArgumentList(): boolean {
             return true;
         }
 
