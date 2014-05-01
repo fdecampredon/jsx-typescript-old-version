@@ -10216,13 +10216,6 @@ var TypeScript;
 
             return new SourceUnitSyntax(moduleElements, endOfFileToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        SourceUnitSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.moduleElements.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return SourceUnitSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SourceUnitSyntax = SourceUnitSyntax;
@@ -10275,10 +10268,6 @@ var TypeScript;
 
             return new ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ExternalModuleReferenceSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return ExternalModuleReferenceSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ExternalModuleReferenceSyntax = ExternalModuleReferenceSyntax;
@@ -10318,10 +10307,6 @@ var TypeScript;
             }
 
             return new ModuleNameModuleReferenceSyntax(moduleName, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ModuleNameModuleReferenceSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return ModuleNameModuleReferenceSyntax;
     })(TypeScript.SyntaxNode);
@@ -10383,10 +10368,6 @@ var TypeScript;
 
             return new ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ImportDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return ImportDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ImportDeclarationSyntax = ImportDeclarationSyntax;
@@ -10438,10 +10419,6 @@ var TypeScript;
             }
 
             return new ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ExportAssignmentSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return ExportAssignmentSyntax;
     })(TypeScript.SyntaxNode);
@@ -10511,10 +10488,6 @@ var TypeScript;
 
             return new ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ClassDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return ClassDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ClassDeclarationSyntax = ClassDeclarationSyntax;
@@ -10575,10 +10548,6 @@ var TypeScript;
 
             return new InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        InterfaceDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return InterfaceDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.InterfaceDeclarationSyntax = InterfaceDeclarationSyntax;
@@ -10619,10 +10588,6 @@ var TypeScript;
             }
 
             return new HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        HeritageClauseSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return HeritageClauseSyntax;
     })(TypeScript.SyntaxNode);
@@ -10688,10 +10653,6 @@ var TypeScript;
 
             return new ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ModuleDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return ModuleDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ModuleDeclarationSyntax = ModuleDeclarationSyntax;
@@ -10756,19 +10717,6 @@ var TypeScript;
 
             return new FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        FunctionDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.modifiers.childCount() > 0) {
-                return true;
-            }
-            if (this.callSignature.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.block !== null && this.block.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return FunctionDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionDeclarationSyntax = FunctionDeclarationSyntax;
@@ -10821,16 +10769,6 @@ var TypeScript;
 
             return new VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        VariableStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.modifiers.childCount() > 0) {
-                return true;
-            }
-            if (this.variableDeclaration.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return VariableStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.VariableStatementSyntax = VariableStatementSyntax;
@@ -10870,13 +10808,6 @@ var TypeScript;
             }
 
             return new VariableDeclarationSyntax(varKeyword, variableDeclarators, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        VariableDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.variableDeclarators.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return VariableDeclarationSyntax;
     })(TypeScript.SyntaxNode);
@@ -10922,16 +10853,6 @@ var TypeScript;
 
             return new VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        VariableDeclaratorSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.typeAnnotation !== null) {
-                return true;
-            }
-            if (this.equalsValueClause !== null && this.equalsValueClause.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return VariableDeclaratorSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.VariableDeclaratorSyntax = VariableDeclaratorSyntax;
@@ -10971,13 +10892,6 @@ var TypeScript;
             }
 
             return new EqualsValueClauseSyntax(equalsToken, value, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        EqualsValueClauseSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.value.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return EqualsValueClauseSyntax;
     })(TypeScript.SyntaxNode);
@@ -11027,13 +10941,6 @@ var TypeScript;
             }
 
             return new PrefixUnaryExpressionSyntax(kind, operatorToken, operand, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        PrefixUnaryExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.operand.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return PrefixUnaryExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -11103,13 +11010,6 @@ var TypeScript;
 
             return new ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ArrayLiteralExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expressions.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ArrayLiteralExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ArrayLiteralExpressionSyntax = ArrayLiteralExpressionSyntax;
@@ -11137,10 +11037,6 @@ var TypeScript;
 
         OmittedExpressionSyntax.prototype.update = function () {
             return this;
-        };
-
-        OmittedExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            return false;
         };
         return OmittedExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -11210,13 +11106,6 @@ var TypeScript;
 
             return new ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ParenthesizedExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ParenthesizedExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ParenthesizedExpressionSyntax = ParenthesizedExpressionSyntax;
@@ -11276,10 +11165,6 @@ var TypeScript;
             }
 
             return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return SimpleArrowFunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -11341,10 +11226,6 @@ var TypeScript;
 
             return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return ParenthesizedArrowFunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ParenthesizedArrowFunctionExpressionSyntax = ParenthesizedArrowFunctionExpressionSyntax;
@@ -11397,10 +11278,6 @@ var TypeScript;
 
             return new QualifiedNameSyntax(left, dotToken, right, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        QualifiedNameSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return QualifiedNameSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.QualifiedNameSyntax = QualifiedNameSyntax;
@@ -11444,10 +11321,6 @@ var TypeScript;
             }
 
             return new TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        TypeArgumentListSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return TypeArgumentListSyntax;
     })(TypeScript.SyntaxNode);
@@ -11505,10 +11378,6 @@ var TypeScript;
 
             return new ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ConstructorTypeSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return ConstructorTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConstructorTypeSyntax = ConstructorTypeSyntax;
@@ -11561,10 +11430,6 @@ var TypeScript;
 
             return new FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        FunctionTypeSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return FunctionTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionTypeSyntax = FunctionTypeSyntax;
@@ -11612,10 +11477,6 @@ var TypeScript;
             }
 
             return new ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ObjectTypeSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return ObjectTypeSyntax;
     })(TypeScript.SyntaxNode);
@@ -11665,10 +11526,6 @@ var TypeScript;
 
             return new ArrayTypeSyntax(type, openBracketToken, closeBracketToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ArrayTypeSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return ArrayTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ArrayTypeSyntax = ArrayTypeSyntax;
@@ -11712,10 +11569,6 @@ var TypeScript;
             }
 
             return new GenericTypeSyntax(name, typeArgumentList, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        GenericTypeSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return GenericTypeSyntax;
     })(TypeScript.SyntaxNode);
@@ -11761,10 +11614,6 @@ var TypeScript;
 
             return new TypeQuerySyntax(typeOfKeyword, name, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        TypeQuerySyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return TypeQuerySyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TypeQuerySyntax = TypeQuerySyntax;
@@ -11804,10 +11653,6 @@ var TypeScript;
             }
 
             return new TypeAnnotationSyntax(colonToken, type, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        TypeAnnotationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return TypeAnnotationSyntax;
     })(TypeScript.SyntaxNode);
@@ -11860,13 +11705,6 @@ var TypeScript;
             }
 
             return new BlockSyntax(openBraceToken, statements, closeBraceToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        BlockSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.statements.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return BlockSyntax;
     })(TypeScript.SyntaxNode);
@@ -11923,25 +11761,6 @@ var TypeScript;
             }
 
             return new ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ParameterSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.dotDotDotToken !== null) {
-                return true;
-            }
-            if (this.modifiers.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.questionToken !== null) {
-                return true;
-            }
-            if (this.typeAnnotation !== null) {
-                return true;
-            }
-            if (this.equalsValueClause !== null) {
-                return true;
-            }
-            return false;
         };
         return ParameterSyntax;
     })(TypeScript.SyntaxNode);
@@ -12011,13 +11830,6 @@ var TypeScript;
 
             return new MemberAccessExpressionSyntax(expression, dotToken, name, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        MemberAccessExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return MemberAccessExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.MemberAccessExpressionSyntax = MemberAccessExpressionSyntax;
@@ -12070,13 +11882,6 @@ var TypeScript;
             }
 
             return new PostfixUnaryExpressionSyntax(kind, operand, operatorToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.operand.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return PostfixUnaryExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -12150,16 +11955,6 @@ var TypeScript;
 
             return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ElementAccessExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.argumentExpression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ElementAccessExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ElementAccessExpressionSyntax = ElementAccessExpressionSyntax;
@@ -12224,16 +12019,6 @@ var TypeScript;
 
             return new InvocationExpressionSyntax(expression, argumentList, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        InvocationExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.argumentList.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return InvocationExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.InvocationExpressionSyntax = InvocationExpressionSyntax;
@@ -12281,16 +12066,6 @@ var TypeScript;
             }
 
             return new ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ArgumentListSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.typeArgumentList !== null && this.typeArgumentList.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.arguments.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return ArgumentListSyntax;
     })(TypeScript.SyntaxNode);
@@ -12340,16 +12115,6 @@ var TypeScript;
             }
 
             return new BinaryExpressionSyntax(kind, left, operatorToken, right, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        BinaryExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.left.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.right.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return BinaryExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -12407,19 +12172,6 @@ var TypeScript;
 
             return new ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ConditionalExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.condition.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.whenTrue.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.whenFalse.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ConditionalExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConditionalExpressionSyntax = ConditionalExpressionSyntax;
@@ -12463,10 +12215,6 @@ var TypeScript;
             }
 
             return new ConstructSignatureSyntax(newKeyword, callSignature, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ConstructSignatureSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return ConstructSignatureSyntax;
     })(TypeScript.SyntaxNode);
@@ -12515,13 +12263,6 @@ var TypeScript;
             }
 
             return new MethodSignatureSyntax(propertyName, questionToken, callSignature, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        MethodSignatureSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.callSignature.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return MethodSignatureSyntax;
     })(TypeScript.SyntaxNode);
@@ -12575,10 +12316,6 @@ var TypeScript;
 
             return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        IndexSignatureSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return IndexSignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.IndexSignatureSyntax = IndexSignatureSyntax;
@@ -12626,10 +12363,6 @@ var TypeScript;
             }
 
             return new PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        PropertySignatureSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return PropertySignatureSyntax;
     })(TypeScript.SyntaxNode);
@@ -12679,19 +12412,6 @@ var TypeScript;
 
             return new CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        CallSignatureSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.typeParameterList !== null) {
-                return true;
-            }
-            if (this.parameterList.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.typeAnnotation !== null) {
-                return true;
-            }
-            return false;
-        };
         return CallSignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CallSignatureSyntax = CallSignatureSyntax;
@@ -12735,13 +12455,6 @@ var TypeScript;
             }
 
             return new ParameterListSyntax(openParenToken, parameters, closeParenToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ParameterListSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.parameters.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return ParameterListSyntax;
     })(TypeScript.SyntaxNode);
@@ -12787,10 +12500,6 @@ var TypeScript;
 
             return new TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        TypeParameterListSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return TypeParameterListSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TypeParameterListSyntax = TypeParameterListSyntax;
@@ -12830,10 +12539,6 @@ var TypeScript;
             }
 
             return new TypeParameterSyntax(identifier, constraint, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        TypeParameterSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return TypeParameterSyntax;
     })(TypeScript.SyntaxNode);
@@ -12875,10 +12580,6 @@ var TypeScript;
 
             return new ConstraintSyntax(extendsKeyword, type, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ConstraintSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return ConstraintSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConstraintSyntax = ConstraintSyntax;
@@ -12918,13 +12619,6 @@ var TypeScript;
             }
 
             return new ElseClauseSyntax(elseKeyword, statement, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ElseClauseSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.statement.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return ElseClauseSyntax;
     })(TypeScript.SyntaxNode);
@@ -12990,19 +12684,6 @@ var TypeScript;
 
             return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        IfStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.condition.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.statement.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.elseClause !== null && this.elseClause.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return IfStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.IfStatementSyntax = IfStatementSyntax;
@@ -13050,13 +12731,6 @@ var TypeScript;
             }
 
             return new ExpressionStatementSyntax(expression, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ExpressionStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return ExpressionStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -13113,10 +12787,6 @@ var TypeScript;
             }
 
             return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ConstructorDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return ConstructorDeclarationSyntax;
     })(TypeScript.SyntaxNode);
@@ -13177,10 +12847,6 @@ var TypeScript;
             }
 
             return new MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return MemberFunctionDeclarationSyntax;
     })(TypeScript.SyntaxNode);
@@ -13250,22 +12916,6 @@ var TypeScript;
 
             return new GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        GetAccessorSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.modifiers.childCount() > 0) {
-                return true;
-            }
-            if (this.parameterList.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.typeAnnotation !== null) {
-                return true;
-            }
-            if (this.block.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return GetAccessorSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.GetAccessorSyntax = GetAccessorSyntax;
@@ -13330,10 +12980,6 @@ var TypeScript;
 
             return new SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        SetAccessorSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return SetAccessorSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SetAccessorSyntax = SetAccessorSyntax;
@@ -13386,10 +13032,6 @@ var TypeScript;
 
             return new MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        MemberVariableDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return MemberVariableDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.MemberVariableDeclarationSyntax = MemberVariableDeclarationSyntax;
@@ -13437,10 +13079,6 @@ var TypeScript;
             }
 
             return new IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        IndexMemberDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return IndexMemberDeclarationSyntax;
     })(TypeScript.SyntaxNode);
@@ -13494,13 +13132,6 @@ var TypeScript;
 
             return new ThrowStatementSyntax(throwKeyword, expression, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ThrowStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ThrowStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ThrowStatementSyntax = ThrowStatementSyntax;
@@ -13552,13 +13183,6 @@ var TypeScript;
             }
 
             return new ReturnStatementSyntax(returnKeyword, expression, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ReturnStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression !== null && this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return ReturnStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -13628,16 +13252,6 @@ var TypeScript;
 
             return new ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ObjectCreationExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.argumentList !== null && this.argumentList.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ObjectCreationExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ObjectCreationExpressionSyntax = ObjectCreationExpressionSyntax;
@@ -13706,16 +13320,6 @@ var TypeScript;
 
             return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        SwitchStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.switchClauses.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return SwitchStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SwitchStatementSyntax = SwitchStatementSyntax;
@@ -13768,16 +13372,6 @@ var TypeScript;
 
             return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        CaseSwitchClauseSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.statements.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return CaseSwitchClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CaseSwitchClauseSyntax = CaseSwitchClauseSyntax;
@@ -13825,13 +13419,6 @@ var TypeScript;
             }
 
             return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        DefaultSwitchClauseSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.statements.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return DefaultSwitchClauseSyntax;
     })(TypeScript.SyntaxNode);
@@ -13885,10 +13472,6 @@ var TypeScript;
 
             return new BreakStatementSyntax(breakKeyword, identifier, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        BreakStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            return false;
-        };
         return BreakStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.BreakStatementSyntax = BreakStatementSyntax;
@@ -13940,10 +13523,6 @@ var TypeScript;
             }
 
             return new ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        ContinueStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            return false;
         };
         return ContinueStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -14029,25 +13608,6 @@ var TypeScript;
 
             return new ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ForStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.variableDeclaration !== null && this.variableDeclaration.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.initializer !== null && this.initializer.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.condition !== null && this.condition.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.incrementor !== null && this.incrementor.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.statement.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ForStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ForStatementSyntax = ForStatementSyntax;
@@ -14124,22 +13684,6 @@ var TypeScript;
 
             return new ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ForInStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.variableDeclaration !== null && this.variableDeclaration.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.left !== null && this.left.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.statement.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ForInStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ForInStatementSyntax = ForInStatementSyntax;
@@ -14204,16 +13748,6 @@ var TypeScript;
 
             return new WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        WhileStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.condition.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.statement.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return WhileStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.WhileStatementSyntax = WhileStatementSyntax;
@@ -14273,16 +13807,6 @@ var TypeScript;
             }
 
             return new WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        WithStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.condition.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.statement.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return WithStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -14344,10 +13868,6 @@ var TypeScript;
 
             return new EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        EnumDeclarationSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
-        };
         return EnumDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.EnumDeclarationSyntax = EnumDeclarationSyntax;
@@ -14387,13 +13907,6 @@ var TypeScript;
             }
 
             return new EnumElementSyntax(propertyName, equalsValueClause, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        EnumElementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.equalsValueClause !== null && this.equalsValueClause.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return EnumElementSyntax;
     })(TypeScript.SyntaxNode);
@@ -14450,10 +13963,6 @@ var TypeScript;
             }
 
             return new CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        CastExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            return true;
         };
         return CastExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -14523,13 +14032,6 @@ var TypeScript;
 
             return new ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        ObjectLiteralExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.propertyAssignments.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return ObjectLiteralExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ObjectLiteralExpressionSyntax = ObjectLiteralExpressionSyntax;
@@ -14578,13 +14080,6 @@ var TypeScript;
 
             return new SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        SimplePropertyAssignmentSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return SimplePropertyAssignmentSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SimplePropertyAssignmentSyntax = SimplePropertyAssignmentSyntax;
@@ -14632,16 +14127,6 @@ var TypeScript;
             }
 
             return new FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        FunctionPropertyAssignmentSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.callSignature.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.block.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return FunctionPropertyAssignmentSyntax;
     })(TypeScript.SyntaxNode);
@@ -14715,16 +14200,6 @@ var TypeScript;
 
             return new FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        FunctionExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.callSignature.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.block.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return FunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionExpressionSyntax = FunctionExpressionSyntax;
@@ -14768,10 +14243,6 @@ var TypeScript;
             }
 
             return new EmptyStatementSyntax(semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        EmptyStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            return false;
         };
         return EmptyStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -14829,19 +14300,6 @@ var TypeScript;
 
             return new TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        TryStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.block.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.catchClause !== null && this.catchClause.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.finallyClause !== null && this.finallyClause.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return TryStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TryStatementSyntax = TryStatementSyntax;
@@ -14898,16 +14356,6 @@ var TypeScript;
 
             return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        CatchClauseSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.typeAnnotation !== null && this.typeAnnotation.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.block.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return CatchClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CatchClauseSyntax = CatchClauseSyntax;
@@ -14947,13 +14395,6 @@ var TypeScript;
             }
 
             return new FinallyClauseSyntax(finallyKeyword, block, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        FinallyClauseSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.block.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return FinallyClauseSyntax;
     })(TypeScript.SyntaxNode);
@@ -15006,13 +14447,6 @@ var TypeScript;
             }
 
             return new LabeledStatementSyntax(identifier, colonToken, statement, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        LabeledStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.statement.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return LabeledStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -15086,16 +14520,6 @@ var TypeScript;
 
             return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        DoStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.statement.isTypeScriptSpecific()) {
-                return true;
-            }
-            if (this.condition.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return DoStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DoStatementSyntax = DoStatementSyntax;
@@ -15143,13 +14567,6 @@ var TypeScript;
             }
 
             return new TypeOfExpressionSyntax(typeOfKeyword, expression, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        TypeOfExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
         };
         return TypeOfExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -15199,13 +14616,6 @@ var TypeScript;
 
             return new DeleteExpressionSyntax(deleteKeyword, expression, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        DeleteExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return DeleteExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DeleteExpressionSyntax = DeleteExpressionSyntax;
@@ -15254,13 +14664,6 @@ var TypeScript;
 
             return new VoidExpressionSyntax(voidKeyword, expression, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
         };
-
-        VoidExpressionSyntax.prototype.isTypeScriptSpecific = function () {
-            if (this.expression.isTypeScriptSpecific()) {
-                return true;
-            }
-            return false;
-        };
         return VoidExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.VoidExpressionSyntax = VoidExpressionSyntax;
@@ -15308,10 +14711,6 @@ var TypeScript;
             }
 
             return new DebuggerStatementSyntax(debuggerKeyword, semicolonToken, this.parsedInStrictMode() ? 4 /* NodeParsedInStrictModeMask */ : 0);
-        };
-
-        DebuggerStatementSyntax.prototype.isTypeScriptSpecific = function () {
-            return false;
         };
         return DebuggerStatementSyntax;
     })(TypeScript.SyntaxNode);
