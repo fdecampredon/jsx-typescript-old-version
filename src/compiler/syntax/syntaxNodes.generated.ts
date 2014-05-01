@@ -38,7 +38,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SourceUnitSyntax(moduleElements, endOfFileToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new SourceUnitSyntax(moduleElements, endOfFileToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -86,7 +86,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -122,7 +122,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ModuleNameModuleReferenceSyntax(moduleName, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ModuleNameModuleReferenceSyntax(moduleName, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -178,7 +178,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -226,7 +226,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -290,7 +290,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -346,7 +346,7 @@ module TypeScript {
                 return this;
             }
 
-            return new InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -387,7 +387,7 @@ module TypeScript {
                 return this;
             }
 
-            return new HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -447,7 +447,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -507,7 +507,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -555,7 +555,7 @@ module TypeScript {
                 return this;
             }
 
-            return new VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -591,7 +591,7 @@ module TypeScript {
                 return this;
             }
 
-            return new VariableDeclarationSyntax(varKeyword, variableDeclarators, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new VariableDeclarationSyntax(varKeyword, variableDeclarators, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -631,7 +631,7 @@ module TypeScript {
                 return this;
             }
 
-            return new VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -667,7 +667,7 @@ module TypeScript {
                 return this;
             }
 
-            return new EqualsValueClauseSyntax(equalsToken, value, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new EqualsValueClauseSyntax(equalsToken, value, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -716,7 +716,7 @@ module TypeScript {
                 return this;
             }
 
-            return new PrefixUnaryExpressionSyntax(kind, operatorToken, operand, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new PrefixUnaryExpressionSyntax(kind, operatorToken, operand, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -780,7 +780,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -870,7 +870,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -926,7 +926,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -982,7 +982,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1030,7 +1030,7 @@ module TypeScript {
                 return this;
             }
 
-            return new QualifiedNameSyntax(left, dotToken, right, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new QualifiedNameSyntax(left, dotToken, right, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1070,7 +1070,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1122,7 +1122,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1170,7 +1170,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1214,7 +1214,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1258,7 +1258,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ArrayTypeSyntax(type, openBracketToken, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ArrayTypeSyntax(type, openBracketToken, closeBracketToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1298,7 +1298,7 @@ module TypeScript {
                 return this;
             }
 
-            return new GenericTypeSyntax(name, typeArgumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new GenericTypeSyntax(name, typeArgumentList, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1338,7 +1338,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeQuerySyntax(typeOfKeyword, name, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new TypeQuerySyntax(typeOfKeyword, name, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1374,7 +1374,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeAnnotationSyntax(colonToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new TypeAnnotationSyntax(colonToken, type, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1422,7 +1422,7 @@ module TypeScript {
                 return this;
             }
 
-            return new BlockSyntax(openBraceToken, statements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new BlockSyntax(openBraceToken, statements, closeBraceToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1474,7 +1474,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1538,7 +1538,7 @@ module TypeScript {
                 return this;
             }
 
-            return new MemberAccessExpressionSyntax(expression, dotToken, name, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new MemberAccessExpressionSyntax(expression, dotToken, name, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1591,7 +1591,7 @@ module TypeScript {
                 return this;
             }
 
-            return new PostfixUnaryExpressionSyntax(kind, operand, operatorToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new PostfixUnaryExpressionSyntax(kind, operand, operatorToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1659,7 +1659,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1715,7 +1715,7 @@ module TypeScript {
                 return this;
             }
 
-            return new InvocationExpressionSyntax(expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new InvocationExpressionSyntax(expression, argumentList, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1761,7 +1761,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1810,7 +1810,7 @@ module TypeScript {
                 return this;
             }
 
-            return new BinaryExpressionSyntax(kind, left, operatorToken, right, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new BinaryExpressionSyntax(kind, left, operatorToken, right, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1862,7 +1862,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1902,7 +1902,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConstructSignatureSyntax(newKeyword, callSignature, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ConstructSignatureSyntax(newKeyword, callSignature, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1946,7 +1946,7 @@ module TypeScript {
                 return this;
             }
 
-            return new MethodSignatureSyntax(propertyName, questionToken, callSignature, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new MethodSignatureSyntax(propertyName, questionToken, callSignature, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -1994,7 +1994,7 @@ module TypeScript {
                 return this;
             }
 
-            return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2038,7 +2038,7 @@ module TypeScript {
                 return this;
             }
 
-            return new PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2082,7 +2082,7 @@ module TypeScript {
                 return this;
             }
 
-            return new CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2122,7 +2122,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ParameterListSyntax(openParenToken, parameters, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ParameterListSyntax(openParenToken, parameters, closeParenToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2162,7 +2162,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2198,7 +2198,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeParameterSyntax(identifier, constraint, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new TypeParameterSyntax(identifier, constraint, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2234,7 +2234,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConstraintSyntax(extendsKeyword, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ConstraintSyntax(extendsKeyword, type, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2270,7 +2270,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ElseClauseSyntax(elseKeyword, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ElseClauseSyntax(elseKeyword, statement, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2330,7 +2330,7 @@ module TypeScript {
                 return this;
             }
 
-            return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2374,7 +2374,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ExpressionStatementSyntax(expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ExpressionStatementSyntax(expression, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2426,7 +2426,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2482,7 +2482,7 @@ module TypeScript {
                 return this;
             }
 
-            return new MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2546,7 +2546,7 @@ module TypeScript {
                 return this;
             }
 
-            return new GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2606,7 +2606,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2654,7 +2654,7 @@ module TypeScript {
                 return this;
             }
 
-            return new MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2698,7 +2698,7 @@ module TypeScript {
                 return this;
             }
 
-            return new IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2746,7 +2746,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ThrowStatementSyntax(throwKeyword, expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ThrowStatementSyntax(throwKeyword, expression, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2794,7 +2794,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ReturnStatementSyntax(returnKeyword, expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ReturnStatementSyntax(returnKeyword, expression, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2854,7 +2854,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2918,7 +2918,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -2966,7 +2966,7 @@ module TypeScript {
                 return this;
             }
 
-            return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3010,7 +3010,7 @@ module TypeScript {
                 return this;
             }
 
-            return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3058,7 +3058,7 @@ module TypeScript {
                 return this;
             }
 
-            return new BreakStatementSyntax(breakKeyword, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new BreakStatementSyntax(breakKeyword, identifier, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3106,7 +3106,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3182,7 +3182,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3250,7 +3250,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3306,7 +3306,7 @@ module TypeScript {
                 return this;
             }
 
-            return new WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3362,7 +3362,7 @@ module TypeScript {
                 return this;
             }
 
-            return new WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3418,7 +3418,7 @@ module TypeScript {
                 return this;
             }
 
-            return new EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3454,7 +3454,7 @@ module TypeScript {
                 return this;
             }
 
-            return new EnumElementSyntax(propertyName, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new EnumElementSyntax(propertyName, equalsValueClause, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3506,7 +3506,7 @@ module TypeScript {
                 return this;
             }
 
-            return new CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3570,7 +3570,7 @@ module TypeScript {
                 return this;
             }
 
-            return new ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3614,7 +3614,7 @@ module TypeScript {
                 return this;
             }
 
-            return new SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3658,7 +3658,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3726,7 +3726,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3766,7 +3766,7 @@ module TypeScript {
                 return this;
             }
 
-            return new EmptyStatementSyntax(semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new EmptyStatementSyntax(semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3818,7 +3818,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3870,7 +3870,7 @@ module TypeScript {
                 return this;
             }
 
-            return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3906,7 +3906,7 @@ module TypeScript {
                 return this;
             }
 
-            return new FinallyClauseSyntax(finallyKeyword, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new FinallyClauseSyntax(finallyKeyword, block, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -3954,7 +3954,7 @@ module TypeScript {
                 return this;
             }
 
-            return new LabeledStatementSyntax(identifier, colonToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new LabeledStatementSyntax(identifier, colonToken, statement, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -4018,7 +4018,7 @@ module TypeScript {
                 return this;
             }
 
-            return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -4062,7 +4062,7 @@ module TypeScript {
                 return this;
             }
 
-            return new TypeOfExpressionSyntax(typeOfKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new TypeOfExpressionSyntax(typeOfKeyword, expression, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -4106,7 +4106,7 @@ module TypeScript {
                 return this;
             }
 
-            return new DeleteExpressionSyntax(deleteKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new DeleteExpressionSyntax(deleteKeyword, expression, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -4150,7 +4150,7 @@ module TypeScript {
                 return this;
             }
 
-            return new VoidExpressionSyntax(voidKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new VoidExpressionSyntax(voidKeyword, expression, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 
@@ -4194,7 +4194,7 @@ module TypeScript {
                 return this;
             }
 
-            return new DebuggerStatementSyntax(debuggerKeyword, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
+            return new DebuggerStatementSyntax(debuggerKeyword, semicolonToken, this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
     }
 }

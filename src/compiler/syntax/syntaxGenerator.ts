@@ -1363,7 +1363,7 @@ function generateFactory1Method(definition: ITypeDefinition): string {
         result += ", ";
     }
 
-    result += "/*parsedInStrictMode:*/ 0);\r\n";
+    result += "/*data:*/ 0);\r\n";
     result += "        }\r\n";
 
     return result;
@@ -1473,7 +1473,7 @@ function generateFactory2Method(definition: ITypeDefinition): string {
         result += ", ";
     }
 
-    result += "/*parsedInStrictMode:*/ 0);\r\n";
+    result += "/*data:*/ 0);\r\n";
     result += "        }\r\n";
 
     return result;
@@ -1849,7 +1849,7 @@ function generateUpdateMethod(definition: ITypeDefinition): string {
             result += ", ";
         }
 
-        result += "/*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);\r\n";
+        result += "this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);\r\n";
     }
 
     result += "        }\r\n";
@@ -2067,7 +2067,7 @@ function generateSyntaxInterfaces(): string {
         }
     }
 
-    result += "\r\n    interface ModuleElement extends Node {\r\n";
+    result += "\r\n    interface ModuleElement extends SyntaxElement {\r\n";
     result += "    }\r\n";
     result += "\r\n    interface ModuleReference extends Node {\r\n";
     result += "    }\r\n";
@@ -2575,7 +2575,7 @@ function generateFactory(): string {
             result += ", ";
         }
 
-        result += "/*parsedInStrictMode:*/ 0);\r\n";
+        result += "/*data:*/ 0);\r\n";
         result += "        }\r\n"
     }
 
@@ -2606,7 +2606,7 @@ function generateFactory(): string {
             result += ", ";
         }
 
-        result += "/*parsedInStrictMode:*/ SyntaxConstants.NodeParsedInStrictModeMask);\r\n";
+        result += "/*data:*/ SyntaxConstants.NodeParsedInStrictModeMask);\r\n";
 
         result += "        }\r\n"
     }
