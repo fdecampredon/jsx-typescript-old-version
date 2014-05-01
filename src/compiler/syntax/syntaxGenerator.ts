@@ -61,7 +61,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'requireKeyword', isToken: true, tokenKinds: ['RequireKeyword'] }, 
             <any>{ name: 'openParenToken', isToken: true },
-            <any>{ name: 'stringLiteral', isToken: true },
+            <any>{ name: 'stringLiteral', isToken: true, tokenKinds: ['StringLiteral'] },
             <any>{ name: 'closeParenToken', isToken: true }
         ],
         isTypeScriptSpecific: true
@@ -150,7 +150,7 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
             <any>{ name: 'moduleKeyword', isToken: true },
             <any>{ name: 'name', type: 'INameSyntax', isOptional: true },
-            <any>{ name: 'stringLiteral', isToken: true, isOptional: true },
+            <any>{ name: 'stringLiteral', isToken: true, isOptional: true, tokenKinds: ['StringLiteral'] },
             <any>{ name: 'openBraceToken', isToken: true },
             <any>{ name: 'moduleElements', isList: true, elementType: 'IModuleElementSyntax' },
             <any>{ name: 'closeBraceToken', isToken: true }
@@ -985,6 +985,14 @@ var definitions:ITypeDefinition[] = [
 function getStringWithoutSuffix(definition: string) {
     if (TypeScript.StringUtilities.endsWith(definition, "Syntax")) {
         return definition.substring(0, definition.length - "Syntax".length);
+    }
+
+    return definition;
+}
+
+function getStringWithoutPrefix(definition: string) {
+    if (definition.charAt(0) == "I" && definition.charAt(1).toUpperCase() == definition.charAt(1)) {
+        return definition.substring(1);
     }
 
     return definition;
@@ -1925,8 +1933,164 @@ function generateNode(definition: ITypeDefinition): string {
     return result;
 }
 
+function generateSyntaxInterfaces(): string {
+    var result = "///<reference path='references.ts' />\r\n\r\n";
+
+    result += "module TypeScript {\r\n";
+
+    result += "    export enum NodeFlags {\r\n";
+    result += "        Export   = 0x00000001,  // Declarations\r\n";
+    result += "        Ambient  = 0x00000002,  // Declarations\r\n";
+    result += "        Optional = 0x00000004,  // Parameter/Property/Method\r\n";
+    result += "        Rest     = 0x00000008,  // Parameter\r\n";
+    result += "        Public   = 0x00000010,  // Property/Method\r\n";
+    result += "        Private  = 0x00000020,  // Property/Method\r\n";
+    result += "        Static   = 0x00000040,  // Property/Method\r\n";
+    result += "    }\r\n";
+
+    result += "\r\n    interface SyntaxElement {\r\n";
+    result += "        kind: SyntaxKind;\r\n";
+    result += "    }\r\n";
+
+    result += "\r\n    // Should be called SyntaxNode.  But we already have that type.  Calling 'Node' for now.\r\n";
+    result += "    interface Node extends SyntaxElement {\r\n";
+    result += "        flags: NodeFlags;\r\n";
+    result += "    }\r\n"
+
+    result += "\r\n    function nodeStart(node: Node): number {\r\n";
+    result += "    }\r\n"
+
+    result += "\r\n    function nodeWidth(node: Node): number {\r\n";
+    result += "    }\r\n"
+
+    result += "\r\n    interface SyntaxToken extends Name, PrimaryExpression {\r\n"
+    result += "    }\r\n";
+
+    result += "\r\n    // The raw text of the token, as written in the original source.\r\n";
+    result += "    function tokenText(token: SyntaxToken): string {\r\n";
+    result += "    }\r\n";
+
+    result += "\r\n    // The token's javascript value.  i.e. 0.0 in the text would have the javascript number value: 0.\r\n";
+    result += "    function tokenValue(token: SyntaxToken): any {\r\n";
+    result += "    }\r\n";
+
+    result += "\r\n    // The token's value in string form.  i.e. \\u0041 in the source text would result in a string with the text: A.\r\n";
+    result += "    function tokenValueText(token: SyntaxToken): string {\r\n";
+    result += "    }\r\n";
+
+    result += "\r\n    interface SyntaxList<T> extends SyntaxElement {\r\n";
+    result += "        length: number;\r\n";
+    result += "        item(index: number): T;\r\n";
+    result += "    }\r\n";
+
+    var trim = (key: string) => getStringWithoutPrefix(getStringWithoutSuffix(key));
+
+    for (var i = 0; i < definitions.length; i++) {
+        var definition = definitions[i];
+
+        //if (i > 0) {
+        //    result += "\r\n";
+        //}
+
+        var interfaceDefinition = "";
+
+        interfaceDefinition += "\r\n    interface " + getNameWithoutSuffix(definition);
+        var hasChild = false;
+
+        interfaceDefinition += " extends";
+        if (definition.interfaces && definition.interfaces.length > 0) {
+
+            for (var j = 0; j < definition.interfaces.length; j++) {
+                if (j > 0) {
+                    interfaceDefinition += ",";
+                }
+
+                interfaceDefinition += " " + getStringWithoutPrefix(getStringWithoutSuffix(definition.interfaces[j]));
+            }
+        }
+        else {
+            interfaceDefinition += " Node";
+        }
+
+        interfaceDefinition += " {\r\n";
+
+        for (var j = 0; j < definition.children.length; j++) {
+            var child = definition.children[j];
+
+            if (child.type === "SyntaxKind") {
+                continue;
+            }
+
+            if (child.isList || child.isSeparatedList) {
+                if (child.elementType === "ISyntaxToken") {
+                    continue;
+                }
+
+                interfaceDefinition += "        " + child.name + ": SyntaxList<" + getStringWithoutPrefix(getStringWithoutSuffix(child.elementType)) + ">;\r\n";
+                hasChild = true;
+            }
+            else if (child.isToken) {
+                if (child.tokenKinds) {
+                    if (child.tokenKinds.indexOf("IdentifierName") >= 0 || child.tokenKinds.indexOf("StringLiteral") >= 0) {
+                        interfaceDefinition += "        " + child.name;
+                        if (child.isOptional) {
+                            interfaceDefinition += "?";
+                        }
+
+                        interfaceDefinition += ": SyntaxToken;\r\n";
+                        hasChild = true;
+                    }
+                }
+            }
+            else {
+                interfaceDefinition += "        " + child.name;
+                if (child.isOptional) {
+                    interfaceDefinition += "?";
+                }
+
+                interfaceDefinition += ": " + getStringWithoutPrefix(getStringWithoutSuffix(child.type)) + ";\r\n";
+                hasChild = true;
+            }
+        }
+
+        interfaceDefinition += "    }\r\n"
+
+        if (hasChild) {
+            result += interfaceDefinition;
+        }
+    }
+
+    for (var key in interfaces) {
+        if (interfaces.hasOwnProperty(key)) {
+            result += "\r\n    interface " + trim(key) + " extends " + trim(interfaces[key]) + " {\r\n";
+            result += "    }\r\n";
+        }
+    }
+
+    result += "\r\n    interface ModuleElement extends Node {\r\n";
+    result += "    }\r\n";
+    result += "\r\n    interface ModuleReference extends Node {\r\n";
+    result += "    }\r\n";
+    result += "\r\n    interface ClassElement extends Node {\r\n";
+    result += "    }\r\n";
+    result += "\r\n    interface TypeMember extends Node {\r\n";
+    result += "    }\r\n";
+    result += "\r\n    interface PropertyAssignment extends Node {\r\n";
+    result += "    }\r\n";
+    result += "\r\n    interface SwitchClause extends Node {\r\n";
+    result += "    }\r\n";
+    result += "\r\n    interface Expression extends SyntaxElement {\r\n";
+    result += "    }\r\n";
+    result += "\r\n    interface Type extends SyntaxElement {\r\n";
+    result += "    }\r\n";
+
+    result += "}";
+
+    return result;
+}
+
 function generateNodes(): string {
-    var result = "///<reference path='references.ts' />\r\n\r\n"
+    var result = "///<reference path='references.ts' />\r\n\r\n";
 
     result += "module TypeScript {\r\n";
 
@@ -2621,6 +2785,7 @@ function generateIsTypeScriptSpecificMethod(definition: ITypeDefinition): string
 }
 
 var syntaxNodes = generateNodes();
+var syntaxInterfaces = generateSyntaxInterfaces();
 var rewriter = generateRewriter();
 var walker = generateWalker();
 var scannerUtilities = generateScannerUtilities();
@@ -2628,6 +2793,7 @@ var visitor = generateVisitor();
 var factory = generateFactory();
 var servicesUtilities = generateServicesUtilities();
 
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxInterfaces.generated.ts", syntaxInterfaces, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxNodes.generated.ts", syntaxNodes, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxRewriter.generated.ts", rewriter, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxWalker.generated.ts", walker, false);
