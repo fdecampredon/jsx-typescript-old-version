@@ -1,0 +1,1 @@
+//// [noImplicitAnyInBareInterface.js]

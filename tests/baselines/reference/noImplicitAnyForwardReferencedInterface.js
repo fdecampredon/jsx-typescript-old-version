@@ -1,0 +1,1 @@
+//// [noImplicitAnyForwardReferencedInterface.js]

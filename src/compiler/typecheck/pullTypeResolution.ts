@@ -3756,12 +3756,55 @@ module TypeScript {
 
             if (funcDecl.kind === PullElementKind.Function) {
                 this.checkNameForCompilerGeneratedDeclarationCollision(funcDeclAST, /*isDeclaration*/ true, name, context);
+            } 
+
+            // Check for implicit `any` return types on signatures.
+            // In cases where a function has a body, the return type can be inferred from the body.
+            // In such cases, we do not consider the inferred type to be implicit.
+            if (this.compilationSettings.noImplicitAny() && block == null && returnTypeAnnotation == null ) {
+                this.checkAndReportImplicitAnyOnFunctionSignature(funcDeclAST, name, context);
             }
 
             this.typeCheckCallBacks.push(context => {
                 // Function or constructor
                 this.typeCheckFunctionOverloads(funcDeclAST, context);
             });
+        }
+
+        // Given that we have no type annotation nor body, raise an error if we find it appropriate to do so.
+        private checkAndReportImplicitAnyOnFunctionSignature(funcDeclAST: ISyntaxElement, funcDeclASTName: ISyntaxToken, context: PullTypeResolutionContext): void {
+            var funcDecl = this.semanticInfoChain.getDeclForAST(funcDeclAST);
+
+            // Don't report an error to the user if the field is a private ambient member.
+            // Private fields don't actually need their types exposed, and in generated
+            // .d.ts files, they are given no type annotations.
+            if (this.isFunctionPrivateWithinAmbientDeclaration(funcDecl)) {
+                return;
+            }
+
+            if (funcDecl.kind === PullElementKind.ConstructSignature) {
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST, DiagnosticCode.Constructor_signature_which_lacks_return_type_annotation_implicitly_has_an_any_return_type));
+            }
+            else if (funcDeclASTName !== null) {
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST, DiagnosticCode._0_which_lacks_return_type_annotation_implicitly_has_an_any_return_type,
+                    [funcDeclASTName.text()]));
+            }
+            else {
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST,
+                    DiagnosticCode.Lambda_Function_which_lacks_return_type_annotation_implicitly_has_an_any_return_type));
+            }
+        }
+        
+        private isFunctionPrivateWithinAmbientDeclaration(funcDecl: PullDecl): boolean {
+            var parentDecl = funcDecl.getParentDecl();
+
+            if (parentDecl !== null) {
+                var parentDeclFlags = funcDecl.getParentDecl().flags;
+
+                return (TypeScript.hasFlag(parentDeclFlags, PullElementFlags.Ambient) && TypeScript.hasFlag(funcDecl.flags, PullElementFlags.Private));
+            }
+
+            return true;
         }
 
         private checkThatNonVoidFunctionHasReturnExpressionOrThrowStatement(
@@ -4272,39 +4315,13 @@ module TypeScript {
                 else if (funcDecl.kind !== PullElementKind.ConstructSignature) {
                     if (hasFlag(funcDecl.flags, PullElementFlags.Signature)) {
                         signature.returnType = this.semanticInfoChain.anyTypeSymbol;
-                        var parentDeclFlags = TypeScript.PullElementFlags.None;
-                        if (TypeScript.hasFlag(funcDecl.kind, TypeScript.PullElementKind.Method) ||
-                            TypeScript.hasFlag(funcDecl.kind, TypeScript.PullElementKind.ConstructorMethod)) {
-                            var parentDecl = funcDecl.getParentDecl();
-                            parentDeclFlags = parentDecl.flags;
-                        }
-
-                        // if the noImplicitAny flag is set to be true, report an error
-                        if (this.compilationSettings.noImplicitAny() &&
-                            (!TypeScript.hasFlag(parentDeclFlags, PullElementFlags.Ambient) ||
-                            (TypeScript.hasFlag(parentDeclFlags, PullElementFlags.Ambient) && !TypeScript.hasFlag(funcDecl.flags, PullElementFlags.Private)))) {
-                            var funcDeclASTName = name;
-                            if (funcDeclASTName) {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST, DiagnosticCode._0_which_lacks_return_type_annotation_implicitly_has_an_any_return_type,
-                                    [funcDeclASTName.text()]));
-                            }
-                            else {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST,
-                                    DiagnosticCode.Lambda_Function_which_lacks_return_type_annotation_implicitly_has_an_any_return_type));
-                            }
-                        }
                     }
                     else {
                         this.resolveFunctionBodyReturnTypes(funcDeclAST, block, /*bodyExpression:*/ null, signature, false, funcDecl, context);
                     }
                 }
-                else if (funcDecl.kind === PullElementKind.ConstructSignature) {
+                else {
                     signature.returnType = this.semanticInfoChain.anyTypeSymbol;
-
-                    // if the noImplicitAny flag is set to be true, report an error
-                    if (this.compilationSettings.noImplicitAny()) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST, DiagnosticCode.Constructor_signature_which_lacks_return_type_annotation_implicitly_has_an_any_return_type));
-                    }
                 }
 
                 if (!hadError) {
