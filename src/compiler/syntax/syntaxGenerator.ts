@@ -43,7 +43,6 @@ var interfaces: TypeScript.IIndexable<any> = {
     ICallExpressionSyntax: 'ILeftHandSideExpressionSyntax',
     IPrimaryExpressionSyntax: 'IMemberExpressionSyntax',
     IArrowFunctionExpressionSyntax: 'IUnaryExpressionSyntax',
-    IIterationStatementSyntax: 'IStatementSyntax',
 };
 
 var definitions:ITypeDefinition[] = [
@@ -762,7 +761,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'ForStatementSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IIterationStatementSyntax'],
+        interfaces: ['IStatementSyntax'],
         children: [
             <any>{ name: 'forKeyword', isToken: true },
             <any>{ name: 'openParenToken', isToken: true },
@@ -779,7 +778,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'ForInStatementSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IIterationStatementSyntax'],
+        interfaces: ['IStatementSyntax'],
         children: [
             <any>{ name: 'forKeyword', isToken: true },
             <any>{ name: 'openParenToken', isToken: true },
@@ -794,7 +793,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'WhileStatementSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IIterationStatementSyntax'],
+        interfaces: ['IStatementSyntax'],
         children: [
             <any>{ name: 'whileKeyword', isToken: true },
             <any>{ name: 'openParenToken', isToken: true },
@@ -936,7 +935,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'DoStatementSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IIterationStatementSyntax'],
+        interfaces: ['IStatementSyntax'],
         children: [
             <any>{ name: 'doKeyword', isToken: true },
             <any>{ name: 'statement', type: 'IStatementSyntax' },

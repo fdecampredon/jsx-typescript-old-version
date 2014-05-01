@@ -3118,7 +3118,7 @@ module TypeScript {
         }
     }
 
-    export class ForStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
+    export class ForStatementSyntax extends SyntaxNode implements IStatementSyntax {
         constructor(public forKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public variableDeclaration: VariableDeclarationSyntax,
@@ -3168,10 +3168,6 @@ module TypeScript {
             }
         }
 
-        public isIterationStatement(): boolean {
-            return true;
-        }
-
         public isStatement(): boolean {
             return true;
         }
@@ -3198,7 +3194,7 @@ module TypeScript {
         }
     }
 
-    export class ForInStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
+    export class ForInStatementSyntax extends SyntaxNode implements IStatementSyntax {
         constructor(public forKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public variableDeclaration: VariableDeclarationSyntax,
@@ -3242,10 +3238,6 @@ module TypeScript {
             }
         }
 
-        public isIterationStatement(): boolean {
-            return true;
-        }
-
         public isStatement(): boolean {
             return true;
         }
@@ -3270,7 +3262,7 @@ module TypeScript {
         }
     }
 
-    export class WhileStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
+    export class WhileStatementSyntax extends SyntaxNode implements IStatementSyntax {
         constructor(public whileKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public condition: IExpressionSyntax,
@@ -3303,10 +3295,6 @@ module TypeScript {
                 case 4: return this.statement;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isIterationStatement(): boolean {
-            return true;
         }
 
         public isStatement(): boolean {
@@ -3978,7 +3966,7 @@ module TypeScript {
         }
     }
 
-    export class DoStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
+    export class DoStatementSyntax extends SyntaxNode implements IStatementSyntax {
         constructor(public doKeyword: ISyntaxToken,
                     public statement: IStatementSyntax,
                     public whileKeyword: ISyntaxToken,
@@ -4017,10 +4005,6 @@ module TypeScript {
                 case 6: return this.semicolonToken;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isIterationStatement(): boolean {
-            return true;
         }
 
         public isStatement(): boolean {

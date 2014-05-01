@@ -500,7 +500,7 @@ class Program {
             var left = sourceUnit.findTokenOnLeft(i);
             var tokenOnLeft = left === null ? null : left;
 
-            TypeScript.Debug.assert(token.isToken());
+            TypeScript.Debug.assert(TypeScript.isToken(token));
             if (i === contents.length) {
                 TypeScript.Debug.assert(token.kind() === TypeScript.SyntaxKind.EndOfFileToken);
             }

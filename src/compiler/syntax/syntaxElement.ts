@@ -120,10 +120,6 @@ module TypeScript {
         isStatement(): boolean;
     }
 
-    export interface IIterationStatementSyntax extends IStatementSyntax {
-        isIterationStatement(): boolean;
-    }
-
     export interface ITypeMemberSyntax extends ISyntaxNode {
     }
 

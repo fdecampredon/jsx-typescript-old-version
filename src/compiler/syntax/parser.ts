@@ -3172,7 +3172,7 @@ module TypeScript.Parser {
             return this.factory.emptyStatement(semicolonToken);
         }
 
-        private parseForOrForInStatement(): IIterationStatementSyntax {
+        private parseForOrForInStatement(): IStatementSyntax {
             // Debug.assert(this.isForOrForInStatement());
 
             var forKeyword = this.eatKeyword(SyntaxKind.ForKeyword);
@@ -3195,7 +3195,7 @@ module TypeScript.Parser {
             }
         }
 
-        private parseForOrForInStatementWithVariableDeclaration(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): IIterationStatementSyntax {
+        private parseForOrForInStatementWithVariableDeclaration(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): IStatementSyntax {
             // Debug.assert(forKeyword.kind() === SyntaxKind.ForKeyword && openParenToken.kind() === SyntaxKind.OpenParenToken);
             // Debug.assert(this.currentToken().kind() === SyntaxKind.VarKeyword);
 
@@ -3228,7 +3228,7 @@ module TypeScript.Parser {
                 initializer, inKeyword, expression, closeParenToken, statement);
         }
 
-        private parseForOrForInStatementWithInitializer(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): IIterationStatementSyntax {
+        private parseForOrForInStatementWithInitializer(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): IStatementSyntax {
             // Debug.assert(forKeyword.kind() === SyntaxKind.ForKeyword && openParenToken.kind() === SyntaxKind.OpenParenToken);
 
             // for ( ExpressionNoInopt; Expressionopt ; Expressionopt ) Statement
