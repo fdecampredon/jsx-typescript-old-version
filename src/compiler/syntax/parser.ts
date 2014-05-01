@@ -264,7 +264,7 @@ module TypeScript.Parser {
 
         public currentNode(): SyntaxNode {
             var element = this.currentNodeOrToken();
-            return element !== null && element.isNode() ? <SyntaxNode>element : null;
+            return isNode(element) ? <SyntaxNode>element : null;
         }
 
         public moveToFirstChild() {
@@ -273,13 +273,13 @@ module TypeScript.Parser {
                 return;
             }
 
-            if (nodeOrToken.isToken()) {
+            if (isToken(nodeOrToken)) {
                 // If we're already on a token, there's nothing to do.
                 return;
             }
 
             // The last element must be a token or a node.
-            Debug.assert(nodeOrToken.isNode());
+            Debug.assert(isNode(nodeOrToken));
 
             // Either the node has some existent child, then move to it.  if it doesn't, then it's
             // an empty node.  Conceptually the first child of an empty node is really just the 
@@ -342,7 +342,7 @@ module TypeScript.Parser {
         private moveToFirstChildIfList(): void {
             var element = this.pieces[this.currentPieceIndex].element;
 
-            if (element.isList() || element.isSeparatedList()) {
+            if (isList(element) || isSeparatedList(element)) {
                 // We cannot ever get an empty list in our piece path.  Empty lists are 'shared' and
                 // we make sure to filter that out before pushing any children.
                 Debug.assert(element.childCount() > 0);
@@ -370,12 +370,12 @@ module TypeScript.Parser {
         public moveToFirstToken(): void {
             while (!this.isFinished()) {
                 var element = this.pieces[this.currentPieceIndex].element;
-                if (element.isNode()) {
+                if (isNode(element)) {
                     this.moveToFirstChild();
                     continue;
                 }
 
-                Debug.assert(element.isToken());
+                Debug.assert(isToken(element));
                 return;
             }
         }
@@ -960,7 +960,7 @@ module TypeScript.Parser {
                 // whose width is greater than the delta, then crumble it and try again.
                 // Otherwise, we must be pointing at a token.  Just skip it and try again.
                     
-                if (currentNodeOrToken.isNode() && (currentNodeOrToken.fullWidth() > Math.abs(this._changeDelta))) {
+                if (isNode(currentNodeOrToken) && (currentNodeOrToken.fullWidth() > Math.abs(this._changeDelta))) {
                     // We were pointing at a node whose width was more than changeDelta.  Crumble the 
                     // node and try again.  Note: we haven't changed changeDelta.  So the callers loop
                     // will just repeat this until we get to a node or token that we can skip over.
@@ -1691,10 +1691,10 @@ module TypeScript.Parser {
         }
         
         private addSkippedTokenAfterNodeOrToken(nodeOrToken: ISyntaxNodeOrToken, skippedToken: ISyntaxToken): ISyntaxNodeOrToken {
-            if (nodeOrToken.isToken()) {
+            if (isToken(nodeOrToken)) {
                 return this.addSkippedTokenAfterToken(<ISyntaxToken>nodeOrToken, skippedToken);
             }
-            else if (nodeOrToken.isNode()) {
+            else if (isNode(nodeOrToken)) {
                 return this.addSkippedTokenAfterNode(<SyntaxNode>nodeOrToken, skippedToken);
             }
             else {

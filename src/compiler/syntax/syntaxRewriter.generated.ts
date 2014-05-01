@@ -11,7 +11,7 @@ module TypeScript {
         }
 
         public visitNodeOrToken(node: ISyntaxNodeOrToken): ISyntaxNodeOrToken {
-            return node.isToken() ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>node) : this.visitNode(<SyntaxNode>node);
+            return isToken(node) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>node) : this.visitNode(<SyntaxNode>node);
         }
 
         public visitList<T extends ISyntaxNodeOrToken>(list: ISyntaxList<T>): ISyntaxList<T> {
@@ -42,7 +42,7 @@ module TypeScript {
 
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var item = list.childAt(i);
-                var newItem = item.isToken() ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>item) : this.visitNode(<SyntaxNode>item);
+                var newItem = isToken(item) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>item) : this.visitNode(<SyntaxNode>item);
 
                 if (item !== newItem && newItems === null) {
                     newItems = [];

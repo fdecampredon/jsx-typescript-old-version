@@ -286,7 +286,7 @@ module TypeScript {
             var declarators = node.variableDeclarators;
             if (declarators.childCount() % 2 === 0) {
                 var lastComma = declarators.childAt(declarators.childCount() - 1);
-                Debug.assert(lastComma.isToken());
+                Debug.assert(isToken(lastComma));
 
                 var nextToken = Syntax.nextToken(<ISyntaxToken>lastComma, /*includeSkippedTokens:*/ true);
                 this.pushDiagnostic(nextToken, DiagnosticCode.Identifier_expected);

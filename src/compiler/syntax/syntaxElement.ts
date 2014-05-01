@@ -1,6 +1,32 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    export function isNode(element: ISyntaxElement): boolean {
+        if (element !== null) {
+            var kind = element.kind();
+            return kind >= SyntaxKind.FirstNode && kind <= SyntaxKind.LastNode;
+        }
+
+        return false;
+    }
+
+    export function isToken(element: ISyntaxElement): boolean {
+        if (element !== null) {
+            var kind = element.kind();
+            return kind >= SyntaxKind.FirstToken && kind <= SyntaxKind.LastToken;
+        }
+
+        return false;
+    }
+
+    export function isList(element: ISyntaxElement): boolean {
+        return element !== null && element.kind() === SyntaxKind.List;
+    }
+
+    export function isSeparatedList(element: ISyntaxElement): boolean {
+        return element !== null && element.kind() === SyntaxKind.SeparatedList;
+    }
+
     export interface ISyntaxElement {
         syntaxID(): number;
         syntaxTree(): SyntaxTree;
@@ -8,13 +34,6 @@ module TypeScript {
 
         kind(): SyntaxKind;
         parent: ISyntaxElement;
-
-        isNode(): boolean;
-        isToken(): boolean;
-        isTrivia(): boolean;
-        isList(): boolean;
-        isSeparatedList(): boolean;
-        isTriviaList(): boolean;
 
         childCount(): number;
         childAt(index: number): ISyntaxElement;

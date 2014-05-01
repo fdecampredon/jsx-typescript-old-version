@@ -5737,7 +5737,7 @@ module TypeScript {
             // We also have to check isTypesOnlyLocation because an identifier representing a type reference
             // is considered an expression at the AST level, yet we only want to resolve it as an expression
             // if it is in an expression position.
-            if (ast.isNode() || ast.isToken()) {
+            if (isNode(ast) || isToken(ast)) {
                 if ((<SyntaxNode>ast).isExpression() && !isTypesOnlyLocation(ast)) {
                     return this.resolveExpressionAST(ast, isContextuallyTyped, context);
                 }

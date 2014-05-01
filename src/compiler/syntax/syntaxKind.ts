@@ -303,7 +303,6 @@ module TypeScript {
         TypeAnnotation,
         ExternalModuleReference,
         ModuleNameModuleReference,
-        Last = ModuleNameModuleReference,
 
         FirstStandardKeyword = BreakKeyword,
         LastStandardKeyword = WithKeyword,
@@ -331,5 +330,8 @@ module TypeScript {
 
         FirstTrivia = WhitespaceTrivia,
         LastTrivia = SkippedTokenTrivia,
+
+        FirstNode = SourceUnit,
+        LastNode = ModuleNameModuleReference,
     }
 }

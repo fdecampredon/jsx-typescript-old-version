@@ -35,13 +35,6 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
 
-        public isNode(): boolean { return false; }
-        public isToken(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return true; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
-
         public toJSON(key: any): any {
             return [];
         }
@@ -170,13 +163,6 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
 
-        public isToken(): boolean { return false; }
-        public isNode(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return true; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
-
         public toJSON(key: any) {
             return [this.item];
         }
@@ -300,13 +286,6 @@ module TypeScript.Syntax {
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
-
-        public isNode(): boolean { return false; }
-        public isToken(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return true; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
 
         public toJSON(key: any) {
             return this.nodeOrTokens;

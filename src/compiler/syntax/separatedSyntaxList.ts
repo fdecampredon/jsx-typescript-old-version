@@ -35,30 +35,6 @@ module TypeScript.Syntax {
             return SyntaxKind.SeparatedList;
         }
 
-        public isNode() {
-            return false;
-        }
-
-        public isToken() {
-            return false;
-        }
-
-        public isTrivia(): boolean {
-            return false;
-        }
-
-        public isList() {
-            return false;
-        }
-
-        public isSeparatedList() {
-            return true;
-        }
-
-        public isTriviaList(): boolean {
-            return false;
-        }
-
         toJSON(key: any): any[] {
             return [];
         }
@@ -199,13 +175,6 @@ module TypeScript.Syntax {
 
         public kind() { return SyntaxKind.SeparatedList; }
 
-        public isNode(): boolean { return false; }
-        public isToken(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return true; }
-        public isTriviaList(): boolean { return false; }
-
         public childCount() { return 1; }
         public nonSeparatorCount() { return 1; }
         public separatorCount() { return 0; }
@@ -328,13 +297,6 @@ module TypeScript.Syntax {
         }
 
         public kind() { return SyntaxKind.SeparatedList; }
-
-        public isToken(): boolean { return false; }
-        public isNode(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return true; }
-        public isTriviaList(): boolean { return false; }
 
         public toJSON(key: any) { return this.elements; }
 

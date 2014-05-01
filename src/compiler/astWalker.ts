@@ -422,7 +422,7 @@ module TypeScript {
         walker.walk(preAst.variableDeclaration);
     }
 
-    var childrenWalkers: IAstWalkChildren[] = new Array<IAstWalkChildren>(SyntaxKind.Last + 1);
+    var childrenWalkers: IAstWalkChildren[] = new Array<IAstWalkChildren>(SyntaxKind.LastNode + 1);
 
     // Tokens/trivia can't ever be walked into. 
     for (var i = SyntaxKind.FirstToken, n = SyntaxKind.LastToken; i <= n; i++) {

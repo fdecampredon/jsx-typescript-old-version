@@ -21,9 +21,9 @@ module TypeScript {
 
     export function isTypeScriptSpecific(element: ISyntaxElement): boolean {
         if (element === null) { return false; }
-        if (element.isToken()) { return false; }
-        if (element.isList()) { return isListTypeScriptSpecific(<ISyntaxList<ISyntaxNodeOrToken>>element); }
-        if (element.isSeparatedList()) { return isSeparatedListTypeScriptSpecific(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element); }
+        if (isToken(element)) { return false; }
+        if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxList<ISyntaxNodeOrToken>>element); }
+        if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element); }
 
         switch (element.kind()) {
             case SyntaxKind.ExternalModuleReference:

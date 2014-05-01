@@ -1969,7 +1969,7 @@ function generateRewriter(): string {
 "        }\r\n" +
 "\r\n" +
 "        public visitNodeOrToken(node: ISyntaxNodeOrToken): ISyntaxNodeOrToken {\r\n" +
-"            return node.isToken() ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>node) : this.visitNode(<SyntaxNode>node);\r\n" +
+"            return isToken(node) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>node) : this.visitNode(<SyntaxNode>node);\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public visitList<T extends ISyntaxNodeOrToken>(list: ISyntaxList<T>): ISyntaxList<T> {\r\n" +
@@ -2000,7 +2000,7 @@ function generateRewriter(): string {
 "\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
 "                var item = list.childAt(i);\r\n" +
-"                var newItem = item.isToken() ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>item) : this.visitNode(<SyntaxNode>item);\r\n" +
+"                var newItem = isToken(item) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>item) : this.visitNode(<SyntaxNode>item);\r\n" +
 "\r\n" +
 "                if (item !== newItem && newItems === null) {\r\n" +
 "                    newItems = [];\r\n" +
@@ -2094,7 +2094,7 @@ function generateWalker(): string {
 "        }\r\n" +
 "\r\n" +
 "        public visitNodeOrToken(nodeOrToken: ISyntaxNodeOrToken): void {\r\n" +
-"            if (nodeOrToken.isToken()) { \r\n" +
+"            if (isToken(nodeOrToken)) { \r\n" +
 "                this.visitToken(<ISyntaxToken>nodeOrToken);\r\n" +
 "            }\r\n" +
 "            else {\r\n" +
@@ -2298,7 +2298,7 @@ function generateVisitor(): string {
     result += "module TypeScript {\r\n";
     result += "    export function visitNodeOrToken(visitor: ISyntaxVisitor, element: ISyntaxNodeOrToken): any {\r\n";
     result += "        if (element === null) { return null; }\r\n";
-    result += "        if (element.isToken()) { return visitor.visitToken(<ISyntaxToken>element); }\r\n";
+    result += "        if (isToken(element)) { return visitor.visitToken(<ISyntaxToken>element); }\r\n";
     result += "        switch (element.kind()) {\r\n";
 
     for (var i = 0; i < definitions.length; i++) {
@@ -2490,9 +2490,9 @@ function generateIsTypeScriptSpecific(): string {
 
     result += "    export function isTypeScriptSpecific(element: ISyntaxElement): boolean {\r\n"
     result += "        if (element === null) { return false; }\r\n";
-    result += "        if (element.isToken()) { return false; }\r\n";
-    result += "        if (element.isList()) { return isListTypeScriptSpecific(<ISyntaxList<ISyntaxNodeOrToken>>element); }\r\n";
-    result += "        if (element.isSeparatedList()) { return isSeparatedListTypeScriptSpecific(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element); }\r\n\r\n";
+    result += "        if (isToken(element)) { return false; }\r\n";
+    result += "        if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxList<ISyntaxNodeOrToken>>element); }\r\n";
+    result += "        if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element); }\r\n\r\n";
     result += "        switch (element.kind()) {\r\n";
 
     for (var i = 0; i < definitions.length; i++) {

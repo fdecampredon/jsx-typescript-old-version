@@ -25,13 +25,6 @@ module TypeScript {
             return this._syntaxID;
         }
 
-        public isNode(): boolean { return true; }
-        public isToken(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
-
         public kind(): SyntaxKind {
             throw Errors.abstract();
         }
@@ -119,9 +112,14 @@ module TypeScript {
         }
 
         public toJSON(key: any): any {
-            var result: any = {
-                kind: SyntaxKind[this.kind()],
-            };
+            var result: any = {}
+
+            for (var name in SyntaxKind) {
+                if (<any>SyntaxKind[name] === this.kind()) {
+                    result.kind = name;
+                    break;
+                }
+            }
 
             result.fullStart = this.fullStart();
             result.fullEnd = this.fullEnd();

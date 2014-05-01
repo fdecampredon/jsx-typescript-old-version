@@ -141,11 +141,11 @@ module TypeScript.Syntax {
             return false;
         }
 
-        if (node1.isToken()) {
-            return node2.isToken() ? tokenStructuralEquals(<ISyntaxToken>node1, <ISyntaxToken>node2) : false;
+        if (isToken(node1)) {
+            return isToken(node2) ? tokenStructuralEquals(<ISyntaxToken>node1, <ISyntaxToken>node2) : false;
         }
 
-        return node2.isNode() ? nodeStructuralEquals(<SyntaxNode>node1, <SyntaxNode>node2) : false;
+        return isNode(node2) ? nodeStructuralEquals(<SyntaxNode>node1, <SyntaxNode>node2) : false;
     }
 
     export function tokenStructuralEquals(token1: ISyntaxToken, token2: ISyntaxToken): boolean {
@@ -251,16 +251,16 @@ module TypeScript.Syntax {
             return false;
         }
 
-        if (element1.isToken()) {
+        if (isToken(element1)) {
             return tokenStructuralEquals(<ISyntaxToken>element1, <ISyntaxToken>element2);
         }
-        else if (element1.isNode()) {
+        else if (isNode(element1)) {
             return nodeStructuralEquals(<SyntaxNode>element1, <SyntaxNode>element2);
         }
-        else if (element1.isList()) {
+        else if (isList(element1)) {
             return listStructuralEquals(<ISyntaxList<ISyntaxNodeOrToken>>element1, <ISyntaxList<ISyntaxNodeOrToken>>element2);
         }
-        else if (element1.isSeparatedList()) {
+        else if (isSeparatedList(element1)) {
             return separatedListStructuralEquals(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element1, <ISeparatedSyntaxList<ISyntaxNodeOrToken>>element2);
         }
 
@@ -314,7 +314,7 @@ module TypeScript.Syntax {
     export function nodeHasSkippedOrMissingTokens(node: SyntaxNode): boolean {
         for (var i = 0; i < node.childCount(); i++) {
             var child = node.childAt(i);
-            if (child !== null && child.isToken()) {
+            if (isToken(child)) {
                 var token = <ISyntaxToken>child;
                 // If a token is skipped, return true. Or if it is a missing token. The only empty token that is not missing is EOF
                 if (token.hasSkippedToken() || (token.width() === 0 && token.kind() !== SyntaxKind.EndOfFileToken)) {
@@ -529,7 +529,7 @@ module TypeScript.Syntax {
                     // (and not a hex integer).  i.e. -0xA is a legal expression, but it is not a 
                     // *literal*.
                     expression = (<PrefixUnaryExpressionSyntax>expression).operand;
-                    return expression.isToken() && IntegerUtilities.isInteger((<ISyntaxToken>expression).text());
+                    return isToken(expression) && IntegerUtilities.isInteger((<ISyntaxToken>expression).text());
 
                 case SyntaxKind.NumericLiteral:
                     // If it doesn't have a + or -, then either an integer literal or a hex literal
@@ -587,7 +587,7 @@ module TypeScript.Syntax {
     export function containingNode(element: ISyntaxElement): SyntaxNode {
         var current = element.parent;
 
-        while (current !== null && !current.isNode()) {
+        while (current !== null && !isNode(current)) {
             current = current.parent;
         }
 
@@ -596,7 +596,7 @@ module TypeScript.Syntax {
 
     export function findToken(element: ISyntaxElement, position: number): ISyntaxToken {
         // Debug.assert(position >= 0 && position < this.fullWidth());
-        if (element.isToken()) {
+        if (isToken(element)) {
             Debug.assert(element.fullWidth() > 0);
             return <ISyntaxToken>element;
         }

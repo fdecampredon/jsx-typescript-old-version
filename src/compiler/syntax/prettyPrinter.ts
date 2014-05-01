@@ -123,7 +123,7 @@ module TypeScript.PrettyPrinter {
 
         private appendSpaceList(list: ISyntaxList<ISyntaxNodeOrToken>): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
-                if (list.childAt(i).isNode()) {
+                if (isNode(list.childAt(i))) {
                     this.appendNode(list.childAt(i));
                 }
                 else {

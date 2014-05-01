@@ -236,7 +236,7 @@ module TypeScript.Services.Breakpoints {
 
         private breakpointSpanOfComma(commaToken: TypeScript.ISyntaxToken): SpanInfo {
             var commaParent = commaToken.parent;
-            if (commaParent && commaParent.isSeparatedList()) {
+            if (isSeparatedList(commaParent)) {
                 var grandParent = commaParent.parent;
                 if (grandParent) {
                     switch (grandParent.kind()) {
@@ -783,7 +783,7 @@ module TypeScript.Services.Breakpoints {
             }
 
             var child = containerChildren.childAt(0);
-            if (child && child.isNode()) {
+            if (isNode(child)) {
                 return this.canHaveBreakpointInVariableDeclarator(<TypeScript.SyntaxNode>child);
             }
 
@@ -1016,7 +1016,7 @@ module TypeScript.Services.Breakpoints {
 
         private breakpointSpanOfContainingNode(positionedElement: ISyntaxElement): SpanInfo {
             var current = positionedElement.parent;
-            while (!current.isNode()) {
+            while (!isNode(current)) {
                 current = current.parent;
             }
 
@@ -1045,12 +1045,12 @@ module TypeScript.Services.Breakpoints {
             var element = positionedElement;
 
             // Syntax node
-            if (element.isNode()) {
+            if (isNode(element)) {
                 return this.breakpointSpanOfNode(<TypeScript.SyntaxNode>positionedElement);
             }
 
             // Token
-            if (element.isToken()) {
+            if (isToken(element)) {
                 return this.breakpointSpanOfToken(<TypeScript.ISyntaxToken>positionedElement);
             }
 

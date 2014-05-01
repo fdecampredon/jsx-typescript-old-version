@@ -381,13 +381,6 @@ module TypeScript.Syntax {
 
         public kind() { return this.tokenKind; }
 
-        public isToken(): boolean { return true; }
-        public isNode(): boolean { return false; }
-        public isTrivia(): boolean { return true; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
-
         public childCount(): number {
             return 0;
         }
@@ -631,13 +624,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public isToken(): boolean { return true; }
-        public isNode(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
-
         public fullWidth(): number { return this._underlyingToken.fullWidth(); }
         public width(): number { return this._underlyingToken.width(); }
 
@@ -816,13 +802,6 @@ module TypeScript.Syntax {
         public isShared(): boolean {
             return false;
         }
-
-        public isToken(): boolean { return true; }
-        public isNode(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
 
         public fullWidth(): number { return this._leadingTrivia.fullWidth() + this.width() + this._trailingTrivia.fullWidth(); }
         public width(): number { return this.text().length; }

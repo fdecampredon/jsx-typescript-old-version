@@ -1266,13 +1266,6 @@ module TypeScript {
             return unpackKind(this._packedFullWidthAndKind);
         }
 
-        public isNode(): boolean { return false; }
-        public isToken(): boolean { return true; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
-
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
