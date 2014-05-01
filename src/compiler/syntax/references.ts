@@ -23,7 +23,6 @@
 ///<reference path='syntaxNode.ts' />
 ///<reference path='syntaxNodeOrToken.ts' />
 ///<reference path='syntaxNodes.generated.ts' />
-///<reference path='syntaxRewriter.generated.ts' />
 
 // SyntaxDedenter depends on SyntaxRewriter
 // ///<reference path='syntaxDedenter.ts' />
@@ -31,7 +30,6 @@
 // ///<reference path='syntaxIndenter.ts' />
 
 ///<reference path='syntaxToken.ts' />
-///<reference path='syntaxTokenReplacer.ts' />
 ///<reference path='syntaxTrivia.ts' />
 ///<reference path='syntaxTriviaList.ts' />
 ///<reference path='syntaxUtilities.ts' />

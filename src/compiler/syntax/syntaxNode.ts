@@ -9,6 +9,10 @@ module TypeScript {
             // this._data = parsedInStrictMode ? SyntaxConstants.NodeParsedInStrictModeMask : 0;
         }
 
+        public resetData(): void {
+            this._data = this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0
+        }
+
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
         }
@@ -171,13 +175,13 @@ module TypeScript {
             }
         }
 
-        public replaceToken(token1: ISyntaxToken, token2: ISyntaxToken): SyntaxNode {
-            if (token1 === token2) {
-                return this;
-            }
+        //public replaceToken(token1: ISyntaxToken, token2: ISyntaxToken): SyntaxNode {
+        //    if (token1 === token2) {
+        //        return this;
+        //    }
 
-            return visitNodeOrToken(new SyntaxTokenReplacer(token1, token2), this);
-        }
+        //    return visitNodeOrToken(new SyntaxTokenReplacer(token1, token2), this);
+        //}
 
         //public withLeadingTrivia(trivia: ISyntaxTriviaList): SyntaxNode {
         //    return this.replaceToken(this.firstToken(), this.firstToken().withLeadingTrivia(trivia));

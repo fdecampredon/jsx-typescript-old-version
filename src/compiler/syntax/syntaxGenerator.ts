@@ -1914,7 +1914,7 @@ function generateNode(definition: ITypeDefinition): string {
     result += generateSlotMethods(definition);
     result += generateIsMethod(definition);
     result += generateAccessors(definition);
-    result += generateUpdateMethod(definition);
+    // result += generateUpdateMethod(definition);
 
     if (!forPrettyPrinter) {
         result += generateFactoryMethod(definition);
@@ -2795,7 +2795,7 @@ var servicesUtilities = generateServicesUtilities();
 
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxInterfaces.generated.ts", syntaxInterfaces, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxNodes.generated.ts", syntaxNodes, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxRewriter.generated.ts", rewriter, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\services\\syntaxRewriter.generated.ts", rewriter, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxWalker.generated.ts", walker, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\scannerUtilities.generated.ts", scannerUtilities, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxVisitor.generated.ts", visitor, false);

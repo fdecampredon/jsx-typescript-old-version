@@ -1702,11 +1702,48 @@ module TypeScript.Parser {
             }
         }
 
+        private replaceTokenInParent(oldToken: ISyntaxToken, newToken: ISyntaxToken): void {
+            // oldToken may be parented by a node or a list.
+            var parent: any = oldToken.parent;
+            if (isNode(parent)) {
+                var node = <SyntaxNode>parent;
+                for (var key in parent) {
+                    if (parent[key] === oldToken) {
+                        parent[key] = newToken;
+                        newToken.parent = parent;
+                        node.resetData();
+                        return;
+                    }
+                }
+            }
+            else if (isList(parent)) {
+                var list1 = <ISyntaxList<ISyntaxNodeOrToken>>parent;
+                for (var i = 0, n = list1.childCount(); i < n; i++) {
+                    if (list1.childAt(i) === oldToken) {
+                        list1.setChildAt(i, newToken);
+                        return;
+                    }
+                }
+            }
+            else if (isSeparatedList(parent)) {
+                var list2 = <ISeparatedSyntaxList<ISyntaxNodeOrToken>>parent;
+                for (var i = 0, n = list2.childCount(); i < n; i++) {
+                    if (list2.childAt(i) === oldToken) {
+                        list2.setChildAt(i, newToken);
+                        return;
+                    }
+                }
+            }
+
+            throw Errors.invalidOperation();
+        }
+
         private addSkippedTokenAfterNode(node: SyntaxNode, skippedToken: ISyntaxToken): SyntaxNode {
             var oldToken = node.lastToken();
             var newToken = this.addSkippedTokenAfterToken(oldToken, skippedToken);
 
-            return node.replaceToken(oldToken, newToken);
+            this.replaceTokenInParent(oldToken, newToken);
+            return node;
         }
 
         private addSkippedTokensBeforeNode(node: SyntaxNode, skippedTokens: ISyntaxToken[]): SyntaxNode {
@@ -1714,7 +1751,7 @@ module TypeScript.Parser {
                 var oldToken = node.firstToken();
                 var newToken = this.addSkippedTokensBeforeToken(oldToken, skippedTokens);
 
-                return node.replaceToken(oldToken, newToken);
+                this.replaceTokenInParent(oldToken, newToken);
             }
 
             return node;
@@ -2470,12 +2507,7 @@ module TypeScript.Parser {
 
             // If we got an errant => then we want to parse what's coming up without requiring an
             // open brace.
-            var parseBlockEvenWithNoOpenBrace = false;
-            var newCallSignature = this.tryAddUnexpectedEqualsGreaterThanToken(callSignature);
-            if (newCallSignature !== callSignature) {
-                parseBlockEvenWithNoOpenBrace = true;
-                callSignature = newCallSignature;
-            }
+            var parseBlockEvenWithNoOpenBrace = this.tryAddUnexpectedEqualsGreaterThanToken(callSignature);
 
             var block: BlockSyntax = null;
             var semicolon: ISyntaxToken = null;
@@ -2587,14 +2619,15 @@ module TypeScript.Parser {
             return this.factory.indexMemberDeclaration(modifiers, indexSignature, semicolonToken);
         }
 
-        private tryAddUnexpectedEqualsGreaterThanToken(callSignature: CallSignatureSyntax): CallSignatureSyntax {
+        private tryAddUnexpectedEqualsGreaterThanToken(callSignature: CallSignatureSyntax): boolean {
             var token0 = this.currentToken();
 
             var hasEqualsGreaterThanToken = token0.kind() === SyntaxKind.EqualsGreaterThanToken;
             if (hasEqualsGreaterThanToken) {
                 // We can only do this if the call signature actually contains a final token that we 
                 // could add the => to.
-                if (callSignature.lastToken()) {
+                var lastToken = callSignature.lastToken();
+                if (lastToken && lastToken.fullWidth() > 0) {
                     // Previously the language allowed "function f() => expr;" as a shorthand for 
                     // "function f() { return expr; }.
                     // 
@@ -2604,11 +2637,14 @@ module TypeScript.Parser {
                     this.addDiagnostic(diagnostic);
 
                     var token = this.eatAnyToken();
-                    return <CallSignatureSyntax>this.addSkippedTokenAfterNode(callSignature, token0);
+                    this.addSkippedTokenAfterNode(callSignature, token0);
+
+                    return true;
                 }
             }
 
-            return callSignature;
+
+            return false;
         }
 
         private isFunctionDeclaration(): boolean {
@@ -2626,12 +2662,7 @@ module TypeScript.Parser {
 
             // If we got an errant => then we want to parse what's coming up without requiring an
             // open brace.
-            var parseBlockEvenWithNoOpenBrace = false;
-            var newCallSignature = this.tryAddUnexpectedEqualsGreaterThanToken(callSignature);
-            if (newCallSignature !== callSignature) {
-                parseBlockEvenWithNoOpenBrace = true;
-                callSignature = newCallSignature;
-            }
+            var parseBlockEvenWithNoOpenBrace = this.tryAddUnexpectedEqualsGreaterThanToken(callSignature);
 
             var semicolonToken: ISyntaxToken = null;
             var block: BlockSyntax = null;

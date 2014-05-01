@@ -3,6 +3,7 @@
 module TypeScript {
     export interface ISeparatedSyntaxList<T extends ISyntaxNodeOrToken> extends ISyntaxElement {
         childAt(index: number): ISyntaxNodeOrToken;
+        setChildAt(index: number, value: ISyntaxNodeOrToken): void;
 
         toArray(): ISyntaxNodeOrToken[];
         toNonSeparatorArray(): ISyntaxNodeOrToken[];
@@ -64,6 +65,10 @@ module TypeScript.Syntax {
         }
 
         public childAt(index: number): ISyntaxNodeOrToken {
+            throw Errors.argumentOutOfRange("index");
+        }
+
+        public setChildAt(index: number, value: ISyntaxNodeOrToken): void {
             throw Errors.argumentOutOfRange("index");
         }
 
@@ -192,6 +197,15 @@ module TypeScript.Syntax {
             }
 
             return this.item;
+        }
+
+        public setChildAt(index: number, value: ISyntaxNodeOrToken): void {
+            if (index !== 0) {
+                throw Errors.argumentOutOfRange("index");
+            }
+
+            this.item = <T>value;
+            value.parent = this;
         }
 
         public nonSeparatorAt(index: number): T {
@@ -325,6 +339,16 @@ module TypeScript.Syntax {
             }
 
             return this.elements[index];
+        }
+
+        public setChildAt(index: number, value: ISyntaxNodeOrToken): void {
+            if (index < 0 || index >= this.elements.length) {
+                throw Errors.argumentOutOfRange("index");
+            }
+
+            this.elements[index] = value;
+            value.parent = this;
+            this._data = 0;
         }
 
         public nonSeparatorAt(index: number): T {

@@ -3,6 +3,7 @@
 module TypeScript {
     export interface ISyntaxList<T extends ISyntaxNodeOrToken> extends ISyntaxElement {
         childAt(index: number): T;
+        setChildAt(index: number, value: T): void;
         toArray(): T[];
 
         any(func: (v: T) => boolean): boolean;
@@ -44,6 +45,10 @@ module TypeScript.Syntax {
         }
 
         public childAt(index: number): T {
+            throw Errors.argumentOutOfRange("index");
+        }
+
+        public setChildAt(index: number, value: T): void {
             throw Errors.argumentOutOfRange("index");
         }
 
@@ -179,6 +184,15 @@ module TypeScript.Syntax {
             return this.item;
         }
 
+        public setChildAt(index: number, value: T): void {
+            if (index !== 0) {
+                throw Errors.argumentOutOfRange("index");
+            }
+
+            this.item = value;
+            value.parent = this;
+        }
+
         public isShared(): boolean {
             return false;
         }
@@ -301,6 +315,16 @@ module TypeScript.Syntax {
             }
 
             return this.nodeOrTokens[index];
+        }
+
+        public setChildAt(index: number, value: T): void {
+            if (index < 0 || index >= this.nodeOrTokens.length) {
+                throw Errors.argumentOutOfRange("index");
+            }
+
+            this.nodeOrTokens[index] = value;
+            value.parent = this;
+            this._data = 0;
         }
 
         public isShared(): boolean {
