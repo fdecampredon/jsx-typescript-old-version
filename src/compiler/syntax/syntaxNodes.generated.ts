@@ -40,11 +40,6 @@ module TypeScript {
 
             return new SourceUnitSyntax(moduleElements, endOfFileToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.moduleElements.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class ExternalModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
@@ -93,10 +88,6 @@ module TypeScript {
 
             return new ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
@@ -132,10 +123,6 @@ module TypeScript {
             }
 
             return new ModuleNameModuleReferenceSyntax(moduleName, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -193,10 +180,6 @@ module TypeScript {
 
             return new ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class ExportAssignmentSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -244,10 +227,6 @@ module TypeScript {
             }
 
             return new ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -313,10 +292,6 @@ module TypeScript {
 
             return new ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class InterfaceDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -373,10 +348,6 @@ module TypeScript {
 
             return new InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class HeritageClauseSyntax extends SyntaxNode {
@@ -417,10 +388,6 @@ module TypeScript {
             }
 
             return new HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -482,10 +449,6 @@ module TypeScript {
 
             return new ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class FunctionDeclarationSyntax extends SyntaxNode implements IStatementSyntax {
@@ -546,13 +509,6 @@ module TypeScript {
 
             return new FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.modifiers.childCount() > 0) { return true; }
-            if (this.callSignature.isTypeScriptSpecific()) { return true; }
-            if (this.block !== null && this.block.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class VariableStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -601,12 +557,6 @@ module TypeScript {
 
             return new VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.modifiers.childCount() > 0) { return true; }
-            if (this.variableDeclaration.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class VariableDeclarationSyntax extends SyntaxNode {
@@ -642,11 +592,6 @@ module TypeScript {
             }
 
             return new VariableDeclarationSyntax(varKeyword, variableDeclarators, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.variableDeclarators.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -688,12 +633,6 @@ module TypeScript {
 
             return new VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.typeAnnotation !== null) { return true; }
-            if (this.equalsValueClause !== null && this.equalsValueClause.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class EqualsValueClauseSyntax extends SyntaxNode {
@@ -729,11 +668,6 @@ module TypeScript {
             }
 
             return new EqualsValueClauseSyntax(equalsToken, value, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.value.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -783,11 +717,6 @@ module TypeScript {
             }
 
             return new PrefixUnaryExpressionSyntax(kind, operatorToken, operand, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.operand.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -853,11 +782,6 @@ module TypeScript {
 
             return new ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expressions.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class OmittedExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
@@ -883,10 +807,6 @@ module TypeScript {
 
         public update(): OmittedExpressionSyntax {
             return this;
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return false;
         }
     }
 
@@ -952,11 +872,6 @@ module TypeScript {
 
             return new ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IArrowFunctionExpressionSyntax {
@@ -1012,10 +927,6 @@ module TypeScript {
             }
 
             return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -1073,10 +984,6 @@ module TypeScript {
 
             return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class QualifiedNameSyntax extends SyntaxNode implements INameSyntax {
@@ -1125,10 +1032,6 @@ module TypeScript {
 
             return new QualifiedNameSyntax(left, dotToken, right, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class TypeArgumentListSyntax extends SyntaxNode {
@@ -1168,10 +1071,6 @@ module TypeScript {
             }
 
             return new TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -1225,10 +1124,6 @@ module TypeScript {
 
             return new ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class FunctionTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -1277,10 +1172,6 @@ module TypeScript {
 
             return new FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class ObjectTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -1324,10 +1215,6 @@ module TypeScript {
             }
 
             return new ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -1373,10 +1260,6 @@ module TypeScript {
 
             return new ArrayTypeSyntax(type, openBracketToken, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class GenericTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -1416,10 +1299,6 @@ module TypeScript {
             }
 
             return new GenericTypeSyntax(name, typeArgumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -1461,10 +1340,6 @@ module TypeScript {
 
             return new TypeQuerySyntax(typeOfKeyword, name, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class TypeAnnotationSyntax extends SyntaxNode {
@@ -1500,10 +1375,6 @@ module TypeScript {
             }
 
             return new TypeAnnotationSyntax(colonToken, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -1552,11 +1423,6 @@ module TypeScript {
             }
 
             return new BlockSyntax(openBraceToken, statements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.statements.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -1609,15 +1475,6 @@ module TypeScript {
             }
 
             return new ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.dotDotDotToken !== null) { return true; }
-            if (this.modifiers.isTypeScriptSpecific()) { return true; }
-            if (this.questionToken !== null) { return true; }
-            if (this.typeAnnotation !== null) { return true; }
-            if (this.equalsValueClause !== null) { return true; }
-            return false;
         }
     }
 
@@ -1683,11 +1540,6 @@ module TypeScript {
 
             return new MemberAccessExpressionSyntax(expression, dotToken, name, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class PostfixUnaryExpressionSyntax extends SyntaxNode implements IPostfixExpressionSyntax {
@@ -1740,11 +1592,6 @@ module TypeScript {
             }
 
             return new PostfixUnaryExpressionSyntax(kind, operand, operatorToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.operand.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -1814,12 +1661,6 @@ module TypeScript {
 
             return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            if (this.argumentExpression.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax, IExpressionWithArgumentListSyntax {
@@ -1880,12 +1721,6 @@ module TypeScript {
 
             return new InvocationExpressionSyntax(expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            if (this.argumentList.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class ArgumentListSyntax extends SyntaxNode {
@@ -1931,12 +1766,6 @@ module TypeScript {
             }
 
             return new ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.typeArgumentList !== null && this.typeArgumentList.isTypeScriptSpecific()) { return true; }
-            if (this.arguments.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -1986,12 +1815,6 @@ module TypeScript {
             }
 
             return new BinaryExpressionSyntax(kind, left, operatorToken, right, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.left.isTypeScriptSpecific()) { return true; }
-            if (this.right.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -2045,13 +1868,6 @@ module TypeScript {
 
             return new ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.condition.isTypeScriptSpecific()) { return true; }
-            if (this.whenTrue.isTypeScriptSpecific()) { return true; }
-            if (this.whenFalse.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class ConstructSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -2091,10 +1907,6 @@ module TypeScript {
             }
 
             return new ConstructSignatureSyntax(newKeyword, callSignature, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -2139,11 +1951,6 @@ module TypeScript {
             }
 
             return new MethodSignatureSyntax(propertyName, questionToken, callSignature, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.callSignature.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -2193,10 +2000,6 @@ module TypeScript {
 
             return new IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class PropertySignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -2240,10 +2043,6 @@ module TypeScript {
             }
 
             return new PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -2289,13 +2088,6 @@ module TypeScript {
 
             return new CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.typeParameterList !== null) { return true; }
-            if (this.parameterList.isTypeScriptSpecific()) { return true; }
-            if (this.typeAnnotation !== null) { return true; }
-            return false;
-        }
     }
 
     export class ParameterListSyntax extends SyntaxNode {
@@ -2335,11 +2127,6 @@ module TypeScript {
             }
 
             return new ParameterListSyntax(openParenToken, parameters, closeParenToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.parameters.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -2381,10 +2168,6 @@ module TypeScript {
 
             return new TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class TypeParameterSyntax extends SyntaxNode {
@@ -2420,10 +2203,6 @@ module TypeScript {
             }
 
             return new TypeParameterSyntax(identifier, constraint, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -2461,10 +2240,6 @@ module TypeScript {
 
             return new ConstraintSyntax(extendsKeyword, type, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class ElseClauseSyntax extends SyntaxNode {
@@ -2500,11 +2275,6 @@ module TypeScript {
             }
 
             return new ElseClauseSyntax(elseKeyword, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.statement.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -2566,13 +2336,6 @@ module TypeScript {
 
             return new IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.condition.isTypeScriptSpecific()) { return true; }
-            if (this.statement.isTypeScriptSpecific()) { return true; }
-            if (this.elseClause !== null && this.elseClause.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class ExpressionStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -2616,11 +2379,6 @@ module TypeScript {
             }
 
             return new ExpressionStatementSyntax(expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -2673,10 +2431,6 @@ module TypeScript {
             }
 
             return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -2733,10 +2487,6 @@ module TypeScript {
             }
 
             return new MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -2802,14 +2552,6 @@ module TypeScript {
 
             return new GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.modifiers.childCount() > 0) { return true; }
-            if (this.parameterList.isTypeScriptSpecific()) { return true; }
-            if (this.typeAnnotation !== null) { return true; }
-            if (this.block.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class SetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
@@ -2870,10 +2612,6 @@ module TypeScript {
 
             return new SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class MemberVariableDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
@@ -2922,10 +2660,6 @@ module TypeScript {
 
             return new MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class IndexMemberDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
@@ -2969,10 +2703,6 @@ module TypeScript {
             }
 
             return new IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -3022,11 +2752,6 @@ module TypeScript {
 
             return new ThrowStatementSyntax(throwKeyword, expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class ReturnStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -3074,11 +2799,6 @@ module TypeScript {
             }
 
             return new ReturnStatementSyntax(returnKeyword, expression, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression !== null && this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -3144,12 +2864,6 @@ module TypeScript {
 
             return new ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            if (this.argumentList !== null && this.argumentList.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class SwitchStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -3214,12 +2928,6 @@ module TypeScript {
 
             return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            if (this.switchClauses.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class CaseSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
@@ -3268,12 +2976,6 @@ module TypeScript {
 
             return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            if (this.statements.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class DefaultSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
@@ -3317,11 +3019,6 @@ module TypeScript {
             }
 
             return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.statements.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -3371,10 +3068,6 @@ module TypeScript {
 
             return new BreakStatementSyntax(breakKeyword, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return false;
-        }
     }
 
     export class ContinueStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -3422,10 +3115,6 @@ module TypeScript {
             }
 
             return new ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return false;
         }
     }
 
@@ -3507,15 +3196,6 @@ module TypeScript {
 
             return new ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.variableDeclaration !== null && this.variableDeclaration.isTypeScriptSpecific()) { return true; }
-            if (this.initializer !== null && this.initializer.isTypeScriptSpecific()) { return true; }
-            if (this.condition !== null && this.condition.isTypeScriptSpecific()) { return true; }
-            if (this.incrementor !== null && this.incrementor.isTypeScriptSpecific()) { return true; }
-            if (this.statement.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class ForInStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
@@ -3588,14 +3268,6 @@ module TypeScript {
 
             return new ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.variableDeclaration !== null && this.variableDeclaration.isTypeScriptSpecific()) { return true; }
-            if (this.left !== null && this.left.isTypeScriptSpecific()) { return true; }
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            if (this.statement.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class WhileStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
@@ -3656,12 +3328,6 @@ module TypeScript {
 
             return new WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.condition.isTypeScriptSpecific()) { return true; }
-            if (this.statement.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class WithStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -3717,12 +3383,6 @@ module TypeScript {
             }
 
             return new WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.condition.isTypeScriptSpecific()) { return true; }
-            if (this.statement.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -3780,10 +3440,6 @@ module TypeScript {
 
             return new EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
-        }
     }
 
     export class EnumElementSyntax extends SyntaxNode {
@@ -3819,11 +3475,6 @@ module TypeScript {
             }
 
             return new EnumElementSyntax(propertyName, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.equalsValueClause !== null && this.equalsValueClause.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -3876,10 +3527,6 @@ module TypeScript {
             }
 
             return new CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return true;
         }
     }
 
@@ -3945,11 +3592,6 @@ module TypeScript {
 
             return new ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.propertyAssignments.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class SimplePropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
@@ -3994,11 +3636,6 @@ module TypeScript {
 
             return new SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class FunctionPropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
@@ -4042,12 +3679,6 @@ module TypeScript {
             }
 
             return new FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.callSignature.isTypeScriptSpecific()) { return true; }
-            if (this.block.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -4117,12 +3748,6 @@ module TypeScript {
 
             return new FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.callSignature.isTypeScriptSpecific()) { return true; }
-            if (this.block.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class EmptyStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -4162,10 +3787,6 @@ module TypeScript {
             }
 
             return new EmptyStatementSyntax(semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return false;
         }
     }
 
@@ -4219,13 +3840,6 @@ module TypeScript {
 
             return new TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.block.isTypeScriptSpecific()) { return true; }
-            if (this.catchClause !== null && this.catchClause.isTypeScriptSpecific()) { return true; }
-            if (this.finallyClause !== null && this.finallyClause.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class CatchClauseSyntax extends SyntaxNode {
@@ -4278,12 +3892,6 @@ module TypeScript {
 
             return new CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.typeAnnotation !== null && this.typeAnnotation.isTypeScriptSpecific()) { return true; }
-            if (this.block.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class FinallyClauseSyntax extends SyntaxNode {
@@ -4319,11 +3927,6 @@ module TypeScript {
             }
 
             return new FinallyClauseSyntax(finallyKeyword, block, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.block.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -4372,11 +3975,6 @@ module TypeScript {
             }
 
             return new LabeledStatementSyntax(identifier, colonToken, statement, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.statement.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -4446,12 +4044,6 @@ module TypeScript {
 
             return new DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.statement.isTypeScriptSpecific()) { return true; }
-            if (this.condition.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class TypeOfExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -4495,11 +4087,6 @@ module TypeScript {
             }
 
             return new TypeOfExpressionSyntax(typeOfKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
         }
     }
 
@@ -4545,11 +4132,6 @@ module TypeScript {
 
             return new DeleteExpressionSyntax(deleteKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class VoidExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -4594,11 +4176,6 @@ module TypeScript {
 
             return new VoidExpressionSyntax(voidKeyword, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
         }
-
-        public isTypeScriptSpecific(): boolean {
-            if (this.expression.isTypeScriptSpecific()) { return true; }
-            return false;
-        }
     }
 
     export class DebuggerStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -4642,10 +4219,6 @@ module TypeScript {
             }
 
             return new DebuggerStatementSyntax(debuggerKeyword, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0);
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            return false;
         }
     }
 }

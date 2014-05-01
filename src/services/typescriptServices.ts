@@ -15,6 +15,7 @@
 
 ///<reference path='es5compat.ts' />
 ///<reference path='..\compiler\typescript.ts' />
+///<reference path='syntaxUtilities.generated.ts' />
 ///<reference path='coreServices.ts' />
 ///<reference path='classifier.ts' />
 ///<reference path='compilerState.ts' />
