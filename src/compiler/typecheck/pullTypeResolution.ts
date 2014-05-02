@@ -59,6 +59,11 @@ module TypeScript {
         stringSignature: PullSignatureSymbol;
     }
 
+    interface IExpressionWithArgumentListSyntax extends IExpressionSyntax {
+        expression: IExpressionSyntax;
+        argumentList: ArgumentListSyntax;
+    }
+
     // The resolver associates types with a given AST
     export class PullTypeResolver {
         private _cachedArrayInterfaceType: PullTypeSymbol = null;

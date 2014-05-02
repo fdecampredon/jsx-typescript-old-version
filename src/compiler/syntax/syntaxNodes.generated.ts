@@ -685,7 +685,7 @@ module TypeScript {
         }
     }
 
-    export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IArrowFunctionExpressionSyntax {
+    export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         constructor(public identifier: ISyntaxToken,
                     public equalsGreaterThanToken: ISyntaxToken,
                     public block: BlockSyntax,
@@ -717,10 +717,6 @@ module TypeScript {
             }
         }
 
-        public isArrowFunctionExpression(): boolean {
-            return true;
-        }
-
         public isUnaryExpression(): boolean {
             return true;
         }
@@ -730,7 +726,7 @@ module TypeScript {
         }
     }
 
-    export class ParenthesizedArrowFunctionExpressionSyntax extends SyntaxNode implements IArrowFunctionExpressionSyntax {
+    export class ParenthesizedArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         constructor(public callSignature: CallSignatureSyntax,
                     public equalsGreaterThanToken: ISyntaxToken,
                     public block: BlockSyntax,
@@ -760,10 +756,6 @@ module TypeScript {
                 case 3: return this.expression;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isArrowFunctionExpression(): boolean {
-            return true;
         }
 
         public isUnaryExpression(): boolean {

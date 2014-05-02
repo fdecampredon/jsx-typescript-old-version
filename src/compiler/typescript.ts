@@ -305,6 +305,11 @@ module TypeScript {
         }
     }
 
+    interface IExpressionWithArgumentListSyntax extends IExpressionSyntax {
+        expression: IExpressionSyntax;
+        argumentList: ArgumentListSyntax;
+    }
+
     export class TypeScriptCompiler {
         private semanticInfoChain: SemanticInfoChain = null;
 

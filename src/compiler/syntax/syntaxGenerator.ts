@@ -42,7 +42,6 @@ var interfaces: TypeScript.IIndexable<any> = {
     IMemberExpressionSyntax: 'ILeftHandSideExpressionSyntax',
     ICallExpressionSyntax: 'ILeftHandSideExpressionSyntax',
     IPrimaryExpressionSyntax: 'IMemberExpressionSyntax',
-    IArrowFunctionExpressionSyntax: 'IUnaryExpressionSyntax',
 };
 
 var definitions:ITypeDefinition[] = [
@@ -245,7 +244,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'SimpleArrowFunctionExpressionSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IArrowFunctionExpressionSyntax'],
+        interfaces: ['IUnaryExpressionSyntax'],
         children: [
             <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
             <any>{ name: 'equalsGreaterThanToken', isToken: true },
@@ -257,7 +256,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'ParenthesizedArrowFunctionExpressionSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IArrowFunctionExpressionSyntax'],
+        interfaces: ['IUnaryExpressionSyntax'],
         children: [
             <any>{ name: 'callSignature', type: 'CallSignatureSyntax' },
             <any>{ name: 'equalsGreaterThanToken', isToken: true },

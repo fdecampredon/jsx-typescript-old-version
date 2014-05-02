@@ -11,6 +11,11 @@ module TypeScript.Services {
         argumentIndex: number;
     }
 
+    export interface IExpressionWithArgumentListSyntax extends IExpressionSyntax {
+        expression: IExpressionSyntax;
+        argumentList: ArgumentListSyntax;
+    }
+
     export class SignatureInfoHelpers {
 
         // A partially written generic type expression is not guaranteed to have the correct syntax tree. the expression could be parsed as less than/greater than expression or a comma expression
@@ -224,7 +229,7 @@ module TypeScript.Services {
             return [signatureGroupInfo];
         }
 
-        public static getActualSignatureInfoFromCallExpression(ast: TypeScript.IExpressionWithArgumentListSyntax, caretPosition: number, typeParameterInformation: IPartiallyWrittenTypeArgumentListInformation): ActualSignatureInfo {
+        public static getActualSignatureInfoFromCallExpression(ast: IExpressionWithArgumentListSyntax, caretPosition: number, typeParameterInformation: IPartiallyWrittenTypeArgumentListInformation): ActualSignatureInfo {
             if (!ast) {
                 return null;
             }
