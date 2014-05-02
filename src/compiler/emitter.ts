@@ -3707,7 +3707,15 @@ module TypeScript {
     }
 
     export function getLastConstructor(classDecl: ClassDeclarationSyntax): ConstructorDeclarationSyntax {
-        return <ConstructorDeclarationSyntax>classDecl.classElements.lastOrDefault(e => e.kind() === SyntaxKind.ConstructorDeclaration);
+        for (var i = classDecl.classElements.childCount() - 1; i >= 0; i--) {
+            var child = classDecl.classElements.childAt(i);
+
+            if (child.kind() === SyntaxKind.ConstructorDeclaration) {
+                return <ConstructorDeclarationSyntax>child;
+            }
+        }
+
+        return null;
     }
 
     export function getTrimmedTextLines(comment: Comment): string[] {

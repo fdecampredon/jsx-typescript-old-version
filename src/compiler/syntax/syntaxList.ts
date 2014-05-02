@@ -4,9 +4,6 @@ module TypeScript {
     export interface ISyntaxList<T extends ISyntaxNodeOrToken> extends ISyntaxElement {
         childAt(index: number): T;
         setChildAt(index: number, value: T): void;
-
-        firstOrDefault(func: (v: T, index: number) => boolean): T;
-        lastOrDefault(func: (v: T, index: number) => boolean): T;
     }
 }
 
@@ -110,14 +107,6 @@ module TypeScript.Syntax {
 
         public isIncrementallyUnusable(): boolean {
             return false;
-        }
-
-        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
-            return null;
-        }
-
-        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
-            return null;
         }
     }
 
@@ -244,14 +233,6 @@ module TypeScript.Syntax {
 
         public isIncrementallyUnusable(): boolean {
             return this.item.isIncrementallyUnusable();
-        }
-
-        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
-            return func && func(this.item, 0) ? this.item : null;
-        }
-
-        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
-            return func && func(this.item, 0) ? this.item : null;
         }
     }
 
@@ -423,14 +404,6 @@ module TypeScript.Syntax {
             }
 
             return this._data;
-        }
-
-        public firstOrDefault(func: (v: T, index: number) => boolean): T {
-            return ArrayUtilities.firstOrDefault(this.nodeOrTokens, func);
-        }
-
-        public lastOrDefault(func: (v: T, index: number) => boolean): T {
-            return ArrayUtilities.lastOrDefault(this.nodeOrTokens, func);
         }
     }
 

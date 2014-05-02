@@ -149,21 +149,25 @@ module TypeScript.ASTHelpers {
     }
 
     export function getExtendsHeritageClause(clauses: ISyntaxList<HeritageClauseSyntax>): HeritageClauseSyntax {
-        if (!clauses) {
-            return null;
-        }
-
-        return clauses.firstOrDefault(c =>
-            c.typeNames.nonSeparatorCount() > 0 && c.kind() === SyntaxKind.ExtendsHeritageClause);
+        return getHeritageClause(clauses, SyntaxKind.ExtendsHeritageClause);
     }
 
     export function getImplementsHeritageClause(clauses: ISyntaxList<HeritageClauseSyntax>): HeritageClauseSyntax {
-        if (!clauses) {
-            return null;
+        return getHeritageClause(clauses, SyntaxKind.ImplementsHeritageClause);
+    }
+
+    function getHeritageClause(clauses: ISyntaxList<HeritageClauseSyntax>, kind: SyntaxKind): HeritageClauseSyntax {
+        if (clauses) {
+            for (var i = 0, n = clauses.childCount(); i < n; i++) {
+                var child = clauses.childAt(i);
+
+                if (child.typeNames.nonSeparatorCount() > 0 && child.kind() === kind) {
+                    return child;
+                }
+            }
         }
 
-        return clauses.firstOrDefault(c =>
-            c.typeNames.nonSeparatorCount() > 0 && c.kind() === SyntaxKind.ImplementsHeritageClause);
+        return null;
     }
 
     export function isCallExpression(ast: ISyntaxElement): boolean {
