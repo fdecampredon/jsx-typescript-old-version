@@ -82,18 +82,19 @@ module TypeScript.Services {
             }
 
             var result = new ClassificationResult();
-            this.scanner = new TypeScript.Scanner(TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text));
+            this.scanner = createScanner(TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text));
 
             var lastTokenKind = TypeScript.SyntaxKind.None;
-
-            while (this.scanner.absoluteIndex() < text.length) {
+            var token: ISyntaxToken = null;
+            do {
                 this.lastDiagnosticKey = null;
 
-                var token = this.scanner.scan(!noRegexTable[lastTokenKind], this.reportDiagnostic);
+                token = this.scanner.scan(!noRegexTable[lastTokenKind], this.reportDiagnostic);
                 lastTokenKind = token.kind();
 
                 this.processToken(text, offset, token, result);
             }
+            while (token.kind() !== SyntaxKind.EndOfFileToken);
 
             this.lastDiagnosticKey = null;
             return result;
@@ -104,7 +105,7 @@ module TypeScript.Services {
             this.addResult(text, offset, result, token.width(), token.kind());
             this.processTriviaList(text, offset, token.trailingTrivia(), result);
 
-            if (this.scanner.absoluteIndex() >= text.length) {
+            if (token.fullEnd() >= text.length) {
                 // We're at the end.
                 if (this.lastDiagnosticKey === TypeScript.DiagnosticCode.AsteriskSlash_expected) {
                     result.finalLexState = EndOfLineState.InMultiLineCommentTrivia;

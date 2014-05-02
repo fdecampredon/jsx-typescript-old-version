@@ -83,7 +83,6 @@ module TypeScript {
     var reportDiagnostic = () => { };
 
     function processImports(lineMap: LineMap, scanner: Scanner, token: ISyntaxToken, importedFiles: IFileReference[]): void {
-        var position = 0;
         var lineChar = { line: -1, character: -1 };
 
         var start = new Date().getTime();
@@ -91,7 +90,7 @@ module TypeScript {
         // import foo = module("foo")
         while (token.kind() !== SyntaxKind.EndOfFileToken) {
             if (token.kind() === SyntaxKind.ImportKeyword) {
-                var importStart = position + token.leadingTriviaWidth();
+                var importToken = token;
                 token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
                 if (SyntaxFacts.isIdentifierNameOrAnyKeyword(token)) {
@@ -104,16 +103,15 @@ module TypeScript {
                             token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
                             if (token.kind() === SyntaxKind.OpenParenToken) {
-                                var afterOpenParenPosition = scanner.absoluteIndex();
                                 token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 
-                                lineMap.fillLineAndCharacterFromPosition(importStart, lineChar);
+                                lineMap.fillLineAndCharacterFromPosition(importToken.start(), lineChar);
 
                                 if (token.kind() === SyntaxKind.StringLiteral) {
                                     var ref = {
                                         line: lineChar.line,
                                         character: lineChar.character,
-                                        position: afterOpenParenPosition + token.leadingTriviaWidth(),
+                                        position: token.start(),
                                         length: token.width(),
                                         path: stripStartAndEndQuotes(switchToForwardSlashes(token.text())),
                                         isResident: false
@@ -126,7 +124,6 @@ module TypeScript {
                 }
             }
 
-            position = scanner.absoluteIndex();
             token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
         }
 
@@ -175,7 +172,7 @@ module TypeScript {
 
     export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, readImportFiles = true): IPreProcessedFileInfo {
         var text = SimpleText.fromScriptSnapshot(sourceText);
-        var scanner = new Scanner(LanguageVersion.EcmaScript5, text);
+        var scanner = createScanner(LanguageVersion.EcmaScript5, text);
 
         var firstToken = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
 

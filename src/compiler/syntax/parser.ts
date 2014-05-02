@@ -526,7 +526,7 @@ module TypeScript.Parser {
                     languageVersion: LanguageVersion,
                     public text: ISimpleText) {
             this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 32, null), null);
-            this.scanner = new Scanner(languageVersion, text);
+            this.scanner = createScanner(languageVersion, text);
         }
 
         public currentNode(): SyntaxNode {
@@ -651,7 +651,7 @@ module TypeScript.Parser {
 
             // Now tell the scanner to reset its position to this position as well.  That way
             // when we try to scan the next item, we'll be at the right location.
-            this.scanner.setAbsoluteIndex(absolutePosition);
+            this.scanner.setIndex(absolutePosition);
         }
 
         public currentTokenAllowingRegularExpression(): ISyntaxToken {
