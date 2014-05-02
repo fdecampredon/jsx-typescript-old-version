@@ -106,10 +106,13 @@ module TypeScript {
             Debug.assert(index <= fullText.length());
             Debug.assert(textEnd <= fullText.length());
             this._index = index;
-            this._fullText = fullText;
-            this._length = textEnd;
 
-            this._string = fullText.substr(0, fullText.length());
+            if (this._fullText !== fullText || !this._string) {
+                this._fullText = fullText;
+                this._string = fullText.substr(0, fullText.length());
+            }
+
+            this._length = textEnd;
         }
 
         public languageVersion(): LanguageVersion {
