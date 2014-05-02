@@ -17871,7 +17871,7 @@ var TypeScript;
                 } else if (this.isEnumDeclaration(currentToken, nextToken, modifierCount, tokenAfterModifiers)) {
                     return this.parseEnumDeclaration();
                 } else {
-                    return this.tryParseStatement(false, inErrorRecovery);
+                    return this.tryParseStatement(inErrorRecovery);
                 }
             };
 
@@ -17934,7 +17934,7 @@ var TypeScript;
             };
 
             ParserImpl.prototype.parseModuleNameModuleReference = function () {
-                var name = this.tryParseName(true);
+                var name = this.parseName();
                 return this.factory.moduleNameModuleReference(name);
             };
 
@@ -18017,10 +18017,14 @@ var TypeScript;
                 }
             };
 
-            ParserImpl.prototype.tryParseName = function (force) {
+            ParserImpl.prototype.parseName = function () {
+                return this.tryParseName() || this.eatIdentifierToken();
+            };
+
+            ParserImpl.prototype.tryParseName = function () {
                 var token0 = this.currentToken();
                 var shouldContinue = this.isIdentifier(token0);
-                if (!shouldContinue && !force) {
+                if (!shouldContinue) {
                     return null;
                 }
 
@@ -18173,7 +18177,7 @@ var TypeScript;
                     return null;
                 }
 
-                return this.tryParseNameOrGenericType(false);
+                return this.tryParseNameOrGenericType();
             };
 
             ParserImpl.prototype.parseClassDeclaration = function () {
@@ -18397,7 +18401,10 @@ var TypeScript;
                 var modifiers = TypeScript.Syntax.list(modifierArray);
                 returnZeroOrOneLengthArray(modifierArray);
 
-                var variableDeclarator = this.tryParseVariableDeclarator(true, true, true);
+                var variableDeclarator = this.tryParseVariableDeclarator(true, true);
+
+                TypeScript.Debug.assert(variableDeclarator !== null);
+
                 var semicolon = this.eatExplicitOrAutomaticSemicolon(false);
 
                 return this.factory.memberVariableDeclaration(modifiers, variableDeclarator, semicolon);
@@ -18483,7 +18490,7 @@ var TypeScript;
                 if (this.currentToken().kind() === 14 /* StringLiteral */) {
                     stringLiteral = this.eatToken(14 /* StringLiteral */);
                 } else {
-                    moduleName = this.tryParseName(true);
+                    moduleName = this.parseName();
                 }
 
                 var openBraceToken = this.eatToken(70 /* OpenBraceToken */);
@@ -18572,7 +18579,7 @@ var TypeScript;
 
             ParserImpl.prototype.parseIndexSignature = function () {
                 var openBracketToken = this.eatToken(74 /* OpenBracketToken */);
-                var parameter = this.tryParseParameter(true);
+                var parameter = this.parseParameter();
                 var closeBracketToken = this.eatToken(75 /* CloseBracketToken */);
                 var typeAnnotation = this.parseOptionalTypeAnnotation(false);
 
@@ -18726,7 +18733,11 @@ var TypeScript;
                 return this.isLabeledStatement(currentToken) || this.isVariableStatement() || this.isFunctionDeclaration() || this.isEmptyStatement(currentToken, inErrorRecovery) || this.isExpressionStatement(currentToken);
             };
 
-            ParserImpl.prototype.tryParseStatement = function (force, inErrorRecovery) {
+            ParserImpl.prototype.parseStatement = function (inErrorRecovery) {
+                return this.tryParseStatement(inErrorRecovery) || this.parseExpressionStatement();
+            };
+
+            ParserImpl.prototype.tryParseStatement = function (inErrorRecovery) {
                 var node = this.currentNode();
                 if (node !== null && node.isStatement()) {
                     this.moveToNextNode();
@@ -18786,7 +18797,7 @@ var TypeScript;
                     return this.parseFunctionDeclaration();
                 } else if (this.isEmptyStatement(currentToken, inErrorRecovery)) {
                     return this.parseEmptyStatement();
-                } else if (force || this.isExpressionStatement(currentToken)) {
+                } else if (this.isExpressionStatement(currentToken)) {
                     return this.parseExpressionStatement();
                 } else {
                     return null;
@@ -18802,7 +18813,7 @@ var TypeScript;
 
             ParserImpl.prototype.parseDoStatement = function () {
                 var doKeyword = this.eatKeyword(22 /* DoKeyword */);
-                var statement = this.tryParseStatement(true, false);
+                var statement = this.parseStatement(false);
                 var whileKeyword = this.eatKeyword(42 /* WhileKeyword */);
                 var openParenToken = this.eatToken(72 /* OpenParenToken */);
                 var condition = this.parseExpression(true);
@@ -18820,7 +18831,7 @@ var TypeScript;
             ParserImpl.prototype.parseLabeledStatement = function () {
                 var identifier = this.eatIdentifierToken();
                 var colonToken = this.eatToken(106 /* ColonToken */);
-                var statement = this.tryParseStatement(true, false);
+                var statement = this.parseStatement(false);
 
                 return this.factory.labeledStatement(identifier, colonToken, statement);
             };
@@ -18881,7 +18892,7 @@ var TypeScript;
                 var openParenToken = this.eatToken(72 /* OpenParenToken */);
                 var condition = this.parseExpression(true);
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
-                var statement = this.tryParseStatement(true, false);
+                var statement = this.parseStatement(false);
 
                 return this.factory.withStatement(withKeyword, openParenToken, condition, closeParenToken, statement);
             };
@@ -18891,7 +18902,7 @@ var TypeScript;
                 var openParenToken = this.eatToken(72 /* OpenParenToken */);
                 var condition = this.parseExpression(true);
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
-                var statement = this.tryParseStatement(true, false);
+                var statement = this.parseStatement(false);
 
                 return this.factory.whileStatement(whileKeyword, openParenToken, condition, closeParenToken, statement);
             };
@@ -18937,7 +18948,7 @@ var TypeScript;
                 var inKeyword = this.eatKeyword(29 /* InKeyword */);
                 var expression = this.parseExpression(true);
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
-                var statement = this.tryParseStatement(true, false);
+                var statement = this.parseStatement(false);
 
                 return this.factory.forInStatement(forKeyword, openParenToken, variableDeclaration, initializer, inKeyword, expression, closeParenToken, statement);
             };
@@ -18971,7 +18982,7 @@ var TypeScript;
                 }
 
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
-                var statement = this.tryParseStatement(true, false);
+                var statement = this.parseStatement(false);
 
                 return this.factory.forStatement(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement);
             };
@@ -19197,7 +19208,7 @@ var TypeScript;
                 var openParenToken = this.eatToken(72 /* OpenParenToken */);
                 var condition = this.parseExpression(true);
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
-                var statement = this.tryParseStatement(true, false);
+                var statement = this.parseStatement(false);
 
                 var elseClause = null;
                 if (this.isElseClause()) {
@@ -19213,7 +19224,7 @@ var TypeScript;
 
             ParserImpl.prototype.parseElseClause = function () {
                 var elseKeyword = this.eatKeyword(23 /* ElseKeyword */);
-                var statement = this.tryParseStatement(true, false);
+                var statement = this.parseStatement(false);
 
                 return this.factory.elseClause(elseKeyword, statement);
             };
@@ -19260,14 +19271,18 @@ var TypeScript;
                 return variableDeclarator.equalsValueClause === null;
             };
 
-            ParserImpl.prototype.tryParseVariableDeclarator = function (force, allowIn, allowPropertyName) {
+            ParserImpl.prototype.tryParseVariableDeclarator = function (allowIn, allowPropertyName) {
                 var node = this.currentNode();
                 if (this.canReuseVariableDeclaratorNode(node)) {
                     this.moveToNextNode();
                     return node;
                 }
 
-                if (!force && !this.isIdentifier(this.currentToken())) {
+                if (allowPropertyName) {
+                    TypeScript.Debug.assert(this.isPropertyName(this.currentToken(), false));
+                }
+
+                if (!allowPropertyName && !this.isIdentifier(this.currentToken())) {
                     return null;
                 }
 
@@ -19843,7 +19858,7 @@ var TypeScript;
 
             ParserImpl.prototype.parseCastExpression = function () {
                 var lessThanToken = this.eatToken(80 /* LessThanToken */);
-                var type = this.tryParseType(true);
+                var type = this.parseType();
                 var greaterThanToken = this.eatToken(81 /* GreaterThanToken */);
                 var expression = this.tryParseUnaryExpressionOrHigher(true);
 
@@ -20182,6 +20197,10 @@ var TypeScript;
                 return this.isIdentifier(this.currentToken());
             };
 
+            ParserImpl.prototype.parseTypeParameter = function () {
+                return this.tryParseTypeParameter() || this.factory.typeParameter(this.eatIdentifierToken(), null);
+            };
+
             ParserImpl.prototype.tryParseTypeParameter = function () {
                 if (!this.isIdentifier(this.currentToken())) {
                     return null;
@@ -20199,7 +20218,7 @@ var TypeScript;
                 }
 
                 var extendsKeyword = this.eatKeyword(48 /* ExtendsKeyword */);
-                var type = this.tryParseType(true);
+                var type = this.parseType();
 
                 return this.factory.constraint(extendsKeyword, type);
             };
@@ -20228,7 +20247,7 @@ var TypeScript;
 
             ParserImpl.prototype.parseTypeAnnotation = function (allowStringLiteral) {
                 var colonToken = this.eatToken(106 /* ColonToken */);
-                var type = allowStringLiteral && this.currentToken().kind() === 14 /* StringLiteral */ ? this.eatToken(14 /* StringLiteral */) : this.tryParseType(true);
+                var type = allowStringLiteral && this.currentToken().kind() === 14 /* StringLiteral */ ? this.eatToken(14 /* StringLiteral */) : this.parseType();
 
                 return this.factory.typeAnnotation(colonToken, type);
             };
@@ -20258,8 +20277,12 @@ var TypeScript;
                 return this.isIdentifier(currentToken);
             };
 
-            ParserImpl.prototype.tryParseType = function (force) {
-                var type = this.tryParseNonArrayType(force);
+            ParserImpl.prototype.parseType = function () {
+                return this.tryParseType() || this.eatIdentifierToken();
+            };
+
+            ParserImpl.prototype.tryParseType = function () {
+                var type = this.tryParseNonArrayType();
                 if (type === null) {
                     return null;
                 }
@@ -20280,12 +20303,12 @@ var TypeScript;
 
             ParserImpl.prototype.parseTypeQuery = function () {
                 var typeOfKeyword = this.eatToken(39 /* TypeOfKeyword */);
-                var name = this.tryParseName(true);
+                var name = this.parseName();
 
                 return this.factory.typeQuery(typeOfKeyword, name);
             };
 
-            ParserImpl.prototype.tryParseNonArrayType = function (force) {
+            ParserImpl.prototype.tryParseNonArrayType = function () {
                 var currentToken = this.currentToken();
                 switch (currentToken.kind()) {
                     case 60 /* AnyKeyword */:
@@ -20310,11 +20333,11 @@ var TypeScript;
                         return this.parseTypeQuery();
                 }
 
-                return this.tryParseNameOrGenericType(force);
+                return this.tryParseNameOrGenericType();
             };
 
-            ParserImpl.prototype.tryParseNameOrGenericType = function (force) {
-                var name = this.tryParseName(force);
+            ParserImpl.prototype.tryParseNameOrGenericType = function () {
+                var name = this.tryParseName();
                 if (name === null) {
                     return null;
                 }
@@ -20328,7 +20351,7 @@ var TypeScript;
                 var typeParameterList = this.tryParseTypeParameterList(false);
                 var parameterList = this.parseParameterList();
                 var equalsGreaterThanToken = this.eatToken(85 /* EqualsGreaterThanToken */);
-                var returnType = this.tryParseType(true);
+                var returnType = this.parseType();
 
                 return this.factory.functionType(typeParameterList, parameterList, equalsGreaterThanToken, returnType);
             };
@@ -20338,7 +20361,7 @@ var TypeScript;
                 var typeParameterList = this.tryParseTypeParameterList(false);
                 var parameterList = this.parseParameterList();
                 var equalsGreaterThanToken = this.eatToken(85 /* EqualsGreaterThanToken */);
-                var type = this.tryParseType(true);
+                var type = this.parseType();
 
                 return this.factory.constructorType(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type);
             };
@@ -20377,7 +20400,11 @@ var TypeScript;
                 return false;
             };
 
-            ParserImpl.prototype.tryParseParameter = function (force) {
+            ParserImpl.prototype.parseParameter = function () {
+                return this.tryParseParameter() || this.factory.parameter(null, TypeScript.Syntax.emptyList(), this.eatIdentifierToken(), null, null, null);
+            };
+
+            ParserImpl.prototype.tryParseParameter = function () {
                 var node = this.currentNode();
                 if (node !== null && node.kind() === 242 /* Parameter */) {
                     this.moveToNextNode();
@@ -20401,7 +20428,7 @@ var TypeScript;
                 var modifiers = TypeScript.Syntax.list(modifierArray);
                 returnZeroOrOneLengthArray(modifierArray);
 
-                if (!force && !this.isIdentifier(this.currentToken()) && dotDotDotToken === null && modifiers.childCount() === 0) {
+                if (!this.isIdentifier(this.currentToken()) && dotDotDotToken === null && modifiers.childCount() === 0) {
                     return null;
                 }
 
@@ -20925,10 +20952,10 @@ var TypeScript;
                         return this.tryParseSwitchClause();
 
                     case 16 /* SwitchClause_Statements */:
-                        return this.tryParseStatement(false, inErrorRecovery);
+                        return this.tryParseStatement(inErrorRecovery);
 
                     case 32 /* Block_Statements */:
-                        return this.tryParseStatement(false, inErrorRecovery);
+                        return this.tryParseStatement(inErrorRecovery);
 
                     case 256 /* EnumDeclaration_EnumElements */:
                         return this.tryParseEnumElement(inErrorRecovery);
@@ -20943,10 +20970,10 @@ var TypeScript;
                         return this.tryParseHeritageClauseTypeName();
 
                     case 4096 /* VariableDeclaration_VariableDeclarators_AllowIn */:
-                        return this.tryParseVariableDeclarator(false, true, false);
+                        return this.tryParseVariableDeclarator(true, false);
 
                     case 8192 /* VariableDeclaration_VariableDeclarators_DisallowIn */:
-                        return this.tryParseVariableDeclarator(false, false, false);
+                        return this.tryParseVariableDeclarator(false, false);
 
                     case 32768 /* ObjectLiteralExpression_PropertyAssignments */:
                         return this.tryParsePropertyAssignment(inErrorRecovery);
@@ -20955,10 +20982,10 @@ var TypeScript;
                         return this.tryParseAssignmentOrOmittedExpression();
 
                     case 131072 /* ParameterList_Parameters */:
-                        return this.tryParseParameter(false);
+                        return this.tryParseParameter();
 
                     case 262144 /* TypeArgumentList_Types */:
-                        return this.tryParseType(false);
+                        return this.tryParseType();
 
                     case 524288 /* TypeParameterList_TypeParameters */:
                         return this.tryParseTypeParameter();
