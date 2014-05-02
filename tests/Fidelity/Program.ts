@@ -543,14 +543,14 @@ class Program {
 
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
         var text = TypeScript.SimpleText.fromString(contents);
-        var scanner = TypeScript.createScanner(languageVersion, text);
+        var scanner = TypeScript.createScanner(languageVersion, text, () => { });
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var textArray: string[] = [];
         var diagnostics: TypeScript.Diagnostic[] = [];
 
         while (true) {
-            var token = scanner.scan(/*allowRegularExpression:*/ false, () => { });
+            var token = scanner.scan(/*allowRegularExpression:*/ false);
             tokens.push(token);
 
             if (token.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
@@ -568,19 +568,20 @@ class Program {
 
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
 
-        var text = TypeScript.SimpleText.fromString(contents);
-        var scanner = TypeScript.createScanner(languageVersion, text);
-
-        var tokens: TypeScript.ISyntaxToken[] = [];
-        var textArray: string[] = [];
         var diagnostics: TypeScript.Diagnostic[] = [];
-        var position = 0;
         var reportDiagnostic = (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => {
             diagnostics.push(new TypeScript.Diagnostic(fileName, text.lineMap(), position, fullWidth, diagnosticKey, args));
         };
 
+        var text = TypeScript.SimpleText.fromString(contents);
+        var scanner = TypeScript.createScanner(languageVersion, text, reportDiagnostic);
+
+        var tokens: TypeScript.ISyntaxToken[] = [];
+        var textArray: string[] = [];
+        var position = 0;
+
         while (true) {
-            var token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
+            var token = scanner.scan(/*allowRegularExpression:*/ false);
             tokens.push(token);
 
             TypeScript.Debug.assert(position === token.fullStart());

@@ -91,19 +91,19 @@ module TypeScript {
         while (token.kind() !== SyntaxKind.EndOfFileToken) {
             if (token.kind() === SyntaxKind.ImportKeyword) {
                 var importToken = token;
-                token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
+                token = scanner.scan(/*allowRegularExpression:*/ false);
 
                 if (SyntaxFacts.isIdentifierNameOrAnyKeyword(token)) {
-                    token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
+                    token = scanner.scan(/*allowRegularExpression:*/ false);
 
                     if (token.kind() === SyntaxKind.EqualsToken) {
-                        token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
+                        token = scanner.scan(/*allowRegularExpression:*/ false);
 
                         if (token.kind() === SyntaxKind.ModuleKeyword || token.kind() === SyntaxKind.RequireKeyword) {
-                            token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
+                            token = scanner.scan(/*allowRegularExpression:*/ false);
 
                             if (token.kind() === SyntaxKind.OpenParenToken) {
-                                token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
+                                token = scanner.scan(/*allowRegularExpression:*/ false);
 
                                 lineMap.fillLineAndCharacterFromPosition(importToken.start(), lineChar);
 
@@ -124,7 +124,7 @@ module TypeScript {
                 }
             }
 
-            token = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
+            token = scanner.scan(/*allowRegularExpression:*/ false);
         }
 
         var totalTime = new Date().getTime() - start;
@@ -172,9 +172,9 @@ module TypeScript {
 
     export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, readImportFiles = true): IPreProcessedFileInfo {
         var text = SimpleText.fromScriptSnapshot(sourceText);
-        var scanner = createScanner(LanguageVersion.EcmaScript5, text);
+        var scanner = createScanner(LanguageVersion.EcmaScript5, text, reportDiagnostic);
 
-        var firstToken = scanner.scan(/*allowRegularExpression:*/ false, reportDiagnostic);
+        var firstToken = scanner.scan(/*allowRegularExpression:*/ false);
 
         // only search out dynamic mods
         // if you find a dynamic mod, ignore every other mod inside, until you balance rcurlies

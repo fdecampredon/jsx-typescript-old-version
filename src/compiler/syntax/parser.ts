@@ -526,7 +526,7 @@ module TypeScript.Parser {
                     languageVersion: LanguageVersion,
                     public text: ISimpleText) {
             this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 32, null), null);
-            this.scanner = createScanner(languageVersion, text);
+            this.scanner = createScanner(languageVersion, text, this.reportDiagnostic);
         }
 
         public currentNode(): SyntaxNode {
@@ -593,7 +593,7 @@ module TypeScript.Parser {
         public fetchNextItem(allowRegularExpression: boolean): ISyntaxToken {
             // Assert disabled because it is actually expensive enugh to affect perf.
             // Debug.assert(spaceAvailable > 0);
-            var token = this.scanner.scan(allowRegularExpression, this.reportDiagnostic);
+            var token = this.scanner.scan(allowRegularExpression);
 
             var lastDiagnostic = this.lastDiagnostic;
             if (lastDiagnostic === null) {

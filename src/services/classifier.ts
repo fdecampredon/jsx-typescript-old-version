@@ -82,14 +82,14 @@ module TypeScript.Services {
             }
 
             var result = new ClassificationResult();
-            this.scanner = createScanner(TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text));
+            this.scanner = createScanner(TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text), this.reportDiagnostic);
 
             var lastTokenKind = TypeScript.SyntaxKind.None;
             var token: ISyntaxToken = null;
             do {
                 this.lastDiagnosticKey = null;
 
-                token = this.scanner.scan(!noRegexTable[lastTokenKind], this.reportDiagnostic);
+                token = this.scanner.scan(!noRegexTable[lastTokenKind]);
                 lastTokenKind = token.kind();
 
                 this.processToken(text, offset, token, result);
