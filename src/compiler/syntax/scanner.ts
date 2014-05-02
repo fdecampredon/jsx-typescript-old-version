@@ -1271,8 +1271,6 @@ module TypeScript {
 
         public isShared(): boolean { return false; }
 
-        public isTypeScriptSpecific(): boolean { return false; }
-
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind()); }
         public isKeywordConvertedToIdentifier(): boolean { return false; }
 

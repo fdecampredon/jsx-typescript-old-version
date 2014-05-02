@@ -108,10 +108,6 @@ module TypeScript.Syntax {
             return "";
         }
 
-        isTypeScriptSpecific() {
-            return false;
-        }
-
         isIncrementallyUnusable() {
             return false;
         }
@@ -262,10 +258,6 @@ module TypeScript.Syntax {
             return this.item.trailingTriviaWidth();
         }
 
-        public isTypeScriptSpecific(): boolean {
-            return this.item.isTypeScriptSpecific();
-        }
-
         public isIncrementallyUnusable(): boolean {
             return this.item.isIncrementallyUnusable();
         }
@@ -373,16 +365,6 @@ module TypeScript.Syntax {
             var elements: string[] = [];
             this.collectTextElements(elements);
             return elements.join("");
-        }
-
-        public isTypeScriptSpecific(): boolean {
-            for (var i = 0, n = this.nonSeparatorCount(); i < n; i++) {
-                if (this.nonSeparatorAt(i).isTypeScriptSpecific()) {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         public isIncrementallyUnusable(): boolean {

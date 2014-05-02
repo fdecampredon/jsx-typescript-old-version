@@ -45,9 +45,6 @@ module TypeScript {
         // nodes don't have positions or parents.
         isShared(): boolean;
 
-        // True if this element is typescript specific and would not be legal in pure javascript.
-        isTypeScriptSpecific(): boolean;
-
         // True if this element cannot be reused in incremental parsing.  There are several situations
         // in which an element can not be reused.  They are:
         //

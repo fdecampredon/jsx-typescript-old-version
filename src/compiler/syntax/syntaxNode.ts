@@ -199,10 +199,6 @@ module TypeScript {
             return this.lastToken().hasTrailingTrivia();
         }
 
-        public isTypeScriptSpecific(): boolean {
-            return false;
-        }
-
         public isIncrementallyUnusable(): boolean {
             return (this.data() & SyntaxConstants.NodeIncrementallyUnusableMask) !== 0;
         }
