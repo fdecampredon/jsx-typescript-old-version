@@ -358,10 +358,6 @@ module TypeScript.Syntax {
             return this.parent.syntaxTree();
         }
 
-        public fileName(): string {
-            return this.parent.fileName();
-        }
-
         public syntaxID(): number {
             if (this._syntaxID === 0) {
                 this._syntaxID = _nextSyntaxID++;
@@ -572,10 +568,6 @@ module TypeScript.Syntax {
             return this.parent.syntaxTree();
         }
 
-        public fileName(): string {
-            return this.parent.fileName();
-        }
-
         public syntaxID(): number {
             if (this._syntaxID === 0) {
                 this._syntaxID = _nextSyntaxID++;
@@ -755,10 +747,6 @@ module TypeScript.Syntax {
 
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
-        }
-
-        public fileName(): string {
-            return this.parent.fileName();
         }
 
         public syntaxID(): number {

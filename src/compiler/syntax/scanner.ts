@@ -1258,10 +1258,6 @@ module TypeScript {
             return this.parent.syntaxTree();
         }
 
-        public fileName(): string {
-            return this.parent.fileName();
-        }
-
         public kind(): SyntaxKind {
             return unpackKind(this._packedFullWidthAndKind);
         }

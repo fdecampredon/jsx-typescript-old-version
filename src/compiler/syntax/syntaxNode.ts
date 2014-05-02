@@ -17,10 +17,6 @@ module TypeScript {
             return this.parent.syntaxTree();
         }
 
-        public fileName(): string {
-            return this.syntaxTree().fileName();
-        }
-
         public syntaxID(): number {
             if (this._syntaxID === undefined) {
                 this._syntaxID = TypeScript.Syntax._nextSyntaxID++;

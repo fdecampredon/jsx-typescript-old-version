@@ -30,7 +30,7 @@ module TypeScript {
 
 module TypeScript.ASTHelpers {
     export function scriptIsElided(sourceUnit: SourceUnitSyntax): boolean {
-        return isDTSFile(sourceUnit.fileName()) || moduleMembersAreElided(sourceUnit.moduleElements);
+        return isDTSFile(sourceUnit.syntaxTree().fileName()) || moduleMembersAreElided(sourceUnit.moduleElements);
     }
 
     export function moduleIsElided(declaration: ModuleDeclarationSyntax): boolean {

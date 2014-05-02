@@ -30,7 +30,6 @@ module TypeScript {
     export interface ISyntaxElement {
         syntaxID(): number;
         syntaxTree(): SyntaxTree;
-        fileName(): string;
 
         kind(): SyntaxKind;
         parent: ISyntaxElement;

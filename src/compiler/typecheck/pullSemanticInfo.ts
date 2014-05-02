@@ -603,7 +603,7 @@ module TypeScript {
         }
 
         public getDeclForAST(ast: ISyntaxElement): PullDecl {
-            var document = this.getDocument(ast.fileName());
+            var document = this.getDocument(ast.syntaxTree().fileName());
 
             if (document) {
                 return document._getDeclForAST(ast);
@@ -613,7 +613,7 @@ module TypeScript {
         }
 
         public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
-            return this.getDocument(ast.fileName()).getEnclosingDecl(ast);
+            return this.getDocument(ast.syntaxTree().fileName()).getEnclosingDecl(ast);
         }
 
         public setDeclForAST(ast: ISyntaxElement, decl: PullDecl): void {
@@ -655,7 +655,8 @@ module TypeScript {
         }
 
         public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
-            return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width(), diagnosticKey, _arguments, additionalLocations);
+            var syntaxTree = ast.syntaxTree();
+            return new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), ast.start(), ast.width(), diagnosticKey, _arguments, additionalLocations);
         }
 
         public diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
@@ -663,7 +664,8 @@ module TypeScript {
         }
 
         public locationFromAST(ast: ISyntaxElement): Location {
-            return new Location(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width());
+            var syntaxTree = ast.syntaxTree();
+            return new Location(syntaxTree.fileName(), syntaxTree.lineMap(), ast.start(), ast.width());
         }
 
         public duplicateIdentifierDiagnosticFromAST(ast: ISyntaxElement, identifier: string, additionalLocationAST: ISyntaxElement): Diagnostic {
