@@ -29,7 +29,13 @@ module TypeScript {
     }
 
     function moduleElementsHasExportAssignment(moduleElements: ISyntaxList<IModuleElementSyntax>): boolean {
-        return moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
+        for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
+            if (moduleElements.childAt(i).kind() === SyntaxKind.ExportAssignment) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     function containingModuleHasExportAssignment(ast: ISyntaxElement): boolean {

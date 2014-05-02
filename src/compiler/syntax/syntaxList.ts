@@ -5,8 +5,6 @@ module TypeScript {
         childAt(index: number): T;
         setChildAt(index: number, value: T): void;
 
-        any(func: (v: T) => boolean): boolean;
-
         firstOrDefault(func: (v: T, index: number) => boolean): T;
         lastOrDefault(func: (v: T, index: number) => boolean): T;
     }
@@ -27,10 +25,6 @@ module TypeScript.Syntax {
 
         public fileName(): string {
             throw Errors.invalidOperation("Shared lists do not belong to a single file.");
-        }
-
-        public any(func: (v: ISyntaxNodeOrToken) => boolean): boolean {
-            return false;
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
@@ -155,10 +149,6 @@ module TypeScript.Syntax {
             }
 
             return this._syntaxID;
-        }
-
-        public any(func: (v: ISyntaxNodeOrToken) => boolean): boolean {
-            return func(this.item);
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
@@ -433,10 +423,6 @@ module TypeScript.Syntax {
             }
 
             return this._data;
-        }
-
-        public any(func: (v: ISyntaxNodeOrToken) => boolean): boolean {
-            return ArrayUtilities.any(this.nodeOrTokens, func);
         }
 
         public firstOrDefault(func: (v: T, index: number) => boolean): T {
