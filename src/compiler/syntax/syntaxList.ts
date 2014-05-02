@@ -4,7 +4,6 @@ module TypeScript {
     export interface ISyntaxList<T extends ISyntaxNodeOrToken> extends ISyntaxElement {
         childAt(index: number): T;
         setChildAt(index: number, value: T): void;
-        toArray(): T[];
 
         any(func: (v: T) => boolean): boolean;
 
@@ -54,10 +53,6 @@ module TypeScript.Syntax {
 
         public isShared(): boolean {
             return true;
-        }
-
-        public toArray(): T[] {
-            return [];
         }
 
         public collectTextElements(elements: string[]): void {
@@ -197,10 +192,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public toArray(): T[] {
-            return [this.item];
-        }
-
         public collectTextElements(elements: string[]): void {
             this.item.collectTextElements(elements);
         }
@@ -329,10 +320,6 @@ module TypeScript.Syntax {
 
         public isShared(): boolean {
             return false;
-        }
-
-        public toArray(): T[] {
-            return this.nodeOrTokens.slice(0);
         }
 
         public collectTextElements(elements: string[]): void {

@@ -5,9 +5,6 @@ module TypeScript {
         childAt(index: number): ISyntaxNodeOrToken;
         setChildAt(index: number, value: ISyntaxNodeOrToken): void;
 
-        toArray(): ISyntaxNodeOrToken[];
-        toNonSeparatorArray(): ISyntaxNodeOrToken[];
-
         separatorCount(): number;
         separatorAt(index: number): ISyntaxToken;
 
@@ -54,14 +51,6 @@ module TypeScript.Syntax {
 
         public separatorCount() {
             return 0;
-        }
-
-        public toArray(): ISyntaxNodeOrToken[] {
-            return [];
-        }
-
-        public toNonSeparatorArray(): T[] {
-            return [];
         }
 
         public childAt(index: number): ISyntaxNodeOrToken {
@@ -187,9 +176,6 @@ module TypeScript.Syntax {
         public isShared(): boolean {
             return false;
         }
-
-        public toArray() { return [this.item]; }
-        public toNonSeparatorArray(): T[] { return [this.item]; }
 
         public childAt(index: number): ISyntaxNodeOrToken {
             if (index !== 0) {
@@ -320,17 +306,6 @@ module TypeScript.Syntax {
 
         public isShared(): boolean {
             return false;
-        }
-
-        public toArray(): ISyntaxNodeOrToken[] { return this.elements.slice(0); }
-
-        public toNonSeparatorArray(): T[] {
-            var result: T[] = [];
-            for (var i = 0, n = this.nonSeparatorCount(); i < n; i++) {
-                result.push(this.nonSeparatorAt(i));
-            }
-
-            return result;
         }
         
         public childAt(index: number): ISyntaxNodeOrToken {
