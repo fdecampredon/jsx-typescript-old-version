@@ -34,6 +34,8 @@ module TypeScript {
     }
 
     export class ExternalModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
+        public _isModuleReference: any;
+
         constructor(public requireKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public stringLiteral: ISyntaxToken,
@@ -64,13 +66,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isModuleReference(): boolean {
-            return true;
-        }
     }
 
     export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
+        public _isModuleReference: any;
+
         constructor(public moduleName: INameSyntax,
                     data: number) {
             super(data); 
@@ -92,13 +92,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isModuleReference(): boolean {
-            return true;
-        }
     }
 
     export class ImportDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
+        public _isModuleElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public importKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
@@ -135,13 +133,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ExportAssignmentSyntax extends SyntaxNode implements IModuleElementSyntax {
+        public _isModuleElement: any;
+
         constructor(public exportKeyword: ISyntaxToken,
                     public equalsToken: ISyntaxToken,
                     public identifier: ISyntaxToken,
@@ -172,13 +168,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ClassDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
+        public _isModuleElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public classKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
@@ -221,13 +215,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class InterfaceDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
+        public _isModuleElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public interfaceKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
@@ -264,14 +256,10 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class HeritageClauseSyntax extends SyntaxNode {
-    private _kind: SyntaxKind;
+        private _kind: SyntaxKind;
 
         constructor(kind: SyntaxKind,
                     public extendsOrImplementsKeyword: ISyntaxToken,
@@ -302,6 +290,8 @@ module TypeScript {
     }
 
     export class ModuleDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
+        public _isModuleElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public moduleKeyword: ISyntaxToken,
                     public name: INameSyntax,
@@ -341,13 +331,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class FunctionDeclarationSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public functionKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
@@ -384,17 +373,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class VariableStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public variableDeclaration: VariableDeclarationSyntax,
                     public semicolonToken: ISyntaxToken,
@@ -421,14 +405,6 @@ module TypeScript {
                 case 2: return this.semicolonToken;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
         }
     }
 
@@ -517,7 +493,10 @@ module TypeScript {
     }
 
     export class PrefixUnaryExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-    private _kind: SyntaxKind;
+        private _kind: SyntaxKind;
+
+        public _isUnaryExpression: any;
+        public _isExpression: any;
 
         constructor(kind: SyntaxKind,
                     public operatorToken: ISyntaxToken,
@@ -542,20 +521,19 @@ module TypeScript {
             }
         }
 
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
-
         public kind(): SyntaxKind {
             return this._kind;
         }
     }
 
     export class ArrayLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
+        public _isPrimaryExpression: any;
+        public _isMemberExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public openBracketToken: ISyntaxToken,
                     public expressions: ISeparatedSyntaxList<IExpressionSyntax>,
                     public closeBracketToken: ISyntaxToken,
@@ -583,33 +561,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isPrimaryExpression(): boolean {
-            return true;
-        }
-
-        public isMemberExpression(): boolean {
-            return true;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return true;
-        }
-
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class OmittedExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
+        public _isExpression: any;
+
         constructor(data: number) {
             super(data); 
         }
@@ -625,13 +581,16 @@ module TypeScript {
         public childAt(slot: number): ISyntaxElement {
             throw Errors.invalidOperation();
         }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class ParenthesizedExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
+        public _isPrimaryExpression: any;
+        public _isMemberExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public openParenToken: ISyntaxToken,
                     public expression: IExpressionSyntax,
                     public closeParenToken: ISyntaxToken,
@@ -659,33 +618,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isPrimaryExpression(): boolean {
-            return true;
-        }
-
-        public isMemberExpression(): boolean {
-            return true;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return true;
-        }
-
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public identifier: ISyntaxToken,
                     public equalsGreaterThanToken: ISyntaxToken,
                     public block: BlockSyntax,
@@ -716,17 +654,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class ParenthesizedArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public callSignature: CallSignatureSyntax,
                     public equalsGreaterThanToken: ISyntaxToken,
                     public block: BlockSyntax,
@@ -757,17 +690,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class QualifiedNameSyntax extends SyntaxNode implements INameSyntax {
+        public _isName: any;
+        public _isType: any;
+
         constructor(public left: INameSyntax,
                     public dotToken: ISyntaxToken,
                     public right: ISyntaxToken,
@@ -794,14 +722,6 @@ module TypeScript {
                 case 2: return this.right;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isName(): boolean {
-            return true;
-        }
-
-        public isType(): boolean {
-            return true;
         }
     }
 
@@ -836,6 +756,8 @@ module TypeScript {
     }
 
     export class ConstructorTypeSyntax extends SyntaxNode implements ITypeSyntax {
+        public _isType: any;
+
         constructor(public newKeyword: ISyntaxToken,
                     public typeParameterList: TypeParameterListSyntax,
                     public parameterList: ParameterListSyntax,
@@ -869,13 +791,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isType(): boolean {
-            return true;
-        }
     }
 
     export class FunctionTypeSyntax extends SyntaxNode implements ITypeSyntax {
+        public _isType: any;
+
         constructor(public typeParameterList: TypeParameterListSyntax,
                     public parameterList: ParameterListSyntax,
                     public equalsGreaterThanToken: ISyntaxToken,
@@ -906,13 +826,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isType(): boolean {
-            return true;
-        }
     }
 
     export class ObjectTypeSyntax extends SyntaxNode implements ITypeSyntax {
+        public _isType: any;
+
         constructor(public openBraceToken: ISyntaxToken,
                     public typeMembers: ISeparatedSyntaxList<ITypeMemberSyntax>,
                     public closeBraceToken: ISyntaxToken,
@@ -940,13 +858,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isType(): boolean {
-            return true;
-        }
     }
 
     export class ArrayTypeSyntax extends SyntaxNode implements ITypeSyntax {
+        public _isType: any;
+
         constructor(public type: ITypeSyntax,
                     public openBracketToken: ISyntaxToken,
                     public closeBracketToken: ISyntaxToken,
@@ -974,13 +890,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isType(): boolean {
-            return true;
-        }
     }
 
     export class GenericTypeSyntax extends SyntaxNode implements ITypeSyntax {
+        public _isType: any;
+
         constructor(public name: INameSyntax,
                     public typeArgumentList: TypeArgumentListSyntax,
                     data: number) {
@@ -1005,13 +919,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isType(): boolean {
-            return true;
-        }
     }
 
     export class TypeQuerySyntax extends SyntaxNode implements ITypeSyntax {
+        public _isType: any;
+
         constructor(public typeOfKeyword: ISyntaxToken,
                     public name: INameSyntax,
                     data: number) {
@@ -1035,10 +947,6 @@ module TypeScript {
                 case 1: return this.name;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isType(): boolean {
-            return true;
         }
     }
 
@@ -1070,6 +978,9 @@ module TypeScript {
     }
 
     export class BlockSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public openBraceToken: ISyntaxToken,
                     public statements: ISyntaxList<IStatementSyntax>,
                     public closeBraceToken: ISyntaxToken,
@@ -1096,14 +1007,6 @@ module TypeScript {
                 case 2: return this.closeBraceToken;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
         }
     }
 
@@ -1147,6 +1050,13 @@ module TypeScript {
     }
 
     export class MemberAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
+        public _isMemberExpression: any;
+        public _isCallExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public expression: ILeftHandSideExpressionSyntax,
                     public dotToken: ISyntaxToken,
                     public name: ISyntaxToken,
@@ -1174,34 +1084,14 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isMemberExpression(): boolean {
-            return true;
-        }
-
-        public isCallExpression(): boolean {
-            return true;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return true;
-        }
-
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class PostfixUnaryExpressionSyntax extends SyntaxNode implements IPostfixExpressionSyntax {
-    private _kind: SyntaxKind;
+        private _kind: SyntaxKind;
+
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
 
         constructor(kind: SyntaxKind,
                     public operand: ILeftHandSideExpressionSyntax,
@@ -1226,24 +1116,19 @@ module TypeScript {
             }
         }
 
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
-
         public kind(): SyntaxKind {
             return this._kind;
         }
     }
 
     export class ElementAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
+        public _isMemberExpression: any;
+        public _isCallExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public expression: ILeftHandSideExpressionSyntax,
                     public openBracketToken: ISyntaxToken,
                     public argumentExpression: IExpressionSyntax,
@@ -1274,33 +1159,15 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isMemberExpression(): boolean {
-            return true;
-        }
-
-        public isCallExpression(): boolean {
-            return true;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return true;
-        }
-
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax {
+        public _isCallExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public expression: ILeftHandSideExpressionSyntax,
                     public argumentList: ArgumentListSyntax,
                     data: number) {
@@ -1324,26 +1191,6 @@ module TypeScript {
                 case 1: return this.argumentList;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isCallExpression(): boolean {
-            return true;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return true;
-        }
-
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
         }
     }
 
@@ -1383,7 +1230,9 @@ module TypeScript {
     }
 
     export class BinaryExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
-    private _kind: SyntaxKind;
+        private _kind: SyntaxKind;
+
+        public _isExpression: any;
 
         constructor(kind: SyntaxKind,
                     public left: IExpressionSyntax,
@@ -1411,16 +1260,14 @@ module TypeScript {
             }
         }
 
-        public isExpression(): boolean {
-            return true;
-        }
-
         public kind(): SyntaxKind {
             return this._kind;
         }
     }
 
     export class ConditionalExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
+        public _isExpression: any;
+
         constructor(public condition: IExpressionSyntax,
                     public questionToken: ISyntaxToken,
                     public whenTrue: IExpressionSyntax,
@@ -1454,13 +1301,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class ConstructSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
+        public _isTypeMember: any;
+
         constructor(public newKeyword: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
                     data: number) {
@@ -1485,13 +1330,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isTypeMember(): boolean {
-            return true;
-        }
     }
 
     export class MethodSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
+        public _isTypeMember: any;
+
         constructor(public propertyName: ISyntaxToken,
                     public questionToken: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
@@ -1519,13 +1362,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isTypeMember(): boolean {
-            return true;
-        }
     }
 
     export class IndexSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
+        public _isTypeMember: any;
+
         constructor(public openBracketToken: ISyntaxToken,
                     public parameter: ParameterSyntax,
                     public closeBracketToken: ISyntaxToken,
@@ -1556,13 +1397,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isTypeMember(): boolean {
-            return true;
-        }
     }
 
     export class PropertySignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
+        public _isTypeMember: any;
+
         constructor(public propertyName: ISyntaxToken,
                     public questionToken: ISyntaxToken,
                     public typeAnnotation: TypeAnnotationSyntax,
@@ -1590,13 +1429,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isTypeMember(): boolean {
-            return true;
-        }
     }
 
     export class CallSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
+        public _isTypeMember: any;
+
         constructor(public typeParameterList: TypeParameterListSyntax,
                     public parameterList: ParameterListSyntax,
                     public typeAnnotation: TypeAnnotationSyntax,
@@ -1623,10 +1460,6 @@ module TypeScript {
                 case 2: return this.typeAnnotation;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isTypeMember(): boolean {
-            return true;
         }
     }
 
@@ -1772,6 +1605,9 @@ module TypeScript {
     }
 
     export class IfStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public ifKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public condition: IExpressionSyntax,
@@ -1808,17 +1644,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ExpressionStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public expression: IExpressionSyntax,
                     public semicolonToken: ISyntaxToken,
                     data: number) {
@@ -1843,17 +1674,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ConstructorDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
+        public _isClassElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public constructorKeyword: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
@@ -1887,13 +1712,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isClassElement(): boolean {
-            return true;
-        }
     }
 
     export class MemberFunctionDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
+        public _isMemberDeclaration: any;
+        public _isClassElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public propertyName: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
@@ -1927,17 +1751,13 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isMemberDeclaration(): boolean {
-            return true;
-        }
-
-        public isClassElement(): boolean {
-            return true;
-        }
     }
 
     export class GetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
+        public _isMemberDeclaration: any;
+        public _isPropertyAssignment: any;
+        public _isClassElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public getKeyword: ISyntaxToken,
                     public propertyName: ISyntaxToken,
@@ -1974,21 +1794,13 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isMemberDeclaration(): boolean {
-            return true;
-        }
-
-        public isPropertyAssignment(): boolean {
-            return true;
-        }
-
-        public isClassElement(): boolean {
-            return true;
-        }
     }
 
     export class SetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
+        public _isMemberDeclaration: any;
+        public _isPropertyAssignment: any;
+        public _isClassElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public setKeyword: ISyntaxToken,
                     public propertyName: ISyntaxToken,
@@ -2022,21 +1834,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isMemberDeclaration(): boolean {
-            return true;
-        }
-
-        public isPropertyAssignment(): boolean {
-            return true;
-        }
-
-        public isClassElement(): boolean {
-            return true;
-        }
     }
 
     export class MemberVariableDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
+        public _isMemberDeclaration: any;
+        public _isClassElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public variableDeclarator: VariableDeclaratorSyntax,
                     public semicolonToken: ISyntaxToken,
@@ -2064,17 +1867,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isMemberDeclaration(): boolean {
-            return true;
-        }
-
-        public isClassElement(): boolean {
-            return true;
-        }
     }
 
     export class IndexMemberDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
+        public _isClassElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public indexSignature: IndexSignatureSyntax,
                     public semicolonToken: ISyntaxToken,
@@ -2102,13 +1899,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isClassElement(): boolean {
-            return true;
-        }
     }
 
     export class ThrowStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public throwKeyword: ISyntaxToken,
                     public expression: IExpressionSyntax,
                     public semicolonToken: ISyntaxToken,
@@ -2136,17 +1932,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ReturnStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public returnKeyword: ISyntaxToken,
                     public expression: IExpressionSyntax,
                     public semicolonToken: ISyntaxToken,
@@ -2174,17 +1965,15 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
+        public _isMemberExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public newKeyword: ISyntaxToken,
                     public expression: IMemberExpressionSyntax,
                     public argumentList: ArgumentListSyntax,
@@ -2212,29 +2001,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isMemberExpression(): boolean {
-            return true;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return true;
-        }
-
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class SwitchStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public switchKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public expression: IExpressionSyntax,
@@ -2274,17 +2046,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class CaseSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
+        public _isSwitchClause: any;
+
         constructor(public caseKeyword: ISyntaxToken,
                     public expression: IExpressionSyntax,
                     public colonToken: ISyntaxToken,
@@ -2315,13 +2081,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isSwitchClause(): boolean {
-            return true;
-        }
     }
 
     export class DefaultSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
+        public _isSwitchClause: any;
+
         constructor(public defaultKeyword: ISyntaxToken,
                     public colonToken: ISyntaxToken,
                     public statements: ISyntaxList<IStatementSyntax>,
@@ -2349,13 +2113,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isSwitchClause(): boolean {
-            return true;
-        }
     }
 
     export class BreakStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public breakKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
@@ -2383,17 +2146,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ContinueStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public continueKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
@@ -2421,17 +2179,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ForStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public forKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public variableDeclaration: VariableDeclarationSyntax,
@@ -2480,17 +2233,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class ForInStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public forKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public variableDeclaration: VariableDeclarationSyntax,
@@ -2533,17 +2281,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class WhileStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public whileKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public condition: IExpressionSyntax,
@@ -2577,17 +2320,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class WithStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public withKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
                     public condition: IExpressionSyntax,
@@ -2621,17 +2359,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class EnumDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
+        public _isModuleElement: any;
+
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public enumKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
@@ -2668,10 +2400,6 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class EnumElementSyntax extends SyntaxNode {
@@ -2702,6 +2430,9 @@ module TypeScript {
     }
 
     export class CastExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public lessThanToken: ISyntaxToken,
                     public type: ITypeSyntax,
                     public greaterThanToken: ISyntaxToken,
@@ -2732,17 +2463,16 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class ObjectLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
+        public _isPrimaryExpression: any;
+        public _isMemberExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public openBraceToken: ISyntaxToken,
                     public propertyAssignments: ISeparatedSyntaxList<IPropertyAssignmentSyntax>,
                     public closeBraceToken: ISyntaxToken,
@@ -2770,33 +2500,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isPrimaryExpression(): boolean {
-            return true;
-        }
-
-        public isMemberExpression(): boolean {
-            return true;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return true;
-        }
-
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class SimplePropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
+        public _isPropertyAssignment: any;
+
         constructor(public propertyName: ISyntaxToken,
                     public colonToken: ISyntaxToken,
                     public expression: IExpressionSyntax,
@@ -2824,13 +2532,11 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isPropertyAssignment(): boolean {
-            return true;
-        }
     }
 
     export class FunctionPropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
+        public _isPropertyAssignment: any;
+
         constructor(public propertyName: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
                     public block: BlockSyntax,
@@ -2858,13 +2564,16 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isPropertyAssignment(): boolean {
-            return true;
-        }
     }
 
     export class FunctionExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
+        public _isPrimaryExpression: any;
+        public _isMemberExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public functionKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
                     public callSignature: CallSignatureSyntax,
@@ -2895,33 +2604,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isPrimaryExpression(): boolean {
-            return true;
-        }
-
-        public isMemberExpression(): boolean {
-            return true;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return true;
-        }
-
-        public isPostfixExpression(): boolean {
-            return true;
-        }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class EmptyStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public semicolonToken: ISyntaxToken,
                     data: number) {
             super(data); 
@@ -2943,17 +2631,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class TryStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public tryKeyword: ISyntaxToken,
                     public block: BlockSyntax,
                     public catchClause: CatchClauseSyntax,
@@ -2983,14 +2666,6 @@ module TypeScript {
                 case 3: return this.finallyClause;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
         }
     }
 
@@ -3061,6 +2736,9 @@ module TypeScript {
     }
 
     export class LabeledStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public identifier: ISyntaxToken,
                     public colonToken: ISyntaxToken,
                     public statement: IStatementSyntax,
@@ -3088,17 +2766,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class DoStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public doKeyword: ISyntaxToken,
                     public statement: IStatementSyntax,
                     public whileKeyword: ISyntaxToken,
@@ -3138,17 +2811,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
-        }
     }
 
     export class TypeOfExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public typeOfKeyword: ISyntaxToken,
                     public expression: IUnaryExpressionSyntax,
                     data: number) {
@@ -3173,17 +2841,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class DeleteExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public deleteKeyword: ISyntaxToken,
                     public expression: IUnaryExpressionSyntax,
                     data: number) {
@@ -3208,17 +2871,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class VoidExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(public voidKeyword: ISyntaxToken,
                     public expression: IUnaryExpressionSyntax,
                     data: number) {
@@ -3243,17 +2901,12 @@ module TypeScript {
                 default: throw Errors.invalidOperation();
             }
         }
-
-        public isUnaryExpression(): boolean {
-            return true;
-        }
-
-        public isExpression(): boolean {
-            return true;
-        }
     }
 
     export class DebuggerStatementSyntax extends SyntaxNode implements IStatementSyntax {
+        public _isStatement: any;
+        public _isModuleElement: any;
+
         constructor(public debuggerKeyword: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
                     data: number) {
@@ -3277,14 +2930,6 @@ module TypeScript {
                 case 1: return this.semicolonToken;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public isStatement(): boolean {
-            return true;
-        }
-
-        public isModuleElement(): boolean {
-            return true;
         }
     }
 }

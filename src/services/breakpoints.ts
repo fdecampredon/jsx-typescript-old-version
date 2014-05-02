@@ -275,7 +275,7 @@ module TypeScript.Services.Breakpoints {
             return this.breakpointSpanOfContainingNode(closeParenToken);
         }
 
-        private canHaveBreakpointInBlock(blockNode: TypeScript.SyntaxNode) {
+        private canHaveBreakpointInBlock(blockNode: TypeScript.ISyntaxNode) {
             if (!blockNode || TypeScript.SyntaxUtilities.isAmbientDeclarationSyntax(blockNode)) {
                 return false;
             }
@@ -284,7 +284,7 @@ module TypeScript.Services.Breakpoints {
             return blockSyntax.statements && blockSyntax.statements.childCount() != 0;
         }
 
-        private breakpointSpanOfFirstStatementInBlock(blockNode: TypeScript.SyntaxNode): SpanInfo {
+        private breakpointSpanOfFirstStatementInBlock(blockNode: TypeScript.ISyntaxNode): SpanInfo {
             if (!blockNode) {
                 return null;
             }
@@ -297,8 +297,8 @@ module TypeScript.Services.Breakpoints {
 
             var firstStatement = statementsNode.childAt(0);
             if (firstStatement && firstStatement.kind() == TypeScript.SyntaxKind.Block) {
-                if (this.canHaveBreakpointInBlock(<TypeScript.SyntaxNode>firstStatement)) {
-                    return this.breakpointSpanOfFirstStatementInBlock(<TypeScript.SyntaxNode>firstStatement);
+                if (this.canHaveBreakpointInBlock(<TypeScript.ISyntaxNode>firstStatement)) {
+                    return this.breakpointSpanOfFirstStatementInBlock(<TypeScript.ISyntaxNode>firstStatement);
                 }
                 return null;
             }
@@ -307,7 +307,7 @@ module TypeScript.Services.Breakpoints {
             }
         }
 
-        private breakpointSpanOfLastStatementInBlock(blockNode: TypeScript.SyntaxNode): SpanInfo {
+        private breakpointSpanOfLastStatementInBlock(blockNode: TypeScript.ISyntaxNode): SpanInfo {
             if (!blockNode) {
                 return null;
             }
@@ -320,8 +320,8 @@ module TypeScript.Services.Breakpoints {
 
             var lastStatement = statementsNode.childAt(statementsNode.childCount() - 1);
             if (lastStatement && lastStatement.kind() == TypeScript.SyntaxKind.Block) {
-                if (this.canHaveBreakpointInBlock(<TypeScript.SyntaxNode>lastStatement)) {
-                    return this.breakpointSpanOfLastStatementInBlock(<TypeScript.SyntaxNode>lastStatement);
+                if (this.canHaveBreakpointInBlock(<TypeScript.ISyntaxNode>lastStatement)) {
+                    return this.breakpointSpanOfLastStatementInBlock(<TypeScript.ISyntaxNode>lastStatement);
                 }
                 return null;
             }
@@ -452,7 +452,7 @@ module TypeScript.Services.Breakpoints {
 
                 // Expressions or statements
                 default:
-                    if (node.isStatement()) {
+                    if (SyntaxUtilities.isStatement(node)) {
                         return this.breakpointSpanOfStatement(positionedNode);
                     }
                     else {
@@ -485,7 +485,7 @@ module TypeScript.Services.Breakpoints {
             return false;
         }
         
-        private isInitializerOfForStatement(expressionNode: TypeScript.SyntaxNode): boolean {
+        private isInitializerOfForStatement(expressionNode: TypeScript.ISyntaxNode): boolean {
             if (!expressionNode) {
                 return false;
             }
@@ -505,7 +505,7 @@ module TypeScript.Services.Breakpoints {
             return false;
         }
 
-        private isConditionOfForStatement(expressionNode: TypeScript.SyntaxNode): boolean {
+        private isConditionOfForStatement(expressionNode: TypeScript.ISyntaxNode): boolean {
             if (!expressionNode) {
                 return false;
             }
@@ -524,7 +524,7 @@ module TypeScript.Services.Breakpoints {
             return false;
         }
 
-        private isIncrememtorOfForStatement(expressionNode: TypeScript.SyntaxNode): boolean {
+        private isIncrememtorOfForStatement(expressionNode: TypeScript.ISyntaxNode): boolean {
             if (!expressionNode) {
                 return false;
             }
@@ -580,7 +580,7 @@ module TypeScript.Services.Breakpoints {
             }
 
             var containingNode = Syntax.containingNode(statementNode);
-            if (containingNode && containingNode.isStatement()) {
+            if (SyntaxUtilities.isStatement(containingNode)) {
                 // Check if not the declarations and the compound statements
                 var useNodeForBreakpoint = false;
                 switch (containingNode.kind()) {
@@ -721,8 +721,8 @@ module TypeScript.Services.Breakpoints {
             // If inside another module the whole declaration is debuggable
             var node = positionedNode;
             var moduleSyntax = <TypeScript.ModuleDeclarationSyntax>positionedNode;
-            if ((node.isModuleElement() && Syntax.containingNode(positionedNode).kind() != TypeScript.SyntaxKind.SourceUnit) ||
-                node.isClassElement() ||
+            if ((SyntaxUtilities.isModuleElement(node) && Syntax.containingNode(positionedNode).kind() != TypeScript.SyntaxKind.SourceUnit) ||
+                SyntaxUtilities.isClassElement(node) ||
                 (moduleSyntax.kind() == TypeScript.SyntaxKind.ModuleDeclaration && moduleSyntax.name
                 && moduleSyntax.name.kind() == TypeScript.SyntaxKind.QualifiedName)) {
                 return createBreakpointSpanInfo(positionedNode);
@@ -914,7 +914,9 @@ module TypeScript.Services.Breakpoints {
 
         private breakpointSpanOfForStatement(forStatementNode: TypeScript.SyntaxNode): SpanInfo {
             var forStatement = <TypeScript.ForStatementSyntax>forStatementNode;
-            return this.breakpointSpanOf(forStatement.variableDeclaration ? forStatement.variableDeclaration : forStatement.initializer);
+            return this.breakpointSpanOf(forStatement.variableDeclaration
+                ? <TypeScript.ISyntaxElement>forStatement.variableDeclaration
+                : forStatement.initializer);
         }
 
         private breakpointSpanOfWhileStatement(whileStatementNode: TypeScript.SyntaxNode): SpanInfo {

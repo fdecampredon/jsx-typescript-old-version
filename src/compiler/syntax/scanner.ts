@@ -1231,6 +1231,13 @@ module TypeScript {
     class ScannerToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
 
+        public _isPrimaryExpression: any;
+        public _isMemberExpression: any;
+        public _isLeftHandSideExpression: any;
+        public _isPostfixExpression: any;
+        public _isUnaryExpression: any;
+        public _isExpression: any;
+
         constructor(private _text: ISimpleText,
                     private _packedFullStartAndTriviaInfo: number,
                     private _packedFullWidthAndKind: number) {
@@ -1403,12 +1410,5 @@ module TypeScript {
         public clone(): ISyntaxToken {
             return new ScannerToken(this._text, this._packedFullStartAndTriviaInfo, this._packedFullWidthAndKind);
         }
-
-        public isPrimaryExpression(): boolean { return Syntax.isPrimaryExpression(this); }
-        public isExpression(): boolean { return this.isPrimaryExpression(); }
-        public isMemberExpression(): boolean { return this.isPrimaryExpression(); }
-        public isLeftHandSideExpression(): boolean { return this.isPrimaryExpression(); }
-        public isPostfixExpression(): boolean { return this.isPrimaryExpression(); }
-        public isUnaryExpression(): boolean { return this.isPrimaryExpression(); }
     }
 }

@@ -133,7 +133,7 @@ module TypeScript.Services {
                     // and we want these on the same indentation level.
                     return false;
                 default:
-                    return isNode(parent) && (<TypeScript.SyntaxNode>parent).isStatement();
+                    return isNode(parent) && SyntaxUtilities.isStatement(parent);
             }
         }
 

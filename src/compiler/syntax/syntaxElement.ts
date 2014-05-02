@@ -118,14 +118,14 @@ module TypeScript {
     }
 
     export interface IModuleReferenceSyntax extends ISyntaxNode {
-        isModuleReference(): boolean;
+        _isModuleReference: any;
     }
 
     export interface IModuleElementSyntax extends ISyntaxNode {
     }
 
     export interface IStatementSyntax extends IModuleElementSyntax {
-        isStatement(): boolean;
+        _isStatement: any;
     }
 
     export interface ITypeMemberSyntax extends ISyntaxNode {
@@ -141,37 +141,36 @@ module TypeScript {
     }
 
     export interface ISwitchClauseSyntax extends ISyntaxNode {
-        isSwitchClause(): boolean;
+        _isSwitchClause: any;
         statements: ISyntaxList<IStatementSyntax>;
     }
 
     export interface IExpressionSyntax extends ISyntaxNodeOrToken {
-        isExpression(): boolean;
-        isLeftHandSideExpression(): boolean;
+        _isExpression: any;
     }
 
     export interface IUnaryExpressionSyntax extends IExpressionSyntax {
-        isUnaryExpression(): boolean;
+        _isUnaryExpression: any;
     }
 
     export interface IPostfixExpressionSyntax extends IUnaryExpressionSyntax {
-        isPostfixExpression(): boolean;
+        _isPostfixExpression: any;
     }
 
     export interface ILeftHandSideExpressionSyntax extends IPostfixExpressionSyntax {
-        isLeftHandSideExpression(): boolean;
+        _isLeftHandSideExpression: any;
     }
 
     export interface IMemberExpressionSyntax extends ILeftHandSideExpressionSyntax {
-        isMemberExpression(): boolean;
+        _isMemberExpression: any;
     }
 
     export interface ICallExpressionSyntax extends ILeftHandSideExpressionSyntax {
-        isCallExpression(): boolean;
+        _isCallExpression: any;
     }
 
     export interface IPrimaryExpressionSyntax extends IMemberExpressionSyntax {
-        isPrimaryExpression(): boolean;
+        _isPrimaryExpression: any;
     }
 
     export interface ITypeSyntax extends ISyntaxNodeOrToken {

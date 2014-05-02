@@ -329,34 +329,6 @@ module TypeScript {
             return positionedToken.previousToken(includeSkippedTokens);
         }
 
-        public isModuleElement(): boolean {
-            return false;
-        }
-
-        public isClassElement(): boolean {
-            return false;
-        }
-
-        public isTypeMember(): boolean {
-            return false;
-        }
-
-        public isStatement(): boolean {
-            return false;
-        }
-
-        public isExpression(): boolean {
-            return false;
-        }
-
-        public isLeftHandSideExpression(): boolean {
-            return false;
-        }
-
-        public isSwitchClause(): boolean {
-            return false;
-        }
-
         public structuralEquals(node: SyntaxNode): boolean {
             if (this === node) { return true; }
             if (node === null) { return false; }

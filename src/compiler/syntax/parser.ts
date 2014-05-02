@@ -1891,7 +1891,7 @@ module TypeScript.Parser {
         }
 
         private isModuleElement(inErrorRecovery: boolean): boolean {
-            if (this.currentNode() !== null && this.currentNode().isModuleElement()) {
+            if (SyntaxUtilities.isModuleElement(this.currentNode())) {
                 return true;
             }
 
@@ -1910,7 +1910,7 @@ module TypeScript.Parser {
         
         private tryParseModuleElement(inErrorRecovery: boolean): IModuleElementSyntax {
             var node = this.currentNode();
-            if (node !== null && node.isModuleElement()) {
+            if (SyntaxUtilities.isModuleElement(node)) {
                 this.moveToNextNode();
                 return <IModuleElementSyntax>node;
             }
@@ -2406,7 +2406,7 @@ module TypeScript.Parser {
         }
 
         private isClassElement(inErrorRecovery: boolean): boolean {
-            if (this.currentNode() !== null && this.currentNode().isClassElement()) {
+            if (SyntaxUtilities.isClassElement(this.currentNode())) {
                 return true;
             }
 
@@ -2422,7 +2422,7 @@ module TypeScript.Parser {
         private tryParseClassElement(inErrorRecovery: boolean): IClassElementSyntax {
             // Debug.assert(this.isClassElement());
             var node = this.currentNode();
-            if (node !== null && node.isClassElement()) {
+            if (SyntaxUtilities.isClassElement(node)) {
                 this.moveToNextNode();
                 return <IClassElementSyntax>node;
             }
@@ -2801,7 +2801,7 @@ module TypeScript.Parser {
         }
 
         private isTypeMember(inErrorRecovery: boolean): boolean {
-            if (this.currentNode() !== null && this.currentNode().isTypeMember()) {
+            if (SyntaxUtilities.isTypeMember(this.currentNode())) {
                 return true;
             }
 
@@ -2814,7 +2814,7 @@ module TypeScript.Parser {
 
         private tryParseTypeMember(inErrorRecovery: boolean): ITypeMemberSyntax {
             var node = this.currentNode();
-            if (node !== null && node.isTypeMember()) {
+            if (SyntaxUtilities.isTypeMember(node)) {
                 this.moveToNextNode();
                 return <ITypeMemberSyntax>node;
             }
@@ -3002,7 +3002,7 @@ module TypeScript.Parser {
         }
 
         private isStatement(inErrorRecovery: boolean): boolean {
-            if (this.currentNode() !== null && this.currentNode().isStatement()) {
+            if (SyntaxUtilities.isStatement(this.currentNode())) {
                 return true;
             }
 
@@ -3065,9 +3065,9 @@ module TypeScript.Parser {
 
         private tryParseStatement(inErrorRecovery: boolean): IStatementSyntax {
             var node = this.currentNode();
-            if (node !== null && node.isStatement()) {
+            if (SyntaxUtilities.isStatement(node)) {
                 this.moveToNextNode();
-                return <IStatementSyntax>node;
+                return <IStatementSyntax><ISyntaxNode>node;
             }
 
             var currentToken = this.currentToken();
@@ -3459,7 +3459,7 @@ module TypeScript.Parser {
         }
 
         private isSwitchClause(): boolean {
-            if (this.currentNode() !== null && this.currentNode().isSwitchClause()) {
+            if (SyntaxUtilities.isSwitchClause(this.currentNode())) {
                 return true;
             }
 
@@ -3469,7 +3469,7 @@ module TypeScript.Parser {
         private tryParseSwitchClause(): ISwitchClauseSyntax {
             // Debug.assert(this.isSwitchClause());
             var node = this.currentNode();
-            if (node !== null && node.isSwitchClause()) {
+            if (SyntaxUtilities.isSwitchClause(node)) {
                 this.moveToNextNode();
                 return <ISwitchClauseSyntax><ISyntaxNode>node;
             }
@@ -3913,7 +3913,7 @@ module TypeScript.Parser {
                 return null;
             }
 
-            if (leftOperand.isLeftHandSideExpression()) {
+            if (SyntaxUtilities.isLeftHandSizeExpression(leftOperand)) {
                 // Note: we call currentOperatorToken so that we get an appropriately merged token
                 // for cases like > > =  becoming >>=
                 var token0 = this.currentOperatorToken();

@@ -1054,7 +1054,7 @@ function generateProperties(definition: ITypeDefinition): string {
         var child = definition.children[i];
 
         if (getType(child) === "SyntaxKind") {
-            result += "    private _" + child.name + ": " + getType(child) + ";\r\n";
+            result += "        private _" + child.name + ": " + getType(child) + ";\r\n";
             newLine = true;
         }
         else if (child.name === "arguments") {
@@ -1482,8 +1482,8 @@ function generateFactoryMethod(definition: ITypeDefinition): string {
     return generateFactory1Method(definition) + generateFactory2Method(definition);
 }
 
-function generateIsMethod(definition: ITypeDefinition): string {
-    var result = "";
+function generateIsProperties(definition: ITypeDefinition): string {
+    var properties = "";
 
     if (definition.interfaces) {
         var ifaces = definition.interfaces.slice(0);
@@ -1507,14 +1507,15 @@ function generateIsMethod(definition: ITypeDefinition): string {
                 type = type.substr(1);
             }
 
-            result += "\r\n";
-            result += "        public is" + type + "(): boolean {\r\n";
-            result += "            return true;\r\n";
-            result += "        }\r\n";
+            properties += "        public _is" + type + ": any;\r\n";
         }
     }
 
-    return result;
+    if (properties.length > 0) {
+        properties += "\r\n";
+    }
+
+    return properties;
 }
 
 function generateKindMethod(definition: ITypeDefinition): string {
@@ -1908,10 +1909,10 @@ function generateNode(definition: ITypeDefinition): string {
     hasKind = false;
 
     result += generateProperties(definition);
+    result += generateIsProperties(definition);
     result += generateConstructor(definition);
     result += generateKindMethod(definition);
     result += generateSlotMethods(definition);
-    result += generateIsMethod(definition);
     result += generateAccessors(definition);
     // result += generateUpdateMethod(definition);
 

@@ -5745,7 +5745,7 @@ module TypeScript {
             // is considered an expression at the AST level, yet we only want to resolve it as an expression
             // if it is in an expression position.
             if (isNode(ast) || isToken(ast)) {
-                if ((<SyntaxNode>ast).isExpression() && !isTypesOnlyLocation(ast)) {
+                if (SyntaxUtilities.isExpression(ast) && !isTypesOnlyLocation(ast)) {
                     return this.resolveExpressionAST(ast, isContextuallyTyped, context);
                 }
             }
