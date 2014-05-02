@@ -27,8 +27,20 @@ module TypeScript {
         return element !== null && element.kind() === SyntaxKind.SeparatedList;
     }
 
+    export function syntaxID(element: ISyntaxElement): number {
+        if (element.isShared()) {
+            throw Errors.invalidOperation("Should not use shared syntax element as a key.");
+        }
+
+        var obj = <any>element;
+        if (obj._syntaxID === undefined) {
+            obj._syntaxID = TypeScript.Syntax._nextSyntaxID++;
+        }
+
+        return obj._syntaxID;
+    }
+
     export interface ISyntaxElement {
-        syntaxID(): number;
         syntaxTree(): SyntaxTree;
 
         kind(): SyntaxKind;

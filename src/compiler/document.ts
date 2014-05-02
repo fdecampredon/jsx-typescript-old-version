@@ -288,7 +288,7 @@ module TypeScript {
             // Ensure we actually have created all our decls before we try to find a mathcing decl
             // for this ast.
             this.topLevelDecl();
-            return this._astDeclMap[ast.syntaxID()];
+            return this._astDeclMap[syntaxID(ast)];
         }
 
         public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
@@ -322,7 +322,7 @@ module TypeScript {
 
         public _setDeclForAST(ast: ISyntaxElement, decl: PullDecl): void {
             Debug.assert(decl.fileName() === this.fileName);
-            this._astDeclMap[ast.syntaxID()] = decl;
+            this._astDeclMap[syntaxID(ast)] = decl;
         }
 
         public _getASTForDecl(decl: PullDecl): ISyntaxElement {

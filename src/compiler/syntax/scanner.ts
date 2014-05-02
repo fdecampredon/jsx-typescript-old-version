@@ -1230,7 +1230,6 @@ module TypeScript {
 
     class ScannerToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
-        private _syntaxID: number;
 
         constructor(private _text: ISimpleText,
                     private _packedFullStartAndTriviaInfo: number,
@@ -1244,14 +1243,6 @@ module TypeScript {
                 (fullStart << ScannerConstants.FullStartShift) |
                 (unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo) << ScannerConstants.LeadingTriviaShift) |
                 (unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo) << ScannerConstants.TrailingTriviaShift);
-        }
-
-        public syntaxID(): number {
-            if (this._syntaxID === undefined) {
-                this._syntaxID = Syntax._nextSyntaxID++;
-            }
-
-            return this._syntaxID;
         }
 
         public syntaxTree(): SyntaxTree {

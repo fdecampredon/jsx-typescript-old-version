@@ -348,7 +348,6 @@ module TypeScript.Syntax {
     class EmptyToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
         public tokenKind: SyntaxKind;
-        private _syntaxID: number = 0;
 
         constructor(kind: SyntaxKind) {
             this.tokenKind = kind;
@@ -356,14 +355,6 @@ module TypeScript.Syntax {
 
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
-        }
-
-        public syntaxID(): number {
-            if (this._syntaxID === 0) {
-                this._syntaxID = _nextSyntaxID++;
-            }
-
-            return this._syntaxID;
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
@@ -558,7 +549,6 @@ module TypeScript.Syntax {
         public parent: ISyntaxElement = null;
         public tokenKind: SyntaxKind = SyntaxKind.IdentifierName;
         private _underlyingToken: ISyntaxToken;
-        private _syntaxID: number = 0;
 
         constructor(underlyingToken: ISyntaxToken) {
             this._underlyingToken = underlyingToken;
@@ -566,14 +556,6 @@ module TypeScript.Syntax {
 
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
-        }
-
-        public syntaxID(): number {
-            if (this._syntaxID === 0) {
-                this._syntaxID = _nextSyntaxID++;
-            }
-
-            return this._syntaxID;
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
@@ -718,7 +700,6 @@ module TypeScript.Syntax {
         private _value: any;
         private _valueText: string;
         private _trailingTrivia: ISyntaxTriviaList;
-        private _syntaxID: number = 0;
 
         constructor(fullStart: number,
                     tokenKind: SyntaxKind,
@@ -747,14 +728,6 @@ module TypeScript.Syntax {
 
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
-        }
-
-        public syntaxID(): number {
-            if (this._syntaxID === 0) {
-                this._syntaxID = _nextSyntaxID++;
-            }
-
-            return this._syntaxID;
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {

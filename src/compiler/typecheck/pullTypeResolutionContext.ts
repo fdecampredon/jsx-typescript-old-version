@@ -215,11 +215,11 @@ module TypeScript {
 
         public setSymbolForAST(ast: ISyntaxElement, symbol: PullSymbol): void {
             Debug.assert(!ast.isShared());
-            this.astSymbolMap[ast.syntaxID()] = symbol;
+            this.astSymbolMap[syntaxID(ast)] = symbol;
         }
 
         public getSymbolForAST(ast: ISyntaxElement): PullSymbol {
-            return ast.isShared() ? null : this.astSymbolMap[ast.syntaxID()];
+            return ast.isShared() ? null : this.astSymbolMap[syntaxID(ast)];
         }
     }
 
@@ -238,7 +238,7 @@ module TypeScript {
 
         public setTypeChecked(ast: ISyntaxElement): void {
             if (!this.inProvisionalResolution()) {
-                this.typeCheckedNodes.setValueAt(ast.syntaxID(), true);
+                this.typeCheckedNodes.setValueAt(syntaxID(ast), true);
             }
         }
 
@@ -254,7 +254,7 @@ module TypeScript {
             // keep jumping around to ISyntaxElement nodes all around a large project.
             return !ast.isShared() &&
                 this.typeCheck() &&
-                !this.typeCheckedNodes.valueAt(ast.syntaxID()) &&
+                !this.typeCheckedNodes.valueAt(syntaxID(ast)) &&
                 this.fileName === ast.syntaxTree().fileName();
         }
 

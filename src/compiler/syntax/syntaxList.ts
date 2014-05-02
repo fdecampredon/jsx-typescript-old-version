@@ -12,10 +12,6 @@ module TypeScript.Syntax {
     export class EmptySyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
 
-        public syntaxID(): number {
-            throw Errors.invalidOperation("Should not use shared syntax element as a key.");
-        }
-
         public syntaxTree(): SyntaxTree {
             throw Errors.invalidOperation("Shared lists do not belong to a single tree.");
         }
@@ -114,7 +110,6 @@ module TypeScript.Syntax {
 
     class SingletonSyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
-        private _syntaxID: number = 0;
 
         constructor(private item: T) {
             Syntax.setParentForChildren(this);
@@ -122,14 +117,6 @@ module TypeScript.Syntax {
 
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
-        }
-
-        public syntaxID(): number {
-            if (this._syntaxID === 0) {
-                this._syntaxID = _nextSyntaxID++;
-            }
-
-            return this._syntaxID;
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
@@ -227,7 +214,6 @@ module TypeScript.Syntax {
     class NormalSyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
         private _data: number = 0;
-        private _syntaxID: number = 0;
 
         constructor(private nodeOrTokens: T[]) {
             Syntax.setParentForChildren(this);
@@ -235,14 +221,6 @@ module TypeScript.Syntax {
 
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
-        }
-
-        public syntaxID(): number {
-            if (this._syntaxID === 0) {
-                this._syntaxID = _nextSyntaxID++;
-            }
-
-            return this._syntaxID;
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
