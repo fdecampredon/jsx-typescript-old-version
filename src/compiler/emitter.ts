@@ -512,7 +512,7 @@ module TypeScript {
         public emitComments(ast: ISyntaxElement, pre: boolean, onlyPinnedOrTripleSlashComments: boolean = false) {
             // Emitting the comments for the exprssion inside an arrow function is handled specially
             // in emitFunctionBodyStatements.  We don't want to emit those comments a second time.
-            if (ast && !ast.isShared() && ast.kind() !== SyntaxKind.Block) {
+            if (ast && !isShared(ast) && ast.kind() !== SyntaxKind.Block) {
                 if (ast.parent.kind() === SyntaxKind.SimpleArrowFunctionExpression || ast.parent.kind() === SyntaxKind.ParenthesizedArrowFunctionExpression) {
                     return;
                 }

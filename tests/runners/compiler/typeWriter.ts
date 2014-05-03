@@ -53,7 +53,7 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
     }
 
     private getAstForElement(element: TypeScript.ISyntaxElement) {
-        if (!element.isShared()) {
+        if (!TypeScript.isShared(element)) {
             var candidates: string[] = [];
 
             for (var i = 0; i < TypeScript.fullWidth(element); i++) {

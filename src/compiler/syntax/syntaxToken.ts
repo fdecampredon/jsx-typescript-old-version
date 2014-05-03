@@ -325,10 +325,6 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        public isShared(): boolean {
-            return false;
-        }
-
         private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             return this;
         }
@@ -498,10 +494,6 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        public isShared(): boolean {
-            return false;
-        }
-
         public fullStart(): number { return this._underlyingToken.fullStart(); }
         public fullWidth(): number { return this._underlyingToken.fullWidth(); }
 
@@ -626,10 +618,6 @@ module TypeScript.Syntax {
 
         public childAt(index: number): ISyntaxElement {
             throw Errors.argumentOutOfRange("index");
-        }
-
-        public isShared(): boolean {
-            return false;
         }
 
         public fullStart(): number { return this._fullStart; }

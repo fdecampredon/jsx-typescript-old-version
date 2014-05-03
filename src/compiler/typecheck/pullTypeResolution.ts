@@ -5731,7 +5731,7 @@ module TypeScript {
                 return null;
             }
 
-            if (ast.isShared()) {
+            if (isShared(ast)) {
                 return null;
             }
 

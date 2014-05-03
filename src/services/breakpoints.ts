@@ -17,7 +17,7 @@ module TypeScript.Services.Breakpoints {
         var end: number;
         for (var i = 0; i < childElements.length; i++) {
             var element = childElements[i];
-            if (element && !element.isShared()) {
+            if (element && !isShared(element)) {
                 if (start == undefined) {
                     start = TypeScript.start(element);
                 }

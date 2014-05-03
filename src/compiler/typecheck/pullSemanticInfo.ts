@@ -505,7 +505,7 @@ module TypeScript {
         }
 
         public setSymbolForAST(ast: ISyntaxElement, symbol: PullSymbol): void {
-            Debug.assert(!ast.isShared());
+            Debug.assert(!isShared(ast));
             this.astSymbolMap[syntaxID(ast)] = symbol;
         }
 
@@ -514,20 +514,20 @@ module TypeScript {
         }
 
         public setAliasSymbolForAST(ast: ISyntaxElement, symbol: PullTypeAliasSymbol): void {
-            Debug.assert(!ast.isShared());
+            Debug.assert(!isShared(ast));
             this.astAliasSymbolMap[syntaxID(ast)] = symbol;
         }
 
         public getAliasSymbolForAST(ast: ISyntaxElement): PullTypeAliasSymbol {
-            return ast.isShared() ? null : this.astAliasSymbolMap[syntaxID(ast)];
+            return isShared(ast) ? null : this.astAliasSymbolMap[syntaxID(ast)];
         }
 
         public getCallResolutionDataForAST(ast: ISyntaxElement): PullAdditionalCallResolutionData {
-            return ast.isShared() ? null : this.astCallResolutionDataMap[syntaxID(ast)];
+            return isShared(ast) ? null : this.astCallResolutionDataMap[syntaxID(ast)];
         }
 
         public setCallResolutionDataForAST(ast: ISyntaxElement, callResolutionData: PullAdditionalCallResolutionData) {
-            Debug.assert(!ast.isShared());
+            Debug.assert(!isShared(ast));
             if (callResolutionData) {
                 this.astCallResolutionDataMap[syntaxID(ast)] = callResolutionData;
             }

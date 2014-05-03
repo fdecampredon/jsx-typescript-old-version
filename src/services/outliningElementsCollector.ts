@@ -90,7 +90,7 @@ module TypeScript.Services {
         }
 
         private addOutlineRange(node: TypeScript.SyntaxNode, startElement: TypeScript.ISyntaxNodeOrToken, endElement: TypeScript.ISyntaxNodeOrToken) {
-            if (startElement && endElement && !startElement.isShared() && !endElement.isShared()) {
+            if (startElement && endElement && !isShared(startElement) && !isShared(endElement)) {
                 // Compute the position
                 var start = TypeScript.start(startElement);
                 var end = TypeScript.end(endElement);

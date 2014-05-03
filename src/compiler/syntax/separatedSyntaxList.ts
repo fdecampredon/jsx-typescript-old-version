@@ -25,10 +25,6 @@ module TypeScript.Syntax {
             return 0;
         }
 
-        public isShared(): boolean {
-            return true;
-        }
-
         public nonSeparatorCount() {
             return 0;
         }
@@ -72,10 +68,6 @@ module TypeScript.Syntax {
         public childCount() { return 1; }
         public nonSeparatorCount() { return 1; }
         public separatorCount() { return 0; }
-
-        public isShared(): boolean {
-            return false;
-        }
 
         public childAt(index: number): ISyntaxNodeOrToken {
             if (index !== 0) {
@@ -121,10 +113,6 @@ module TypeScript.Syntax {
         public nonSeparatorCount() { return IntegerUtilities.integerDivide(this.elements.length + 1, 2); }
         public separatorCount() { return IntegerUtilities.integerDivide(this.elements.length, 2); }
 
-        public isShared(): boolean {
-            return false;
-        }
-        
         public childAt(index: number): ISyntaxNodeOrToken {
             if (index < 0 || index >= this.elements.length) {
                 throw Errors.argumentOutOfRange("index");

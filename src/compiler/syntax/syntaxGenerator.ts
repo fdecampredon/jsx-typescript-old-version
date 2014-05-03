@@ -1286,7 +1286,7 @@ function generateConstructor(definition: ITypeDefinition): string {
                 result += "            " + getSafeName(child) + " && (" + getSafeName(child) + ".parent = this);\r\n";
             }
             else if (child.isList || child.isSeparatedList) {
-                result += "            !" + getSafeName(child) + ".isShared() && (" + getSafeName(child) + ".parent = this);\r\n";
+                result += "            !isShared(" + getSafeName(child) + ") && (" + getSafeName(child) + ".parent = this);\r\n";
             }
             else {
                 result += "            " + getSafeName(child) + ".parent = this;\r\n";

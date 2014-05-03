@@ -66,7 +66,7 @@ module TypeScript.ASTHelpers {
     }
 
      export function isValidAstNode(ast: ISyntaxElement): boolean {
-         return ast && !ast.isShared() && start(ast) !== -1 && end(ast) !== -1;
+         return ast && !isShared(ast) && start(ast) !== -1 && end(ast) !== -1;
      }
 
      export function isValidSpan(ast: ISpan): boolean {
@@ -86,7 +86,7 @@ module TypeScript.ASTHelpers {
         var top: ISyntaxElement = null;
 
         var pre = function (cur: ISyntaxElement, walker: IAstWalker) {
-            if (!cur.isShared() && isValidAstNode(cur)) {
+            if (!isShared(cur) && isValidAstNode(cur)) {
                 var isInvalid1 = cur.kind() === SyntaxKind.ExpressionStatement && width(cur) === 0;
 
                 if (isInvalid1) {

@@ -8,7 +8,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !moduleElements.isShared() && (moduleElements.parent = this);
+            !isShared(moduleElements) && (moduleElements.parent = this);
             endOfFileToken.parent = this;
         }
 
@@ -102,7 +102,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             importKeyword.parent = this;
             identifier.parent = this;
             equalsToken.parent = this;
@@ -180,13 +180,13 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             classKeyword.parent = this;
             identifier.parent = this;
             typeParameterList && (typeParameterList.parent = this);
-            !heritageClauses.isShared() && (heritageClauses.parent = this);
+            !isShared(heritageClauses) && (heritageClauses.parent = this);
             openBraceToken.parent = this;
-            !classElements.isShared() && (classElements.parent = this);
+            !isShared(classElements) && (classElements.parent = this);
             closeBraceToken.parent = this;
         }
 
@@ -225,11 +225,11 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             interfaceKeyword.parent = this;
             identifier.parent = this;
             typeParameterList && (typeParameterList.parent = this);
-            !heritageClauses.isShared() && (heritageClauses.parent = this);
+            !isShared(heritageClauses) && (heritageClauses.parent = this);
             body.parent = this;
         }
 
@@ -265,7 +265,7 @@ module TypeScript {
 
             this._kind = kind;
             extendsOrImplementsKeyword.parent = this;
-            !typeNames.isShared() && (typeNames.parent = this);
+            !isShared(typeNames) && (typeNames.parent = this);
         }
 
         public childCount(): number {
@@ -298,12 +298,12 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             moduleKeyword.parent = this;
             name && (name.parent = this);
             stringLiteral && (stringLiteral.parent = this);
             openBraceToken.parent = this;
-            !moduleElements.isShared() && (moduleElements.parent = this);
+            !isShared(moduleElements) && (moduleElements.parent = this);
             closeBraceToken.parent = this;
         }
 
@@ -342,7 +342,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             functionKeyword.parent = this;
             identifier.parent = this;
             callSignature.parent = this;
@@ -381,7 +381,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             variableDeclaration.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
@@ -411,7 +411,7 @@ module TypeScript {
             super(data); 
 
             varKeyword.parent = this;
-            !variableDeclarators.isShared() && (variableDeclarators.parent = this);
+            !isShared(variableDeclarators) && (variableDeclarators.parent = this);
         }
 
         public kind(): SyntaxKind {
@@ -537,7 +537,7 @@ module TypeScript {
             super(data); 
 
             openBracketToken.parent = this;
-            !expressions.isShared() && (expressions.parent = this);
+            !isShared(expressions) && (expressions.parent = this);
             closeBracketToken.parent = this;
         }
 
@@ -729,7 +729,7 @@ module TypeScript {
             super(data); 
 
             lessThanToken.parent = this;
-            !typeArguments.isShared() && (typeArguments.parent = this);
+            !isShared(typeArguments) && (typeArguments.parent = this);
             greaterThanToken.parent = this;
         }
 
@@ -834,7 +834,7 @@ module TypeScript {
             super(data); 
 
             openBraceToken.parent = this;
-            !typeMembers.isShared() && (typeMembers.parent = this);
+            !isShared(typeMembers) && (typeMembers.parent = this);
             closeBraceToken.parent = this;
         }
 
@@ -984,7 +984,7 @@ module TypeScript {
             super(data); 
 
             openBraceToken.parent = this;
-            !statements.isShared() && (statements.parent = this);
+            !isShared(statements) && (statements.parent = this);
             closeBraceToken.parent = this;
         }
 
@@ -1017,7 +1017,7 @@ module TypeScript {
             super(data); 
 
             dotDotDotToken && (dotDotDotToken.parent = this);
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             identifier.parent = this;
             questionToken && (questionToken.parent = this);
             typeAnnotation && (typeAnnotation.parent = this);
@@ -1202,7 +1202,7 @@ module TypeScript {
             this.arguments = _arguments;
             typeArgumentList && (typeArgumentList.parent = this);
             openParenToken.parent = this;
-            !_arguments.isShared() && (_arguments.parent = this);
+            !isShared(_arguments) && (_arguments.parent = this);
             closeParenToken.parent = this;
         }
 
@@ -1467,7 +1467,7 @@ module TypeScript {
             super(data); 
 
             openParenToken.parent = this;
-            !parameters.isShared() && (parameters.parent = this);
+            !isShared(parameters) && (parameters.parent = this);
             closeParenToken.parent = this;
         }
 
@@ -1497,7 +1497,7 @@ module TypeScript {
             super(data); 
 
             lessThanToken.parent = this;
-            !typeParameters.isShared() && (typeParameters.parent = this);
+            !isShared(typeParameters) && (typeParameters.parent = this);
             greaterThanToken.parent = this;
         }
 
@@ -1683,7 +1683,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             constructorKeyword.parent = this;
             callSignature.parent = this;
             block && (block.parent = this);
@@ -1722,7 +1722,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             propertyName.parent = this;
             callSignature.parent = this;
             block && (block.parent = this);
@@ -1763,7 +1763,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             getKeyword.parent = this;
             propertyName.parent = this;
             parameterList.parent = this;
@@ -1805,7 +1805,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             setKeyword.parent = this;
             propertyName.parent = this;
             parameterList.parent = this;
@@ -1842,7 +1842,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             variableDeclarator.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
@@ -1874,7 +1874,7 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             indexSignature.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
@@ -2018,7 +2018,7 @@ module TypeScript {
             expression.parent = this;
             closeParenToken.parent = this;
             openBraceToken.parent = this;
-            !switchClauses.isShared() && (switchClauses.parent = this);
+            !isShared(switchClauses) && (switchClauses.parent = this);
             closeBraceToken.parent = this;
         }
 
@@ -2057,7 +2057,7 @@ module TypeScript {
             caseKeyword.parent = this;
             expression.parent = this;
             colonToken.parent = this;
-            !statements.isShared() && (statements.parent = this);
+            !isShared(statements) && (statements.parent = this);
         }
 
         public kind(): SyntaxKind {
@@ -2090,7 +2090,7 @@ module TypeScript {
 
             defaultKeyword.parent = this;
             colonToken.parent = this;
-            !statements.isShared() && (statements.parent = this);
+            !isShared(statements) && (statements.parent = this);
         }
 
         public kind(): SyntaxKind {
@@ -2369,11 +2369,11 @@ module TypeScript {
                     data: number) {
             super(data); 
 
-            !modifiers.isShared() && (modifiers.parent = this);
+            !isShared(modifiers) && (modifiers.parent = this);
             enumKeyword.parent = this;
             identifier.parent = this;
             openBraceToken.parent = this;
-            !enumElements.isShared() && (enumElements.parent = this);
+            !isShared(enumElements) && (enumElements.parent = this);
             closeBraceToken.parent = this;
         }
 
@@ -2476,7 +2476,7 @@ module TypeScript {
             super(data); 
 
             openBraceToken.parent = this;
-            !propertyAssignments.isShared() && (propertyAssignments.parent = this);
+            !isShared(propertyAssignments) && (propertyAssignments.parent = this);
             closeBraceToken.parent = this;
         }
 

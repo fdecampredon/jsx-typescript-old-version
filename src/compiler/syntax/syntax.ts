@@ -9,7 +9,7 @@ module TypeScript.Syntax {
 
             // Don't set the parent for this child if it is a shared child.  This child can be 
             // found under multiple parents, and thus has no valid 'parent' reference.
-            if (child && !child.isShared()) {
+            if (child && !isShared(child)) {
                 child.parent = element;
             }
         }
@@ -641,7 +641,7 @@ module TypeScript.Syntax {
             return <ISyntaxToken>element;
         }
 
-        if (element.isShared()) {
+        if (isShared(element)) {
             // This should never have been called on this element.  It has a 0 width, so the client 
             // should have skipped over this.
             throw Errors.invalidOperation();

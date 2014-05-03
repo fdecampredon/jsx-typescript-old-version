@@ -1,9 +1,18 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    // True if there is only a single instance of this element (and thus can be reused in many 
+    // places in a syntax tree).  Examples of this include our empty lists.  Because empty 
+    // lists can be found all over the tree, we want to save on memory by using this single
+    // instance instead of creating new objects for each case.  Note: because of this, shared
+    // nodes don't have positions or parents.
+    export function isShared(element: ISyntaxElement): boolean {
+        return (isList(element) || isSeparatedList(element)) && element.childCount() === 0;
+    }
+
     export function syntaxTree(element: ISyntaxElement): SyntaxTree {
         if (element) {
-            Debug.assert(!element.isShared());
+            Debug.assert(!isShared(element));
 
             while (element) {
                 if (element.kind() === SyntaxKind.SourceUnit) {
@@ -53,7 +62,7 @@ module TypeScript {
     }
 
     export function syntaxID(element: ISyntaxElement): number {
-        if (element.isShared()) {
+        if (isShared(element)) {
             throw Errors.invalidOperation("Should not use shared syntax element as a key.");
         }
 
@@ -144,7 +153,7 @@ module TypeScript {
     }
 
     export function fullStart(element: ISyntaxElement): number {
-        Debug.assert(!element.isShared());
+        Debug.assert(!isShared(element));
         var token = isToken(element) ? <ISyntaxToken>element : firstToken(element);
         return token ? token.fullStart() : -1;
     }
@@ -154,7 +163,7 @@ module TypeScript {
             return (<ISyntaxToken>element).fullWidth();
         }
 
-        if (element.isShared()) {
+        if (isShared(element)) {
             return 0;
         }
 
@@ -167,7 +176,7 @@ module TypeScript {
             return (<ISyntaxToken>element).isIncrementallyUnusable();
         }
 
-        if (element.isShared()) {
+        if (isShared(element)) {
             // All shared lists are reusable.
             return false;
         }
@@ -237,13 +246,6 @@ module TypeScript {
 
         childCount(): number;
         childAt(index: number): ISyntaxElement;
-
-        // True if there is only a single instance of this element (and thus can be reused in many 
-        // places in a syntax tree).  Examples of this include our empty lists.  Because empty 
-        // lists can be found all over the tree, we want to save on memory by using this single
-        // instance instead of creating new objects for each case.  Note: because of this, shared
-        // nodes don't have positions or parents.
-        isShared(): boolean;
     }
 
     export interface ISyntaxNode extends ISyntaxNodeOrToken {

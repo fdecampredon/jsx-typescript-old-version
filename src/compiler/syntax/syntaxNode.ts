@@ -23,9 +23,5 @@ module TypeScript {
         public childAt(slot: number): ISyntaxElement {
             throw Errors.abstract();
         }
-
-        public isShared(): boolean {
-            return false;
-        }
     }
 }

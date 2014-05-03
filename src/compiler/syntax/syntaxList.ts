@@ -30,10 +30,6 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        public isShared(): boolean {
-            return true;
-        }
-
         public fullWidth(): number {
             return 0;
         }
@@ -82,10 +78,6 @@ module TypeScript.Syntax {
             this.item = value;
             value.parent = this;
         }
-
-        public isShared(): boolean {
-            return false;
-        }
     }
 
     class NormalSyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
@@ -118,10 +110,6 @@ module TypeScript.Syntax {
             this.nodeOrTokens[index] = value;
             value.parent = this;
             this._data = 0;
-        }
-
-        public isShared(): boolean {
-            return false;
         }
     }
 

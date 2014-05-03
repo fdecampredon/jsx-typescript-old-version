@@ -286,7 +286,7 @@ module TypeScript.Parser {
             // next sibling of the empty node.
             for (var i = 0, n = nodeOrToken.childCount(); i < n; i++) {
                 var child = nodeOrToken.childAt(i);
-                if (child !== null && !child.isShared()) {
+                if (child !== null && !isShared(child)) {
                     // Great, we found a real child.  Push that.
                     this.pushElement(child, /*indexInParent:*/ i);
 
@@ -314,7 +314,7 @@ module TypeScript.Parser {
                 for (var i = currentPiece.indexInParent + 1, n = parent.childCount(); i < n; i++) {
                     var sibling = parent.childAt(i);
 
-                    if (sibling !== null && !sibling.isShared()) {
+                    if (sibling !== null && !isShared(sibling)) {
                         // We found a good sibling that we can move to.  Just reuse our existing piece
                         // so we don't have to push/pop.
                         currentPiece.element = sibling;
