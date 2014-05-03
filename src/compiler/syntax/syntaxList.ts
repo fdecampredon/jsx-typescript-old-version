@@ -18,10 +18,6 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
 
-        public toJSON(key: any): any {
-            return [];
-        }
-
         public childCount(): number {
             return 0;
         }
@@ -66,10 +62,6 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
 
-        public toJSON(key: any) {
-            return [this.item];
-        }
-
         public childCount() {
             return 1;
         }
@@ -105,10 +97,6 @@ module TypeScript.Syntax {
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
-
-        public toJSON(key: any) {
-            return this.nodeOrTokens;
-        }
 
         public childCount() {
             return this.nodeOrTokens.length;

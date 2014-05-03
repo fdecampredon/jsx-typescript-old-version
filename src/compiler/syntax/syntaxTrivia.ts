@@ -50,28 +50,6 @@ module TypeScript.Syntax {
             throw Errors.abstract();
         }
 
-        public toJSON(key: any): any {
-            var result: any = {};
-
-            for (var name in SyntaxKind) {
-                if (<any>SyntaxKind[name] === this._kind) {
-                    result.kind = name;
-                    break;
-                }
-            }
-
-            if (this.isSkippedToken()) {
-                result.skippedToken = this.skippedToken();
-            }
-            else {
-                result.fullStart = this.fullStart();
-                result.fullEnd = this.fullStart() + this.fullWidth();
-                result.text = this.fullText();
-            }
-
-            return result;
-        }
-
         public kind(): SyntaxKind {
             return this._kind;
         }

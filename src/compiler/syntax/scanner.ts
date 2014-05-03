@@ -141,8 +141,6 @@ module TypeScript {
         public value(): any { return Syntax.value(this); }
         public valueText(): string { return Syntax.valueText(this); }
 
-        public toJSON(key: any): any { return Syntax.tokenToJSON(this); }
-
         public leadingTrivia(): ISyntaxTriviaList {
             if (!this.hasLeadingTrivia()) {
                 return Syntax.emptyTriviaList;

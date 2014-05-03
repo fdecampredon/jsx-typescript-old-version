@@ -21,10 +21,6 @@ module TypeScript.Syntax {
             return SyntaxKind.SeparatedList;
         }
 
-        toJSON(key: any): any[] {
-            return [];
-        }
-
         public childCount() {
             return 0;
         }
@@ -69,10 +65,6 @@ module TypeScript.Syntax {
 
         constructor(private item: T) {
             Syntax.setParentForChildren(this);
-        }
-
-        public toJSON(key: any) {
-            return [this.item];
         }
 
         public kind() { return SyntaxKind.SeparatedList; }
@@ -124,8 +116,6 @@ module TypeScript.Syntax {
         }
 
         public kind() { return SyntaxKind.SeparatedList; }
-
-        public toJSON(key: any) { return this.elements; }
 
         public childCount() { return this.elements.length; }
         public nonSeparatorCount() { return IntegerUtilities.integerDivide(this.elements.length + 1, 2); }

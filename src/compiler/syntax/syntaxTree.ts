@@ -26,23 +26,6 @@ module TypeScript {
             sourceUnit.syntaxTree = this;
         }
 
-        public toJSON(key: any): any {
-            var result: any = {};
-
-            result.isDeclaration = this._isDeclaration;
-            result.languageVersion = LanguageVersion[this._parseOptions.languageVersion()];
-            result.parseOptions = this._parseOptions;
-
-            if (this.diagnostics().length > 0) {
-                result.diagnostics = this.diagnostics();
-            }
-
-            result.sourceUnit = this._sourceUnit;
-            result.lineMap = this._lineMap;
-
-            return result;
-        }
-
         public sourceUnit(): SourceUnitSyntax {
             return this._sourceUnit;
         }

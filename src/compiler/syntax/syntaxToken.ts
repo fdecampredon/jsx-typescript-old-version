@@ -99,78 +99,6 @@ module TypeScript.Syntax {
         return new ConvertedIdentifierToken(token);
     }
 
-    export function tokenToJSON(token: ISyntaxToken): any {
-        var result: any = {};
-
-        for (var name in SyntaxKind) {
-            if (<any>SyntaxKind[name] === token.kind()) {
-                result.kind = name;
-                break;
-            }
-        }
-
-        result.fullStart = token.fullStart();
-        result.fullEnd = fullEnd(token);
-
-        result.start = start(token);
-        result.end = end(token);
-
-        result.fullWidth = token.fullWidth();
-        result.width = width(token);
-
-        result.text = token.text();
-
-        var value = token.value();
-        if (value !== null) {
-            result.value = value;
-            result.valueText = token.valueText();
-        }
-
-        if (token.hasLeadingTrivia()) {
-            result.hasLeadingTrivia = true;
-        }
-
-        if (token.hasLeadingComment()) {
-            result.hasLeadingComment = true;
-        }
-
-        if (token.hasLeadingNewLine()) {
-            result.hasLeadingNewLine = true;
-        }
-
-        if (token.hasLeadingSkippedText()) {
-            result.hasLeadingSkippedText = true;
-        }
-
-        if (token.hasTrailingTrivia()) {
-            result.hasTrailingTrivia = true;
-        }
-
-        if (token.hasTrailingComment()) {
-            result.hasTrailingComment = true;
-        }
-
-        if (token.hasTrailingNewLine()) {
-            result.hasTrailingNewLine = true;
-        }
-
-        if (token.hasTrailingSkippedText()) {
-            result.hasTrailingSkippedText = true;
-        }
-
-        var trivia = token.leadingTrivia();
-        if (trivia.count() > 0) {
-            result.leadingTrivia = trivia;
-        }
-
-        trivia = token.trailingTrivia();
-        if (trivia.count() > 0) {
-            result.trailingTrivia = trivia;
-        }
-
-        return result;
-    }
-
     export function value(token: ISyntaxToken): any {
         return value1(token.kind(), token.text());
     }
@@ -401,8 +329,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public toJSON(key: any): any { return tokenToJSON(this); }
-
         private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             return this;
         }
@@ -550,7 +476,6 @@ module TypeScript.Syntax {
         }
 
         public kind(): SyntaxKind { return this.tokenKind; }
-        public toJSON(key: any): any { return tokenToJSON(this); }
 
         // We mark this token as being incrementally *reusable* and also that it was a keyword
         // that was converted to an identifier.  The incremental parser knows not to return this
@@ -690,7 +615,6 @@ module TypeScript.Syntax {
         }
 
         public kind(): SyntaxKind { return this.tokenKind; }
-        public toJSON(key: any): any { return tokenToJSON(this); }
 
         // Realized tokens are created from the parser.  They are *never* incrementally reusable.
         public isIncrementallyUnusable() { return true; }

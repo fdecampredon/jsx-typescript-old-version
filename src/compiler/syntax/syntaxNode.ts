@@ -27,49 +27,5 @@ module TypeScript {
         public isShared(): boolean {
             return false;
         }
-
-        public toJSON(key: any): any {
-            var result: any = {}
-
-            for (var name in SyntaxKind) {
-                if (<any>SyntaxKind[name] === this.kind()) {
-                    result.kind = name;
-                    break;
-                }
-            }
-
-            result.fullStart = fullStart(this);
-            result.fullEnd = fullEnd(this);
-
-            result.start = start(this);
-            result.end = end(this);
-
-            result.fullWidth = fullWidth(this);
-            result.width = width(this);
-
-            if (isIncrementallyUnusable(this)) {
-                result.isIncrementallyUnusable = true;
-            }
-
-            if (parsedInStrictMode(this)) {
-                result.parsedInStrictMode = true;
-            }
-
-            var thisAsIndexable: IIndexable<any> = <any>this;
-            for (var i = 0, n = this.childCount(); i < n; i++) {
-                var value = this.childAt(i);
-
-                if (value) {
-                    for (var name in this) {
-                        if (value === thisAsIndexable[name]) {
-                            result[name] = value;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
     }
 }

@@ -72,10 +72,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public toJSON(key: any): any {
-            return [];
-        }
-
         public toArray(): ISyntaxTrivia[] {
             return [];
         }
@@ -159,10 +155,6 @@ module TypeScript.Syntax {
 
         public hasSkippedToken(): boolean {
             return this.item.kind() === SyntaxKind.SkippedTokenTrivia;
-        }
-
-        public toJSON(key: any): ISyntaxTrivia[] {
-            return [this.item];
         }
 
         public toArray(): ISyntaxTrivia[] {
@@ -254,10 +246,6 @@ module TypeScript.Syntax {
             }
 
             return false;
-        }
-
-        public toJSON(key: any): ISyntaxTrivia[] {
-            return this.trivia;
         }
 
         public toArray(): ISyntaxTrivia[] {

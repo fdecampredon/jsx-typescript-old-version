@@ -29,6 +29,193 @@ class PositionValidatingWalker extends TypeScript.SyntaxWalker {
     }
 }
 
+function tokenToJSON(token: TypeScript.ISyntaxToken): any {
+    if (token === null) {
+        return null;
+    }
+
+    var result: any = {};
+
+    for (var name in TypeScript.SyntaxKind) {
+        if (<any>TypeScript.SyntaxKind[name] === token.kind()) {
+            result.kind = name;
+            break;
+        }
+    }
+
+    result.fullStart = token.fullStart();
+    result.fullEnd = TypeScript.fullEnd(token);
+
+    result.start = TypeScript.start(token);
+    result.end = TypeScript.end(token);
+
+    result.fullWidth = token.fullWidth();
+    result.width = TypeScript.width(token);
+
+    result.text = token.text();
+
+    var value = token.value();
+    if (value !== null) {
+        result.value = value;
+        result.valueText = token.valueText();
+    }
+
+    if (token.hasLeadingTrivia()) {
+        result.hasLeadingTrivia = true;
+    }
+
+    if (token.hasLeadingComment()) {
+        result.hasLeadingComment = true;
+    }
+
+    if (token.hasLeadingNewLine()) {
+        result.hasLeadingNewLine = true;
+    }
+
+    if (token.hasLeadingSkippedText()) {
+        result.hasLeadingSkippedText = true;
+    }
+
+    if (token.hasTrailingTrivia()) {
+        result.hasTrailingTrivia = true;
+    }
+
+    if (token.hasTrailingComment()) {
+        result.hasTrailingComment = true;
+    }
+
+    if (token.hasTrailingNewLine()) {
+        result.hasTrailingNewLine = true;
+    }
+
+    if (token.hasTrailingSkippedText()) {
+        result.hasTrailingSkippedText = true;
+    }
+
+    var trivia = token.leadingTrivia();
+    if (trivia.count() > 0) {
+        result.leadingTrivia = triviaListToJSON(trivia);
+    }
+
+    trivia = token.trailingTrivia();
+    if (trivia.count() > 0) {
+        result.trailingTrivia = triviaListToJSON(trivia);
+    }
+
+    return result;
+}
+
+function triviaListToJSON(trivia: TypeScript.ISyntaxTriviaList): any {
+    var result: any[] = [];
+
+    for (var i = 0, n = trivia.count(); i < n; i++) {
+        result.push(triviaToJSON(trivia.syntaxTriviaAt(i)));
+    }
+
+    return result;
+}
+
+function triviaToJSON(trivia: TypeScript.ISyntaxTrivia): any {
+    var result: any = {};
+
+    for (var name in TypeScript.SyntaxKind) {
+        if (<any>TypeScript.SyntaxKind[name] === trivia.kind()) {
+            result.kind = name;
+            break;
+        }
+    }
+
+    if (trivia.isSkippedToken()) {
+        result.skippedToken = tokenToJSON(trivia.skippedToken());
+    }
+    else {
+        result.fullStart = trivia.fullStart();
+        result.fullEnd = trivia.fullStart() + trivia.fullWidth();
+        result.text = trivia.fullText();
+    }
+
+    return result;
+}
+
+function nodeToJSON(node: TypeScript.SyntaxNode): any {
+    var result: any = {}
+
+    for (var name in TypeScript.SyntaxKind) {
+        if (<any>TypeScript.SyntaxKind[name] === node.kind()) {
+            result.kind = name;
+            break;
+        }
+    }
+
+    result.fullStart = TypeScript.fullStart(node);
+    result.fullEnd = TypeScript.fullEnd(node);
+
+    result.start = TypeScript.start(node);
+    result.end = TypeScript.end(node);
+
+    result.fullWidth = TypeScript.fullWidth(node);
+    result.width = TypeScript.width(node);
+
+    if (TypeScript.isIncrementallyUnusable(node)) {
+        result.isIncrementallyUnusable = true;
+    }
+
+    if (TypeScript.parsedInStrictMode(node)) {
+        result.parsedInStrictMode = true;
+    }
+
+    var thisAsIndexable: TypeScript.IIndexable<any> = <any>node;
+    for (var i = 0, n = node.childCount(); i < n; i++) {
+        var value = node.childAt(i);
+
+        if (value) {
+            for (var name in node) {
+                if (value === thisAsIndexable[name]) {
+                    result[name] = elementToJSON(value);
+                    break;
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
+function elementToJSON(element: TypeScript.ISyntaxElement): any {
+    if (TypeScript.isToken(element)) {
+        return tokenToJSON(<TypeScript.ISyntaxToken>element);
+    }
+    else if (TypeScript.isList(element) || TypeScript.isSeparatedList(element)) {
+        var result: any[] = [];
+
+        for (var i = 0, n = element.childCount(); i < n; i++) {
+            result.push(elementToJSON(element.childAt(i)));
+        }
+
+        return result;
+    }
+    else {
+        return nodeToJSON(<TypeScript.SyntaxNode>element);
+    }
+}
+
+function syntaxTreeToJSON(tree: TypeScript.SyntaxTree): any {
+    var result: any = {};
+
+    result.isDeclaration = tree.isDeclaration();
+    result.languageVersion = TypeScript.LanguageVersion[tree.parseOptions().languageVersion()];
+    result.parseOptions = tree.parseOptions();
+
+    if (tree.diagnostics().length > 0) {
+        result.diagnostics = tree.diagnostics();
+    }
+
+    result.sourceUnit = elementToJSON(tree.sourceUnit());
+    result.lineMap = tree.lineMap();
+
+    return result;
+}
+
 function emptySourceUnit() {
     return new TypeScript.SourceUnitSyntax(TypeScript.Syntax.emptyList<TypeScript.IModuleElementSyntax>(), TypeScript.Syntax.token(TypeScript.SyntaxKind.EndOfFileToken, { text: "" }, 0), 0);
 }
@@ -82,6 +269,14 @@ class Program {
         this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\scanner\\ecmascript5",
             fileName => this.runScanner(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
 
+        TypeScript.Environment.standardOut.WriteLine("Testing findToken.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\findToken\\ecmascript5",
+            fileName => this.runFindToken(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
+
+        TypeScript.Environment.standardOut.WriteLine("Testing trivia.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\trivia\\ecmascript5",
+            fileName => this.runTrivia(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
+
         TypeScript.Environment.standardOut.WriteLine("Testing parser ES5.");
         this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
             fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
@@ -105,14 +300,6 @@ class Program {
         TypeScript.Environment.standardOut.WriteLine("Testing pretty printer.");
         this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\prettyPrinter\\ecmascript5",
             fileName => this.runPrettyPrinter(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
-
-        TypeScript.Environment.standardOut.WriteLine("Testing findToken.");
-        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\findToken\\ecmascript5",
-            fileName => this.runFindToken(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
-
-        TypeScript.Environment.standardOut.WriteLine("Testing trivia.");
-        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\trivia\\ecmascript5",
-            fileName => this.runTrivia(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
 
         if (specificFile === undefined) {
             this.testIncrementalSpeed(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\Syntax\\SyntaxNodes.generated.ts");
@@ -296,14 +483,14 @@ class Program {
         });
     }
 
-    private checkResult(fileName: string, result: any, verify: boolean, generateBaseline: boolean, justText: boolean): void {
+    private checkResult(fileName: string, result: any, convert: (a: any) => any, verify: boolean, generateBaseline: boolean, justText: boolean): void {
         var actualResult: string;
 
         var expectedFile = fileName + ".expected";
         var actualFile = fileName + ".actual";
 
         if (generateBaseline) {
-            actualResult = justText ? result : JSON.stringify(result, null, 4);
+            actualResult = justText ? result : JSON.stringify(convert(result), null, 4);
             expectedFile = fileName + ".expected";
 
             // TypeScript.Environment.standardOut.WriteLine("Generating baseline for: " + fileName);
@@ -314,7 +501,7 @@ class Program {
             }
         }
         else if (verify) {
-            actualResult = justText ? result : JSON.stringify(result, null, 4);
+            actualResult = justText ? result : JSON.stringify(convert(result), null, 4);
 
             var expectedResult: string = null;
             if (!TypeScript.Environment.fileExists(expectedFile)) {
@@ -396,7 +583,7 @@ class Program {
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
         var result = TypeScript.PrettyPrinter.prettyPrint(tree.sourceUnit());
 
-        this.checkResult(fileName, result, verify, generateBaseline, true);
+        this.checkResult(fileName, result, null, verify, generateBaseline, true);
 
         totalTime += timer.time;
     }
@@ -445,7 +632,7 @@ class Program {
             TypeScript.Debug.assert(TypeScript.fullWidth(tree.sourceUnit()) === contents.length);
             TypeScript.visitNodeOrToken(new PositionValidatingWalker(), tree.sourceUnit());
 
-            this.checkResult(fileName, tree, verify, generateBaseline, /*justText:*/ false);
+            this.checkResult(fileName, tree, syntaxTreeToJSON, verify, generateBaseline, /*justText:*/ false);
         }
         totalTime += timer.time;
     }
@@ -513,19 +700,19 @@ class Program {
                 TypeScript.Debug.assert(token.fullWidth() > 0);
             }
 
-            tokens[i] = token;
-            tokensOnLeft[i] = tokenOnLeft;
+            tokens[i] = tokenToJSON(token);
+            tokensOnLeft[i] = tokenToJSON(tokenOnLeft);
         }
 
         var positionedToken = TypeScript.Syntax.findToken(sourceUnit, 0);
         while (positionedToken !== null) {
-            leftToRight.push(positionedToken);
+            leftToRight.push(tokenToJSON(positionedToken));
             positionedToken = positionedToken.nextToken();
         }
 
         positionedToken = TypeScript.Syntax.findToken(sourceUnit, contents.length);
         while (positionedToken !== null) {
-            rightToLeft.push(positionedToken);
+            rightToLeft.push(tokenToJSON(positionedToken));
             positionedToken = positionedToken.previousToken();
         }
 
@@ -536,7 +723,7 @@ class Program {
             rightToLeft: rightToLeft,
         };
 
-        this.checkResult(fileName, result, verify, generateBaseline, /*justText:*/ false);
+        this.checkResult(fileName, result, a => a, verify, generateBaseline, /*justText:*/ false);
     }
 
     runTrivia(fileName: string,
@@ -555,14 +742,14 @@ class Program {
 
         while (true) {
             var token = scanner.scan(/*allowRegularExpression:*/ false);
-            tokens.push(token);
+            tokens.push(tokenToJSON(token));
 
             if (token.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
                 break;
             }
         }
 
-        this.checkResult(fileName, tokens, verify, generateBaseline, false);
+        this.checkResult(fileName, tokens, a => a, verify, generateBaseline, false);
     }
 
     runScanner(fileName: string, languageVersion: TypeScript.LanguageVersion, verify: boolean, generateBaseline: boolean): void {
@@ -581,11 +768,13 @@ class Program {
         var scanner = TypeScript.createScanner(languageVersion, text, reportDiagnostic);
 
         var tokens: TypeScript.ISyntaxToken[] = [];
+        var jsonTokens: any[] = [];
         var textArray: string[] = [];
         var position = 0;
 
         while (true) {
             var token = scanner.scan(/*allowRegularExpression:*/ false);
+            jsonTokens.push(tokenToJSON(token));
             tokens.push(token);
 
             TypeScript.Debug.assert(position === token.fullStart());
@@ -604,8 +793,8 @@ class Program {
             }
         }
 
-        var result = diagnostics.length === 0 ? <any>tokens : { diagnostics: diagnostics, tokens: tokens };
-        this.checkResult(fileName, result, verify, generateBaseline, false);
+        var result = diagnostics.length === 0 ? <any>jsonTokens : { diagnostics: diagnostics, tokens: jsonTokens };
+        this.checkResult(fileName, result, a => a, verify, generateBaseline, false);
     }
 
     parseArguments(): void {
