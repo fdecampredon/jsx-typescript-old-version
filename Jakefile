@@ -80,7 +80,6 @@ var compilerSources = [
 	"syntax/slidingWindow.ts",
 	"syntax/syntax.ts",
 	"syntax/syntaxElement.ts",
-	"syntax/syntaxFactory.generated.ts",
 	"syntax/syntaxFacts.ts",
 	"syntax/syntaxFacts2.ts",
 	"syntax/syntaxKind.ts",

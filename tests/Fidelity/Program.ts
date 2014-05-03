@@ -29,6 +29,10 @@ class PositionValidatingWalker extends TypeScript.SyntaxWalker {
     }
 }
 
+function emptySourceUnit() {
+    return new TypeScript.SourceUnitSyntax(TypeScript.Syntax.emptyList<TypeScript.IModuleElementSyntax>(), TypeScript.Syntax.token(TypeScript.SyntaxKind.EndOfFileToken, { text: "" }, 0), 0);
+}
+
 class Program {
     runAllTests(verify: boolean): void {
         TypeScript.Environment.standardOut.WriteLine("");
@@ -463,7 +467,7 @@ class Program {
 
             var tree1 = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
         var tree2 = TypeScript.Parser.incrementalParse(
-            new TypeScript.SyntaxTree(TypeScript.Syntax.emptySourceUnit(), TypeScript.isDTSFile(fileName), [], fileName, null, tree1.parseOptions()),
+            new TypeScript.SyntaxTree(emptySourceUnit(), TypeScript.isDTSFile(fileName), [], fileName, null, tree1.parseOptions()),
             new TypeScript.TextChangeRange(new TypeScript.TextSpan(0, 0), text.length()),
             text);
 

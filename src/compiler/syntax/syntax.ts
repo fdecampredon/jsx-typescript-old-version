@@ -15,9 +15,9 @@ module TypeScript.Syntax {
         }
     }
 
-    export function emptySourceUnit() {
-        return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList<IModuleElementSyntax>(), Syntax.token(SyntaxKind.EndOfFileToken, { text: "" }, 0));
-    }
+    //export function emptySourceUnit() {
+    //    return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList<IModuleElementSyntax>(), Syntax.token(SyntaxKind.EndOfFileToken, { text: "" }, 0));
+    //}
 
     export function getStandaloneExpression(positionedToken: ISyntaxToken): ISyntaxNodeOrToken {
         var token = positionedToken;
@@ -307,9 +307,9 @@ module TypeScript.Syntax {
             isSuperMemberAccessExpression((<InvocationExpressionSyntax>node).expression);
     }
 
-    export function assignmentExpression(left: IExpressionSyntax, token: ISyntaxToken, right: IExpressionSyntax): BinaryExpressionSyntax {
-        return Syntax.normalModeFactory.binaryExpression(SyntaxKind.AssignmentExpression, left, token, right);
-    }
+    //export function assignmentExpression(left: IExpressionSyntax, token: ISyntaxToken, right: IExpressionSyntax): BinaryExpressionSyntax {
+    //    return new BinaryExpressionSyntax(SyntaxKind.AssignmentExpression, left, token, right);
+    //}
 
     export function nodeHasSkippedOrMissingTokens(node: SyntaxNode): boolean {
         for (var i = 0; i < node.childCount(); i++) {
