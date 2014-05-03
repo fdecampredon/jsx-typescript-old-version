@@ -789,7 +789,7 @@ module TypeScript.Parser {
             // the left by maxLookahead tokens.  We only need to do this as long as we're not at the
             // start of the tree.
             for (var i = 0; start > 0 && i <= maxLookahead; i++) {
-                var token = sourceUnit.findToken(start);
+                var token = Syntax.findToken(sourceUnit, start);
 
                 // Debug.assert(token.kind() !== SyntaxKind.None);
                 // Debug.assert(token.kind() === SyntaxKind.EndOfFileToken || token.fullWidth() > 0);

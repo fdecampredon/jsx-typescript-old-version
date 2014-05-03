@@ -15,15 +15,11 @@ module TypeScript.Syntax {
         }
     }
 
-    //export function emptySourceUnit() {
-    //    return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList<IModuleElementSyntax>(), Syntax.token(SyntaxKind.EndOfFileToken, { text: "" }, 0));
-    //}
-
     export function getStandaloneExpression(positionedToken: ISyntaxToken): ISyntaxNodeOrToken {
         var token = positionedToken;
         if (positionedToken !== null && positionedToken.kind() === SyntaxKind.IdentifierName) {
-            var parentPositionedNode = Syntax.containingNode(positionedToken);
-            var parentNode = Syntax.containingNode(parentPositionedNode);
+            var parentPositionedNode = containingNode(positionedToken);
+            var parentNode = containingNode(parentPositionedNode);
 
             if (parentNode.kind() === SyntaxKind.QualifiedName && (<QualifiedNameSyntax>parentNode).right === token) {
                 return parentPositionedNode;
@@ -38,8 +34,8 @@ module TypeScript.Syntax {
 
     export function isInModuleOrTypeContext(positionedToken: ISyntaxToken): boolean {
         if (positionedToken !== null) {
-            var positionedNodeOrToken = Syntax.getStandaloneExpression(positionedToken);
-            var parent = Syntax.containingNode(positionedNodeOrToken);
+            var positionedNodeOrToken = getStandaloneExpression(positionedToken);
+            var parent = containingNode(positionedNodeOrToken);
 
             if (parent !== null) {
                 switch (parent.kind()) {
@@ -61,10 +57,10 @@ module TypeScript.Syntax {
     }
 
     export function isInTypeOnlyContext(positionedToken: ISyntaxToken): boolean {
-        var positionedNodeOrToken = Syntax.getStandaloneExpression(positionedToken);
-        var positionedParent = Syntax.containingNode(positionedNodeOrToken);
+        var positionedNodeOrToken = getStandaloneExpression(positionedToken);
+        var positionedParent = containingNode(positionedNodeOrToken);
 
-        var parent = Syntax.containingNode(positionedParent);
+        var parent = containingNode(positionedParent);
         var nodeOrToken = positionedNodeOrToken;
 
         if (parent !== null) {
@@ -125,11 +121,21 @@ module TypeScript.Syntax {
     }
 
     export function nodeStructuralEquals(node1: SyntaxNode, node2: SyntaxNode): boolean {
-        if (node1 === null) {
-            return node2 === null;
+        if (node1 === node2) { return true; }
+        if (node1 === null || node2 === null) { return false; }
+        if (node1.kind() !== node2.kind()) { return false; }
+        if (node1.childCount() !== node2.childCount()) { return false; }
+
+        for (var i = 0, n = node1.childCount(); i < n; i++) {
+            var element1 = node1.childAt(i);
+            var element2 = node2.childAt(i);
+
+            if (!elementStructuralEquals(element1, element2)) {
+                return false;
+            }
         }
 
-        return node1.structuralEquals(node2);
+        return true;
     }
 
     export function nodeOrTokenStructuralEquals(node1: ISyntaxNodeOrToken, node2: ISyntaxNodeOrToken): boolean {
@@ -165,8 +171,8 @@ module TypeScript.Syntax {
             start(token1) === start(token2) &&
             end(token1) === end(token2) &&
             token1.text() === token2.text() &&
-            Syntax.triviaListStructuralEquals(token1.leadingTrivia(), token2.leadingTrivia()) &&
-            Syntax.triviaListStructuralEquals(token1.trailingTrivia(), token2.trailingTrivia());
+            triviaListStructuralEquals(token1.leadingTrivia(), token2.leadingTrivia()) &&
+            triviaListStructuralEquals(token1.trailingTrivia(), token2.trailingTrivia());
     }
 
     export function triviaListStructuralEquals(triviaList1: ISyntaxTriviaList, triviaList2: ISyntaxTriviaList): boolean {
@@ -175,7 +181,7 @@ module TypeScript.Syntax {
         }
 
         for (var i = 0, n = triviaList1.count(); i < n; i++) {
-            if (!Syntax.triviaStructuralEquals(triviaList1.syntaxTriviaAt(i), triviaList2.syntaxTriviaAt(i))) {
+            if (!triviaStructuralEquals(triviaList1.syntaxTriviaAt(i), triviaList2.syntaxTriviaAt(i))) {
                 return false;
             }
         }
@@ -198,7 +204,7 @@ module TypeScript.Syntax {
             var child1 = list1.childAt(i);
             var child2 = list2.childAt(i);
 
-            if (!Syntax.nodeOrTokenStructuralEquals(child1, child2)) {
+            if (!nodeOrTokenStructuralEquals(child1, child2)) {
                 return false;
             }
         }
@@ -214,7 +220,7 @@ module TypeScript.Syntax {
         for (var i = 0, n = list1.childCount(); i < n; i++) {
             var element1 = list1.childAt(i);
             var element2 = list2.childAt(i);
-            if (!Syntax.nodeOrTokenStructuralEquals(element1, element2)) {
+            if (!nodeOrTokenStructuralEquals(element1, element2)) {
                 return false;
             }
         }
@@ -358,7 +364,7 @@ module TypeScript.Syntax {
     }
 
     export function isEntirelyInsideComment(sourceUnit: SourceUnitSyntax, position: number): boolean {
-        var positionedToken = sourceUnit.findToken(position);
+        var positionedToken = findToken(sourceUnit, position);
         var fullStart = positionedToken.fullStart();
         var triviaList: ISyntaxTriviaList = null;
         var lastTriviaBeforeToken: ISyntaxTrivia = null;
@@ -411,7 +417,7 @@ module TypeScript.Syntax {
     }
 
     export function isEntirelyInStringOrRegularExpressionLiteral(sourceUnit: SourceUnitSyntax, position: number): boolean {
-        var positionedToken = sourceUnit.findToken(position);
+        var positionedToken = findToken(sourceUnit, position);
 
         if (positionedToken) {
             if (positionedToken.kind() === SyntaxKind.EndOfFileToken) {
@@ -518,7 +524,7 @@ module TypeScript.Syntax {
     }
 
     export function hasAncestorOfKind(positionedToken: ISyntaxElement, kind: SyntaxKind): boolean {
-        return Syntax.getAncestorOfKind(positionedToken, kind) !== null;
+        return getAncestorOfKind(positionedToken, kind) !== null;
     }
 
     export function isIntegerLiteral(expression: IExpressionSyntax): boolean {
@@ -564,7 +570,7 @@ module TypeScript.Syntax {
             return null;
         }
 
-        return token.syntaxTree().sourceUnit().findToken(start - 1, includeSkippedTokens);
+        return findToken(token.syntaxTree().sourceUnit(), start - 1, includeSkippedTokens);
     }
 
     export function nextToken(token: ISyntaxToken, includeSkippedTokens: boolean = false): ISyntaxToken {
@@ -582,7 +588,7 @@ module TypeScript.Syntax {
             }
         }
 
-        return token.syntaxTree().sourceUnit().findToken(token.fullEnd(), includeSkippedTokens);
+        return findToken(token.syntaxTree().sourceUnit(), token.fullEnd(), includeSkippedTokens);
     }
 
     export function containingNode(element: ISyntaxElement): SyntaxNode {
@@ -595,7 +601,40 @@ module TypeScript.Syntax {
         return <SyntaxNode>current;
     }
 
-    export function findToken(element: ISyntaxElement, position: number): ISyntaxToken {
+        /**
+         * Finds a token according to the following rules:
+         * 1) If position matches the End of the node/s FullSpan and the node is SourceUnitSyntax,
+         *    then the EOF token is returned.
+         *
+         *  2) If node.FullSpan.Contains(position) then the token that contains given position is
+         *     returned.
+         *
+         *  3) Otherwise an ArgumentOutOfRangeException is thrown
+         *
+         * Note: findToken will always return a non-missing token with width greater than or equal to
+         * 1 (except for EOF).  Empty tokens synthesized by the parser are never returned.
+         */
+    export function findToken(element: ISyntaxElement, position: number, includeSkippedTokens: boolean = false): ISyntaxToken {
+        var endOfFileToken = tryGetEndOfFileAt(element, position);
+        if (endOfFileToken !== null) {
+            return endOfFileToken;
+        }
+
+        if (position < 0 || position >= element.fullWidth()) {
+            throw Errors.argumentOutOfRange("position");
+        }
+
+        var positionedToken = findTokenWorker(element, position);
+
+        if (includeSkippedTokens) {
+            return findSkippedTokenInPositionedToken(positionedToken, position) || positionedToken;
+        }
+
+        // Could not find a better match
+        return positionedToken;
+    }
+
+    function findTokenWorker(element: ISyntaxElement, position: number): ISyntaxToken {
         // Debug.assert(position >= 0 && position < this.fullWidth());
         if (isToken(element)) {
             Debug.assert(element.fullWidth() > 0);
@@ -619,7 +658,7 @@ module TypeScript.Syntax {
                     var childFullEnd = childFullStart + child.fullWidth();
 
                     if (position < childFullEnd) {
-                        return findToken(child, position);
+                        return findTokenWorker(child, position);
                     }
                 }
             }
@@ -628,8 +667,62 @@ module TypeScript.Syntax {
         throw Errors.invalidOperation();
     }
 
+    function tryGetEndOfFileAt(element: ISyntaxElement, position: number): ISyntaxToken {
+        if (element.kind() === SyntaxKind.SourceUnit && position === element.fullWidth()) {
+            var sourceUnit = <SourceUnitSyntax>element;
+            return sourceUnit.endOfFileToken;
+        }
+
+        return null;
+    }
+
+    export function findTokenOnLeft(element: ISyntaxElement, position: number, includeSkippedTokens: boolean = false): ISyntaxToken {
+        var positionedToken = findToken(element, position, /*includeSkippedTokens*/ false);
+        var _start = start(positionedToken);
+
+        // Position better fall within this token.
+        // Debug.assert(position >= positionedToken.fullStart());
+        // Debug.assert(position < positionedToken.fullEnd() || positionedToken.token().tokenKind === SyntaxKind.EndOfFileToken);
+
+        if (includeSkippedTokens) {
+            positionedToken = findSkippedTokenOnLeft(positionedToken, position) || positionedToken;
+        }
+
+        // if position is after the start of the token, then this token is the token on the left.
+        if (position > _start) {
+            return positionedToken;
+        }
+
+        // we're in the trivia before the start of the token.  Need to return the previous token.
+        if (positionedToken.fullStart() === 0) {
+            // Already on the first token.  Nothing before us.
+            return null;
+        }
+
+        return positionedToken.previousToken(includeSkippedTokens);
+    }
+
+    export function findCompleteTokenOnLeft(element: ISyntaxElement, position: number, includeSkippedTokens: boolean = false): ISyntaxToken {
+        var positionedToken = findToken(element, position, /*includeSkippedTokens*/ false);
+
+        // Position better fall within this token.
+        // Debug.assert(position >= positionedToken.fullStart());
+        // Debug.assert(position < positionedToken.fullEnd() || positionedToken.token().tokenKind === SyntaxKind.EndOfFileToken);
+
+        if (includeSkippedTokens) {
+            positionedToken = findSkippedTokenOnLeft(positionedToken, position) || positionedToken;
+        }
+
+        // if position is after the end of the token, then this token is the token on the left.
+        if (width(positionedToken) > 0 && position >= end(positionedToken)) {
+            return positionedToken;
+        }
+
+        return positionedToken.previousToken(includeSkippedTokens);
+    }
+
     export function firstTokenInLineContainingPosition(syntaxTree: SyntaxTree, position: number): ISyntaxToken {
-        var current = syntaxTree.sourceUnit().findToken(position);
+        var current = findToken(syntaxTree.sourceUnit(), position);
         while (true) {
             if (isFirstTokenInLine(current)) {
                 break;

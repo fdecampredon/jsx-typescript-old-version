@@ -563,7 +563,7 @@ module TypeScript.ASTHelpers {
                     // Now check if it was written like so:
                     //      (/** blah */ a, /** blah */ b);
                     // In this case, the comment will belong to the preceding token.
-                    var previousToken = ast.syntaxTree().sourceUnit().findToken(firstToken(ast).fullStart() - 1);
+                    var previousToken = Syntax.findToken(ast.syntaxTree().sourceUnit(), firstToken(ast).fullStart() - 1);
                     if (previousToken && (previousToken.kind() === SyntaxKind.OpenParenToken || previousToken.kind() === SyntaxKind.CommaToken)) {
                         comments = convertTokenTrailingComments(previousToken);
                     }

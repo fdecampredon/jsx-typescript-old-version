@@ -140,7 +140,7 @@ module TypeScript.Services {
         }
 
         public static getNonIdentifierCompleteTokenOnLeft(sourceUnit: TypeScript.SourceUnitSyntax, position: number): TypeScript.ISyntaxToken {
-            var positionedToken = sourceUnit.findCompleteTokenOnLeft(position, /*includeSkippedTokens*/true);
+            var positionedToken = Syntax.findCompleteTokenOnLeft(sourceUnit, position, /*includeSkippedTokens*/true);
 
             if (positionedToken && position === end(positionedToken) && positionedToken.kind() == TypeScript.SyntaxKind.EndOfFileToken) {
                 // EndOfFile token is not intresting, get the one before it

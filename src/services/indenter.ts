@@ -18,9 +18,8 @@
 module TypeScript.Services {
     export class Indenter {
         public static getIndentation(node: TypeScript.SourceUnitSyntax, soruceText: TypeScript.IScriptSnapshot, position: number, editorOptions: TypeScript.Services.EditorOptions): number {
-            
             var indentation = 0;
-            var currentToken = node.findToken(position);
+            var currentToken = TypeScript.Syntax.findToken(node, position);
             var currentNode: TypeScript.ISyntaxElement = currentToken;
 
             if (currentToken.kind() === TypeScript.SyntaxKind.EndOfFileToken) {

@@ -24,7 +24,7 @@ module TypeScript.Services {
         // will return the generic identifier that started the expression (e.g. "foo" in "foo<any, |"). It is then up to the caller to ensure that this is a valid generic expression through 
         // looking up the type. The method will also keep track of the parameter index inside the expression.
         public static isInPartiallyWrittenTypeArgumentList(syntaxTree: TypeScript.SyntaxTree, position: number): IPartiallyWrittenTypeArgumentListInformation {
-            var token = syntaxTree.sourceUnit().findTokenOnLeft(position, /*includeSkippedTokens*/ true);
+            var token = Syntax.findTokenOnLeft(syntaxTree.sourceUnit(), position, /*includeSkippedTokens*/ true);
 
             if (token && TypeScript.Syntax.hasAncestorOfKind(token, TypeScript.SyntaxKind.TypeParameterList)) {
                 // We are in the wrong generic list. bail out

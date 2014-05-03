@@ -24,7 +24,7 @@ module TypeScript.Services {
         public static getMatchSpans(syntaxTree: TypeScript.SyntaxTree, position: number): TypeScript.TextSpan[] {
             var result: TypeScript.TextSpan[] = [];
 
-            var currentToken = syntaxTree.sourceUnit().findToken(position);
+            var currentToken = Syntax.findToken(syntaxTree.sourceUnit(), position);
 
             BraceMatcher.getMatchingCloseBrace(currentToken, position, result);
             BraceMatcher.getMatchingOpenBrace(currentToken, position, result);

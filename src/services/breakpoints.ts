@@ -1069,7 +1069,7 @@ module TypeScript.Services.Breakpoints {
         }
 
         var sourceUnit = syntaxTree.sourceUnit();
-        var positionedToken = sourceUnit.findToken(askedPos);
+        var positionedToken = TypeScript.Syntax.findToken(sourceUnit, askedPos);
 
         var lineMap = syntaxTree.lineMap();
         var posLine = lineMap.getLineNumberFromPosition(askedPos);

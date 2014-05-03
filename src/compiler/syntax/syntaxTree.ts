@@ -86,7 +86,7 @@ module TypeScript {
                 return false;
             }
 
-            return this.sourceUnit().structuralEquals(tree.sourceUnit());
+            return Syntax.nodeStructuralEquals(this.sourceUnit(), tree.sourceUnit());
         }
     }
 
@@ -241,7 +241,7 @@ module TypeScript {
             }
 
             var listFullStart = parent.fullStart() + Syntax.childOffset(parent, list);
-            var tokenAtStart = this.syntaxTree.sourceUnit().findToken(listFullStart);
+            var tokenAtStart = Syntax.findToken(this.syntaxTree.sourceUnit(), listFullStart);
 
             this.pushDiagnostic(tokenAtStart, DiagnosticCode.Unexpected_token_0_expected, [expected]);
 

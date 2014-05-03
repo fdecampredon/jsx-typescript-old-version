@@ -499,9 +499,9 @@ class Program {
         var rightToLeft: TypeScript.ISyntaxToken[] = [];
 
         for (var i = 0; i <= contents.length; i++) {
-            var token = sourceUnit.findToken(i);
+            var token = TypeScript.Syntax.findToken(sourceUnit, i);
 
-            var left = sourceUnit.findTokenOnLeft(i);
+            var left = TypeScript.Syntax.findTokenOnLeft(sourceUnit, i);
             var tokenOnLeft = left === null ? null : left;
 
             TypeScript.Debug.assert(TypeScript.isToken(token));
@@ -517,13 +517,13 @@ class Program {
             tokensOnLeft[i] = tokenOnLeft;
         }
 
-        var positionedToken = sourceUnit.findToken(0);
+        var positionedToken = TypeScript.Syntax.findToken(sourceUnit, 0);
         while (positionedToken !== null) {
             leftToRight.push(positionedToken);
             positionedToken = positionedToken.nextToken();
         }
 
-        positionedToken = sourceUnit.findToken(contents.length);
+        positionedToken = TypeScript.Syntax.findToken(sourceUnit, contents.length);
         while (positionedToken !== null) {
             rightToLeft.push(positionedToken);
             positionedToken = positionedToken.previousToken();
