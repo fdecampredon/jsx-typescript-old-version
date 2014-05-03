@@ -3,7 +3,6 @@
 module TypeScript {
     export interface ISyntaxTriviaList {
         parent: ISyntaxToken;
-        syntaxTree(): SyntaxTree;
 
         isShared(): boolean;
 
@@ -35,10 +34,6 @@ module TypeScript.Syntax {
 
         public isShared(): boolean {
             return true;
-        }
-
-        public syntaxTree(): SyntaxTree {
-            throw Errors.invalidOperation("Shared lists do not belong to a single tree.");
         }
 
         public kind() {
@@ -124,10 +119,6 @@ module TypeScript.Syntax {
             this.item.parent = this;
         }
 
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
-        }
-
         public isShared(): boolean {
             return false;
         }
@@ -201,10 +192,6 @@ module TypeScript.Syntax {
 
         public isShared(): boolean {
             return false;
-        }
-
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
         }
 
         public kind(): SyntaxKind { return SyntaxKind.TriviaList; }

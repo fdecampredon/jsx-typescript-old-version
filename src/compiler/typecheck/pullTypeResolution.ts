@@ -3629,7 +3629,7 @@ module TypeScript {
             if (funcDecl.getSignatureSymbol(this.semanticInfoChain) && funcDecl.getSignatureSymbol(this.semanticInfoChain).isDefinition() && this.enclosingClassIsDerived(funcDecl.getParentDecl())) {
                 // Constructors for derived classes must contain a call to the class's 'super' constructor
                 if (!this.constructorHasSuperCall(funcDeclAST)) {
-                    var syntaxTree = funcDeclAST.syntaxTree();
+                    var syntaxTree = TypeScript.syntaxTree(funcDeclAST);
                     context.postDiagnostic(new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), start(funcDeclAST.constructorKeyword), width(funcDeclAST.constructorKeyword),
                         DiagnosticCode.Constructors_for_derived_classes_must_contain_a_super_call));
                 }
@@ -3639,7 +3639,7 @@ module TypeScript {
                 else if (this.superCallMustBeFirstStatementInConstructor(funcDecl)) {
                     var firstStatement = this.getFirstStatementOfBlockOrNull(funcDeclAST.block);
                     if (!firstStatement || !this.isSuperInvocationExpressionStatement(firstStatement)) {
-                        var syntaxTree = funcDeclAST.syntaxTree();
+                        var syntaxTree = TypeScript.syntaxTree(funcDeclAST);
                         context.postDiagnostic(new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), start(funcDeclAST.constructorKeyword), width(funcDeclAST.constructorKeyword),
                             DiagnosticCode.A_super_call_must_be_the_first_statement_in_the_constructor_when_a_class_contains_initialized_properties_or_has_parameter_properties));
                     }
@@ -11728,7 +11728,7 @@ module TypeScript {
             var sourceUnit = document.sourceUnit();
 
             var resolver = semanticInfoChain.getResolver();
-            var context = new PullTypeResolutionContext(resolver, /*inTypeCheck*/ true, sourceUnit.syntaxTree().fileName());
+            var context = new PullTypeResolutionContext(resolver, /*inTypeCheck*/ true, TypeScript.syntaxTree(sourceUnit).fileName());
 
             if (resolver.canTypeCheckAST(sourceUnit, context)) {
                 resolver.resolveAST(sourceUnit, /*isContextuallyTyped:*/ false, context);

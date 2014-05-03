@@ -255,7 +255,7 @@ module TypeScript {
             return !ast.isShared() &&
                 this.typeCheck() &&
                 !this.typeCheckedNodes.valueAt(syntaxID(ast)) &&
-                this.fileName === ast.syntaxTree().fileName();
+                this.fileName === syntaxTree(ast).fileName();
         }
 
         private _pushAnyContextualType(type: PullTypeSymbol, provisional: boolean, isInferentiallyTyping: boolean, argContext: TypeArgumentInferenceContext) {

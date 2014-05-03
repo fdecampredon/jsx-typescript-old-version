@@ -1046,7 +1046,7 @@ function generateProperties(definition: ITypeDefinition): string {
     var result = "";
 
     if (definition.name === "SourceUnitSyntax") {
-        result += "        public _syntaxTree: SyntaxTree = null;\r\n";
+        result += "        public syntaxTree: SyntaxTree = null;\r\n";
     }
 
     var newLine = false;
@@ -1699,12 +1699,12 @@ function contains(definition: ITypeDefinition, child: IMemberDefinition) {
 function generateAccessors(definition: ITypeDefinition): string {
     var result = "";
 
-    if (definition.name === "SourceUnitSyntax") {
-        result += "\r\n";
-        result += "        public syntaxTree(): SyntaxTree {\r\n";
-        result += "            return this._syntaxTree;\r\n";
-        result += "        }\r\n";
-    }
+    //if (definition.name === "SourceUnitSyntax") {
+    //    result += "\r\n";
+    //    result += "        public syntaxTree(): SyntaxTree {\r\n";
+    //    result += "            return this._syntaxTree;\r\n";
+    //    result += "        }\r\n";
+    //}
 
     for (var i = 0; i < definition.children.length; i++) {
         var child = definition.children[i];

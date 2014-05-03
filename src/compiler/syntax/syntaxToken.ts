@@ -378,10 +378,6 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
         }
 
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
-        }
-
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
             // An empty token is always at the -1 position.
             // An empty token has no need to point at an underlying text.
@@ -545,10 +541,6 @@ module TypeScript.Syntax {
             this._underlyingToken = underlyingToken;
         }
 
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
-        }
-
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
             this._underlyingToken.setTextAndFullStart(text, fullStart);
         }
@@ -685,10 +677,6 @@ module TypeScript.Syntax {
             if (!this._trailingTrivia.isShared()) {
                 this._trailingTrivia.parent = this;
             }
-        }
-
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {

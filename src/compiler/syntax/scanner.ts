@@ -107,10 +107,6 @@ module TypeScript {
                 (unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo) << ScannerConstants.TrailingTriviaShift);
         }
 
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
-        }
-
         public kind(): SyntaxKind {
             return unpackKind(this._packedFullWidthAndKind);
         }

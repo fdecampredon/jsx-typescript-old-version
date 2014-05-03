@@ -22,6 +22,8 @@ module TypeScript {
             this._fileName = fileName;
             this._lineMap = lineMap;
             this._parseOptions = parseOtions;
+
+            sourceUnit.syntaxTree = this;
         }
 
         public toJSON(key: any): any {

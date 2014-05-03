@@ -603,7 +603,7 @@ module TypeScript {
         }
 
         public getDeclForAST(ast: ISyntaxElement): PullDecl {
-            var document = this.getDocument(ast.syntaxTree().fileName());
+            var document = this.getDocument(syntaxTree(ast).fileName());
 
             if (document) {
                 return document._getDeclForAST(ast);
@@ -613,7 +613,7 @@ module TypeScript {
         }
 
         public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
-            return this.getDocument(ast.syntaxTree().fileName()).getEnclosingDecl(ast);
+            return this.getDocument(syntaxTree(ast).fileName()).getEnclosingDecl(ast);
         }
 
         public setDeclForAST(ast: ISyntaxElement, decl: PullDecl): void {
@@ -655,7 +655,7 @@ module TypeScript {
         }
 
         public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
-            var syntaxTree = ast.syntaxTree();
+            var syntaxTree = TypeScript.syntaxTree(ast);
             return new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), start(ast), width(ast), diagnosticKey, _arguments, additionalLocations);
         }
 
@@ -664,7 +664,7 @@ module TypeScript {
         }
 
         public locationFromAST(ast: ISyntaxElement): Location {
-            var syntaxTree = ast.syntaxTree();
+            var syntaxTree = TypeScript.syntaxTree(ast);
             return new Location(syntaxTree.fileName(), syntaxTree.lineMap(), start(ast), width(ast));
         }
 

@@ -2,7 +2,7 @@
 
 module TypeScript {
     export class SourceUnitSyntax extends SyntaxNode {
-        public _syntaxTree: SyntaxTree = null;
+        public syntaxTree: SyntaxTree = null;
         constructor(public moduleElements: ISyntaxList<IModuleElementSyntax>,
                     public endOfFileToken: ISyntaxToken,
                     data: number) {
@@ -26,10 +26,6 @@ module TypeScript {
                 case 1: return this.endOfFileToken;
                 default: throw Errors.invalidOperation();
             }
-        }
-
-        public syntaxTree(): SyntaxTree {
-            return this._syntaxTree;
         }
     }
 

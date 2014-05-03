@@ -1,6 +1,31 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    export function syntaxTree(element: ISyntaxElement): SyntaxTree {
+        if (element) {
+            Debug.assert(!element.isShared());
+
+            while (element) {
+                if (element.kind() === SyntaxKind.SourceUnit) {
+                    return (<SourceUnitSyntax>element).syntaxTree;
+                }
+
+                element = element.parent;
+            }
+        }
+
+        return null;
+    }
+
+    export function parsedInStrictMode(node: SyntaxNode): boolean {
+        var info = (<any>node)._data;
+        if (info === undefined) {
+            return false;
+        }
+
+        return (info & SyntaxConstants.NodeParsedInStrictModeMask) !== 0;
+    }
+
     export function isNode(element: ISyntaxElement): boolean {
         if (element !== null) {
             var kind = element.kind();
@@ -207,8 +232,6 @@ module TypeScript {
     }
 
     export interface ISyntaxElement {
-        syntaxTree(): SyntaxTree;
-
         kind(): SyntaxKind;
         parent: ISyntaxElement;
 

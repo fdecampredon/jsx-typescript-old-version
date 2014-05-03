@@ -3,7 +3,6 @@
 module TypeScript {
     export interface ISyntaxTrivia {
         parent: ISyntaxTriviaList;
-        syntaxTree(): SyntaxTree;
         kind(): SyntaxKind;
 
         isWhitespace(): boolean;
@@ -29,10 +28,6 @@ module TypeScript.Syntax {
         public parent: ISyntaxTriviaList = null;
 
         constructor(private _kind: SyntaxKind) {
-        }
-
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
         }
 
         public clone(): ISyntaxTrivia {

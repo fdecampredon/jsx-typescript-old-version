@@ -2256,7 +2256,7 @@ module TypeScript {
                 var temp = this.setContainer(EmitContainer.DynamicModule);
 
                 var svModuleName = this.moduleName;
-                this.moduleName = sourceUnit.syntaxTree().fileName();
+                this.moduleName = syntaxTree(sourceUnit).fileName();
                 if (TypeScript.isTSFile(this.moduleName)) {
                     this.moduleName = this.moduleName.substring(0, this.moduleName.length - ".ts".length);
                 }

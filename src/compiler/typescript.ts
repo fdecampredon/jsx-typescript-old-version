@@ -1238,7 +1238,7 @@ module TypeScript {
             }
 
             var astForDeclContext = this.extractResolutionContextFromAST(
-                resolver, astForDecl, this.getDocument(astForDecl.syntaxTree().fileName()), /*propagateContextualTypes*/ true);
+                resolver, astForDecl, this.getDocument(syntaxTree(astForDecl).fileName()), /*propagateContextualTypes*/ true);
             if (!astForDeclContext) {
                 return null;
             }

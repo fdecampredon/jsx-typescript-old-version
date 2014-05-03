@@ -1364,7 +1364,7 @@ module TypeScript.Parser {
             // Note: we *can* reuse tokens when the strict mode changes.  That's because tokens
             // are unaffected by strict mode.  It's just the parser will decide what to do with it
             // differently depending on what mode it is in.
-            if (node === null || node.parsedInStrictMode() !== this.isInStrictMode) {
+            if (node === null || parsedInStrictMode(node) !== this.isInStrictMode) {
                 return null;
             }
 
@@ -1840,10 +1840,7 @@ module TypeScript.Parser {
             var allDiagnostics = this.source.tokenDiagnostics().concat(this.diagnostics);
             allDiagnostics.sort((a: Diagnostic, b: Diagnostic) => a.start() - b.start());
 
-            var syntaxTree = new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.source.text.lineMap(), this.parseOptions);
-            sourceUnit._syntaxTree = syntaxTree;
-
-            return syntaxTree;
+            return new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.source.text.lineMap(), this.parseOptions);
         }
 
         private setStrictMode(isInStrictMode: boolean) {

@@ -5,15 +5,11 @@ module TypeScript {
         public parent: ISyntaxElement = null;
 
         constructor(private _data: number) {
-            // this._data = parsedInStrictMode ? SyntaxConstants.NodeParsedInStrictModeMask : 0;
         }
 
         public resetData(): void {
-            this._data = this.parsedInStrictMode() ? SyntaxConstants.NodeParsedInStrictModeMask : 0
-        }
-
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
+            // Throw away all data except for if this was parsed in strict more or not.
+            this._data = this._data & SyntaxConstants.NodeParsedInStrictModeMask;
         }
 
         public kind(): SyntaxKind {
@@ -55,7 +51,7 @@ module TypeScript {
                 result.isIncrementallyUnusable = true;
             }
 
-            if (this.parsedInStrictMode()) {
+            if (parsedInStrictMode(this)) {
                 result.parsedInStrictMode = true;
             }
 
@@ -74,14 +70,6 @@ module TypeScript {
             }
 
             return result;
-        }
-
-        // True if this node was parsed while the parser was in 'strict' mode.  A node parsed in strict
-        // mode cannot be reused if the parser is non-strict mode (and vice versa).  This is because 
-        // the parser parses things differently in strict mode and thus the tokens may be interpretted
-        // differently if the mode is changed. 
-        public parsedInStrictMode(): boolean {
-            return (this._data & SyntaxConstants.NodeParsedInStrictModeMask) !== 0;
         }
     }
 }

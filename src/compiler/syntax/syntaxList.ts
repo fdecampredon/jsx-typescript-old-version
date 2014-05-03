@@ -12,10 +12,6 @@ module TypeScript.Syntax {
     export class EmptySyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
 
-        public syntaxTree(): SyntaxTree {
-            throw Errors.invalidOperation("Shared lists do not belong to a single tree.");
-        }
-
         public fileName(): string {
             throw Errors.invalidOperation("Shared lists do not belong to a single file.");
         }
@@ -68,10 +64,6 @@ module TypeScript.Syntax {
             Syntax.setParentForChildren(this);
         }
 
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
-        }
-
         public kind(): SyntaxKind { return SyntaxKind.List; }
 
         public toJSON(key: any) {
@@ -110,10 +102,6 @@ module TypeScript.Syntax {
 
         constructor(private nodeOrTokens: T[]) {
             Syntax.setParentForChildren(this);
-        }
-
-        public syntaxTree(): SyntaxTree {
-            return this.parent.syntaxTree();
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }

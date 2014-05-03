@@ -570,7 +570,7 @@ module TypeScript.Syntax {
             return null;
         }
 
-        return findToken(token.syntaxTree().sourceUnit(), start - 1, includeSkippedTokens);
+        return findToken(syntaxTree(token).sourceUnit(), start - 1, includeSkippedTokens);
     }
 
     export function nextToken(token: ISyntaxToken, includeSkippedTokens: boolean = false): ISyntaxToken {
@@ -588,7 +588,7 @@ module TypeScript.Syntax {
             }
         }
 
-        return findToken(token.syntaxTree().sourceUnit(), fullEnd(token), includeSkippedTokens);
+        return findToken(syntaxTree(token).sourceUnit(), fullEnd(token), includeSkippedTokens);
     }
 
     export function containingNode(element: ISyntaxElement): SyntaxNode {

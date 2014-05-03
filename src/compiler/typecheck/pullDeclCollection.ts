@@ -91,7 +91,7 @@ module TypeScript {
     }
 
     function preCollectScriptDecls(sourceUnit: SourceUnitSyntax, context: DeclCollectionContext): void {
-        var fileName = sourceUnit.syntaxTree().fileName();
+        var fileName = syntaxTree(sourceUnit).fileName();
 
         var isExternalModule = context.document.isExternalModule();
 
