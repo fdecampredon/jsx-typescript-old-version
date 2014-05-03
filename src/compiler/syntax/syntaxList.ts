@@ -42,9 +42,6 @@ module TypeScript.Syntax {
             return true;
         }
 
-        public collectTextElements(elements: string[]): void {
-        }
-
         public firstToken(): ISyntaxToken {
             return null;
         }
@@ -91,10 +88,6 @@ module TypeScript.Syntax {
 
         public trailingTriviaWidth(): number {
             return 0;
-        }
-
-        public fullText(): string {
-            return "";
         }
 
         public isIncrementallyUnusable(): boolean {
@@ -150,10 +143,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public collectTextElements(elements: string[]): void {
-            this.item.collectTextElements(elements);
-        }
-
         public firstToken(): ISyntaxToken {
             return this.item.firstToken();
         }
@@ -200,10 +189,6 @@ module TypeScript.Syntax {
 
         public trailingTriviaWidth(): number {
             return this.item.trailingTriviaWidth();
-        }
-
-        public fullText(): string {
-            return this.item.fullText();
         }
 
         public isIncrementallyUnusable(): boolean {
@@ -255,13 +240,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public collectTextElements(elements: string[]): void {
-            for (var i = 0, n = this.nodeOrTokens.length; i < n; i++) {
-                var element = this.nodeOrTokens[i];
-                element.collectTextElements(elements);
-            }
-        }
-
         public firstToken(): ISyntaxToken {
             for (var i = 0, n = this.nodeOrTokens.length; i < n; i++) {
                 var token = this.nodeOrTokens[i].firstToken();
@@ -282,12 +260,6 @@ module TypeScript.Syntax {
             }
 
             return null;
-        }
-
-        public fullText(): string {
-            var elements = new Array<string>();
-            this.collectTextElements(elements);
-            return elements.join("");
         }
 
         public isIncrementallyUnusable(): boolean {

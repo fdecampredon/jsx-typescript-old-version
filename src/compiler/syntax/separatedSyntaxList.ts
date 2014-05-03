@@ -65,9 +65,6 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        collectTextElements(elements: string[]): void {
-        }
-
         firstToken(): ISyntaxToken {
             return null;
         }
@@ -98,10 +95,6 @@ module TypeScript.Syntax {
 
         public end(): number {
             throw Errors.invalidOperation("'end' invalid on a singleton element.");
-        }
-
-        fullText() {
-            return "";
         }
 
         isIncrementallyUnusable() {
@@ -185,10 +178,6 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        public collectTextElements(elements: string[]): void {
-            this.item.collectTextElements(elements);
-        }
-
         public firstToken(): ISyntaxToken {
             return this.item.firstToken();
         }
@@ -219,10 +208,6 @@ module TypeScript.Syntax {
 
         public end(): number {
             return this.item.end();
-        }
-
-        public fullText(): string {
-            return this.item.fullText();
         }
 
         public leadingTrivia(): ISyntaxTriviaList {
@@ -331,12 +316,6 @@ module TypeScript.Syntax {
             return null;
         }
 
-        public fullText(): string {
-            var elements: string[] = [];
-            this.collectTextElements(elements);
-            return elements.join("");
-        }
-
         public isIncrementallyUnusable(): boolean {
             return (this.data() & SyntaxConstants.NodeIncrementallyUnusableMask) !== 0;
         }
@@ -406,13 +385,6 @@ module TypeScript.Syntax {
             }
 
             return this._data;
-        }
-
-        public collectTextElements(elements: string[]): void {
-            for (var i = 0, n = this.elements.length; i < n; i++) {
-                var element = this.elements[i];
-                element.collectTextElements(elements);
-            }
         }
     }
 

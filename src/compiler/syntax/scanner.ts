@@ -200,10 +200,6 @@ module TypeScript {
         public firstToken(): ISyntaxToken { return this; }
         public lastToken(): ISyntaxToken { return this; }
 
-        public collectTextElements(elements: string[]): void {
-            elements.push(this.fullText());
-        }
-
         public hasLeadingTrivia(): boolean {
             var info = unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo);
             return info !== 0;

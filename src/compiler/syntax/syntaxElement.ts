@@ -40,6 +40,30 @@ module TypeScript {
         return obj._syntaxID;
     }
 
+    function collectTextElements(element: ISyntaxElement, elements: string[]): void {
+        if (element) {
+            if (isToken(element)) {
+                elements.push((<ISyntaxToken>element).fullText());
+            }
+            else {
+                for (var i = 0, n = element.childCount(); i < n; i++) {
+                    collectTextElements(element.childAt(i), elements);
+                }
+            }
+        }
+    }
+
+    export function fullText(element: ISyntaxElement): string {
+        if (isToken(element)) {
+            return (<ISyntaxToken>element).fullText();
+        }
+
+        var elements: string[] = [];
+        collectTextElements(element, elements);
+
+        return elements.join("");
+    }
+
     export interface ISyntaxElement {
         syntaxTree(): SyntaxTree;
 
@@ -99,9 +123,6 @@ module TypeScript {
         // The absolute start of this element, not including the trailing trivia.
         end(): number;
 
-        // Text for this element, including leading and trailing trivia.
-        fullText(): string;
-
         leadingTrivia(): ISyntaxTriviaList;
         trailingTrivia(): ISyntaxTriviaList;
 
@@ -110,8 +131,6 @@ module TypeScript {
 
         firstToken(): ISyntaxToken;
         lastToken(): ISyntaxToken;
-
-        collectTextElements(elements: string[]): void;
     }
 
     export interface ISyntaxNode extends ISyntaxNodeOrToken {

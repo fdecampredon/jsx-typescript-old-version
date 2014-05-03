@@ -1869,7 +1869,7 @@ module TypeScript.Parser {
                 Debug.assert(sourceUnit.fullWidth() === this.source.text.length());
 
                 if (Debug.shouldAssert(AssertionLevel.VeryAggressive)) {
-                    Debug.assert(sourceUnit.fullText() === this.source.text.substr(0, this.source.text.length()));
+                    Debug.assert(fullText(sourceUnit) === this.source.text.substr(0, this.source.text.length()));
                 }
             }
 

@@ -241,7 +241,7 @@ module TypeScript.Services {
                 // Ok, the trees looked good.  So at least our incremental parser agrees with the 
                 // normal parser.  Now, verify that the incremental tree matches the contents of the 
                 // script snapshot.
-                var incrementalTreeText = incrementalTree.sourceUnit().fullText();
+                var incrementalTreeText = fullText(incrementalTree.sourceUnit());
                 var actualSnapshotText = newScriptSnapshot.getText(0, newScriptSnapshot.getLength());
                 Debug.assert(incrementalTreeText === actualSnapshotText, 'Expected full texts to be equal');
             }

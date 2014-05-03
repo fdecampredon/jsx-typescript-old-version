@@ -66,7 +66,7 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
                 }
             }
 
-            var errorText = 'Was looking for AST in file ' + this.filename + ' with fulltext = ' + element.fullText() + ', width = ' + element.width() + ', pos = ' + element.fullStart();
+            var errorText = 'Was looking for AST in file ' + this.filename + ' with fulltext = ' + TypeScript.fullText(element) + ', width = ' + element.width() + ', pos = ' + element.fullStart();
 
             throw new Error(errorText);
         }
@@ -174,6 +174,6 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
 
     public log(node: TypeScript.ISyntaxNodeOrToken) {
         var pos = this.document.lineMap().getLineAndCharacterFromPosition(node.fullStart());
-        this.results.push({ line: pos.line(), column: pos.character(), syntaxKind: TypeScript.SyntaxKind[node.kind()], identifierName: node.fullText().trim(), type: this.getTypeOfElement(node) });
+        this.results.push({ line: pos.line(), column: pos.character(), syntaxKind: TypeScript.SyntaxKind[node.kind()], identifierName: TypeScript.fullText(node).trim(), type: this.getTypeOfElement(node) });
     }
 }

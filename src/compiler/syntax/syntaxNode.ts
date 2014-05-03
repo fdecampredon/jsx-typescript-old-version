@@ -146,22 +146,6 @@ module TypeScript {
             return result;
         }
 
-        public fullText(): string {
-            var elements: string[] = [];
-            this.collectTextElements(elements);
-            return elements.join("");
-        }
-
-        public collectTextElements(elements: string[]): void {
-            for (var i = 0, n = this.childCount(); i < n; i++) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    element.collectTextElements(elements);
-                }
-            }
-        }
-
         //public replaceToken(token1: ISyntaxToken, token2: ISyntaxToken): SyntaxNode {
         //    if (token1 === token2) {
         //        return this;

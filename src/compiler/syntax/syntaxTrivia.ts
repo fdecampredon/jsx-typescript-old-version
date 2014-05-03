@@ -117,10 +117,6 @@ module TypeScript.Syntax {
         public isSkippedToken(): boolean {
             return this.kind() === SyntaxKind.SkippedTokenTrivia;
         }
-
-        public collectTextElements(elements: string[]): void {
-            elements.push(this.fullText());
-        }
     }
 
     class NormalTrivia extends AbstractTrivia {

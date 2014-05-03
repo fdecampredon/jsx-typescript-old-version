@@ -7,6 +7,7 @@ module TypeScript {
 
         // Text for this token, not including leading or trailing trivia.
         text(): string;
+        fullText(): string;
 
         value(): any;
         valueText(): string;
@@ -488,7 +489,6 @@ module TypeScript.Syntax {
         public leadingTrivia(): ISyntaxTriviaList { return Syntax.emptyTriviaList; }
         public trailingTrivia(): ISyntaxTriviaList { return Syntax.emptyTriviaList; }
         public realize(): ISyntaxToken { return realizeToken(this); }
-        public collectTextElements(elements: string[]): void { }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);
@@ -613,12 +613,6 @@ module TypeScript.Syntax {
 
         private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             return this;
-        }
-
-        public collectTextElements(elements: string[]): void {
-            this.leadingTrivia().collectTextElements(elements);
-            elements.push(this.text());
-            this.trailingTrivia().collectTextElements(elements);
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
@@ -750,12 +744,6 @@ module TypeScript.Syntax {
 
         private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             return this;
-        }
-
-        public collectTextElements(elements: string[]): void {
-            this.leadingTrivia().collectTextElements(elements);
-            elements.push(this.text());
-            this.trailingTrivia().collectTextElements(elements);
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {

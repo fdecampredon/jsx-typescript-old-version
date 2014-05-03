@@ -32,8 +32,6 @@ module TypeScript {
 
         concat(trivia: ISyntaxTriviaList): ISyntaxTriviaList;
 
-        collectTextElements(elements: string[]): void;
-
         clone(): ISyntaxTriviaList;
     }
 }
@@ -95,9 +93,6 @@ module TypeScript.Syntax {
 
         public toJSON(key: any): any {
             return [];
-        }
-
-        public collectTextElements(elements: string[]): void {
         }
 
         public toArray(): ISyntaxTrivia[] {
@@ -200,10 +195,6 @@ module TypeScript.Syntax {
             return [this.item];
         }
 
-        public collectTextElements(elements: string[]): void {
-            (<any>this.item).collectTextElements(elements);
-        }
-
         public toArray(): ISyntaxTrivia[] {
             return [this.item];
         }
@@ -267,13 +258,13 @@ module TypeScript.Syntax {
         }
 
         public fullText(): string {
-            var result = "";
+            var result: string[] = [];
 
             for (var i = 0, n = this.trivia.length; i < n; i++) {
-                result += this.trivia[i].fullText();
+                result.push(this.trivia[i].fullText());
             }
 
-            return result;
+            return result.join("");
         }
 
         public hasComment(): boolean {
@@ -308,12 +299,6 @@ module TypeScript.Syntax {
 
         public toJSON(key: any): ISyntaxTrivia[] {
             return this.trivia;
-        }
-
-        public collectTextElements(elements: string[]): void {
-            for (var i = 0; i < this.trivia.length; i++) {
-                (<any>this.trivia[i]).collectTextElements(elements);
-            }
         }
 
         public toArray(): ISyntaxTrivia[] {
