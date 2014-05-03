@@ -54,7 +54,7 @@ module TypeScript.Services.Formatting {
                 }
 
                 // Compute the span
-                var span = new TextSpan(current.fullStart(), current.fullWidth());
+                var span = new TextSpan(fullStart(current), fullWidth(current));
 
                 // Format the span
                 return this.formatSpan(span, FormattingRequestKind.FormatOnSemicolon);
@@ -77,7 +77,7 @@ module TypeScript.Services.Formatting {
                 }
 
                 // Compute the span
-                var span = new TextSpan(current.fullStart(), current.fullWidth());
+                var span = new TextSpan(fullStart(current), fullWidth(current));
 
                 // Format the span
                 return this.formatSpan(span, FormattingRequestKind.FormatOnClosingCurlyBrace);

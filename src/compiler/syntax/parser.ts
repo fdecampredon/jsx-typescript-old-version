@@ -300,7 +300,7 @@ module TypeScript.Parser {
             // This element must have been an empty node.  Moving to its 'first child' is equivalent to just
             // moving to the next sibling.
 
-            Debug.assert(nodeOrToken.fullWidth() === 0);
+            Debug.assert(fullWidth(nodeOrToken) === 0);
             this.moveToNextSibling();
         }
 
@@ -754,7 +754,7 @@ module TypeScript.Parser {
             // The old tree's length, plus whatever length change was caused by the edit
             // Had better equal the new text's length!
             if (Debug.shouldAssert(AssertionLevel.Aggressive)) {
-                Debug.assert((oldSourceUnit.fullWidth() - this._changeRange.span().length() + this._changeRange.newLength()) === newText.length());
+                Debug.assert((fullWidth(oldSourceUnit) - this._changeRange.span().length() + this._changeRange.newLength()) === newText.length());
             }
 
             // Set up a scanner so that we can scan tokens out of the new text.
@@ -892,7 +892,7 @@ module TypeScript.Parser {
             // creates them.
 
             var position = this.absolutePosition();
-            var tokenWasMoved = this.isPastChangeRange() && nodeOrToken.fullStart() !== position;
+            var tokenWasMoved = this.isPastChangeRange() && fullStart(nodeOrToken) !== position;
 
             if (tokenWasMoved) {
                 setTokenTextAndFullStartWalker.text = this.text;
@@ -960,7 +960,7 @@ module TypeScript.Parser {
                 // whose width is greater than the delta, then crumble it and try again.
                 // Otherwise, we must be pointing at a token.  Just skip it and try again.
                     
-                if (isNode(currentNodeOrToken) && (currentNodeOrToken.fullWidth() > Math.abs(this._changeDelta))) {
+                if (isNode(currentNodeOrToken) && (fullWidth(currentNodeOrToken) > Math.abs(this._changeDelta))) {
                     // We were pointing at a node whose width was more than changeDelta.  Crumble the 
                     // node and try again.  Note: we haven't changed changeDelta.  So the callers loop
                     // will just repeat this until we get to a node or token that we can skip over.
@@ -970,7 +970,7 @@ module TypeScript.Parser {
                     this._oldSourceUnitCursor.moveToNextSibling();
 
                     // Get our change delta closer to 0 as we skip past this item.
-                    this._changeDelta += currentNodeOrToken.fullWidth();
+                    this._changeDelta += fullWidth(currentNodeOrToken);
 
                     // If this was a node, then our changeDelta is 0 or negative.  If this was a 
                     // token, then we could still be negative (and we have to read another token),
@@ -1008,9 +1008,9 @@ module TypeScript.Parser {
                     return null;
                 }
 
-                if (!this.intersectsWithChangeRangeSpanInOriginalText(this.absolutePosition(), node.fullWidth())) {
+                if (!this.intersectsWithChangeRangeSpanInOriginalText(this.absolutePosition(), fullWidth(node))) {
                     // Didn't intersect with the change range.
-                    var isIncrementallyUnusuable = node.isIncrementallyUnusable();
+                    var isIncrementallyUnusuable = TypeScript.isIncrementallyUnusable(node);
                     if (!isIncrementallyUnusuable) {
 
                         // Didn't contain anything that would make it unusable.  Awesome.  This is
@@ -1139,7 +1139,7 @@ module TypeScript.Parser {
 
             // Update the underlying source with where it should now be currently pointing, and 
             // what the previous token is before that position.
-            var absolutePosition = this.absolutePosition() + currentNode.fullWidth();
+            var absolutePosition = this.absolutePosition() + fullWidth(currentNode);
             this._normalParserSource.resetToPosition(absolutePosition);
 
             // Debug.assert(previousToken !== null);
@@ -1866,7 +1866,7 @@ module TypeScript.Parser {
             sourceUnit = <SourceUnitSyntax>this.addSkippedTokensBeforeNode(sourceUnit, result.skippedTokens);
 
             if (Debug.shouldAssert(AssertionLevel.Aggressive)) {
-                Debug.assert(sourceUnit.fullWidth() === this.source.text.length());
+                Debug.assert(fullWidth(sourceUnit) === this.source.text.length());
 
                 if (Debug.shouldAssert(AssertionLevel.VeryAggressive)) {
                     Debug.assert(fullText(sourceUnit) === this.source.text.substr(0, this.source.text.length()));

@@ -32,11 +32,6 @@ module TypeScript {
             return false;
         }
 
-        public fullStart(): number {
-            var token = firstToken(this);
-            return token ? token.fullStart() : -1;
-        }
-
         public toJSON(key: any): any {
             var result: any = {}
 
@@ -47,16 +42,16 @@ module TypeScript {
                 }
             }
 
-            result.fullStart = this.fullStart();
+            result.fullStart = fullStart(this);
             result.fullEnd = fullEnd(this);
 
             result.start = start(this);
             result.end = end(this);
 
-            result.fullWidth = this.fullWidth();
+            result.fullWidth = fullWidth(this);
             result.width = width(this);
 
-            if (this.isIncrementallyUnusable()) {
+            if (isIncrementallyUnusable(this)) {
                 result.isIncrementallyUnusable = true;
             }
 
@@ -81,59 +76,12 @@ module TypeScript {
             return result;
         }
 
-        public isIncrementallyUnusable(): boolean {
-            return (this.data() & SyntaxConstants.NodeIncrementallyUnusableMask) !== 0;
-        }
-
         // True if this node was parsed while the parser was in 'strict' mode.  A node parsed in strict
         // mode cannot be reused if the parser is non-strict mode (and vice versa).  This is because 
         // the parser parses things differently in strict mode and thus the tokens may be interpretted
         // differently if the mode is changed. 
         public parsedInStrictMode(): boolean {
-            return (this.data() & SyntaxConstants.NodeParsedInStrictModeMask) !== 0;
-        }
-
-        public fullWidth(): number {
-            return this.data() >>> SyntaxConstants.NodeFullWidthShift;
-        }
-
-        private computeData(): number {
-            var slotCount = this.childCount();
-
-            var fullWidth = 0;
-
-            // If we have no children (like an OmmittedExpressionSyntax), we're automatically not reusable.
-            var isIncrementallyUnusable = slotCount === 0;
-
-            for (var i = 0, n = slotCount; i < n; i++) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    fullWidth += element.fullWidth();
-
-                    /*
-                    if (!isIncrementallyUnusable) {
-                        
-                        var childIsUnusable = element.isIncrementallyUnusable();
-                        isIncrementallyUnusable = childIsUnusable;
-                    }
-                    /*/
-                    isIncrementallyUnusable = isIncrementallyUnusable || element.isIncrementallyUnusable();
-                    //*/
-                }
-            }
-
-            return (fullWidth << SyntaxConstants.NodeFullWidthShift)
-                 | (isIncrementallyUnusable ? SyntaxConstants.NodeIncrementallyUnusableMask : 0)
-                 | SyntaxConstants.NodeDataComputed;
-        }
-
-        private data(): number {
-            if ((this._data & SyntaxConstants.NodeDataComputed) === 0) {
-                this._data |= this.computeData();
-            }
-
-            return this._data;
+            return (this._data & SyntaxConstants.NodeParsedInStrictModeMask) !== 0;
         }
     }
 }

@@ -490,7 +490,7 @@ module TypeScript.ASTHelpers {
             return null;
         }
 
-        return convertComments(_lastToken.trailingTrivia(), node.fullStart() + node.fullWidth() - _lastToken.trailingTriviaWidth());
+        return convertComments(_lastToken.trailingTrivia(), fullStart(node) + fullWidth(node) - _lastToken.trailingTriviaWidth());
     }
 
     function convertNodeLeadingComments(element: ISyntaxElement): Comment[]{

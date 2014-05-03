@@ -55,7 +55,7 @@ module TypeScript.Services {
             // isEntirelyInsideComment can't handle when the position is out of bounds, 
             // callers should be fixed, however we should be resiliant to bad inputs
             // so we return true (this position is a blocker for getting completions)
-            if (position < 0 || position > sourceUnit.fullWidth()) {
+            if (position < 0 || position > fullWidth(sourceUnit)) {
                 return true;
             }
 

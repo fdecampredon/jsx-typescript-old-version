@@ -90,7 +90,7 @@ module TypeScript.Syntax {
             }
 
             if (current !== null) {
-                offset += current.fullWidth();
+                offset += fullWidth(current);
             }
         }
 
@@ -102,7 +102,7 @@ module TypeScript.Syntax {
         for (var i = 0; i < index; i++) {
             var current = parent.childAt(i);
             if (current !== null) {
-                offset += current.fullWidth();
+                offset += fullWidth(current);
             }
         }
 
@@ -241,7 +241,7 @@ module TypeScript.Syntax {
             return false;
         }
 
-        if (element1.fullStart() !== element2.fullStart()) {
+        if (fullStart(element1) !== fullStart(element2)) {
             return false;
         }
 
@@ -620,7 +620,7 @@ module TypeScript.Syntax {
             return endOfFileToken;
         }
 
-        if (position < 0 || position >= element.fullWidth()) {
+        if (position < 0 || position >= fullWidth(element)) {
             throw Errors.argumentOutOfRange("position");
         }
 
@@ -637,7 +637,7 @@ module TypeScript.Syntax {
     function findTokenWorker(element: ISyntaxElement, position: number): ISyntaxToken {
         // Debug.assert(position >= 0 && position < this.fullWidth());
         if (isToken(element)) {
-            Debug.assert(element.fullWidth() > 0);
+            Debug.assert(fullWidth(element) > 0);
             return <ISyntaxToken>element;
         }
 
@@ -651,11 +651,11 @@ module TypeScript.Syntax {
         for (var i = 0, n = element.childCount(); i < n; i++) {
             var child = element.childAt(i);
 
-            if (child !== null && child.fullWidth() > 0) {
-                var childFullStart = child.fullStart();
+            if (child !== null && fullWidth(child) > 0) {
+                var childFullStart = fullStart(child);
 
                 if (position >= childFullStart) {
-                    var childFullEnd = childFullStart + child.fullWidth();
+                    var childFullEnd = childFullStart + fullWidth(child);
 
                     if (position < childFullEnd) {
                         return findTokenWorker(child, position);
@@ -668,7 +668,7 @@ module TypeScript.Syntax {
     }
 
     function tryGetEndOfFileAt(element: ISyntaxElement, position: number): ISyntaxToken {
-        if (element.kind() === SyntaxKind.SourceUnit && position === element.fullWidth()) {
+        if (element.kind() === SyntaxKind.SourceUnit && position === fullWidth(element)) {
             var sourceUnit = <SourceUnitSyntax>element;
             return sourceUnit.endOfFileToken;
         }

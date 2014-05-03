@@ -102,23 +102,11 @@ module TypeScript.Syntax {
         public isShared(): boolean {
             return false;
         }
-
-        public fullWidth(): number {
-            return this.item.fullWidth();
-        }
-
-        public fullStart(): number {
-            return this.item.fullStart();
-        }
-
-        public isIncrementallyUnusable(): boolean {
-            return this.item.isIncrementallyUnusable();
-        }
     }
 
     class NormalSyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
-        private _data: number = 0;
+        private _data: number;
 
         constructor(private nodeOrTokens: T[]) {
             Syntax.setParentForChildren(this);
@@ -158,41 +146,6 @@ module TypeScript.Syntax {
 
         public isShared(): boolean {
             return false;
-        }
-
-        public isIncrementallyUnusable(): boolean {
-            return (this.data() & SyntaxConstants.NodeIncrementallyUnusableMask) !== 0;
-        }
-
-        public fullWidth(): number {
-            return this.data() >>> SyntaxConstants.NodeFullWidthShift;
-        }
-
-        public fullStart(): number {
-            return firstToken(this).fullStart();
-        }
-
-        private computeData(): number {
-            var fullWidth = 0;
-            var isIncrementallyUnusable = false;
-
-            for (var i = 0, n = this.nodeOrTokens.length; i < n; i++) {
-                var node = this.nodeOrTokens[i];
-                fullWidth += node.fullWidth();
-                isIncrementallyUnusable = isIncrementallyUnusable || node.isIncrementallyUnusable();
-            }
-
-            return (fullWidth << SyntaxConstants.NodeFullWidthShift)
-                 | (isIncrementallyUnusable ? SyntaxConstants.NodeIncrementallyUnusableMask : 0)
-                 | SyntaxConstants.NodeDataComputed;
-        }
-
-        private data(): number {
-            if ((this._data & SyntaxConstants.NodeDataComputed) === 0) {
-                this._data = this.computeData();
-            }
-
-            return this._data;
         }
     }
 

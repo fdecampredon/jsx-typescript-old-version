@@ -99,7 +99,7 @@ module TypeScript.Services.Formatting {
         }
 
         public visitNode(node: SyntaxNode): void {
-            var nodeSpan = new TextSpan(this._position, node.fullWidth());
+            var nodeSpan = new TextSpan(this._position, fullWidth(node));
 
             if (nodeSpan.intersectsWithTextSpan(this._textSpan)) {
                 // Update indentation level
@@ -118,7 +118,7 @@ module TypeScript.Services.Formatting {
             }
             else {
                 // We're skipping the node, so update our position accordingly.
-                this._position += node.fullWidth();
+                this._position += fullWidth(node);
             }
         }
 

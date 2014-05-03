@@ -289,7 +289,7 @@ module TypeScript.Services {
             // isEntirelyInsideComment can't handle when the position is out of bounds, 
             // callers should be fixed, however we should be resiliant to bad inputs
             // so we return true (this position is a blocker for getting signature help)
-            if (position < 0 || position > sourceUnit.fullWidth()) {
+            if (position < 0 || position > fullWidth(sourceUnit)) {
                 return true;
             }
 
@@ -301,9 +301,9 @@ module TypeScript.Services {
             if (positionedParent) {
                 var objectCreationExpression = <TypeScript.ObjectCreationExpressionSyntax> positionedParent;
                 var expressionRelativeStart = objectCreationExpression.newKeyword.fullWidth();
-                var tokenRelativeStart = positionedToken.fullStart() - positionedParent.fullStart();
+                var tokenRelativeStart = positionedToken.fullStart() - fullStart(positionedParent);
                 return tokenRelativeStart >= expressionRelativeStart &&
-                    tokenRelativeStart <= (expressionRelativeStart + objectCreationExpression.expression.fullWidth());
+                    tokenRelativeStart <= (expressionRelativeStart + fullWidth(objectCreationExpression.expression));
             }
 
             return false;

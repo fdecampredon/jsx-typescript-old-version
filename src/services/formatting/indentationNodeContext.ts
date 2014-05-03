@@ -42,7 +42,7 @@ module TypeScript.Services.Formatting {
         }
 
         public fullWidth(): number {
-            return this._node.fullWidth();
+            return fullWidth(this._node);
         }
 
         public start(): number {

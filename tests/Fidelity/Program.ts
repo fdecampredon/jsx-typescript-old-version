@@ -7,7 +7,7 @@
 ///<reference path='..\..\src\compiler\core\environment.ts' />
 ///<reference path='..\..\src\harness\diff.ts' />
 ///<reference path='..\..\src\compiler\references.ts' />
-// ///<reference path='anders\parser.ts' />
+///<reference path='anders\parser.ts' />
 
 var timer = new TypeScript.Timer();
 
@@ -421,17 +421,17 @@ class Program {
 
         var text = TypeScript.TextFactory.createText(contents);
 
-        //var andersText = ts.createSourceFile(fileName, contents);
-        //timer.start();
-        //var andersTree = ts.parseSourceFile(andersText);
-        //timer.end();
-        //andersTime += timer.time;
+        var andersText = ts.createSourceFile(fileName, contents);
+        timer.start();
+        var andersTree = ts.parseSourceFile(andersText);
+        timer.end();
+        andersTime += timer.time;
 
         timer.start();
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
         timer.end();
 
-        // cyrusTime += timer.time;
+        cyrusTime += timer.time;
 
         if (!allowErrors) {
             var diagnostics = tree.diagnostics();
@@ -442,7 +442,7 @@ class Program {
         }
 
         if (verify) {
-            TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
+            TypeScript.Debug.assert(TypeScript.fullWidth(tree.sourceUnit()) === contents.length);
             TypeScript.visitNodeOrToken(new PositionValidatingWalker(), tree.sourceUnit());
 
             this.checkResult(fileName, tree, verify, generateBaseline, /*justText:*/ false);
@@ -491,7 +491,7 @@ class Program {
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
         var sourceUnit = tree.sourceUnit();
 
-        TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
+        TypeScript.Debug.assert(TypeScript.fullWidth(tree.sourceUnit()) === contents.length);
 
         var tokens: TypeScript.IIndexable<any>= {};
         var tokensOnLeft: TypeScript.IIndexable<any> = {};
@@ -702,8 +702,8 @@ for (var d in TypeScript.LocalizedDiagnosticMessages) {
 
 var whatever = JSON.stringify(diagnostics, null, 4);
 
-//var andersTime = 0;
-//var cyrusTime = 0;
+var andersTime = 0;
+var cyrusTime = 0;
 
 var totalTime = 0;
 var totalSize = 0;
@@ -722,5 +722,6 @@ var count = 1;
 
 TypeScript.Environment.standardOut.WriteLine("Total time: " + (totalTime / count));
 TypeScript.Environment.standardOut.WriteLine("Total size: " + (totalSize / count));
-//TypeScript.Environment.standardOut.WriteLine("Anders time: " + andersTime);
-//TypeScript.Environment.standardOut.WriteLine("Cyrus time : " + cyrusTime);
+TypeScript.Environment.standardOut.WriteLine("Anders time: " + andersTime);
+TypeScript.Environment.standardOut.WriteLine("Cyrus time : " + cyrusTime);
+TypeScript.Environment.standardOut.WriteLine("Ratio      : " + (cyrusTime / andersTime));

@@ -46,7 +46,7 @@ module TypeScript.Services {
 
             while (parent !== null) {
                 // Skip nodes that start at the position, these will have the indentation level of thier parent
-                if (parent.fullStart() !== currentNode.fullStart()) {
+                if (fullStart(parent) !== fullStart(currentNode)) {
                     if (Indenter.isInContainerNode(parent, currentElement)) {
                         indentation += editorOptions.IndentSize;
                     }

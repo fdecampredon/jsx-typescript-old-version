@@ -64,18 +64,6 @@ module TypeScript.Syntax {
         public separatorAt(index: number): ISyntaxToken {
             throw Errors.argumentOutOfRange("index");
         }
-
-        fullWidth() {
-            return 0;
-        }
-
-        public fullStart(): number {
-            throw Errors.invalidOperation("'fullStart' invalid on a singleton element.");
-        }
-
-        isIncrementallyUnusable() {
-            return false;
-        }
     }
 
     var _emptySeparatedList: ISeparatedSyntaxList<ISyntaxNodeOrToken> = new EmptySeparatedSyntaxList<ISyntaxNodeOrToken>();
@@ -137,23 +125,11 @@ module TypeScript.Syntax {
         public separatorAt(index: number): ISyntaxToken {
             throw Errors.argumentOutOfRange("index");
         }
-
-        public fullWidth(): number {
-            return this.item.fullWidth();
-        }
-
-        public fullStart(): number {
-            return this.item.fullStart();
-        }
-
-        public isIncrementallyUnusable(): boolean {
-            return this.item.isIncrementallyUnusable();
-        }
     }
 
     class NormalSeparatedSyntaxList<T extends ISyntaxNodeOrToken> implements ISeparatedSyntaxList<T> {
         public parent: ISyntaxElement = null;
-        private _data: number = 0;
+        private _data: number;
 
         constructor(private elements: ISyntaxNodeOrToken[]) {
             Syntax.setParentForChildren(this);
@@ -209,44 +185,6 @@ module TypeScript.Syntax {
             }
 
             return <ISyntaxToken>this.elements[value];
-        }
-
-        public isIncrementallyUnusable(): boolean {
-            return (this.data() & SyntaxConstants.NodeIncrementallyUnusableMask) !== 0;
-        }
-
-        public fullWidth(): number {
-            return this.data() >>> SyntaxConstants.NodeFullWidthShift;
-        }
-
-        public fullStart(): number {
-            return firstToken(this).fullStart();
-        }
-
-        private computeData(): number {
-            var fullWidth = 0;
-            var isIncrementallyUnusable = false;
-
-            for (var i = 0, n = this.elements.length; i < n; i++) {
-                var element = this.elements[i];
-
-                var childWidth = element.fullWidth();
-                fullWidth += childWidth;
-
-                isIncrementallyUnusable = isIncrementallyUnusable || element.isIncrementallyUnusable();
-            }
-
-            return (fullWidth << SyntaxConstants.NodeFullWidthShift)
-                 | (isIncrementallyUnusable ? SyntaxConstants.NodeIncrementallyUnusableMask : 0)
-                 | SyntaxConstants.NodeDataComputed;
-        }
-
-        private data(): number {
-            if ((this._data & SyntaxConstants.NodeDataComputed) === 0) {
-                this._data = this.computeData();
-            }
-
-            return this._data;
         }
     }
 

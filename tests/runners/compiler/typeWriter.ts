@@ -56,8 +56,8 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
         if (!element.isShared()) {
             var candidates: string[] = [];
 
-            for (var i = 0; i < element.fullWidth(); i++) {
-                var ast = TypeScript.ASTHelpers.getAstAtPosition(this.document.sourceUnit(), element.fullStart() + i, false, false);
+            for (var i = 0; i < TypeScript.fullWidth(element); i++) {
+                var ast = TypeScript.ASTHelpers.getAstAtPosition(this.document.sourceUnit(), TypeScript.fullStart(element) + i, false, false);
                 while (ast) {
                     if (TypeScript.end(ast) - TypeScript.start(ast) === TypeScript.width(element)) {
                         return ast;
@@ -66,8 +66,8 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
                 }
             }
 
-            var errorText = 'Was looking for AST in file ' + this.filename + ' with fulltext = ' + TypeScript.fullText(element) + 
-                ', width = ' + TypeScript.width(element) + ', pos = ' + element.fullStart();
+            var errorText = 'Was looking for AST in file ' + this.filename + ' with fulltext = ' + TypeScript.fullText(element) +
+                ', width = ' + TypeScript.width(element) + ', pos = ' + TypeScript.fullStart(element);
 
             throw new Error(errorText);
         }
@@ -174,7 +174,7 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
     }
 
     public log(node: TypeScript.ISyntaxNodeOrToken) {
-        var pos = this.document.lineMap().getLineAndCharacterFromPosition(node.fullStart());
+        var pos = this.document.lineMap().getLineAndCharacterFromPosition(TypeScript.fullStart(node));
         this.results.push({ line: pos.line(), column: pos.character(), syntaxKind: TypeScript.SyntaxKind[node.kind()], identifierName: TypeScript.fullText(node).trim(), type: this.getTypeOfElement(node) });
     }
 }

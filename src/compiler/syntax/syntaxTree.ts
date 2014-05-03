@@ -240,7 +240,7 @@ module TypeScript {
                 return false;
             }
 
-            var listFullStart = parent.fullStart() + Syntax.childOffset(parent, list);
+            var listFullStart = fullStart(parent) + Syntax.childOffset(parent, list);
             var tokenAtStart = Syntax.findToken(this.syntaxTree.sourceUnit(), listFullStart);
 
             this.pushDiagnostic(tokenAtStart, DiagnosticCode.Unexpected_token_0_expected, [expected]);
