@@ -4897,13 +4897,13 @@ var TypeScript;
 (function (TypeScript) {
     (function (Indentation) {
         function columnForEndOfTokenAtPosition(syntaxTree, position, options) {
-            var token = syntaxTree.sourceUnit().findToken(position);
-            return columnForStartOfTokenAtPosition(syntaxTree, position, options) + token.width();
+            var token = TypeScript.Syntax.findToken(syntaxTree.sourceUnit(), position);
+            return columnForStartOfTokenAtPosition(syntaxTree, position, options) + TypeScript.width(token);
         }
         Indentation.columnForEndOfTokenAtPosition = columnForEndOfTokenAtPosition;
 
         function columnForStartOfTokenAtPosition(syntaxTree, position, options) {
-            var token = syntaxTree.sourceUnit().findToken(position);
+            var token = TypeScript.Syntax.findToken(syntaxTree.sourceUnit(), position);
 
             var firstTokenInLine = TypeScript.Syntax.firstTokenInLineContainingPosition(syntaxTree, token.fullStart());
             var leadingTextInReverse = [];
@@ -5890,971 +5890,6 @@ var TypeScript;
         isKeywordStartCharacter[keyword.charCodeAt(0)] = true;
     }
 
-    var Scanner = (function () {
-        function Scanner(_languageVersion, _fullText) {
-            this._languageVersion = _languageVersion;
-            this._fullText = _fullText;
-            this._index = 0;
-            if (_fullText !== null) {
-                this.reset(_fullText, 0, _fullText.length());
-            }
-        }
-        Scanner.prototype.reset = function (fullText, index, textEnd) {
-            TypeScript.Debug.assert(index <= fullText.length());
-            TypeScript.Debug.assert(textEnd <= fullText.length());
-            this._index = index;
-            this._fullText = fullText;
-            this._length = textEnd;
-
-            this._string = fullText.substr(0, fullText.length());
-        };
-
-        Scanner.prototype.languageVersion = function () {
-            return this._languageVersion;
-        };
-
-        Scanner.prototype.absoluteIndex = function () {
-            return this._index;
-        };
-
-        Scanner.prototype.isAtEndOfSource = function () {
-            return this._index >= this._length;
-        };
-
-        Scanner.prototype.setAbsoluteIndex = function (index) {
-            this._index = index;
-        };
-
-        Scanner.prototype.fillSizeInfo = function (allowRegularExpression) {
-            var fullStart = this.absoluteIndex();
-            var leadingTriviaInfo = this.scanTriviaInfo(null, false);
-
-            var start = this.absoluteIndex();
-            this.scanSyntaxToken(null, allowRegularExpression);
-            var end = this.absoluteIndex();
-
-            sizeInfo.leadingTriviaWidth = start - fullStart;
-            sizeInfo.width = end - start;
-        };
-
-        Scanner.prototype.scan = function (allowRegularExpression, reportDiagnostic) {
-            var fullStart = this._index;
-
-            var leadingTriviaInfo = this.scanTriviaInfo(reportDiagnostic, false);
-            var kind = this.scanSyntaxToken(reportDiagnostic, allowRegularExpression);
-            var trailingTriviaInfo = this.scanTriviaInfo(reportDiagnostic, true);
-
-            var fullEnd = this._index;
-
-            var fullWidth = fullEnd - fullStart;
-            var packedFullStartAndTriviaInfo = (fullStart << 6 /* FullStartShift */) | leadingTriviaInfo | (trailingTriviaInfo << 3 /* TrailingTriviaShift */);
-            var packedFullWidthAndKind = (fullWidth << 7 /* FullWidthShift */) | kind;
-            return new ScannerToken(this._fullText, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
-        };
-
-        Scanner.prototype.scanTrivia = function (parent, isTrailing) {
-            var trivia = new Array();
-
-            while (true) {
-                if (!this.isAtEndOfSource()) {
-                    var ch = this._string.charCodeAt(this._index);
-                    switch (ch) {
-                        case 32 /* space */:
-                        case 160 /* nonBreakingSpace */:
-                        case 8192 /* enQuad */:
-                        case 8193 /* emQuad */:
-                        case 8194 /* enSpace */:
-                        case 8195 /* emSpace */:
-                        case 8196 /* threePerEmSpace */:
-                        case 8197 /* fourPerEmSpace */:
-                        case 8198 /* sixPerEmSpace */:
-                        case 8199 /* figureSpace */:
-                        case 8200 /* punctuationSpace */:
-                        case 8201 /* thinSpace */:
-                        case 8202 /* hairSpace */:
-                        case 8203 /* zeroWidthSpace */:
-                        case 8239 /* narrowNoBreakSpace */:
-                        case 12288 /* ideographicSpace */:
-
-                        case 9 /* tab */:
-                        case 11 /* verticalTab */:
-                        case 12 /* formFeed */:
-                        case 65279 /* byteOrderMark */:
-                            trivia.push(this.scanWhitespaceTrivia());
-                            continue;
-
-                        case 47 /* slash */:
-                            var ch2 = this._string.charCodeAt(this._index + 1);
-                            if (ch2 === 47 /* slash */) {
-                                trivia.push(this.scanSingleLineCommentTrivia());
-                                continue;
-                            }
-
-                            if (ch2 === 42 /* asterisk */) {
-                                trivia.push(this.scanMultiLineCommentTrivia());
-                                continue;
-                            }
-
-                            throw TypeScript.Errors.invalidOperation();
-
-                        case 13 /* carriageReturn */:
-                        case 10 /* lineFeed */:
-                        case 8233 /* paragraphSeparator */:
-                        case 8232 /* lineSeparator */:
-                            trivia.push(this.scanLineTerminatorSequenceTrivia(ch));
-
-                            if (!isTrailing) {
-                                continue;
-                            }
-
-                            break;
-
-                        default:
-                            throw TypeScript.Errors.invalidOperation();
-                    }
-                }
-
-                var triviaList = TypeScript.Syntax.triviaList(trivia);
-                triviaList.parent = parent;
-
-                return triviaList;
-            }
-        };
-
-        Scanner.prototype.scanTriviaInfo = function (reportDiagnostic, isTrailing) {
-            var commentInfo = 0;
-            var whitespaceInfo = 0;
-            var newLineInfo = 0;
-
-            while (true) {
-                var ch = this._string.charCodeAt(this._index);
-
-                switch (ch) {
-                    case 32 /* space */:
-                    case 160 /* nonBreakingSpace */:
-                    case 8192 /* enQuad */:
-                    case 8193 /* emQuad */:
-                    case 8194 /* enSpace */:
-                    case 8195 /* emSpace */:
-                    case 8196 /* threePerEmSpace */:
-                    case 8197 /* fourPerEmSpace */:
-                    case 8198 /* sixPerEmSpace */:
-                    case 8199 /* figureSpace */:
-                    case 8200 /* punctuationSpace */:
-                    case 8201 /* thinSpace */:
-                    case 8202 /* hairSpace */:
-                    case 8203 /* zeroWidthSpace */:
-                    case 8239 /* narrowNoBreakSpace */:
-                    case 12288 /* ideographicSpace */:
-
-                    case 9 /* tab */:
-                    case 11 /* verticalTab */:
-                    case 12 /* formFeed */:
-                    case 65279 /* byteOrderMark */:
-                        whitespaceInfo = 4 /* WhitespaceTriviaBitMask */;
-                        this._index++;
-                        continue;
-
-                    case 47 /* slash */:
-                        var ch2 = this._string.charCodeAt(this._index + 1);
-                        if (ch2 === 47 /* slash */) {
-                            commentInfo = 1 /* CommentTriviaBitMask */;
-                            this.skipSingleLineCommentTrivia();
-                            continue;
-                        }
-
-                        if (ch2 === 42 /* asterisk */) {
-                            commentInfo = 1 /* CommentTriviaBitMask */;
-                            this.skipMultiLineCommentTrivia(reportDiagnostic);
-                            continue;
-                        }
-
-                        break;
-
-                    case 13 /* carriageReturn */:
-                    case 10 /* lineFeed */:
-                    case 8233 /* paragraphSeparator */:
-                    case 8232 /* lineSeparator */:
-                        newLineInfo = 2 /* NewLineTriviaBitMask */;
-                        this.skipLineTerminatorSequence(ch);
-
-                        if (!isTrailing) {
-                            continue;
-                        }
-
-                        break;
-                }
-
-                return commentInfo + newLineInfo + whitespaceInfo;
-            }
-        };
-
-        Scanner.prototype.isNewLineCharacter = function (ch) {
-            switch (ch) {
-                case 13 /* carriageReturn */:
-                case 10 /* lineFeed */:
-                case 8233 /* paragraphSeparator */:
-                case 8232 /* lineSeparator */:
-                    return true;
-                default:
-                    return false;
-            }
-        };
-
-        Scanner.prototype.scanWhitespaceTrivia = function () {
-            var absoluteStartIndex = this.absoluteIndex();
-
-            while (true) {
-                var ch = this._string.charCodeAt(this._index);
-
-                switch (ch) {
-                    case 32 /* space */:
-                    case 160 /* nonBreakingSpace */:
-                    case 8192 /* enQuad */:
-                    case 8193 /* emQuad */:
-                    case 8194 /* enSpace */:
-                    case 8195 /* emSpace */:
-                    case 8196 /* threePerEmSpace */:
-                    case 8197 /* fourPerEmSpace */:
-                    case 8198 /* sixPerEmSpace */:
-                    case 8199 /* figureSpace */:
-                    case 8200 /* punctuationSpace */:
-                    case 8201 /* thinSpace */:
-                    case 8202 /* hairSpace */:
-                    case 8203 /* zeroWidthSpace */:
-                    case 8239 /* narrowNoBreakSpace */:
-                    case 12288 /* ideographicSpace */:
-
-                    case 9 /* tab */:
-                    case 11 /* verticalTab */:
-                    case 12 /* formFeed */:
-                    case 65279 /* byteOrderMark */:
-                        this._index++;
-                        continue;
-                }
-
-                break;
-            }
-
-            return this.createTrivia(4 /* WhitespaceTrivia */, absoluteStartIndex);
-        };
-
-        Scanner.prototype.createTrivia = function (kind, absoluteStartIndex) {
-            var fullWidth = this.absoluteIndex() - absoluteStartIndex;
-            return TypeScript.Syntax.deferredTrivia(kind, this._fullText, absoluteStartIndex, fullWidth);
-        };
-
-        Scanner.prototype.scanSingleLineCommentTrivia = function () {
-            var absoluteStartIndex = this.absoluteIndex();
-            this.skipSingleLineCommentTrivia();
-
-            return this.createTrivia(7 /* SingleLineCommentTrivia */, absoluteStartIndex);
-        };
-
-        Scanner.prototype.skipSingleLineCommentTrivia = function () {
-            this._index += 2;
-
-            while (true) {
-                var ch = this._string.charCodeAt(this._index);
-                if (isNaN(ch) || this.isNewLineCharacter(ch)) {
-                    return;
-                }
-
-                this._index++;
-            }
-        };
-
-        Scanner.prototype.scanMultiLineCommentTrivia = function () {
-            var absoluteStartIndex = this.absoluteIndex();
-            this.skipMultiLineCommentTrivia(null);
-
-            return this.createTrivia(6 /* MultiLineCommentTrivia */, absoluteStartIndex);
-        };
-
-        Scanner.prototype.skipMultiLineCommentTrivia = function (reportDiagnostic) {
-            this._index += 2;
-
-            while (true) {
-                if (this.isAtEndOfSource()) {
-                    if (reportDiagnostic !== null) {
-                        reportDiagnostic(this._length, 0, TypeScript.DiagnosticCode.AsteriskSlash_expected, null);
-                    }
-
-                    return;
-                }
-
-                if (this._string.charCodeAt(this._index) === 42 /* asterisk */ && this._string.charCodeAt(this._index + 1) === 47 /* slash */) {
-                    this._index += 2;
-                    return;
-                }
-
-                this._index++;
-            }
-        };
-
-        Scanner.prototype.scanLineTerminatorSequenceTrivia = function (ch) {
-            var absoluteStartIndex = this.absoluteIndex();
-            this.skipLineTerminatorSequence(ch);
-
-            return this.createTrivia(5 /* NewLineTrivia */, absoluteStartIndex);
-        };
-
-        Scanner.prototype.skipLineTerminatorSequence = function (ch) {
-            this._index++;
-
-            if (ch === 13 /* carriageReturn */ && this._string.charCodeAt(this._index) === 10 /* lineFeed */) {
-                this._index++;
-            }
-        };
-
-        Scanner.prototype.scanSyntaxToken = function (reportDiagnostic, allowRegularExpression) {
-            if (this.isAtEndOfSource()) {
-                return 10 /* EndOfFileToken */;
-            }
-
-            var character = this._string.charCodeAt(this._index);
-
-            switch (character) {
-                case 34 /* doubleQuote */:
-                case 39 /* singleQuote */:
-                    return this.scanStringLiteral(reportDiagnostic);
-
-                case 47 /* slash */:
-                    return this.scanSlashToken(allowRegularExpression);
-
-                case 46 /* dot */:
-                    return this.scanDotToken(reportDiagnostic);
-
-                case 45 /* minus */:
-                    return this.scanMinusToken();
-
-                case 33 /* exclamation */:
-                    return this.scanExclamationToken();
-
-                case 61 /* equals */:
-                    return this.scanEqualsToken();
-
-                case 124 /* bar */:
-                    return this.scanBarToken();
-
-                case 42 /* asterisk */:
-                    return this.scanAsteriskToken();
-
-                case 43 /* plus */:
-                    return this.scanPlusToken();
-
-                case 37 /* percent */:
-                    return this.scanPercentToken();
-
-                case 38 /* ampersand */:
-                    return this.scanAmpersandToken();
-
-                case 94 /* caret */:
-                    return this.scanCaretToken();
-
-                case 60 /* lessThan */:
-                    return this.scanLessThanToken();
-
-                case 62 /* greaterThan */:
-                    return this.advanceAndSetTokenKind(81 /* GreaterThanToken */);
-
-                case 44 /* comma */:
-                    return this.advanceAndSetTokenKind(79 /* CommaToken */);
-
-                case 58 /* colon */:
-                    return this.advanceAndSetTokenKind(106 /* ColonToken */);
-
-                case 59 /* semicolon */:
-                    return this.advanceAndSetTokenKind(78 /* SemicolonToken */);
-
-                case 126 /* tilde */:
-                    return this.advanceAndSetTokenKind(102 /* TildeToken */);
-
-                case 40 /* openParen */:
-                    return this.advanceAndSetTokenKind(72 /* OpenParenToken */);
-
-                case 41 /* closeParen */:
-                    return this.advanceAndSetTokenKind(73 /* CloseParenToken */);
-
-                case 123 /* openBrace */:
-                    return this.advanceAndSetTokenKind(70 /* OpenBraceToken */);
-
-                case 125 /* closeBrace */:
-                    return this.advanceAndSetTokenKind(71 /* CloseBraceToken */);
-
-                case 91 /* openBracket */:
-                    return this.advanceAndSetTokenKind(74 /* OpenBracketToken */);
-
-                case 93 /* closeBracket */:
-                    return this.advanceAndSetTokenKind(75 /* CloseBracketToken */);
-
-                case 63 /* question */:
-                    return this.advanceAndSetTokenKind(105 /* QuestionToken */);
-            }
-
-            if (isNumericLiteralStart[character]) {
-                return this.scanNumericLiteral(reportDiagnostic);
-            }
-
-            if (isIdentifierStartCharacter[character]) {
-                var result = this.tryFastScanIdentifierOrKeyword(character);
-                if (result !== 0 /* None */) {
-                    return result;
-                }
-            }
-
-            if (this.isIdentifierStart(this.peekCharOrUnicodeEscape())) {
-                return this.slowScanIdentifierOrKeyword(reportDiagnostic);
-            }
-
-            return this.scanDefaultCharacter(character, reportDiagnostic);
-        };
-
-        Scanner.prototype.isIdentifierStart = function (interpretedChar) {
-            if (isIdentifierStartCharacter[interpretedChar]) {
-                return true;
-            }
-
-            return interpretedChar > 127 /* maxAsciiCharacter */ && TypeScript.Unicode.isIdentifierStart(interpretedChar, this._languageVersion);
-        };
-
-        Scanner.prototype.isIdentifierPart = function (interpretedChar) {
-            if (isIdentifierPartCharacter[interpretedChar]) {
-                return true;
-            }
-
-            return interpretedChar > 127 /* maxAsciiCharacter */ && TypeScript.Unicode.isIdentifierPart(interpretedChar, this._languageVersion);
-        };
-
-        Scanner.prototype.tryFastScanIdentifierOrKeyword = function (firstCharacter) {
-            var startIndex = this._index;
-            var character = 0;
-
-            while (this._index < this._length) {
-                character = this._string.charCodeAt(this._index);
-                if (!isIdentifierPartCharacter[character]) {
-                    break;
-                }
-
-                this._index++;
-            }
-
-            if (this._index < this._length && (character === 92 /* backslash */ || character > 127 /* maxAsciiCharacter */)) {
-                this._index = startIndex;
-                return 0 /* None */;
-            } else {
-                var kind;
-                var identifierLength = this._index - startIndex;
-                if (isKeywordStartCharacter[firstCharacter]) {
-                    kind = TypeScript.ScannerUtilities.identifierKind(this._string, startIndex, identifierLength);
-                } else {
-                    kind = 11 /* IdentifierName */;
-                }
-
-                return kind;
-            }
-        };
-
-        Scanner.prototype.slowScanIdentifierOrKeyword = function (reportDiagnostic) {
-            var startIndex = this._index;
-
-            do {
-                this.scanCharOrUnicodeEscape(reportDiagnostic);
-            } while(this.isIdentifierPart(this.peekCharOrUnicodeEscape()));
-
-            var length = this._index - startIndex;
-            var text = this._string.substr(startIndex, length);
-            var valueText = TypeScript.Syntax.massageEscapes(text);
-
-            var keywordKind = TypeScript.SyntaxFacts.getTokenKind(valueText);
-            if (keywordKind >= 15 /* FirstKeyword */ && keywordKind <= 69 /* LastKeyword */) {
-                return keywordKind;
-            }
-
-            return 11 /* IdentifierName */;
-        };
-
-        Scanner.prototype.scanNumericLiteral = function (reportDiagnostic) {
-            if (this.isHexNumericLiteral()) {
-                this.scanHexNumericLiteral();
-            } else if (this.isOctalNumericLiteral()) {
-                this.scanOctalNumericLiteral(reportDiagnostic);
-            } else {
-                this.scanDecimalNumericLiteral();
-            }
-
-            return 13 /* NumericLiteral */;
-        };
-
-        Scanner.prototype.isOctalNumericLiteral = function () {
-            return this._string.charCodeAt(this._index) === 48 /* _0 */ && TypeScript.CharacterInfo.isOctalDigit(this._string.charCodeAt(this._index + 1));
-        };
-
-        Scanner.prototype.scanOctalNumericLiteral = function (reportDiagnostic) {
-            var position = this.absoluteIndex();
-
-            while (TypeScript.CharacterInfo.isOctalDigit(this._string.charCodeAt(this._index))) {
-                this._index++;
-            }
-
-            if (this.languageVersion() >= 1 /* EcmaScript5 */ && reportDiagnostic !== null) {
-                reportDiagnostic(position, this._index - position, TypeScript.DiagnosticCode.Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher, null);
-            }
-        };
-
-        Scanner.prototype.scanDecimalDigits = function () {
-            while (TypeScript.CharacterInfo.isDecimalDigit(this._string.charCodeAt(this._index))) {
-                this._index++;
-            }
-        };
-
-        Scanner.prototype.scanDecimalNumericLiteral = function () {
-            this.scanDecimalDigits();
-
-            if (this._string.charCodeAt(this._index) === 46 /* dot */) {
-                this._index++;
-            }
-
-            this.scanDecimalDigits();
-
-            var ch = this._string.charCodeAt(this._index);
-            if (ch === 101 /* e */ || ch === 69 /* E */) {
-                var nextChar1 = this._string.charCodeAt(this._index + 1);
-
-                if (TypeScript.CharacterInfo.isDecimalDigit(nextChar1)) {
-                    this._index++;
-                    this.scanDecimalDigits();
-                } else if (nextChar1 === 45 /* minus */ || nextChar1 === 43 /* plus */) {
-                    var nextChar2 = this._string.charCodeAt(this._index + 2);
-                    if (TypeScript.CharacterInfo.isDecimalDigit(nextChar2)) {
-                        this._index += 2;
-                        this.scanDecimalDigits();
-                    }
-                }
-            }
-        };
-
-        Scanner.prototype.scanHexNumericLiteral = function () {
-            this._index += 2;
-
-            while (TypeScript.CharacterInfo.isHexDigit(this._string.charCodeAt(this._index))) {
-                this._index++;
-            }
-        };
-
-        Scanner.prototype.isHexNumericLiteral = function () {
-            if (this._string.charCodeAt(this._index) === 48 /* _0 */) {
-                var ch = this._string.charCodeAt(this._index + 1);
-
-                if (ch === 120 /* x */ || ch === 88 /* X */) {
-                    ch = this._string.charCodeAt(this._index + 2);
-
-                    return TypeScript.CharacterInfo.isHexDigit(ch);
-                }
-            }
-
-            return false;
-        };
-
-        Scanner.prototype.advanceAndSetTokenKind = function (kind) {
-            this._index++;
-            return kind;
-        };
-
-        Scanner.prototype.scanLessThanToken = function () {
-            this._index++;
-            var ch0 = this._string.charCodeAt(this._index);
-            if (ch0 === 61 /* equals */) {
-                this._index++;
-                return 82 /* LessThanEqualsToken */;
-            } else if (ch0 === 60 /* lessThan */) {
-                this._index++;
-                if (this._string.charCodeAt(this._index) === 61 /* equals */) {
-                    this._index++;
-                    return 112 /* LessThanLessThanEqualsToken */;
-                } else {
-                    return 95 /* LessThanLessThanToken */;
-                }
-            } else {
-                return 80 /* LessThanToken */;
-            }
-        };
-
-        Scanner.prototype.scanBarToken = function () {
-            this._index++;
-            var ch = this._string.charCodeAt(this._index);
-            if (ch === 61 /* equals */) {
-                this._index++;
-                return 116 /* BarEqualsToken */;
-            } else if (ch === 124 /* bar */) {
-                this._index++;
-                return 104 /* BarBarToken */;
-            } else {
-                return 99 /* BarToken */;
-            }
-        };
-
-        Scanner.prototype.scanCaretToken = function () {
-            this._index++;
-            if (this._string.charCodeAt(this._index) === 61 /* equals */) {
-                this._index++;
-                return 117 /* CaretEqualsToken */;
-            } else {
-                return 100 /* CaretToken */;
-            }
-        };
-
-        Scanner.prototype.scanAmpersandToken = function () {
-            this._index++;
-            var character = this._string.charCodeAt(this._index);
-            if (character === 61 /* equals */) {
-                this._index++;
-                return 115 /* AmpersandEqualsToken */;
-            } else if (character === 38 /* ampersand */) {
-                this._index++;
-                return 103 /* AmpersandAmpersandToken */;
-            } else {
-                return 98 /* AmpersandToken */;
-            }
-        };
-
-        Scanner.prototype.scanPercentToken = function () {
-            this._index++;
-            if (this._string.charCodeAt(this._index) === 61 /* equals */) {
-                this._index++;
-                return 111 /* PercentEqualsToken */;
-            } else {
-                return 92 /* PercentToken */;
-            }
-        };
-
-        Scanner.prototype.scanMinusToken = function () {
-            this._index++;
-            var character = this._string.charCodeAt(this._index);
-
-            if (character === 61 /* equals */) {
-                this._index++;
-                return 109 /* MinusEqualsToken */;
-            } else if (character === 45 /* minus */) {
-                this._index++;
-                return 94 /* MinusMinusToken */;
-            } else {
-                return 90 /* MinusToken */;
-            }
-        };
-
-        Scanner.prototype.scanPlusToken = function () {
-            this._index++;
-            var character = this._string.charCodeAt(this._index);
-            if (character === 61 /* equals */) {
-                this._index++;
-                return 108 /* PlusEqualsToken */;
-            } else if (character === 43 /* plus */) {
-                this._index++;
-                return 93 /* PlusPlusToken */;
-            } else {
-                return 89 /* PlusToken */;
-            }
-        };
-
-        Scanner.prototype.scanAsteriskToken = function () {
-            this._index++;
-            if (this._string.charCodeAt(this._index) === 61 /* equals */) {
-                this._index++;
-                return 110 /* AsteriskEqualsToken */;
-            } else {
-                return 91 /* AsteriskToken */;
-            }
-        };
-
-        Scanner.prototype.scanEqualsToken = function () {
-            this._index++;
-            var character = this._string.charCodeAt(this._index);
-            if (character === 61 /* equals */) {
-                this._index++;
-
-                if (this._string.charCodeAt(this._index) === 61 /* equals */) {
-                    this._index++;
-
-                    return 87 /* EqualsEqualsEqualsToken */;
-                } else {
-                    return 84 /* EqualsEqualsToken */;
-                }
-            } else if (character === 62 /* greaterThan */) {
-                this._index++;
-                return 85 /* EqualsGreaterThanToken */;
-            } else {
-                return 107 /* EqualsToken */;
-            }
-        };
-
-        Scanner.prototype.isDotPrefixedNumericLiteral = function () {
-            if (this._string.charCodeAt(this._index) === 46 /* dot */) {
-                var ch = this._string.charCodeAt(this._index + 1);
-                return TypeScript.CharacterInfo.isDecimalDigit(ch);
-            }
-
-            return false;
-        };
-
-        Scanner.prototype.scanDotToken = function (reportDiagnostic) {
-            if (this.isDotPrefixedNumericLiteral()) {
-                return this.scanNumericLiteral(reportDiagnostic);
-            }
-
-            this._index++;
-            if (this._string.charCodeAt(this._index) === 46 /* dot */ && this._string.charCodeAt(this._index + 1) === 46 /* dot */) {
-                this._index += 2;
-                return 77 /* DotDotDotToken */;
-            } else {
-                return 76 /* DotToken */;
-            }
-        };
-
-        Scanner.prototype.scanSlashToken = function (allowRegularExpression) {
-            if (allowRegularExpression) {
-                var result = this.tryScanRegularExpressionToken();
-                if (result !== 0 /* None */) {
-                    return result;
-                }
-            }
-
-            this._index++;
-            if (this._string.charCodeAt(this._index) === 61 /* equals */) {
-                this._index++;
-                return 119 /* SlashEqualsToken */;
-            } else {
-                return 118 /* SlashToken */;
-            }
-        };
-
-        Scanner.prototype.tryScanRegularExpressionToken = function () {
-            var startIndex = this.absoluteIndex();
-
-            this._index++;
-
-            var inEscape = false;
-            var inCharacterClass = false;
-            while (true) {
-                var ch = this._string.charCodeAt(this._index);
-
-                if (isNaN(ch) || this.isNewLineCharacter(ch)) {
-                    this.setAbsoluteIndex(startIndex);
-                    return 0 /* None */;
-                }
-
-                this._index++;
-                if (inEscape) {
-                    inEscape = false;
-                    continue;
-                }
-
-                switch (ch) {
-                    case 92 /* backslash */:
-                        inEscape = true;
-                        continue;
-
-                    case 91 /* openBracket */:
-                        inCharacterClass = true;
-                        continue;
-
-                    case 93 /* closeBracket */:
-                        inCharacterClass = false;
-                        continue;
-
-                    case 47 /* slash */:
-                        if (inCharacterClass) {
-                            continue;
-                        }
-
-                        break;
-
-                    default:
-                        continue;
-                }
-
-                break;
-            }
-
-            while (isIdentifierPartCharacter[this._string.charCodeAt(this._index)]) {
-                this._index++;
-            }
-
-            return 12 /* RegularExpressionLiteral */;
-        };
-
-        Scanner.prototype.scanExclamationToken = function () {
-            this._index++;
-            if (this._string.charCodeAt(this._index) === 61 /* equals */) {
-                this._index++;
-
-                if (this._string.charCodeAt(this._index) === 61 /* equals */) {
-                    this._index++;
-
-                    return 88 /* ExclamationEqualsEqualsToken */;
-                } else {
-                    return 86 /* ExclamationEqualsToken */;
-                }
-            } else {
-                return 101 /* ExclamationToken */;
-            }
-        };
-
-        Scanner.prototype.scanDefaultCharacter = function (character, reportDiagnostic) {
-            var position = this.absoluteIndex();
-            this._index++;
-
-            if (reportDiagnostic !== null) {
-                var text = String.fromCharCode(character);
-                var messageText = this.getErrorMessageText(text);
-                reportDiagnostic(position, 1, TypeScript.DiagnosticCode.Unexpected_character_0, [messageText]);
-            }
-
-            return 9 /* ErrorToken */;
-        };
-
-        Scanner.prototype.getErrorMessageText = function (text) {
-            if (text === "\\") {
-                return '"\\"';
-            }
-
-            return JSON.stringify(text);
-        };
-
-        Scanner.prototype.skipEscapeSequence = function (reportDiagnostic) {
-            var rewindPoint = this._index;
-
-            this._index++;
-
-            var ch = this._string.charCodeAt(this._index);
-            if (isNaN(ch)) {
-                return;
-            }
-
-            this._index++;
-            switch (ch) {
-                case 120 /* x */:
-                case 117 /* u */:
-                    this.setAbsoluteIndex(rewindPoint);
-                    var value = this.scanUnicodeOrHexEscape(reportDiagnostic);
-                    break;
-
-                case 13 /* carriageReturn */:
-                    if (this._string.charCodeAt(this._index) === 10 /* lineFeed */) {
-                        this._index++;
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-        };
-
-        Scanner.prototype.scanStringLiteral = function (reportDiagnostic) {
-            var quoteCharacter = this._string.charCodeAt(this._index);
-
-            this._index++;
-
-            while (true) {
-                var ch = this._string.charCodeAt(this._index);
-                if (ch === 92 /* backslash */) {
-                    this.skipEscapeSequence(reportDiagnostic);
-                } else if (ch === quoteCharacter) {
-                    this._index++;
-                    break;
-                } else if (isNaN(ch) || this.isNewLineCharacter(ch)) {
-                    if (reportDiagnostic) {
-                        reportDiagnostic(TypeScript.MathPrototype.min(this._index, this._length), 1, TypeScript.DiagnosticCode.Missing_close_quote_character, null);
-                    }
-                    break;
-                } else {
-                    this._index++;
-                }
-            }
-
-            return 14 /* StringLiteral */;
-        };
-
-        Scanner.prototype.isUnicodeEscape = function (character) {
-            return character === 92 /* backslash */ && this._string.charCodeAt(this._index + 1) === 117 /* u */;
-        };
-
-        Scanner.prototype.peekCharOrUnicodeEscape = function () {
-            var character = this._string.charCodeAt(this._index);
-            if (this.isUnicodeEscape(character)) {
-                return this.peekUnicodeOrHexEscape();
-            } else {
-                return character;
-            }
-        };
-
-        Scanner.prototype.peekUnicodeOrHexEscape = function () {
-            var startIndex = this._index;
-
-            var ch = this.scanUnicodeOrHexEscape(null);
-
-            this._index = startIndex;
-
-            return ch;
-        };
-
-        Scanner.prototype.scanCharOrUnicodeEscape = function (reportDiagnostic) {
-            if (this._string.charCodeAt(this._index) === 92 /* backslash */ && this._string.charCodeAt(this._index + 1) === 117 /* u */) {
-                this.scanUnicodeOrHexEscape(reportDiagnostic);
-            } else {
-                this._index++;
-            }
-        };
-
-        Scanner.prototype.scanUnicodeOrHexEscape = function (reportDiagnostic) {
-            var start = this._index;
-            var character = this._string.charCodeAt(this._index);
-
-            this._index++;
-
-            character = this._string.charCodeAt(this._index);
-
-            var intChar = 0;
-            this._index++;
-
-            var count = character === 117 /* u */ ? 4 : 2;
-
-            for (var i = 0; i < count; i++) {
-                var ch2 = this._string.charCodeAt(this._index);
-                if (!TypeScript.CharacterInfo.isHexDigit(ch2)) {
-                    if (reportDiagnostic !== null) {
-                        reportDiagnostic(start, this._index - start, TypeScript.DiagnosticCode.Unrecognized_escape_sequence, null);
-                    }
-
-                    break;
-                }
-
-                intChar = (intChar << 4) + TypeScript.CharacterInfo.hexValue(ch2);
-                this._index++;
-            }
-
-            return intChar;
-        };
-
-        Scanner.isValidIdentifier = function (text, languageVersion) {
-            var scanner = new Scanner(languageVersion, text);
-
-            var hadError = false;
-            var token = scanner.scan(false, function () {
-                return hadError = true;
-            });
-
-            return !hadError && TypeScript.SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && token.width() === text.length();
-        };
-        return Scanner;
-    })();
-    TypeScript.Scanner = Scanner;
-
-    var triviaScanner = new Scanner(1 /* EcmaScript5 */, null);
-
-    var sizeInfo = { leadingTriviaWidth: -1, width: -1 };
-    var sizeInfoToken = null;
-
     var ScannerToken = (function () {
         function ScannerToken(_text, _packedFullStartAndTriviaInfo, _packedFullWidthAndKind) {
             this._text = _text;
@@ -6900,32 +5935,12 @@ var TypeScript;
         ScannerToken.prototype.fullStart = function () {
             return unpackFullStart(this._packedFullStartAndTriviaInfo);
         };
-        ScannerToken.prototype.fullEnd = function () {
-            return this.fullStart() + this.fullWidth();
-        };
 
         ScannerToken.prototype.fillSizeInfo = function () {
-            if (sizeInfoToken !== this) {
-                triviaScanner.reset(this._text, this.fullStart(), this.fullEnd());
-                triviaScanner.fillSizeInfo(this.kind() === 12 /* RegularExpressionLiteral */);
-
-                sizeInfoToken = this;
+            if (ScannerToken.lastTokenInfoToken !== this) {
+                ScannerToken.triviaScanner.fillTokenInfo(this, ScannerToken.lastTokenInfo);
+                ScannerToken.lastTokenInfoToken = this;
             }
-        };
-
-        ScannerToken.prototype.width = function () {
-            this.fillSizeInfo();
-            return sizeInfo.width;
-        };
-
-        ScannerToken.prototype.start = function () {
-            this.fillSizeInfo();
-            return this.fullStart() + sizeInfo.leadingTriviaWidth;
-        };
-
-        ScannerToken.prototype.end = function () {
-            this.fillSizeInfo();
-            return this.fullStart() + sizeInfo.leadingTriviaWidth + sizeInfo.width;
         };
 
         ScannerToken.prototype.fullText = function () {
@@ -6934,7 +5949,7 @@ var TypeScript;
 
         ScannerToken.prototype.text = function () {
             this.fillSizeInfo();
-            return this._text.substr(this.fullStart() + sizeInfo.leadingTriviaWidth, sizeInfo.width);
+            return this._text.substr(this.fullStart() + ScannerToken.lastTokenInfo.leadingTriviaWidth, ScannerToken.lastTokenInfo.width);
         };
 
         ScannerToken.prototype.value = function () {
@@ -6953,11 +5968,7 @@ var TypeScript;
                 return TypeScript.Syntax.emptyTriviaList;
             }
 
-            this.fillSizeInfo();
-
-            var fullStart = this.fullStart();
-            triviaScanner.reset(this._text, fullStart, fullStart + sizeInfo.leadingTriviaWidth);
-            return triviaScanner.scanTrivia(this, false);
+            return ScannerToken.triviaScanner.scanTrivia(this, false);
         };
 
         ScannerToken.prototype.trailingTrivia = function () {
@@ -6965,13 +5976,7 @@ var TypeScript;
                 return TypeScript.Syntax.emptyTriviaList;
             }
 
-            this.fillSizeInfo();
-            var triviaStart = this.fullStart() + sizeInfo.leadingTriviaWidth + sizeInfo.width;
-            var fullEnd = this.fullEnd();
-            var triviaWidth = fullEnd - triviaStart;
-
-            triviaScanner.reset(this._text, triviaStart, fullEnd);
-            return triviaScanner.scanTrivia(this, true);
+            return ScannerToken.triviaScanner.scanTrivia(this, true);
         };
 
         ScannerToken.prototype.leadingTriviaWidth = function () {
@@ -6980,7 +5985,7 @@ var TypeScript;
             }
 
             this.fillSizeInfo();
-            return sizeInfo.leadingTriviaWidth;
+            return ScannerToken.lastTokenInfo.leadingTriviaWidth;
         };
 
         ScannerToken.prototype.trailingTriviaWidth = function () {
@@ -6989,18 +5994,7 @@ var TypeScript;
             }
 
             this.fillSizeInfo();
-            return this.fullWidth() - sizeInfo.leadingTriviaWidth - sizeInfo.width;
-        };
-
-        ScannerToken.prototype.firstToken = function () {
-            return this;
-        };
-        ScannerToken.prototype.lastToken = function () {
-            return this;
-        };
-
-        ScannerToken.prototype.collectTextElements = function (elements) {
-            elements.push(this.fullText());
+            return this.fullWidth() - ScannerToken.lastTokenInfo.leadingTriviaWidth - ScannerToken.lastTokenInfo.width;
         };
 
         ScannerToken.prototype.hasLeadingTrivia = function () {
@@ -7063,27 +6057,983 @@ var TypeScript;
         ScannerToken.prototype.clone = function () {
             return new ScannerToken(this._text, this._packedFullStartAndTriviaInfo, this._packedFullWidthAndKind);
         };
-
-        ScannerToken.prototype.isPrimaryExpression = function () {
-            return TypeScript.Syntax.isPrimaryExpression(this);
-        };
-        ScannerToken.prototype.isExpression = function () {
-            return this.isPrimaryExpression();
-        };
-        ScannerToken.prototype.isMemberExpression = function () {
-            return this.isPrimaryExpression();
-        };
-        ScannerToken.prototype.isLeftHandSideExpression = function () {
-            return this.isPrimaryExpression();
-        };
-        ScannerToken.prototype.isPostfixExpression = function () {
-            return this.isPrimaryExpression();
-        };
-        ScannerToken.prototype.isUnaryExpression = function () {
-            return this.isPrimaryExpression();
-        };
+        ScannerToken.lastTokenInfo = { leadingTriviaWidth: -1, width: -1 };
+        ScannerToken.lastTokenInfoToken = null;
+        ScannerToken.triviaScanner = createScannerInternal(1 /* EcmaScript5 */, TypeScript.SimpleText.fromString(""), function () {
+        });
         return ScannerToken;
     })();
+
+    function createScanner(languageVersion, text, reportDiagnostic) {
+        var scanner = createScannerInternal(languageVersion, text, reportDiagnostic);
+        return {
+            setIndex: scanner.setIndex,
+            scan: scanner.scan
+        };
+    }
+    TypeScript.createScanner = createScanner;
+
+    function createScannerInternal(languageVersion, text, reportDiagnostic) {
+        var str;
+        var index;
+        var start;
+        var end;
+
+        function setIndex(_index) {
+            index = _index;
+        }
+
+        function reset(_text, _start, _end) {
+            TypeScript.Debug.assert(_start <= _text.length());
+            TypeScript.Debug.assert(_end <= _text.length());
+
+            if (!str || text !== _text) {
+                text = _text;
+                str = _text.substr(0, _text.length());
+            }
+
+            start = _start;
+            end = _end;
+            index = _start;
+        }
+
+        function isAtEndOfSource() {
+            return index >= end;
+        }
+
+        function scan(allowRegularExpression) {
+            var fullStart = index;
+
+            var leadingTriviaInfo = scanTriviaInfo(false);
+            var kind = scanSyntaxKind(allowRegularExpression);
+            var trailingTriviaInfo = scanTriviaInfo(true);
+
+            var fullEnd = index;
+
+            var fullWidth = fullEnd - fullStart;
+            var packedFullStartAndTriviaInfo = (fullStart << 6 /* FullStartShift */) | leadingTriviaInfo | (trailingTriviaInfo << 3 /* TrailingTriviaShift */);
+            var packedFullWidthAndKind = (fullWidth << 7 /* FullWidthShift */) | kind;
+            return new ScannerToken(text, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
+        }
+
+        function scanTrivia(parent, isTrailing) {
+            if (isTrailing) {
+                reset(parent._text, TypeScript.end(parent), TypeScript.fullEnd(parent));
+            } else {
+                reset(parent._text, parent.fullStart(), TypeScript.start(parent));
+            }
+
+            var trivia = [];
+
+            while (true) {
+                if (!isAtEndOfSource()) {
+                    var ch = str.charCodeAt(index);
+                    switch (ch) {
+                        case 32 /* space */:
+                        case 160 /* nonBreakingSpace */:
+                        case 8192 /* enQuad */:
+                        case 8193 /* emQuad */:
+                        case 8194 /* enSpace */:
+                        case 8195 /* emSpace */:
+                        case 8196 /* threePerEmSpace */:
+                        case 8197 /* fourPerEmSpace */:
+                        case 8198 /* sixPerEmSpace */:
+                        case 8199 /* figureSpace */:
+                        case 8200 /* punctuationSpace */:
+                        case 8201 /* thinSpace */:
+                        case 8202 /* hairSpace */:
+                        case 8203 /* zeroWidthSpace */:
+                        case 8239 /* narrowNoBreakSpace */:
+                        case 12288 /* ideographicSpace */:
+
+                        case 9 /* tab */:
+                        case 11 /* verticalTab */:
+                        case 12 /* formFeed */:
+                        case 65279 /* byteOrderMark */:
+                            trivia.push(scanWhitespaceTrivia());
+                            continue;
+
+                        case 47 /* slash */:
+                            var ch2 = str.charCodeAt(index + 1);
+                            if (ch2 === 47 /* slash */) {
+                                trivia.push(scanSingleLineCommentTrivia());
+                                continue;
+                            }
+
+                            if (ch2 === 42 /* asterisk */) {
+                                trivia.push(scanMultiLineCommentTrivia());
+                                continue;
+                            }
+
+                            throw TypeScript.Errors.invalidOperation();
+
+                        case 13 /* carriageReturn */:
+                        case 10 /* lineFeed */:
+                        case 8233 /* paragraphSeparator */:
+                        case 8232 /* lineSeparator */:
+                            trivia.push(scanLineTerminatorSequenceTrivia(ch));
+
+                            if (!isTrailing) {
+                                continue;
+                            }
+
+                            break;
+
+                        default:
+                            throw TypeScript.Errors.invalidOperation();
+                    }
+                }
+
+                var triviaList = TypeScript.Syntax.triviaList(trivia);
+                triviaList.parent = parent;
+
+                return triviaList;
+            }
+        }
+
+        function scanTriviaInfo(isTrailing) {
+            var commentInfo = 0;
+            var whitespaceInfo = 0;
+            var newLineInfo = 0;
+
+            while (true) {
+                var ch = str.charCodeAt(index);
+
+                switch (ch) {
+                    case 32 /* space */:
+                    case 160 /* nonBreakingSpace */:
+                    case 8192 /* enQuad */:
+                    case 8193 /* emQuad */:
+                    case 8194 /* enSpace */:
+                    case 8195 /* emSpace */:
+                    case 8196 /* threePerEmSpace */:
+                    case 8197 /* fourPerEmSpace */:
+                    case 8198 /* sixPerEmSpace */:
+                    case 8199 /* figureSpace */:
+                    case 8200 /* punctuationSpace */:
+                    case 8201 /* thinSpace */:
+                    case 8202 /* hairSpace */:
+                    case 8203 /* zeroWidthSpace */:
+                    case 8239 /* narrowNoBreakSpace */:
+                    case 12288 /* ideographicSpace */:
+
+                    case 9 /* tab */:
+                    case 11 /* verticalTab */:
+                    case 12 /* formFeed */:
+                    case 65279 /* byteOrderMark */:
+                        whitespaceInfo = 4 /* WhitespaceTriviaBitMask */;
+                        index++;
+                        continue;
+
+                    case 47 /* slash */:
+                        var ch2 = str.charCodeAt(index + 1);
+                        if (ch2 === 47 /* slash */) {
+                            commentInfo = 1 /* CommentTriviaBitMask */;
+                            skipSingleLineCommentTrivia();
+                            continue;
+                        }
+
+                        if (ch2 === 42 /* asterisk */) {
+                            commentInfo = 1 /* CommentTriviaBitMask */;
+                            skipMultiLineCommentTrivia();
+                            continue;
+                        }
+
+                        break;
+
+                    case 13 /* carriageReturn */:
+                    case 10 /* lineFeed */:
+                    case 8233 /* paragraphSeparator */:
+                    case 8232 /* lineSeparator */:
+                        newLineInfo = 2 /* NewLineTriviaBitMask */;
+                        skipLineTerminatorSequence(ch);
+
+                        if (!isTrailing) {
+                            continue;
+                        }
+
+                        break;
+                }
+
+                return commentInfo + newLineInfo + whitespaceInfo;
+            }
+        }
+
+        function isNewLineCharacter(ch) {
+            switch (ch) {
+                case 13 /* carriageReturn */:
+                case 10 /* lineFeed */:
+                case 8233 /* paragraphSeparator */:
+                case 8232 /* lineSeparator */:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        function scanWhitespaceTrivia() {
+            var absoluteStartIndex = index;
+
+            while (true) {
+                var ch = str.charCodeAt(index);
+
+                switch (ch) {
+                    case 32 /* space */:
+                    case 160 /* nonBreakingSpace */:
+                    case 8192 /* enQuad */:
+                    case 8193 /* emQuad */:
+                    case 8194 /* enSpace */:
+                    case 8195 /* emSpace */:
+                    case 8196 /* threePerEmSpace */:
+                    case 8197 /* fourPerEmSpace */:
+                    case 8198 /* sixPerEmSpace */:
+                    case 8199 /* figureSpace */:
+                    case 8200 /* punctuationSpace */:
+                    case 8201 /* thinSpace */:
+                    case 8202 /* hairSpace */:
+                    case 8203 /* zeroWidthSpace */:
+                    case 8239 /* narrowNoBreakSpace */:
+                    case 12288 /* ideographicSpace */:
+
+                    case 9 /* tab */:
+                    case 11 /* verticalTab */:
+                    case 12 /* formFeed */:
+                    case 65279 /* byteOrderMark */:
+                        index++;
+                        continue;
+                }
+
+                break;
+            }
+
+            return createTrivia(4 /* WhitespaceTrivia */, absoluteStartIndex);
+        }
+
+        function createTrivia(kind, absoluteStartIndex) {
+            var fullWidth = index - absoluteStartIndex;
+            return TypeScript.Syntax.deferredTrivia(kind, text, absoluteStartIndex, fullWidth);
+        }
+
+        function scanSingleLineCommentTrivia() {
+            var absoluteStartIndex = index;
+            skipSingleLineCommentTrivia();
+
+            return createTrivia(7 /* SingleLineCommentTrivia */, absoluteStartIndex);
+        }
+
+        function skipSingleLineCommentTrivia() {
+            index += 2;
+
+            while (true) {
+                var ch = str.charCodeAt(index);
+                if (isNaN(ch) || isNewLineCharacter(ch)) {
+                    return;
+                }
+
+                index++;
+            }
+        }
+
+        function scanMultiLineCommentTrivia() {
+            var absoluteStartIndex = index;
+            skipMultiLineCommentTrivia();
+
+            return createTrivia(6 /* MultiLineCommentTrivia */, absoluteStartIndex);
+        }
+
+        function skipMultiLineCommentTrivia() {
+            index += 2;
+
+            while (true) {
+                if (isAtEndOfSource()) {
+                    reportDiagnostic(end, 0, TypeScript.DiagnosticCode.AsteriskSlash_expected, null);
+                    return;
+                }
+
+                if (str.charCodeAt(index) === 42 /* asterisk */ && str.charCodeAt(index + 1) === 47 /* slash */) {
+                    index += 2;
+                    return;
+                }
+
+                index++;
+            }
+        }
+
+        function scanLineTerminatorSequenceTrivia(ch) {
+            var absoluteStartIndex = index;
+            skipLineTerminatorSequence(ch);
+
+            return createTrivia(5 /* NewLineTrivia */, absoluteStartIndex);
+        }
+
+        function skipLineTerminatorSequence(ch) {
+            index++;
+
+            if (ch === 13 /* carriageReturn */ && str.charCodeAt(index) === 10 /* lineFeed */) {
+                index++;
+            }
+        }
+
+        function scanSyntaxKind(allowRegularExpression) {
+            if (isAtEndOfSource()) {
+                return 10 /* EndOfFileToken */;
+            }
+
+            var character = str.charCodeAt(index);
+
+            switch (character) {
+                case 34 /* doubleQuote */:
+                case 39 /* singleQuote */:
+                    return scanStringLiteral();
+
+                case 47 /* slash */:
+                    return scanSlashToken(allowRegularExpression);
+
+                case 46 /* dot */:
+                    return scanDotToken();
+
+                case 45 /* minus */:
+                    return scanMinusToken();
+
+                case 33 /* exclamation */:
+                    return scanExclamationToken();
+
+                case 61 /* equals */:
+                    return scanEqualsToken();
+
+                case 124 /* bar */:
+                    return scanBarToken();
+
+                case 42 /* asterisk */:
+                    return scanAsteriskToken();
+
+                case 43 /* plus */:
+                    return scanPlusToken();
+
+                case 37 /* percent */:
+                    return scanPercentToken();
+
+                case 38 /* ampersand */:
+                    return scanAmpersandToken();
+
+                case 94 /* caret */:
+                    return scanCaretToken();
+
+                case 60 /* lessThan */:
+                    return scanLessThanToken();
+
+                case 62 /* greaterThan */:
+                    return advanceAndSetTokenKind(81 /* GreaterThanToken */);
+
+                case 44 /* comma */:
+                    return advanceAndSetTokenKind(79 /* CommaToken */);
+
+                case 58 /* colon */:
+                    return advanceAndSetTokenKind(106 /* ColonToken */);
+
+                case 59 /* semicolon */:
+                    return advanceAndSetTokenKind(78 /* SemicolonToken */);
+
+                case 126 /* tilde */:
+                    return advanceAndSetTokenKind(102 /* TildeToken */);
+
+                case 40 /* openParen */:
+                    return advanceAndSetTokenKind(72 /* OpenParenToken */);
+
+                case 41 /* closeParen */:
+                    return advanceAndSetTokenKind(73 /* CloseParenToken */);
+
+                case 123 /* openBrace */:
+                    return advanceAndSetTokenKind(70 /* OpenBraceToken */);
+
+                case 125 /* closeBrace */:
+                    return advanceAndSetTokenKind(71 /* CloseBraceToken */);
+
+                case 91 /* openBracket */:
+                    return advanceAndSetTokenKind(74 /* OpenBracketToken */);
+
+                case 93 /* closeBracket */:
+                    return advanceAndSetTokenKind(75 /* CloseBracketToken */);
+
+                case 63 /* question */:
+                    return advanceAndSetTokenKind(105 /* QuestionToken */);
+            }
+
+            if (isNumericLiteralStart[character]) {
+                return scanNumericLiteral();
+            }
+
+            if (isIdentifierStartCharacter[character]) {
+                var result = tryFastScanIdentifierOrKeyword(character);
+                if (result !== 0 /* None */) {
+                    return result;
+                }
+            }
+
+            if (isIdentifierStart(peekCharOrUnicodeEscape())) {
+                return slowScanIdentifierOrKeyword();
+            }
+
+            return scanDefaultCharacter(character);
+        }
+
+        function isIdentifierStart(interpretedChar) {
+            if (isIdentifierStartCharacter[interpretedChar]) {
+                return true;
+            }
+
+            return interpretedChar > 127 /* maxAsciiCharacter */ && TypeScript.Unicode.isIdentifierStart(interpretedChar, languageVersion);
+        }
+
+        function isIdentifierPart(interpretedChar) {
+            if (isIdentifierPartCharacter[interpretedChar]) {
+                return true;
+            }
+
+            return interpretedChar > 127 /* maxAsciiCharacter */ && TypeScript.Unicode.isIdentifierPart(interpretedChar, languageVersion);
+        }
+
+        function tryFastScanIdentifierOrKeyword(firstCharacter) {
+            var startIndex = index;
+            var character = 0;
+
+            while (index < end) {
+                character = str.charCodeAt(index);
+                if (!isIdentifierPartCharacter[character]) {
+                    break;
+                }
+
+                index++;
+            }
+
+            if (index < end && (character === 92 /* backslash */ || character > 127 /* maxAsciiCharacter */)) {
+                index = startIndex;
+                return 0 /* None */;
+            } else {
+                var kind;
+                var identifierLength = index - startIndex;
+                if (isKeywordStartCharacter[firstCharacter]) {
+                    kind = TypeScript.ScannerUtilities.identifierKind(str, startIndex, identifierLength);
+                } else {
+                    kind = 11 /* IdentifierName */;
+                }
+
+                return kind;
+            }
+        }
+
+        function slowScanIdentifierOrKeyword() {
+            var startIndex = index;
+
+            do {
+                scanCharOrUnicodeEscape();
+            } while(isIdentifierPart(peekCharOrUnicodeEscape()));
+
+            var length = index - startIndex;
+            var text = str.substr(startIndex, length);
+            var valueText = TypeScript.Syntax.massageEscapes(text);
+
+            var keywordKind = TypeScript.SyntaxFacts.getTokenKind(valueText);
+            if (keywordKind >= 15 /* FirstKeyword */ && keywordKind <= 69 /* LastKeyword */) {
+                return keywordKind;
+            }
+
+            return 11 /* IdentifierName */;
+        }
+
+        function scanNumericLiteral() {
+            if (isHexNumericLiteral()) {
+                scanHexNumericLiteral();
+            } else if (isOctalNumericLiteral()) {
+                scanOctalNumericLiteral();
+            } else {
+                scanDecimalNumericLiteral();
+            }
+
+            return 13 /* NumericLiteral */;
+        }
+
+        function isOctalNumericLiteral() {
+            return str.charCodeAt(index) === 48 /* _0 */ && TypeScript.CharacterInfo.isOctalDigit(str.charCodeAt(index + 1));
+        }
+
+        function scanOctalNumericLiteral() {
+            var position = index;
+
+            while (TypeScript.CharacterInfo.isOctalDigit(str.charCodeAt(index))) {
+                index++;
+            }
+
+            if (languageVersion >= 1 /* EcmaScript5 */) {
+                reportDiagnostic(position, index - position, TypeScript.DiagnosticCode.Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher, null);
+            }
+        }
+
+        function scanDecimalDigits() {
+            while (TypeScript.CharacterInfo.isDecimalDigit(str.charCodeAt(index))) {
+                index++;
+            }
+        }
+
+        function scanDecimalNumericLiteral() {
+            scanDecimalDigits();
+
+            if (str.charCodeAt(index) === 46 /* dot */) {
+                index++;
+            }
+
+            scanDecimalDigits();
+
+            var ch = str.charCodeAt(index);
+            if (ch === 101 /* e */ || ch === 69 /* E */) {
+                var nextChar1 = str.charCodeAt(index + 1);
+
+                if (TypeScript.CharacterInfo.isDecimalDigit(nextChar1)) {
+                    index++;
+                    scanDecimalDigits();
+                } else if (nextChar1 === 45 /* minus */ || nextChar1 === 43 /* plus */) {
+                    var nextChar2 = str.charCodeAt(index + 2);
+                    if (TypeScript.CharacterInfo.isDecimalDigit(nextChar2)) {
+                        index += 2;
+                        scanDecimalDigits();
+                    }
+                }
+            }
+        }
+
+        function scanHexNumericLiteral() {
+            index += 2;
+
+            while (TypeScript.CharacterInfo.isHexDigit(str.charCodeAt(index))) {
+                index++;
+            }
+        }
+
+        function isHexNumericLiteral() {
+            if (str.charCodeAt(index) === 48 /* _0 */) {
+                var ch = str.charCodeAt(index + 1);
+
+                if (ch === 120 /* x */ || ch === 88 /* X */) {
+                    ch = str.charCodeAt(index + 2);
+
+                    return TypeScript.CharacterInfo.isHexDigit(ch);
+                }
+            }
+
+            return false;
+        }
+
+        function advanceAndSetTokenKind(kind) {
+            index++;
+            return kind;
+        }
+
+        function scanLessThanToken() {
+            index++;
+            var ch0 = str.charCodeAt(index);
+            if (ch0 === 61 /* equals */) {
+                index++;
+                return 82 /* LessThanEqualsToken */;
+            } else if (ch0 === 60 /* lessThan */) {
+                index++;
+                if (str.charCodeAt(index) === 61 /* equals */) {
+                    index++;
+                    return 112 /* LessThanLessThanEqualsToken */;
+                } else {
+                    return 95 /* LessThanLessThanToken */;
+                }
+            } else {
+                return 80 /* LessThanToken */;
+            }
+        }
+
+        function scanBarToken() {
+            index++;
+            var ch = str.charCodeAt(index);
+            if (ch === 61 /* equals */) {
+                index++;
+                return 116 /* BarEqualsToken */;
+            } else if (ch === 124 /* bar */) {
+                index++;
+                return 104 /* BarBarToken */;
+            } else {
+                return 99 /* BarToken */;
+            }
+        }
+
+        function scanCaretToken() {
+            index++;
+            if (str.charCodeAt(index) === 61 /* equals */) {
+                index++;
+                return 117 /* CaretEqualsToken */;
+            } else {
+                return 100 /* CaretToken */;
+            }
+        }
+
+        function scanAmpersandToken() {
+            index++;
+            var character = str.charCodeAt(index);
+            if (character === 61 /* equals */) {
+                index++;
+                return 115 /* AmpersandEqualsToken */;
+            } else if (character === 38 /* ampersand */) {
+                index++;
+                return 103 /* AmpersandAmpersandToken */;
+            } else {
+                return 98 /* AmpersandToken */;
+            }
+        }
+
+        function scanPercentToken() {
+            index++;
+            if (str.charCodeAt(index) === 61 /* equals */) {
+                index++;
+                return 111 /* PercentEqualsToken */;
+            } else {
+                return 92 /* PercentToken */;
+            }
+        }
+
+        function scanMinusToken() {
+            index++;
+            var character = str.charCodeAt(index);
+
+            if (character === 61 /* equals */) {
+                index++;
+                return 109 /* MinusEqualsToken */;
+            } else if (character === 45 /* minus */) {
+                index++;
+                return 94 /* MinusMinusToken */;
+            } else {
+                return 90 /* MinusToken */;
+            }
+        }
+
+        function scanPlusToken() {
+            index++;
+            var character = str.charCodeAt(index);
+            if (character === 61 /* equals */) {
+                index++;
+                return 108 /* PlusEqualsToken */;
+            } else if (character === 43 /* plus */) {
+                index++;
+                return 93 /* PlusPlusToken */;
+            } else {
+                return 89 /* PlusToken */;
+            }
+        }
+
+        function scanAsteriskToken() {
+            index++;
+            if (str.charCodeAt(index) === 61 /* equals */) {
+                index++;
+                return 110 /* AsteriskEqualsToken */;
+            } else {
+                return 91 /* AsteriskToken */;
+            }
+        }
+
+        function scanEqualsToken() {
+            index++;
+            var character = str.charCodeAt(index);
+            if (character === 61 /* equals */) {
+                index++;
+
+                if (str.charCodeAt(index) === 61 /* equals */) {
+                    index++;
+
+                    return 87 /* EqualsEqualsEqualsToken */;
+                } else {
+                    return 84 /* EqualsEqualsToken */;
+                }
+            } else if (character === 62 /* greaterThan */) {
+                index++;
+                return 85 /* EqualsGreaterThanToken */;
+            } else {
+                return 107 /* EqualsToken */;
+            }
+        }
+
+        function isDotPrefixedNumericLiteral() {
+            if (str.charCodeAt(index) === 46 /* dot */) {
+                var ch = str.charCodeAt(index + 1);
+                return TypeScript.CharacterInfo.isDecimalDigit(ch);
+            }
+
+            return false;
+        }
+
+        function scanDotToken() {
+            if (isDotPrefixedNumericLiteral()) {
+                return scanNumericLiteral();
+            }
+
+            index++;
+            if (str.charCodeAt(index) === 46 /* dot */ && str.charCodeAt(index + 1) === 46 /* dot */) {
+                index += 2;
+                return 77 /* DotDotDotToken */;
+            } else {
+                return 76 /* DotToken */;
+            }
+        }
+
+        function scanSlashToken(allowRegularExpression) {
+            if (allowRegularExpression) {
+                var result = tryScanRegularExpressionToken();
+                if (result !== 0 /* None */) {
+                    return result;
+                }
+            }
+
+            index++;
+            if (str.charCodeAt(index) === 61 /* equals */) {
+                index++;
+                return 119 /* SlashEqualsToken */;
+            } else {
+                return 118 /* SlashToken */;
+            }
+        }
+
+        function tryScanRegularExpressionToken() {
+            var startIndex = index;
+
+            index++;
+
+            var inEscape = false;
+            var inCharacterClass = false;
+            while (true) {
+                var ch = str.charCodeAt(index);
+
+                if (isNaN(ch) || isNewLineCharacter(ch)) {
+                    index = startIndex;
+                    return 0 /* None */;
+                }
+
+                index++;
+                if (inEscape) {
+                    inEscape = false;
+                    continue;
+                }
+
+                switch (ch) {
+                    case 92 /* backslash */:
+                        inEscape = true;
+                        continue;
+
+                    case 91 /* openBracket */:
+                        inCharacterClass = true;
+                        continue;
+
+                    case 93 /* closeBracket */:
+                        inCharacterClass = false;
+                        continue;
+
+                    case 47 /* slash */:
+                        if (inCharacterClass) {
+                            continue;
+                        }
+
+                        break;
+
+                    default:
+                        continue;
+                }
+
+                break;
+            }
+
+            while (isIdentifierPartCharacter[str.charCodeAt(index)]) {
+                index++;
+            }
+
+            return 12 /* RegularExpressionLiteral */;
+        }
+
+        function scanExclamationToken() {
+            index++;
+            if (str.charCodeAt(index) === 61 /* equals */) {
+                index++;
+
+                if (str.charCodeAt(index) === 61 /* equals */) {
+                    index++;
+
+                    return 88 /* ExclamationEqualsEqualsToken */;
+                } else {
+                    return 86 /* ExclamationEqualsToken */;
+                }
+            } else {
+                return 101 /* ExclamationToken */;
+            }
+        }
+
+        function scanDefaultCharacter(character) {
+            var position = index;
+            index++;
+
+            var text = String.fromCharCode(character);
+            var messageText = getErrorMessageText(text);
+            reportDiagnostic(position, 1, TypeScript.DiagnosticCode.Unexpected_character_0, [messageText]);
+
+            return 9 /* ErrorToken */;
+        }
+
+        function getErrorMessageText(text) {
+            if (text === "\\") {
+                return '"\\"';
+            }
+
+            return JSON.stringify(text);
+        }
+
+        function skipEscapeSequence() {
+            var rewindPoint = index;
+
+            index++;
+
+            var ch = str.charCodeAt(index);
+            if (isNaN(ch)) {
+                return;
+            }
+
+            index++;
+            switch (ch) {
+                case 120 /* x */:
+                case 117 /* u */:
+                    index = rewindPoint;
+                    var value = scanUnicodeOrHexEscape(true);
+                    break;
+
+                case 13 /* carriageReturn */:
+                    if (str.charCodeAt(index) === 10 /* lineFeed */) {
+                        index++;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        function scanStringLiteral() {
+            var quoteCharacter = str.charCodeAt(index);
+
+            index++;
+
+            while (true) {
+                var ch = str.charCodeAt(index);
+                if (ch === 92 /* backslash */) {
+                    skipEscapeSequence();
+                } else if (ch === quoteCharacter) {
+                    index++;
+                    break;
+                } else if (isNaN(ch) || isNewLineCharacter(ch)) {
+                    reportDiagnostic(TypeScript.MathPrototype.min(index, end), 1, TypeScript.DiagnosticCode.Missing_close_quote_character, null);
+                    break;
+                } else {
+                    index++;
+                }
+            }
+
+            return 14 /* StringLiteral */;
+        }
+
+        function isUnicodeEscape(character) {
+            return character === 92 /* backslash */ && str.charCodeAt(index + 1) === 117 /* u */;
+        }
+
+        function peekCharOrUnicodeEscape() {
+            var character = str.charCodeAt(index);
+            if (isUnicodeEscape(character)) {
+                return peekUnicodeOrHexEscape();
+            } else {
+                return character;
+            }
+        }
+
+        function peekUnicodeOrHexEscape() {
+            var startIndex = index;
+
+            var ch = scanUnicodeOrHexEscape(false);
+
+            index = startIndex;
+
+            return ch;
+        }
+
+        function scanCharOrUnicodeEscape() {
+            if (str.charCodeAt(index) === 92 /* backslash */ && str.charCodeAt(index + 1) === 117 /* u */) {
+                scanUnicodeOrHexEscape(true);
+            } else {
+                index++;
+            }
+        }
+
+        function scanUnicodeOrHexEscape(report) {
+            var start = index;
+            var character = str.charCodeAt(index);
+
+            index++;
+
+            character = str.charCodeAt(index);
+
+            var intChar = 0;
+            index++;
+
+            var count = character === 117 /* u */ ? 4 : 2;
+
+            for (var i = 0; i < count; i++) {
+                var ch2 = str.charCodeAt(index);
+                if (!TypeScript.CharacterInfo.isHexDigit(ch2)) {
+                    if (report) {
+                        reportDiagnostic(start, index - start, TypeScript.DiagnosticCode.Unrecognized_escape_sequence, null);
+                    }
+
+                    break;
+                }
+
+                intChar = (intChar << 4) + TypeScript.CharacterInfo.hexValue(ch2);
+                index++;
+            }
+
+            return intChar;
+        }
+
+        function fillTokenInfo(token, tokenInfo) {
+            reset(token._text, token.fullStart(), TypeScript.fullEnd(token));
+
+            var fullStart = index;
+            var leadingTriviaInfo = scanTriviaInfo(false);
+
+            var start = index;
+            scanSyntaxKind(token.kind() === 12 /* RegularExpressionLiteral */);
+            var end = index;
+
+            tokenInfo.leadingTriviaWidth = start - fullStart;
+            tokenInfo.width = end - start;
+        }
+
+        reset(text, 0, text.length());
+
+        return {
+            setIndex: setIndex,
+            scan: scan,
+            fillTokenInfo: fillTokenInfo,
+            scanTrivia: scanTrivia
+        };
+    }
+
+    function isValidIdentifier(text, languageVersion) {
+        var hadError = false;
+        var scanner = createScanner(languageVersion, text, function () {
+            return hadError = true;
+        });
+
+        var token = scanner.scan(false);
+
+        return !hadError && TypeScript.SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && TypeScript.width(token) === text.length();
+    }
+    TypeScript.isValidIdentifier = isValidIdentifier;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
@@ -7380,22 +7330,7 @@ var TypeScript;
                 throw TypeScript.Errors.argumentOutOfRange("index");
             };
 
-            EmptySeparatedSyntaxList.prototype.collectTextElements = function (elements) {
-            };
-
-            EmptySeparatedSyntaxList.prototype.firstToken = function () {
-                return null;
-            };
-
-            EmptySeparatedSyntaxList.prototype.lastToken = function () {
-                return null;
-            };
-
             EmptySeparatedSyntaxList.prototype.fullWidth = function () {
-                return 0;
-            };
-
-            EmptySeparatedSyntaxList.prototype.width = function () {
                 return 0;
             };
 
@@ -7403,40 +7338,8 @@ var TypeScript;
                 throw TypeScript.Errors.invalidOperation("'fullStart' invalid on a singleton element.");
             };
 
-            EmptySeparatedSyntaxList.prototype.fullEnd = function () {
-                throw TypeScript.Errors.invalidOperation("'fullEnd' invalid on a singleton element.");
-            };
-
-            EmptySeparatedSyntaxList.prototype.start = function () {
-                throw TypeScript.Errors.invalidOperation("'start' invalid on a singleton element.");
-            };
-
-            EmptySeparatedSyntaxList.prototype.end = function () {
-                throw TypeScript.Errors.invalidOperation("'end' invalid on a singleton element.");
-            };
-
-            EmptySeparatedSyntaxList.prototype.fullText = function () {
-                return "";
-            };
-
             EmptySeparatedSyntaxList.prototype.isIncrementallyUnusable = function () {
                 return false;
-            };
-
-            EmptySeparatedSyntaxList.prototype.leadingTrivia = function () {
-                return Syntax.emptyTriviaList;
-            };
-
-            EmptySeparatedSyntaxList.prototype.trailingTrivia = function () {
-                return Syntax.emptyTriviaList;
-            };
-
-            EmptySeparatedSyntaxList.prototype.leadingTriviaWidth = function () {
-                return 0;
-            };
-
-            EmptySeparatedSyntaxList.prototype.trailingTriviaWidth = function () {
-                return 0;
             };
             return EmptySeparatedSyntaxList;
         })();
@@ -7509,60 +7412,12 @@ var TypeScript;
                 throw TypeScript.Errors.argumentOutOfRange("index");
             };
 
-            SingletonSeparatedSyntaxList.prototype.collectTextElements = function (elements) {
-                this.item.collectTextElements(elements);
-            };
-
-            SingletonSeparatedSyntaxList.prototype.firstToken = function () {
-                return this.item.firstToken();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.lastToken = function () {
-                return this.item.lastToken();
-            };
-
             SingletonSeparatedSyntaxList.prototype.fullWidth = function () {
                 return this.item.fullWidth();
             };
 
-            SingletonSeparatedSyntaxList.prototype.width = function () {
-                return this.item.width();
-            };
-
             SingletonSeparatedSyntaxList.prototype.fullStart = function () {
                 return this.item.fullStart();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.fullEnd = function () {
-                return this.item.fullEnd();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.start = function () {
-                return this.item.start();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.end = function () {
-                return this.item.end();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.fullText = function () {
-                return this.item.fullText();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.leadingTrivia = function () {
-                return this.item.leadingTrivia();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.trailingTrivia = function () {
-                return this.item.trailingTrivia();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.leadingTriviaWidth = function () {
-                return this.item.leadingTriviaWidth();
-            };
-
-            SingletonSeparatedSyntaxList.prototype.trailingTriviaWidth = function () {
-                return this.item.trailingTriviaWidth();
             };
 
             SingletonSeparatedSyntaxList.prototype.isIncrementallyUnusable = function () {
@@ -7640,37 +7495,6 @@ var TypeScript;
                 return this.elements[value];
             };
 
-            NormalSeparatedSyntaxList.prototype.firstToken = function () {
-                for (var i = 0, n = this.elements.length; i < n; i++) {
-                    var nodeOrToken = this.elements[i];
-                    var token = nodeOrToken.firstToken();
-                    if (token !== null && token.fullWidth() > 0) {
-                        return token;
-                    }
-                }
-
-                return null;
-            };
-
-            NormalSeparatedSyntaxList.prototype.lastToken = function () {
-                var token;
-                for (var i = this.elements.length - 1; i >= 0; i--) {
-                    var nodeOrToken = this.elements[i];
-                    var token = nodeOrToken.lastToken();
-                    if (token !== null && token.fullWidth() > 0) {
-                        return token;
-                    }
-                }
-
-                return null;
-            };
-
-            NormalSeparatedSyntaxList.prototype.fullText = function () {
-                var elements = [];
-                this.collectTextElements(elements);
-                return elements.join("");
-            };
-
             NormalSeparatedSyntaxList.prototype.isIncrementallyUnusable = function () {
                 return (this.data() & 2 /* NodeIncrementallyUnusableMask */) !== 0;
             };
@@ -7679,41 +7503,8 @@ var TypeScript;
                 return this.data() >>> 3 /* NodeFullWidthShift */;
             };
 
-            NormalSeparatedSyntaxList.prototype.width = function () {
-                var fullWidth = this.fullWidth();
-                return fullWidth - this.leadingTriviaWidth() - this.trailingTriviaWidth();
-            };
-
             NormalSeparatedSyntaxList.prototype.fullStart = function () {
-                return this.firstToken().fullStart();
-            };
-
-            NormalSeparatedSyntaxList.prototype.fullEnd = function () {
-                return this.lastToken().fullEnd();
-            };
-
-            NormalSeparatedSyntaxList.prototype.start = function () {
-                return this.firstToken().start();
-            };
-
-            NormalSeparatedSyntaxList.prototype.end = function () {
-                return this.lastToken().end();
-            };
-
-            NormalSeparatedSyntaxList.prototype.leadingTrivia = function () {
-                return this.firstToken().leadingTrivia();
-            };
-
-            NormalSeparatedSyntaxList.prototype.trailingTrivia = function () {
-                return this.lastToken().trailingTrivia();
-            };
-
-            NormalSeparatedSyntaxList.prototype.leadingTriviaWidth = function () {
-                return this.firstToken().leadingTriviaWidth();
-            };
-
-            NormalSeparatedSyntaxList.prototype.trailingTriviaWidth = function () {
-                return this.lastToken().trailingTriviaWidth();
+                return TypeScript.firstToken(this).fullStart();
             };
 
             NormalSeparatedSyntaxList.prototype.computeData = function () {
@@ -7738,13 +7529,6 @@ var TypeScript;
                 }
 
                 return this._data;
-            };
-
-            NormalSeparatedSyntaxList.prototype.collectTextElements = function (elements) {
-                for (var i = 0, n = this.elements.length; i < n; i++) {
-                    var element = this.elements[i];
-                    element.collectTextElements(elements);
-                }
             };
             return NormalSeparatedSyntaxList;
         })();
@@ -7949,16 +7733,11 @@ var TypeScript;
         }
         Syntax.setParentForChildren = setParentForChildren;
 
-        function emptySourceUnit() {
-            return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList(), Syntax.token(10 /* EndOfFileToken */, { text: "" }, 0));
-        }
-        Syntax.emptySourceUnit = emptySourceUnit;
-
         function getStandaloneExpression(positionedToken) {
             var token = positionedToken;
             if (positionedToken !== null && positionedToken.kind() === 11 /* IdentifierName */) {
-                var parentPositionedNode = Syntax.containingNode(positionedToken);
-                var parentNode = Syntax.containingNode(parentPositionedNode);
+                var parentPositionedNode = containingNode(positionedToken);
+                var parentNode = containingNode(parentPositionedNode);
 
                 if (parentNode.kind() === 121 /* QualifiedName */ && parentNode.right === token) {
                     return parentPositionedNode;
@@ -7973,8 +7752,8 @@ var TypeScript;
 
         function isInModuleOrTypeContext(positionedToken) {
             if (positionedToken !== null) {
-                var positionedNodeOrToken = Syntax.getStandaloneExpression(positionedToken);
-                var parent = Syntax.containingNode(positionedNodeOrToken);
+                var positionedNodeOrToken = getStandaloneExpression(positionedToken);
+                var parent = containingNode(positionedNodeOrToken);
 
                 if (parent !== null) {
                     switch (parent.kind()) {
@@ -7993,10 +7772,10 @@ var TypeScript;
         Syntax.isInModuleOrTypeContext = isInModuleOrTypeContext;
 
         function isInTypeOnlyContext(positionedToken) {
-            var positionedNodeOrToken = Syntax.getStandaloneExpression(positionedToken);
-            var positionedParent = Syntax.containingNode(positionedNodeOrToken);
+            var positionedNodeOrToken = getStandaloneExpression(positionedToken);
+            var positionedParent = containingNode(positionedNodeOrToken);
 
-            var parent = Syntax.containingNode(positionedParent);
+            var parent = containingNode(positionedParent);
             var nodeOrToken = positionedNodeOrToken;
 
             if (parent !== null) {
@@ -8060,11 +7839,29 @@ var TypeScript;
         Syntax.childIndex = childIndex;
 
         function nodeStructuralEquals(node1, node2) {
-            if (node1 === null) {
-                return node2 === null;
+            if (node1 === node2) {
+                return true;
+            }
+            if (node1 === null || node2 === null) {
+                return false;
+            }
+            if (node1.kind() !== node2.kind()) {
+                return false;
+            }
+            if (node1.childCount() !== node2.childCount()) {
+                return false;
             }
 
-            return node1.structuralEquals(node2);
+            for (var i = 0, n = node1.childCount(); i < n; i++) {
+                var element1 = node1.childAt(i);
+                var element2 = node2.childAt(i);
+
+                if (!elementStructuralEquals(element1, element2)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
         Syntax.nodeStructuralEquals = nodeStructuralEquals;
 
@@ -8094,7 +7891,7 @@ var TypeScript;
                 return false;
             }
 
-            return token1.kind() === token2.kind() && token1.width() === token2.width() && token1.fullWidth() === token2.fullWidth() && token1.fullStart() === token2.fullStart() && token1.fullEnd() === token2.fullEnd() && token1.start() === token2.start() && token1.end() === token2.end() && token1.text() === token2.text() && Syntax.triviaListStructuralEquals(token1.leadingTrivia(), token2.leadingTrivia()) && Syntax.triviaListStructuralEquals(token1.trailingTrivia(), token2.trailingTrivia());
+            return token1.kind() === token2.kind() && TypeScript.width(token1) === TypeScript.width(token2) && token1.fullWidth() === token2.fullWidth() && token1.fullStart() === token2.fullStart() && TypeScript.fullEnd(token1) === TypeScript.fullEnd(token2) && TypeScript.start(token1) === TypeScript.start(token2) && TypeScript.end(token1) === TypeScript.end(token2) && token1.text() === token2.text() && triviaListStructuralEquals(token1.leadingTrivia(), token2.leadingTrivia()) && triviaListStructuralEquals(token1.trailingTrivia(), token2.trailingTrivia());
         }
         Syntax.tokenStructuralEquals = tokenStructuralEquals;
 
@@ -8104,7 +7901,7 @@ var TypeScript;
             }
 
             for (var i = 0, n = triviaList1.count(); i < n; i++) {
-                if (!Syntax.triviaStructuralEquals(triviaList1.syntaxTriviaAt(i), triviaList2.syntaxTriviaAt(i))) {
+                if (!triviaStructuralEquals(triviaList1.syntaxTriviaAt(i), triviaList2.syntaxTriviaAt(i))) {
                     return false;
                 }
             }
@@ -8127,7 +7924,7 @@ var TypeScript;
                 var child1 = list1.childAt(i);
                 var child2 = list2.childAt(i);
 
-                if (!Syntax.nodeOrTokenStructuralEquals(child1, child2)) {
+                if (!nodeOrTokenStructuralEquals(child1, child2)) {
                     return false;
                 }
             }
@@ -8144,7 +7941,7 @@ var TypeScript;
             for (var i = 0, n = list1.childCount(); i < n; i++) {
                 var element1 = list1.childAt(i);
                 var element2 = list2.childAt(i);
-                if (!Syntax.nodeOrTokenStructuralEquals(element1, element2)) {
+                if (!nodeOrTokenStructuralEquals(element1, element2)) {
                     return false;
                 }
             }
@@ -8170,15 +7967,15 @@ var TypeScript;
                 return false;
             }
 
-            if (element1.start() !== element2.start()) {
+            if (TypeScript.start(element1) !== TypeScript.start(element2)) {
                 return false;
             }
 
-            if (element1.end() !== element2.end()) {
+            if (TypeScript.end(element1) !== TypeScript.end(element2)) {
                 return false;
             }
 
-            if (element1.fullEnd() !== element2.fullEnd()) {
+            if (TypeScript.fullEnd(element1) !== TypeScript.fullEnd(element2)) {
                 return false;
             }
 
@@ -8242,22 +8039,18 @@ var TypeScript;
         }
         Syntax.isSuperMemberAccessInvocationExpression = isSuperMemberAccessInvocationExpression;
 
-        function assignmentExpression(left, token, right) {
-            return Syntax.normalModeFactory.binaryExpression(174 /* AssignmentExpression */, left, token, right);
-        }
-        Syntax.assignmentExpression = assignmentExpression;
-
         function nodeHasSkippedOrMissingTokens(node) {
             for (var i = 0; i < node.childCount(); i++) {
                 var child = node.childAt(i);
                 if (TypeScript.isToken(child)) {
                     var token = child;
 
-                    if (token.hasSkippedToken() || (token.width() === 0 && token.kind() !== 10 /* EndOfFileToken */)) {
+                    if (token.hasSkippedToken() || (TypeScript.width(token) === 0 && token.kind() !== 10 /* EndOfFileToken */)) {
                         return true;
                     }
                 }
             }
+
             return false;
         }
         Syntax.nodeHasSkippedOrMissingTokens = nodeHasSkippedOrMissingTokens;
@@ -8296,7 +8089,7 @@ var TypeScript;
         Syntax.isEntirelyInsideCommentTrivia = isEntirelyInsideCommentTrivia;
 
         function isEntirelyInsideComment(sourceUnit, position) {
-            var positionedToken = sourceUnit.findToken(position);
+            var positionedToken = findToken(sourceUnit, position);
             var fullStart = positionedToken.fullStart();
             var triviaList = null;
             var lastTriviaBeforeToken = null;
@@ -8309,16 +8102,16 @@ var TypeScript;
                     if (positionedToken) {
                         if (positionedToken && positionedToken.hasTrailingTrivia()) {
                             triviaList = positionedToken.trailingTrivia();
-                            fullStart = positionedToken.end();
+                            fullStart = TypeScript.end(positionedToken);
                         }
                     }
                 }
             } else {
                 if (position <= (fullStart + positionedToken.leadingTriviaWidth())) {
                     triviaList = positionedToken.leadingTrivia();
-                } else if (position >= (fullStart + positionedToken.width())) {
+                } else if (position >= (fullStart + TypeScript.width(positionedToken))) {
                     triviaList = positionedToken.trailingTrivia();
-                    fullStart = positionedToken.end();
+                    fullStart = TypeScript.end(positionedToken);
                 }
             }
 
@@ -8341,14 +8134,14 @@ var TypeScript;
         Syntax.isEntirelyInsideComment = isEntirelyInsideComment;
 
         function isEntirelyInStringOrRegularExpressionLiteral(sourceUnit, position) {
-            var positionedToken = sourceUnit.findToken(position);
+            var positionedToken = findToken(sourceUnit, position);
 
             if (positionedToken) {
                 if (positionedToken.kind() === 10 /* EndOfFileToken */) {
                     positionedToken = positionedToken.previousToken();
                     return positionedToken && positionedToken.trailingTriviaWidth() === 0 && isUnterminatedStringLiteral(positionedToken);
-                } else if (position > positionedToken.start()) {
-                    return (position < positionedToken.end() && (positionedToken.kind() === 14 /* StringLiteral */ || positionedToken.kind() === 12 /* RegularExpressionLiteral */)) || (position <= positionedToken.end() && isUnterminatedStringLiteral(positionedToken));
+                } else if (position > TypeScript.start(positionedToken)) {
+                    return (position < TypeScript.end(positionedToken) && (positionedToken.kind() === 14 /* StringLiteral */ || positionedToken.kind() === 12 /* RegularExpressionLiteral */)) || (position <= TypeScript.end(positionedToken) && isUnterminatedStringLiteral(positionedToken));
                 }
             }
 
@@ -8365,7 +8158,7 @@ var TypeScript;
                 fullStart = positionedToken.fullStart();
             } else {
                 triviaList = positionedToken.trailingTrivia();
-                fullStart = positionedToken.end();
+                fullStart = TypeScript.end(positionedToken);
             }
 
             if (triviaList && triviaList.hasSkippedToken()) {
@@ -8393,7 +8186,7 @@ var TypeScript;
                 fullEnd = positionedToken.fullStart() + triviaList.fullWidth();
             } else {
                 triviaList = positionedToken.trailingTrivia();
-                fullEnd = positionedToken.fullEnd();
+                fullEnd = TypeScript.fullEnd(positionedToken);
             }
 
             if (triviaList && triviaList.hasSkippedToken()) {
@@ -8423,13 +8216,13 @@ var TypeScript;
         Syntax.findSkippedTokenInTrailingTriviaList = findSkippedTokenInTrailingTriviaList;
 
         function findSkippedTokenInPositionedToken(positionedToken, position) {
-            var positionInLeadingTriviaList = (position < positionedToken.start());
+            var positionInLeadingTriviaList = (position < TypeScript.start(positionedToken));
             return findSkippedTokenInTriviaList(positionedToken, position, positionInLeadingTriviaList);
         }
         Syntax.findSkippedTokenInPositionedToken = findSkippedTokenInPositionedToken;
 
         function findSkippedTokenOnLeft(positionedToken, position) {
-            var positionInLeadingTriviaList = (position < positionedToken.start());
+            var positionInLeadingTriviaList = (position < TypeScript.start(positionedToken));
             return findSkippedTokenOnLeftInTriviaList(positionedToken, position, positionInLeadingTriviaList);
         }
         Syntax.findSkippedTokenOnLeft = findSkippedTokenOnLeft;
@@ -8448,7 +8241,7 @@ var TypeScript;
         Syntax.getAncestorOfKind = getAncestorOfKind;
 
         function hasAncestorOfKind(positionedToken, kind) {
-            return Syntax.getAncestorOfKind(positionedToken, kind) !== null;
+            return getAncestorOfKind(positionedToken, kind) !== null;
         }
         Syntax.hasAncestorOfKind = hasAncestorOfKind;
 
@@ -8475,7 +8268,7 @@ var TypeScript;
             if (includeSkippedTokens) {
                 var triviaList = token.leadingTrivia();
                 if (triviaList && triviaList.hasSkippedToken()) {
-                    var currentTriviaEndPosition = token.start();
+                    var currentTriviaEndPosition = TypeScript.start(token);
                     for (var i = triviaList.count() - 1; i >= 0; i--) {
                         var trivia = triviaList.syntaxTriviaAt(i);
                         if (trivia.isSkippedToken()) {
@@ -8492,7 +8285,7 @@ var TypeScript;
                 return null;
             }
 
-            return token.syntaxTree().sourceUnit().findToken(start - 1, includeSkippedTokens);
+            return findToken(token.syntaxTree().sourceUnit(), start - 1, includeSkippedTokens);
         }
         Syntax.previousToken = previousToken;
 
@@ -8512,7 +8305,7 @@ var TypeScript;
                 }
             }
 
-            return token.syntaxTree().sourceUnit().findToken(token.fullEnd(), includeSkippedTokens);
+            return findToken(token.syntaxTree().sourceUnit(), TypeScript.fullEnd(token), includeSkippedTokens);
         }
         Syntax.nextToken = nextToken;
 
@@ -8527,7 +8320,28 @@ var TypeScript;
         }
         Syntax.containingNode = containingNode;
 
-        function findToken(element, position) {
+        function findToken(element, position, includeSkippedTokens) {
+            if (typeof includeSkippedTokens === "undefined") { includeSkippedTokens = false; }
+            var endOfFileToken = tryGetEndOfFileAt(element, position);
+            if (endOfFileToken !== null) {
+                return endOfFileToken;
+            }
+
+            if (position < 0 || position >= element.fullWidth()) {
+                throw TypeScript.Errors.argumentOutOfRange("position");
+            }
+
+            var positionedToken = findTokenWorker(element, position);
+
+            if (includeSkippedTokens) {
+                return findSkippedTokenInPositionedToken(positionedToken, position) || positionedToken;
+            }
+
+            return positionedToken;
+        }
+        Syntax.findToken = findToken;
+
+        function findTokenWorker(element, position) {
             if (TypeScript.isToken(element)) {
                 TypeScript.Debug.assert(element.fullWidth() > 0);
                 return element;
@@ -8547,7 +8361,7 @@ var TypeScript;
                         var childFullEnd = childFullStart + child.fullWidth();
 
                         if (position < childFullEnd) {
-                            return findToken(child, position);
+                            return findTokenWorker(child, position);
                         }
                     }
                 }
@@ -8555,10 +8369,55 @@ var TypeScript;
 
             throw TypeScript.Errors.invalidOperation();
         }
-        Syntax.findToken = findToken;
+
+        function tryGetEndOfFileAt(element, position) {
+            if (element.kind() === 120 /* SourceUnit */ && position === element.fullWidth()) {
+                var sourceUnit = element;
+                return sourceUnit.endOfFileToken;
+            }
+
+            return null;
+        }
+
+        function findTokenOnLeft(element, position, includeSkippedTokens) {
+            if (typeof includeSkippedTokens === "undefined") { includeSkippedTokens = false; }
+            var positionedToken = findToken(element, position, false);
+            var _start = TypeScript.start(positionedToken);
+
+            if (includeSkippedTokens) {
+                positionedToken = findSkippedTokenOnLeft(positionedToken, position) || positionedToken;
+            }
+
+            if (position > _start) {
+                return positionedToken;
+            }
+
+            if (positionedToken.fullStart() === 0) {
+                return null;
+            }
+
+            return positionedToken.previousToken(includeSkippedTokens);
+        }
+        Syntax.findTokenOnLeft = findTokenOnLeft;
+
+        function findCompleteTokenOnLeft(element, position, includeSkippedTokens) {
+            if (typeof includeSkippedTokens === "undefined") { includeSkippedTokens = false; }
+            var positionedToken = findToken(element, position, false);
+
+            if (includeSkippedTokens) {
+                positionedToken = findSkippedTokenOnLeft(positionedToken, position) || positionedToken;
+            }
+
+            if (TypeScript.width(positionedToken) > 0 && position >= TypeScript.end(positionedToken)) {
+                return positionedToken;
+            }
+
+            return positionedToken.previousToken(includeSkippedTokens);
+        }
+        Syntax.findCompleteTokenOnLeft = findCompleteTokenOnLeft;
 
         function firstTokenInLineContainingPosition(syntaxTree, position) {
-            var current = syntaxTree.sourceUnit().findToken(position);
+            var current = findToken(syntaxTree.sourceUnit(), position);
             while (true) {
                 if (isFirstTokenInLine(current)) {
                     break;
@@ -8623,538 +8482,110 @@ var TypeScript;
         return obj._syntaxID;
     }
     TypeScript.syntaxID = syntaxID;
-})(TypeScript || (TypeScript = {}));
-var TypeScript;
-(function (TypeScript) {
-    (function (Syntax) {
-        var NormalModeFactory = (function () {
-            function NormalModeFactory() {
-            }
-            NormalModeFactory.prototype.sourceUnit = function (moduleElements, endOfFileToken) {
-                return new TypeScript.SourceUnitSyntax(moduleElements, endOfFileToken, 0);
-            };
-            NormalModeFactory.prototype.externalModuleReference = function (requireKeyword, openParenToken, stringLiteral, closeParenToken) {
-                return new TypeScript.ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, 0);
-            };
-            NormalModeFactory.prototype.moduleNameModuleReference = function (moduleName) {
-                return new TypeScript.ModuleNameModuleReferenceSyntax(moduleName, 0);
-            };
-            NormalModeFactory.prototype.importDeclaration = function (modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken) {
-                return new TypeScript.ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.exportAssignment = function (exportKeyword, equalsToken, identifier, semicolonToken) {
-                return new TypeScript.ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.classDeclaration = function (modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken) {
-                return new TypeScript.ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, 0);
-            };
-            NormalModeFactory.prototype.interfaceDeclaration = function (modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body) {
-                return new TypeScript.InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, 0);
-            };
-            NormalModeFactory.prototype.heritageClause = function (kind, extendsOrImplementsKeyword, typeNames) {
-                return new TypeScript.HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, 0);
-            };
-            NormalModeFactory.prototype.moduleDeclaration = function (modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken) {
-                return new TypeScript.ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, 0);
-            };
-            NormalModeFactory.prototype.functionDeclaration = function (modifiers, functionKeyword, identifier, callSignature, block, semicolonToken) {
-                return new TypeScript.FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.variableStatement = function (modifiers, variableDeclaration, semicolonToken) {
-                return new TypeScript.VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.variableDeclaration = function (varKeyword, variableDeclarators) {
-                return new TypeScript.VariableDeclarationSyntax(varKeyword, variableDeclarators, 0);
-            };
-            NormalModeFactory.prototype.variableDeclarator = function (propertyName, typeAnnotation, equalsValueClause) {
-                return new TypeScript.VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, 0);
-            };
-            NormalModeFactory.prototype.equalsValueClause = function (equalsToken, value) {
-                return new TypeScript.EqualsValueClauseSyntax(equalsToken, value, 0);
-            };
-            NormalModeFactory.prototype.prefixUnaryExpression = function (kind, operatorToken, operand) {
-                return new TypeScript.PrefixUnaryExpressionSyntax(kind, operatorToken, operand, 0);
-            };
-            NormalModeFactory.prototype.arrayLiteralExpression = function (openBracketToken, expressions, closeBracketToken) {
-                return new TypeScript.ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, 0);
-            };
-            NormalModeFactory.prototype.omittedExpression = function () {
-                return new TypeScript.OmittedExpressionSyntax(0);
-            };
-            NormalModeFactory.prototype.parenthesizedExpression = function (openParenToken, expression, closeParenToken) {
-                return new TypeScript.ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, 0);
-            };
-            NormalModeFactory.prototype.simpleArrowFunctionExpression = function (identifier, equalsGreaterThanToken, block, expression) {
-                return new TypeScript.SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, 0);
-            };
-            NormalModeFactory.prototype.parenthesizedArrowFunctionExpression = function (callSignature, equalsGreaterThanToken, block, expression) {
-                return new TypeScript.ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, 0);
-            };
-            NormalModeFactory.prototype.qualifiedName = function (left, dotToken, right) {
-                return new TypeScript.QualifiedNameSyntax(left, dotToken, right, 0);
-            };
-            NormalModeFactory.prototype.typeArgumentList = function (lessThanToken, typeArguments, greaterThanToken) {
-                return new TypeScript.TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, 0);
-            };
-            NormalModeFactory.prototype.constructorType = function (newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type) {
-                return new TypeScript.ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, 0);
-            };
-            NormalModeFactory.prototype.functionType = function (typeParameterList, parameterList, equalsGreaterThanToken, type) {
-                return new TypeScript.FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, 0);
-            };
-            NormalModeFactory.prototype.objectType = function (openBraceToken, typeMembers, closeBraceToken) {
-                return new TypeScript.ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, 0);
-            };
-            NormalModeFactory.prototype.arrayType = function (type, openBracketToken, closeBracketToken) {
-                return new TypeScript.ArrayTypeSyntax(type, openBracketToken, closeBracketToken, 0);
-            };
-            NormalModeFactory.prototype.genericType = function (name, typeArgumentList) {
-                return new TypeScript.GenericTypeSyntax(name, typeArgumentList, 0);
-            };
-            NormalModeFactory.prototype.typeQuery = function (typeOfKeyword, name) {
-                return new TypeScript.TypeQuerySyntax(typeOfKeyword, name, 0);
-            };
-            NormalModeFactory.prototype.typeAnnotation = function (colonToken, type) {
-                return new TypeScript.TypeAnnotationSyntax(colonToken, type, 0);
-            };
-            NormalModeFactory.prototype.block = function (openBraceToken, statements, closeBraceToken) {
-                return new TypeScript.BlockSyntax(openBraceToken, statements, closeBraceToken, 0);
-            };
-            NormalModeFactory.prototype.parameter = function (dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause) {
-                return new TypeScript.ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, 0);
-            };
-            NormalModeFactory.prototype.memberAccessExpression = function (expression, dotToken, name) {
-                return new TypeScript.MemberAccessExpressionSyntax(expression, dotToken, name, 0);
-            };
-            NormalModeFactory.prototype.postfixUnaryExpression = function (kind, operand, operatorToken) {
-                return new TypeScript.PostfixUnaryExpressionSyntax(kind, operand, operatorToken, 0);
-            };
-            NormalModeFactory.prototype.elementAccessExpression = function (expression, openBracketToken, argumentExpression, closeBracketToken) {
-                return new TypeScript.ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, 0);
-            };
-            NormalModeFactory.prototype.invocationExpression = function (expression, argumentList) {
-                return new TypeScript.InvocationExpressionSyntax(expression, argumentList, 0);
-            };
-            NormalModeFactory.prototype.argumentList = function (typeArgumentList, openParenToken, _arguments, closeParenToken) {
-                return new TypeScript.ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, 0);
-            };
-            NormalModeFactory.prototype.binaryExpression = function (kind, left, operatorToken, right) {
-                return new TypeScript.BinaryExpressionSyntax(kind, left, operatorToken, right, 0);
-            };
-            NormalModeFactory.prototype.conditionalExpression = function (condition, questionToken, whenTrue, colonToken, whenFalse) {
-                return new TypeScript.ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, 0);
-            };
-            NormalModeFactory.prototype.constructSignature = function (newKeyword, callSignature) {
-                return new TypeScript.ConstructSignatureSyntax(newKeyword, callSignature, 0);
-            };
-            NormalModeFactory.prototype.methodSignature = function (propertyName, questionToken, callSignature) {
-                return new TypeScript.MethodSignatureSyntax(propertyName, questionToken, callSignature, 0);
-            };
-            NormalModeFactory.prototype.indexSignature = function (openBracketToken, parameter, closeBracketToken, typeAnnotation) {
-                return new TypeScript.IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, 0);
-            };
-            NormalModeFactory.prototype.propertySignature = function (propertyName, questionToken, typeAnnotation) {
-                return new TypeScript.PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, 0);
-            };
-            NormalModeFactory.prototype.callSignature = function (typeParameterList, parameterList, typeAnnotation) {
-                return new TypeScript.CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, 0);
-            };
-            NormalModeFactory.prototype.parameterList = function (openParenToken, parameters, closeParenToken) {
-                return new TypeScript.ParameterListSyntax(openParenToken, parameters, closeParenToken, 0);
-            };
-            NormalModeFactory.prototype.typeParameterList = function (lessThanToken, typeParameters, greaterThanToken) {
-                return new TypeScript.TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, 0);
-            };
-            NormalModeFactory.prototype.typeParameter = function (identifier, constraint) {
-                return new TypeScript.TypeParameterSyntax(identifier, constraint, 0);
-            };
-            NormalModeFactory.prototype.constraint = function (extendsKeyword, type) {
-                return new TypeScript.ConstraintSyntax(extendsKeyword, type, 0);
-            };
-            NormalModeFactory.prototype.elseClause = function (elseKeyword, statement) {
-                return new TypeScript.ElseClauseSyntax(elseKeyword, statement, 0);
-            };
-            NormalModeFactory.prototype.ifStatement = function (ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause) {
-                return new TypeScript.IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, 0);
-            };
-            NormalModeFactory.prototype.expressionStatement = function (expression, semicolonToken) {
-                return new TypeScript.ExpressionStatementSyntax(expression, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.constructorDeclaration = function (modifiers, constructorKeyword, callSignature, block, semicolonToken) {
-                return new TypeScript.ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.memberFunctionDeclaration = function (modifiers, propertyName, callSignature, block, semicolonToken) {
-                return new TypeScript.MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.getAccessor = function (modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block) {
-                return new TypeScript.GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, 0);
-            };
-            NormalModeFactory.prototype.setAccessor = function (modifiers, setKeyword, propertyName, parameterList, block) {
-                return new TypeScript.SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, 0);
-            };
-            NormalModeFactory.prototype.memberVariableDeclaration = function (modifiers, variableDeclarator, semicolonToken) {
-                return new TypeScript.MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.indexMemberDeclaration = function (modifiers, indexSignature, semicolonToken) {
-                return new TypeScript.IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.throwStatement = function (throwKeyword, expression, semicolonToken) {
-                return new TypeScript.ThrowStatementSyntax(throwKeyword, expression, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.returnStatement = function (returnKeyword, expression, semicolonToken) {
-                return new TypeScript.ReturnStatementSyntax(returnKeyword, expression, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.objectCreationExpression = function (newKeyword, expression, argumentList) {
-                return new TypeScript.ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, 0);
-            };
-            NormalModeFactory.prototype.switchStatement = function (switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken) {
-                return new TypeScript.SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, 0);
-            };
-            NormalModeFactory.prototype.caseSwitchClause = function (caseKeyword, expression, colonToken, statements) {
-                return new TypeScript.CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, 0);
-            };
-            NormalModeFactory.prototype.defaultSwitchClause = function (defaultKeyword, colonToken, statements) {
-                return new TypeScript.DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, 0);
-            };
-            NormalModeFactory.prototype.breakStatement = function (breakKeyword, identifier, semicolonToken) {
-                return new TypeScript.BreakStatementSyntax(breakKeyword, identifier, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.continueStatement = function (continueKeyword, identifier, semicolonToken) {
-                return new TypeScript.ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.forStatement = function (forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement) {
-                return new TypeScript.ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, 0);
-            };
-            NormalModeFactory.prototype.forInStatement = function (forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement) {
-                return new TypeScript.ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, 0);
-            };
-            NormalModeFactory.prototype.whileStatement = function (whileKeyword, openParenToken, condition, closeParenToken, statement) {
-                return new TypeScript.WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, 0);
-            };
-            NormalModeFactory.prototype.withStatement = function (withKeyword, openParenToken, condition, closeParenToken, statement) {
-                return new TypeScript.WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, 0);
-            };
-            NormalModeFactory.prototype.enumDeclaration = function (modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken) {
-                return new TypeScript.EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, 0);
-            };
-            NormalModeFactory.prototype.enumElement = function (propertyName, equalsValueClause) {
-                return new TypeScript.EnumElementSyntax(propertyName, equalsValueClause, 0);
-            };
-            NormalModeFactory.prototype.castExpression = function (lessThanToken, type, greaterThanToken, expression) {
-                return new TypeScript.CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, 0);
-            };
-            NormalModeFactory.prototype.objectLiteralExpression = function (openBraceToken, propertyAssignments, closeBraceToken) {
-                return new TypeScript.ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, 0);
-            };
-            NormalModeFactory.prototype.simplePropertyAssignment = function (propertyName, colonToken, expression) {
-                return new TypeScript.SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, 0);
-            };
-            NormalModeFactory.prototype.functionPropertyAssignment = function (propertyName, callSignature, block) {
-                return new TypeScript.FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, 0);
-            };
-            NormalModeFactory.prototype.functionExpression = function (functionKeyword, identifier, callSignature, block) {
-                return new TypeScript.FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, 0);
-            };
-            NormalModeFactory.prototype.emptyStatement = function (semicolonToken) {
-                return new TypeScript.EmptyStatementSyntax(semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.tryStatement = function (tryKeyword, block, catchClause, finallyClause) {
-                return new TypeScript.TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, 0);
-            };
-            NormalModeFactory.prototype.catchClause = function (catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block) {
-                return new TypeScript.CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, 0);
-            };
-            NormalModeFactory.prototype.finallyClause = function (finallyKeyword, block) {
-                return new TypeScript.FinallyClauseSyntax(finallyKeyword, block, 0);
-            };
-            NormalModeFactory.prototype.labeledStatement = function (identifier, colonToken, statement) {
-                return new TypeScript.LabeledStatementSyntax(identifier, colonToken, statement, 0);
-            };
-            NormalModeFactory.prototype.doStatement = function (doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken) {
-                return new TypeScript.DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, 0);
-            };
-            NormalModeFactory.prototype.typeOfExpression = function (typeOfKeyword, expression) {
-                return new TypeScript.TypeOfExpressionSyntax(typeOfKeyword, expression, 0);
-            };
-            NormalModeFactory.prototype.deleteExpression = function (deleteKeyword, expression) {
-                return new TypeScript.DeleteExpressionSyntax(deleteKeyword, expression, 0);
-            };
-            NormalModeFactory.prototype.voidExpression = function (voidKeyword, expression) {
-                return new TypeScript.VoidExpressionSyntax(voidKeyword, expression, 0);
-            };
-            NormalModeFactory.prototype.debuggerStatement = function (debuggerKeyword, semicolonToken) {
-                return new TypeScript.DebuggerStatementSyntax(debuggerKeyword, semicolonToken, 0);
-            };
-            return NormalModeFactory;
-        })();
-        Syntax.NormalModeFactory = NormalModeFactory;
 
-        var StrictModeFactory = (function () {
-            function StrictModeFactory() {
+    function collectTextElements(element, elements) {
+        if (element) {
+            if (isToken(element)) {
+                elements.push(element.fullText());
+            } else {
+                for (var i = 0, n = element.childCount(); i < n; i++) {
+                    collectTextElements(element.childAt(i), elements);
+                }
             }
-            StrictModeFactory.prototype.sourceUnit = function (moduleElements, endOfFileToken) {
-                return new TypeScript.SourceUnitSyntax(moduleElements, endOfFileToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.externalModuleReference = function (requireKeyword, openParenToken, stringLiteral, closeParenToken) {
-                return new TypeScript.ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.moduleNameModuleReference = function (moduleName) {
-                return new TypeScript.ModuleNameModuleReferenceSyntax(moduleName, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.importDeclaration = function (modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken) {
-                return new TypeScript.ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.exportAssignment = function (exportKeyword, equalsToken, identifier, semicolonToken) {
-                return new TypeScript.ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.classDeclaration = function (modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken) {
-                return new TypeScript.ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.interfaceDeclaration = function (modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body) {
-                return new TypeScript.InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.heritageClause = function (kind, extendsOrImplementsKeyword, typeNames) {
-                return new TypeScript.HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.moduleDeclaration = function (modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken) {
-                return new TypeScript.ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.functionDeclaration = function (modifiers, functionKeyword, identifier, callSignature, block, semicolonToken) {
-                return new TypeScript.FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.variableStatement = function (modifiers, variableDeclaration, semicolonToken) {
-                return new TypeScript.VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.variableDeclaration = function (varKeyword, variableDeclarators) {
-                return new TypeScript.VariableDeclarationSyntax(varKeyword, variableDeclarators, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.variableDeclarator = function (propertyName, typeAnnotation, equalsValueClause) {
-                return new TypeScript.VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.equalsValueClause = function (equalsToken, value) {
-                return new TypeScript.EqualsValueClauseSyntax(equalsToken, value, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.prefixUnaryExpression = function (kind, operatorToken, operand) {
-                return new TypeScript.PrefixUnaryExpressionSyntax(kind, operatorToken, operand, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.arrayLiteralExpression = function (openBracketToken, expressions, closeBracketToken) {
-                return new TypeScript.ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.omittedExpression = function () {
-                return new TypeScript.OmittedExpressionSyntax(4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.parenthesizedExpression = function (openParenToken, expression, closeParenToken) {
-                return new TypeScript.ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.simpleArrowFunctionExpression = function (identifier, equalsGreaterThanToken, block, expression) {
-                return new TypeScript.SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.parenthesizedArrowFunctionExpression = function (callSignature, equalsGreaterThanToken, block, expression) {
-                return new TypeScript.ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.qualifiedName = function (left, dotToken, right) {
-                return new TypeScript.QualifiedNameSyntax(left, dotToken, right, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.typeArgumentList = function (lessThanToken, typeArguments, greaterThanToken) {
-                return new TypeScript.TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.constructorType = function (newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type) {
-                return new TypeScript.ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.functionType = function (typeParameterList, parameterList, equalsGreaterThanToken, type) {
-                return new TypeScript.FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, type, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.objectType = function (openBraceToken, typeMembers, closeBraceToken) {
-                return new TypeScript.ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.arrayType = function (type, openBracketToken, closeBracketToken) {
-                return new TypeScript.ArrayTypeSyntax(type, openBracketToken, closeBracketToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.genericType = function (name, typeArgumentList) {
-                return new TypeScript.GenericTypeSyntax(name, typeArgumentList, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.typeQuery = function (typeOfKeyword, name) {
-                return new TypeScript.TypeQuerySyntax(typeOfKeyword, name, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.typeAnnotation = function (colonToken, type) {
-                return new TypeScript.TypeAnnotationSyntax(colonToken, type, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.block = function (openBraceToken, statements, closeBraceToken) {
-                return new TypeScript.BlockSyntax(openBraceToken, statements, closeBraceToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.parameter = function (dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause) {
-                return new TypeScript.ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.memberAccessExpression = function (expression, dotToken, name) {
-                return new TypeScript.MemberAccessExpressionSyntax(expression, dotToken, name, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.postfixUnaryExpression = function (kind, operand, operatorToken) {
-                return new TypeScript.PostfixUnaryExpressionSyntax(kind, operand, operatorToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.elementAccessExpression = function (expression, openBracketToken, argumentExpression, closeBracketToken) {
-                return new TypeScript.ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.invocationExpression = function (expression, argumentList) {
-                return new TypeScript.InvocationExpressionSyntax(expression, argumentList, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.argumentList = function (typeArgumentList, openParenToken, _arguments, closeParenToken) {
-                return new TypeScript.ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.binaryExpression = function (kind, left, operatorToken, right) {
-                return new TypeScript.BinaryExpressionSyntax(kind, left, operatorToken, right, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.conditionalExpression = function (condition, questionToken, whenTrue, colonToken, whenFalse) {
-                return new TypeScript.ConditionalExpressionSyntax(condition, questionToken, whenTrue, colonToken, whenFalse, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.constructSignature = function (newKeyword, callSignature) {
-                return new TypeScript.ConstructSignatureSyntax(newKeyword, callSignature, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.methodSignature = function (propertyName, questionToken, callSignature) {
-                return new TypeScript.MethodSignatureSyntax(propertyName, questionToken, callSignature, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.indexSignature = function (openBracketToken, parameter, closeBracketToken, typeAnnotation) {
-                return new TypeScript.IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.propertySignature = function (propertyName, questionToken, typeAnnotation) {
-                return new TypeScript.PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.callSignature = function (typeParameterList, parameterList, typeAnnotation) {
-                return new TypeScript.CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.parameterList = function (openParenToken, parameters, closeParenToken) {
-                return new TypeScript.ParameterListSyntax(openParenToken, parameters, closeParenToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.typeParameterList = function (lessThanToken, typeParameters, greaterThanToken) {
-                return new TypeScript.TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.typeParameter = function (identifier, constraint) {
-                return new TypeScript.TypeParameterSyntax(identifier, constraint, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.constraint = function (extendsKeyword, type) {
-                return new TypeScript.ConstraintSyntax(extendsKeyword, type, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.elseClause = function (elseKeyword, statement) {
-                return new TypeScript.ElseClauseSyntax(elseKeyword, statement, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.ifStatement = function (ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause) {
-                return new TypeScript.IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.expressionStatement = function (expression, semicolonToken) {
-                return new TypeScript.ExpressionStatementSyntax(expression, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.constructorDeclaration = function (modifiers, constructorKeyword, callSignature, block, semicolonToken) {
-                return new TypeScript.ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.memberFunctionDeclaration = function (modifiers, propertyName, callSignature, block, semicolonToken) {
-                return new TypeScript.MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.getAccessor = function (modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block) {
-                return new TypeScript.GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.setAccessor = function (modifiers, setKeyword, propertyName, parameterList, block) {
-                return new TypeScript.SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.memberVariableDeclaration = function (modifiers, variableDeclarator, semicolonToken) {
-                return new TypeScript.MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.indexMemberDeclaration = function (modifiers, indexSignature, semicolonToken) {
-                return new TypeScript.IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.throwStatement = function (throwKeyword, expression, semicolonToken) {
-                return new TypeScript.ThrowStatementSyntax(throwKeyword, expression, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.returnStatement = function (returnKeyword, expression, semicolonToken) {
-                return new TypeScript.ReturnStatementSyntax(returnKeyword, expression, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.objectCreationExpression = function (newKeyword, expression, argumentList) {
-                return new TypeScript.ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.switchStatement = function (switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken) {
-                return new TypeScript.SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.caseSwitchClause = function (caseKeyword, expression, colonToken, statements) {
-                return new TypeScript.CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.defaultSwitchClause = function (defaultKeyword, colonToken, statements) {
-                return new TypeScript.DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.breakStatement = function (breakKeyword, identifier, semicolonToken) {
-                return new TypeScript.BreakStatementSyntax(breakKeyword, identifier, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.continueStatement = function (continueKeyword, identifier, semicolonToken) {
-                return new TypeScript.ContinueStatementSyntax(continueKeyword, identifier, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.forStatement = function (forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement) {
-                return new TypeScript.ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.forInStatement = function (forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement) {
-                return new TypeScript.ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.whileStatement = function (whileKeyword, openParenToken, condition, closeParenToken, statement) {
-                return new TypeScript.WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.withStatement = function (withKeyword, openParenToken, condition, closeParenToken, statement) {
-                return new TypeScript.WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.enumDeclaration = function (modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken) {
-                return new TypeScript.EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.enumElement = function (propertyName, equalsValueClause) {
-                return new TypeScript.EnumElementSyntax(propertyName, equalsValueClause, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.castExpression = function (lessThanToken, type, greaterThanToken, expression) {
-                return new TypeScript.CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.objectLiteralExpression = function (openBraceToken, propertyAssignments, closeBraceToken) {
-                return new TypeScript.ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.simplePropertyAssignment = function (propertyName, colonToken, expression) {
-                return new TypeScript.SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.functionPropertyAssignment = function (propertyName, callSignature, block) {
-                return new TypeScript.FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.functionExpression = function (functionKeyword, identifier, callSignature, block) {
-                return new TypeScript.FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.emptyStatement = function (semicolonToken) {
-                return new TypeScript.EmptyStatementSyntax(semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.tryStatement = function (tryKeyword, block, catchClause, finallyClause) {
-                return new TypeScript.TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.catchClause = function (catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block) {
-                return new TypeScript.CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.finallyClause = function (finallyKeyword, block) {
-                return new TypeScript.FinallyClauseSyntax(finallyKeyword, block, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.labeledStatement = function (identifier, colonToken, statement) {
-                return new TypeScript.LabeledStatementSyntax(identifier, colonToken, statement, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.doStatement = function (doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken) {
-                return new TypeScript.DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.typeOfExpression = function (typeOfKeyword, expression) {
-                return new TypeScript.TypeOfExpressionSyntax(typeOfKeyword, expression, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.deleteExpression = function (deleteKeyword, expression) {
-                return new TypeScript.DeleteExpressionSyntax(deleteKeyword, expression, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.voidExpression = function (voidKeyword, expression) {
-                return new TypeScript.VoidExpressionSyntax(voidKeyword, expression, 4 /* NodeParsedInStrictModeMask */);
-            };
-            StrictModeFactory.prototype.debuggerStatement = function (debuggerKeyword, semicolonToken) {
-                return new TypeScript.DebuggerStatementSyntax(debuggerKeyword, semicolonToken, 4 /* NodeParsedInStrictModeMask */);
-            };
-            return StrictModeFactory;
-        })();
-        Syntax.StrictModeFactory = StrictModeFactory;
+        }
+    }
 
-        Syntax.normalModeFactory = new NormalModeFactory();
-        Syntax.strictModeFactory = new StrictModeFactory();
-    })(TypeScript.Syntax || (TypeScript.Syntax = {}));
-    var Syntax = TypeScript.Syntax;
+    function fullText(element) {
+        if (isToken(element)) {
+            return element.fullText();
+        }
+
+        var elements = [];
+        collectTextElements(element, elements);
+
+        return elements.join("");
+    }
+    TypeScript.fullText = fullText;
+
+    function leadingTriviaWidth(element) {
+        var token = firstToken(element);
+        return token ? token.leadingTriviaWidth() : 0;
+    }
+    TypeScript.leadingTriviaWidth = leadingTriviaWidth;
+
+    function trailingTriviaWidth(element) {
+        var token = lastToken(element);
+        return token ? token.trailingTriviaWidth() : 0;
+    }
+    TypeScript.trailingTriviaWidth = trailingTriviaWidth;
+
+    function firstToken(element) {
+        if (isToken(element)) {
+            return element.fullWidth() > 0 || element.kind() === 10 /* EndOfFileToken */ ? element : null;
+        }
+
+        for (var i = 0, n = element.childCount(); i < n; i++) {
+            var child = element.childAt(i);
+            if (child !== null) {
+                var token = firstToken(child);
+                if (token) {
+                    return token;
+                }
+            }
+        }
+
+        if (element.kind() === 120 /* SourceUnit */) {
+            return element.endOfFileToken;
+        }
+
+        return null;
+    }
+    TypeScript.firstToken = firstToken;
+
+    function lastToken(element) {
+        if (isToken(element)) {
+            return element.fullWidth() > 0 || element.kind() === 10 /* EndOfFileToken */ ? element : null;
+        }
+
+        if (element.kind() === 120 /* SourceUnit */) {
+            return element.endOfFileToken;
+        }
+
+        for (var i = element.childCount() - 1; i >= 0; i--) {
+            var child = element.childAt(i);
+            if (child !== null) {
+                var token = lastToken(child);
+                if (token) {
+                    return token;
+                }
+            }
+        }
+
+        return null;
+    }
+    TypeScript.lastToken = lastToken;
+
+    function start(element) {
+        var token = isToken(element) ? element : firstToken(element);
+        return token ? token.fullStart() + token.leadingTriviaWidth() : -1;
+    }
+    TypeScript.start = start;
+
+    function end(element) {
+        var token = isToken(element) ? element : lastToken(element);
+        return token ? fullEnd(token) - token.trailingTriviaWidth() : -1;
+    }
+    TypeScript.end = end;
+
+    function width(element) {
+        return element.fullWidth() - leadingTriviaWidth(element) - trailingTriviaWidth(element);
+    }
+    TypeScript.width = width;
+
+    function fullEnd(element) {
+        return element.fullStart() + element.fullWidth();
+    }
+    TypeScript.fullEnd = fullEnd;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
@@ -9230,59 +8661,12 @@ var TypeScript;
                 return true;
             };
 
-            EmptySyntaxList.prototype.collectTextElements = function (elements) {
-            };
-
-            EmptySyntaxList.prototype.firstToken = function () {
-                return null;
-            };
-
-            EmptySyntaxList.prototype.lastToken = function () {
-                return null;
-            };
-
             EmptySyntaxList.prototype.fullWidth = function () {
-                return 0;
-            };
-
-            EmptySyntaxList.prototype.width = function () {
                 return 0;
             };
 
             EmptySyntaxList.prototype.fullStart = function () {
                 throw TypeScript.Errors.invalidOperation("'fullStart' invalid on a singleton element.");
-            };
-
-            EmptySyntaxList.prototype.fullEnd = function () {
-                throw TypeScript.Errors.invalidOperation("'fullEnd' invalid on a singleton element.");
-            };
-
-            EmptySyntaxList.prototype.start = function () {
-                throw TypeScript.Errors.invalidOperation("'start' invalid on a singleton element.");
-            };
-
-            EmptySyntaxList.prototype.end = function () {
-                throw TypeScript.Errors.invalidOperation("'end' invalid on a singleton element.");
-            };
-
-            EmptySyntaxList.prototype.leadingTrivia = function () {
-                return Syntax.emptyTriviaList;
-            };
-
-            EmptySyntaxList.prototype.trailingTrivia = function () {
-                return Syntax.emptyTriviaList;
-            };
-
-            EmptySyntaxList.prototype.leadingTriviaWidth = function () {
-                return 0;
-            };
-
-            EmptySyntaxList.prototype.trailingTriviaWidth = function () {
-                return 0;
-            };
-
-            EmptySyntaxList.prototype.fullText = function () {
-                return "";
             };
 
             EmptySyntaxList.prototype.isIncrementallyUnusable = function () {
@@ -9342,60 +8726,12 @@ var TypeScript;
                 return false;
             };
 
-            SingletonSyntaxList.prototype.collectTextElements = function (elements) {
-                this.item.collectTextElements(elements);
-            };
-
-            SingletonSyntaxList.prototype.firstToken = function () {
-                return this.item.firstToken();
-            };
-
-            SingletonSyntaxList.prototype.lastToken = function () {
-                return this.item.lastToken();
-            };
-
             SingletonSyntaxList.prototype.fullWidth = function () {
                 return this.item.fullWidth();
             };
 
-            SingletonSyntaxList.prototype.width = function () {
-                return this.item.width();
-            };
-
             SingletonSyntaxList.prototype.fullStart = function () {
                 return this.item.fullStart();
-            };
-
-            SingletonSyntaxList.prototype.fullEnd = function () {
-                return this.item.fullEnd();
-            };
-
-            SingletonSyntaxList.prototype.start = function () {
-                return this.item.start();
-            };
-
-            SingletonSyntaxList.prototype.end = function () {
-                return this.item.end();
-            };
-
-            SingletonSyntaxList.prototype.leadingTrivia = function () {
-                return this.item.leadingTrivia();
-            };
-
-            SingletonSyntaxList.prototype.trailingTrivia = function () {
-                return this.item.trailingTrivia();
-            };
-
-            SingletonSyntaxList.prototype.leadingTriviaWidth = function () {
-                return this.item.leadingTriviaWidth();
-            };
-
-            SingletonSyntaxList.prototype.trailingTriviaWidth = function () {
-                return this.item.trailingTriviaWidth();
-            };
-
-            SingletonSyntaxList.prototype.fullText = function () {
-                return this.item.fullText();
             };
 
             SingletonSyntaxList.prototype.isIncrementallyUnusable = function () {
@@ -9449,41 +8785,6 @@ var TypeScript;
                 return false;
             };
 
-            NormalSyntaxList.prototype.collectTextElements = function (elements) {
-                for (var i = 0, n = this.nodeOrTokens.length; i < n; i++) {
-                    var element = this.nodeOrTokens[i];
-                    element.collectTextElements(elements);
-                }
-            };
-
-            NormalSyntaxList.prototype.firstToken = function () {
-                for (var i = 0, n = this.nodeOrTokens.length; i < n; i++) {
-                    var token = this.nodeOrTokens[i].firstToken();
-                    if (token && token.fullWidth() > 0) {
-                        return token;
-                    }
-                }
-
-                return null;
-            };
-
-            NormalSyntaxList.prototype.lastToken = function () {
-                for (var i = this.nodeOrTokens.length - 1; i >= 0; i--) {
-                    var token = this.nodeOrTokens[i].lastToken();
-                    if (token && token.fullWidth() > 0) {
-                        return token;
-                    }
-                }
-
-                return null;
-            };
-
-            NormalSyntaxList.prototype.fullText = function () {
-                var elements = new Array();
-                this.collectTextElements(elements);
-                return elements.join("");
-            };
-
             NormalSyntaxList.prototype.isIncrementallyUnusable = function () {
                 return (this.data() & 2 /* NodeIncrementallyUnusableMask */) !== 0;
             };
@@ -9492,41 +8793,8 @@ var TypeScript;
                 return this.data() >>> 3 /* NodeFullWidthShift */;
             };
 
-            NormalSyntaxList.prototype.width = function () {
-                var fullWidth = this.fullWidth();
-                return fullWidth - this.leadingTriviaWidth() - this.trailingTriviaWidth();
-            };
-
             NormalSyntaxList.prototype.fullStart = function () {
-                return this.firstToken().fullStart();
-            };
-
-            NormalSyntaxList.prototype.fullEnd = function () {
-                return this.lastToken().fullEnd();
-            };
-
-            NormalSyntaxList.prototype.start = function () {
-                return this.firstToken().start();
-            };
-
-            NormalSyntaxList.prototype.end = function () {
-                return this.lastToken().end();
-            };
-
-            NormalSyntaxList.prototype.leadingTrivia = function () {
-                return this.firstToken().leadingTrivia();
-            };
-
-            NormalSyntaxList.prototype.trailingTrivia = function () {
-                return this.lastToken().trailingTrivia();
-            };
-
-            NormalSyntaxList.prototype.leadingTriviaWidth = function () {
-                return this.firstToken().leadingTriviaWidth();
-            };
-
-            NormalSyntaxList.prototype.trailingTriviaWidth = function () {
-                return this.lastToken().trailingTriviaWidth();
+                return TypeScript.firstToken(this).fullStart();
             };
 
             NormalSyntaxList.prototype.computeData = function () {
@@ -9600,71 +8868,8 @@ var TypeScript;
         };
 
         SyntaxNode.prototype.fullStart = function () {
-            var firstToken = this.firstToken();
-            return firstToken ? firstToken.fullStart() : -1;
-        };
-
-        SyntaxNode.prototype.fullEnd = function () {
-            var lastToken = this.lastToken();
-            return lastToken ? lastToken.fullEnd() : -1;
-        };
-
-        SyntaxNode.prototype.start = function () {
-            var firstToken = this.firstToken();
-            return firstToken ? firstToken.start() : -1;
-        };
-
-        SyntaxNode.prototype.end = function () {
-            var lastToken = this.lastToken();
-            return lastToken ? lastToken.end() : -1;
-        };
-
-        SyntaxNode.prototype.firstToken = function () {
-            for (var i = 0, n = this.childCount(); i < n; i++) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    if (element.kind() === 10 /* EndOfFileToken */) {
-                        return element;
-                    }
-
-                    var token = element.firstToken();
-                    if (token && token.fullWidth() > 0) {
-                        return token;
-                    }
-                }
-            }
-
-            return null;
-        };
-
-        SyntaxNode.prototype.lastToken = function () {
-            for (var i = this.childCount() - 1; i >= 0; i--) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    if (element.kind() === 10 /* EndOfFileToken */) {
-                        return element;
-                    }
-
-                    var token = element.lastToken();
-                    if (token && token.fullWidth() > 0) {
-                        return token;
-                    }
-                }
-            }
-
-            return null;
-        };
-
-        SyntaxNode.prototype.leadingTrivia = function () {
-            var firstToken = this.firstToken();
-            return firstToken ? firstToken.leadingTrivia() : TypeScript.Syntax.emptyTriviaList;
-        };
-
-        SyntaxNode.prototype.trailingTrivia = function () {
-            var lastToken = this.lastToken();
-            return lastToken ? lastToken.trailingTrivia() : TypeScript.Syntax.emptyTriviaList;
+            var token = TypeScript.firstToken(this);
+            return token ? token.fullStart() : -1;
         };
 
         SyntaxNode.prototype.toJSON = function (key) {
@@ -9678,13 +8883,13 @@ var TypeScript;
             }
 
             result.fullStart = this.fullStart();
-            result.fullEnd = this.fullEnd();
+            result.fullEnd = TypeScript.fullEnd(this);
 
-            result.start = this.start();
-            result.end = this.end();
+            result.start = TypeScript.start(this);
+            result.end = TypeScript.end(this);
 
             result.fullWidth = this.fullWidth();
-            result.width = this.width();
+            result.width = TypeScript.width(this);
 
             if (this.isIncrementallyUnusable()) {
                 result.isIncrementallyUnusable = true;
@@ -9709,30 +8914,6 @@ var TypeScript;
             }
 
             return result;
-        };
-
-        SyntaxNode.prototype.fullText = function () {
-            var elements = [];
-            this.collectTextElements(elements);
-            return elements.join("");
-        };
-
-        SyntaxNode.prototype.collectTextElements = function (elements) {
-            for (var i = 0, n = this.childCount(); i < n; i++) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    element.collectTextElements(elements);
-                }
-            }
-        };
-
-        SyntaxNode.prototype.hasLeadingTrivia = function () {
-            return this.lastToken().hasLeadingTrivia();
-        };
-
-        SyntaxNode.prototype.hasTrailingTrivia = function () {
-            return this.lastToken().hasTrailingTrivia();
         };
 
         SyntaxNode.prototype.isIncrementallyUnusable = function () {
@@ -9773,135 +8954,6 @@ var TypeScript;
             }
 
             return this._data;
-        };
-
-        SyntaxNode.prototype.findToken = function (position, includeSkippedTokens) {
-            if (typeof includeSkippedTokens === "undefined") { includeSkippedTokens = false; }
-            var endOfFileToken = this.tryGetEndOfFileAt(position);
-            if (endOfFileToken !== null) {
-                return endOfFileToken;
-            }
-
-            if (position < 0 || position >= this.fullWidth()) {
-                throw TypeScript.Errors.argumentOutOfRange("position");
-            }
-
-            var positionedToken = TypeScript.Syntax.findToken(this, position);
-
-            if (includeSkippedTokens) {
-                return TypeScript.Syntax.findSkippedTokenInPositionedToken(positionedToken, position) || positionedToken;
-            }
-
-            return positionedToken;
-        };
-
-        SyntaxNode.prototype.tryGetEndOfFileAt = function (position) {
-            if (this.kind() === 120 /* SourceUnit */ && position === this.fullWidth()) {
-                var sourceUnit = this;
-                return sourceUnit.endOfFileToken;
-            }
-
-            return null;
-        };
-
-        SyntaxNode.prototype.findTokenOnLeft = function (position, includeSkippedTokens) {
-            if (typeof includeSkippedTokens === "undefined") { includeSkippedTokens = false; }
-            var positionedToken = this.findToken(position, false);
-            var start = positionedToken.start();
-
-            if (includeSkippedTokens) {
-                positionedToken = TypeScript.Syntax.findSkippedTokenOnLeft(positionedToken, position) || positionedToken;
-            }
-
-            if (position > start) {
-                return positionedToken;
-            }
-
-            if (positionedToken.fullStart() === 0) {
-                return null;
-            }
-
-            return positionedToken.previousToken(includeSkippedTokens);
-        };
-
-        SyntaxNode.prototype.findCompleteTokenOnLeft = function (position, includeSkippedTokens) {
-            if (typeof includeSkippedTokens === "undefined") { includeSkippedTokens = false; }
-            var positionedToken = this.findToken(position, false);
-
-            if (includeSkippedTokens) {
-                positionedToken = TypeScript.Syntax.findSkippedTokenOnLeft(positionedToken, position) || positionedToken;
-            }
-
-            if (positionedToken.width() > 0 && position >= positionedToken.end()) {
-                return positionedToken;
-            }
-
-            return positionedToken.previousToken(includeSkippedTokens);
-        };
-
-        SyntaxNode.prototype.isModuleElement = function () {
-            return false;
-        };
-
-        SyntaxNode.prototype.isClassElement = function () {
-            return false;
-        };
-
-        SyntaxNode.prototype.isTypeMember = function () {
-            return false;
-        };
-
-        SyntaxNode.prototype.isStatement = function () {
-            return false;
-        };
-
-        SyntaxNode.prototype.isExpression = function () {
-            return false;
-        };
-
-        SyntaxNode.prototype.isLeftHandSideExpression = function () {
-            return false;
-        };
-
-        SyntaxNode.prototype.isSwitchClause = function () {
-            return false;
-        };
-
-        SyntaxNode.prototype.structuralEquals = function (node) {
-            if (this === node) {
-                return true;
-            }
-            if (node === null) {
-                return false;
-            }
-            if (this.kind() !== node.kind()) {
-                return false;
-            }
-
-            for (var i = 0, n = this.childCount(); i < n; i++) {
-                var element1 = this.childAt(i);
-                var element2 = node.childAt(i);
-
-                if (!TypeScript.Syntax.elementStructuralEquals(element1, element2)) {
-                    return false;
-                }
-            }
-
-            return true;
-        };
-
-        SyntaxNode.prototype.width = function () {
-            return this.fullWidth() - this.leadingTriviaWidth() - this.trailingTriviaWidth();
-        };
-
-        SyntaxNode.prototype.leadingTriviaWidth = function () {
-            var firstToken = this.firstToken();
-            return firstToken === null ? 0 : firstToken.leadingTriviaWidth();
-        };
-
-        SyntaxNode.prototype.trailingTriviaWidth = function () {
-            var lastToken = this.lastToken();
-            return lastToken === null ? 0 : lastToken.trailingTriviaWidth();
         };
         return SyntaxNode;
     })();
@@ -9982,10 +9034,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ExternalModuleReferenceSyntax.prototype.isModuleReference = function () {
-            return true;
-        };
         return ExternalModuleReferenceSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ExternalModuleReferenceSyntax = ExternalModuleReferenceSyntax;
@@ -10013,10 +9061,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ModuleNameModuleReferenceSyntax.prototype.isModuleReference = function () {
-            return true;
         };
         return ModuleNameModuleReferenceSyntax;
     })(TypeScript.SyntaxNode);
@@ -10066,10 +9110,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ImportDeclarationSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return ImportDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ImportDeclarationSyntax = ImportDeclarationSyntax;
@@ -10109,10 +9149,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ExportAssignmentSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return ExportAssignmentSyntax;
     })(TypeScript.SyntaxNode);
@@ -10170,10 +9206,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ClassDeclarationSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return ClassDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ClassDeclarationSyntax = ClassDeclarationSyntax;
@@ -10221,10 +9253,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        InterfaceDeclarationSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return InterfaceDeclarationSyntax;
     })(TypeScript.SyntaxNode);
@@ -10311,10 +9339,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ModuleDeclarationSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return ModuleDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ModuleDeclarationSyntax = ModuleDeclarationSyntax;
@@ -10363,14 +9387,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        FunctionDeclarationSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        FunctionDeclarationSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return FunctionDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionDeclarationSyntax = FunctionDeclarationSyntax;
@@ -10406,14 +9422,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        VariableStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        VariableStatementSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return VariableStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -10545,14 +9553,6 @@ var TypeScript;
             }
         };
 
-        PrefixUnaryExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        PrefixUnaryExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
-
         PrefixUnaryExpressionSyntax.prototype.kind = function () {
             return this._kind;
         };
@@ -10592,30 +9592,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ArrayLiteralExpressionSyntax.prototype.isPrimaryExpression = function () {
-            return true;
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.isMemberExpression = function () {
-            return true;
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.isLeftHandSideExpression = function () {
-            return true;
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return ArrayLiteralExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ArrayLiteralExpressionSyntax = ArrayLiteralExpressionSyntax;
@@ -10635,10 +9611,6 @@ var TypeScript;
 
         OmittedExpressionSyntax.prototype.childAt = function (slot) {
             throw TypeScript.Errors.invalidOperation();
-        };
-
-        OmittedExpressionSyntax.prototype.isExpression = function () {
-            return true;
         };
         return OmittedExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -10675,30 +9647,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ParenthesizedExpressionSyntax.prototype.isPrimaryExpression = function () {
-            return true;
-        };
-
-        ParenthesizedExpressionSyntax.prototype.isMemberExpression = function () {
-            return true;
-        };
-
-        ParenthesizedExpressionSyntax.prototype.isLeftHandSideExpression = function () {
-            return true;
-        };
-
-        ParenthesizedExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        ParenthesizedExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        ParenthesizedExpressionSyntax.prototype.isExpression = function () {
-            return true;
         };
         return ParenthesizedExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -10740,14 +9688,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return SimpleArrowFunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SimpleArrowFunctionExpressionSyntax = SimpleArrowFunctionExpressionSyntax;
@@ -10788,14 +9728,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return ParenthesizedArrowFunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ParenthesizedArrowFunctionExpressionSyntax = ParenthesizedArrowFunctionExpressionSyntax;
@@ -10831,14 +9763,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        QualifiedNameSyntax.prototype.isName = function () {
-            return true;
-        };
-
-        QualifiedNameSyntax.prototype.isType = function () {
-            return true;
         };
         return QualifiedNameSyntax;
     })(TypeScript.SyntaxNode);
@@ -10920,10 +9844,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ConstructorTypeSyntax.prototype.isType = function () {
-            return true;
-        };
         return ConstructorTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConstructorTypeSyntax = ConstructorTypeSyntax;
@@ -10964,10 +9884,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        FunctionTypeSyntax.prototype.isType = function () {
-            return true;
-        };
         return FunctionTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionTypeSyntax = FunctionTypeSyntax;
@@ -11003,10 +9919,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ObjectTypeSyntax.prototype.isType = function () {
-            return true;
         };
         return ObjectTypeSyntax;
     })(TypeScript.SyntaxNode);
@@ -11044,10 +9956,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ArrayTypeSyntax.prototype.isType = function () {
-            return true;
-        };
         return ArrayTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ArrayTypeSyntax = ArrayTypeSyntax;
@@ -11080,10 +9988,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        GenericTypeSyntax.prototype.isType = function () {
-            return true;
-        };
         return GenericTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.GenericTypeSyntax = GenericTypeSyntax;
@@ -11115,10 +10019,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        TypeQuerySyntax.prototype.isType = function () {
-            return true;
         };
         return TypeQuerySyntax;
     })(TypeScript.SyntaxNode);
@@ -11187,14 +10087,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        BlockSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        BlockSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return BlockSyntax;
     })(TypeScript.SyntaxNode);
@@ -11280,30 +10172,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        MemberAccessExpressionSyntax.prototype.isMemberExpression = function () {
-            return true;
-        };
-
-        MemberAccessExpressionSyntax.prototype.isCallExpression = function () {
-            return true;
-        };
-
-        MemberAccessExpressionSyntax.prototype.isLeftHandSideExpression = function () {
-            return true;
-        };
-
-        MemberAccessExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        MemberAccessExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        MemberAccessExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return MemberAccessExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.MemberAccessExpressionSyntax = MemberAccessExpressionSyntax;
@@ -11332,18 +10200,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.isExpression = function () {
-            return true;
         };
 
         PostfixUnaryExpressionSyntax.prototype.kind = function () {
@@ -11389,30 +10245,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ElementAccessExpressionSyntax.prototype.isMemberExpression = function () {
-            return true;
-        };
-
-        ElementAccessExpressionSyntax.prototype.isCallExpression = function () {
-            return true;
-        };
-
-        ElementAccessExpressionSyntax.prototype.isLeftHandSideExpression = function () {
-            return true;
-        };
-
-        ElementAccessExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        ElementAccessExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        ElementAccessExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return ElementAccessExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ElementAccessExpressionSyntax = ElementAccessExpressionSyntax;
@@ -11444,26 +10276,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        InvocationExpressionSyntax.prototype.isCallExpression = function () {
-            return true;
-        };
-
-        InvocationExpressionSyntax.prototype.isLeftHandSideExpression = function () {
-            return true;
-        };
-
-        InvocationExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        InvocationExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        InvocationExpressionSyntax.prototype.isExpression = function () {
-            return true;
         };
         return InvocationExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -11539,10 +10351,6 @@ var TypeScript;
             }
         };
 
-        BinaryExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
-
         BinaryExpressionSyntax.prototype.kind = function () {
             return this._kind;
         };
@@ -11590,10 +10398,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ConditionalExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return ConditionalExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConditionalExpressionSyntax = ConditionalExpressionSyntax;
@@ -11625,10 +10429,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ConstructSignatureSyntax.prototype.isTypeMember = function () {
-            return true;
         };
         return ConstructSignatureSyntax;
     })(TypeScript.SyntaxNode);
@@ -11665,10 +10465,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        MethodSignatureSyntax.prototype.isTypeMember = function () {
-            return true;
         };
         return MethodSignatureSyntax;
     })(TypeScript.SyntaxNode);
@@ -11710,10 +10506,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        IndexSignatureSyntax.prototype.isTypeMember = function () {
-            return true;
-        };
         return IndexSignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.IndexSignatureSyntax = IndexSignatureSyntax;
@@ -11750,10 +10542,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        PropertySignatureSyntax.prototype.isTypeMember = function () {
-            return true;
-        };
         return PropertySignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.PropertySignatureSyntax = PropertySignatureSyntax;
@@ -11789,10 +10577,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        CallSignatureSyntax.prototype.isTypeMember = function () {
-            return true;
         };
         return CallSignatureSyntax;
     })(TypeScript.SyntaxNode);
@@ -12010,14 +10794,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        IfStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        IfStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return IfStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.IfStatementSyntax = IfStatementSyntax;
@@ -12049,14 +10825,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ExpressionStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        ExpressionStatementSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return ExpressionStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -12102,10 +10870,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ConstructorDeclarationSyntax.prototype.isClassElement = function () {
-            return true;
-        };
         return ConstructorDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConstructorDeclarationSyntax = ConstructorDeclarationSyntax;
@@ -12149,14 +10913,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.isMemberDeclaration = function () {
-            return true;
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.isClassElement = function () {
-            return true;
         };
         return MemberFunctionDeclarationSyntax;
     })(TypeScript.SyntaxNode);
@@ -12206,18 +10962,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        GetAccessorSyntax.prototype.isMemberDeclaration = function () {
-            return true;
-        };
-
-        GetAccessorSyntax.prototype.isPropertyAssignment = function () {
-            return true;
-        };
-
-        GetAccessorSyntax.prototype.isClassElement = function () {
-            return true;
-        };
         return GetAccessorSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.GetAccessorSyntax = GetAccessorSyntax;
@@ -12262,18 +11006,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        SetAccessorSyntax.prototype.isMemberDeclaration = function () {
-            return true;
-        };
-
-        SetAccessorSyntax.prototype.isPropertyAssignment = function () {
-            return true;
-        };
-
-        SetAccessorSyntax.prototype.isClassElement = function () {
-            return true;
-        };
         return SetAccessorSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SetAccessorSyntax = SetAccessorSyntax;
@@ -12309,14 +11041,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        MemberVariableDeclarationSyntax.prototype.isMemberDeclaration = function () {
-            return true;
-        };
-
-        MemberVariableDeclarationSyntax.prototype.isClassElement = function () {
-            return true;
         };
         return MemberVariableDeclarationSyntax;
     })(TypeScript.SyntaxNode);
@@ -12354,10 +11078,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        IndexMemberDeclarationSyntax.prototype.isClassElement = function () {
-            return true;
-        };
         return IndexMemberDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.IndexMemberDeclarationSyntax = IndexMemberDeclarationSyntax;
@@ -12393,14 +11113,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ThrowStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        ThrowStatementSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return ThrowStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -12438,14 +11150,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ReturnStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        ReturnStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return ReturnStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ReturnStatementSyntax = ReturnStatementSyntax;
@@ -12481,26 +11185,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ObjectCreationExpressionSyntax.prototype.isMemberExpression = function () {
-            return true;
-        };
-
-        ObjectCreationExpressionSyntax.prototype.isLeftHandSideExpression = function () {
-            return true;
-        };
-
-        ObjectCreationExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        ObjectCreationExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        ObjectCreationExpressionSyntax.prototype.isExpression = function () {
-            return true;
         };
         return ObjectCreationExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -12554,14 +11238,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        SwitchStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        SwitchStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return SwitchStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SwitchStatementSyntax = SwitchStatementSyntax;
@@ -12602,10 +11278,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        CaseSwitchClauseSyntax.prototype.isSwitchClause = function () {
-            return true;
-        };
         return CaseSwitchClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CaseSwitchClauseSyntax = CaseSwitchClauseSyntax;
@@ -12641,10 +11313,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        DefaultSwitchClauseSyntax.prototype.isSwitchClause = function () {
-            return true;
         };
         return DefaultSwitchClauseSyntax;
     })(TypeScript.SyntaxNode);
@@ -12682,14 +11350,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        BreakStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        BreakStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return BreakStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.BreakStatementSyntax = BreakStatementSyntax;
@@ -12725,14 +11385,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ContinueStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        ContinueStatementSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return ContinueStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -12798,14 +11450,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ForStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        ForStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return ForStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ForStatementSyntax = ForStatementSyntax;
@@ -12862,14 +11506,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        ForInStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        ForInStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return ForInStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ForInStatementSyntax = ForInStatementSyntax;
@@ -12914,14 +11550,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        WhileStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        WhileStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return WhileStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.WhileStatementSyntax = WhileStatementSyntax;
@@ -12965,14 +11593,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        WithStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        WithStatementSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return WithStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -13021,10 +11641,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        EnumDeclarationSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return EnumDeclarationSyntax;
     })(TypeScript.SyntaxNode);
@@ -13098,14 +11714,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        CastExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        CastExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return CastExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CastExpressionSyntax = CastExpressionSyntax;
@@ -13141,30 +11749,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.isPrimaryExpression = function () {
-            return true;
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.isMemberExpression = function () {
-            return true;
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.isLeftHandSideExpression = function () {
-            return true;
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.isExpression = function () {
-            return true;
         };
         return ObjectLiteralExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -13202,10 +11786,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        SimplePropertyAssignmentSyntax.prototype.isPropertyAssignment = function () {
-            return true;
-        };
         return SimplePropertyAssignmentSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SimplePropertyAssignmentSyntax = SimplePropertyAssignmentSyntax;
@@ -13241,10 +11821,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        FunctionPropertyAssignmentSyntax.prototype.isPropertyAssignment = function () {
-            return true;
         };
         return FunctionPropertyAssignmentSyntax;
     })(TypeScript.SyntaxNode);
@@ -13286,30 +11862,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        FunctionExpressionSyntax.prototype.isPrimaryExpression = function () {
-            return true;
-        };
-
-        FunctionExpressionSyntax.prototype.isMemberExpression = function () {
-            return true;
-        };
-
-        FunctionExpressionSyntax.prototype.isLeftHandSideExpression = function () {
-            return true;
-        };
-
-        FunctionExpressionSyntax.prototype.isPostfixExpression = function () {
-            return true;
-        };
-
-        FunctionExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        FunctionExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return FunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionExpressionSyntax = FunctionExpressionSyntax;
@@ -13337,14 +11889,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        EmptyStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        EmptyStatementSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return EmptyStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -13385,14 +11929,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        TryStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        TryStatementSyntax.prototype.isModuleElement = function () {
-            return true;
         };
         return TryStatementSyntax;
     })(TypeScript.SyntaxNode);
@@ -13510,14 +12046,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        LabeledStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        LabeledStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return LabeledStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.LabeledStatementSyntax = LabeledStatementSyntax;
@@ -13570,14 +12098,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        DoStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        DoStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return DoStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DoStatementSyntax = DoStatementSyntax;
@@ -13609,14 +12129,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        TypeOfExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        TypeOfExpressionSyntax.prototype.isExpression = function () {
-            return true;
         };
         return TypeOfExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -13650,14 +12162,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        DeleteExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        DeleteExpressionSyntax.prototype.isExpression = function () {
-            return true;
-        };
         return DeleteExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DeleteExpressionSyntax = DeleteExpressionSyntax;
@@ -13689,14 +12193,6 @@ var TypeScript;
                 default:
                     throw TypeScript.Errors.invalidOperation();
             }
-        };
-
-        VoidExpressionSyntax.prototype.isUnaryExpression = function () {
-            return true;
-        };
-
-        VoidExpressionSyntax.prototype.isExpression = function () {
-            return true;
         };
         return VoidExpressionSyntax;
     })(TypeScript.SyntaxNode);
@@ -13730,14 +12226,6 @@ var TypeScript;
                     throw TypeScript.Errors.invalidOperation();
             }
         };
-
-        DebuggerStatementSyntax.prototype.isStatement = function () {
-            return true;
-        };
-
-        DebuggerStatementSyntax.prototype.isModuleElement = function () {
-            return true;
-        };
         return DebuggerStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DebuggerStatementSyntax = DebuggerStatementSyntax;
@@ -13746,24 +12234,6 @@ var TypeScript;
 var TypeScript;
 (function (TypeScript) {
     (function (Syntax) {
-        function isPrimaryExpression(token) {
-            switch (token.kind()) {
-                case 11 /* IdentifierName */:
-                case 12 /* RegularExpressionLiteral */:
-                case 13 /* NumericLiteral */:
-                case 14 /* StringLiteral */:
-                case 24 /* FalseKeyword */:
-                case 32 /* NullKeyword */:
-                case 35 /* ThisKeyword */:
-                case 37 /* TrueKeyword */:
-                case 50 /* SuperKeyword */:
-                    return true;
-            }
-
-            return false;
-        }
-        Syntax.isPrimaryExpression = isPrimaryExpression;
-
         function realizeToken(token) {
             return new RealizedToken(token.fullStart(), token.kind(), token.leadingTrivia(), token.text(), token.value(), token.valueText(), token.trailingTrivia());
         }
@@ -13786,13 +12256,13 @@ var TypeScript;
             }
 
             result.fullStart = token.fullStart();
-            result.fullEnd = token.fullEnd();
+            result.fullEnd = TypeScript.fullEnd(token);
 
-            result.start = token.start();
-            result.end = token.end();
+            result.start = TypeScript.start(token);
+            result.end = TypeScript.end(token);
 
             result.fullWidth = token.fullWidth();
-            result.width = token.width();
+            result.width = TypeScript.width(token);
 
             result.text = token.text();
 
@@ -14061,13 +12531,6 @@ var TypeScript;
                 return this;
             };
 
-            EmptyToken.prototype.firstToken = function () {
-                return null;
-            };
-            EmptyToken.prototype.lastToken = function () {
-                return null;
-            };
-
             EmptyToken.prototype.isIncrementallyUnusable = function () {
                 return true;
             };
@@ -14077,9 +12540,6 @@ var TypeScript;
             };
 
             EmptyToken.prototype.fullWidth = function () {
-                return 0;
-            };
-            EmptyToken.prototype.width = function () {
                 return 0;
             };
 
@@ -14118,18 +12578,6 @@ var TypeScript;
             };
 
             EmptyToken.prototype.fullStart = function () {
-                return this.position();
-            };
-
-            EmptyToken.prototype.fullEnd = function () {
-                return this.position();
-            };
-
-            EmptyToken.prototype.start = function () {
-                return this.position();
-            };
-
-            EmptyToken.prototype.end = function () {
                 return this.position();
             };
 
@@ -14189,8 +12637,6 @@ var TypeScript;
             EmptyToken.prototype.realize = function () {
                 return realizeToken(this);
             };
-            EmptyToken.prototype.collectTextElements = function (elements) {
-            };
 
             EmptyToken.prototype.withLeadingTrivia = function (leadingTrivia) {
                 return this.realize().withLeadingTrivia(leadingTrivia);
@@ -14198,30 +12644,6 @@ var TypeScript;
 
             EmptyToken.prototype.withTrailingTrivia = function (trailingTrivia) {
                 return this.realize().withTrailingTrivia(trailingTrivia);
-            };
-
-            EmptyToken.prototype.isPrimaryExpression = function () {
-                return isPrimaryExpression(this);
-            };
-
-            EmptyToken.prototype.isExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            EmptyToken.prototype.isLeftHandSideExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            EmptyToken.prototype.isMemberExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            EmptyToken.prototype.isPostfixExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            EmptyToken.prototype.isUnaryExpression = function () {
-                return this.isPrimaryExpression();
             };
 
             EmptyToken.prototype.previousToken = function (includeSkippedTokens) {
@@ -14265,12 +12687,6 @@ var TypeScript;
             ConvertedIdentifierToken.prototype.toJSON = function (key) {
                 return tokenToJSON(this);
             };
-            ConvertedIdentifierToken.prototype.firstToken = function () {
-                return this.fullWidth() > 0 ? this : null;
-            };
-            ConvertedIdentifierToken.prototype.lastToken = function () {
-                return this.fullWidth() > 0 ? this : null;
-            };
 
             ConvertedIdentifierToken.prototype.isIncrementallyUnusable = function () {
                 return this._underlyingToken.isIncrementallyUnusable();
@@ -14291,24 +12707,11 @@ var TypeScript;
                 return false;
             };
 
-            ConvertedIdentifierToken.prototype.fullWidth = function () {
-                return this._underlyingToken.fullWidth();
-            };
-            ConvertedIdentifierToken.prototype.width = function () {
-                return this._underlyingToken.width();
-            };
-
             ConvertedIdentifierToken.prototype.fullStart = function () {
                 return this._underlyingToken.fullStart();
             };
-            ConvertedIdentifierToken.prototype.fullEnd = function () {
-                return this._underlyingToken.fullEnd();
-            };
-            ConvertedIdentifierToken.prototype.start = function () {
-                return this._underlyingToken.start();
-            };
-            ConvertedIdentifierToken.prototype.end = function () {
-                return this._underlyingToken.end();
+            ConvertedIdentifierToken.prototype.fullWidth = function () {
+                return this._underlyingToken.fullWidth();
             };
 
             ConvertedIdentifierToken.prototype.text = function () {
@@ -14379,42 +12782,12 @@ var TypeScript;
                 return this;
             };
 
-            ConvertedIdentifierToken.prototype.collectTextElements = function (elements) {
-                this.leadingTrivia().collectTextElements(elements);
-                elements.push(this.text());
-                this.trailingTrivia().collectTextElements(elements);
-            };
-
             ConvertedIdentifierToken.prototype.withLeadingTrivia = function (leadingTrivia) {
                 return new RealizedToken(this.fullStart(), this.tokenKind, leadingTrivia, this.text(), this.value(), this.valueText(), this.trailingTrivia());
             };
 
             ConvertedIdentifierToken.prototype.withTrailingTrivia = function (trailingTrivia) {
                 return new RealizedToken(this.fullStart(), this.tokenKind, this.leadingTrivia(), this.text(), this.value(), this.valueText(), trailingTrivia);
-            };
-
-            ConvertedIdentifierToken.prototype.isPrimaryExpression = function () {
-                return isPrimaryExpression(this);
-            };
-
-            ConvertedIdentifierToken.prototype.isExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            ConvertedIdentifierToken.prototype.isLeftHandSideExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            ConvertedIdentifierToken.prototype.isMemberExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            ConvertedIdentifierToken.prototype.isPostfixExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            ConvertedIdentifierToken.prototype.isUnaryExpression = function () {
-                return this.isPrimaryExpression();
             };
 
             ConvertedIdentifierToken.prototype.previousToken = function (includeSkippedTokens) {
@@ -14467,12 +12840,6 @@ var TypeScript;
             RealizedToken.prototype.toJSON = function (key) {
                 return tokenToJSON(this);
             };
-            RealizedToken.prototype.firstToken = function () {
-                return this.fullWidth() > 0 ? this : null;
-            };
-            RealizedToken.prototype.lastToken = function () {
-                return this.fullWidth() > 0 ? this : null;
-            };
 
             RealizedToken.prototype.isIncrementallyUnusable = function () {
                 return true;
@@ -14493,24 +12860,11 @@ var TypeScript;
                 return false;
             };
 
-            RealizedToken.prototype.fullWidth = function () {
-                return this._leadingTrivia.fullWidth() + this.width() + this._trailingTrivia.fullWidth();
-            };
-            RealizedToken.prototype.width = function () {
-                return this.text().length;
-            };
-
             RealizedToken.prototype.fullStart = function () {
                 return this._fullStart;
             };
-            RealizedToken.prototype.fullEnd = function () {
-                return this._fullStart + this.fullWidth();
-            };
-            RealizedToken.prototype.start = function () {
-                return this._fullStart + this._leadingTrivia.fullWidth();
-            };
-            RealizedToken.prototype.end = function () {
-                return this.start() + this.width();
+            RealizedToken.prototype.fullWidth = function () {
+                return this._leadingTrivia.fullWidth() + this._text.length + this._trailingTrivia.fullWidth();
             };
 
             RealizedToken.prototype.text = function () {
@@ -14574,42 +12928,12 @@ var TypeScript;
                 return this;
             };
 
-            RealizedToken.prototype.collectTextElements = function (elements) {
-                this.leadingTrivia().collectTextElements(elements);
-                elements.push(this.text());
-                this.trailingTrivia().collectTextElements(elements);
-            };
-
             RealizedToken.prototype.withLeadingTrivia = function (leadingTrivia) {
                 return new RealizedToken(this._fullStart, this.tokenKind, leadingTrivia, this._text, this._value, this._valueText, this._trailingTrivia);
             };
 
             RealizedToken.prototype.withTrailingTrivia = function (trailingTrivia) {
                 return new RealizedToken(this._fullStart, this.tokenKind, this._leadingTrivia, this._text, this._value, this._valueText, trailingTrivia);
-            };
-
-            RealizedToken.prototype.isPrimaryExpression = function () {
-                return isPrimaryExpression(this);
-            };
-
-            RealizedToken.prototype.isExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            RealizedToken.prototype.isLeftHandSideExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            RealizedToken.prototype.isMemberExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            RealizedToken.prototype.isPostfixExpression = function () {
-                return this.isPrimaryExpression();
-            };
-
-            RealizedToken.prototype.isUnaryExpression = function () {
-                return this.isPrimaryExpression();
             };
 
             RealizedToken.prototype.previousToken = function (includeSkippedTokens) {
@@ -14652,25 +12976,6 @@ var TypeScript;
                 this._kind = _kind;
                 this.parent = null;
             }
-            AbstractTrivia.prototype.isNode = function () {
-                return false;
-            };
-            AbstractTrivia.prototype.isToken = function () {
-                return false;
-            };
-            AbstractTrivia.prototype.isTrivia = function () {
-                return true;
-            };
-            AbstractTrivia.prototype.isList = function () {
-                return false;
-            };
-            AbstractTrivia.prototype.isSeparatedList = function () {
-                return false;
-            };
-            AbstractTrivia.prototype.isTriviaList = function () {
-                return false;
-            };
-
             AbstractTrivia.prototype.syntaxTree = function () {
                 return this.parent.syntaxTree();
             };
@@ -14680,10 +12985,6 @@ var TypeScript;
             };
 
             AbstractTrivia.prototype.fullStart = function () {
-                throw TypeScript.Errors.abstract();
-            };
-
-            AbstractTrivia.prototype.fullEnd = function () {
                 throw TypeScript.Errors.abstract();
             };
 
@@ -14713,7 +13014,7 @@ var TypeScript;
                     result.skippedToken = this.skippedToken();
                 } else {
                     result.fullStart = this.fullStart();
-                    result.fullEnd = this.fullEnd();
+                    result.fullEnd = this.fullStart() + this.fullWidth();
                     result.text = this.fullText();
                 }
 
@@ -14739,10 +13040,6 @@ var TypeScript;
             AbstractTrivia.prototype.isSkippedToken = function () {
                 return this.kind() === 8 /* SkippedTokenTrivia */;
             };
-
-            AbstractTrivia.prototype.collectTextElements = function (elements) {
-                elements.push(this.fullText());
-            };
             return AbstractTrivia;
         })();
 
@@ -14759,10 +13056,6 @@ var TypeScript;
 
             NormalTrivia.prototype.fullStart = function () {
                 return this._fullStart;
-            };
-
-            NormalTrivia.prototype.fullEnd = function () {
-                return this._fullStart + this.fullWidth();
             };
 
             NormalTrivia.prototype.fullWidth = function () {
@@ -14795,10 +13088,6 @@ var TypeScript;
                 return this._skippedToken.fullStart();
             };
 
-            SkippedTokenTrivia.prototype.fullEnd = function () {
-                return this._skippedToken.fullEnd();
-            };
-
             SkippedTokenTrivia.prototype.fullWidth = function () {
                 return this.fullText().length;
             };
@@ -14827,10 +13116,6 @@ var TypeScript;
 
             DeferredTrivia.prototype.fullStart = function () {
                 return this._fullStart;
-            };
-
-            DeferredTrivia.prototype.fullEnd = function () {
-                return this._fullStart + this.fullWidth();
             };
 
             DeferredTrivia.prototype.fullWidth = function () {
@@ -14931,25 +13216,6 @@ var TypeScript;
             function EmptyTriviaList() {
                 this.parent = null;
             }
-            EmptyTriviaList.prototype.isNode = function () {
-                return false;
-            };
-            EmptyTriviaList.prototype.isToken = function () {
-                return false;
-            };
-            EmptyTriviaList.prototype.isTrivia = function () {
-                return false;
-            };
-            EmptyTriviaList.prototype.isList = function () {
-                return false;
-            };
-            EmptyTriviaList.prototype.isSeparatedList = function () {
-                return false;
-            };
-            EmptyTriviaList.prototype.isTriviaList = function () {
-                return true;
-            };
-
             EmptyTriviaList.prototype.isShared = function () {
                 return true;
             };
@@ -14998,9 +13264,6 @@ var TypeScript;
                 return [];
             };
 
-            EmptyTriviaList.prototype.collectTextElements = function (elements) {
-            };
-
             EmptyTriviaList.prototype.toArray = function () {
                 return [];
             };
@@ -15043,25 +13306,6 @@ var TypeScript;
                 this.item = item.clone();
                 this.item.parent = this;
             }
-            SingletonSyntaxTriviaList.prototype.isNode = function () {
-                return false;
-            };
-            SingletonSyntaxTriviaList.prototype.isToken = function () {
-                return false;
-            };
-            SingletonSyntaxTriviaList.prototype.isTrivia = function () {
-                return false;
-            };
-            SingletonSyntaxTriviaList.prototype.isList = function () {
-                return false;
-            };
-            SingletonSyntaxTriviaList.prototype.isSeparatedList = function () {
-                return false;
-            };
-            SingletonSyntaxTriviaList.prototype.isTriviaList = function () {
-                return true;
-            };
-
             SingletonSyntaxTriviaList.prototype.syntaxTree = function () {
                 return this.parent.syntaxTree();
             };
@@ -15114,10 +13358,6 @@ var TypeScript;
                 return [this.item];
             };
 
-            SingletonSyntaxTriviaList.prototype.collectTextElements = function (elements) {
-                this.item.collectTextElements(elements);
-            };
-
             SingletonSyntaxTriviaList.prototype.toArray = function () {
                 return [this.item];
             };
@@ -15142,25 +13382,6 @@ var TypeScript;
                     return cloned;
                 });
             }
-            NormalSyntaxTriviaList.prototype.isNode = function () {
-                return false;
-            };
-            NormalSyntaxTriviaList.prototype.isToken = function () {
-                return false;
-            };
-            NormalSyntaxTriviaList.prototype.isTrivia = function () {
-                return false;
-            };
-            NormalSyntaxTriviaList.prototype.isList = function () {
-                return false;
-            };
-            NormalSyntaxTriviaList.prototype.isSeparatedList = function () {
-                return false;
-            };
-            NormalSyntaxTriviaList.prototype.isTriviaList = function () {
-                return true;
-            };
-
             NormalSyntaxTriviaList.prototype.isShared = function () {
                 return false;
             };
@@ -15196,13 +13417,13 @@ var TypeScript;
             };
 
             NormalSyntaxTriviaList.prototype.fullText = function () {
-                var result = "";
+                var result = [];
 
                 for (var i = 0, n = this.trivia.length; i < n; i++) {
-                    result += this.trivia[i].fullText();
+                    result.push(this.trivia[i].fullText());
                 }
 
-                return result;
+                return result.join("");
             };
 
             NormalSyntaxTriviaList.prototype.hasComment = function () {
@@ -15237,12 +13458,6 @@ var TypeScript;
 
             NormalSyntaxTriviaList.prototype.toJSON = function (key) {
                 return this.trivia;
-            };
-
-            NormalSyntaxTriviaList.prototype.collectTextElements = function (elements) {
-                for (var i = 0; i < this.trivia.length; i++) {
-                    this.trivia[i].collectTextElements(elements);
-                }
             };
 
             NormalSyntaxTriviaList.prototype.toArray = function () {
@@ -15283,6 +13498,222 @@ var TypeScript;
     var SyntaxUtilities = (function () {
         function SyntaxUtilities() {
         }
+        SyntaxUtilities.isLeftHandSizeExpression = function (element) {
+            if (element) {
+                switch (element.kind()) {
+                    case 212 /* MemberAccessExpression */:
+                    case 221 /* ElementAccessExpression */:
+                    case 216 /* ObjectCreationExpression */:
+                    case 213 /* InvocationExpression */:
+                    case 214 /* ArrayLiteralExpression */:
+                    case 217 /* ParenthesizedExpression */:
+                    case 215 /* ObjectLiteralExpression */:
+                    case 222 /* FunctionExpression */:
+                    case 11 /* IdentifierName */:
+                    case 12 /* RegularExpressionLiteral */:
+                    case 13 /* NumericLiteral */:
+                    case 14 /* StringLiteral */:
+                    case 24 /* FalseKeyword */:
+                    case 32 /* NullKeyword */:
+                    case 35 /* ThisKeyword */:
+                    case 37 /* TrueKeyword */:
+                    case 50 /* SuperKeyword */:
+                        return true;
+                }
+            }
+
+            return false;
+        };
+
+        SyntaxUtilities.isExpression = function (element) {
+            if (element) {
+                switch (element.kind()) {
+                    case 11 /* IdentifierName */:
+                    case 12 /* RegularExpressionLiteral */:
+                    case 13 /* NumericLiteral */:
+                    case 14 /* StringLiteral */:
+                    case 24 /* FalseKeyword */:
+                    case 32 /* NullKeyword */:
+                    case 35 /* ThisKeyword */:
+                    case 37 /* TrueKeyword */:
+                    case 50 /* SuperKeyword */:
+
+                    case 164 /* PlusExpression */:
+                    case 165 /* NegateExpression */:
+                    case 166 /* BitwiseNotExpression */:
+                    case 167 /* LogicalNotExpression */:
+                    case 168 /* PreIncrementExpression */:
+                    case 169 /* PreDecrementExpression */:
+                    case 170 /* DeleteExpression */:
+                    case 171 /* TypeOfExpression */:
+                    case 172 /* VoidExpression */:
+                    case 173 /* CommaExpression */:
+                    case 174 /* AssignmentExpression */:
+                    case 175 /* AddAssignmentExpression */:
+                    case 176 /* SubtractAssignmentExpression */:
+                    case 177 /* MultiplyAssignmentExpression */:
+                    case 178 /* DivideAssignmentExpression */:
+                    case 179 /* ModuloAssignmentExpression */:
+                    case 180 /* AndAssignmentExpression */:
+                    case 181 /* ExclusiveOrAssignmentExpression */:
+                    case 182 /* OrAssignmentExpression */:
+                    case 183 /* LeftShiftAssignmentExpression */:
+                    case 184 /* SignedRightShiftAssignmentExpression */:
+                    case 185 /* UnsignedRightShiftAssignmentExpression */:
+                    case 186 /* ConditionalExpression */:
+                    case 187 /* LogicalOrExpression */:
+                    case 188 /* LogicalAndExpression */:
+                    case 189 /* BitwiseOrExpression */:
+                    case 190 /* BitwiseExclusiveOrExpression */:
+                    case 191 /* BitwiseAndExpression */:
+                    case 192 /* EqualsWithTypeConversionExpression */:
+                    case 193 /* NotEqualsWithTypeConversionExpression */:
+                    case 194 /* EqualsExpression */:
+                    case 195 /* NotEqualsExpression */:
+                    case 196 /* LessThanExpression */:
+                    case 197 /* GreaterThanExpression */:
+                    case 198 /* LessThanOrEqualExpression */:
+                    case 199 /* GreaterThanOrEqualExpression */:
+                    case 200 /* InstanceOfExpression */:
+                    case 201 /* InExpression */:
+                    case 202 /* LeftShiftExpression */:
+                    case 203 /* SignedRightShiftExpression */:
+                    case 204 /* UnsignedRightShiftExpression */:
+                    case 205 /* MultiplyExpression */:
+                    case 206 /* DivideExpression */:
+                    case 207 /* ModuloExpression */:
+                    case 208 /* AddExpression */:
+                    case 209 /* SubtractExpression */:
+                    case 210 /* PostIncrementExpression */:
+                    case 211 /* PostDecrementExpression */:
+                    case 212 /* MemberAccessExpression */:
+                    case 213 /* InvocationExpression */:
+                    case 214 /* ArrayLiteralExpression */:
+                    case 215 /* ObjectLiteralExpression */:
+                    case 216 /* ObjectCreationExpression */:
+                    case 217 /* ParenthesizedExpression */:
+                    case 218 /* ParenthesizedArrowFunctionExpression */:
+                    case 219 /* SimpleArrowFunctionExpression */:
+                    case 220 /* CastExpression */:
+                    case 221 /* ElementAccessExpression */:
+                    case 222 /* FunctionExpression */:
+                    case 223 /* OmittedExpression */:
+                        return true;
+                }
+            }
+
+            return false;
+        };
+
+        SyntaxUtilities.isSwitchClause = function (element) {
+            if (element) {
+                switch (element.kind()) {
+                    case 233 /* CaseSwitchClause */:
+                    case 234 /* DefaultSwitchClause */:
+                        return true;
+                }
+            }
+
+            return false;
+        };
+
+        SyntaxUtilities.isTypeMember = function (element) {
+            if (element) {
+                switch (element.kind()) {
+                    case 143 /* ConstructSignature */:
+                    case 145 /* MethodSignature */:
+                    case 144 /* IndexSignature */:
+                    case 141 /* PropertySignature */:
+                    case 142 /* CallSignature */:
+                        return true;
+                }
+            }
+
+            return false;
+        };
+
+        SyntaxUtilities.isClassElement = function (element) {
+            if (element) {
+                switch (element.kind()) {
+                    case 137 /* ConstructorDeclaration */:
+                    case 138 /* IndexMemberDeclaration */:
+                    case 135 /* MemberFunctionDeclaration */:
+                    case 139 /* GetAccessor */:
+                    case 140 /* SetAccessor */:
+                    case 135 /* MemberFunctionDeclaration */:
+                    case 136 /* MemberVariableDeclaration */:
+                        return true;
+                }
+            }
+
+            return false;
+        };
+
+        SyntaxUtilities.isModuleElement = function (element) {
+            if (element) {
+                switch (element.kind()) {
+                    case 133 /* ImportDeclaration */:
+                    case 134 /* ExportAssignment */:
+                    case 131 /* ClassDeclaration */:
+                    case 128 /* InterfaceDeclaration */:
+                    case 130 /* ModuleDeclaration */:
+                    case 132 /* EnumDeclaration */:
+
+                    case 129 /* FunctionDeclaration */:
+                    case 148 /* VariableStatement */:
+                    case 146 /* Block */:
+                    case 147 /* IfStatement */:
+                    case 149 /* ExpressionStatement */:
+                    case 157 /* ThrowStatement */:
+                    case 150 /* ReturnStatement */:
+                    case 151 /* SwitchStatement */:
+                    case 152 /* BreakStatement */:
+                    case 153 /* ContinueStatement */:
+                    case 155 /* ForInStatement */:
+                    case 154 /* ForStatement */:
+                    case 158 /* WhileStatement */:
+                    case 163 /* WithStatement */:
+                    case 156 /* EmptyStatement */:
+                    case 159 /* TryStatement */:
+                    case 160 /* LabeledStatement */:
+                    case 161 /* DoStatement */:
+                    case 162 /* DebuggerStatement */:
+                        return true;
+                }
+            }
+
+            return false;
+        };
+
+        SyntaxUtilities.isStatement = function (element) {
+            if (element) {
+                switch (element.kind()) {
+                    case 129 /* FunctionDeclaration */:
+                    case 148 /* VariableStatement */:
+                    case 146 /* Block */:
+                    case 147 /* IfStatement */:
+                    case 149 /* ExpressionStatement */:
+                    case 157 /* ThrowStatement */:
+                    case 150 /* ReturnStatement */:
+                    case 151 /* SwitchStatement */:
+                    case 152 /* BreakStatement */:
+                    case 153 /* ContinueStatement */:
+                    case 155 /* ForInStatement */:
+                    case 154 /* ForStatement */:
+                    case 158 /* WhileStatement */:
+                    case 163 /* WithStatement */:
+                    case 156 /* EmptyStatement */:
+                    case 159 /* TryStatement */:
+                    case 160 /* LabeledStatement */:
+                    case 161 /* DoStatement */:
+                    case 162 /* DebuggerStatement */:
+                        return true;
+                }
+            }
+
+            return false;
+        };
+
         SyntaxUtilities.isAngleBracket = function (positionedElement) {
             var element = positionedElement;
             var parent = positionedElement.parent;
@@ -15354,7 +13785,7 @@ var TypeScript;
                 case 139 /* GetAccessor */:
                 case 140 /* SetAccessor */:
                 case 136 /* MemberVariableDeclaration */:
-                    if (node.isClassElement() || node.isModuleElement()) {
+                    if (SyntaxUtilities.isClassElement(node) || SyntaxUtilities.isModuleElement(node)) {
                         return SyntaxUtilities.isAmbientDeclarationSyntax(TypeScript.Syntax.containingNode(positionNode));
                     }
 
@@ -16881,7 +15312,7 @@ var TypeScript;
                     _this.lastDiagnostic = new TypeScript.Diagnostic(_this.fileName, _this.text.lineMap(), position, fullWidth, diagnosticKey, args);
                 };
                 this.slidingWindow = new TypeScript.SlidingWindow(this, TypeScript.ArrayUtilities.createArray(32, null), null);
-                this.scanner = new TypeScript.Scanner(languageVersion, text);
+                this.scanner = TypeScript.createScanner(languageVersion, text, this.reportDiagnostic);
             }
             NormalParserSource.prototype.currentNode = function () {
                 return null;
@@ -16941,7 +15372,7 @@ var TypeScript;
             };
 
             NormalParserSource.prototype.fetchNextItem = function (allowRegularExpression) {
-                var token = this.scanner.scan(allowRegularExpression, this.reportDiagnostic);
+                var token = this.scanner.scan(allowRegularExpression);
 
                 var lastDiagnostic = this.lastDiagnostic;
                 if (lastDiagnostic === null) {
@@ -16989,7 +15420,7 @@ var TypeScript;
 
                 this.slidingWindow.disgardAllItemsFromCurrentIndexOnwards();
 
-                this.scanner.setAbsoluteIndex(absolutePosition);
+                this.scanner.setIndex(absolutePosition);
             };
 
             NormalParserSource.prototype.currentTokenAllowingRegularExpression = function () {
@@ -17030,7 +15461,7 @@ var TypeScript;
                 var start = changeRange.span().start();
 
                 for (var i = 0; start > 0 && i <= maxLookahead; i++) {
-                    var token = sourceUnit.findToken(start);
+                    var token = TypeScript.Syntax.findToken(sourceUnit, start);
 
                     var position = token.fullStart();
 
@@ -17334,7 +15765,7 @@ var TypeScript;
                 this.listParsingState = 0;
                 this.isInStrictMode = false;
                 this.diagnostics = [];
-                this.factory = TypeScript.Syntax.normalModeFactory;
+                this.parseNodeData = 0;
                 this._currentToken = null;
                 this._currentNode = null;
                 this.mergeTokensStorage = [];
@@ -17600,12 +16031,12 @@ var TypeScript;
                 var token = this.currentToken();
 
                 if (TypeScript.SyntaxFacts.isAnyKeyword(expectedKind) || TypeScript.SyntaxFacts.isAnyPunctuation(expectedKind)) {
-                    return new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), token.start(), token.width(), TypeScript.DiagnosticCode._0_expected, [TypeScript.SyntaxFacts.getText(expectedKind)]);
+                    return new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), TypeScript.start(token), TypeScript.width(token), TypeScript.DiagnosticCode._0_expected, [TypeScript.SyntaxFacts.getText(expectedKind)]);
                 } else {
                     if (actual !== null && TypeScript.SyntaxFacts.isAnyKeyword(actual.kind())) {
-                        return new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), token.start(), token.width(), TypeScript.DiagnosticCode.Identifier_expected_0_is_a_keyword, [TypeScript.SyntaxFacts.getText(actual.kind())]);
+                        return new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), TypeScript.start(token), TypeScript.width(token), TypeScript.DiagnosticCode.Identifier_expected_0_is_a_keyword, [TypeScript.SyntaxFacts.getText(actual.kind())]);
                     } else {
-                        return new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), token.start(), token.width(), TypeScript.DiagnosticCode.Identifier_expected, null);
+                        return new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), TypeScript.start(token), TypeScript.width(token), TypeScript.DiagnosticCode.Identifier_expected, null);
                     }
                 }
             };
@@ -17703,7 +16134,7 @@ var TypeScript;
             };
 
             ParserImpl.prototype.addSkippedTokenAfterNode = function (node, skippedToken) {
-                var oldToken = node.lastToken();
+                var oldToken = TypeScript.lastToken(node);
                 var newToken = this.addSkippedTokenAfterToken(oldToken, skippedToken);
 
                 this.replaceTokenInParent(oldToken, newToken);
@@ -17712,7 +16143,7 @@ var TypeScript;
 
             ParserImpl.prototype.addSkippedTokensBeforeNode = function (node, skippedTokens) {
                 if (skippedTokens.length > 0) {
-                    var oldToken = node.firstToken();
+                    var oldToken = TypeScript.firstToken(node);
                     var newToken = this.addSkippedTokensBeforeToken(oldToken, skippedTokens);
 
                     this.replaceTokenInParent(oldToken, newToken);
@@ -17767,7 +16198,7 @@ var TypeScript;
 
                 var trimmedToken = skippedToken.withLeadingTrivia(TypeScript.Syntax.emptyTriviaList).withTrailingTrivia(TypeScript.Syntax.emptyTriviaList);
 
-                trimmedToken.setTextAndFullStart(this.source.text, skippedToken.start());
+                trimmedToken.setTextAndFullStart(this.source.text, TypeScript.start(skippedToken));
 
                 array.push(TypeScript.Syntax.skippedTokenTrivia(trimmedToken));
 
@@ -17796,7 +16227,7 @@ var TypeScript;
 
             ParserImpl.prototype.setStrictMode = function (isInStrictMode) {
                 this.isInStrictMode = isInStrictMode;
-                this.factory = isInStrictMode ? TypeScript.Syntax.strictModeFactory : TypeScript.Syntax.normalModeFactory;
+                this.parseNodeData = isInStrictMode ? 4 /* NodeParsedInStrictModeMask */ : 0;
             };
 
             ParserImpl.prototype.parseSourceUnit = function () {
@@ -17807,14 +16238,14 @@ var TypeScript;
 
                 this.setStrictMode(savedIsInStrictMode);
 
-                var sourceUnit = this.factory.sourceUnit(moduleElements, this.currentToken());
+                var sourceUnit = new TypeScript.SourceUnitSyntax(moduleElements, this.currentToken(), this.parseNodeData);
                 sourceUnit = this.addSkippedTokensBeforeNode(sourceUnit, result.skippedTokens);
 
                 if (TypeScript.Debug.shouldAssert(2 /* Aggressive */)) {
                     TypeScript.Debug.assert(sourceUnit.fullWidth() === this.source.text.length());
 
                     if (TypeScript.Debug.shouldAssert(3 /* VeryAggressive */)) {
-                        TypeScript.Debug.assert(sourceUnit.fullText() === this.source.text.substr(0, this.source.text.length()));
+                        TypeScript.Debug.assert(TypeScript.fullText(sourceUnit) === this.source.text.substr(0, this.source.text.length()));
                     }
                 }
 
@@ -17835,7 +16266,7 @@ var TypeScript;
             };
 
             ParserImpl.prototype.isModuleElement = function (inErrorRecovery) {
-                if (this.currentNode() !== null && this.currentNode().isModuleElement()) {
+                if (TypeScript.SyntaxUtilities.isModuleElement(this.currentNode())) {
                     return true;
                 }
 
@@ -17848,7 +16279,7 @@ var TypeScript;
 
             ParserImpl.prototype.tryParseModuleElement = function (inErrorRecovery) {
                 var node = this.currentNode();
-                if (node !== null && node.isModuleElement()) {
+                if (TypeScript.SyntaxUtilities.isModuleElement(node)) {
                     this.moveToNextNode();
                     return node;
                 }
@@ -17891,7 +16322,7 @@ var TypeScript;
                 var moduleReference = this.parseModuleReference();
                 var semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.importDeclaration(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken);
+                return new TypeScript.ImportDeclarationSyntax(modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isExportAssignment = function () {
@@ -17904,7 +16335,7 @@ var TypeScript;
                 var identifier = this.eatIdentifierToken();
                 var semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.exportAssignment(exportKeyword, equalsToken, identifier, semicolonToken);
+                return new TypeScript.ExportAssignmentSyntax(exportKeyword, equalsToken, identifier, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseModuleReference = function () {
@@ -17930,12 +16361,12 @@ var TypeScript;
                 var stringLiteral = this.eatToken(14 /* StringLiteral */);
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
 
-                return this.factory.externalModuleReference(requireKeyword, openParenToken, stringLiteral, closeParenToken);
+                return new TypeScript.ExternalModuleReferenceSyntax(requireKeyword, openParenToken, stringLiteral, closeParenToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseModuleNameModuleReference = function () {
                 var name = this.parseName();
-                return this.factory.moduleNameModuleReference(name);
+                return new TypeScript.ModuleNameModuleReferenceSyntax(name, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseIdentifierName = function () {
@@ -17962,7 +16393,7 @@ var TypeScript;
 
                     greaterThanToken = this.eatToken(81 /* GreaterThanToken */);
 
-                    return this.factory.typeArgumentList(lessThanToken, typeArguments, greaterThanToken);
+                    return new TypeScript.TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, this.parseNodeData);
                 }
 
                 var rewindPoint = this.getRewindPoint();
@@ -17982,7 +16413,7 @@ var TypeScript;
                     return null;
                 } else {
                     this.releaseRewindPoint(rewindPoint);
-                    var typeArgumentList = this.factory.typeArgumentList(lessThanToken, typeArguments, greaterThanToken);
+                    var typeArgumentList = new TypeScript.TypeArgumentListSyntax(lessThanToken, typeArguments, greaterThanToken, this.parseNodeData);
 
                     return typeArgumentList;
                 }
@@ -18042,7 +16473,7 @@ var TypeScript;
                         identifierName = this.eatIdentifierNameToken();
                     }
 
-                    current = this.factory.qualifiedName(current, dotToken, identifierName);
+                    current = new TypeScript.QualifiedNameSyntax(current, dotToken, identifierName, this.parseNodeData);
 
                     shouldContinue = identifierName.fullWidth() > 0;
                 }
@@ -18074,7 +16505,7 @@ var TypeScript;
 
                 var closeBraceToken = this.eatToken(71 /* CloseBraceToken */);
 
-                return this.factory.enumDeclaration(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken);
+                return new TypeScript.EnumDeclarationSyntax(modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isEnumElement = function (inErrorRecovery) {
@@ -18102,7 +16533,7 @@ var TypeScript;
                     equalsValueClause = this.parseEqualsValueClause(true);
                 }
 
-                return this.factory.enumElement(propertyName, equalsValueClause);
+                return new TypeScript.EnumElementSyntax(propertyName, equalsValueClause, this.parseNodeData);
             };
 
             ParserImpl.isModifier = function (token) {
@@ -18198,7 +16629,7 @@ var TypeScript;
                 }
 
                 var closeBraceToken = this.eatToken(71 /* CloseBraceToken */);
-                return this.factory.classDeclaration(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken);
+                return new TypeScript.ClassDeclarationSyntax(modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken, this.parseNodeData);
             };
 
             ParserImpl.isPublicOrPrivateKeyword = function (token) {
@@ -18235,7 +16666,7 @@ var TypeScript;
                 var typeAnnotation = this.parseOptionalTypeAnnotation(false);
                 var block = this.parseBlock(false, checkForStrictMode);
 
-                return this.factory.getAccessor(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block);
+                return new TypeScript.GetAccessorSyntax(modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseSetMemberAccessorDeclaration = function (modifiers, checkForStrictMode) {
@@ -18244,11 +16675,11 @@ var TypeScript;
                 var parameterList = this.parseParameterList();
                 var block = this.parseBlock(false, checkForStrictMode);
 
-                return this.factory.setAccessor(modifiers, setKeyword, propertyName, parameterList, block);
+                return new TypeScript.SetAccessorSyntax(modifiers, setKeyword, propertyName, parameterList, block, this.parseNodeData);
             };
 
             ParserImpl.prototype.isClassElement = function (inErrorRecovery) {
-                if (this.currentNode() !== null && this.currentNode().isClassElement()) {
+                if (TypeScript.SyntaxUtilities.isClassElement(this.currentNode())) {
                     return true;
                 }
 
@@ -18257,7 +16688,7 @@ var TypeScript;
 
             ParserImpl.prototype.tryParseClassElement = function (inErrorRecovery) {
                 var node = this.currentNode();
-                if (node !== null && node.isClassElement()) {
+                if (TypeScript.SyntaxUtilities.isClassElement(node)) {
                     this.moveToNextNode();
                     return node;
                 }
@@ -18296,7 +16727,7 @@ var TypeScript;
                     semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
                 }
 
-                return this.factory.constructorDeclaration(modifiers, constructorKeyword, callSignature, block, semicolonToken);
+                return new TypeScript.ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isMemberFunctionDeclaration = function (inErrorRecovery) {
@@ -18347,7 +16778,7 @@ var TypeScript;
                     semicolon = this.eatExplicitOrAutomaticSemicolon(false);
                 }
 
-                return this.factory.memberFunctionDeclaration(modifiers, propertyName, callSignature, block, semicolon);
+                return new TypeScript.MemberFunctionDeclarationSyntax(modifiers, propertyName, callSignature, block, semicolon, this.parseNodeData);
             };
 
             ParserImpl.prototype.isDefinitelyMemberVariablePropertyName = function (index) {
@@ -18407,7 +16838,7 @@ var TypeScript;
 
                 var semicolon = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.memberVariableDeclaration(modifiers, variableDeclarator, semicolon);
+                return new TypeScript.MemberVariableDeclarationSyntax(modifiers, variableDeclarator, semicolon, this.parseNodeData);
             };
 
             ParserImpl.prototype.isIndexMemberDeclaration = function () {
@@ -18420,7 +16851,7 @@ var TypeScript;
                 var indexSignature = this.parseIndexSignature();
                 var semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.indexMemberDeclaration(modifiers, indexSignature, semicolonToken);
+                return new TypeScript.IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryAddUnexpectedEqualsGreaterThanToken = function (callSignature) {
@@ -18428,9 +16859,9 @@ var TypeScript;
 
                 var hasEqualsGreaterThanToken = token0.kind() === 85 /* EqualsGreaterThanToken */;
                 if (hasEqualsGreaterThanToken) {
-                    var lastToken = callSignature.lastToken();
-                    if (lastToken && lastToken.fullWidth() > 0) {
-                        var diagnostic = new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), token0.start(), token0.width(), TypeScript.DiagnosticCode.Unexpected_token_0_expected, [TypeScript.SyntaxFacts.getText(70 /* OpenBraceToken */)]);
+                    var _lastToken = TypeScript.lastToken(callSignature);
+                    if (_lastToken && _lastToken.fullWidth() > 0) {
+                        var diagnostic = new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), TypeScript.start(token0), TypeScript.width(token0), TypeScript.DiagnosticCode.Unexpected_token_0_expected, [TypeScript.SyntaxFacts.getText(70 /* OpenBraceToken */)]);
                         this.addDiagnostic(diagnostic);
 
                         var token = this.eatAnyToken();
@@ -18465,7 +16896,7 @@ var TypeScript;
                     semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
                 }
 
-                return this.factory.functionDeclaration(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken);
+                return new TypeScript.FunctionDeclarationSyntax(modifiers, functionKeyword, identifier, callSignature, block, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isModuleDeclaration = function (currentToken, nextToken, modifierCount, tokenAfterModifiers) {
@@ -18504,7 +16935,7 @@ var TypeScript;
 
                 var closeBraceToken = this.eatToken(71 /* CloseBraceToken */);
 
-                return this.factory.moduleDeclaration(modifiers, moduleKeyword, moduleName, stringLiteral, openBraceToken, moduleElements, closeBraceToken);
+                return new TypeScript.ModuleDeclarationSyntax(modifiers, moduleKeyword, moduleName, stringLiteral, openBraceToken, moduleElements, closeBraceToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isInterfaceDeclaration = function (currentToken, nextToken, modifierCount, tokenAfterModifiers) {
@@ -18523,7 +16954,7 @@ var TypeScript;
                 var heritageClauses = this.parseHeritageClauses();
 
                 var objectType = this.parseObjectType();
-                return this.factory.interfaceDeclaration(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, objectType);
+                return new TypeScript.InterfaceDeclarationSyntax(modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, objectType, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseObjectType = function () {
@@ -18537,11 +16968,11 @@ var TypeScript;
                 }
 
                 var closeBraceToken = this.eatToken(71 /* CloseBraceToken */);
-                return this.factory.objectType(openBraceToken, typeMembers, closeBraceToken);
+                return new TypeScript.ObjectTypeSyntax(openBraceToken, typeMembers, closeBraceToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isTypeMember = function (inErrorRecovery) {
-                if (this.currentNode() !== null && this.currentNode().isTypeMember()) {
+                if (TypeScript.SyntaxUtilities.isTypeMember(this.currentNode())) {
                     return true;
                 }
 
@@ -18550,7 +16981,7 @@ var TypeScript;
 
             ParserImpl.prototype.tryParseTypeMember = function (inErrorRecovery) {
                 var node = this.currentNode();
-                if (node !== null && node.isTypeMember()) {
+                if (TypeScript.SyntaxUtilities.isTypeMember(node)) {
                     this.moveToNextNode();
                     return node;
                 }
@@ -18574,7 +17005,7 @@ var TypeScript;
                 var newKeyword = this.eatKeyword(31 /* NewKeyword */);
                 var callSignature = this.parseCallSignature(false);
 
-                return this.factory.constructSignature(newKeyword, callSignature);
+                return new TypeScript.ConstructSignatureSyntax(newKeyword, callSignature, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseIndexSignature = function () {
@@ -18583,7 +17014,7 @@ var TypeScript;
                 var closeBracketToken = this.eatToken(75 /* CloseBracketToken */);
                 var typeAnnotation = this.parseOptionalTypeAnnotation(false);
 
-                return this.factory.indexSignature(openBracketToken, parameter, closeBracketToken, typeAnnotation);
+                return new TypeScript.IndexSignatureSyntax(openBracketToken, parameter, closeBracketToken, typeAnnotation, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseMethodSignature = function () {
@@ -18591,7 +17022,7 @@ var TypeScript;
                 var questionToken = this.tryEatToken(105 /* QuestionToken */);
                 var callSignature = this.parseCallSignature(false);
 
-                return this.factory.methodSignature(propertyName, questionToken, callSignature);
+                return new TypeScript.MethodSignatureSyntax(propertyName, questionToken, callSignature, this.parseNodeData);
             };
 
             ParserImpl.prototype.parsePropertySignature = function () {
@@ -18599,7 +17030,7 @@ var TypeScript;
                 var questionToken = this.tryEatToken(105 /* QuestionToken */);
                 var typeAnnotation = this.parseOptionalTypeAnnotation(false);
 
-                return this.factory.propertySignature(propertyName, questionToken, typeAnnotation);
+                return new TypeScript.PropertySignatureSyntax(propertyName, questionToken, typeAnnotation, this.parseNodeData);
             };
 
             ParserImpl.prototype.isCallSignature = function (tokenIndex) {
@@ -18677,7 +17108,7 @@ var TypeScript;
                 var typeNames = result.list;
                 extendsOrImplementsKeyword = this.addSkippedTokensAfterToken(extendsOrImplementsKeyword, result.skippedTokens);
 
-                return this.factory.heritageClause(extendsOrImplementsKeyword.kind() === 48 /* ExtendsKeyword */ ? 230 /* ExtendsHeritageClause */ : 231 /* ImplementsHeritageClause */, extendsOrImplementsKeyword, typeNames);
+                return new TypeScript.HeritageClauseSyntax(extendsOrImplementsKeyword.kind() === 48 /* ExtendsKeyword */ ? 230 /* ExtendsHeritageClause */ : 231 /* ImplementsHeritageClause */, extendsOrImplementsKeyword, typeNames, this.parseNodeData);
             };
 
             ParserImpl.prototype.isInterfaceEnumClassOrModule = function () {
@@ -18693,7 +17124,7 @@ var TypeScript;
             };
 
             ParserImpl.prototype.isStatement = function (inErrorRecovery) {
-                if (this.currentNode() !== null && this.currentNode().isStatement()) {
+                if (TypeScript.SyntaxUtilities.isStatement(this.currentNode())) {
                     return true;
                 }
 
@@ -18739,7 +17170,7 @@ var TypeScript;
 
             ParserImpl.prototype.tryParseStatement = function (inErrorRecovery) {
                 var node = this.currentNode();
-                if (node !== null && node.isStatement()) {
+                if (TypeScript.SyntaxUtilities.isStatement(node)) {
                     this.moveToNextNode();
                     return node;
                 }
@@ -18808,7 +17239,7 @@ var TypeScript;
                 var debuggerKeyword = this.eatKeyword(19 /* DebuggerKeyword */);
                 var semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.debuggerStatement(debuggerKeyword, semicolonToken);
+                return new TypeScript.DebuggerStatementSyntax(debuggerKeyword, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseDoStatement = function () {
@@ -18821,7 +17252,7 @@ var TypeScript;
 
                 var semicolonToken = this.eatExplicitOrAutomaticSemicolon(true);
 
-                return this.factory.doStatement(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken);
+                return new TypeScript.DoStatementSyntax(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isLabeledStatement = function (currentToken) {
@@ -18833,7 +17264,7 @@ var TypeScript;
                 var colonToken = this.eatToken(106 /* ColonToken */);
                 var statement = this.parseStatement(false);
 
-                return this.factory.labeledStatement(identifier, colonToken, statement);
+                return new TypeScript.LabeledStatementSyntax(identifier, colonToken, statement, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseTryStatement = function () {
@@ -18854,7 +17285,7 @@ var TypeScript;
                     finallyClause = this.parseFinallyClause();
                 }
 
-                return this.factory.tryStatement(tryKeyword, block, catchClause, finallyClause);
+                return new TypeScript.TryStatementSyntax(tryKeyword, block, catchClause, finallyClause, this.parseNodeData);
             };
 
             ParserImpl.prototype.isCatchClause = function () {
@@ -18873,7 +17304,7 @@ var TypeScript;
                 var block = this.parseBlock(false, false);
                 this.listParsingState = savedListParsingState;
 
-                return this.factory.catchClause(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block);
+                return new TypeScript.CatchClauseSyntax(catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block, this.parseNodeData);
             };
 
             ParserImpl.prototype.isFinallyClause = function () {
@@ -18884,7 +17315,7 @@ var TypeScript;
                 var finallyKeyword = this.eatKeyword(25 /* FinallyKeyword */);
                 var block = this.parseBlock(false, false);
 
-                return this.factory.finallyClause(finallyKeyword, block);
+                return new TypeScript.FinallyClauseSyntax(finallyKeyword, block, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseWithStatement = function () {
@@ -18894,7 +17325,7 @@ var TypeScript;
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
                 var statement = this.parseStatement(false);
 
-                return this.factory.withStatement(withKeyword, openParenToken, condition, closeParenToken, statement);
+                return new TypeScript.WithStatementSyntax(withKeyword, openParenToken, condition, closeParenToken, statement, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseWhileStatement = function () {
@@ -18904,7 +17335,7 @@ var TypeScript;
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
                 var statement = this.parseStatement(false);
 
-                return this.factory.whileStatement(whileKeyword, openParenToken, condition, closeParenToken, statement);
+                return new TypeScript.WhileStatementSyntax(whileKeyword, openParenToken, condition, closeParenToken, statement, this.parseNodeData);
             };
 
             ParserImpl.prototype.isEmptyStatement = function (currentToken, inErrorRecovery) {
@@ -18917,7 +17348,7 @@ var TypeScript;
 
             ParserImpl.prototype.parseEmptyStatement = function () {
                 var semicolonToken = this.eatToken(78 /* SemicolonToken */);
-                return this.factory.emptyStatement(semicolonToken);
+                return new TypeScript.EmptyStatementSyntax(semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseForOrForInStatement = function () {
@@ -18950,7 +17381,7 @@ var TypeScript;
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
                 var statement = this.parseStatement(false);
 
-                return this.factory.forInStatement(forKeyword, openParenToken, variableDeclaration, initializer, inKeyword, expression, closeParenToken, statement);
+                return new TypeScript.ForInStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, inKeyword, expression, closeParenToken, statement, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseForOrForInStatementWithInitializer = function (forKeyword, openParenToken) {
@@ -18984,7 +17415,7 @@ var TypeScript;
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
                 var statement = this.parseStatement(false);
 
-                return this.factory.forStatement(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement);
+                return new TypeScript.ForStatementSyntax(forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseBreakStatement = function () {
@@ -18998,7 +17429,7 @@ var TypeScript;
                 }
 
                 var semicolon = this.eatExplicitOrAutomaticSemicolon(false);
-                return this.factory.breakStatement(breakKeyword, identifier, semicolon);
+                return new TypeScript.BreakStatementSyntax(breakKeyword, identifier, semicolon, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseContinueStatement = function () {
@@ -19012,7 +17443,7 @@ var TypeScript;
                 }
 
                 var semicolon = this.eatExplicitOrAutomaticSemicolon(false);
-                return this.factory.continueStatement(continueKeyword, identifier, semicolon);
+                return new TypeScript.ContinueStatementSyntax(continueKeyword, identifier, semicolon, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseSwitchStatement = function () {
@@ -19031,7 +17462,7 @@ var TypeScript;
                 }
 
                 var closeBraceToken = this.eatToken(71 /* CloseBraceToken */);
-                return this.factory.switchStatement(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken);
+                return new TypeScript.SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isCaseSwitchClause = function () {
@@ -19043,7 +17474,7 @@ var TypeScript;
             };
 
             ParserImpl.prototype.isSwitchClause = function () {
-                if (this.currentNode() !== null && this.currentNode().isSwitchClause()) {
+                if (TypeScript.SyntaxUtilities.isSwitchClause(this.currentNode())) {
                     return true;
                 }
 
@@ -19052,7 +17483,7 @@ var TypeScript;
 
             ParserImpl.prototype.tryParseSwitchClause = function () {
                 var node = this.currentNode();
-                if (node !== null && node.isSwitchClause()) {
+                if (TypeScript.SyntaxUtilities.isSwitchClause(node)) {
                     this.moveToNextNode();
                     return node;
                 }
@@ -19078,7 +17509,7 @@ var TypeScript;
                     colonToken = this.addSkippedTokensAfterToken(colonToken, result.skippedTokens);
                 }
 
-                return this.factory.caseSwitchClause(caseKeyword, expression, colonToken, statements);
+                return new TypeScript.CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, statements, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseDefaultSwitchClause = function () {
@@ -19092,7 +17523,7 @@ var TypeScript;
                     colonToken = this.addSkippedTokensAfterToken(colonToken, result.skippedTokens);
                 }
 
-                return this.factory.defaultSwitchClause(defaultKeyword, colonToken, statements);
+                return new TypeScript.DefaultSwitchClauseSyntax(defaultKeyword, colonToken, statements, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseThrowStatement = function () {
@@ -19108,7 +17539,7 @@ var TypeScript;
 
                 var semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.throwStatement(throwKeyword, expression, semicolonToken);
+                return new TypeScript.ThrowStatementSyntax(throwKeyword, expression, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseReturnStatement = function () {
@@ -19121,7 +17552,7 @@ var TypeScript;
 
                 var semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.returnStatement(returnKeyword, expression, semicolonToken);
+                return new TypeScript.ReturnStatementSyntax(returnKeyword, expression, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isExpressionStatement = function (currentToken) {
@@ -19144,7 +17575,7 @@ var TypeScript;
 
             ParserImpl.prototype.tryParseAssignmentOrOmittedExpression = function () {
                 if (this.currentToken().kind() === 79 /* CommaToken */) {
-                    return this.factory.omittedExpression();
+                    return new TypeScript.OmittedExpressionSyntax(this.parseNodeData);
                 }
 
                 return this.tryParseAssignmentExpressionOrHigher(false, true);
@@ -19200,7 +17631,7 @@ var TypeScript;
 
                 var semicolon = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.expressionStatement(expression, semicolon);
+                return new TypeScript.ExpressionStatementSyntax(expression, semicolon, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseIfStatement = function () {
@@ -19215,7 +17646,7 @@ var TypeScript;
                     elseClause = this.parseElseClause();
                 }
 
-                return this.factory.ifStatement(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause);
+                return new TypeScript.IfStatementSyntax(ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause, this.parseNodeData);
             };
 
             ParserImpl.prototype.isElseClause = function () {
@@ -19226,7 +17657,7 @@ var TypeScript;
                 var elseKeyword = this.eatKeyword(23 /* ElseKeyword */);
                 var statement = this.parseStatement(false);
 
-                return this.factory.elseClause(elseKeyword, statement);
+                return new TypeScript.ElseClauseSyntax(elseKeyword, statement, this.parseNodeData);
             };
 
             ParserImpl.prototype.isVariableStatement = function () {
@@ -19239,7 +17670,7 @@ var TypeScript;
                 var variableDeclaration = this.parseVariableDeclaration(true);
                 var semicolonToken = this.eatExplicitOrAutomaticSemicolon(false);
 
-                return this.factory.variableStatement(modifiers, variableDeclaration, semicolonToken);
+                return new TypeScript.VariableStatementSyntax(modifiers, variableDeclaration, semicolonToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseVariableDeclaration = function (allowIn) {
@@ -19251,7 +17682,7 @@ var TypeScript;
                 var variableDeclarators = result.list;
                 varKeyword = this.addSkippedTokensAfterToken(varKeyword, result.skippedTokens);
 
-                return this.factory.variableDeclaration(varKeyword, variableDeclarators);
+                return new TypeScript.VariableDeclarationSyntax(varKeyword, variableDeclarators, this.parseNodeData);
             };
 
             ParserImpl.prototype.isVariableDeclarator = function () {
@@ -19298,7 +17729,7 @@ var TypeScript;
                     }
                 }
 
-                return this.factory.variableDeclarator(propertyName, typeAnnotation, equalsValueClause);
+                return new TypeScript.VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, this.parseNodeData);
             };
 
             ParserImpl.prototype.isColonValueClause = function () {
@@ -19330,7 +17761,7 @@ var TypeScript;
                 var equalsToken = this.eatToken(107 /* EqualsToken */);
                 var value = this.tryParseAssignmentExpressionOrHigher(true, allowIn);
 
-                return this.factory.equalsValueClause(equalsToken, value);
+                return new TypeScript.EqualsValueClauseSyntax(equalsToken, value, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseExpression = function (allowIn) {
@@ -19346,7 +17777,7 @@ var TypeScript;
                     this.eatAnyToken();
 
                     var rightOperand = this.tryParseAssignmentExpressionOrHigher(true, allowIn);
-                    leftOperand = this.factory.binaryExpression(173 /* CommaExpression */, leftOperand, token0, rightOperand);
+                    leftOperand = new TypeScript.BinaryExpressionSyntax(173 /* CommaExpression */, leftOperand, token0, rightOperand, this.parseNodeData);
                 }
 
                 return leftOperand;
@@ -19363,7 +17794,7 @@ var TypeScript;
                     return null;
                 }
 
-                if (leftOperand.isLeftHandSideExpression()) {
+                if (TypeScript.SyntaxUtilities.isLeftHandSizeExpression(leftOperand)) {
                     var token0 = this.currentOperatorToken();
                     var token0Kind = token0.kind();
 
@@ -19372,7 +17803,7 @@ var TypeScript;
 
                         var rightOperand = this.tryParseAssignmentExpressionOrHigher(true, allowIn);
                         var binaryExpressionKind = TypeScript.SyntaxFacts.getBinaryExpressionFromOperatorToken(token0Kind);
-                        return this.factory.binaryExpression(binaryExpressionKind, leftOperand, token0, rightOperand);
+                        return new TypeScript.BinaryExpressionSyntax(binaryExpressionKind, leftOperand, token0, rightOperand, this.parseNodeData);
                     }
                 }
 
@@ -19416,7 +17847,7 @@ var TypeScript;
                     var operatorToken = this.eatAnyToken();
 
                     var operand = this.tryParseUnaryExpressionOrHigher(true);
-                    return this.factory.prefixUnaryExpression(operatorKind, operatorToken, operand);
+                    return new TypeScript.PrefixUnaryExpressionSyntax(operatorKind, operatorToken, operand, this.parseNodeData);
                 } else if (currentTokenKind === 39 /* TypeOfKeyword */) {
                     return this.parseTypeOfExpression();
                 } else if (currentTokenKind === 41 /* VoidKeyword */) {
@@ -19453,7 +17884,7 @@ var TypeScript;
                 var colon = this.eatToken(106 /* ColonToken */);
 
                 var whenFalseExpression = this.tryParseAssignmentExpressionOrHigher(true, allowIn);
-                return this.factory.conditionalExpression(leftOperand, questionToken, whenTrueExpression, colon, whenFalseExpression);
+                return new TypeScript.ConditionalExpressionSyntax(leftOperand, questionToken, whenTrueExpression, colon, whenFalseExpression, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseBinaryExpressionRest = function (precedence, allowIn, leftOperand) {
@@ -19480,7 +17911,7 @@ var TypeScript;
                     this.moveToNextTokenN(skipCount);
 
                     var rightOperand = this.tryParseBinaryExpressionOrHigher(true, newPrecedence, allowIn);
-                    leftOperand = this.factory.binaryExpression(binaryExpressionKind, leftOperand, operatorToken, rightOperand);
+                    leftOperand = new TypeScript.BinaryExpressionSyntax(binaryExpressionKind, leftOperand, operatorToken, rightOperand, this.parseNodeData);
                 }
 
                 return leftOperand;
@@ -19586,7 +18017,7 @@ var TypeScript;
                                 break;
                             }
 
-                            expression = this.factory.invocationExpression(expression, this.parseArgumentList(null));
+                            expression = new TypeScript.InvocationExpressionSyntax(expression, this.parseArgumentList(null), this.parseNodeData);
                             continue;
 
                         case 80 /* LessThanToken */:
@@ -19599,7 +18030,7 @@ var TypeScript;
                                 break;
                             }
 
-                            expression = this.factory.invocationExpression(expression, argumentList);
+                            expression = new TypeScript.InvocationExpressionSyntax(expression, argumentList, this.parseNodeData);
                             continue;
 
                         case 74 /* OpenBracketToken */:
@@ -19607,7 +18038,7 @@ var TypeScript;
                             continue;
 
                         case 76 /* DotToken */:
-                            expression = this.factory.memberAccessExpression(expression, this.eatToken(76 /* DotToken */), this.eatIdentifierNameToken());
+                            expression = new TypeScript.MemberAccessExpressionSyntax(expression, this.eatToken(76 /* DotToken */), this.eatIdentifierNameToken(), this.parseNodeData);
                             continue;
                     }
 
@@ -19637,7 +18068,7 @@ var TypeScript;
                     return expression;
                 }
 
-                return this.factory.memberAccessExpression(expression, this.eatToken(76 /* DotToken */), this.eatIdentifierNameToken());
+                return new TypeScript.MemberAccessExpressionSyntax(expression, this.eatToken(76 /* DotToken */), this.eatIdentifierNameToken(), this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParsePostfixExpressionOrHigher = function (force) {
@@ -19656,7 +18087,7 @@ var TypeScript;
                             break;
                         }
 
-                        return this.factory.postfixUnaryExpression(TypeScript.SyntaxFacts.getPostfixUnaryExpressionFromOperatorToken(currentTokenKind), expression, this.eatAnyToken());
+                        return new TypeScript.PostfixUnaryExpressionSyntax(TypeScript.SyntaxFacts.getPostfixUnaryExpressionFromOperatorToken(currentTokenKind), expression, this.eatAnyToken(), this.parseNodeData);
                 }
 
                 return expression;
@@ -19681,10 +18112,10 @@ var TypeScript;
                     this.releaseRewindPoint(rewindPoint);
 
                     if (isDot) {
-                        var diagnostic = new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), token0.start(), token0.width(), TypeScript.DiagnosticCode.A_parameter_list_must_follow_a_generic_type_argument_list_expected, null);
+                        var diagnostic = new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), TypeScript.start(token0), TypeScript.width(token0), TypeScript.DiagnosticCode.A_parameter_list_must_follow_a_generic_type_argument_list_expected, null);
                         this.addDiagnostic(diagnostic);
 
-                        return this.factory.argumentList(typeArgumentList, TypeScript.Syntax.emptyToken(72 /* OpenParenToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.emptyToken(73 /* CloseParenToken */));
+                        return new TypeScript.ArgumentListSyntax(typeArgumentList, TypeScript.Syntax.emptyToken(72 /* OpenParenToken */), TypeScript.Syntax.emptySeparatedList(), TypeScript.Syntax.emptyToken(73 /* CloseParenToken */), this.parseNodeData);
                     } else {
                         return this.parseArgumentList(typeArgumentList);
                     }
@@ -19716,7 +18147,7 @@ var TypeScript;
 
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
 
-                return this.factory.argumentList(typeArgumentList, openParenToken, _arguments, closeParenToken);
+                return new TypeScript.ArgumentListSyntax(typeArgumentList, openParenToken, _arguments, closeParenToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParseArgumentListExpression = function () {
@@ -19725,12 +18156,12 @@ var TypeScript;
             };
 
             ParserImpl.prototype.parseElementAccessExpression = function (expression, inObjectCreation) {
-                var start = this.currentToken().start();
                 var openBracketToken = this.eatToken(74 /* OpenBracketToken */);
                 var argumentExpression;
 
                 if (this.currentToken().kind() === 75 /* CloseBracketToken */ && inObjectCreation) {
-                    var end = this.currentToken().start() + this.currentToken().width();
+                    var start = TypeScript.start(openBracketToken);
+                    var end = TypeScript.end(this.currentToken());
                     var diagnostic = new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), start, end - start, TypeScript.DiagnosticCode.new_T_cannot_be_used_to_create_an_array_Use_new_Array_T_instead, null);
                     this.addDiagnostic(diagnostic);
 
@@ -19741,7 +18172,7 @@ var TypeScript;
 
                 var closeBracketToken = this.eatToken(75 /* CloseBracketToken */);
 
-                return this.factory.elementAccessExpression(expression, openBracketToken, argumentExpression, closeBracketToken);
+                return new TypeScript.ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParsePrimaryExpression = function (force) {
@@ -19815,21 +18246,21 @@ var TypeScript;
                 var typeOfKeyword = this.eatKeyword(39 /* TypeOfKeyword */);
                 var expression = this.tryParseUnaryExpressionOrHigher(true);
 
-                return this.factory.typeOfExpression(typeOfKeyword, expression);
+                return new TypeScript.TypeOfExpressionSyntax(typeOfKeyword, expression, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseDeleteExpression = function () {
                 var deleteKeyword = this.eatKeyword(21 /* DeleteKeyword */);
                 var expression = this.tryParseUnaryExpressionOrHigher(true);
 
-                return this.factory.deleteExpression(deleteKeyword, expression);
+                return new TypeScript.DeleteExpressionSyntax(deleteKeyword, expression, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseVoidExpression = function () {
                 var voidKeyword = this.eatKeyword(41 /* VoidKeyword */);
                 var expression = this.tryParseUnaryExpressionOrHigher(true);
 
-                return this.factory.voidExpression(voidKeyword, expression);
+                return new TypeScript.VoidExpressionSyntax(voidKeyword, expression, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseFunctionExpression = function () {
@@ -19843,7 +18274,7 @@ var TypeScript;
                 var callSignature = this.parseCallSignature(false);
                 var block = this.parseBlock(false, true);
 
-                return this.factory.functionExpression(functionKeyword, identifier, callSignature, block);
+                return new TypeScript.FunctionExpressionSyntax(functionKeyword, identifier, callSignature, block, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseObjectCreationExpression = function () {
@@ -19853,7 +18284,7 @@ var TypeScript;
 
                 var argumentList = this.tryParseArgumentList();
 
-                return this.factory.objectCreationExpression(newKeyword, expression, argumentList);
+                return new TypeScript.ObjectCreationExpressionSyntax(newKeyword, expression, argumentList, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseCastExpression = function () {
@@ -19862,7 +18293,7 @@ var TypeScript;
                 var greaterThanToken = this.eatToken(81 /* GreaterThanToken */);
                 var expression = this.tryParseUnaryExpressionOrHigher(true);
 
-                return this.factory.castExpression(lessThanToken, type, greaterThanToken, expression);
+                return new TypeScript.CastExpressionSyntax(lessThanToken, type, greaterThanToken, expression, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseParenthesizedExpression = function () {
@@ -19870,7 +18301,7 @@ var TypeScript;
                 var expression = this.parseExpression(true);
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
 
-                return this.factory.parenthesizedExpression(openParenToken, expression, closeParenToken);
+                return new TypeScript.ParenthesizedExpressionSyntax(openParenToken, expression, closeParenToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParseParenthesizedArrowFunctionExpression = function () {
@@ -19915,7 +18346,7 @@ var TypeScript;
                     expression = this.tryParseAssignmentExpressionOrHigher(true, true);
                 }
 
-                return this.factory.parenthesizedArrowFunctionExpression(callSignature, equalsGreaterThanToken, block, expression);
+                return new TypeScript.ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParseArrowFunctionBlock = function () {
@@ -19948,7 +18379,7 @@ var TypeScript;
                     expression = this.tryParseAssignmentExpressionOrHigher(true, true);
                 }
 
-                return this.factory.simpleArrowFunctionExpression(identifier, equalsGreaterThanToken, block, expression);
+                return new TypeScript.SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, this.parseNodeData);
             };
 
             ParserImpl.prototype.isBlock = function () {
@@ -20044,7 +18475,7 @@ var TypeScript;
 
                 var closeBraceToken = this.eatToken(71 /* CloseBraceToken */);
 
-                return this.factory.objectLiteralExpression(openBraceToken, propertyAssignments, closeBraceToken);
+                return new TypeScript.ObjectLiteralExpressionSyntax(openBraceToken, propertyAssignments, closeBraceToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParsePropertyAssignment = function (inErrorRecovery) {
@@ -20083,7 +18514,7 @@ var TypeScript;
                 var callSignature = this.parseCallSignature(false);
                 var block = this.parseBlock(false, true);
 
-                return this.factory.functionPropertyAssignment(propertyName, callSignature, block);
+                return new TypeScript.FunctionPropertyAssignmentSyntax(propertyName, callSignature, block, this.parseNodeData);
             };
 
             ParserImpl.prototype.isSimplePropertyAssignment = function (inErrorRecovery) {
@@ -20095,7 +18526,7 @@ var TypeScript;
                 var colonToken = this.eatToken(106 /* ColonToken */);
                 var expression = this.tryParseAssignmentExpressionOrHigher(true, true);
 
-                return this.factory.simplePropertyAssignment(propertyName, colonToken, expression);
+                return new TypeScript.SimplePropertyAssignmentSyntax(propertyName, colonToken, expression, this.parseNodeData);
             };
 
             ParserImpl.prototype.isPropertyName = function (token, inErrorRecovery) {
@@ -20126,7 +18557,7 @@ var TypeScript;
 
                 var closeBracketToken = this.eatToken(75 /* CloseBracketToken */);
 
-                return this.factory.arrayLiteralExpression(openBracketToken, expressions, closeBracketToken);
+                return new TypeScript.ArrayLiteralExpressionSyntax(openBracketToken, expressions, closeBracketToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseLiteralExpression = function () {
@@ -20155,7 +18586,7 @@ var TypeScript;
 
                 var closeBraceToken = this.eatToken(71 /* CloseBraceToken */);
 
-                return this.factory.block(openBraceToken, statements, closeBraceToken);
+                return new TypeScript.BlockSyntax(openBraceToken, statements, closeBraceToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseCallSignature = function (requireCompleteTypeParameterList) {
@@ -20163,7 +18594,7 @@ var TypeScript;
                 var parameterList = this.parseParameterList();
                 var typeAnnotation = this.parseOptionalTypeAnnotation(false);
 
-                return this.factory.callSignature(typeParameterList, parameterList, typeAnnotation);
+                return new TypeScript.CallSignatureSyntax(typeParameterList, parameterList, typeAnnotation, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParseTypeParameterList = function (requireCompleteTypeParameterList) {
@@ -20187,7 +18618,7 @@ var TypeScript;
                     return null;
                 } else {
                     this.releaseRewindPoint(rewindPoint);
-                    var typeParameterList = this.factory.typeParameterList(lessThanToken, typeParameters, greaterThanToken);
+                    var typeParameterList = new TypeScript.TypeParameterListSyntax(lessThanToken, typeParameters, greaterThanToken, this.parseNodeData);
 
                     return typeParameterList;
                 }
@@ -20198,7 +18629,7 @@ var TypeScript;
             };
 
             ParserImpl.prototype.parseTypeParameter = function () {
-                return this.tryParseTypeParameter() || this.factory.typeParameter(this.eatIdentifierToken(), null);
+                return this.tryParseTypeParameter() || new TypeScript.TypeParameterSyntax(this.eatIdentifierToken(), null, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParseTypeParameter = function () {
@@ -20209,7 +18640,7 @@ var TypeScript;
                 var identifier = this.eatIdentifierToken();
                 var constraint = this.tryParseConstraint();
 
-                return this.factory.typeParameter(identifier, constraint);
+                return new TypeScript.TypeParameterSyntax(identifier, constraint, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParseConstraint = function () {
@@ -20220,7 +18651,7 @@ var TypeScript;
                 var extendsKeyword = this.eatKeyword(48 /* ExtendsKeyword */);
                 var type = this.parseType();
 
-                return this.factory.constraint(extendsKeyword, type);
+                return new TypeScript.ConstraintSyntax(extendsKeyword, type, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseParameterList = function () {
@@ -20234,7 +18665,7 @@ var TypeScript;
                 }
 
                 var closeParenToken = this.eatToken(73 /* CloseParenToken */);
-                return this.factory.parameterList(openParenToken, parameters, closeParenToken);
+                return new TypeScript.ParameterListSyntax(openParenToken, parameters, closeParenToken, this.parseNodeData);
             };
 
             ParserImpl.prototype.isTypeAnnotation = function () {
@@ -20249,7 +18680,7 @@ var TypeScript;
                 var colonToken = this.eatToken(106 /* ColonToken */);
                 var type = allowStringLiteral && this.currentToken().kind() === 14 /* StringLiteral */ ? this.eatToken(14 /* StringLiteral */) : this.parseType();
 
-                return this.factory.typeAnnotation(colonToken, type);
+                return new TypeScript.TypeAnnotationSyntax(colonToken, type, this.parseNodeData);
             };
 
             ParserImpl.prototype.isType = function () {
@@ -20291,7 +18722,7 @@ var TypeScript;
                     var openBracketToken = this.eatToken(74 /* OpenBracketToken */);
                     var closeBracketToken = this.eatToken(75 /* CloseBracketToken */);
 
-                    type = this.factory.arrayType(type, openBracketToken, closeBracketToken);
+                    type = new TypeScript.ArrayTypeSyntax(type, openBracketToken, closeBracketToken, this.parseNodeData);
                 }
 
                 return type;
@@ -20305,7 +18736,7 @@ var TypeScript;
                 var typeOfKeyword = this.eatToken(39 /* TypeOfKeyword */);
                 var name = this.parseName();
 
-                return this.factory.typeQuery(typeOfKeyword, name);
+                return new TypeScript.TypeQuerySyntax(typeOfKeyword, name, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParseNonArrayType = function () {
@@ -20344,7 +18775,7 @@ var TypeScript;
 
                 var typeArgumentList = this.tryParseTypeArgumentList(false);
 
-                return typeArgumentList === null ? name : this.factory.genericType(name, typeArgumentList);
+                return typeArgumentList === null ? name : new TypeScript.GenericTypeSyntax(name, typeArgumentList, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseFunctionType = function () {
@@ -20353,7 +18784,7 @@ var TypeScript;
                 var equalsGreaterThanToken = this.eatToken(85 /* EqualsGreaterThanToken */);
                 var returnType = this.parseType();
 
-                return this.factory.functionType(typeParameterList, parameterList, equalsGreaterThanToken, returnType);
+                return new TypeScript.FunctionTypeSyntax(typeParameterList, parameterList, equalsGreaterThanToken, returnType, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseConstructorType = function () {
@@ -20363,7 +18794,7 @@ var TypeScript;
                 var equalsGreaterThanToken = this.eatToken(85 /* EqualsGreaterThanToken */);
                 var type = this.parseType();
 
-                return this.factory.constructorType(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type);
+                return new TypeScript.ConstructorTypeSyntax(newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type, this.parseNodeData);
             };
 
             ParserImpl.prototype.isParameter = function () {
@@ -20401,7 +18832,7 @@ var TypeScript;
             };
 
             ParserImpl.prototype.parseParameter = function () {
-                return this.tryParseParameter() || this.factory.parameter(null, TypeScript.Syntax.emptyList(), this.eatIdentifierToken(), null, null, null);
+                return this.tryParseParameter() || new TypeScript.ParameterSyntax(null, TypeScript.Syntax.emptyList(), this.eatIdentifierToken(), null, null, null, this.parseNodeData);
             };
 
             ParserImpl.prototype.tryParseParameter = function () {
@@ -20441,7 +18872,7 @@ var TypeScript;
                     equalsValueClause = this.parseEqualsValueClause(true);
                 }
 
-                return this.factory.parameter(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause);
+                return new TypeScript.ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, this.parseNodeData);
             };
 
             ParserImpl.prototype.parseSyntaxList = function (currentListType, processItems) {
@@ -20490,8 +18921,8 @@ var TypeScript;
             ParserImpl.prototype.addSkippedTokenToList = function (items, skippedTokens, skippedToken) {
                 for (var i = items.length - 1; i >= 0; i--) {
                     var item = items[i];
-                    var lastToken = item.lastToken();
-                    if (lastToken && lastToken.fullWidth() > 0) {
+                    var _lastToken = TypeScript.lastToken(item);
+                    if (_lastToken && _lastToken.fullWidth() > 0) {
                         items[i] = this.addSkippedTokenAfterNodeOrToken(item, skippedToken);
                         return;
                     }
@@ -20641,7 +19072,7 @@ var TypeScript;
             ParserImpl.prototype.reportUnexpectedTokenDiagnostic = function (listType) {
                 var token = this.currentToken();
 
-                var diagnostic = new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), token.start(), token.width(), TypeScript.DiagnosticCode.Unexpected_token_0_expected, [this.getExpectedListElementType(listType)]);
+                var diagnostic = new TypeScript.Diagnostic(this.fileName, this.source.text.lineMap(), TypeScript.start(token), TypeScript.width(token), TypeScript.DiagnosticCode.Unexpected_token_0_expected, [this.getExpectedListElementType(listType)]);
                 this.addDiagnostic(diagnostic);
             };
 
@@ -21149,7 +19580,7 @@ var TypeScript;
                 return false;
             }
 
-            return this.sourceUnit().structuralEquals(tree.sourceUnit());
+            return TypeScript.Syntax.nodeStructuralEquals(this.sourceUnit(), tree.sourceUnit());
         };
         return SyntaxTree;
     })();
@@ -21168,7 +19599,7 @@ var TypeScript;
         }
         GrammarCheckerWalker.prototype.pushDiagnostic = function (element, diagnosticKey, args) {
             if (typeof args === "undefined") { args = null; }
-            this.diagnostics.push(new TypeScript.Diagnostic(this.syntaxTree.fileName(), this.syntaxTree.lineMap(), element.start(), element.width(), diagnosticKey, args));
+            this.diagnostics.push(new TypeScript.Diagnostic(this.syntaxTree.fileName(), this.syntaxTree.lineMap(), TypeScript.start(element), TypeScript.width(element), diagnosticKey, args));
         };
 
         GrammarCheckerWalker.prototype.visitCatchClause = function (node) {
@@ -21286,7 +19717,7 @@ var TypeScript;
             }
 
             var listFullStart = parent.fullStart() + TypeScript.Syntax.childOffset(parent, list);
-            var tokenAtStart = this.syntaxTree.sourceUnit().findToken(listFullStart);
+            var tokenAtStart = TypeScript.Syntax.findToken(this.syntaxTree.sourceUnit(), listFullStart);
 
             this.pushDiagnostic(tokenAtStart, TypeScript.DiagnosticCode.Unexpected_token_0_expected, [expected]);
 
@@ -21445,7 +19876,7 @@ var TypeScript;
         GrammarCheckerWalker.prototype.checkForRequiredDeclareModifier = function (moduleElement, typeKeyword, modifiers) {
             if (!this.inAmbientDeclaration && this.syntaxTree.isDeclaration()) {
                 if (!TypeScript.SyntaxUtilities.containsToken(modifiers, 63 /* DeclareKeyword */)) {
-                    this.pushDiagnostic(typeKeyword.firstToken(), TypeScript.DiagnosticCode.declare_modifier_required_for_top_level_element);
+                    this.pushDiagnostic(TypeScript.firstToken(typeKeyword), TypeScript.DiagnosticCode.declare_modifier_required_for_top_level_element);
                     return true;
                 }
             }
@@ -21462,7 +19893,7 @@ var TypeScript;
 
                     if (inFunctionOverloadChain) {
                         if (moduleElement.kind() !== 129 /* FunctionDeclaration */) {
-                            this.pushDiagnostic(moduleElement.firstToken(), TypeScript.DiagnosticCode.Function_implementation_expected);
+                            this.pushDiagnostic(TypeScript.firstToken(moduleElement), TypeScript.DiagnosticCode.Function_implementation_expected);
                             return true;
                         }
 
@@ -21481,7 +19912,7 @@ var TypeScript;
 
                             if (inFunctionOverloadChain) {
                                 if (lastElement) {
-                                    this.pushDiagnostic(moduleElement.firstToken(), TypeScript.DiagnosticCode.Function_implementation_expected);
+                                    this.pushDiagnostic(TypeScript.firstToken(moduleElement), TypeScript.DiagnosticCode.Function_implementation_expected);
                                     return true;
                                 } else {
                                     var nextElement = moduleElements.childAt(i + 1);
@@ -21522,7 +19953,7 @@ var TypeScript;
 
                     if (inFunctionOverloadChain) {
                         if (classElement.kind() !== 135 /* MemberFunctionDeclaration */) {
-                            this.pushDiagnostic(classElement.firstToken(), TypeScript.DiagnosticCode.Function_implementation_expected);
+                            this.pushDiagnostic(TypeScript.firstToken(classElement), TypeScript.DiagnosticCode.Function_implementation_expected);
                             return true;
                         }
 
@@ -21540,7 +19971,7 @@ var TypeScript;
                         }
                     } else if (inConstructorOverloadChain) {
                         if (classElement.kind() !== 137 /* ConstructorDeclaration */) {
-                            this.pushDiagnostic(classElement.firstToken(), TypeScript.DiagnosticCode.Constructor_implementation_expected);
+                            this.pushDiagnostic(TypeScript.firstToken(classElement), TypeScript.DiagnosticCode.Constructor_implementation_expected);
                             return true;
                         }
                     }
@@ -21554,7 +19985,7 @@ var TypeScript;
 
                         if (inFunctionOverloadChain) {
                             if (lastElement) {
-                                this.pushDiagnostic(classElement.firstToken(), TypeScript.DiagnosticCode.Function_implementation_expected);
+                                this.pushDiagnostic(TypeScript.firstToken(classElement), TypeScript.DiagnosticCode.Function_implementation_expected);
                                 return true;
                             } else {
                                 var nextElement = node.classElements.childAt(i + 1);
@@ -21573,7 +20004,7 @@ var TypeScript;
 
                         inConstructorOverloadChain = constructorDeclaration.block === null;
                         if (lastElement && inConstructorOverloadChain) {
-                            this.pushDiagnostic(classElement.firstToken(), TypeScript.DiagnosticCode.Constructor_implementation_expected);
+                            this.pushDiagnostic(TypeScript.firstToken(classElement), TypeScript.DiagnosticCode.Constructor_implementation_expected);
                             return true;
                         }
                     }
@@ -22018,7 +20449,7 @@ var TypeScript;
 
         GrammarCheckerWalker.prototype.visitBlock = function (node) {
             if (this.inAmbientDeclaration || this.syntaxTree.isDeclaration()) {
-                this.pushDiagnostic(node.firstToken(), TypeScript.DiagnosticCode.Implementations_are_not_allowed_in_ambient_contexts);
+                this.pushDiagnostic(TypeScript.firstToken(node), TypeScript.DiagnosticCode.Implementations_are_not_allowed_in_ambient_contexts);
                 return;
             }
 
@@ -22034,7 +20465,7 @@ var TypeScript;
 
         GrammarCheckerWalker.prototype.checkForStatementInAmbientContxt = function (node) {
             if (this.inAmbientDeclaration || this.syntaxTree.isDeclaration()) {
-                this.pushDiagnostic(node.firstToken(), TypeScript.DiagnosticCode.Statements_are_not_allowed_in_ambient_contexts);
+                this.pushDiagnostic(TypeScript.firstToken(node), TypeScript.DiagnosticCode.Statements_are_not_allowed_in_ambient_contexts);
                 return true;
             }
 
@@ -22486,7 +20917,7 @@ var TypeScript;
             this._lineMap = syntaxTree.lineMap();
 
             var sourceUnit = syntaxTree.sourceUnit();
-            var leadingTrivia = sourceUnit.leadingTrivia();
+            var leadingTrivia = TypeScript.firstToken(sourceUnit).leadingTrivia();
 
             this._externalModuleIndicatorSpan = this.getImplicitImportSpan(leadingTrivia) || this.getTopLevelImportOrExportSpan(sourceUnit);
 
@@ -22537,20 +20968,18 @@ var TypeScript;
         };
 
         Document.prototype.getTopLevelImportOrExportSpan = function (node) {
-            var firstToken;
-
             for (var i = 0, n = node.moduleElements.childCount(); i < n; i++) {
                 var moduleElement = node.moduleElements.childAt(i);
 
-                firstToken = moduleElement.firstToken();
-                if (firstToken !== null && firstToken.kind() === 47 /* ExportKeyword */) {
-                    return new TypeScript.TextSpan(firstToken.start(), firstToken.width());
+                var _firstToken = TypeScript.firstToken(moduleElement);
+                if (_firstToken !== null && _firstToken.kind() === 47 /* ExportKeyword */) {
+                    return new TypeScript.TextSpan(TypeScript.start(_firstToken), TypeScript.width(_firstToken));
                 }
 
                 if (moduleElement.kind() === 133 /* ImportDeclaration */) {
                     var importDecl = moduleElement;
                     if (importDecl.moduleReference.kind() === 245 /* ExternalModuleReference */) {
-                        return new TypeScript.TextSpan(importDecl.start(), importDecl.width());
+                        return new TypeScript.TextSpan(TypeScript.start(importDecl), TypeScript.width(importDecl));
                     }
                 }
             }
@@ -22959,7 +21388,7 @@ var TypeScript;
         ASTHelpers.enumIsElided = enumIsElided;
 
         function isValidAstNode(ast) {
-            return ast && !ast.isShared() && isValidSpan(ast);
+            return ast && !ast.isShared() && TypeScript.start(ast) !== -1 && TypeScript.end(ast) !== -1;
         }
         ASTHelpers.isValidAstNode = isValidAstNode;
 
@@ -22981,21 +21410,21 @@ var TypeScript;
 
             var pre = function (cur, walker) {
                 if (!cur.isShared() && isValidAstNode(cur)) {
-                    var isInvalid1 = cur.kind() === 149 /* ExpressionStatement */ && cur.width() === 0;
+                    var isInvalid1 = cur.kind() === 149 /* ExpressionStatement */ && TypeScript.width(cur) === 0;
 
                     if (isInvalid1) {
                         walker.options.goChildren = false;
                     } else {
-                        var inclusive = forceInclusive || cur.kind() === 11 /* IdentifierName */ || cur.kind() === 212 /* MemberAccessExpression */ || cur.kind() === 121 /* QualifiedName */ || cur.kind() === 224 /* VariableDeclaration */ || cur.kind() === 225 /* VariableDeclarator */ || cur.kind() === 213 /* InvocationExpression */ || pos === script.end() + script.trailingTriviaWidth();
+                        var inclusive = forceInclusive || cur.kind() === 11 /* IdentifierName */ || cur.kind() === 212 /* MemberAccessExpression */ || cur.kind() === 121 /* QualifiedName */ || cur.kind() === 224 /* VariableDeclaration */ || cur.kind() === 225 /* VariableDeclarator */ || cur.kind() === 213 /* InvocationExpression */ || pos === TypeScript.end(script) + TypeScript.lastToken(script).trailingTriviaWidth();
 
-                        var minChar = cur.start();
-                        var limChar = cur.end() + (useTrailingTriviaAsLimChar ? cur.trailingTriviaWidth() : 0) + (inclusive ? 1 : 0);
+                        var minChar = TypeScript.start(cur);
+                        var limChar = TypeScript.end(cur) + (useTrailingTriviaAsLimChar ? TypeScript.trailingTriviaWidth(cur) : 0) + (inclusive ? 1 : 0);
                         if (pos >= minChar && pos < limChar) {
-                            if ((cur.kind() !== 1 /* List */ && cur.kind() !== 2 /* SeparatedList */) || cur.end() > cur.start()) {
+                            if ((cur.kind() !== 1 /* List */ && cur.kind() !== 2 /* SeparatedList */) || TypeScript.end(cur) > TypeScript.start(cur)) {
                                 if (top === null) {
                                     top = cur;
-                                } else if (cur.start() >= top.start() && (cur.end() + (useTrailingTriviaAsLimChar ? cur.trailingTriviaWidth() : 0)) <= (top.end() + (useTrailingTriviaAsLimChar ? top.trailingTriviaWidth() : 0))) {
-                                    if (top.width() !== 0 || cur.width() !== 0) {
+                                } else if (TypeScript.start(cur) >= TypeScript.start(top) && (TypeScript.end(cur) + (useTrailingTriviaAsLimChar ? TypeScript.trailingTriviaWidth(cur) : 0)) <= (TypeScript.end(top) + (useTrailingTriviaAsLimChar ? TypeScript.trailingTriviaWidth(top) : 0))) {
+                                    if (TypeScript.width(top) !== 0 || TypeScript.width(cur) !== 0) {
                                         top = cur;
                                     }
                                 }
@@ -23379,21 +21808,21 @@ var TypeScript;
 
         function convertNodeTrailingComments(node, allowWithNewLine) {
             if (typeof allowWithNewLine === "undefined") { allowWithNewLine = false; }
-            var lastToken = node.lastToken();
-            if (lastToken === null || !lastToken.hasTrailingComment()) {
+            var _lastToken = TypeScript.lastToken(node);
+            if (_lastToken === null || !_lastToken.hasTrailingComment()) {
                 return null;
             }
 
-            if (!allowWithNewLine && lastToken.hasTrailingNewLine()) {
+            if (!allowWithNewLine && _lastToken.hasTrailingNewLine()) {
                 return null;
             }
 
-            return convertComments(lastToken.trailingTrivia(), node.fullStart() + node.fullWidth() - lastToken.trailingTriviaWidth());
+            return convertComments(_lastToken.trailingTrivia(), node.fullStart() + node.fullWidth() - _lastToken.trailingTriviaWidth());
         }
 
         function convertNodeLeadingComments(element) {
             if (element) {
-                return convertTokenLeadingComments(element.firstToken());
+                return convertTokenLeadingComments(TypeScript.firstToken(element));
             }
 
             return null;
@@ -23413,7 +21842,7 @@ var TypeScript;
                 return null;
             }
 
-            return token.hasTrailingComment() ? convertComments(token.trailingTrivia(), token.fullEnd() - token.trailingTriviaWidth()) : null;
+            return token.hasTrailingComment() ? convertComments(token.trailingTrivia(), TypeScript.fullEnd(token) - token.trailingTriviaWidth()) : null;
         }
         ASTHelpers.convertTokenTrailingComments = convertTokenTrailingComments;
 
@@ -23449,7 +21878,7 @@ var TypeScript;
                 } else if (ast.kind() === 242 /* Parameter */) {
                     comments = TypeScript.ASTHelpers.preComments(ast);
                     if (!comments) {
-                        var previousToken = ast.syntaxTree().sourceUnit().findToken(ast.firstToken().fullStart() - 1);
+                        var previousToken = TypeScript.Syntax.findToken(ast.syntaxTree().sourceUnit(), TypeScript.firstToken(ast).fullStart() - 1);
                         if (previousToken && (previousToken.kind() === 72 /* OpenParenToken */ || previousToken.kind() === 79 /* CommaToken */)) {
                             comments = convertTokenTrailingComments(previousToken);
                         }
@@ -24509,9 +22938,11 @@ var TypeScript;
         SourceMapper.prototype.decreaseMappingLevel = function (ast) {
             TypeScript.Debug.assert(this.mappingLevel.length > 0, "Mapping level should never be less than 0. This suggests a missing start call.");
             var expectedAst = this.mappingLevel.pop();
-            var expectedAstInfo = expectedAst.kind ? TypeScript.SyntaxKind[expectedAst.kind()] : [expectedAst.start(), expectedAst.end()];
-            var astInfo = ast.kind ? TypeScript.SyntaxKind[ast.kind()] : [ast.start(), ast.end()];
-            TypeScript.Debug.assert(ast === expectedAst, "Provided ast is not the expected ISyntaxElement, Expected: " + expectedAstInfo + " Given: " + astInfo);
+            if (ast !== expectedAst) {
+                var expectedAstInfo = expectedAst.kind ? TypeScript.SyntaxKind[expectedAst.kind()] : [expectedAst.start(), expectedAst.end()];
+                var astInfo = ast.kind ? TypeScript.SyntaxKind[ast.kind()] : [ast.start(), ast.end()];
+                TypeScript.Debug.fail("Provided ast is not the expected ISyntaxElement, Expected: " + expectedAstInfo + " Given: " + astInfo);
+            }
         };
 
         SourceMapper.prototype.setNewSourceFile = function (document, emitOptions) {
@@ -25076,7 +23507,7 @@ var TypeScript;
             }
 
             if (comment.kind() === 6 /* MultiLineCommentTrivia */) {
-                this.recordSourceMappingSpanStart(comment);
+                this.recordSourceMappingCommentStart(comment);
                 this.writeToOutput(text[0]);
 
                 if (text.length > 1 || comment.endsLine) {
@@ -25085,17 +23516,17 @@ var TypeScript;
                         this.emitIndent();
                         this.writeToOutput(text[i]);
                     }
-                    this.recordSourceMappingSpanEnd(comment);
+                    this.recordSourceMappingCommentEnd(comment);
                     this.writeLineToOutput("");
                 } else {
-                    this.recordSourceMappingSpanEnd(comment);
+                    this.recordSourceMappingCommentEnd(comment);
                     this.writeToOutput(" ");
                     return;
                 }
             } else {
-                this.recordSourceMappingSpanStart(comment);
+                this.recordSourceMappingCommentStart(comment);
                 this.writeToOutput(text[0]);
-                this.recordSourceMappingSpanEnd(comment);
+                this.recordSourceMappingCommentEnd(comment);
                 this.writeLineToOutput("");
             }
 
@@ -26350,22 +24781,26 @@ var TypeScript;
 
         Emitter.prototype.recordSourceMappingStart = function (ast) {
             if (this.sourceMapper && TypeScript.ASTHelpers.isValidAstNode(ast)) {
-                this.recordSourceMappingSpanStart(ast);
+                this.recordSourceMappingSpanStart(ast, TypeScript.start(ast), TypeScript.end(ast));
             }
         };
 
-        Emitter.prototype.recordSourceMappingSpanStart = function (ast) {
-            if (this.sourceMapper && TypeScript.ASTHelpers.isValidSpan(ast)) {
+        Emitter.prototype.recordSourceMappingCommentStart = function (comment) {
+            this.recordSourceMappingSpanStart(comment, comment.start(), comment.end());
+        };
+
+        Emitter.prototype.recordSourceMappingSpanStart = function (ast, start, end) {
+            if (this.sourceMapper && ast && start !== -1 && end !== -1) {
                 var lineCol = { line: -1, character: -1 };
                 var sourceMapping = new TypeScript.SourceMapping();
                 sourceMapping.start.emittedColumn = this.emitState.column;
                 sourceMapping.start.emittedLine = this.emitState.line;
 
                 var lineMap = this.document.lineMap();
-                lineMap.fillLineAndCharacterFromPosition(ast.start(), lineCol);
+                lineMap.fillLineAndCharacterFromPosition(start, lineCol);
                 sourceMapping.start.sourceColumn = lineCol.character;
                 sourceMapping.start.sourceLine = lineCol.line + 1;
-                lineMap.fillLineAndCharacterFromPosition(ast.end(), lineCol);
+                lineMap.fillLineAndCharacterFromPosition(end, lineCol);
                 sourceMapping.end.sourceColumn = lineCol.character;
                 sourceMapping.end.sourceLine = lineCol.line + 1;
 
@@ -26389,12 +24824,18 @@ var TypeScript;
 
         Emitter.prototype.recordSourceMappingEnd = function (ast) {
             if (this.sourceMapper && TypeScript.ASTHelpers.isValidAstNode(ast)) {
-                this.recordSourceMappingSpanEnd(ast);
+                this.recordSourceMappingSpanEnd(ast, TypeScript.start(ast), TypeScript.end(ast));
             }
         };
 
-        Emitter.prototype.recordSourceMappingSpanEnd = function (ast) {
+        Emitter.prototype.recordSourceMappingCommentEnd = function (ast) {
             if (this.sourceMapper && TypeScript.ASTHelpers.isValidSpan(ast)) {
+                this.recordSourceMappingSpanEnd(ast, ast.start(), ast.end());
+            }
+        };
+
+        Emitter.prototype.recordSourceMappingSpanEnd = function (ast, start, end) {
+            if (this.sourceMapper && ast && start !== -1 && end !== -1) {
                 this.sourceMapper.currentMappings.pop();
 
                 var siblings = this.sourceMapper.currentMappings[this.sourceMapper.currentMappings.length - 1];
@@ -26467,7 +24908,7 @@ var TypeScript;
                 return;
             }
 
-            var startLine = preserveNewLines && !this.isOnSameLine(parent.end(), list.nonSeparatorAt(0).end());
+            var startLine = preserveNewLines && !this.isOnSameLine(TypeScript.end(parent), TypeScript.end(list.nonSeparatorAt(0)));
 
             if (preserveNewLines) {
                 this.indenter.increaseIndent();
@@ -26485,7 +24926,7 @@ var TypeScript;
                 this.emitJavascript(emitNode, startLine);
 
                 if (i < (n - 1)) {
-                    startLine = preserveNewLines && !this.isOnSameLine(emitNode.end(), list.nonSeparatorAt(i + 1).start());
+                    startLine = preserveNewLines && !this.isOnSameLine(TypeScript.end(emitNode), TypeScript.start(list.nonSeparatorAt(i + 1)));
                     if (startLine) {
                         this.writeLineToOutput(",");
                     } else {
@@ -26498,7 +24939,7 @@ var TypeScript;
                 this.indenter.decreaseIndent();
             }
 
-            if (preserveNewLines && !this.isOnSameLine(parent.end(), list.nonSeparatorAt(list.nonSeparatorCount() - 1).end())) {
+            if (preserveNewLines && !this.isOnSameLine(TypeScript.end(parent), TypeScript.end(list.nonSeparatorAt(list.nonSeparatorCount() - 1)))) {
                 this.writeLineToOutput("");
                 this.emitIndent();
             } else {
@@ -26578,13 +25019,13 @@ var TypeScript;
                 return;
             }
 
-            if (node1.start() === -1 || node1.end() === -1 || node2.start() === -1 || node2.end() === -1) {
+            if (TypeScript.start(node1) === -1 || TypeScript.end(node1) === -1 || TypeScript.start(node2) === -1 || TypeScript.end(node2) === -1) {
                 return;
             }
 
             var lineMap = this.document.lineMap();
-            var node1EndLine = lineMap.getLineNumberFromPosition(node1.end());
-            var node2StartLine = lineMap.getLineNumberFromPosition(node2.start());
+            var node1EndLine = lineMap.getLineNumberFromPosition(TypeScript.end(node1));
+            var node2StartLine = lineMap.getLineNumberFromPosition(TypeScript.start(node2));
 
             if ((node2StartLine - node1EndLine) > 1) {
                 this.writeLineToOutput("", true);
@@ -26616,7 +25057,7 @@ var TypeScript;
                 }
 
                 var lastCommentLine = lineMap.getLineNumberFromPosition(TypeScript.ArrayUtilities.last(detachedComments).end());
-                var astLine = lineMap.getLineNumberFromPosition(element.start());
+                var astLine = lineMap.getLineNumberFromPosition(TypeScript.start(element));
                 if (astLine >= lastCommentLine + 2) {
                     return detachedComments;
                 }
@@ -28421,37 +26862,35 @@ var TypeScript;
     };
 
     function processImports(lineMap, scanner, token, importedFiles) {
-        var position = 0;
         var lineChar = { line: -1, character: -1 };
 
         var start = new Date().getTime();
 
         while (token.kind() !== 10 /* EndOfFileToken */) {
             if (token.kind() === 49 /* ImportKeyword */) {
-                var importStart = position + token.leadingTriviaWidth();
-                token = scanner.scan(false, reportDiagnostic);
+                var importToken = token;
+                token = scanner.scan(false);
 
                 if (TypeScript.SyntaxFacts.isIdentifierNameOrAnyKeyword(token)) {
-                    token = scanner.scan(false, reportDiagnostic);
+                    token = scanner.scan(false);
 
                     if (token.kind() === 107 /* EqualsToken */) {
-                        token = scanner.scan(false, reportDiagnostic);
+                        token = scanner.scan(false);
 
                         if (token.kind() === 65 /* ModuleKeyword */ || token.kind() === 66 /* RequireKeyword */) {
-                            token = scanner.scan(false, reportDiagnostic);
+                            token = scanner.scan(false);
 
                             if (token.kind() === 72 /* OpenParenToken */) {
-                                var afterOpenParenPosition = scanner.absoluteIndex();
-                                token = scanner.scan(false, reportDiagnostic);
+                                token = scanner.scan(false);
 
-                                lineMap.fillLineAndCharacterFromPosition(importStart, lineChar);
+                                lineMap.fillLineAndCharacterFromPosition(TypeScript.start(importToken), lineChar);
 
                                 if (token.kind() === 14 /* StringLiteral */) {
                                     var ref = {
                                         line: lineChar.line,
                                         character: lineChar.character,
-                                        position: afterOpenParenPosition + token.leadingTriviaWidth(),
-                                        length: token.width(),
+                                        position: TypeScript.start(token),
+                                        length: TypeScript.width(token),
                                         path: TypeScript.stripStartAndEndQuotes(TypeScript.switchToForwardSlashes(token.text())),
                                         isResident: false
                                     };
@@ -28463,8 +26902,7 @@ var TypeScript;
                 }
             }
 
-            position = scanner.absoluteIndex();
-            token = scanner.scan(false, reportDiagnostic);
+            token = scanner.scan(false);
         }
 
         var totalTime = new Date().getTime() - start;
@@ -28512,9 +26950,9 @@ var TypeScript;
     function preProcessFile(fileName, sourceText, readImportFiles) {
         if (typeof readImportFiles === "undefined") { readImportFiles = true; }
         var text = TypeScript.SimpleText.fromScriptSnapshot(sourceText);
-        var scanner = new TypeScript.Scanner(1 /* EcmaScript5 */, text);
+        var scanner = TypeScript.createScanner(1 /* EcmaScript5 */, text, reportDiagnostic);
 
-        var firstToken = scanner.scan(false, reportDiagnostic);
+        var firstToken = scanner.scan(false);
 
         var importedFiles = [];
         if (readImportFiles) {
@@ -37998,12 +36436,12 @@ var TypeScript;
             if (funcDecl.getSignatureSymbol(this.semanticInfoChain) && funcDecl.getSignatureSymbol(this.semanticInfoChain).isDefinition() && this.enclosingClassIsDerived(funcDecl.getParentDecl())) {
                 if (!this.constructorHasSuperCall(funcDeclAST)) {
                     var syntaxTree = funcDeclAST.syntaxTree();
-                    context.postDiagnostic(new TypeScript.Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), funcDeclAST.start(), "constructor".length, TypeScript.DiagnosticCode.Constructors_for_derived_classes_must_contain_a_super_call));
+                    context.postDiagnostic(new TypeScript.Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), TypeScript.start(funcDeclAST.constructorKeyword), TypeScript.width(funcDeclAST.constructorKeyword), TypeScript.DiagnosticCode.Constructors_for_derived_classes_must_contain_a_super_call));
                 } else if (this.superCallMustBeFirstStatementInConstructor(funcDecl)) {
                     var firstStatement = this.getFirstStatementOfBlockOrNull(funcDeclAST.block);
                     if (!firstStatement || !this.isSuperInvocationExpressionStatement(firstStatement)) {
                         var syntaxTree = funcDeclAST.syntaxTree();
-                        context.postDiagnostic(new TypeScript.Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), funcDeclAST.start(), "constructor".length, TypeScript.DiagnosticCode.A_super_call_must_be_the_first_statement_in_the_constructor_when_a_class_contains_initialized_properties_or_has_parameter_properties));
+                        context.postDiagnostic(new TypeScript.Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), TypeScript.start(funcDeclAST.constructorKeyword), TypeScript.width(funcDeclAST.constructorKeyword), TypeScript.DiagnosticCode.A_super_call_must_be_the_first_statement_in_the_constructor_when_a_class_contains_initialized_properties_or_has_parameter_properties));
                     }
                 }
             }
@@ -39753,7 +38191,7 @@ var TypeScript;
             }
 
             if (TypeScript.isNode(ast) || TypeScript.isToken(ast)) {
-                if (ast.isExpression() && !isTypesOnlyLocation(ast)) {
+                if (TypeScript.SyntaxUtilities.isExpression(ast) && !isTypesOnlyLocation(ast)) {
                     return this.resolveExpressionAST(ast, isContextuallyTyped, context);
                 }
             }
@@ -46274,14 +44712,14 @@ var TypeScript;
         };
 
         SemanticInfoChain.prototype.findTopLevelSymbolInDecl = function (topLevelDecl, name, kind, doNotGoPastThisDecl) {
-            var doNotGoPastThisPosition = doNotGoPastThisDecl && doNotGoPastThisDecl.fileName() === topLevelDecl.fileName() ? doNotGoPastThisDecl.ast().start() : -1;
+            var doNotGoPastThisPosition = doNotGoPastThisDecl && doNotGoPastThisDecl.fileName() === topLevelDecl.fileName() ? TypeScript.start(doNotGoPastThisDecl.ast()) : -1;
 
             var foundDecls = topLevelDecl.searchChildDecls(name, kind);
 
             for (var j = 0; j < foundDecls.length; j++) {
                 var foundDecl = foundDecls[j];
 
-                if (doNotGoPastThisPosition !== -1 && foundDecl.ast() && foundDecl.ast().start() > doNotGoPastThisPosition) {
+                if (doNotGoPastThisPosition !== -1 && foundDecl.ast() && TypeScript.start(foundDecl.ast()) > doNotGoPastThisPosition) {
                     break;
                 }
 
@@ -46670,7 +45108,7 @@ var TypeScript;
             if (typeof _arguments === "undefined") { _arguments = null; }
             if (typeof additionalLocations === "undefined") { additionalLocations = null; }
             var syntaxTree = ast.syntaxTree();
-            return new TypeScript.Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), ast.start(), ast.width(), diagnosticKey, _arguments, additionalLocations);
+            return new TypeScript.Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), TypeScript.start(ast), TypeScript.width(ast), diagnosticKey, _arguments, additionalLocations);
         };
 
         SemanticInfoChain.prototype.diagnosticFromDecl = function (decl, diagnosticKey, _arguments, additionalLocations) {
@@ -46681,7 +45119,7 @@ var TypeScript;
 
         SemanticInfoChain.prototype.locationFromAST = function (ast) {
             var syntaxTree = ast.syntaxTree();
-            return new TypeScript.Location(syntaxTree.fileName(), syntaxTree.lineMap(), ast.start(), ast.width());
+            return new TypeScript.Location(syntaxTree.fileName(), syntaxTree.lineMap(), TypeScript.start(ast), TypeScript.width(ast));
         };
 
         SemanticInfoChain.prototype.duplicateIdentifierDiagnosticFromAST = function (ast, identifier, additionalLocationAST) {
@@ -47499,7 +45937,7 @@ var TypeScript;
 
     function preCollectSimplePropertyAssignmentDecls(propertyAssignment, context) {
         var assignmentText = TypeScript.getPropertyAssignmentNameTextFromIdentifier(propertyAssignment.propertyName);
-        var span = TypeScript.TextSpan.fromBounds(propertyAssignment.start(), propertyAssignment.end());
+        var span = TypeScript.TextSpan.fromBounds(TypeScript.start(propertyAssignment), TypeScript.end(propertyAssignment));
 
         var decl = new TypeScript.NormalPullDecl(assignmentText.memberName, assignmentText.actualText, 4096 /* Property */, 4 /* Public */, context.getParent());
 
