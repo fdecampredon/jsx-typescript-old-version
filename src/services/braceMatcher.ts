@@ -43,7 +43,7 @@ module TypeScript.Services {
                         if (element !== null && element.fullWidth() > 0) {
                             if (element.kind() === closingBraceKind) {
                                 var range1 = new TypeScript.TextSpan(position, currentToken.width());
-                                var range2 = new TypeScript.TextSpan(currentPosition + element.leadingTriviaWidth(), element.width());
+                                var range2 = new TypeScript.TextSpan(currentPosition + leadingTriviaWidth(element), element.width());
                                 result.push(range1, range2);
                                 break;
                             }
@@ -71,7 +71,7 @@ module TypeScript.Services {
                         if (element !== null && element.fullWidth() > 0) {
                             if (element.kind() === openBraceKind) {
                                 var range1 = new TypeScript.TextSpan(position - 1, currentToken.width());
-                                var range2 = new TypeScript.TextSpan(currentPosition - element.trailingTriviaWidth() - element.width(), element.width());
+                                var range2 = new TypeScript.TextSpan(currentPosition - element.lastToken().trailingTriviaWidth() - element.width(), element.width());
                                 result.push(range1, range2);
                                 break;
                             }

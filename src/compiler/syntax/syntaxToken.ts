@@ -27,6 +27,9 @@ module TypeScript {
         leadingTrivia(): ISyntaxTriviaList;
         trailingTrivia(): ISyntaxTriviaList;
 
+        leadingTriviaWidth(): number;
+        trailingTriviaWidth(): number;
+
         withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken;
         withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken;
 

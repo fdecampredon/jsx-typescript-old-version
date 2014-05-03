@@ -243,7 +243,7 @@ module TypeScript.Services {
 
             if (ast.argumentList.typeArgumentList) {
                 parameterMinChar = Math.min(ast.argumentList.typeArgumentList.start());
-                parameterLimChar = Math.max(Math.max(ast.argumentList.typeArgumentList.start(), ast.argumentList.typeArgumentList.end() + ast.argumentList.typeArgumentList.trailingTriviaWidth()));
+                parameterLimChar = Math.max(Math.max(ast.argumentList.typeArgumentList.start(), ast.argumentList.typeArgumentList.end() + trailingTriviaWidth(ast.argumentList.typeArgumentList)));
             }
 
             if (ast.argumentList.arguments) {
@@ -264,7 +264,7 @@ module TypeScript.Services {
             else if (ast.argumentList.arguments && ast.argumentList.arguments.nonSeparatorCount() > 0) {
                 result.currentParameter = 0;
                 for (var index = 0; index < ast.argumentList.arguments.nonSeparatorCount(); index++) {
-                    if (caretPosition > ast.argumentList.arguments.nonSeparatorAt(index).end() + ast.argumentList.arguments.nonSeparatorAt(index).trailingTriviaWidth()) {
+                    if (caretPosition > ast.argumentList.arguments.nonSeparatorAt(index).end() + ast.argumentList.arguments.nonSeparatorAt(index).lastToken().trailingTriviaWidth()) {
                         result.currentParameter++;
                     }
                 }

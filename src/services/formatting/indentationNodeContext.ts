@@ -46,11 +46,11 @@ module TypeScript.Services.Formatting {
         }
 
         public start(): number {
-            return this._fullStart + this._node.leadingTriviaWidth();
+            return this._fullStart + leadingTriviaWidth(this._node);
         }
 
         public end(): number {
-            return this._fullStart + this._node.leadingTriviaWidth() + this._node.width();
+            return this._fullStart + leadingTriviaWidth(this._node) + this._node.width();
         }
 
         public indentationAmount(): number {

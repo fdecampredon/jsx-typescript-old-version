@@ -109,10 +109,10 @@ module TypeScript.ASTHelpers {
                         cur.kind() === SyntaxKind.VariableDeclaration ||
                         cur.kind() === SyntaxKind.VariableDeclarator ||
                         cur.kind() === SyntaxKind.InvocationExpression ||
-                        pos === script.end() + script.trailingTriviaWidth(); // Special "EOF" case
+                        pos === script.end() + script.lastToken().trailingTriviaWidth(); // Special "EOF" case
 
                     var minChar = cur.start();
-                    var limChar = cur.end() + (useTrailingTriviaAsLimChar ? cur.trailingTriviaWidth() : 0) + (inclusive ? 1 : 0);
+                    var limChar = cur.end() + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(cur) : 0) + (inclusive ? 1 : 0);
                     if (pos >= minChar && pos < limChar) {
 
                         // Ignore empty lists
@@ -123,7 +123,7 @@ module TypeScript.ASTHelpers {
                                 top = cur;
                             }
                             else if (cur.start() >= top.start() &&
-                                (cur.end() + (useTrailingTriviaAsLimChar ? cur.trailingTriviaWidth() : 0)) <= (top.end() + (useTrailingTriviaAsLimChar ? top.trailingTriviaWidth() : 0))) {
+                                (cur.end() + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(cur) : 0)) <= (top.end() + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(top) : 0))) {
                                 // this new node appears to be better than the one we're 
                                 // storing.  Make this the new node.
 

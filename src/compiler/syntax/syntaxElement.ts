@@ -64,6 +64,16 @@ module TypeScript {
         return elements.join("");
     }
 
+    export function leadingTriviaWidth(element: ISyntaxElement): number {
+        var token = isToken(element) ? <ISyntaxToken>element : element.firstToken();
+        return token ? token.leadingTriviaWidth() : 0;
+    }
+
+    export function trailingTriviaWidth(element: ISyntaxElement): number {
+        var token = isToken(element) ? <ISyntaxToken>element : element.lastToken();
+        return token ? token.trailingTriviaWidth() : 0;
+    }
+
     export interface ISyntaxElement {
         syntaxTree(): SyntaxTree;
 
@@ -122,12 +132,6 @@ module TypeScript {
 
         // The absolute start of this element, not including the trailing trivia.
         end(): number;
-
-        leadingTrivia(): ISyntaxTriviaList;
-        trailingTrivia(): ISyntaxTriviaList;
-
-        leadingTriviaWidth(): number;
-        trailingTriviaWidth(): number;
 
         firstToken(): ISyntaxToken;
         lastToken(): ISyntaxToken;

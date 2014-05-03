@@ -195,11 +195,11 @@ module TypeScript.Services {
             for (var i = elementIndex; i > 0 ; i--) {
                 var child = list.childAt(i);
                 var previousChild = list.childAt(i - 1);
-                if ((child !== null && child.leadingTrivia().hasNewLine()) ||
-                    (previousChild !== null && previousChild.trailingTrivia().hasNewLine())) {
+                if ((child !== null && child.firstToken().leadingTrivia().hasNewLine()) ||
+                    (previousChild !== null && previousChild.lastToken().trailingTrivia().hasNewLine())) {
 
                     // TODO: get the trivia after new line
-                    return child.leadingTriviaWidth();
+                    return leadingTriviaWidth(child);
                 }
             }
             return -1;

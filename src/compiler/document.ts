@@ -49,7 +49,7 @@ module TypeScript {
             this._lineMap = syntaxTree.lineMap();
 
             var sourceUnit = syntaxTree.sourceUnit();
-            var leadingTrivia = sourceUnit.leadingTrivia();
+            var leadingTrivia = sourceUnit.firstToken().leadingTrivia();
 
             this._externalModuleIndicatorSpan = this.getImplicitImportSpan(leadingTrivia) || this.getTopLevelImportOrExportSpan(sourceUnit);
 

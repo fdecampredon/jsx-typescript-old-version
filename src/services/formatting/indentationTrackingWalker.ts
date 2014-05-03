@@ -306,7 +306,7 @@ module TypeScript.Services.Formatting {
             if (parentNode) {
                 if (!newLineInsertedByFormatting /*This could be false or undefined here*/) {
                     var parentStartLine = this._snapshot.getLineNumberFromPosition(parent.start());
-                    var currentNodeStartLine = this._snapshot.getLineNumberFromPosition(this._position + node.leadingTriviaWidth());
+                    var currentNodeStartLine = this._snapshot.getLineNumberFromPosition(this._position + leadingTriviaWidth(node));
                     if (parentStartLine === currentNodeStartLine || newLineInsertedByFormatting === false /*meaning a new line was removed and we are force recomputing*/) {
                         indentationAmount = parentIndentationAmount;
                         indentationAmountDelta = Math.min(this.options.indentSpaces, parentIndentationAmountDelta + indentationAmountDelta);

@@ -74,22 +74,6 @@ module TypeScript.Syntax {
             throw Errors.invalidOperation("'end' invalid on a singleton element.");
         }
 
-        public leadingTrivia(): ISyntaxTriviaList {
-            return Syntax.emptyTriviaList;
-        }
-
-        public trailingTrivia(): ISyntaxTriviaList {
-            return Syntax.emptyTriviaList;
-        }
-
-        public leadingTriviaWidth(): number {
-            return 0;
-        }
-
-        public trailingTriviaWidth(): number {
-            return 0;
-        }
-
         public isIncrementallyUnusable(): boolean {
             return false;
         }
@@ -175,22 +159,6 @@ module TypeScript.Syntax {
             return this.item.end();
         }
 
-        public leadingTrivia(): ISyntaxTriviaList {
-            return this.item.leadingTrivia();
-        }
-
-        public trailingTrivia(): ISyntaxTriviaList {
-            return this.item.trailingTrivia();
-        }
-
-        public leadingTriviaWidth(): number {
-            return this.item.leadingTriviaWidth();
-        }
-
-        public trailingTriviaWidth(): number {
-            return this.item.trailingTriviaWidth();
-        }
-
         public isIncrementallyUnusable(): boolean {
             return this.item.isIncrementallyUnusable();
         }
@@ -272,7 +240,7 @@ module TypeScript.Syntax {
 
         public width(): number {
             var fullWidth = this.fullWidth();
-            return fullWidth - this.leadingTriviaWidth() - this.trailingTriviaWidth();
+            return fullWidth - leadingTriviaWidth(this) - trailingTriviaWidth(this);
         }
 
         public fullStart(): number {
@@ -289,22 +257,6 @@ module TypeScript.Syntax {
 
         public end(): number {
             return this.lastToken().end();
-        }
-
-        public leadingTrivia(): ISyntaxTriviaList {
-            return this.firstToken().leadingTrivia();
-        }
-
-        public trailingTrivia(): ISyntaxTriviaList {
-            return this.lastToken().trailingTrivia();
-        }
-
-        public leadingTriviaWidth(): number {
-            return this.firstToken().leadingTriviaWidth();
-        }
-
-        public trailingTriviaWidth(): number {
-            return this.lastToken().trailingTriviaWidth();
         }
 
         private computeData(): number {

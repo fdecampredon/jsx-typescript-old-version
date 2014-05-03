@@ -92,16 +92,6 @@ module TypeScript {
             return null;
         }
 
-        public leadingTrivia(): ISyntaxTriviaList {
-            var firstToken = this.firstToken();
-            return firstToken ? firstToken.leadingTrivia() : Syntax.emptyTriviaList;
-        }
-
-        public trailingTrivia(): ISyntaxTriviaList {
-            var lastToken = this.lastToken();
-            return lastToken ? lastToken.trailingTrivia() : Syntax.emptyTriviaList;
-        }
-
         public toJSON(key: any): any {
             var result: any = {}
 
@@ -145,22 +135,6 @@ module TypeScript {
 
             return result;
         }
-
-        //public replaceToken(token1: ISyntaxToken, token2: ISyntaxToken): SyntaxNode {
-        //    if (token1 === token2) {
-        //        return this;
-        //    }
-
-        //    return visitNodeOrToken(new SyntaxTokenReplacer(token1, token2), this);
-        //}
-
-        //public withLeadingTrivia(trivia: ISyntaxTriviaList): SyntaxNode {
-        //    return this.replaceToken(this.firstToken(), this.firstToken().withLeadingTrivia(trivia));
-        //}
-
-        //public withTrailingTrivia(trivia: ISyntaxTriviaList): SyntaxNode {
-        //    return this.replaceToken(this.lastToken(), this.lastToken().withTrailingTrivia(trivia));
-        //}
 
         public hasLeadingTrivia(): boolean {
             return this.lastToken().hasLeadingTrivia();
@@ -331,17 +305,7 @@ module TypeScript {
         }
 
         public width(): number {
-            return this.fullWidth() - this.leadingTriviaWidth() - this.trailingTriviaWidth();
-        }
-
-        public leadingTriviaWidth() {
-            var firstToken = this.firstToken();
-            return firstToken === null ? 0 : firstToken.leadingTriviaWidth();
-        }
-
-        public trailingTriviaWidth() {
-            var lastToken = this.lastToken();
-            return lastToken === null ? 0 : lastToken.trailingTriviaWidth();
+            return this.fullWidth() - leadingTriviaWidth(this) - trailingTriviaWidth(this);
         }
     }
 }
