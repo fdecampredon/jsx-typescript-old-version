@@ -517,7 +517,7 @@ module TypeScript.ASTHelpers {
         }
 
         return token.hasTrailingComment()
-            ? convertComments(token.trailingTrivia(), token.fullEnd() - token.trailingTriviaWidth())
+            ? convertComments(token.trailingTrivia(), fullEnd(token) - token.trailingTriviaWidth())
             : null;
     }
 

@@ -165,7 +165,7 @@ module TypeScript.Syntax {
         }
 
         public fullEnd(): number {
-            return this._skippedToken.fullEnd();
+            return fullEnd(this._skippedToken);
         }
 
         public fullWidth(): number {

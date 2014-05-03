@@ -125,7 +125,6 @@ module TypeScript {
 
         public fullWidth(): number { return unpackFullWidth(this._packedFullWidthAndKind); }
         public fullStart(): number { return unpackFullStart(this._packedFullStartAndTriviaInfo); }
-        public fullEnd(): number { return this.fullStart() + this.fullWidth(); }
 
         private fillSizeInfo(): void {
             if (ScannerToken.lastTokenInfoToken !== this) {
@@ -312,7 +311,7 @@ module TypeScript {
 
         function scanTrivia(parent: ScannerToken, isTrailing: boolean): ISyntaxTriviaList {
             if (isTrailing) {
-                reset(parent._text, TypeScript.end(parent), parent.fullEnd());
+                reset(parent._text, TypeScript.end(parent), fullEnd(parent));
             }
             else {
                 reset(parent._text, parent.fullStart(), TypeScript.start(parent));
@@ -1349,7 +1348,7 @@ module TypeScript {
         }
 
         function fillTokenInfo(token: ScannerToken, tokenInfo: TokenInfo): void {
-            reset(token._text, token.fullStart(), token.fullEnd());
+            reset(token._text, token.fullStart(), fullEnd(token));
 
             var fullStart = index;
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);

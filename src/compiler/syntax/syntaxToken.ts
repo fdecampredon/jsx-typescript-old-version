@@ -79,7 +79,7 @@ module TypeScript.Syntax {
         }
 
         result.fullStart = token.fullStart();
-        result.fullEnd = token.fullEnd();
+        result.fullEnd = fullEnd(token);
 
         result.start = start(token);
         result.end = end(token);
@@ -456,10 +456,6 @@ module TypeScript.Syntax {
             return this.position();
         }
 
-        public fullEnd(): number {
-            return this.position();
-        }
-
         public text() { return ""; }
         public fullText(): string { return ""; }
         public value(): any { return null; }
@@ -558,10 +554,8 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public fullWidth(): number { return this._underlyingToken.fullWidth(); }
-
         public fullStart(): number { return this._underlyingToken.fullStart(); }
-        public fullEnd(): number { return this._underlyingToken.fullEnd(); }
+        public fullWidth(): number { return this._underlyingToken.fullWidth(); }
 
         public text(): string { return this._underlyingToken.text(); }
         public fullText(): string { return this._underlyingToken.fullText(); }
@@ -695,10 +689,8 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public fullWidth(): number { return this._leadingTrivia.fullWidth() + this._text.length + this._trailingTrivia.fullWidth(); }
-
         public fullStart(): number { return this._fullStart; }
-        public fullEnd(): number { return this._fullStart + this.fullWidth(); }
+        public fullWidth(): number { return this._leadingTrivia.fullWidth() + this._text.length + this._trailingTrivia.fullWidth(); }
 
         public text(): string { return this._text; }
         public fullText(): string { return this._leadingTrivia.fullText() + this.text() + this._trailingTrivia.fullText(); }

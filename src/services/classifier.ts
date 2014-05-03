@@ -105,7 +105,7 @@ module TypeScript.Services {
             this.addResult(text, offset, result, width(token), token.kind());
             this.processTriviaList(text, offset, token.trailingTrivia(), result);
 
-            if (token.fullEnd() >= text.length) {
+            if (fullEnd(token) >= text.length) {
                 // We're at the end.
                 if (this.lastDiagnosticKey === TypeScript.DiagnosticCode.AsteriskSlash_expected) {
                     result.finalLexState = EndOfLineState.InMultiLineCommentTrivia;

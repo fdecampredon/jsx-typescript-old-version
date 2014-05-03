@@ -526,7 +526,7 @@ module TypeScript.Services {
             var argumentsStart = end(callExpression.argumentList.openParenToken);
             var argumentsEnd = callExpression.argumentList.closeParenToken.fullWidth() > 0
                 ? start(callExpression.argumentList.closeParenToken)
-                : callExpression.argumentList.fullEnd();
+                : fullEnd(callExpression.argumentList);
             
             if (position < argumentsStart || position > argumentsEnd) {
                 this.logger.log("Outside argument list");

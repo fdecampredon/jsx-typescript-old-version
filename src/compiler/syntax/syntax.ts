@@ -167,7 +167,7 @@ module TypeScript.Syntax {
             width(token1) === width(token2) &&
             token1.fullWidth() === token2.fullWidth() &&
             token1.fullStart() === token2.fullStart() &&
-            token1.fullEnd() === token2.fullEnd() &&
+            fullEnd(token1) === fullEnd(token2) &&
             start(token1) === start(token2) &&
             end(token1) === end(token2) &&
             token1.text() === token2.text() &&
@@ -253,7 +253,7 @@ module TypeScript.Syntax {
             return false;
         }
 
-        if (element1.fullEnd() !== element2.fullEnd()) {
+        if (fullEnd(element1) !== fullEnd(element2)) {
             return false;
         }
 
@@ -474,7 +474,7 @@ module TypeScript.Syntax {
         }
         else {
             triviaList = positionedToken.trailingTrivia();
-            fullEnd = positionedToken.fullEnd();
+            fullEnd = TypeScript.fullEnd(positionedToken);
         }
 
         if (triviaList && triviaList.hasSkippedToken()) {
@@ -588,7 +588,7 @@ module TypeScript.Syntax {
             }
         }
 
-        return findToken(token.syntaxTree().sourceUnit(), token.fullEnd(), includeSkippedTokens);
+        return findToken(token.syntaxTree().sourceUnit(), fullEnd(token), includeSkippedTokens);
     }
 
     export function containingNode(element: ISyntaxElement): SyntaxNode {

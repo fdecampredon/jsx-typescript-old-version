@@ -125,11 +125,15 @@ module TypeScript {
 
     export function end(element: ISyntaxElement): number {
         var token = isToken(element) ? <ISyntaxToken>element : lastToken(element);
-        return token ? token.fullEnd() - token.trailingTriviaWidth() : -1;
+        return token ? fullEnd(token) - token.trailingTriviaWidth() : -1;
     }
 
     export function width(element: ISyntaxElement): number {
         return element.fullWidth() - leadingTriviaWidth(element) - trailingTriviaWidth(element);
+    }
+
+    export function fullEnd(element: ISyntaxElement): number {
+        return element.fullStart() + element.fullWidth();
     }
 
     export interface ISyntaxElement {
@@ -178,9 +182,6 @@ module TypeScript {
 
         // The absolute start of this element, including the leading trivia.
         fullStart(): number;
-
-        // The absolute end of this element, including the trailing trivia.
-        fullEnd(): number;
     }
 
     export interface ISyntaxNode extends ISyntaxNodeOrToken {

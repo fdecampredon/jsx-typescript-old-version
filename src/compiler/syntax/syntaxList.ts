@@ -50,10 +50,6 @@ module TypeScript.Syntax {
             throw Errors.invalidOperation("'fullStart' invalid on a singleton element.");
         }
 
-        public fullEnd(): number {
-            throw Errors.invalidOperation("'fullEnd' invalid on a singleton element.");
-        }
-
         public isIncrementallyUnusable(): boolean {
             return false;
         }
@@ -115,10 +111,6 @@ module TypeScript.Syntax {
             return this.item.fullStart();
         }
 
-        public fullEnd(): number {
-            return this.item.fullEnd();
-        }
-
         public isIncrementallyUnusable(): boolean {
             return this.item.isIncrementallyUnusable();
         }
@@ -178,10 +170,6 @@ module TypeScript.Syntax {
 
         public fullStart(): number {
             return firstToken(this).fullStart();
-        }
-
-        public fullEnd(): number {
-            return lastToken(this).fullEnd();
         }
 
         private computeData(): number {

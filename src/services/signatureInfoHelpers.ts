@@ -249,7 +249,7 @@ module TypeScript.Services {
             if (ast.argumentList.arguments) {
                 parameterMinChar = Math.min(parameterMinChar, end(ast.argumentList.openParenToken));
                 parameterLimChar = Math.max(parameterLimChar,
-                    ast.argumentList.closeParenToken.fullWidth() > 0 ? start(ast.argumentList.closeParenToken) : ast.argumentList.fullEnd());
+                    ast.argumentList.closeParenToken.fullWidth() > 0 ? start(ast.argumentList.closeParenToken) : fullEnd(ast.argumentList));
             }
 
             result.parameterMinChar = parameterMinChar;
@@ -277,7 +277,7 @@ module TypeScript.Services {
             var result = new ActualSignatureInfo();
 
             result.parameterMinChar = start(typeParameterInformation.lessThanToken);
-            result.parameterLimChar = Math.max(typeParameterInformation.lessThanToken.fullEnd(), caretPosition);
+            result.parameterLimChar = Math.max(fullEnd(typeParameterInformation.lessThanToken), caretPosition);
             result.currentParameterIsTypeParameter = true;
             result.currentParameter = typeParameterInformation.argumentIndex;
 

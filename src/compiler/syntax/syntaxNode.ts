@@ -37,11 +37,6 @@ module TypeScript {
             return token ? token.fullStart() : -1;
         }
 
-        public fullEnd(): number {
-            var token = lastToken(this);
-            return token ? token.fullEnd() : -1;
-        }
-
         public toJSON(key: any): any {
             var result: any = {}
 
@@ -53,7 +48,7 @@ module TypeScript {
             }
 
             result.fullStart = this.fullStart();
-            result.fullEnd = this.fullEnd();
+            result.fullEnd = fullEnd(this);
 
             result.start = start(this);
             result.end = end(this);
