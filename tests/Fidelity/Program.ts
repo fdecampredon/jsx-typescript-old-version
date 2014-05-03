@@ -7,7 +7,7 @@
 ///<reference path='..\..\src\compiler\core\environment.ts' />
 ///<reference path='..\..\src\harness\diff.ts' />
 ///<reference path='..\..\src\compiler\references.ts' />
-///<reference path='anders\parser.ts' />
+// ///<reference path='anders\parser.ts' />
 
 var timer = new TypeScript.Timer();
 
@@ -421,11 +421,11 @@ class Program {
 
         var text = TypeScript.TextFactory.createText(contents);
 
-        var andersText = ts.createSourceFile(fileName, contents);
-        timer.start();
-        var andersTree = ts.parseSourceFile(andersText);
-        timer.end();
-        andersTime += timer.time;
+        //var andersText = ts.createSourceFile(fileName, contents);
+        //timer.start();
+        //var andersTree = ts.parseSourceFile(andersText);
+        //timer.end();
+        //andersTime += timer.time;
 
         timer.start();
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
