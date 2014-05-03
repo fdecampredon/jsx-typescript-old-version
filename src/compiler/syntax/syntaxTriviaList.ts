@@ -5,13 +5,6 @@ module TypeScript {
         parent: ISyntaxToken;
         syntaxTree(): SyntaxTree;
 
-        isNode(): boolean;
-        isToken(): boolean;
-        isTrivia(): boolean;
-        isList(): boolean;
-        isSeparatedList(): boolean;
-        isTriviaList(): boolean;
-
         isShared(): boolean;
 
         count(): number;
@@ -39,13 +32,6 @@ module TypeScript {
 module TypeScript.Syntax {
     class EmptyTriviaList implements ISyntaxTriviaList {
         public parent: ISyntaxToken = null;
-
-        public isNode(): boolean { return false; }
-        public isToken(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return true; }
 
         public isShared(): boolean {
             return true;
@@ -138,13 +124,6 @@ module TypeScript.Syntax {
             this.item.parent = this;
         }
 
-        public isNode(): boolean { return false; }
-        public isToken(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return true; }
-
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
         }
@@ -219,13 +198,6 @@ module TypeScript.Syntax {
                 return cloned;
             });
         }
-
-        public isNode(): boolean { return false; }
-        public isToken(): boolean { return false; }
-        public isTrivia(): boolean { return false; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return true; }
 
         public isShared(): boolean {
             return false;

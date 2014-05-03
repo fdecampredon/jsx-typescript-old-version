@@ -6,22 +6,12 @@ module TypeScript {
         syntaxTree(): SyntaxTree;
         kind(): SyntaxKind;
 
-        isNode(): boolean;
-        isToken(): boolean;
-        isTrivia(): boolean;
-        isList(): boolean;
-        isSeparatedList(): boolean;
-        isTriviaList(): boolean;
-
         isWhitespace(): boolean;
         isComment(): boolean;
         isNewLine(): boolean;
         isSkippedToken(): boolean;
 
         fullStart(): number;
-        fullEnd(): number;
-
-        // With of this trivia.
         fullWidth(): number;
 
         // Text for this trivia.
@@ -41,13 +31,6 @@ module TypeScript.Syntax {
         constructor(private _kind: SyntaxKind) {
         }
 
-        public isNode(): boolean { return false; }
-        public isToken(): boolean { return false; }
-        public isTrivia(): boolean { return true; }
-        public isList(): boolean { return false; }
-        public isSeparatedList(): boolean { return false; }
-        public isTriviaList(): boolean { return false; }
-
         public syntaxTree(): SyntaxTree {
             return this.parent.syntaxTree();
         }
@@ -57,10 +40,6 @@ module TypeScript.Syntax {
         }
 
         public fullStart(): number {
-            throw Errors.abstract();
-        }
-
-        public fullEnd(): number {
             throw Errors.abstract();
         }
 
@@ -91,7 +70,7 @@ module TypeScript.Syntax {
             }
             else {
                 result.fullStart = this.fullStart();
-                result.fullEnd = this.fullEnd();
+                result.fullEnd = this.fullStart() + this.fullWidth();
                 result.text = this.fullText();
             }
 
@@ -132,10 +111,6 @@ module TypeScript.Syntax {
             return this._fullStart;
         }
 
-        public fullEnd(): number {
-            return this._fullStart + this.fullWidth();
-        }
-
         public fullWidth(): number {
             return this.fullText().length;
         }
@@ -164,10 +139,6 @@ module TypeScript.Syntax {
             return this._skippedToken.fullStart();
         }
 
-        public fullEnd(): number {
-            return fullEnd(this._skippedToken);
-        }
-
         public fullWidth(): number {
             return this.fullText().length;
         }
@@ -192,10 +163,6 @@ module TypeScript.Syntax {
 
         public fullStart(): number {
             return this._fullStart;
-        }
-
-        public fullEnd(): number {
-            return this._fullStart + this.fullWidth();
         }
 
         public fullWidth(): number {
