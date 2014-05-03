@@ -46,24 +46,12 @@ module TypeScript.Syntax {
             return 0;
         }
 
-        public width(): number {
-            return 0;
-        }
-
         public fullStart(): number {
             throw Errors.invalidOperation("'fullStart' invalid on a singleton element.");
         }
 
         public fullEnd(): number {
             throw Errors.invalidOperation("'fullEnd' invalid on a singleton element.");
-        }
-
-        public start(): number {
-            throw Errors.invalidOperation("'start' invalid on a singleton element.");
-        }
-
-        public end(): number {
-            throw Errors.invalidOperation("'end' invalid on a singleton element.");
         }
 
         public isIncrementallyUnusable(): boolean {
@@ -123,24 +111,12 @@ module TypeScript.Syntax {
             return this.item.fullWidth();
         }
 
-        public width(): number {
-            return this.item.width();
-        }
-
         public fullStart(): number {
             return this.item.fullStart();
         }
 
         public fullEnd(): number {
             return this.item.fullEnd();
-        }
-
-        public start(): number {
-            return this.item.start();
-        }
-
-        public end(): number {
-            return this.item.end();
         }
 
         public isIncrementallyUnusable(): boolean {
@@ -200,25 +176,12 @@ module TypeScript.Syntax {
             return this.data() >>> SyntaxConstants.NodeFullWidthShift;
         }
 
-        public width(): number {
-            var fullWidth = this.fullWidth();
-            return fullWidth - leadingTriviaWidth(this) - trailingTriviaWidth(this);
-        }
-
         public fullStart(): number {
             return firstToken(this).fullStart();
         }
 
         public fullEnd(): number {
             return lastToken(this).fullEnd();
-        }
-
-        public start(): number {
-            return firstToken(this).start();
-        }
-
-        public end(): number {
-            return lastToken(this).end();
         }
 
         private computeData(): number {

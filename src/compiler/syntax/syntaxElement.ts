@@ -76,7 +76,7 @@ module TypeScript {
 
     export function firstToken(element: ISyntaxElement): ISyntaxToken {
         if (isToken(element)) {
-            return element.fullWidth() > 0 ? <ISyntaxToken>element : null;
+            return element.fullWidth() > 0 || element.kind() === SyntaxKind.EndOfFileToken ? <ISyntaxToken>element : null;
         }
 
         for (var i = 0, n = element.childCount(); i < n; i++) {
@@ -98,7 +98,7 @@ module TypeScript {
 
     export function lastToken(element: ISyntaxElement): ISyntaxToken {
         if (isToken(element)) {
-            return element.fullWidth() > 0 ? <ISyntaxToken>element : null;
+            return element.fullWidth() > 0 || element.kind() === SyntaxKind.EndOfFileToken ? <ISyntaxToken>element : null;
         }
 
         if (element.kind() === SyntaxKind.SourceUnit) {
@@ -116,6 +116,20 @@ module TypeScript {
         }
 
         return null;
+    }
+
+    export function start(element: ISyntaxElement): number {
+        var token = isToken(element) ? <ISyntaxToken>element : firstToken(element);
+        return token ? token.fullStart() + token.leadingTriviaWidth() : -1;
+    }
+
+    export function end(element: ISyntaxElement): number {
+        var token = isToken(element) ? <ISyntaxToken>element : lastToken(element);
+        return token ? token.fullEnd() - token.trailingTriviaWidth() : -1;
+    }
+
+    export function width(element: ISyntaxElement): number {
+        return element.fullWidth() - leadingTriviaWidth(element) - trailingTriviaWidth(element);
     }
 
     export interface ISyntaxElement {
@@ -162,20 +176,11 @@ module TypeScript {
         // With of this element, including leading and trailing trivia.
         fullWidth(): number;
 
-        // Width of this element, not including leading and trailing trivia.
-        width(): number;
-
         // The absolute start of this element, including the leading trivia.
         fullStart(): number;
 
         // The absolute end of this element, including the trailing trivia.
         fullEnd(): number;
-
-        // The absolute start of this element, not including the leading trivia.
-        start(): number;
-
-        // The absolute start of this element, not including the trailing trivia.
-        end(): number;
     }
 
     export interface ISyntaxNode extends ISyntaxNodeOrToken {

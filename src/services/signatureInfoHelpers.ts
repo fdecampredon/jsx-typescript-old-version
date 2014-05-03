@@ -242,14 +242,14 @@ module TypeScript.Services {
             var parameterLimChar = caretPosition;
 
             if (ast.argumentList.typeArgumentList) {
-                parameterMinChar = Math.min(ast.argumentList.typeArgumentList.start());
-                parameterLimChar = Math.max(Math.max(ast.argumentList.typeArgumentList.start(), ast.argumentList.typeArgumentList.end() + trailingTriviaWidth(ast.argumentList.typeArgumentList)));
+                parameterMinChar = Math.min(start(ast.argumentList.typeArgumentList));
+                parameterLimChar = Math.max(Math.max(start(ast.argumentList.typeArgumentList), end(ast.argumentList.typeArgumentList) + trailingTriviaWidth(ast.argumentList.typeArgumentList)));
             }
 
             if (ast.argumentList.arguments) {
-                parameterMinChar = Math.min(parameterMinChar, ast.argumentList.openParenToken.end());
+                parameterMinChar = Math.min(parameterMinChar, end(ast.argumentList.openParenToken));
                 parameterLimChar = Math.max(parameterLimChar,
-                    ast.argumentList.closeParenToken.fullWidth() > 0 ? ast.argumentList.closeParenToken.start() : ast.argumentList.fullEnd());
+                    ast.argumentList.closeParenToken.fullWidth() > 0 ? start(ast.argumentList.closeParenToken) : ast.argumentList.fullEnd());
             }
 
             result.parameterMinChar = parameterMinChar;
@@ -264,7 +264,7 @@ module TypeScript.Services {
             else if (ast.argumentList.arguments && ast.argumentList.arguments.nonSeparatorCount() > 0) {
                 result.currentParameter = 0;
                 for (var index = 0; index < ast.argumentList.arguments.nonSeparatorCount(); index++) {
-                    if (caretPosition > ast.argumentList.arguments.nonSeparatorAt(index).end() + lastToken(ast.argumentList.arguments.nonSeparatorAt(index)).trailingTriviaWidth()) {
+                    if (caretPosition > end(ast.argumentList.arguments.nonSeparatorAt(index)) + lastToken(ast.argumentList.arguments.nonSeparatorAt(index)).trailingTriviaWidth()) {
                         result.currentParameter++;
                     }
                 }
@@ -276,7 +276,7 @@ module TypeScript.Services {
         public static getActualSignatureInfoFromPartiallyWritenGenericExpression(caretPosition: number, typeParameterInformation: IPartiallyWrittenTypeArgumentListInformation): ActualSignatureInfo {
             var result = new ActualSignatureInfo();
 
-            result.parameterMinChar = typeParameterInformation.lessThanToken.start();
+            result.parameterMinChar = start(typeParameterInformation.lessThanToken);
             result.parameterLimChar = Math.max(typeParameterInformation.lessThanToken.fullEnd(), caretPosition);
             result.currentParameterIsTypeParameter = true;
             result.currentParameter = typeParameterInformation.argumentIndex;

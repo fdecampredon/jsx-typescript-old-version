@@ -33,7 +33,7 @@ module TypeScript.Services {
         }
 
         private static getMatchingCloseBrace(currentToken: TypeScript.ISyntaxToken, position: number, result: TypeScript.TextSpan[]) {
-            if (currentToken.start() === position) {
+            if (start(currentToken) === position) {
                 var closingBraceKind = BraceMatcher.getMatchingCloseBraceTokenKind(currentToken);
                 if (closingBraceKind !== null) {
                     var parentElement = currentToken.parent
@@ -42,8 +42,8 @@ module TypeScript.Services {
                         var element = parentElement.childAt(i);
                         if (element !== null && element.fullWidth() > 0) {
                             if (element.kind() === closingBraceKind) {
-                                var range1 = new TypeScript.TextSpan(position, currentToken.width());
-                                var range2 = new TypeScript.TextSpan(currentPosition + leadingTriviaWidth(element), element.width());
+                                var range1 = new TypeScript.TextSpan(position, width(currentToken));
+                                var range2 = new TypeScript.TextSpan(currentPosition + leadingTriviaWidth(element), width(element));
                                 result.push(range1, range2);
                                 break;
                             }
@@ -61,7 +61,7 @@ module TypeScript.Services {
                 currentToken = currentToken.previousToken();
             }
 
-            if (currentToken !== null && currentToken.start() === (position - 1)) {
+            if (currentToken !== null && start(currentToken) === (position - 1)) {
                 var openBraceKind = BraceMatcher.getMatchingOpenBraceTokenKind(currentToken);
                 if (openBraceKind !== null) {
                     var parentElement = currentToken.parent;
@@ -70,8 +70,8 @@ module TypeScript.Services {
                         var element = parentElement.childAt(i);
                         if (element !== null && element.fullWidth() > 0) {
                             if (element.kind() === openBraceKind) {
-                                var range1 = new TypeScript.TextSpan(position - 1, currentToken.width());
-                                var range2 = new TypeScript.TextSpan(currentPosition - lastToken(element).trailingTriviaWidth() - element.width(), element.width());
+                                var range1 = new TypeScript.TextSpan(position - 1, width(currentToken));
+                                var range2 = new TypeScript.TextSpan(currentPosition - lastToken(element).trailingTriviaWidth() - width(element), width(element));
                                 result.push(range1, range2);
                                 break;
                             }

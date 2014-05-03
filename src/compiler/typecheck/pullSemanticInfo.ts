@@ -236,7 +236,7 @@ module TypeScript {
             // past, then we have to stop searching at the position of that decl.  Otherwise, we
             // search the entire file.
             var doNotGoPastThisPosition = doNotGoPastThisDecl && doNotGoPastThisDecl.fileName() === topLevelDecl.fileName()
-                ? doNotGoPastThisDecl.ast().start()
+                ? start(doNotGoPastThisDecl.ast())
                 : -1
 
             var foundDecls = topLevelDecl.searchChildDecls(name, kind);
@@ -247,7 +247,7 @@ module TypeScript {
                 // This decl was at or past the stopping point.  Don't search any further.
                 if (doNotGoPastThisPosition !== -1 &&
                     foundDecl.ast() &&
-                    foundDecl.ast().start() > doNotGoPastThisPosition) {
+                    start(foundDecl.ast()) > doNotGoPastThisPosition) {
 
                     break;
                 }
@@ -656,7 +656,7 @@ module TypeScript {
 
         public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
             var syntaxTree = ast.syntaxTree();
-            return new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), ast.start(), ast.width(), diagnosticKey, _arguments, additionalLocations);
+            return new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), start(ast), width(ast), diagnosticKey, _arguments, additionalLocations);
         }
 
         public diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
@@ -665,7 +665,7 @@ module TypeScript {
 
         public locationFromAST(ast: ISyntaxElement): Location {
             var syntaxTree = ast.syntaxTree();
-            return new Location(syntaxTree.fileName(), syntaxTree.lineMap(), ast.start(), ast.width());
+            return new Location(syntaxTree.fileName(), syntaxTree.lineMap(), start(ast), width(ast));
         }
 
         public duplicateIdentifierDiagnosticFromAST(ast: ISyntaxElement, identifier: string, additionalLocationAST: ISyntaxElement): Diagnostic {

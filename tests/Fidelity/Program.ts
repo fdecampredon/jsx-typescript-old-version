@@ -505,7 +505,7 @@ class Program {
                 TypeScript.Debug.assert(token.kind() === TypeScript.SyntaxKind.EndOfFileToken);
             }
             else {
-                TypeScript.Debug.assert(token.width() > 0 || token.kind() === TypeScript.SyntaxKind.EndOfFileToken);
+                TypeScript.Debug.assert(TypeScript.width(token) > 0 || token.kind() === TypeScript.SyntaxKind.EndOfFileToken);
                 TypeScript.Debug.assert(token.fullWidth() > 0);
             }
 

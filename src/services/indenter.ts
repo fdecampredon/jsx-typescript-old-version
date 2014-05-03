@@ -77,8 +77,8 @@ module TypeScript.Services {
                 case TypeScript.SyntaxKind.OpenBracketToken:
                 case TypeScript.SyntaxKind.CloseBracketToken:
                     // the current token is a bracket, check if the current position is separated from it by a new line
-                    if (position < token.start()) {
-                        var text = sourceText.getText(position, token.start());
+                    if (position < start(token)) {
+                        var text = sourceText.getText(position, start(token));
                         for(var i = 0; i< text.length; i++){
                             if (TypeScript.CharacterInfo.isLineTerminator(text.charCodeAt(i))) {
                                 return false;

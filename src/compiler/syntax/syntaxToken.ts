@@ -81,11 +81,11 @@ module TypeScript.Syntax {
         result.fullStart = token.fullStart();
         result.fullEnd = token.fullEnd();
 
-        result.start = token.start();
-        result.end = token.end();
+        result.start = start(token);
+        result.end = end(token);
 
         result.fullWidth = token.fullWidth();
-        result.width = token.width();
+        result.width = width(token);
 
         result.text = token.text();
 
@@ -386,7 +386,6 @@ module TypeScript.Syntax {
         public isKeywordConvertedToIdentifier() { return false; }
 
         public fullWidth() { return 0; }
-        public width() { return 0; }
 
         private position(): number {
             // It's hard for us to tell the position of an empty token at the eact time we create 
@@ -458,14 +457,6 @@ module TypeScript.Syntax {
         }
 
         public fullEnd(): number {
-            return this.position();
-        }
-
-        public start(): number {
-            return this.position();
-        }
-
-        public end(): number {
             return this.position();
         }
 
@@ -568,12 +559,9 @@ module TypeScript.Syntax {
         }
 
         public fullWidth(): number { return this._underlyingToken.fullWidth(); }
-        public width(): number { return this._underlyingToken.width(); }
 
         public fullStart(): number { return this._underlyingToken.fullStart(); }
         public fullEnd(): number { return this._underlyingToken.fullEnd(); }
-        public start(): number { return this._underlyingToken.start(); }
-        public end(): number { return this._underlyingToken.end(); }
 
         public text(): string { return this._underlyingToken.text(); }
         public fullText(): string { return this._underlyingToken.fullText(); }
@@ -707,13 +695,10 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public fullWidth(): number { return this._leadingTrivia.fullWidth() + this.width() + this._trailingTrivia.fullWidth(); }
-        public width(): number { return this.text().length; }
+        public fullWidth(): number { return this._leadingTrivia.fullWidth() + this._text.length + this._trailingTrivia.fullWidth(); }
 
         public fullStart(): number { return this._fullStart; }
         public fullEnd(): number { return this._fullStart + this.fullWidth(); }
-        public start(): number { return this._fullStart + this._leadingTrivia.fullWidth(); }
-        public end(): number { return this.start() + this.width(); }
 
         public text(): string { return this._text; }
         public fullText(): string { return this._leadingTrivia.fullText() + this.text() + this._trailingTrivia.fullText(); }

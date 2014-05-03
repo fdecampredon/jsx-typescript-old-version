@@ -3630,7 +3630,7 @@ module TypeScript {
                 // Constructors for derived classes must contain a call to the class's 'super' constructor
                 if (!this.constructorHasSuperCall(funcDeclAST)) {
                     var syntaxTree = funcDeclAST.syntaxTree();
-                    context.postDiagnostic(new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), funcDeclAST.start(), "constructor".length,
+                    context.postDiagnostic(new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), start(funcDeclAST.constructorKeyword), width(funcDeclAST.constructorKeyword),
                         DiagnosticCode.Constructors_for_derived_classes_must_contain_a_super_call));
                 }
                 // The first statement in the body of a constructor must be a super call if both of the following are true:
@@ -3640,7 +3640,7 @@ module TypeScript {
                     var firstStatement = this.getFirstStatementOfBlockOrNull(funcDeclAST.block);
                     if (!firstStatement || !this.isSuperInvocationExpressionStatement(firstStatement)) {
                         var syntaxTree = funcDeclAST.syntaxTree();
-                        context.postDiagnostic(new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), funcDeclAST.start(), "constructor".length,
+                        context.postDiagnostic(new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), start(funcDeclAST.constructorKeyword), width(funcDeclAST.constructorKeyword),
                             DiagnosticCode.A_super_call_must_be_the_first_statement_in_the_constructor_when_a_class_contains_initialized_properties_or_has_parameter_properties));
                     }
                 }

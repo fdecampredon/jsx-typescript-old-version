@@ -66,7 +66,7 @@ module TypeScript.ASTHelpers {
     }
 
      export function isValidAstNode(ast: ISyntaxElement): boolean {
-         return ast && !ast.isShared() && isValidSpan(ast);
+         return ast && !ast.isShared() && start(ast) !== -1 && end(ast) !== -1;
      }
 
      export function isValidSpan(ast: ISpan): boolean {
@@ -87,7 +87,7 @@ module TypeScript.ASTHelpers {
 
         var pre = function (cur: ISyntaxElement, walker: IAstWalker) {
             if (!cur.isShared() && isValidAstNode(cur)) {
-                var isInvalid1 = cur.kind() === SyntaxKind.ExpressionStatement && cur.width() === 0;
+                var isInvalid1 = cur.kind() === SyntaxKind.ExpressionStatement && width(cur) === 0;
 
                 if (isInvalid1) {
                     walker.options.goChildren = false;
@@ -109,21 +109,21 @@ module TypeScript.ASTHelpers {
                         cur.kind() === SyntaxKind.VariableDeclaration ||
                         cur.kind() === SyntaxKind.VariableDeclarator ||
                         cur.kind() === SyntaxKind.InvocationExpression ||
-                        pos === script.end() + lastToken(script).trailingTriviaWidth(); // Special "EOF" case
+                        pos === end(script) + lastToken(script).trailingTriviaWidth(); // Special "EOF" case
 
-                    var minChar = cur.start();
-                    var limChar = cur.end() + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(cur) : 0) + (inclusive ? 1 : 0);
+                    var minChar = start(cur);
+                    var limChar = end(cur) + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(cur) : 0) + (inclusive ? 1 : 0);
                     if (pos >= minChar && pos < limChar) {
 
                         // Ignore empty lists
-                        if ((cur.kind() !== SyntaxKind.List && cur.kind() !== SyntaxKind.SeparatedList) || cur.end() > cur.start()) {
+                        if ((cur.kind() !== SyntaxKind.List && cur.kind() !== SyntaxKind.SeparatedList) || end(cur) > start(cur)) {
                             // TODO: Since ISyntaxElement is sometimes not correct wrt to position, only add "cur" if it's better
                             //       than top of the stack.
                             if (top === null) {
                                 top = cur;
                             }
-                            else if (cur.start() >= top.start() &&
-                                (cur.end() + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(cur) : 0)) <= (top.end() + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(top) : 0))) {
+                            else if (start(cur) >= start(top) &&
+                                (end(cur) + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(cur) : 0)) <= (end(top) + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(top) : 0))) {
                                 // this new node appears to be better than the one we're 
                                 // storing.  Make this the new node.
 
@@ -131,7 +131,7 @@ module TypeScript.ASTHelpers {
                                 // don't want to replace it with another missing identifier.
                                 // We want to return the first missing identifier found in a
                                 // depth first walk of  the tree.
-                                if (top.width() !== 0 || cur.width() !== 0) {
+                                if (width(top) !== 0 || width(cur) !== 0) {
                                     top = cur;
                                 }
                             }

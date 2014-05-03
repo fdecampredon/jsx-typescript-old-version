@@ -91,8 +91,8 @@ module TypeScript.Services {
             item.matchKind = MatchKind.exact;
             item.fileName = this.fileName;
             item.kindModifiers = this.getKindModifiers(modifiers);
-            item.minChar = node.start();
-            item.limChar = node.end();
+            item.minChar = start(node);
+            item.limChar = end(node);
             item.containerName = this.nameStack.join(".");
             item.containerKind = this.kindStack.length === 0 ? "" : TypeScript.ArrayUtilities.last(this.kindStack);
 
@@ -107,8 +107,8 @@ module TypeScript.Services {
             var item = this.currentScope.items[key]
             Debug.assert(item !== undefined);
 
-            var start = node.start();
-            var span = new SpanInfo(start, start + node.width());
+            var start = TypeScript.start(node);
+            var span = new SpanInfo(start, start + width(node));
 
 
             if (item.additionalSpans) {
@@ -322,7 +322,7 @@ module TypeScript.Services {
             //    declare function
             // the parser will synthesize an identifier.
             // we shouldn't add an unnamed function declaration
-            if (node.identifier.width() > 0) {
+            if (width(node.identifier) > 0) {
                 this.createItem(node, node.modifiers, ScriptElementKind.functionElement, node.identifier.text());
             }
 

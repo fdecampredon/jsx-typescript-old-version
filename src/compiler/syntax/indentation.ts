@@ -3,7 +3,7 @@
 module TypeScript.Indentation {
     export function columnForEndOfTokenAtPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {
         var token = syntaxTree.sourceUnit().findToken(position);
-        return columnForStartOfTokenAtPosition(syntaxTree, position, options) + token.width();
+        return columnForStartOfTokenAtPosition(syntaxTree, position, options) + width(token);
     }
 
     export function columnForStartOfTokenAtPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {

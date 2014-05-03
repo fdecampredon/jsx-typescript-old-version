@@ -105,13 +105,13 @@ module TypeScript {
 
                 var _firstToken = firstToken(moduleElement);
                 if (_firstToken !== null && _firstToken.kind() === SyntaxKind.ExportKeyword) {
-                    return new TextSpan(_firstToken.start(), _firstToken.width());
+                    return new TextSpan(start(_firstToken), width(_firstToken));
                 }
 
                 if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
                     var importDecl = <ImportDeclarationSyntax>moduleElement;
                     if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
-                        return new TextSpan(importDecl.start(), importDecl.width());
+                        return new TextSpan(start(importDecl), width(importDecl));
                     }
                 }
             }

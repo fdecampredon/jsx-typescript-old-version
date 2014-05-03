@@ -10,7 +10,7 @@ module TypeScript.Services.Breakpoints {
         }
 
         if (childElements.length == 0) {
-            return new SpanInfo(parentElement.start(), parentElement.end());
+            return new SpanInfo(TypeScript.start(parentElement), TypeScript.end(parentElement));
         }
 
         var start: number;
@@ -19,9 +19,9 @@ module TypeScript.Services.Breakpoints {
             var element = childElements[i];
             if (element && !element.isShared()) {
                 if (start == undefined) {
-                    start = element.start();
+                    start = TypeScript.start(element);
                 }
-                end = element.end();
+                end = TypeScript.end(element);
             }
         }
 
@@ -29,7 +29,7 @@ module TypeScript.Services.Breakpoints {
     }
 
     function createBreakpointSpanInfoWithLimChar(startElement: TypeScript.ISyntaxElement, limChar: number): SpanInfo {
-        return new SpanInfo(startElement.start(), limChar);
+        return new SpanInfo(start(startElement), limChar);
     }
 
     class BreakpointResolver {
@@ -98,7 +98,7 @@ module TypeScript.Services.Breakpoints {
                         if (!this.canHaveBreakpointInDeclaration(container)) {
                             return null;
                         }
-                        if (this.posLine != this.lineMap.getLineNumberFromPosition(container.start())) {
+                        if (this.posLine != this.lineMap.getLineNumberFromPosition(start(container))) {
                             return this.breakpointSpanOfFirstChildOfSyntaxList(this.getSyntaxListOfDeclarationWithElements(container));
                         }
                         else {
@@ -109,7 +109,7 @@ module TypeScript.Services.Breakpoints {
                         if (!this.canHaveBreakpointInDeclaration(container)) {
                             return null;
                         }
-                        if (this.posLine != this.lineMap.getLineNumberFromPosition(container.start())) {
+                        if (this.posLine != this.lineMap.getLineNumberFromPosition(start(container))) {
                             return this.breakpointSpanOfFirstEnumElement(container);
                         }
                         else {
@@ -120,7 +120,7 @@ module TypeScript.Services.Breakpoints {
                     case TypeScript.SyntaxKind.ForInStatement:
                     case TypeScript.SyntaxKind.WhileStatement:
                     case TypeScript.SyntaxKind.CatchClause:
-                        if (this.posLine != this.lineMap.getLineNumberFromPosition(container.start())) {
+                        if (this.posLine != this.lineMap.getLineNumberFromPosition(start(container))) {
                             return this.breakpointSpanOfFirstStatementInBlock(originalContainer);
                         }
                         else {
@@ -131,7 +131,7 @@ module TypeScript.Services.Breakpoints {
                         return this.breakpointSpanOfFirstStatementInBlock(originalContainer);
 
                     case TypeScript.SyntaxKind.ForStatement:
-                        if (this.posLine != this.lineMap.getLineNumberFromPosition(container.start())) {
+                        if (this.posLine != this.lineMap.getLineNumberFromPosition(start(container))) {
                             return this.breakpointSpanOfFirstStatementInBlock(originalContainer);
                         }
                         else {
@@ -147,7 +147,7 @@ module TypeScript.Services.Breakpoints {
                         return this.breakpointSpanOfFirstStatementInBlock(originalContainer);
 
                     case TypeScript.SyntaxKind.SwitchStatement:
-                        if (this.posLine != this.lineMap.getLineNumberFromPosition(container.start())) {
+                        if (this.posLine != this.lineMap.getLineNumberFromPosition(start(container))) {
                             return this.breakpointSpanOfFirstStatementOfFirstCaseClause(container);
                         }
                         else {
@@ -805,7 +805,7 @@ module TypeScript.Services.Breakpoints {
             }
 
             if (this.canHaveBreakpointInVariableDeclaration(varDeclarationNode)) {
-                return createBreakpointSpanInfoWithLimChar(varDeclarationNode, varDeclarators.childAt(0).end());
+                return createBreakpointSpanInfoWithLimChar(varDeclarationNode, end(varDeclarators.childAt(0)));
             }
             else {
                 return null;
@@ -830,7 +830,7 @@ module TypeScript.Services.Breakpoints {
             var variableDeclaration = <TypeScript.SyntaxNode>variableStatement.variableDeclaration;
             var varDeclarationSyntax = <TypeScript.VariableDeclarationSyntax>variableDeclaration;
             var varDeclarators = varDeclarationSyntax.variableDeclarators;
-            return createBreakpointSpanInfoWithLimChar(varStatementNode, varDeclarators.childAt(0).end());
+            return createBreakpointSpanInfoWithLimChar(varStatementNode, end(varDeclarators.childAt(0)));
         }
 
         private breakpointSpanOfParameter(parameterNode: TypeScript.SyntaxNode): SpanInfo {
@@ -1026,7 +1026,7 @@ module TypeScript.Services.Breakpoints {
         }
 
         private breakpointSpanIfStartsOnSameLine(positionedElement: TypeScript.ISyntaxElement): SpanInfo {
-            if (positionedElement && this.posLine == this.lineMap.getLineNumberFromPosition(positionedElement.start())) {
+            if (positionedElement && this.posLine == this.lineMap.getLineNumberFromPosition(start(positionedElement))) {
                 return this.breakpointSpanOf(positionedElement);
             }
 
@@ -1073,7 +1073,7 @@ module TypeScript.Services.Breakpoints {
 
         var lineMap = syntaxTree.lineMap();
         var posLine = lineMap.getLineNumberFromPosition(askedPos);
-        var tokenStartLine = lineMap.getLineNumberFromPosition(positionedToken.start());
+        var tokenStartLine = lineMap.getLineNumberFromPosition(start(positionedToken));
         if (posLine < tokenStartLine) {
             return null;
         }

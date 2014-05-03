@@ -102,7 +102,7 @@ module TypeScript.Services {
 
         private processToken(text: string, offset: number, token: TypeScript.ISyntaxToken, result: ClassificationResult): void {
             this.processTriviaList(text, offset, token.leadingTrivia(), result);
-            this.addResult(text, offset, result, token.width(), token.kind());
+            this.addResult(text, offset, result, width(token), token.kind());
             this.processTriviaList(text, offset, token.trailingTrivia(), result);
 
             if (token.fullEnd() >= text.length) {

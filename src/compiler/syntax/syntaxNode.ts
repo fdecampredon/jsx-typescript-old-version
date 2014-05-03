@@ -42,16 +42,6 @@ module TypeScript {
             return token ? token.fullEnd() : -1;
         }
 
-        public start(): number {
-            var token = firstToken(this);
-            return token ? token.start() : -1;
-        }
-
-        public end(): number {
-            var token = lastToken(this);
-            return token ? token.end() : -1;
-        }
-
         public toJSON(key: any): any {
             var result: any = {}
 
@@ -65,11 +55,11 @@ module TypeScript {
             result.fullStart = this.fullStart();
             result.fullEnd = this.fullEnd();
 
-            result.start = this.start();
-            result.end = this.end();
+            result.start = start(this);
+            result.end = end(this);
 
             result.fullWidth = this.fullWidth();
-            result.width = this.width();
+            result.width = width(this);
 
             if (this.isIncrementallyUnusable()) {
                 result.isIncrementallyUnusable = true;
@@ -196,7 +186,7 @@ module TypeScript {
 
         public findTokenOnLeft(position: number, includeSkippedTokens: boolean = false): ISyntaxToken {
             var positionedToken = this.findToken(position, /*includeSkippedTokens*/ false);
-            var start = positionedToken.start();
+            var _start = start(positionedToken);
             
             // Position better fall within this token.
             // Debug.assert(position >= positionedToken.fullStart());
@@ -207,7 +197,7 @@ module TypeScript {
             }
 
             // if position is after the start of the token, then this token is the token on the left.
-            if (position > start) {
+            if (position > _start) {
                 return positionedToken;
             }
 
@@ -232,7 +222,7 @@ module TypeScript {
             }
 
             // if position is after the end of the token, then this token is the token on the left.
-            if (positionedToken.width() > 0 && position >= positionedToken.end()) {
+            if (width(positionedToken) > 0 && position >= end(positionedToken)) {
                 return positionedToken;
             }
 
@@ -254,10 +244,6 @@ module TypeScript {
             }
 
             return true;
-        }
-
-        public width(): number {
-            return this.fullWidth() - leadingTriviaWidth(this) - trailingTriviaWidth(this);
         }
     }
 }

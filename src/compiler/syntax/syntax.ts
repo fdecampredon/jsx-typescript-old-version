@@ -158,12 +158,12 @@ module TypeScript.Syntax {
         }
 
         return token1.kind() === token2.kind() &&
-            token1.width() === token2.width() &&
+            width(token1) === width(token2) &&
             token1.fullWidth() === token2.fullWidth() &&
             token1.fullStart() === token2.fullStart() &&
             token1.fullEnd() === token2.fullEnd() &&
-            token1.start() === token2.start() &&
-            token1.end() === token2.end() &&
+            start(token1) === start(token2) &&
+            end(token1) === end(token2) &&
             token1.text() === token2.text() &&
             Syntax.triviaListStructuralEquals(token1.leadingTrivia(), token2.leadingTrivia()) &&
             Syntax.triviaListStructuralEquals(token1.trailingTrivia(), token2.trailingTrivia());
@@ -239,11 +239,11 @@ module TypeScript.Syntax {
             return false;
         }
 
-        if (element1.start() !== element2.start()) {
+        if (start(element1) !== start(element2)) {
             return false;
         }
 
-        if (element1.end() !== element2.end()) {
+        if (end(element1) !== end(element2)) {
             return false;
         }
 
@@ -317,11 +317,12 @@ module TypeScript.Syntax {
             if (isToken(child)) {
                 var token = <ISyntaxToken>child;
                 // If a token is skipped, return true. Or if it is a missing token. The only empty token that is not missing is EOF
-                if (token.hasSkippedToken() || (token.width() === 0 && token.kind() !== SyntaxKind.EndOfFileToken)) {
+                if (token.hasSkippedToken() || (width(token) === 0 && token.kind() !== SyntaxKind.EndOfFileToken)) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
@@ -373,7 +374,7 @@ module TypeScript.Syntax {
                 if (positionedToken) {
                     if (positionedToken && positionedToken.hasTrailingTrivia()) {
                         triviaList = positionedToken.trailingTrivia();
-                        fullStart = positionedToken.end();
+                        fullStart = end(positionedToken);
                     }
                 }
             }
@@ -382,9 +383,9 @@ module TypeScript.Syntax {
             if (position <= (fullStart + positionedToken.leadingTriviaWidth())) {
                 triviaList = positionedToken.leadingTrivia();
             }
-            else if (position >= (fullStart + positionedToken.width())) {
+            else if (position >= (fullStart + width(positionedToken))) {
                 triviaList = positionedToken.trailingTrivia();
-                fullStart = positionedToken.end();
+                fullStart = end(positionedToken);
             }
         }
 
@@ -418,10 +419,10 @@ module TypeScript.Syntax {
                 positionedToken = positionedToken.previousToken();
                 return positionedToken && positionedToken.trailingTriviaWidth() === 0 && isUnterminatedStringLiteral(positionedToken);
             }
-            else if (position > positionedToken.start()) {
+            else if (position > start(positionedToken)) {
                 // Ensure position falls enterily within the literal if it is terminated, or the line if it is not
-                return (position < positionedToken.end() && (positionedToken.kind() === TypeScript.SyntaxKind.StringLiteral || positionedToken.kind() === TypeScript.SyntaxKind.RegularExpressionLiteral)) ||
-                    (position <= positionedToken.end() && isUnterminatedStringLiteral(positionedToken));
+                return (position < end(positionedToken) && (positionedToken.kind() === TypeScript.SyntaxKind.StringLiteral || positionedToken.kind() === TypeScript.SyntaxKind.RegularExpressionLiteral)) ||
+                    (position <= end(positionedToken) && isUnterminatedStringLiteral(positionedToken));
             }
         }
 
@@ -438,7 +439,7 @@ module TypeScript.Syntax {
         }
         else {
             triviaList = positionedToken.trailingTrivia();
-            fullStart = positionedToken.end();
+            fullStart = end(positionedToken);
         }
 
         if (triviaList && triviaList.hasSkippedToken()) {
@@ -495,12 +496,12 @@ module TypeScript.Syntax {
     }
 
     export function findSkippedTokenInPositionedToken(positionedToken: ISyntaxToken, position: number): ISyntaxToken {
-        var positionInLeadingTriviaList = (position < positionedToken.start());
+        var positionInLeadingTriviaList = (position < start(positionedToken));
         return findSkippedTokenInTriviaList(positionedToken, position, /*lookInLeadingTriviaList*/ positionInLeadingTriviaList);
     }
 
     export function findSkippedTokenOnLeft(positionedToken: ISyntaxToken, position: number): ISyntaxToken {
-        var positionInLeadingTriviaList = (position < positionedToken.start());
+        var positionInLeadingTriviaList = (position < start(positionedToken));
         return findSkippedTokenOnLeftInTriviaList(positionedToken, position, /*lookInLeadingTriviaList*/ positionInLeadingTriviaList);
     }
 
@@ -546,7 +547,7 @@ module TypeScript.Syntax {
         if (includeSkippedTokens) {
             var triviaList = token.leadingTrivia();
             if (triviaList && triviaList.hasSkippedToken()) {
-                var currentTriviaEndPosition = token.start();
+                var currentTriviaEndPosition = TypeScript.start(token);
                 for (var i = triviaList.count() - 1; i >= 0; i--) {
                     var trivia = triviaList.syntaxTriviaAt(i);
                     if (trivia.isSkippedToken()) {

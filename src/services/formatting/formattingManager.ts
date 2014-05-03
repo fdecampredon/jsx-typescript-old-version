@@ -48,7 +48,7 @@ module TypeScript.Services.Formatting {
                 // Find the outer most parent that this semicolon terminates
                 var current: ISyntaxElement = semicolonPositionedToken;
                 while (current.parent !== null &&
-                       current.parent.end() === semicolonPositionedToken.end() &&
+                       end(current.parent) === end(semicolonPositionedToken) &&
                        current.parent.kind() !== SyntaxKind.List) {
                     current = current.parent;
                 }
@@ -71,7 +71,7 @@ module TypeScript.Services.Formatting {
                 // Find the outer most parent that this closing brace terminates
                 var current: ISyntaxElement = closeBracePositionedToken;
                 while (current.parent !== null &&
-                       current.parent.end() === closeBracePositionedToken.end() &&
+                       end(current.parent) === end(closeBracePositionedToken) &&
                        current.parent.kind() !== SyntaxKind.List) {
                     current = current.parent;
                 }

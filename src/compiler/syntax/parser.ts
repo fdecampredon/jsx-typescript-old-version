@@ -1623,18 +1623,18 @@ module TypeScript.Parser {
 
             // They wanted something specific, just report that that token was missing.
             if (SyntaxFacts.isAnyKeyword(expectedKind) || SyntaxFacts.isAnyPunctuation(expectedKind)) {
-                return new Diagnostic(this.fileName, this.source.text.lineMap(), token.start(), token.width(), DiagnosticCode._0_expected, [SyntaxFacts.getText(expectedKind)]);
+                return new Diagnostic(this.fileName, this.source.text.lineMap(), start(token), width(token), DiagnosticCode._0_expected, [SyntaxFacts.getText(expectedKind)]);
             }
             else {
                 // They wanted an identifier.
 
                 // If the user supplied a keyword, give them a specialized message.
                 if (actual !== null && SyntaxFacts.isAnyKeyword(actual.kind())) {
-                    return new Diagnostic(this.fileName, this.source.text.lineMap(), token.start(), token.width(), DiagnosticCode.Identifier_expected_0_is_a_keyword, [SyntaxFacts.getText(actual.kind())]);
+                    return new Diagnostic(this.fileName, this.source.text.lineMap(), start(token), width(token), DiagnosticCode.Identifier_expected_0_is_a_keyword, [SyntaxFacts.getText(actual.kind())]);
                 }
                 else {
                     // Otherwise just report that an identifier was expected.
-                    return new Diagnostic(this.fileName, this.source.text.lineMap(), token.start(), token.width(), DiagnosticCode.Identifier_expected, null);
+                    return new Diagnostic(this.fileName, this.source.text.lineMap(), start(token), width(token), DiagnosticCode.Identifier_expected, null);
                 }
             }
 
@@ -1820,7 +1820,7 @@ module TypeScript.Parser {
 
             // Because we removed the leading trivia from the skipped token, the full start of the
             // trimmed token is the start of the skipped token.
-            trimmedToken.setTextAndFullStart(this.source.text, skippedToken.start());
+            trimmedToken.setTextAndFullStart(this.source.text, start(skippedToken));
 
             array.push(Syntax.skippedTokenTrivia(trimmedToken));
 
@@ -2664,7 +2664,7 @@ module TypeScript.Parser {
                     // 
                     // Detect if the user is typing this and attempt recovery.
                     var diagnostic = new Diagnostic(this.fileName, this.source.text.lineMap(),
-                        token0.start(), token0.width(), DiagnosticCode.Unexpected_token_0_expected, [SyntaxFacts.getText(SyntaxKind.OpenBraceToken)]);
+                        start(token0), width(token0), DiagnosticCode.Unexpected_token_0_expected, [SyntaxFacts.getText(SyntaxKind.OpenBraceToken)]);
                     this.addDiagnostic(diagnostic);
 
                     var token = this.eatAnyToken();
@@ -4377,7 +4377,7 @@ module TypeScript.Parser {
                 // as an arithmetic expression.
                 if (isDot) {
                     // A parameter list must follow a generic type argument list.
-                    var diagnostic = new Diagnostic(this.fileName, this.source.text.lineMap(), token0.start(), token0.width(),
+                    var diagnostic = new Diagnostic(this.fileName, this.source.text.lineMap(), start(token0), width(token0),
                         DiagnosticCode.A_parameter_list_must_follow_a_generic_type_argument_list_expected, null);
                     this.addDiagnostic(diagnostic);
 
@@ -4434,7 +4434,6 @@ module TypeScript.Parser {
         private parseElementAccessExpression(expression: ILeftHandSideExpressionSyntax, inObjectCreation: boolean): ElementAccessExpressionSyntax {
             // Debug.assert(this.currentToken().kind() === SyntaxKind.OpenBracketToken);
 
-            var start = this.currentToken().start();
             var openBracketToken = this.eatToken(SyntaxKind.OpenBracketToken);
             var argumentExpression: IExpressionSyntax;
 
@@ -4443,8 +4442,9 @@ module TypeScript.Parser {
             if (this.currentToken().kind() === SyntaxKind.CloseBracketToken &&
                 inObjectCreation) {
 
-                var end = this.currentToken().start() + this.currentToken().width();
-                var diagnostic = new Diagnostic(this.fileName, this.source.text.lineMap(),start, end - start,
+                var start = TypeScript.start(openBracketToken);
+                var end = TypeScript.end(this.currentToken());
+                var diagnostic = new Diagnostic(this.fileName, this.source.text.lineMap(), start, end - start,
                     DiagnosticCode.new_T_cannot_be_used_to_create_an_array_Use_new_Array_T_instead, null);
                 this.addDiagnostic(diagnostic);
 
@@ -5682,7 +5682,7 @@ module TypeScript.Parser {
             var token = this.currentToken();
 
             var diagnostic = new Diagnostic(this.fileName, this.source.text.lineMap(),
-                token.start(), token.width(), DiagnosticCode.Unexpected_token_0_expected, [this.getExpectedListElementType(listType)]);
+                start(token), width(token), DiagnosticCode.Unexpected_token_0_expected, [this.getExpectedListElementType(listType)]);
             this.addDiagnostic(diagnostic);
         }
 

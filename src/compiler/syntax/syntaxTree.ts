@@ -103,7 +103,7 @@ module TypeScript {
 
         private pushDiagnostic(element: ISyntaxElement, diagnosticKey: string, args: any[] = null): void {
             this.diagnostics.push(new Diagnostic(
-                this.syntaxTree.fileName(), this.syntaxTree.lineMap(), element.start(), element.width(), diagnosticKey, args));
+                this.syntaxTree.fileName(), this.syntaxTree.lineMap(), start(element), width(element), diagnosticKey, args));
         }
 
         public visitCatchClause(node: CatchClauseSyntax): void {

@@ -134,21 +134,6 @@ module TypeScript {
             }
         }
 
-        public width(): number {
-            this.fillSizeInfo();
-            return ScannerToken.lastTokenInfo.width;
-        }
-
-        public start(): number {
-            this.fillSizeInfo();
-            return this.fullStart() + ScannerToken.lastTokenInfo.leadingTriviaWidth;
-        }
-
-        public end(): number {
-            this.fillSizeInfo();
-            return this.fullStart() + ScannerToken.lastTokenInfo.leadingTriviaWidth + ScannerToken.lastTokenInfo.width;
-        }
-
         public fullText(): string {
             return this._text.substr(this.fullStart(), this.fullWidth());
         }
@@ -327,10 +312,10 @@ module TypeScript {
 
         function scanTrivia(parent: ScannerToken, isTrailing: boolean): ISyntaxTriviaList {
             if (isTrailing) {
-                reset(parent._text, parent.end(), parent.fullEnd());
+                reset(parent._text, TypeScript.end(parent), parent.fullEnd());
             }
             else {
-                reset(parent._text, parent.fullStart(), parent.start());
+                reset(parent._text, parent.fullStart(), TypeScript.start(parent));
             }
             // Debug.assert(length > 0);
 
@@ -1393,6 +1378,6 @@ module TypeScript {
 
         var token = scanner.scan(/*allowRegularExpression:*/ false);
 
-        return !hadError && SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && token.width() === text.length();
+        return !hadError && SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && width(token) === text.length();
     }
 }

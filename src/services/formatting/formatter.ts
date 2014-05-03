@@ -58,7 +58,7 @@ module TypeScript.Services.Formatting {
 
         public visitTokenInSpan(token: ISyntaxToken): void {
             if (token.fullWidth() !== 0) {
-                var tokenSpan = new TextSpan(this.position() + token.leadingTriviaWidth(), token.width());
+                var tokenSpan = new TextSpan(this.position() + token.leadingTriviaWidth(), width(token));
                 if (this.textSpan().containsTextSpan(tokenSpan)) {
                     this.processToken(token);
                 }
@@ -78,7 +78,7 @@ module TypeScript.Services.Formatting {
             }
 
             // Push the token
-            var currentTokenSpan = new TokenSpan(token.kind(), position, token.width());
+            var currentTokenSpan = new TokenSpan(token.kind(), position, width(token));
             if (!this.parent().hasSkippedOrMissingTokenChild()) {
                 if (this.previousTokenSpan) {
                     // Note that formatPair calls TrimWhitespaceInLineRange in between the 2 tokens
@@ -95,7 +95,7 @@ module TypeScript.Services.Formatting {
                 this.indentationNodeContextPool().releaseNode(this.previousTokenParent, /* recursive */true);
             }
             this.previousTokenParent = this.parent().clone(this.indentationNodeContextPool());
-            position += token.width();
+            position += width(token);
 
             // Extract any trailing comments
             if (token.trailingTriviaWidth() !== 0) {

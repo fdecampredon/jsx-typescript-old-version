@@ -476,7 +476,7 @@ module TypeScript {
             }
 
             if (comment.kind() === SyntaxKind.MultiLineCommentTrivia) {
-                this.recordSourceMappingSpanStart(comment);
+                this.recordSourceMappingCommentStart(comment);
                 this.writeToOutput(text[0]);
 
                 if (text.length > 1 || comment.endsLine) {
@@ -485,20 +485,20 @@ module TypeScript {
                         this.emitIndent();
                         this.writeToOutput(text[i]);
                     }
-                    this.recordSourceMappingSpanEnd(comment);
+                    this.recordSourceMappingCommentEnd(comment);
                     this.writeLineToOutput("");
                     // Fall through
                 }
                 else {
-                    this.recordSourceMappingSpanEnd(comment);
+                    this.recordSourceMappingCommentEnd(comment);
                     this.writeToOutput(" ");
                     return;
                 }
             }
             else {
-                this.recordSourceMappingSpanStart(comment);
+                this.recordSourceMappingCommentStart(comment);
                 this.writeToOutput(text[0]);
-                this.recordSourceMappingSpanEnd(comment);
+                this.recordSourceMappingCommentEnd(comment);
                 this.writeLineToOutput("");
                 // Fall through
             }
@@ -1888,22 +1888,26 @@ module TypeScript {
 
         private recordSourceMappingStart(ast: ISyntaxElement) {
             if (this.sourceMapper && ASTHelpers.isValidAstNode(ast)) {
-                this.recordSourceMappingSpanStart(ast);
+                this.recordSourceMappingSpanStart(ast, start(ast), end(ast));
             }
         }
 
-        private recordSourceMappingSpanStart(ast: ISpan) {
-            if (this.sourceMapper && ASTHelpers.isValidSpan(ast)) {
+        private recordSourceMappingCommentStart(comment: Comment) {
+            this.recordSourceMappingSpanStart(comment, comment.start(), comment.end());
+        }
+
+        private recordSourceMappingSpanStart(ast: any, start: number, end: number) {
+            if (this.sourceMapper && ast && start !== -1 && end !== -1) {
                 var lineCol = { line: -1, character: -1 };
                 var sourceMapping = new SourceMapping();
                 sourceMapping.start.emittedColumn = this.emitState.column;
                 sourceMapping.start.emittedLine = this.emitState.line;
                 // REVIEW: check time consumed by this binary search (about two per leaf statement)
                 var lineMap = this.document.lineMap();
-                lineMap.fillLineAndCharacterFromPosition(ast.start(), lineCol);
+                lineMap.fillLineAndCharacterFromPosition(start, lineCol);
                 sourceMapping.start.sourceColumn = lineCol.character;
                 sourceMapping.start.sourceLine = lineCol.line + 1;
-                lineMap.fillLineAndCharacterFromPosition(ast.end(), lineCol);
+                lineMap.fillLineAndCharacterFromPosition(end, lineCol);
                 sourceMapping.end.sourceColumn = lineCol.character;
                 sourceMapping.end.sourceLine = lineCol.line + 1;
 
@@ -1927,12 +1931,18 @@ module TypeScript {
 
         private recordSourceMappingEnd(ast: ISyntaxElement) {
             if (this.sourceMapper && ASTHelpers.isValidAstNode(ast)) {
-                this.recordSourceMappingSpanEnd(ast);
+                this.recordSourceMappingSpanEnd(ast, start(ast), end(ast));
             }
         }
 
-        private recordSourceMappingSpanEnd(ast: ISpan) {
+        private recordSourceMappingCommentEnd(ast: Comment) {
             if (this.sourceMapper && ASTHelpers.isValidSpan(ast)) {
+                this.recordSourceMappingSpanEnd(ast, ast.start(), ast.end());
+            }
+        }
+
+        private recordSourceMappingSpanEnd(ast: any, start: number, end: number) {
+            if (this.sourceMapper && ast && start !== -1 && end !== -1) {
                 // Pop source mapping childs
                 this.sourceMapper.currentMappings.pop();
 
@@ -2013,7 +2023,7 @@ module TypeScript {
 
             // If the first element isn't on hte same line as the parent node, then we need to 
             // start with a newline.
-            var startLine = preserveNewLines && !this.isOnSameLine(parent.end(), list.nonSeparatorAt(0).end());
+            var startLine = preserveNewLines && !this.isOnSameLine(end(parent), end(list.nonSeparatorAt(0)));
 
             if (preserveNewLines) {
                 // Any elements on a new line will have to be indented.
@@ -2039,7 +2049,7 @@ module TypeScript {
                     // If the next element start on a different line than this element ended on, 
                     // then we want to start on a newline.  Emit the comma with a newline.  
                     // Otherwise, emit the comma with the space.
-                    startLine = preserveNewLines && !this.isOnSameLine(emitNode.end(), list.nonSeparatorAt(i + 1).start());
+                    startLine = preserveNewLines && !this.isOnSameLine(end(emitNode), start(list.nonSeparatorAt(i + 1)));
                     if (startLine) {
                         this.writeLineToOutput(",");
                     }
@@ -2058,7 +2068,7 @@ module TypeScript {
             // after the last element and emit our indent so the list's terminator will be
             // on the right line.  Otherwise, emit the buffer string between the last value
             // and the terminator.
-            if (preserveNewLines && !this.isOnSameLine(parent.end(), list.nonSeparatorAt(list.nonSeparatorCount() - 1).end())) {
+            if (preserveNewLines && !this.isOnSameLine(end(parent), end(list.nonSeparatorAt(list.nonSeparatorCount() - 1)))) {
                 this.writeLineToOutput("");
                 this.emitIndent();
             }
@@ -2135,13 +2145,13 @@ module TypeScript {
                 return;
             }
 
-            if (node1.start() === -1 || node1.end() === -1 || node2.start() === -1 || node2.end() === -1) {
+            if (start(node1) === -1 || end(node1) === -1 || start(node2) === -1 || end(node2) === -1) {
                 return;
             }
 
             var lineMap = this.document.lineMap();
-            var node1EndLine = lineMap.getLineNumberFromPosition(node1.end());
-            var node2StartLine = lineMap.getLineNumberFromPosition(node2.start());
+            var node1EndLine = lineMap.getLineNumberFromPosition(end(node1));
+            var node2StartLine = lineMap.getLineNumberFromPosition(start(node2));
 
             if ((node2StartLine - node1EndLine) > 1) {
                 this.writeLineToOutput("", /*force:*/ true);
@@ -2182,7 +2192,7 @@ module TypeScript {
                 // sure there is at least one blank line between it and the node.  If not, it's not
                 // a copyright header.
                 var lastCommentLine = lineMap.getLineNumberFromPosition(ArrayUtilities.last(detachedComments).end());
-                var astLine = lineMap.getLineNumberFromPosition(element.start());
+                var astLine = lineMap.getLineNumberFromPosition(start(element));
                 if (astLine >= lastCommentLine + 2) {
                     return detachedComments;
                 }

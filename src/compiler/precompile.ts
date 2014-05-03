@@ -105,14 +105,14 @@ module TypeScript {
                             if (token.kind() === SyntaxKind.OpenParenToken) {
                                 token = scanner.scan(/*allowRegularExpression:*/ false);
 
-                                lineMap.fillLineAndCharacterFromPosition(importToken.start(), lineChar);
+                                lineMap.fillLineAndCharacterFromPosition(TypeScript.start(importToken), lineChar);
 
                                 if (token.kind() === SyntaxKind.StringLiteral) {
                                     var ref = {
                                         line: lineChar.line,
                                         character: lineChar.character,
-                                        position: token.start(),
-                                        length: token.width(),
+                                        position: TypeScript.start(token),
+                                        length: width(token),
                                         path: stripStartAndEndQuotes(switchToForwardSlashes(token.text())),
                                         isResident: false
                                     };

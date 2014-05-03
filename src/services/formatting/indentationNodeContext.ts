@@ -50,7 +50,7 @@ module TypeScript.Services.Formatting {
         }
 
         public end(): number {
-            return this._fullStart + leadingTriviaWidth(this._node) + this._node.width();
+            return this._fullStart + leadingTriviaWidth(this._node) + width(this._node);
         }
 
         public indentationAmount(): number {
