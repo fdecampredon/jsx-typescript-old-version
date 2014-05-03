@@ -437,7 +437,7 @@ module TypeScript {
                 // We're at the top level in a declaration file, a 'declare' modifiers is required
                 // on most module elements.
                 if (!SyntaxUtilities.containsToken(modifiers, SyntaxKind.DeclareKeyword)) {
-                    this.pushDiagnostic(typeKeyword.firstToken(),
+                    this.pushDiagnostic(firstToken(typeKeyword),
                         DiagnosticCode.declare_modifier_required_for_top_level_element);
                     return true;
                 }
@@ -455,7 +455,7 @@ module TypeScript {
 
                     if (inFunctionOverloadChain) {
                         if (moduleElement.kind() !== SyntaxKind.FunctionDeclaration) {
-                            this.pushDiagnostic(moduleElement.firstToken(),
+                            this.pushDiagnostic(firstToken(moduleElement),
                                 DiagnosticCode.Function_implementation_expected);
                             return true;
                         }
@@ -476,8 +476,7 @@ module TypeScript {
 
                             if (inFunctionOverloadChain) {
                                 if (lastElement) {
-                                    this.pushDiagnostic(moduleElement.firstToken(),
-                                        DiagnosticCode.Function_implementation_expected);
+                                    this.pushDiagnostic(firstToken(moduleElement), DiagnosticCode.Function_implementation_expected);
                                     return true;
                                 }
                                 else {
@@ -526,8 +525,7 @@ module TypeScript {
 
                     if (inFunctionOverloadChain) {
                         if (classElement.kind() !== SyntaxKind.MemberFunctionDeclaration) {
-                            this.pushDiagnostic(classElement.firstToken(),
-                                DiagnosticCode.Function_implementation_expected);
+                            this.pushDiagnostic(firstToken(classElement), DiagnosticCode.Function_implementation_expected);
                             return true;
                         }
 
@@ -547,8 +545,7 @@ module TypeScript {
                     }
                     else if (inConstructorOverloadChain) {
                         if (classElement.kind() !== SyntaxKind.ConstructorDeclaration) {
-                            this.pushDiagnostic(classElement.firstToken(),
-                                DiagnosticCode.Constructor_implementation_expected);
+                            this.pushDiagnostic(firstToken(classElement), DiagnosticCode.Constructor_implementation_expected);
                             return true;
                         }
                     }
@@ -562,7 +559,7 @@ module TypeScript {
 
                         if (inFunctionOverloadChain) {
                             if (lastElement) {
-                                this.pushDiagnostic(classElement.firstToken(), DiagnosticCode.Function_implementation_expected);
+                                this.pushDiagnostic(firstToken(classElement), DiagnosticCode.Function_implementation_expected);
                                 return true;
                             }
                             else {
@@ -589,8 +586,7 @@ module TypeScript {
 
                         inConstructorOverloadChain = constructorDeclaration.block === null;
                         if (lastElement && inConstructorOverloadChain) {
-                            this.pushDiagnostic(classElement.firstToken(),
-                                DiagnosticCode.Constructor_implementation_expected);
+                            this.pushDiagnostic(firstToken(classElement), DiagnosticCode.Constructor_implementation_expected);
                             return true;
                         }
                     }
@@ -1100,7 +1096,7 @@ module TypeScript {
 
         public visitBlock(node: BlockSyntax): void {
             if (this.inAmbientDeclaration || this.syntaxTree.isDeclaration()) {
-                this.pushDiagnostic(node.firstToken(), DiagnosticCode.Implementations_are_not_allowed_in_ambient_contexts);
+                this.pushDiagnostic(firstToken(node), DiagnosticCode.Implementations_are_not_allowed_in_ambient_contexts);
                 return;
             }
 
@@ -1116,8 +1112,7 @@ module TypeScript {
 
         private checkForStatementInAmbientContxt(node: IStatementSyntax): boolean {
             if (this.inAmbientDeclaration || this.syntaxTree.isDeclaration()) {
-                this.pushDiagnostic(node.firstToken(),
-                    DiagnosticCode.Statements_are_not_allowed_in_ambient_contexts);
+                this.pushDiagnostic(firstToken(node), DiagnosticCode.Statements_are_not_allowed_in_ambient_contexts);
                 return true;
             }
 

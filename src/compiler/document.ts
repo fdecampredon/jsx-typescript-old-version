@@ -49,7 +49,7 @@ module TypeScript {
             this._lineMap = syntaxTree.lineMap();
 
             var sourceUnit = syntaxTree.sourceUnit();
-            var leadingTrivia = sourceUnit.firstToken().leadingTrivia();
+            var leadingTrivia = firstToken(sourceUnit).leadingTrivia();
 
             this._externalModuleIndicatorSpan = this.getImplicitImportSpan(leadingTrivia) || this.getTopLevelImportOrExportSpan(sourceUnit);
 
@@ -100,14 +100,12 @@ module TypeScript {
         }
 
         private getTopLevelImportOrExportSpan(node: SourceUnitSyntax): TextSpan {
-            var firstToken: ISyntaxToken;
-
             for (var i = 0, n = node.moduleElements.childCount(); i < n; i++) {
                 var moduleElement = node.moduleElements.childAt(i);
 
-                firstToken = moduleElement.firstToken();
-                if (firstToken !== null && firstToken.kind() === SyntaxKind.ExportKeyword) {
-                    return new TextSpan(firstToken.start(), firstToken.width());
+                var _firstToken = firstToken(moduleElement);
+                if (_firstToken !== null && _firstToken.kind() === SyntaxKind.ExportKeyword) {
+                    return new TextSpan(_firstToken.start(), _firstToken.width());
                 }
 
                 if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {

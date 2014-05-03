@@ -380,9 +380,6 @@ module TypeScript.Syntax {
             return this;
         }
 
-        public firstToken(): ISyntaxToken { return null; }
-        public lastToken(): ISyntaxToken { return null; }
-
         // Empty tokens are never incrementally reusable.
         public isIncrementallyUnusable() { return true; }
 
@@ -544,8 +541,6 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
         public toJSON(key: any): any { return tokenToJSON(this); }
-        public firstToken() { return this.fullWidth() > 0 ? this : null; }
-        public lastToken() { return this.fullWidth() > 0 ? this : null; }
 
         // We mark this token as being incrementally *reusable* and also that it was a keyword
         // that was converted to an identifier.  The incremental parser knows not to return this
@@ -695,8 +690,6 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
         public toJSON(key: any): any { return tokenToJSON(this); }
-        public firstToken() { return this.fullWidth() > 0 ? this : null; }
-        public lastToken() { return this.fullWidth() > 0 ? this : null; }
 
         // Realized tokens are created from the parser.  They are *never* incrementally reusable.
         public isIncrementallyUnusable() { return true; }

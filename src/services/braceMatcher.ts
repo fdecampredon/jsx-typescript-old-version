@@ -71,7 +71,7 @@ module TypeScript.Services {
                         if (element !== null && element.fullWidth() > 0) {
                             if (element.kind() === openBraceKind) {
                                 var range1 = new TypeScript.TextSpan(position - 1, currentToken.width());
-                                var range2 = new TypeScript.TextSpan(currentPosition - element.lastToken().trailingTriviaWidth() - element.width(), element.width());
+                                var range2 = new TypeScript.TextSpan(currentPosition - lastToken(element).trailingTriviaWidth() - element.width(), element.width());
                                 result.push(range1, range2);
                                 break;
                             }

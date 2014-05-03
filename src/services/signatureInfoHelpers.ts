@@ -264,7 +264,7 @@ module TypeScript.Services {
             else if (ast.argumentList.arguments && ast.argumentList.arguments.nonSeparatorCount() > 0) {
                 result.currentParameter = 0;
                 for (var index = 0; index < ast.argumentList.arguments.nonSeparatorCount(); index++) {
-                    if (caretPosition > ast.argumentList.arguments.nonSeparatorAt(index).end() + ast.argumentList.arguments.nonSeparatorAt(index).lastToken().trailingTriviaWidth()) {
+                    if (caretPosition > ast.argumentList.arguments.nonSeparatorAt(index).end() + lastToken(ast.argumentList.arguments.nonSeparatorAt(index)).trailingTriviaWidth()) {
                         result.currentParameter++;
                     }
                 }

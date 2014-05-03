@@ -65,13 +65,57 @@ module TypeScript {
     }
 
     export function leadingTriviaWidth(element: ISyntaxElement): number {
-        var token = isToken(element) ? <ISyntaxToken>element : element.firstToken();
+        var token = firstToken(element);
         return token ? token.leadingTriviaWidth() : 0;
     }
 
     export function trailingTriviaWidth(element: ISyntaxElement): number {
-        var token = isToken(element) ? <ISyntaxToken>element : element.lastToken();
+        var token = lastToken(element);
         return token ? token.trailingTriviaWidth() : 0;
+    }
+
+    export function firstToken(element: ISyntaxElement): ISyntaxToken {
+        if (isToken(element)) {
+            return element.fullWidth() > 0 ? <ISyntaxToken>element : null;
+        }
+
+        for (var i = 0, n = element.childCount(); i < n; i++) {
+            var child = element.childAt(i);
+            if (child !== null) {
+                var token = firstToken(child);
+                if (token) {
+                    return token;
+                }
+            }
+        }
+
+        if (element.kind() === SyntaxKind.SourceUnit) {
+            return (<SourceUnitSyntax>element).endOfFileToken;
+        }
+
+        return null;
+    }
+
+    export function lastToken(element: ISyntaxElement): ISyntaxToken {
+        if (isToken(element)) {
+            return element.fullWidth() > 0 ? <ISyntaxToken>element : null;
+        }
+
+        if (element.kind() === SyntaxKind.SourceUnit) {
+            return (<SourceUnitSyntax>element).endOfFileToken;
+        }
+
+        for (var i = element.childCount() - 1; i >= 0; i--) {
+            var child = element.childAt(i);
+            if (child !== null) {
+                var token = lastToken(child);
+                if (token) {
+                    return token;
+                }
+            }
+        }
+
+        return null;
     }
 
     export interface ISyntaxElement {
@@ -132,9 +176,6 @@ module TypeScript {
 
         // The absolute start of this element, not including the trailing trivia.
         end(): number;
-
-        firstToken(): ISyntaxToken;
-        lastToken(): ISyntaxToken;
     }
 
     export interface ISyntaxNode extends ISyntaxNodeOrToken {

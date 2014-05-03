@@ -42,14 +42,6 @@ module TypeScript.Syntax {
             return true;
         }
 
-        public firstToken(): ISyntaxToken {
-            return null;
-        }
-
-        public lastToken(): ISyntaxToken {
-            return null;
-        }
-
         public fullWidth(): number {
             return 0;
         }
@@ -127,14 +119,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public firstToken(): ISyntaxToken {
-            return this.item.firstToken();
-        }
-
-        public lastToken(): ISyntaxToken {
-            return this.item.lastToken();
-        }
-
         public fullWidth(): number {
             return this.item.fullWidth();
         }
@@ -208,28 +192,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public firstToken(): ISyntaxToken {
-            for (var i = 0, n = this.nodeOrTokens.length; i < n; i++) {
-                var token = this.nodeOrTokens[i].firstToken();
-                if (token && token.fullWidth() > 0) {
-                    return token;
-                }
-            }
-
-            return null;
-        }
-
-        public lastToken(): ISyntaxToken {
-            for (var i = this.nodeOrTokens.length - 1; i >= 0; i--) {
-                var token = this.nodeOrTokens[i].lastToken();
-                if (token && token.fullWidth() > 0) {
-                    return token;
-                }
-            }
-
-            return null;
-        }
-
         public isIncrementallyUnusable(): boolean {
             return (this.data() & SyntaxConstants.NodeIncrementallyUnusableMask) !== 0;
         }
@@ -244,19 +206,19 @@ module TypeScript.Syntax {
         }
 
         public fullStart(): number {
-            return this.firstToken().fullStart();
+            return firstToken(this).fullStart();
         }
 
         public fullEnd(): number {
-            return this.lastToken().fullEnd();
+            return lastToken(this).fullEnd();
         }
 
         public start(): number {
-            return this.firstToken().start();
+            return firstToken(this).start();
         }
 
         public end(): number {
-            return this.lastToken().end();
+            return lastToken(this).end();
         }
 
         private computeData(): number {

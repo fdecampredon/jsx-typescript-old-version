@@ -129,7 +129,7 @@ module TypeScript.Services.Formatting {
             // class {
             // }
             // Also in a do-while statement, the while should be indented like the parent.
-            if (this._parent.node().firstToken() === token ||
+            if (firstToken(this._parent.node()) === token ||
                 token.kind() === SyntaxKind.OpenBraceToken || token.kind() === SyntaxKind.CloseBraceToken ||
                 token.kind() === SyntaxKind.OpenBracketToken || token.kind() === SyntaxKind.CloseBracketToken ||
                 (token.kind() === SyntaxKind.WhileKeyword && this._parent.node().kind() == SyntaxKind.DoStatement)) {

@@ -1739,7 +1739,7 @@ module TypeScript.Parser {
         }
 
         private addSkippedTokenAfterNode(node: SyntaxNode, skippedToken: ISyntaxToken): SyntaxNode {
-            var oldToken = node.lastToken();
+            var oldToken = lastToken(node);
             var newToken = this.addSkippedTokenAfterToken(oldToken, skippedToken);
 
             this.replaceTokenInParent(oldToken, newToken);
@@ -1748,7 +1748,7 @@ module TypeScript.Parser {
 
         private addSkippedTokensBeforeNode(node: SyntaxNode, skippedTokens: ISyntaxToken[]): SyntaxNode {
             if (skippedTokens.length > 0) {
-                var oldToken = node.firstToken();
+                var oldToken = firstToken(node);
                 var newToken = this.addSkippedTokensBeforeToken(oldToken, skippedTokens);
 
                 this.replaceTokenInParent(oldToken, newToken);
@@ -2657,8 +2657,8 @@ module TypeScript.Parser {
             if (hasEqualsGreaterThanToken) {
                 // We can only do this if the call signature actually contains a final token that we 
                 // could add the => to.
-                var lastToken = callSignature.lastToken();
-                if (lastToken && lastToken.fullWidth() > 0) {
+                var _lastToken = lastToken(callSignature);
+                if (_lastToken && _lastToken.fullWidth() > 0) {
                     // Previously the language allowed "function f() => expr;" as a shorthand for 
                     // "function f() { return expr; }.
                     // 
@@ -5451,8 +5451,8 @@ module TypeScript.Parser {
             // have to deal with them.
             for (var i = items.length - 1; i >= 0; i--) {
                 var item = items[i];
-                var lastToken = item.lastToken();
-                if (lastToken && lastToken.fullWidth() > 0) {
+                var _lastToken = lastToken(item);
+                if (_lastToken && _lastToken.fullWidth() > 0) {
                     items[i] = this.addSkippedTokenAfterNodeOrToken(item, skippedToken);
                     return;
                 }

@@ -109,7 +109,7 @@ module TypeScript.ASTHelpers {
                         cur.kind() === SyntaxKind.VariableDeclaration ||
                         cur.kind() === SyntaxKind.VariableDeclarator ||
                         cur.kind() === SyntaxKind.InvocationExpression ||
-                        pos === script.end() + script.lastToken().trailingTriviaWidth(); // Special "EOF" case
+                        pos === script.end() + lastToken(script).trailingTriviaWidth(); // Special "EOF" case
 
                     var minChar = cur.start();
                     var limChar = cur.end() + (useTrailingTriviaAsLimChar ? trailingTriviaWidth(cur) : 0) + (inclusive ? 1 : 0);
@@ -481,21 +481,21 @@ module TypeScript.ASTHelpers {
 
     function convertNodeTrailingComments(node: ISyntaxElement, allowWithNewLine = false): Comment[]{
         // Bail out quickly before doing any expensive math computation.
-        var lastToken = node.lastToken();
-        if (lastToken === null || !lastToken.hasTrailingComment()) {
+        var _lastToken = lastToken(node);
+        if (_lastToken === null || !_lastToken.hasTrailingComment()) {
             return null;
         }
 
-        if (!allowWithNewLine && lastToken.hasTrailingNewLine()) {
+        if (!allowWithNewLine && _lastToken.hasTrailingNewLine()) {
             return null;
         }
 
-        return convertComments(lastToken.trailingTrivia(), node.fullStart() + node.fullWidth() - lastToken.trailingTriviaWidth());
+        return convertComments(_lastToken.trailingTrivia(), node.fullStart() + node.fullWidth() - _lastToken.trailingTriviaWidth());
     }
 
     function convertNodeLeadingComments(element: ISyntaxElement): Comment[]{
         if (element) {
-            return convertTokenLeadingComments(element.firstToken());
+            return convertTokenLeadingComments(firstToken(element));
         }
 
         return null;
@@ -563,7 +563,7 @@ module TypeScript.ASTHelpers {
                     // Now check if it was written like so:
                     //      (/** blah */ a, /** blah */ b);
                     // In this case, the comment will belong to the preceding token.
-                    var previousToken = ast.syntaxTree().sourceUnit().findToken(ast.firstToken().fullStart() - 1);
+                    var previousToken = ast.syntaxTree().sourceUnit().findToken(firstToken(ast).fullStart() - 1);
                     if (previousToken && (previousToken.kind() === SyntaxKind.OpenParenToken || previousToken.kind() === SyntaxKind.CommaToken)) {
                         comments = convertTokenTrailingComments(previousToken);
                     }

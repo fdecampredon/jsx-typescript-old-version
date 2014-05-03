@@ -33,63 +33,23 @@ module TypeScript {
         }
 
         public fullStart(): number {
-            var firstToken = this.firstToken();
-            return firstToken ? firstToken.fullStart() : -1;
+            var token = firstToken(this);
+            return token ? token.fullStart() : -1;
         }
 
         public fullEnd(): number {
-            var lastToken = this.lastToken();
-            return lastToken ? lastToken.fullEnd() : -1;
+            var token = lastToken(this);
+            return token ? token.fullEnd() : -1;
         }
 
         public start(): number {
-            var firstToken = this.firstToken();
-            return firstToken ? firstToken.start() : -1;
+            var token = firstToken(this);
+            return token ? token.start() : -1;
         }
 
         public end(): number {
-            var lastToken = this.lastToken();
-            return lastToken ? lastToken.end() : -1;
-        }
-
-        // Returns the first non-missing token inside this node (or null if there are no such token).
-        public firstToken(): ISyntaxToken {
-            for (var i = 0, n = this.childCount(); i < n; i++) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    if (element.kind() === SyntaxKind.EndOfFileToken) {
-                        return <ISyntaxToken>element;
-                    }
-
-                    var token = element.firstToken();
-                    if (token && token.fullWidth() > 0) {
-                        return token;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        // Returns the last non-missing token inside this node (or null if there are no such token).
-        public lastToken(): ISyntaxToken {
-            for (var i = this.childCount() - 1; i >= 0; i--) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    if (element.kind() === SyntaxKind.EndOfFileToken) {
-                        return <ISyntaxToken>element;
-                    }
-
-                    var token = element.lastToken();
-                    if (token && token.fullWidth() > 0) {
-                        return token;
-                    }
-                }
-            }
-
-            return null;
+            var token = lastToken(this);
+            return token ? token.end() : -1;
         }
 
         public toJSON(key: any): any {
@@ -134,14 +94,6 @@ module TypeScript {
             }
 
             return result;
-        }
-
-        public hasLeadingTrivia(): boolean {
-            return this.lastToken().hasLeadingTrivia();
-        }
-
-        public hasTrailingTrivia(): boolean {
-            return this.lastToken().hasTrailingTrivia();
         }
 
         public isIncrementallyUnusable(): boolean {

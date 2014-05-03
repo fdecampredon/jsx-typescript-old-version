@@ -20,7 +20,7 @@ module TypeScript.PrettyPrinter {
                 return 0;
             }
 
-            if (element1.lastToken().kind() === SyntaxKind.CloseBraceToken) {
+            if (lastToken(element1).kind() === SyntaxKind.CloseBraceToken) {
                 return 2;
             }
 
@@ -40,7 +40,7 @@ module TypeScript.PrettyPrinter {
                 return 0;
             }
 
-            if (element1.lastToken().kind() === SyntaxKind.CloseBraceToken) {
+            if (lastToken(element1).kind() === SyntaxKind.CloseBraceToken) {
                 return 2;
             }
 

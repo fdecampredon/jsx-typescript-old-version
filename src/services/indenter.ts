@@ -195,8 +195,8 @@ module TypeScript.Services {
             for (var i = elementIndex; i > 0 ; i--) {
                 var child = list.childAt(i);
                 var previousChild = list.childAt(i - 1);
-                if ((child !== null && child.firstToken().leadingTrivia().hasNewLine()) ||
-                    (previousChild !== null && previousChild.lastToken().trailingTrivia().hasNewLine())) {
+                if ((child !== null && firstToken(child).leadingTrivia().hasNewLine()) ||
+                    (previousChild !== null && lastToken(previousChild).trailingTrivia().hasNewLine())) {
 
                     // TODO: get the trivia after new line
                     return leadingTriviaWidth(child);

@@ -197,9 +197,6 @@ module TypeScript {
             return this.fullWidth() - ScannerToken.lastTokenInfo.leadingTriviaWidth - ScannerToken.lastTokenInfo.width;
         }
 
-        public firstToken(): ISyntaxToken { return this; }
-        public lastToken(): ISyntaxToken { return this; }
-
         public hasLeadingTrivia(): boolean {
             var info = unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo);
             return info !== 0;
