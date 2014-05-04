@@ -1249,8 +1249,13 @@ function generateConstructor(definition: ITypeDefinition): string {
     result += "        constructor("
 
     var children = definition.children;
+    var kindChild: IMemberDefinition = null;
     for (i = 0; i < children.length; i++) {
         child = children[i];
+
+        if (getType(child) === "SyntaxKind") {
+            kindChild = child;
+        }
 
         if (getType(child) !== "SyntaxKind" && child.name !== "arguments") {
             result += "public ";
@@ -1261,8 +1266,13 @@ function generateConstructor(definition: ITypeDefinition): string {
     }
 
     result += "data: number) {\r\n";
-    
-    result += "            super(data); \r\n";
+
+    if (kindChild) {
+        result += "            super(kind, data); \r\n";
+    }
+    else {
+        result += "            super(SyntaxKind." + getNameWithoutSuffix(definition) + ", data); \r\n";
+    }
 
     if (definition.children.length > 0) {
         result += "\r\n";
@@ -1521,12 +1531,12 @@ function generateIsProperties(definition: ITypeDefinition): string {
 function generateKindMethod(definition: ITypeDefinition): string {
     var result = "";
 
-    if (!hasKind) {
-        result += "\r\n";
-        result += "        public get kind(): SyntaxKind {\r\n";
-        result += "            return SyntaxKind." + getNameWithoutSuffix(definition) + ";\r\n";
-        result += "        }\r\n";
-    }
+    //if (!hasKind) {
+    //    result += "\r\n";
+    //    result += "        public get kind(): SyntaxKind {\r\n";
+    //    result += "            return SyntaxKind." + getNameWithoutSuffix(definition) + ";\r\n";
+    //    result += "        }\r\n";
+    //}
 
     return result;
 }
@@ -1706,16 +1716,16 @@ function generateAccessors(definition: ITypeDefinition): string {
     //    result += "        }\r\n";
     //}
 
-    for (var i = 0; i < definition.children.length; i++) {
-        var child = definition.children[i];
+    //for (var i = 0; i < definition.children.length; i++) {
+    //    var child = definition.children[i];
         
-        if (child.type === "SyntaxKind") {
-            result += "\r\n";
-            result += "        public get " + child.name + "(): " + getType(child) + " {\r\n";
-            result += "            return " + getPropertyAccess(child) + ";\r\n";
-            result += "        }\r\n";
-        }
-    }
+    //    if (child.type === "SyntaxKind") {
+    //        result += "\r\n";
+    //        result += "        public get " + child.name + "(): " + getType(child) + " {\r\n";
+    //        result += "            return " + getPropertyAccess(child) + ";\r\n";
+    //        result += "        }\r\n";
+    //    }
+    //}
 
     return result;
 }
