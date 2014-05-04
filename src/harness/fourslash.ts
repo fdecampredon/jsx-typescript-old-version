@@ -14,6 +14,7 @@
 //
 
 /// <reference path='..\compiler\typescript.ts' />
+/// <reference path='..\compiler\syntax\testUtilities.ts' />
 /// <reference path='harness.ts' />
 
 module FourSlash {
@@ -1115,7 +1116,7 @@ module FourSlash {
             var refSyntaxTree = TypeScript.Parser.parse(this.activeFile.fileName, TypeScript.SimpleText.fromString(content), TypeScript.isDTSFile(this.activeFile.fileName), parseOptions);
             var fullSyntaxErrs = JSON.stringify(refSyntaxTree.diagnostics());
 
-            if (!refSyntaxTree.structuralEquals(this.compiler().getSyntaxTree(this.activeFile.fileName))) {
+            if (!TypeScript.treeStructuralEquals(refSyntaxTree, this.compiler().getSyntaxTree(this.activeFile.fileName))) {
                 throw new Error('Incrementally-parsed and full-parsed syntax trees were not equal');
             }
 

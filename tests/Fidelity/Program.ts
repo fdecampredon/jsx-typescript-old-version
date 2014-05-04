@@ -7,7 +7,8 @@
 ///<reference path='..\..\src\compiler\core\environment.ts' />
 ///<reference path='..\..\src\harness\diff.ts' />
 ///<reference path='..\..\src\compiler\references.ts' />
-// ///<reference path='anders\parser.ts' />
+///<reference path='..\..\src\compiler\syntax\testUtilities.ts' />
+///<reference path='anders\parser.ts' />
 
 var timer = new TypeScript.Timer();
 
@@ -363,7 +364,7 @@ class Program {
             timer.end();
             totalIncrementalTime += timer.time;
 
-            TypeScript.Debug.assert(tree.structuralEquals(tree2));
+            TypeScript.Debug.assert(TypeScript.treeStructuralEquals(tree, tree2));
 
             tree = tree2;
         }
@@ -608,11 +609,11 @@ class Program {
 
         var text = TypeScript.TextFactory.createText(contents);
 
-        //var andersText = ts.createSourceFile(fileName, contents);
-        //timer.start();
-        //var andersTree = ts.parseSourceFile(andersText);
-        //timer.end();
-        //andersTime += timer.time;
+        var andersText = ts.createSourceFile(fileName, contents);
+        timer.start();
+        var andersTree = ts.parseSourceFile(andersText);
+        timer.end();
+        andersTime += timer.time;
 
         timer.start();
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
@@ -658,7 +659,7 @@ class Program {
             new TypeScript.TextChangeRange(new TypeScript.TextSpan(0, 0), text.length()),
             text);
 
-        TypeScript.Debug.assert(tree1.structuralEquals(tree2));
+        TypeScript.Debug.assert(TypeScript.treeStructuralEquals(tree1, tree2));
     }
 
     runFindToken(fileName: string,

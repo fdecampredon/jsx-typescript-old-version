@@ -65,14 +65,6 @@ module TypeScript {
         public parseOptions(): ParseOptions {
             return this._parseOptions;
         }
-
-        public structuralEquals(tree: SyntaxTree): boolean {
-            if (!ArrayUtilities.sequenceEquals(this.diagnostics(), tree.diagnostics(), Diagnostic.equals)) {
-                return false;
-            }
-
-            return Syntax.nodeStructuralEquals(this.sourceUnit(), tree.sourceUnit());
-        }
     }
 
     class GrammarCheckerWalker extends SyntaxWalker {

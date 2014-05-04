@@ -65,7 +65,7 @@ module TypeScript {
         TypeScript.visitNodeOrToken(new PositionValidatingWalker(), incrementalNewTree.sourceUnit());
 
         // We should get the same tree when doign a full or incremental parse.
-        Debug.assert(newTree.structuralEquals(incrementalNewTree));
+        Debug.assert(treeStructuralEquals(newTree, incrementalNewTree));
 
         // There should be no reused nodes between two trees that are fully parsed.
         Debug.assert(IncrementalParserTests.reusedElements(oldTree.sourceUnit(), newTree.sourceUnit()) === 0);
