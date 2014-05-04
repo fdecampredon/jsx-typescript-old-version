@@ -17,8 +17,8 @@
 
 module TypeScript {
     function walkListChildren(preAst: ISyntaxNodeOrToken[], walker: AstWalker): void {
-        for (var i = 0, n = preAst.childCount(); i < n; i++) {
-            walker.walk(preAst.childAt(i));
+        for (var i = 0, n = preAst.length; i < n; i++) {
+            walker.walk(preAst[i]);
         }
     }
 

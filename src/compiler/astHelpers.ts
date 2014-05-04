@@ -38,8 +38,8 @@ module TypeScript.ASTHelpers {
     }
 
     function moduleMembersAreElided(members: IModuleElementSyntax[]): boolean {
-        for (var i = 0, n = members.childCount(); i < n; i++) {
-            var member = members.childAt(i);
+        for (var i = 0, n = members.length; i < n; i++) {
+            var member = members[i];
 
             // We should emit *this* module if it contains any non-interface types. 
             // Caveat: if we have contain a module, then we should be emitted *if we want to
@@ -158,8 +158,8 @@ module TypeScript.ASTHelpers {
 
     function getHeritageClause(clauses: HeritageClauseSyntax[], kind: SyntaxKind): HeritageClauseSyntax {
         if (clauses) {
-            for (var i = 0, n = clauses.childCount(); i < n; i++) {
-                var child = clauses.childAt(i);
+            for (var i = 0, n = clauses.length; i < n; i++) {
+                var child = clauses[i];
 
                 if (child.typeNames.length > 0 && child.kind() === kind) {
                     return child;

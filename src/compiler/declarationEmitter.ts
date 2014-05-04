@@ -63,8 +63,8 @@ module TypeScript {
         }
 
         private emitDeclarationsForList(list: ISyntaxNodeOrToken[]) {
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                this.emitDeclarationsForAST(list.childAt(i));
+            for (var i = 0, n = list.length; i < n; i++) {
+                this.emitDeclarationsForAST(list[i]);
             }
         }
 
@@ -854,8 +854,8 @@ module TypeScript {
 
         private emitHeritageClauses(clauses: HeritageClauseSyntax[]): void {
             if (clauses) {
-                for (var i = 0, n = clauses.childCount(); i < n; i++) {
-                    this.emitHeritageClause(clauses.childAt(i));
+                for (var i = 0, n = clauses.length; i < n; i++) {
+                    this.emitHeritageClause(clauses[i]);
                 }
             }
         }

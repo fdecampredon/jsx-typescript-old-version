@@ -17,8 +17,8 @@ module TypeScript {
         public visitList<T extends ISyntaxNodeOrToken>(list: T[]): T[] {
             var newItems: T[] = null;
 
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                var item = list.childAt(i);
+            for (var i = 0, n = list.length; i < n; i++) {
+                var item = list[i];
                 var newItem = <T>this.visitNodeOrToken(item);
 
                 if (item !== newItem && newItems === null) {

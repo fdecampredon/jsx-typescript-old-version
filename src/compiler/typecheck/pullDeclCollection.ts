@@ -29,7 +29,7 @@ module TypeScript {
     }
 
     function moduleElementsHasExportAssignment(moduleElements: IModuleElementSyntax[]): boolean {
-        for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
+        for (var i = 0, n = moduleElements.length; i < n; i++) {
             if (moduleElements.childAt(i).kind() === SyntaxKind.ExportAssignment) {
                 return true;
             }
@@ -249,7 +249,7 @@ module TypeScript {
     }
 
     function containsExecutableCode(members: IModuleElementSyntax[]): boolean {
-        for (var i = 0, n = members.childCount(); i < n; i++) {
+        for (var i = 0, n = members.length; i < n; i++) {
             var member = members.childAt(i);
 
             // October 11, 2013

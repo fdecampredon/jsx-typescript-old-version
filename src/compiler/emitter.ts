@@ -1994,7 +1994,7 @@ module TypeScript {
                 }
             }
 
-            for (var i = 0, n = this.thisClassNode.classElements.childCount(); i < n; i++) {
+            for (var i = 0, n = this.thisClassNode.classElements.length; i < n; i++) {
                 if (this.thisClassNode.classElements.childAt(i).kind() === SyntaxKind.MemberVariableDeclaration) {
                     var varDecl = <MemberVariableDeclarationSyntax>this.thisClassNode.classElements.childAt(i);
                     if (!hasModifier(varDecl.modifiers, PullElementFlags.Static) && varDecl.variableDeclarator.equalsValueClause) {
@@ -2077,7 +2077,7 @@ module TypeScript {
             }
         }
 
-        public emitList<T extends ISyntaxNodeOrToken>(list: T[], useNewLineSeparator = true, startInclusive = 0, endExclusive = list.childCount()) {
+        public emitList<T extends ISyntaxNodeOrToken>(list: T[], useNewLineSeparator = true, startInclusive = 0, endExclusive = list.length) {
             if (list === null) {
                 return;
             }
@@ -2207,7 +2207,7 @@ module TypeScript {
         }
 
         private emitDetachedComments(list: ISyntaxNodeOrToken[]): void {
-            if (list.childCount() > 0) {
+            if (list.length > 0) {
                 var firstElement = list.childAt(0);
 
                 this.detachedCommentsElement = firstElement;
@@ -2221,7 +2221,7 @@ module TypeScript {
             this.emitPossibleCopyrightHeaders(sourceUnit);
 
             // First, emit all the prologue elements.
-            for (var i = 0, n = list.childCount(); i < n; i++) {
+            for (var i = 0, n = list.length; i < n; i++) {
                 var node = list.childAt(i);
 
                 if (!this.isDirectivePrologueElement(node)) {
@@ -2330,7 +2330,7 @@ module TypeScript {
             var propertyAssignmentIndex = emitPropertyAssignmentsAfterSuperCall ? 1 : 0;
             var lastEmittedNode: ISyntaxElement = null;
 
-            for (var i = 0, n = list.childCount(); i < n; i++) {
+            for (var i = 0, n = list.length; i < n; i++) {
                 // In some circumstances, class property initializers must be emitted immediately after the 'super' constructor
                 // call which, in these cases, must be the first statement in the constructor body
                 if (i === propertyAssignmentIndex) {
@@ -2556,7 +2556,7 @@ module TypeScript {
             // First, emit all the functions.
             var lastEmittedMember: ISyntaxElement = null;
 
-            for (var i = 0, n = classDecl.classElements.childCount(); i < n; i++) {
+            for (var i = 0, n = classDecl.classElements.length; i < n; i++) {
                 var memberDecl = classDecl.classElements.childAt(i);
 
                 if (memberDecl.kind() === SyntaxKind.GetAccessor) {
@@ -2587,7 +2587,7 @@ module TypeScript {
             }
 
             // Now emit all the statics.
-            for (var i = 0, n = classDecl.classElements.childCount(); i < n; i++) {
+            for (var i = 0, n = classDecl.classElements.length; i < n; i++) {
                 var memberDecl = classDecl.classElements.childAt(i);
 
                 if (memberDecl.kind() === SyntaxKind.MemberVariableDeclaration) {
@@ -2659,7 +2659,7 @@ module TypeScript {
         }
 
         private requiresExtendsBlock(moduleElements: IModuleElementSyntax[]): boolean {
-            for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
+            for (var i = 0, n = moduleElements.length; i < n; i++) {
                 var moduleElement = moduleElements.childAt(i);
 
                 if (moduleElement.kind() === SyntaxKind.ModuleDeclaration) {
@@ -3296,7 +3296,7 @@ module TypeScript {
         }
 
         private emitSwitchClauseBody(body: IStatementSyntax[]): void {
-            if (body.childCount() === 1 && body.childAt(0).kind() === SyntaxKind.Block) {
+            if (body.length === 1 && body.childAt(0).kind() === SyntaxKind.Block) {
                 // The case statement was written with curly braces, so emit it with the appropriate formatting
                 this.emit(body.childAt(0));
                 this.writeLineToOutput("");
@@ -3717,7 +3717,7 @@ module TypeScript {
     }
 
     export function getLastConstructor(classDecl: ClassDeclarationSyntax): ConstructorDeclarationSyntax {
-        for (var i = classDecl.classElements.childCount() - 1; i >= 0; i--) {
+        for (var i = classDecl.classElements.length - 1; i >= 0; i--) {
             var child = classDecl.classElements.childAt(i);
 
             if (child.kind() === SyntaxKind.ConstructorDeclaration) {

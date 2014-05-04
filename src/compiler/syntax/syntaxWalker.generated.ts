@@ -43,8 +43,8 @@ module TypeScript {
         }
 
         public visitList(list: ISyntaxNodeOrToken[]): void {
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-               this.visitNodeOrToken(list.childAt(i));
+            for (var i = 0, n = list.length; i < n; i++) {
+               this.visitNodeOrToken(list[i]);
             }
         }
 

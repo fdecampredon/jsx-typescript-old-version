@@ -1226,7 +1226,7 @@ module TypeScript {
         }
 
         private resolveFirstExportAssignmentStatement(moduleElements: IModuleElementSyntax[], context: PullTypeResolutionContext): void {
-            for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
+            for (var i = 0, n = moduleElements.length; i < n; i++) {
                 var moduleElement = moduleElements.childAt(i);
                 if (moduleElement.kind() === SyntaxKind.ExportAssignment) {
                     this.resolveExportAssignmentStatement(<ExportAssignmentSyntax>moduleElement, context);
@@ -3718,7 +3718,7 @@ module TypeScript {
         }
 
         private containsSingleThrowStatement(block: BlockSyntax): boolean {
-            return block !== null && block.statements.childCount() === 1 && block.statements.childAt(0).kind() === SyntaxKind.ThrowStatement;
+            return block !== null && block.statements.length === 1 && block.statements.childAt(0).kind() === SyntaxKind.ThrowStatement;
         }
 
         private typeCheckAnyFunctionDeclaration(
@@ -4745,7 +4745,7 @@ module TypeScript {
                 this.setTypeChecked(list, context);
 
                 // Visit members   
-                for (var i = 0, n = list.childCount(); i < n; i++) {
+                for (var i = 0, n = list.length; i < n; i++) {
                     this.resolveAST(list.childAt(i), /*isContextuallyTyped*/ false, context);
                 }
             }
@@ -5453,7 +5453,7 @@ module TypeScript {
 
             var expressionType = this.resolveAST(ast.expression, false, context).type;
 
-            for (var i = 0, n = ast.switchClauses.childCount(); i < n; i++) {
+            for (var i = 0, n = ast.switchClauses.length; i < n; i++) {
                 var switchClause = ast.switchClauses.childAt(i);
                 if (switchClause.kind() === SyntaxKind.CaseSwitchClause) {
                     var caseSwitchClause = <CaseSwitchClauseSyntax>switchClause;
@@ -12568,7 +12568,7 @@ module TypeScript {
         }
 
         private getFirstStatementOfBlockOrNull(block: BlockSyntax): ISyntaxElement {
-            if (block && block.statements && block.statements.childCount() > 0) {
+            if (block && block.statements && block.statements.length > 0) {
                 return block.statements.childAt(0);
             }
 

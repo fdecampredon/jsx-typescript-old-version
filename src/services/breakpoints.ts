@@ -184,7 +184,7 @@ module TypeScript.Services.Breakpoints {
                             return null;
                         }
                         var moduleSyntax = <TypeScript.ModuleDeclarationSyntax>container;
-                        if (moduleSyntax.moduleElements && moduleSyntax.moduleElements.childCount() > 0) {
+                        if (moduleSyntax.moduleElements && moduleSyntax.moduleElements.length > 0) {
                             return createBreakpointSpanInfo(closeBraceToken);
                         }
                         else {
@@ -281,7 +281,7 @@ module TypeScript.Services.Breakpoints {
             }
 
             var blockSyntax = <TypeScript.BlockSyntax>blockNode;
-            return blockSyntax.statements && blockSyntax.statements.childCount() != 0;
+            return blockSyntax.statements && blockSyntax.statements.length != 0;
         }
 
         private breakpointSpanOfFirstStatementInBlock(blockNode: TypeScript.ISyntaxNode): SpanInfo {
@@ -291,7 +291,7 @@ module TypeScript.Services.Breakpoints {
 
             var blockSyntax = <TypeScript.BlockSyntax>blockNode;
             var statementsNode = blockSyntax.statements;
-            if (!statementsNode || statementsNode.childCount() == 0) {
+            if (!statementsNode || statementsNode.length == 0) {
                 return null;
             }
 
@@ -314,11 +314,11 @@ module TypeScript.Services.Breakpoints {
 
             var blockSyntax = <TypeScript.BlockSyntax>blockNode;
             var statementsNode = blockSyntax.statements;
-            if (!statementsNode || statementsNode.childCount() == 0) {
+            if (!statementsNode || statementsNode.length == 0) {
                 return null;
             }
 
-            var lastStatement = statementsNode.childAt(statementsNode.childCount() - 1);
+            var lastStatement = statementsNode.childAt(statementsNode.length - 1);
             if (lastStatement && lastStatement.kind() == TypeScript.SyntaxKind.Block) {
                 if (this.canHaveBreakpointInBlock(<TypeScript.ISyntaxNode>lastStatement)) {
                     return this.breakpointSpanOfLastStatementInBlock(<TypeScript.ISyntaxNode>lastStatement);
@@ -337,7 +337,7 @@ module TypeScript.Services.Breakpoints {
 
             // Find the first syntax element
             var listSyntax = positionedList;
-            if (listSyntax.childCount() == 0) {
+            if (listSyntax.length == 0) {
                 return null;
             }
 
@@ -361,7 +361,7 @@ module TypeScript.Services.Breakpoints {
 
             // Find the first syntax element
             var listSyntax = positionedList;
-            if (listSyntax.childCount() == 0) {
+            if (listSyntax.length == 0) {
                 return null;
             }
             var lastStatement = positionedList.childAt(0);
@@ -839,7 +839,7 @@ module TypeScript.Services.Breakpoints {
             }
 
             var parameterSyntax = <TypeScript.ParameterSyntax>parameterNode;
-            if (parameterSyntax.dotDotDotToken || parameterSyntax.equalsValueClause || parameterSyntax.modifiers.childCount() > 0) {
+            if (parameterSyntax.dotDotDotToken || parameterSyntax.equalsValueClause || parameterSyntax.modifiers.length > 0) {
                 return createBreakpointSpanInfo(parameterNode);
             }
             else {
@@ -936,16 +936,16 @@ module TypeScript.Services.Breakpoints {
 
         private breakpointSpanOfFirstStatementOfFirstCaseClause(switchStatementNode: TypeScript.SyntaxNode): SpanInfo {
             var switchStatement = <TypeScript.SwitchStatementSyntax>switchStatementNode;
-            if (switchStatement.switchClauses && switchStatement.switchClauses.childCount() == 0) {
+            if (switchStatement.switchClauses && switchStatement.switchClauses.length == 0) {
                 return null;
             }
 
             var switchClauses = switchStatement.switchClauses;
-            if (switchClauses.childCount() == 0) {
+            if (switchClauses.length == 0) {
                 return null;
             }
 
-            var firstCaseClause = switchClauses.childAt(0);
+            var firstCaseClause = switchClauses[0];
             var statements = firstCaseClause.statements;
 
             return this.breakpointSpanOfFirstChildOfSyntaxList(statements);
@@ -953,16 +953,16 @@ module TypeScript.Services.Breakpoints {
 
         private breakpointSpanOfLastStatementOfLastCaseClause(switchStatementNode: TypeScript.SyntaxNode): SpanInfo {
             var switchStatement = <TypeScript.SwitchStatementSyntax>switchStatementNode;
-            if (switchStatement.switchClauses && switchStatement.switchClauses.childCount() == 0) {
+            if (switchStatement.switchClauses && switchStatement.switchClauses.length == 0) {
                 return null;
             }
 
             var switchClauses = switchStatement.switchClauses;
-            if (switchClauses.childCount() == 0) {
+            if (switchClauses.length == 0) {
                 return null;
             }
 
-            var lastClauseNode = switchClauses.childAt(switchClauses.childCount() - 1);
+            var lastClauseNode = switchClauses[switchClauses.length - 1];
             var statements = lastClauseNode.statements;
 
             return this.breakpointSpanOfLastChildOfSyntaxList(statements);

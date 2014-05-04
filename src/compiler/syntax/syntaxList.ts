@@ -8,7 +8,7 @@ interface Array<T> {
 
     childCount(): number;
 
-    childAt(index: number): T;
+    childAt(index: number): TypeScript.ISyntaxNodeOrToken;
     setChildAt(index: number, value: T): void;
 
     separatorCount(): number;

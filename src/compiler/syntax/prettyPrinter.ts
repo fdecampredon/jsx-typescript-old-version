@@ -458,8 +458,8 @@ module TypeScript.PrettyPrinter {
 
         private appendStatements(statements: IStatementSyntax[]): void {
             var lastStatement: IStatementSyntax = null;
-            for (var i = 0, n = statements.childCount(); i < n; i++) {
-                var statement = statements.childAt(i);
+            for (var i = 0, n = statements.length; i < n; i++) {
+                var statement = statements[i];
 
                 var newLineCount = this.newLineCountBetweenStatements(lastStatement, statement);
 
@@ -730,8 +730,8 @@ module TypeScript.PrettyPrinter {
             this.ensureNewLine();
 
             var lastSwitchClause: ISwitchClauseSyntax = null;
-            for (var i = 0, n = node.switchClauses.childCount(); i < n; i++) {
-                var switchClause = node.switchClauses.childAt(i);
+            for (var i = 0, n = node.switchClauses.length; i < n; i++) {
+                var switchClause = node.switchClauses[i];
 
                 var newLineCount = this.newLineCountBetweenSwitchClauses(lastSwitchClause, switchClause);
 

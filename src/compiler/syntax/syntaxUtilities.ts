@@ -245,7 +245,7 @@ module TypeScript {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var token = list.childAt(i);
                 if (token.kind() === kind) {
-                    return token;
+                    return <ISyntaxToken>token;
                 }
             }
 

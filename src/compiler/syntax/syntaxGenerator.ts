@@ -2138,8 +2138,8 @@ function generateRewriter(): string {
 "        public visitList<T extends ISyntaxNodeOrToken>(list: T[]): T[] {\r\n" +
 "            var newItems: T[] = null;\r\n" +
 "\r\n" +
-"            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
-"                var item = list.childAt(i);\r\n" +
+"            for (var i = 0, n = list.length; i < n; i++) {\r\n" +
+"                var item = list[i];\r\n" +
 "                var newItem = <T>this.visitNodeOrToken(item);\r\n" +
 "\r\n" +
 "                if (item !== newItem && newItems === null) {\r\n" +
@@ -2290,8 +2290,8 @@ function generateWalker(): string {
 "        }\r\n" +
 "\r\n" +
 "        public visitList(list: ISyntaxNodeOrToken[]): void {\r\n" +
-"            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
-"               this.visitNodeOrToken(list.childAt(i));\r\n" +
+"            for (var i = 0, n = list.length; i < n; i++) {\r\n" +
+"               this.visitNodeOrToken(list[i]);\r\n" +
 "            }\r\n" +
 "        }\r\n" +
 "\r\n" +
@@ -2634,8 +2634,8 @@ function generateIsTypeScriptSpecific(): string {
     result += "module TypeScript {\r\n";
 
     result += "    function isSeparatedListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {\r\n"
-    result += "        for (var i = 0, n = this.length; i < n; i++) {\r\n";
-    result += "            if (this[i].isTypeScriptSpecific()) {\r\n";
+    result += "        for (var i = 0, n = this.childCount(); i < n; i++) {\r\n";
+    result += "            if (isTypeScriptSpecific(list.childAt(i))) {\r\n";
     result += "                return true;\r\n";
     result += "            }\r\n";
     result += "        }\r\n\r\n";
@@ -2643,8 +2643,8 @@ function generateIsTypeScriptSpecific(): string {
     result += "    }\r\n\r\n";
 
     result += "    function isListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {\r\n"
-    result += "        for (var i = 0, n = this.childCount(); i < n; i++) {\r\n";
-    result += "            if (this.childAt(i).isTypeScriptSpecific()) {\r\n";
+    result += "        for (var i = 0, n = this.length; i < n; i++) {\r\n";
+    result += "            if (isTypeScriptSpecific(list[i])) {\r\n";
     result += "                return true;\r\n";
     result += "            }\r\n";
     result += "        }\r\n\r\n";
@@ -2762,7 +2762,10 @@ function generateIsTypeScriptSpecificMethod(definition: ITypeDefinition): string
         addedCheck = true;
 
         if (child.isTypeScriptSpecific) {
-            if (child.isList || child.isSeparatedList) {
+            if (child.isList) {
+                result += getPropertyAccess(child, "node") + ".length > 0";
+            }
+            else if (child.isSeparatedList) {
                 result += getPropertyAccess(child, "node") + ".childCount() > 0";
             }
             else {

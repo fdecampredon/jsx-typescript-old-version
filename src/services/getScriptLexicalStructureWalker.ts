@@ -117,8 +117,8 @@ module TypeScript.Services {
         private getKindModifiers(modifiers: TypeScript.ISyntaxToken[]): string {
             var result: string[] = [];
 
-            for (var i = 0, n = modifiers.childCount(); i < n; i++) {
-                result.push(modifiers.childAt(i).text());
+            for (var i = 0, n = modifiers.length; i < n; i++) {
+                result.push(modifiers[i].text());
             }
 
             return result.length > 0 ? result.join(',') : ScriptElementKindModifier.none;

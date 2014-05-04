@@ -1,7 +1,7 @@
 module TypeScript {
     function isSeparatedListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {
-        for (var i = 0, n = this.length; i < n; i++) {
-            if (this[i].isTypeScriptSpecific()) {
+        for (var i = 0, n = this.childCount(); i < n; i++) {
+            if (isTypeScriptSpecific(list.childAt(i))) {
                 return true;
             }
         }
@@ -10,8 +10,8 @@ module TypeScript {
     }
 
     function isListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {
-        for (var i = 0, n = this.childCount(); i < n; i++) {
-            if (this.childAt(i).isTypeScriptSpecific()) {
+        for (var i = 0, n = this.length; i < n; i++) {
+            if (isTypeScriptSpecific(list[i])) {
                 return true;
             }
         }
@@ -170,13 +170,13 @@ module TypeScript {
     }
 
     function isFunctionDeclarationTypeScriptSpecific(node: FunctionDeclarationSyntax): boolean {
-        return node.modifiers.childCount() > 0 ||
+        return node.modifiers.length > 0 ||
                isTypeScriptSpecific(node.callSignature) ||
                isTypeScriptSpecific(node.block);
     }
 
     function isVariableStatementTypeScriptSpecific(node: VariableStatementSyntax): boolean {
-        return node.modifiers.childCount() > 0 ||
+        return node.modifiers.length > 0 ||
                isTypeScriptSpecific(node.variableDeclaration);
     }
 
@@ -278,7 +278,7 @@ module TypeScript {
     }
 
     function isGetAccessorTypeScriptSpecific(node: GetAccessorSyntax): boolean {
-        return node.modifiers.childCount() > 0 ||
+        return node.modifiers.length > 0 ||
                isTypeScriptSpecific(node.parameterList) ||
                node.typeAnnotation !== null ||
                isTypeScriptSpecific(node.block);

@@ -739,7 +739,7 @@ module TypeScript.Parser {
             this._oldSourceUnitCursor = getSyntaxCursor();
 
             // Start the cursor pointing at the first element in the source unit (if it exists).
-            if (oldSourceUnit.moduleElements.childCount() > 0) {
+            if (oldSourceUnit.moduleElements.length > 0) {
                 this._oldSourceUnitCursor.pushElement(oldSourceUnit.moduleElements.childAt(0), /*indexInParent:*/ 0);
             }
 
@@ -1718,7 +1718,7 @@ module TypeScript.Parser {
             }
             else if (isList(parent)) {
                 var list1 = <ISyntaxNodeOrToken[]>parent;
-                for (var i = 0, n = list1.childCount(); i < n; i++) {
+                for (var i = 0, n = list1.length; i < n; i++) {
                     if (list1.childAt(i) === oldToken) {
                         list1.setChildAt(i, newToken);
                         return;
@@ -5353,7 +5353,7 @@ module TypeScript.Parser {
 
             // If we're not forcing, and we don't see anything to indicate this is a parameter, then 
             // bail out.
-            if (!this.isIdentifier(this.currentToken()) && dotDotDotToken === null && modifiers.childCount() === 0) {
+            if (!this.isIdentifier(this.currentToken()) && dotDotDotToken === null && modifiers.length === 0) {
                 return null;
             }
 
