@@ -61,6 +61,10 @@ function tokenToJSON(token: TypeScript.ISyntaxToken): any {
         result.valueText = token.valueText();
     }
 
+    if (token.isKeywordConvertedToIdentifier()) {
+        result.isKeywordConvertedToIdentifier = true;
+    }
+
     if (token.hasLeadingTrivia()) {
         result.hasLeadingTrivia = true;
     }

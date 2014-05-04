@@ -1081,7 +1081,8 @@
                         "width": 6,
                         "text": "module",
                         "value": "module",
-                        "valueText": "module"
+                        "valueText": "module",
+                        "isKeywordConvertedToIdentifier": true
                     }
                 },
                 "semicolonToken": {
@@ -8031,6 +8032,7 @@
                                                                                 "text": "number",
                                                                                 "value": "number",
                                                                                 "valueText": "number",
+                                                                                "isKeywordConvertedToIdentifier": true,
                                                                                 "hasTrailingTrivia": true,
                                                                                 "trailingTrivia": [
                                                                                     {
@@ -9662,6 +9664,7 @@
                                                             "text": "any",
                                                             "value": "any",
                                                             "valueText": "any",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -9807,6 +9810,7 @@
                                                             "text": "boolean",
                                                             "value": "boolean",
                                                             "valueText": "boolean",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -9952,6 +9956,7 @@
                                                             "text": "declare",
                                                             "value": "declare",
                                                             "valueText": "declare",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -10097,6 +10102,7 @@
                                                             "text": "constructor",
                                                             "value": "constructor",
                                                             "valueText": "constructor",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -10242,6 +10248,7 @@
                                                             "text": "get",
                                                             "value": "get",
                                                             "valueText": "get",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -10387,6 +10394,7 @@
                                                             "text": "implements",
                                                             "value": "implements",
                                                             "valueText": "implements",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -10532,6 +10540,7 @@
                                                             "text": "interface",
                                                             "value": "interface",
                                                             "valueText": "interface",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -10677,6 +10686,7 @@
                                                             "text": "let",
                                                             "value": "let",
                                                             "valueText": "let",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -10822,6 +10832,7 @@
                                                             "text": "module",
                                                             "value": "module",
                                                             "valueText": "module",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -10967,6 +10978,7 @@
                                                             "text": "number",
                                                             "value": "number",
                                                             "valueText": "number",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -11112,6 +11124,7 @@
                                                             "text": "package",
                                                             "value": "package",
                                                             "valueText": "package",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -11257,6 +11270,7 @@
                                                             "text": "private",
                                                             "value": "private",
                                                             "valueText": "private",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -11402,6 +11416,7 @@
                                                             "text": "protected",
                                                             "value": "protected",
                                                             "valueText": "protected",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -11547,6 +11562,7 @@
                                                             "text": "public",
                                                             "value": "public",
                                                             "valueText": "public",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -11692,6 +11708,7 @@
                                                             "text": "set",
                                                             "value": "set",
                                                             "valueText": "set",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -11837,6 +11854,7 @@
                                                             "text": "static",
                                                             "value": "static",
                                                             "valueText": "static",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -11982,6 +12000,7 @@
                                                             "text": "string",
                                                             "value": "string",
                                                             "valueText": "string",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -12127,6 +12146,7 @@
                                                             "text": "yield",
                                                             "value": "yield",
                                                             "valueText": "yield",
+                                                            "isKeywordConvertedToIdentifier": true,
                                                             "hasTrailingTrivia": true,
                                                             "trailingTrivia": [
                                                                 {
@@ -12465,6 +12485,7 @@
                                                                                                                                     "text": "any",
                                                                                                                                     "value": "any",
                                                                                                                                     "valueText": "any",
+                                                                                                                                    "isKeywordConvertedToIdentifier": true,
                                                                                                                                     "hasTrailingTrivia": true,
                                                                                                                                     "trailingTrivia": [
                                                                                                                                         {
@@ -12507,6 +12528,7 @@
                                                                                                                                     "text": "boolean",
                                                                                                                                     "value": "boolean",
                                                                                                                                     "valueText": "boolean",
+                                                                                                                                    "isKeywordConvertedToIdentifier": true,
                                                                                                                                     "hasTrailingTrivia": true,
                                                                                                                                     "trailingTrivia": [
                                                                                                                                         {
@@ -12550,6 +12572,7 @@
                                                                                                                                 "text": "declare",
                                                                                                                                 "value": "declare",
                                                                                                                                 "valueText": "declare",
+                                                                                                                                "isKeywordConvertedToIdentifier": true,
                                                                                                                                 "hasTrailingTrivia": true,
                                                                                                                                 "trailingTrivia": [
                                                                                                                                     {
@@ -12593,6 +12616,7 @@
                                                                                                                             "text": "constructor",
                                                                                                                             "value": "constructor",
                                                                                                                             "valueText": "constructor",
+                                                                                                                            "isKeywordConvertedToIdentifier": true,
                                                                                                                             "hasTrailingTrivia": true,
                                                                                                                             "trailingTrivia": [
                                                                                                                                 {
@@ -12636,6 +12660,7 @@
                                                                                                                         "text": "get",
                                                                                                                         "value": "get",
                                                                                                                         "valueText": "get",
+                                                                                                                        "isKeywordConvertedToIdentifier": true,
                                                                                                                         "hasTrailingTrivia": true,
                                                                                                                         "trailingTrivia": [
                                                                                                                             {
@@ -12679,6 +12704,7 @@
                                                                                                                     "text": "implements",
                                                                                                                     "value": "implements",
                                                                                                                     "valueText": "implements",
+                                                                                                                    "isKeywordConvertedToIdentifier": true,
                                                                                                                     "hasTrailingTrivia": true,
                                                                                                                     "trailingTrivia": [
                                                                                                                         {
@@ -12722,6 +12748,7 @@
                                                                                                                 "text": "interface",
                                                                                                                 "value": "interface",
                                                                                                                 "valueText": "interface",
+                                                                                                                "isKeywordConvertedToIdentifier": true,
                                                                                                                 "hasTrailingTrivia": true,
                                                                                                                 "trailingTrivia": [
                                                                                                                     {
@@ -12765,6 +12792,7 @@
                                                                                                             "text": "let",
                                                                                                             "value": "let",
                                                                                                             "valueText": "let",
+                                                                                                            "isKeywordConvertedToIdentifier": true,
                                                                                                             "hasTrailingTrivia": true,
                                                                                                             "trailingTrivia": [
                                                                                                                 {
@@ -12808,6 +12836,7 @@
                                                                                                         "text": "module",
                                                                                                         "value": "module",
                                                                                                         "valueText": "module",
+                                                                                                        "isKeywordConvertedToIdentifier": true,
                                                                                                         "hasTrailingTrivia": true,
                                                                                                         "trailingTrivia": [
                                                                                                             {
@@ -12851,6 +12880,7 @@
                                                                                                     "text": "number",
                                                                                                     "value": "number",
                                                                                                     "valueText": "number",
+                                                                                                    "isKeywordConvertedToIdentifier": true,
                                                                                                     "hasTrailingTrivia": true,
                                                                                                     "trailingTrivia": [
                                                                                                         {
@@ -12894,6 +12924,7 @@
                                                                                                 "text": "package",
                                                                                                 "value": "package",
                                                                                                 "valueText": "package",
+                                                                                                "isKeywordConvertedToIdentifier": true,
                                                                                                 "hasTrailingTrivia": true,
                                                                                                 "trailingTrivia": [
                                                                                                     {
@@ -12937,6 +12968,7 @@
                                                                                             "text": "private",
                                                                                             "value": "private",
                                                                                             "valueText": "private",
+                                                                                            "isKeywordConvertedToIdentifier": true,
                                                                                             "hasTrailingTrivia": true,
                                                                                             "trailingTrivia": [
                                                                                                 {
@@ -12980,6 +13012,7 @@
                                                                                         "text": "protected",
                                                                                         "value": "protected",
                                                                                         "valueText": "protected",
+                                                                                        "isKeywordConvertedToIdentifier": true,
                                                                                         "hasTrailingTrivia": true,
                                                                                         "trailingTrivia": [
                                                                                             {
@@ -13023,6 +13056,7 @@
                                                                                     "text": "public",
                                                                                     "value": "public",
                                                                                     "valueText": "public",
+                                                                                    "isKeywordConvertedToIdentifier": true,
                                                                                     "hasTrailingTrivia": true,
                                                                                     "trailingTrivia": [
                                                                                         {
@@ -13066,6 +13100,7 @@
                                                                                 "text": "set",
                                                                                 "value": "set",
                                                                                 "valueText": "set",
+                                                                                "isKeywordConvertedToIdentifier": true,
                                                                                 "hasTrailingTrivia": true,
                                                                                 "trailingTrivia": [
                                                                                     {
@@ -13109,6 +13144,7 @@
                                                                             "text": "static",
                                                                             "value": "static",
                                                                             "valueText": "static",
+                                                                            "isKeywordConvertedToIdentifier": true,
                                                                             "hasTrailingTrivia": true,
                                                                             "trailingTrivia": [
                                                                                 {
@@ -13152,6 +13188,7 @@
                                                                         "text": "string",
                                                                         "value": "string",
                                                                         "valueText": "string",
+                                                                        "isKeywordConvertedToIdentifier": true,
                                                                         "hasTrailingTrivia": true,
                                                                         "trailingTrivia": [
                                                                             {
@@ -13194,7 +13231,8 @@
                                                                     "width": 5,
                                                                     "text": "yield",
                                                                     "value": "yield",
-                                                                    "valueText": "yield"
+                                                                    "valueText": "yield",
+                                                                    "isKeywordConvertedToIdentifier": true
                                                                 }
                                                             }
                                                         }
@@ -18745,6 +18783,7 @@
                                                                         "text": "implements",
                                                                         "value": "implements",
                                                                         "valueText": "implements",
+                                                                        "isKeywordConvertedToIdentifier": true,
                                                                         "hasTrailingTrivia": true,
                                                                         "trailingTrivia": [
                                                                             {
@@ -24491,7 +24530,8 @@
                             "width": 7,
                             "text": "boolean",
                             "value": "boolean",
-                            "valueText": "boolean"
+                            "valueText": "boolean",
+                            "isKeywordConvertedToIdentifier": true
                         },
                         "semicolonToken": {
                             "kind": "SemicolonToken",
