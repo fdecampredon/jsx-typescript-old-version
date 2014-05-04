@@ -230,7 +230,7 @@ module TypeScript.Parser {
 
         // Makes this cursor into a deep copy of the cursor passed in.
         public deepCopyFrom(other: SyntaxCursor): void {
-            Debug.assert(this.currentPieceIndex === -1);
+            // Debug.assert(this.currentPieceIndex === -1);
             for (var i = 0, n = other.pieces.length; i < n; i++) {
                 var piece = other.pieces[i];
 
@@ -241,7 +241,7 @@ module TypeScript.Parser {
                 this.pushElement(piece.element, piece.indexInParent);
             }
 
-            Debug.assert(this.currentPieceIndex === other.currentPieceIndex);
+            // Debug.assert(this.currentPieceIndex === other.currentPieceIndex);
         }
 
         public isFinished(): boolean {
@@ -279,7 +279,7 @@ module TypeScript.Parser {
             }
 
             // The last element must be a token or a node.
-            Debug.assert(isNode(nodeOrToken));
+            // Debug.assert(isNode(nodeOrToken));
 
             // Either the node has some existent child, then move to it.  if it doesn't, then it's
             // an empty node.  Conceptually the first child of an empty node is really just the 
@@ -300,7 +300,7 @@ module TypeScript.Parser {
             // This element must have been an empty node.  Moving to its 'first child' is equivalent to just
             // moving to the next sibling.
 
-            Debug.assert(fullWidth(nodeOrToken) === 0);
+            // Debug.assert(fullWidth(nodeOrToken) === 0);
             this.moveToNextSibling();
         }
 
@@ -345,15 +345,15 @@ module TypeScript.Parser {
             if (isList(element) || isSeparatedList(element)) {
                 // We cannot ever get an empty list in our piece path.  Empty lists are 'shared' and
                 // we make sure to filter that out before pushing any children.
-                Debug.assert(element.childCount() > 0);
+                // Debug.assert(element.childCount() > 0);
 
                 this.pushElement(element.childAt(0), /*indexInParent:*/ 0);
             }
         }
 
         public pushElement(element: ISyntaxElement, indexInParent: number): void {
-            Debug.assert(element !== null);
-            Debug.assert(indexInParent >= 0);
+            // Debug.assert(element !== null);
+            // Debug.assert(indexInParent >= 0);
             this.currentPieceIndex++;
 
             // Reuse an existing piece if we have one.  Otherwise, push a new piece to our list.
@@ -375,7 +375,7 @@ module TypeScript.Parser {
                     continue;
                 }
 
-                Debug.assert(isToken(element));
+                // Debug.assert(isToken(element));
                 return;
             }
         }
@@ -1134,7 +1134,7 @@ module TypeScript.Parser {
             var currentNode = this._oldSourceUnitCursor.currentNode();
 
             // We better still be pointing at the node.
-            Debug.assert(currentElement === currentNode);
+            // Debug.assert(currentElement === currentNode);
             this._oldSourceUnitCursor.moveToNextSibling();
 
             // Update the underlying source with where it should now be currently pointing, and 
@@ -2254,13 +2254,8 @@ module TypeScript.Parser {
 
         private modifierCount(): number {
             var modifierCount = 0;
-            while (true) {
-                if (ParserImpl.isModifier(this.peekToken(modifierCount))) {
-                    modifierCount++;
-                    continue;
-                }
-
-                break;
+            while (ParserImpl.isModifier(this.peekToken(modifierCount))) {
+                modifierCount++;
             }
 
             return modifierCount;
@@ -2307,7 +2302,7 @@ module TypeScript.Parser {
             if (this.isHeritageClause()) {
                 var result = this.parseSyntaxList<HeritageClauseSyntax>(ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses);
                 heritageClauses = result.list;
-                Debug.assert(result.skippedTokens.length === 0);
+                // Debug.assert(result.skippedTokens.length === 0);
             }
 
             return heritageClauses;
@@ -2517,7 +2512,7 @@ module TypeScript.Parser {
                     break;
                 }
 
-                Debug.assert(ParserImpl.isModifier(currentToken));
+                // Debug.assert(ParserImpl.isModifier(currentToken));
                 modifierArray.push(this.eatAnyToken());
             }
 
@@ -2614,7 +2609,7 @@ module TypeScript.Parser {
                     break;
                 }
 
-                Debug.assert(ParserImpl.isModifier(currentToken));
+                // Debug.assert(ParserImpl.isModifier(currentToken));
                 modifierArray.push(this.eatAnyToken());
             }
 
@@ -2625,7 +2620,7 @@ module TypeScript.Parser {
 
             // Even though we're calling tryParseVariableDeclarator, we must get one (we've already
             // verified that because of of hte call to isMemberVariableDecalrator above.
-            Debug.assert(variableDeclarator !== null);
+            // Debug.assert(variableDeclarator !== null);
 
             var semicolon = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
 
@@ -3761,7 +3756,7 @@ module TypeScript.Parser {
             }
 
             if (allowPropertyName) {
-                Debug.assert(this.isPropertyName(this.currentToken(), /*inErrorRecovery:*/ false));
+                // Debug.assert(this.isPropertyName(this.currentToken(), /*inErrorRecovery:*/ false));
             }
 
             if (!allowPropertyName && !this.isIdentifier(this.currentToken())) {
@@ -4708,11 +4703,12 @@ module TypeScript.Parser {
             // ERROR RECOVERY TWEAK:
             // If we see a standalone => try to parse it as an arrow function as that's likely what
             // the user intended to write.
-            if (this.currentToken().kind() === SyntaxKind.EqualsGreaterThanToken) {
+            var token0 = this.currentToken();
+            if (token0.kind() === SyntaxKind.EqualsGreaterThanToken) {
                 return true;
             }
 
-            return this.isIdentifier(this.currentToken()) &&
+            return this.isIdentifier(token0) &&
                    this.peekToken(1).kind() === SyntaxKind.EqualsGreaterThanToken;
         }
 
@@ -4931,7 +4927,7 @@ module TypeScript.Parser {
                 return this.eatIdentifierNameToken();
             }
 
-            Debug.assert(this.isPropertyName(currentToken, false));
+            // Debug.assert(this.isPropertyName(currentToken, false));
             this.moveToNextToken();
             return currentToken;
         }
@@ -5530,12 +5526,12 @@ module TypeScript.Parser {
             var separators: ISyntaxToken[] = getArray();
             var skippedTokens: ISyntaxToken[] = getArray();
 
-            Debug.assert(nodes.length === 0);
-            Debug.assert(separators.length === 0);
-            Debug.assert(skippedTokens.length === 0);
-            Debug.assert(<any>skippedTokens !== nodes);
-            Debug.assert(skippedTokens !== separators);
-            Debug.assert(<any>nodes !== separators);
+            // Debug.assert(nodes.length === 0);
+            // Debug.assert(separators.length === 0);
+            // Debug.assert(skippedTokens.length === 0);
+            // Debug.assert(<any>skippedTokens !== nodes);
+            // Debug.assert(skippedTokens !== separators);
+            // Debug.assert(<any>nodes !== separators);
 
             var separatorKind = this.separatorKind(currentListType);
             var allowAutomaticSemicolonInsertion = separatorKind === SyntaxKind.SemicolonToken;
