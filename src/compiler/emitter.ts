@@ -1995,8 +1995,8 @@ module TypeScript {
             }
 
             for (var i = 0, n = this.thisClassNode.classElements.length; i < n; i++) {
-                if (this.thisClassNode.classElements.childAt(i).kind() === SyntaxKind.MemberVariableDeclaration) {
-                    var varDecl = <MemberVariableDeclarationSyntax>this.thisClassNode.classElements.childAt(i);
+                if (this.thisClassNode.classElements[i].kind() === SyntaxKind.MemberVariableDeclaration) {
+                    var varDecl = <MemberVariableDeclarationSyntax>this.thisClassNode.classElements[i];
                     if (!hasModifier(varDecl.modifiers, PullElementFlags.Static) && varDecl.variableDeclarator.equalsValueClause) {
                         this.emitIndent();
                         this.emitMemberVariableDeclaration(varDecl);
@@ -2086,7 +2086,7 @@ module TypeScript {
             var lastEmittedNode: ISyntaxElement = null;
 
             for (var i = startInclusive; i < endExclusive; i++) {
-                var node = list.childAt(i);
+                var node = list[i];
 
                 if (this.shouldEmit(node)) {
                     this.emitSpaceBetweenConstructs(lastEmittedNode, node);
@@ -2222,7 +2222,7 @@ module TypeScript {
 
             // First, emit all the prologue elements.
             for (var i = 0, n = list.length; i < n; i++) {
-                var node = list.childAt(i);
+                var node = list[i];
 
                 if (!this.isDirectivePrologueElement(node)) {
                     break;
@@ -2337,7 +2337,7 @@ module TypeScript {
                     this.emitParameterPropertyAndMemberVariableAssignments();
                 }
 
-                var node = list.childAt(i);
+                var node = list[i];
 
                 if (this.shouldEmit(node)) {
                     this.emitSpaceBetweenConstructs(lastEmittedNode, node);
@@ -2557,7 +2557,7 @@ module TypeScript {
             var lastEmittedMember: ISyntaxElement = null;
 
             for (var i = 0, n = classDecl.classElements.length; i < n; i++) {
-                var memberDecl = classDecl.classElements.childAt(i);
+                var memberDecl = classDecl.classElements[i];
 
                 if (memberDecl.kind() === SyntaxKind.GetAccessor) {
                     this.emitSpaceBetweenConstructs(lastEmittedMember, memberDecl);
@@ -2588,7 +2588,7 @@ module TypeScript {
 
             // Now emit all the statics.
             for (var i = 0, n = classDecl.classElements.length; i < n; i++) {
-                var memberDecl = classDecl.classElements.childAt(i);
+                var memberDecl = classDecl.classElements[i];
 
                 if (memberDecl.kind() === SyntaxKind.MemberVariableDeclaration) {
                     var varDecl = <MemberVariableDeclarationSyntax>memberDecl;
@@ -2660,7 +2660,7 @@ module TypeScript {
 
         private requiresExtendsBlock(moduleElements: IModuleElementSyntax[]): boolean {
             for (var i = 0, n = moduleElements.length; i < n; i++) {
-                var moduleElement = moduleElements.childAt(i);
+                var moduleElement = moduleElements[i];
 
                 if (moduleElement.kind() === SyntaxKind.ModuleDeclaration) {
                     var moduleAST = <ModuleDeclarationSyntax>moduleElement;
@@ -3718,7 +3718,7 @@ module TypeScript {
 
     export function getLastConstructor(classDecl: ClassDeclarationSyntax): ConstructorDeclarationSyntax {
         for (var i = classDecl.classElements.length - 1; i >= 0; i--) {
-            var child = classDecl.classElements.childAt(i);
+            var child = classDecl.classElements[i];
 
             if (child.kind() === SyntaxKind.ConstructorDeclaration) {
                 return <ConstructorDeclarationSyntax>child;

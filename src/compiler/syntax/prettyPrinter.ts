@@ -166,8 +166,8 @@ module TypeScript.PrettyPrinter {
 
         private appendModuleElements(list: IModuleElementSyntax[]): void {
             var lastModuleElement: IModuleElementSyntax = null;
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                var moduleElement = list.childAt(i);
+            for (var i = 0, n = list.length; i < n; i++) {
+                var moduleElement = list[i];
                 var newLineCount = this.newLineCountBetweenModuleElements(lastModuleElement, moduleElement);
 
                 this.appendNewLines(newLineCount);
@@ -228,8 +228,8 @@ module TypeScript.PrettyPrinter {
             this.indentation++;
 
             var lastClassElement: IClassElementSyntax = null;
-            for (var i = 0, n = node.classElements.childCount(); i < n; i++) {
-                var classElement = node.classElements.childAt(i);
+            for (var i = 0, n = node.classElements.length; i < n; i++) {
+                var classElement = node.classElements[i];
                 var newLineCount = this.newLineCountBetweenClassElements(lastClassElement, classElement);
 
                 this.appendNewLines(newLineCount);

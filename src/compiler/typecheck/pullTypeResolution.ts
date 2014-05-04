@@ -1227,7 +1227,7 @@ module TypeScript {
 
         private resolveFirstExportAssignmentStatement(moduleElements: IModuleElementSyntax[], context: PullTypeResolutionContext): void {
             for (var i = 0, n = moduleElements.length; i < n; i++) {
-                var moduleElement = moduleElements.childAt(i);
+                var moduleElement = moduleElements[i];
                 if (moduleElement.kind() === SyntaxKind.ExportAssignment) {
                     this.resolveExportAssignmentStatement(<ExportAssignmentSyntax>moduleElement, context);
                     return;
@@ -4746,7 +4746,7 @@ module TypeScript {
 
                 // Visit members   
                 for (var i = 0, n = list.length; i < n; i++) {
-                    this.resolveAST(list.childAt(i), /*isContextuallyTyped*/ false, context);
+                    this.resolveAST(list[i], /*isContextuallyTyped*/ false, context);
                 }
             }
 
@@ -5454,7 +5454,7 @@ module TypeScript {
             var expressionType = this.resolveAST(ast.expression, false, context).type;
 
             for (var i = 0, n = ast.switchClauses.length; i < n; i++) {
-                var switchClause = ast.switchClauses.childAt(i);
+                var switchClause = ast.switchClauses[i];
                 if (switchClause.kind() === SyntaxKind.CaseSwitchClause) {
                     var caseSwitchClause = <CaseSwitchClauseSyntax>switchClause;
 

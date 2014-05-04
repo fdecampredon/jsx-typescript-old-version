@@ -60,8 +60,8 @@ module TypeScript {
     export function hasModifier(modifiers: ISyntaxToken[], flag: PullElementFlags): boolean {
         var kind = mapFlagToTokenKind(flag);
 
-        for (var i = 0, n = modifiers.childCount(); i < n; i++) {
-            var modifier = modifiers.childAt(i);
+        for (var i = 0, n = modifiers.length; i < n; i++) {
+            var modifier = modifiers[i];
 
             if (modifier.kind() === kind) {
                 return true;

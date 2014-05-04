@@ -2145,7 +2145,7 @@ function generateRewriter(): string {
 "                if (item !== newItem && newItems === null) {\r\n" +
 "                    newItems = [];\r\n" +
 "                    for (var j = 0; j < i; j++) {\r\n" +
-"                        newItems.push(list.childAt(j));\r\n" +
+"                        newItems.push(list[j]);\r\n" +
 "                    }\r\n" +
 "                }\r\n" +
 "\r\n" +

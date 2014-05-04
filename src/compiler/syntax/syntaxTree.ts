@@ -435,7 +435,7 @@ module TypeScript {
                 var functionOverloadChainName: string = null;
 
                 for (var i = 0, n = moduleElements.length; i < n; i++) {
-                    var moduleElement = moduleElements.childAt(i);
+                    var moduleElement = moduleElements[i];
                     var lastElement = i === (n - 1);
 
                     if (inFunctionOverloadChain) {
@@ -504,7 +504,7 @@ module TypeScript {
                 var memberFunctionDeclaration: MemberFunctionDeclarationSyntax = null;
 
                 for (var i = 0, n = node.classElements.length; i < n; i++) {
-                    var classElement = node.classElements.childAt(i);
+                    var classElement = node.classElements[i];
                     var lastElement = i === (n - 1);
                     var isStaticOverload: boolean = null;
 
@@ -657,7 +657,7 @@ module TypeScript {
 
         private checkInterfaceModifiers(modifiers: ISyntaxToken[]): boolean {
             for (var i = 0, n = modifiers.length; i < n; i++) {
-                var modifier = modifiers.childAt(i);
+                var modifier = modifiers[i];
                 if (modifier.kind() === SyntaxKind.DeclareKeyword) {
                     this.pushDiagnostic(modifier,
                         DiagnosticCode.declare_modifier_cannot_appear_on_an_interface_declaration);
@@ -953,7 +953,7 @@ module TypeScript {
 
         private checkForDisallowedImportDeclaration(node: ModuleDeclarationSyntax): boolean {
             for (var i = 0, n = node.moduleElements.length; i < n; i++) {
-                var child = node.moduleElements.childAt(i);
+                var child = node.moduleElements[i];
                 if (child.kind() === SyntaxKind.ImportDeclaration) {
                     var importDeclaration = <ImportDeclarationSyntax>child;
                     if (importDeclaration.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
@@ -1026,7 +1026,7 @@ module TypeScript {
         private checkForDisallowedExports(node: ISyntaxElement, moduleElements: IModuleElementSyntax[]): boolean {
             var seenExportedElement = false;
             for (var i = 0, n = moduleElements.length; i < n; i++) {
-                var child = moduleElements.childAt(i);
+                var child = moduleElements[i];
 
                 if (SyntaxUtilities.hasExportKeyword(child)) {
                     seenExportedElement = true;
@@ -1036,7 +1036,7 @@ module TypeScript {
 
             if (seenExportedElement) {
                 for (var i = 0, n = moduleElements.length; i < n; i++) {
-                    var child = moduleElements.childAt(i);
+                    var child = moduleElements[i];
 
                     if (child.kind() === SyntaxKind.ExportAssignment) {
                         this.pushDiagnostic(child, DiagnosticCode.Export_assignment_not_allowed_in_module_with_exported_element);
@@ -1052,7 +1052,7 @@ module TypeScript {
             var seenExportAssignment = false;
             var errorFound = false;
             for (var i = 0, n = moduleElements.length; i < n; i++) {
-                var child = moduleElements.childAt(i);
+                var child = moduleElements[i];
                 if (child.kind() === SyntaxKind.ExportAssignment) {
                     if (seenExportAssignment) {
                         this.pushDiagnostic(child, DiagnosticCode.Module_cannot_have_multiple_export_assignments);
@@ -1067,7 +1067,7 @@ module TypeScript {
 
         private checkForDisallowedExportAssignment(node: ModuleDeclarationSyntax): boolean {
             for (var i = 0, n = node.moduleElements.length; i < n; i++) {
-                var child = node.moduleElements.childAt(i);
+                var child = node.moduleElements[i];
 
                 if (child.kind() === SyntaxKind.ExportAssignment) {
                     this.pushDiagnostic(child, DiagnosticCode.Export_assignment_cannot_be_used_in_internal_modules);
@@ -1361,7 +1361,7 @@ module TypeScript {
 
         private checkConstructorModifiers(modifiers: ISyntaxToken[]): boolean {
             for (var i = 0, n = modifiers.length; i < n; i++) {
-                var child = modifiers.childAt(i);
+                var child = modifiers[i];
                 if (child.kind() !== SyntaxKind.PublicKeyword) {
                     this.pushDiagnostic(child, DiagnosticCode._0_modifier_cannot_appear_on_a_constructor_declaration, [SyntaxFacts.getText(child.kind())]);
                     return true;

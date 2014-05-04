@@ -1719,7 +1719,7 @@ module TypeScript.Parser {
             else if (isList(parent)) {
                 var list1 = <ISyntaxNodeOrToken[]>parent;
                 for (var i = 0, n = list1.length; i < n; i++) {
-                    if (list1.childAt(i) === oldToken) {
+                    if (list1[i] === oldToken) {
                         list1.setChildAt(i, newToken);
                         return;
                     }

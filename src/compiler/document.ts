@@ -100,8 +100,8 @@ module TypeScript {
         }
 
         private getTopLevelImportOrExportSpan(node: SourceUnitSyntax): TextSpan {
-            for (var i = 0, n = node.moduleElements.childCount(); i < n; i++) {
-                var moduleElement = node.moduleElements.childAt(i);
+            for (var i = 0, n = node.moduleElements.length; i < n; i++) {
+                var moduleElement = node.moduleElements[i];
 
                 var _firstToken = firstToken(moduleElement);
                 if (_firstToken !== null && _firstToken.kind() === SyntaxKind.ExportKeyword) {

@@ -242,10 +242,10 @@ module TypeScript {
         }
 
         public static getToken(list: ISyntaxToken[], kind: SyntaxKind): ISyntaxToken {
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                var token = list.childAt(i);
+            for (var i = 0, n = list.length; i < n; i++) {
+                var token = list[i];
                 if (token.kind() === kind) {
-                    return <ISyntaxToken>token;
+                    return token;
                 }
             }
 
