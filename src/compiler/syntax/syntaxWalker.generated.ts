@@ -49,8 +49,8 @@ module TypeScript {
         }
 
         public visitSeparatedList(list: ISyntaxNodeOrToken[]): void {
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                var item = list.childAt(i);
+            for (var i = 0, n = childCount(list); i < n; i++) {
+                var item = childAt(list, i);
                 this.visitNodeOrToken(item);
             }
         }

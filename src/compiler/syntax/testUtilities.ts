@@ -3,11 +3,11 @@ module TypeScript {
         if (node1 === node2) { return true; }
         if (node1 === null || node2 === null) { return false; }
         if (node1.kind !== node2.kind) { return false; }
-        if (node1.childCount() !== node2.childCount()) { return false; }
+        if (childCount(node1) !== childCount(node2)) { return false; }
 
-        for (var i = 0, n = node1.childCount(); i < n; i++) {
-            var element1 = node1.childAt(i);
-            var element2 = node2.childAt(i);
+        for (var i = 0, n = childCount(node1); i < n; i++) {
+            var element1 = childAt(node1, i);
+            var element2 = childAt(node2, i);
 
             if (!elementStructuralEquals(element1, element2)) {
                 return false;
@@ -75,13 +75,13 @@ module TypeScript {
     }
 
     function listStructuralEquals<T extends TypeScript.ISyntaxNodeOrToken>(list1: T[], list2: T[]): boolean {
-        if (list1.childCount() !== list2.childCount()) {
+        if (childCount(list1) !== childCount(list2)) {
             return false;
         }
 
-        for (var i = 0, n = list1.childCount(); i < n; i++) {
-            var child1 = list1.childAt(i);
-            var child2 = list2.childAt(i);
+        for (var i = 0, n = childCount(list1); i < n; i++) {
+            var child1 = childAt(list1, i);
+            var child2 = childAt(list2, i);
 
             if (!nodeOrTokenStructuralEquals(child1, child2)) {
                 return false;
@@ -92,13 +92,13 @@ module TypeScript {
     }
 
     function separatedListStructuralEquals<T extends TypeScript.ISyntaxNodeOrToken>(list1: T[], list2: T[]): boolean {
-        if (list1.childCount() !== list2.childCount()) {
+        if (childCount(list1) !== childCount(list2)) {
             return false;
         }
 
-        for (var i = 0, n = list1.childCount(); i < n; i++) {
-            var element1 = list1.childAt(i);
-            var element2 = list2.childAt(i);
+        for (var i = 0, n = childCount(list1); i < n; i++) {
+            var element1 = childAt(list1, i);
+            var element2 = childAt(list2, i);
             if (!nodeOrTokenStructuralEquals(element1, element2)) {
                 return false;
             }

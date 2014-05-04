@@ -2208,7 +2208,7 @@ module TypeScript {
 
         private emitDetachedComments(list: ISyntaxNodeOrToken[]): void {
             if (list.length > 0) {
-                var firstElement = list.childAt(0);
+                var firstElement = childAt(list, 0);
 
                 this.detachedCommentsElement = firstElement;
                 this.emitCommentsArray(this.getDetachedComments(this.detachedCommentsElement), /*trailing:*/ false);
@@ -3296,9 +3296,9 @@ module TypeScript {
         }
 
         private emitSwitchClauseBody(body: IStatementSyntax[]): void {
-            if (body.length === 1 && body.childAt(0).kind === SyntaxKind.Block) {
+            if (body.length === 1 && childAt(body, 0).kind === SyntaxKind.Block) {
                 // The case statement was written with curly braces, so emit it with the appropriate formatting
-                this.emit(body.childAt(0));
+                this.emit(childAt(body, 0));
                 this.writeLineToOutput("");
             }
             else {

@@ -313,14 +313,6 @@ module TypeScript.Syntax {
             return new EmptyToken(this.kind);
         }
 
-        public childCount(): number {
-            return 0;
-        }
-
-        public childAt(index: number): ISyntaxElement {
-            throw Errors.argumentOutOfRange("index");
-        }
-
         private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             return this;
         }
@@ -374,8 +366,8 @@ module TypeScript.Syntax {
                 }
 
                 // Ok.  We have a parent.  First, find out which slot we're at in the parent.
-                for (var i = 0, n = parent.childCount(); i < n; i++) {
-                    if (parent.childAt(i) === current) {
+                for (var i = 0, n = childCount(parent); i < n; i++) {
+                    if (childAt(parent, i) === current) {
                         break;
                     }
                 }
@@ -384,7 +376,7 @@ module TypeScript.Syntax {
 
                 // Walk backward from this element, looking for a non-zero-width sibling.
                 for (var j = i - 1; j >= 0; j--) {
-                    var sibling = parent.childAt(j);
+                    var sibling = childAt(parent, j);
                     if (sibling && fullWidth(sibling) > 0) {
                         return sibling;
                     }
@@ -473,14 +465,6 @@ module TypeScript.Syntax {
         // it.
         public isIncrementallyUnusable() { return this._underlyingToken.isIncrementallyUnusable(); }
         public isKeywordConvertedToIdentifier() { return true; }
-
-        public childCount(): number {
-            return 0;
-        }
-
-        public childAt(index: number): ISyntaxElement {
-            throw Errors.argumentOutOfRange("index");
-        }
 
         public fullStart(): number { return this._underlyingToken.fullStart(); }
         public fullWidth(): number { return this._underlyingToken.fullWidth(); }

@@ -4,8 +4,8 @@ module TypeScript.Syntax {
     export var _nextSyntaxID: number = 1;
 
     export function setParentForChildren(element: ISyntaxElement): void {
-        for (var i = 0, n = element.childCount(); i < n; i++) {
-            var child = element.childAt(i);
+        for (var i = 0, n = childCount(element); i < n; i++) {
+            var child = childAt(element, i);
 
             // Don't set the parent for this child if it is a shared child.  This child can be 
             // found under multiple parents, and thus has no valid 'parent' reference.
@@ -83,8 +83,8 @@ module TypeScript.Syntax {
 
     export function childOffset(parent: ISyntaxElement, child: ISyntaxElement) {
         var offset = 0;
-        for (var i = 0, n = parent.childCount(); i < n; i++) {
-            var current = parent.childAt(i);
+        for (var i = 0, n = childCount(parent); i < n; i++) {
+            var current = childAt(parent, i);
             if (current === child) {
                 return offset;
             }
@@ -100,7 +100,7 @@ module TypeScript.Syntax {
     export function childOffsetAt(parent: ISyntaxElement, index: number) {
         var offset = 0;
         for (var i = 0; i < index; i++) {
-            var current = parent.childAt(i);
+            var current = childAt(parent, i);
             if (current !== null) {
                 offset += fullWidth(current);
             }
@@ -110,8 +110,8 @@ module TypeScript.Syntax {
     }
 
     export function childIndex(parent: ISyntaxElement, child: ISyntaxElement) {
-        for (var i = 0, n = parent.childCount(); i < n; i++) {
-            var current = parent.childAt(i);
+        for (var i = 0, n = childCount(parent); i < n; i++) {
+            var current = childAt(parent, i);
             if (current === child) {
                 return i;
             }
@@ -165,8 +165,8 @@ module TypeScript.Syntax {
     //}
 
     export function nodeHasSkippedOrMissingTokens(node: SyntaxNode): boolean {
-        for (var i = 0; i < node.childCount(); i++) {
-            var child = node.childAt(i);
+        for (var i = 0; i < childCount(node); i++) {
+            var child = childAt(node, i);
             if (isToken(child)) {
                 var token = <ISyntaxToken>child;
                 // If a token is skipped, return true. Or if it is a missing token. The only empty token that is not missing is EOF
@@ -495,8 +495,8 @@ module TypeScript.Syntax {
         }
 
         // Consider: we could use a binary search here to find the child more quickly.
-        for (var i = 0, n = element.childCount(); i < n; i++) {
-            var child = element.childAt(i);
+        for (var i = 0, n = childCount(element); i < n; i++) {
+            var child = childAt(element, i);
 
             if (child !== null && fullWidth(child) > 0) {
                 var childFullStart = fullStart(child);

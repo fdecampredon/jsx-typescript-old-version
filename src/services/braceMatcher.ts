@@ -38,8 +38,8 @@ module TypeScript.Services {
                 if (closingBraceKind !== null) {
                     var parentElement = currentToken.parent
                     var currentPosition = fullStart(currentToken.parent);
-                    for (var i = 0, n = parentElement.childCount(); i < n; i++) {
-                        var element = parentElement.childAt(i);
+                    for (var i = 0, n = childCount(parentElement); i < n; i++) {
+                        var element = childAt(parentElement, i);
                         if (element !== null && fullWidth(element) > 0) {
                             if (element.kind === closingBraceKind) {
                                 var range1 = new TypeScript.TextSpan(position, width(currentToken));
@@ -66,8 +66,8 @@ module TypeScript.Services {
                 if (openBraceKind !== null) {
                     var parentElement = currentToken.parent;
                     var currentPosition = fullStart(currentToken.parent) + fullWidth(parentElement);
-                    for (var i = parentElement.childCount() - 1 ; i >= 0; i--) {
-                        var element = parentElement.childAt(i);
+                    for (var i = childCount(parentElement) - 1 ; i >= 0; i--) {
+                        var element = childAt(parentElement, i);
                         if (element !== null && fullWidth(element) > 0) {
                             if (element.kind === openBraceKind) {
                                 var range1 = new TypeScript.TextSpan(position - 1, width(currentToken));

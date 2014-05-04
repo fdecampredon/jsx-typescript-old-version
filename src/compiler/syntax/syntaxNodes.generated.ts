@@ -177,18 +177,6 @@ module TypeScript {
             !isShared(moduleElements) && (moduleElements.parent = this);
             endOfFileToken.parent = this;
         }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.moduleElements;
-                case 1: return this.endOfFileToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ExternalModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
@@ -206,20 +194,6 @@ module TypeScript {
             stringLiteral.parent = this;
             closeParenToken.parent = this;
         }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.requireKeyword;
-                case 1: return this.openParenToken;
-                case 2: return this.stringLiteral;
-                case 3: return this.closeParenToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
@@ -230,17 +204,6 @@ module TypeScript {
             super(SyntaxKind.ModuleNameModuleReference, data); 
 
             moduleName.parent = this;
-        }
-
-        public childCount(): number {
-            return 1;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.moduleName;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -263,22 +226,6 @@ module TypeScript {
             moduleReference.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-
-        public childCount(): number {
-            return 6;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.importKeyword;
-                case 2: return this.identifier;
-                case 3: return this.equalsToken;
-                case 4: return this.moduleReference;
-                case 5: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ExportAssignmentSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -295,20 +242,6 @@ module TypeScript {
             equalsToken.parent = this;
             identifier.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.exportKeyword;
-                case 1: return this.equalsToken;
-                case 2: return this.identifier;
-                case 3: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -335,24 +268,6 @@ module TypeScript {
             !isShared(classElements) && (classElements.parent = this);
             closeBraceToken.parent = this;
         }
-
-        public childCount(): number {
-            return 8;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.classKeyword;
-                case 2: return this.identifier;
-                case 3: return this.typeParameterList;
-                case 4: return this.heritageClauses;
-                case 5: return this.openBraceToken;
-                case 6: return this.classElements;
-                case 7: return this.closeBraceToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class InterfaceDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -374,22 +289,6 @@ module TypeScript {
             !isShared(heritageClauses) && (heritageClauses.parent = this);
             body.parent = this;
         }
-
-        public childCount(): number {
-            return 6;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.interfaceKeyword;
-                case 2: return this.identifier;
-                case 3: return this.typeParameterList;
-                case 4: return this.heritageClauses;
-                case 5: return this.body;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class HeritageClauseSyntax extends SyntaxNode {
@@ -404,18 +303,6 @@ module TypeScript {
             this._kind = kind;
             extendsOrImplementsKeyword.parent = this;
             !isShared(typeNames) && (typeNames.parent = this);
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.extendsOrImplementsKeyword;
-                case 1: return this.typeNames;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -440,23 +327,6 @@ module TypeScript {
             !isShared(moduleElements) && (moduleElements.parent = this);
             closeBraceToken.parent = this;
         }
-
-        public childCount(): number {
-            return 7;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.moduleKeyword;
-                case 2: return this.name;
-                case 3: return this.stringLiteral;
-                case 4: return this.openBraceToken;
-                case 5: return this.moduleElements;
-                case 6: return this.closeBraceToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class FunctionDeclarationSyntax extends SyntaxNode implements IStatementSyntax {
@@ -479,22 +349,6 @@ module TypeScript {
             block && (block.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-
-        public childCount(): number {
-            return 6;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.functionKeyword;
-                case 2: return this.identifier;
-                case 3: return this.callSignature;
-                case 4: return this.block;
-                case 5: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class VariableStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -511,19 +365,6 @@ module TypeScript {
             variableDeclaration.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.variableDeclaration;
-                case 2: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class VariableDeclarationSyntax extends SyntaxNode {
@@ -534,18 +375,6 @@ module TypeScript {
 
             varKeyword.parent = this;
             !isShared(variableDeclarators) && (variableDeclarators.parent = this);
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.varKeyword;
-                case 1: return this.variableDeclarators;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -560,19 +389,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
             equalsValueClause && (equalsValueClause.parent = this);
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.propertyName;
-                case 1: return this.typeAnnotation;
-                case 2: return this.equalsValueClause;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class EqualsValueClauseSyntax extends SyntaxNode {
@@ -583,18 +399,6 @@ module TypeScript {
 
             equalsToken.parent = this;
             value.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.equalsToken;
-                case 1: return this.value;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -613,18 +417,6 @@ module TypeScript {
             this._kind = kind;
             operatorToken.parent = this;
             operand.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.operatorToken;
-                case 1: return this.operand;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -646,19 +438,6 @@ module TypeScript {
             !isShared(expressions) && (expressions.parent = this);
             closeBracketToken.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.openBracketToken;
-                case 1: return this.expressions;
-                case 2: return this.closeBracketToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class OmittedExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
@@ -666,14 +445,6 @@ module TypeScript {
 
         constructor(data: number) {
             super(SyntaxKind.OmittedExpression, data); 
-        }
-
-        public childCount(): number {
-            return 0;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            throw Errors.invalidOperation();
         }
     }
 
@@ -695,19 +466,6 @@ module TypeScript {
             expression.parent = this;
             closeParenToken.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.openParenToken;
-                case 1: return this.expression;
-                case 2: return this.closeParenToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -725,20 +483,6 @@ module TypeScript {
             equalsGreaterThanToken.parent = this;
             block && (block.parent = this);
             expression && (expression.parent = this);
-        }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.identifier;
-                case 1: return this.equalsGreaterThanToken;
-                case 2: return this.block;
-                case 3: return this.expression;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -758,20 +502,6 @@ module TypeScript {
             block && (block.parent = this);
             expression && (expression.parent = this);
         }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.callSignature;
-                case 1: return this.equalsGreaterThanToken;
-                case 2: return this.block;
-                case 3: return this.expression;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class QualifiedNameSyntax extends SyntaxNode implements INameSyntax {
@@ -788,19 +518,6 @@ module TypeScript {
             dotToken.parent = this;
             right.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.left;
-                case 1: return this.dotToken;
-                case 2: return this.right;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class TypeArgumentListSyntax extends SyntaxNode {
@@ -813,19 +530,6 @@ module TypeScript {
             lessThanToken.parent = this;
             !isShared(typeArguments) && (typeArguments.parent = this);
             greaterThanToken.parent = this;
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.lessThanToken;
-                case 1: return this.typeArguments;
-                case 2: return this.greaterThanToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -846,21 +550,6 @@ module TypeScript {
             equalsGreaterThanToken.parent = this;
             type.parent = this;
         }
-
-        public childCount(): number {
-            return 5;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.newKeyword;
-                case 1: return this.typeParameterList;
-                case 2: return this.parameterList;
-                case 3: return this.equalsGreaterThanToken;
-                case 4: return this.type;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class FunctionTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -878,20 +567,6 @@ module TypeScript {
             equalsGreaterThanToken.parent = this;
             type.parent = this;
         }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.typeParameterList;
-                case 1: return this.parameterList;
-                case 2: return this.equalsGreaterThanToken;
-                case 3: return this.type;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ObjectTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -906,19 +581,6 @@ module TypeScript {
             openBraceToken.parent = this;
             !isShared(typeMembers) && (typeMembers.parent = this);
             closeBraceToken.parent = this;
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.openBraceToken;
-                case 1: return this.typeMembers;
-                case 2: return this.closeBraceToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -935,19 +597,6 @@ module TypeScript {
             openBracketToken.parent = this;
             closeBracketToken.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.type;
-                case 1: return this.openBracketToken;
-                case 2: return this.closeBracketToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class GenericTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -960,18 +609,6 @@ module TypeScript {
 
             name.parent = this;
             typeArgumentList.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.name;
-                case 1: return this.typeArgumentList;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -986,18 +623,6 @@ module TypeScript {
             typeOfKeyword.parent = this;
             name.parent = this;
         }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.typeOfKeyword;
-                case 1: return this.name;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class TypeAnnotationSyntax extends SyntaxNode {
@@ -1008,18 +633,6 @@ module TypeScript {
 
             colonToken.parent = this;
             type.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.colonToken;
-                case 1: return this.type;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1036,19 +649,6 @@ module TypeScript {
             openBraceToken.parent = this;
             !isShared(statements) && (statements.parent = this);
             closeBraceToken.parent = this;
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.openBraceToken;
-                case 1: return this.statements;
-                case 2: return this.closeBraceToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1068,22 +668,6 @@ module TypeScript {
             questionToken && (questionToken.parent = this);
             typeAnnotation && (typeAnnotation.parent = this);
             equalsValueClause && (equalsValueClause.parent = this);
-        }
-
-        public childCount(): number {
-            return 6;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.dotDotDotToken;
-                case 1: return this.modifiers;
-                case 2: return this.identifier;
-                case 3: return this.questionToken;
-                case 4: return this.typeAnnotation;
-                case 5: return this.equalsValueClause;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1105,19 +689,6 @@ module TypeScript {
             dotToken.parent = this;
             name.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.expression;
-                case 1: return this.dotToken;
-                case 2: return this.name;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class PostfixUnaryExpressionSyntax extends SyntaxNode implements IPostfixExpressionSyntax {
@@ -1136,18 +707,6 @@ module TypeScript {
             this._kind = kind;
             operand.parent = this;
             operatorToken.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.operand;
-                case 1: return this.operatorToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1171,20 +730,6 @@ module TypeScript {
             argumentExpression.parent = this;
             closeBracketToken.parent = this;
         }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.expression;
-                case 1: return this.openBracketToken;
-                case 2: return this.argumentExpression;
-                case 3: return this.closeBracketToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax {
@@ -1202,18 +747,6 @@ module TypeScript {
             expression.parent = this;
             argumentList.parent = this;
         }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.expression;
-                case 1: return this.argumentList;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ArgumentListSyntax extends SyntaxNode {
@@ -1230,20 +763,6 @@ module TypeScript {
             openParenToken.parent = this;
             !isShared(_arguments) && (_arguments.parent = this);
             closeParenToken.parent = this;
-        }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.typeArgumentList;
-                case 1: return this.openParenToken;
-                case 2: return this.arguments;
-                case 3: return this.closeParenToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1264,19 +783,6 @@ module TypeScript {
             operatorToken.parent = this;
             right.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.left;
-                case 1: return this.operatorToken;
-                case 2: return this.right;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ConditionalExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
@@ -1296,21 +802,6 @@ module TypeScript {
             colonToken.parent = this;
             whenFalse.parent = this;
         }
-
-        public childCount(): number {
-            return 5;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.condition;
-                case 1: return this.questionToken;
-                case 2: return this.whenTrue;
-                case 3: return this.colonToken;
-                case 4: return this.whenFalse;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ConstructSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -1323,18 +814,6 @@ module TypeScript {
 
             newKeyword.parent = this;
             callSignature.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.newKeyword;
-                case 1: return this.callSignature;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1350,19 +829,6 @@ module TypeScript {
             propertyName.parent = this;
             questionToken && (questionToken.parent = this);
             callSignature.parent = this;
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.propertyName;
-                case 1: return this.questionToken;
-                case 2: return this.callSignature;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1381,20 +847,6 @@ module TypeScript {
             closeBracketToken.parent = this;
             typeAnnotation && (typeAnnotation.parent = this);
         }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.openBracketToken;
-                case 1: return this.parameter;
-                case 2: return this.closeBracketToken;
-                case 3: return this.typeAnnotation;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class PropertySignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -1409,19 +861,6 @@ module TypeScript {
             propertyName.parent = this;
             questionToken && (questionToken.parent = this);
             typeAnnotation && (typeAnnotation.parent = this);
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.propertyName;
-                case 1: return this.questionToken;
-                case 2: return this.typeAnnotation;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1438,19 +877,6 @@ module TypeScript {
             parameterList.parent = this;
             typeAnnotation && (typeAnnotation.parent = this);
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.typeParameterList;
-                case 1: return this.parameterList;
-                case 2: return this.typeAnnotation;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ParameterListSyntax extends SyntaxNode {
@@ -1463,19 +889,6 @@ module TypeScript {
             openParenToken.parent = this;
             !isShared(parameters) && (parameters.parent = this);
             closeParenToken.parent = this;
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.openParenToken;
-                case 1: return this.parameters;
-                case 2: return this.closeParenToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1490,19 +903,6 @@ module TypeScript {
             !isShared(typeParameters) && (typeParameters.parent = this);
             greaterThanToken.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.lessThanToken;
-                case 1: return this.typeParameters;
-                case 2: return this.greaterThanToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class TypeParameterSyntax extends SyntaxNode {
@@ -1513,18 +913,6 @@ module TypeScript {
 
             identifier.parent = this;
             constraint && (constraint.parent = this);
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.identifier;
-                case 1: return this.constraint;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1537,18 +925,6 @@ module TypeScript {
             extendsKeyword.parent = this;
             type.parent = this;
         }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.extendsKeyword;
-                case 1: return this.type;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ElseClauseSyntax extends SyntaxNode {
@@ -1559,18 +935,6 @@ module TypeScript {
 
             elseKeyword.parent = this;
             statement.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.elseKeyword;
-                case 1: return this.statement;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1594,22 +958,6 @@ module TypeScript {
             statement.parent = this;
             elseClause && (elseClause.parent = this);
         }
-
-        public childCount(): number {
-            return 6;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.ifKeyword;
-                case 1: return this.openParenToken;
-                case 2: return this.condition;
-                case 3: return this.closeParenToken;
-                case 4: return this.statement;
-                case 5: return this.elseClause;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ExpressionStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -1623,18 +971,6 @@ module TypeScript {
 
             expression.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.expression;
-                case 1: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1655,21 +991,6 @@ module TypeScript {
             block && (block.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-
-        public childCount(): number {
-            return 5;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.constructorKeyword;
-                case 2: return this.callSignature;
-                case 3: return this.block;
-                case 4: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class MemberFunctionDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
@@ -1689,21 +1010,6 @@ module TypeScript {
             callSignature.parent = this;
             block && (block.parent = this);
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public childCount(): number {
-            return 5;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.propertyName;
-                case 2: return this.callSignature;
-                case 3: return this.block;
-                case 4: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1728,22 +1034,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
             block.parent = this;
         }
-
-        public childCount(): number {
-            return 6;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.getKeyword;
-                case 2: return this.propertyName;
-                case 3: return this.parameterList;
-                case 4: return this.typeAnnotation;
-                case 5: return this.block;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class SetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
@@ -1765,21 +1055,6 @@ module TypeScript {
             parameterList.parent = this;
             block.parent = this;
         }
-
-        public childCount(): number {
-            return 5;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.setKeyword;
-                case 2: return this.propertyName;
-                case 3: return this.parameterList;
-                case 4: return this.block;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class MemberVariableDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
@@ -1796,19 +1071,6 @@ module TypeScript {
             variableDeclarator.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.variableDeclarator;
-                case 2: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class IndexMemberDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
@@ -1823,19 +1085,6 @@ module TypeScript {
             !isShared(modifiers) && (modifiers.parent = this);
             indexSignature.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.indexSignature;
-                case 2: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1853,19 +1102,6 @@ module TypeScript {
             expression.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.throwKeyword;
-                case 1: return this.expression;
-                case 2: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ReturnStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -1881,19 +1117,6 @@ module TypeScript {
             returnKeyword.parent = this;
             expression && (expression.parent = this);
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.returnKeyword;
-                case 1: return this.expression;
-                case 2: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1913,19 +1136,6 @@ module TypeScript {
             newKeyword.parent = this;
             expression.parent = this;
             argumentList && (argumentList.parent = this);
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.newKeyword;
-                case 1: return this.expression;
-                case 2: return this.argumentList;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -1951,23 +1161,6 @@ module TypeScript {
             !isShared(switchClauses) && (switchClauses.parent = this);
             closeBraceToken.parent = this;
         }
-
-        public childCount(): number {
-            return 7;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.switchKeyword;
-                case 1: return this.openParenToken;
-                case 2: return this.expression;
-                case 3: return this.closeParenToken;
-                case 4: return this.openBraceToken;
-                case 5: return this.switchClauses;
-                case 6: return this.closeBraceToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class CaseSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
@@ -1985,20 +1178,6 @@ module TypeScript {
             colonToken.parent = this;
             !isShared(statements) && (statements.parent = this);
         }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.caseKeyword;
-                case 1: return this.expression;
-                case 2: return this.colonToken;
-                case 3: return this.statements;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class DefaultSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
@@ -2013,19 +1192,6 @@ module TypeScript {
             defaultKeyword.parent = this;
             colonToken.parent = this;
             !isShared(statements) && (statements.parent = this);
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.defaultKeyword;
-                case 1: return this.colonToken;
-                case 2: return this.statements;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2043,19 +1209,6 @@ module TypeScript {
             identifier && (identifier.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.breakKeyword;
-                case 1: return this.identifier;
-                case 2: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ContinueStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -2071,19 +1224,6 @@ module TypeScript {
             continueKeyword.parent = this;
             identifier && (identifier.parent = this);
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.continueKeyword;
-                case 1: return this.identifier;
-                case 2: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2115,26 +1255,6 @@ module TypeScript {
             closeParenToken.parent = this;
             statement.parent = this;
         }
-
-        public childCount(): number {
-            return 10;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.forKeyword;
-                case 1: return this.openParenToken;
-                case 2: return this.variableDeclaration;
-                case 3: return this.initializer;
-                case 4: return this.firstSemicolonToken;
-                case 5: return this.condition;
-                case 6: return this.secondSemicolonToken;
-                case 7: return this.incrementor;
-                case 8: return this.closeParenToken;
-                case 9: return this.statement;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class ForInStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -2161,24 +1281,6 @@ module TypeScript {
             closeParenToken.parent = this;
             statement.parent = this;
         }
-
-        public childCount(): number {
-            return 8;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.forKeyword;
-                case 1: return this.openParenToken;
-                case 2: return this.variableDeclaration;
-                case 3: return this.left;
-                case 4: return this.inKeyword;
-                case 5: return this.expression;
-                case 6: return this.closeParenToken;
-                case 7: return this.statement;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class WhileStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -2199,21 +1301,6 @@ module TypeScript {
             closeParenToken.parent = this;
             statement.parent = this;
         }
-
-        public childCount(): number {
-            return 5;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.whileKeyword;
-                case 1: return this.openParenToken;
-                case 2: return this.condition;
-                case 3: return this.closeParenToken;
-                case 4: return this.statement;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class WithStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -2233,21 +1320,6 @@ module TypeScript {
             condition.parent = this;
             closeParenToken.parent = this;
             statement.parent = this;
-        }
-
-        public childCount(): number {
-            return 5;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.withKeyword;
-                case 1: return this.openParenToken;
-                case 2: return this.condition;
-                case 3: return this.closeParenToken;
-                case 4: return this.statement;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2270,22 +1342,6 @@ module TypeScript {
             !isShared(enumElements) && (enumElements.parent = this);
             closeBraceToken.parent = this;
         }
-
-        public childCount(): number {
-            return 6;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.modifiers;
-                case 1: return this.enumKeyword;
-                case 2: return this.identifier;
-                case 3: return this.openBraceToken;
-                case 4: return this.enumElements;
-                case 5: return this.closeBraceToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class EnumElementSyntax extends SyntaxNode {
@@ -2296,18 +1352,6 @@ module TypeScript {
 
             propertyName.parent = this;
             equalsValueClause && (equalsValueClause.parent = this);
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.propertyName;
-                case 1: return this.equalsValueClause;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2326,20 +1370,6 @@ module TypeScript {
             type.parent = this;
             greaterThanToken.parent = this;
             expression.parent = this;
-        }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.lessThanToken;
-                case 1: return this.type;
-                case 2: return this.greaterThanToken;
-                case 3: return this.expression;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2361,19 +1391,6 @@ module TypeScript {
             !isShared(propertyAssignments) && (propertyAssignments.parent = this);
             closeBraceToken.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.openBraceToken;
-                case 1: return this.propertyAssignments;
-                case 2: return this.closeBraceToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class SimplePropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
@@ -2389,19 +1406,6 @@ module TypeScript {
             colonToken.parent = this;
             expression.parent = this;
         }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.propertyName;
-                case 1: return this.colonToken;
-                case 2: return this.expression;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class FunctionPropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
@@ -2416,19 +1420,6 @@ module TypeScript {
             propertyName.parent = this;
             callSignature.parent = this;
             block.parent = this;
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.propertyName;
-                case 1: return this.callSignature;
-                case 2: return this.block;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2452,20 +1443,6 @@ module TypeScript {
             callSignature.parent = this;
             block.parent = this;
         }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.functionKeyword;
-                case 1: return this.identifier;
-                case 2: return this.callSignature;
-                case 3: return this.block;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class EmptyStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -2477,17 +1454,6 @@ module TypeScript {
             super(SyntaxKind.EmptyStatement, data); 
 
             semicolonToken.parent = this;
-        }
-
-        public childCount(): number {
-            return 1;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2506,20 +1472,6 @@ module TypeScript {
             block.parent = this;
             catchClause && (catchClause.parent = this);
             finallyClause && (finallyClause.parent = this);
-        }
-
-        public childCount(): number {
-            return 4;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.tryKeyword;
-                case 1: return this.block;
-                case 2: return this.catchClause;
-                case 3: return this.finallyClause;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2540,22 +1492,6 @@ module TypeScript {
             closeParenToken.parent = this;
             block.parent = this;
         }
-
-        public childCount(): number {
-            return 6;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.catchKeyword;
-                case 1: return this.openParenToken;
-                case 2: return this.identifier;
-                case 3: return this.typeAnnotation;
-                case 4: return this.closeParenToken;
-                case 5: return this.block;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class FinallyClauseSyntax extends SyntaxNode {
@@ -2566,18 +1502,6 @@ module TypeScript {
 
             finallyKeyword.parent = this;
             block.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.finallyKeyword;
-                case 1: return this.block;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2594,19 +1518,6 @@ module TypeScript {
             identifier.parent = this;
             colonToken.parent = this;
             statement.parent = this;
-        }
-
-        public childCount(): number {
-            return 3;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.identifier;
-                case 1: return this.colonToken;
-                case 2: return this.statement;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2632,23 +1543,6 @@ module TypeScript {
             closeParenToken.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-
-        public childCount(): number {
-            return 7;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.doKeyword;
-                case 1: return this.statement;
-                case 2: return this.whileKeyword;
-                case 3: return this.openParenToken;
-                case 4: return this.condition;
-                case 5: return this.closeParenToken;
-                case 6: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class TypeOfExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -2662,18 +1556,6 @@ module TypeScript {
 
             typeOfKeyword.parent = this;
             expression.parent = this;
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.typeOfKeyword;
-                case 1: return this.expression;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 
@@ -2689,18 +1571,6 @@ module TypeScript {
             deleteKeyword.parent = this;
             expression.parent = this;
         }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.deleteKeyword;
-                case 1: return this.expression;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class VoidExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -2715,18 +1585,6 @@ module TypeScript {
             voidKeyword.parent = this;
             expression.parent = this;
         }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.voidKeyword;
-                case 1: return this.expression;
-                default: throw Errors.invalidOperation();
-            }
-        }
     }
 
     export class DebuggerStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -2740,18 +1598,6 @@ module TypeScript {
 
             debuggerKeyword.parent = this;
             semicolonToken && (semicolonToken.parent = this);
-        }
-
-        public childCount(): number {
-            return 2;
-        }
-
-        public childAt(slot: number): ISyntaxElement {
-            switch (slot) {
-                case 0: return this.debuggerKeyword;
-                case 1: return this.semicolonToken;
-                default: throw Errors.invalidOperation();
-            }
         }
     }
 }

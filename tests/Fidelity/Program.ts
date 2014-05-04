@@ -170,8 +170,8 @@ function nodeToJSON(node: TypeScript.SyntaxNode): any {
     }
 
     var thisAsIndexable: TypeScript.IIndexable<any> = <any>node;
-    for (var i = 0, n = node.childCount(); i < n; i++) {
-        var value = node.childAt(i);
+    for (var i = 0, n = TypeScript.childCount(node); i < n; i++) {
+        var value = TypeScript.childAt(node, i);
 
         if (value) {
             for (var name in node) {
@@ -193,8 +193,8 @@ function elementToJSON(element: TypeScript.ISyntaxElement): any {
     else if (TypeScript.isList(element) || TypeScript.isSeparatedList(element)) {
         var result: any[] = [];
 
-        for (var i = 0, n = element.childCount(); i < n; i++) {
-            result.push(elementToJSON(element.childAt(i)));
+        for (var i = 0, n = TypeScript.childCount(element); i < n; i++) {
+            result.push(elementToJSON(TypeScript.childAt(element, i)));
         }
 
         return result;

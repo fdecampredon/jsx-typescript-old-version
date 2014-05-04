@@ -116,9 +116,6 @@ module TypeScript {
                 unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
         }
 
-        public childCount(): number { return 0; }
-        public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
-
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind); }
 
         public isKeywordConvertedToIdentifier(): boolean { return false; }

@@ -1543,6 +1543,7 @@ function generateKindMethod(definition: ITypeDefinition): string {
 
 function generateSlotMethods(definition: ITypeDefinition): string {
     var result = "";
+    return result;
 
     result += "\r\n";
     result += "        public childCount(): number {\r\n";
@@ -2225,21 +2226,21 @@ function generateRewriter(): string {
 "                }\r\n" +
 "            }\r\n" +
 "\r\n" +
-"            // Debug.assert(newItems === null || newItems.length === list.childCount());\r\n" +
+"            // Debug.assert(newItems === null || newItems.length === childCount(list));\r\n" +
 "            return newItems === null ? list : Syntax.list<T>(newItems);\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: T[]): T[] {\r\n" +
 "            var newItems: ISyntaxNodeOrToken[] = null;\r\n" +
 "\r\n" +
-"            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
-"                var item = list.childAt(i);\r\n" +
+"            for (var i = 0, n = childCount(list); i < n; i++) {\r\n" +
+"                var item = childAt(list, i);\r\n" +
 "                var newItem = isToken(item) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>item) : this.visitNode(<SyntaxNode>item);\r\n" +
 "\r\n" +
 "                if (item !== newItem && newItems === null) {\r\n" +
 "                    newItems = [];\r\n" +
 "                    for (var j = 0; j < i; j++) {\r\n" +
-"                        newItems.push(list.childAt(j));\r\n" +
+"                        newItems.push(childAt(list, j));\r\n" +
 "                    }\r\n" +
 "                }\r\n" +
 "\r\n" +
@@ -2248,7 +2249,7 @@ function generateRewriter(): string {
 "                }\r\n" +
 "            }\r\n" +
 "\r\n" +
-"            // Debug.assert(newItems === null || newItems.length === list.childCount());\r\n" +
+"            // Debug.assert(newItems === null || newItems.length === childCount(list));\r\n" +
 "            return newItems === null ? list : Syntax.separatedList<T>(newItems);\r\n" +
 "        }\r\n";
 
@@ -2367,8 +2368,8 @@ function generateWalker(): string {
 "        }\r\n" +
 "\r\n" +
 "        public visitSeparatedList(list: ISyntaxNodeOrToken[]): void {\r\n" +
-"            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
-"                var item = list.childAt(i);\r\n" +
+"            for (var i = 0, n = childCount(list); i < n; i++) {\r\n" +
+"                var item = childAt(list, i);\r\n" +
 "                this.visitNodeOrToken(item);\r\n" + 
 "            }\r\n" +
 "        }\r\n";
@@ -2705,8 +2706,8 @@ function generateIsTypeScriptSpecific(): string {
     result += "module TypeScript {\r\n";
 
     result += "    function isSeparatedListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {\r\n"
-    result += "        for (var i = 0, n = this.childCount(); i < n; i++) {\r\n";
-    result += "            if (isTypeScriptSpecific(list.childAt(i))) {\r\n";
+    result += "        for (var i = 0, n = childCount(list); i < n; i++) {\r\n";
+    result += "            if (isTypeScriptSpecific(childAt(list, i))) {\r\n";
     result += "                return true;\r\n";
     result += "            }\r\n";
     result += "        }\r\n\r\n";
@@ -2714,7 +2715,7 @@ function generateIsTypeScriptSpecific(): string {
     result += "    }\r\n\r\n";
 
     result += "    function isListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {\r\n"
-    result += "        for (var i = 0, n = this.length; i < n; i++) {\r\n";
+    result += "        for (var i = 0, n = list.length; i < n; i++) {\r\n";
     result += "            if (isTypeScriptSpecific(list[i])) {\r\n";
     result += "                return true;\r\n";
     result += "            }\r\n";

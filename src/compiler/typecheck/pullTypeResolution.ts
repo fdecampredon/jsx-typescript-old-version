@@ -3718,7 +3718,7 @@ module TypeScript {
         }
 
         private containsSingleThrowStatement(block: BlockSyntax): boolean {
-            return block !== null && block.statements.length === 1 && block.statements.childAt(0).kind === SyntaxKind.ThrowStatement;
+            return block !== null && block.statements.length === 1 && block.statements[0].kind === SyntaxKind.ThrowStatement;
         }
 
         private typeCheckAnyFunctionDeclaration(
@@ -12569,7 +12569,7 @@ module TypeScript {
 
         private getFirstStatementOfBlockOrNull(block: BlockSyntax): ISyntaxElement {
             if (block && block.statements && block.statements.length > 0) {
-                return block.statements.childAt(0);
+                return block.statements[0];
             }
 
             return null;

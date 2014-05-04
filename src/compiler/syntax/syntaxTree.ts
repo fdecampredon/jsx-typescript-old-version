@@ -202,18 +202,18 @@ module TypeScript {
         private checkForTrailingSeparator(parent: ISyntaxElement, list: ISyntaxNodeOrToken[]): boolean {
             // If we have at least one child, and we have an even number of children, then that 
             // means we have an illegal trailing separator.
-            if (list.childCount() === 0 || list.childCount() % 2 === 1) {
+            if (childCount(list) === 0 || childCount(list) % 2 === 1) {
                 return false;
             }
 
-            var child = list.childAt(list.childCount() - 1);
+            var child = childAt(list, childCount(list) - 1);
             this.pushDiagnostic(child, DiagnosticCode.Trailing_separator_not_allowed);
 
             return true;
         }
 
         private checkForAtLeastOneElement(parent: ISyntaxElement, list: ISyntaxNodeOrToken[], expected: string): boolean {
-            if (list.childCount() > 0) {
+            if (childCount(list) > 0) {
                 return false;
             }
 
@@ -261,7 +261,7 @@ module TypeScript {
             // If we have at least one child, and we have an even number of children, then that 
             // means we have an illegal trailing separator.
             var declarators = node.variableDeclarators;
-            if (declarators.childCount() % 2 === 0) {
+            if (childCount(declarators) % 2 === 0) {
                 var lastComma = declarators.separatorAt(declarators.separatorCount() - 1);
                 Debug.assert(isToken(lastComma));
 
@@ -461,7 +461,7 @@ module TypeScript {
                                     // after us.  If it's another overload that doesn't have a body,
                                     // then report an error that we're missing an implementation here.
 
-                                    var nextElement = moduleElements.childAt(i + 1);
+                                    var nextElement = childAt(moduleElements, i + 1);
                                     if (nextElement.kind === SyntaxKind.FunctionDeclaration) {
                                         var nextFunction = <FunctionDeclarationSyntax>nextElement;
 
@@ -544,7 +544,7 @@ module TypeScript {
                                 // after us.  If it's another overload that doesn't have a body,
                                 // then report an error that we're missing an implementation here.
 
-                                var nextElement = node.classElements.childAt(i + 1);
+                                var nextElement = childAt(node.classElements, i + 1);
                                 if (nextElement.kind === SyntaxKind.MemberFunctionDeclaration) {
                                     var nextMemberFunction = <MemberFunctionDeclarationSyntax>nextElement;
 
@@ -751,7 +751,7 @@ module TypeScript {
 
         private checkIndexMemberModifiers(node: IndexMemberDeclarationSyntax): boolean {
             if (node.modifiers.length > 0) {
-                this.pushDiagnostic(node.modifiers.childAt(0), DiagnosticCode.Modifiers_cannot_appear_here);
+                this.pushDiagnostic(childAt(node.modifiers, 0), DiagnosticCode.Modifiers_cannot_appear_here);
                 return true;
             }
 
@@ -796,13 +796,13 @@ module TypeScript {
         }
 
         private checkSetAccessorParameter(node: SyntaxNode, setKeyword: ISyntaxToken, parameterList: ParameterListSyntax): boolean {
-            if (parameterList.parameters.childCount() !== 1) {
+            if (childCount(parameterList.parameters) !== 1) {
                 this.pushDiagnostic(setKeyword,
                     DiagnosticCode.set_accessor_must_have_one_and_only_one_parameter);
                 return true;
             }
 
-            var parameter = <ParameterSyntax>parameterList.parameters.childAt(0);
+            var parameter = <ParameterSyntax>childAt(parameterList.parameters, 0);
 
             if (parameter.questionToken) {
                 this.pushDiagnostic(parameter,
@@ -855,8 +855,8 @@ module TypeScript {
 
         private checkEnumElements(node: EnumDeclarationSyntax): boolean {
             var previousValueWasComputed = false;
-            for (var i = 0, n = node.enumElements.childCount(); i < n; i++) {
-                var child = node.enumElements.childAt(i);
+            for (var i = 0, n = childCount(node.enumElements); i < n; i++) {
+                var child = childAt(node.enumElements, i);
 
                 if (i % 2 === 0) {
                     var enumElement = <EnumElementSyntax>child;
@@ -1241,7 +1241,7 @@ module TypeScript {
         private checkForDisallowedModifiers(parent: ISyntaxElement, modifiers: ISyntaxToken[]): boolean {
             if (this.inBlock || this.inObjectLiteralExpression) {
                 if (modifiers.length > 0) {
-                    this.pushDiagnostic(modifiers.childAt(0), DiagnosticCode.Modifiers_cannot_appear_here);
+                    this.pushDiagnostic(childAt(modifiers, 0), DiagnosticCode.Modifiers_cannot_appear_here);
                     return true;
                 }
             }
@@ -1280,8 +1280,8 @@ module TypeScript {
         }
 
         private checkListSeparators<T extends ISyntaxNodeOrToken>(parent: ISyntaxElement, list: T[], kind: SyntaxKind): boolean {
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                var child = list.childAt(i);
+            for (var i = 0, n = childCount(list); i < n; i++) {
+                var child = childAt(list, i);
                 if (i % 2 === 1 && child.kind !== kind) {
                     this.pushDiagnostic(child, DiagnosticCode._0_expected, [SyntaxFacts.getText(kind)]);
                 }

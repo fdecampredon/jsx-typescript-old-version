@@ -246,7 +246,7 @@ module TypeScript.Services.Breakpoints {
                             var index = Syntax.childIndex(commaParent, commaToken);
                             // Use the previous child
                             if (index > 0) {
-                                var child = commaParent.childAt(index - 1);
+                                var child = childAt(commaParent, index - 1);
                                 return this.breakpointSpanOf(child);
                             }
 
@@ -295,7 +295,7 @@ module TypeScript.Services.Breakpoints {
                 return null;
             }
 
-            var firstStatement = statementsNode.childAt(0);
+            var firstStatement = childAt(statementsNode, 0);
             if (firstStatement && firstStatement.kind == TypeScript.SyntaxKind.Block) {
                 if (this.canHaveBreakpointInBlock(<TypeScript.ISyntaxNode>firstStatement)) {
                     return this.breakpointSpanOfFirstStatementInBlock(<TypeScript.ISyntaxNode>firstStatement);
@@ -318,7 +318,7 @@ module TypeScript.Services.Breakpoints {
                 return null;
             }
 
-            var lastStatement = statementsNode.childAt(statementsNode.length - 1);
+            var lastStatement = childAt(statementsNode, statementsNode.length - 1);
             if (lastStatement && lastStatement.kind == TypeScript.SyntaxKind.Block) {
                 if (this.canHaveBreakpointInBlock(<TypeScript.ISyntaxNode>lastStatement)) {
                     return this.breakpointSpanOfLastStatementInBlock(<TypeScript.ISyntaxNode>lastStatement);
@@ -341,7 +341,7 @@ module TypeScript.Services.Breakpoints {
                 return null;
             }
 
-            var firstStatement = positionedList.childAt(0);
+            var firstStatement = childAt(positionedList, 0);
             if (firstStatement && firstStatement.kind == TypeScript.SyntaxKind.Block) {
                 if (this.canHaveBreakpointInBlock(<TypeScript.SyntaxNode>firstStatement)) {
                     return this.breakpointSpanOfFirstStatementInBlock(<TypeScript.SyntaxNode>firstStatement);
@@ -364,7 +364,7 @@ module TypeScript.Services.Breakpoints {
             if (listSyntax.length == 0) {
                 return null;
             }
-            var lastStatement = positionedList.childAt(0);
+            var lastStatement = childAt(positionedList, 0);
             if (lastStatement && lastStatement.kind == TypeScript.SyntaxKind.Block) {
                 if (this.canHaveBreakpointInBlock(<TypeScript.SyntaxNode>lastStatement)) {
                     return this.breakpointSpanOfLastStatementInBlock(<TypeScript.SyntaxNode>lastStatement);
@@ -751,7 +751,7 @@ module TypeScript.Services.Breakpoints {
             if (container && container.kind == TypeScript.SyntaxKind.VariableDeclaration) {
                 var parentDeclaratorsList = <TypeScript.VariableDeclaratorSyntax[]>varDeclaratorNode.parent;
                 // If this is the first declarator in the list use the declaration instead
-                if (parentDeclaratorsList && parentDeclaratorsList.childAt(0) == varDeclaratorNode) {
+                if (parentDeclaratorsList && childAt(parentDeclaratorsList, 0) == varDeclaratorNode) {
                     return this.breakpointSpanOfVariableDeclaration(container);
                 }
 
@@ -778,11 +778,11 @@ module TypeScript.Services.Breakpoints {
 
             var varDeclarationSyntax = <TypeScript.VariableDeclarationSyntax>varDeclarationNode;
             var containerChildren = varDeclarationSyntax.variableDeclarators;
-            if (!containerChildren || containerChildren.childCount() == 0) {
+            if (!containerChildren || childCount(containerChildren) == 0) {
                 return false;
             }
 
-            var child = containerChildren.childAt(0);
+            var child = childAt(containerChildren, 0);
             if (isNode(child)) {
                 return this.canHaveBreakpointInVariableDeclarator(<TypeScript.SyntaxNode>child);
             }
@@ -798,14 +798,14 @@ module TypeScript.Services.Breakpoints {
             var container = Syntax.containingNode(varDeclarationNode);
             var varDeclarationSyntax = <TypeScript.VariableDeclarationSyntax>varDeclarationNode;
             var varDeclarators = varDeclarationSyntax.variableDeclarators;
-            var varDeclaratorsCount = varDeclarators.childCount(); // varDeclarators has to be non null because its checked in canHaveBreakpoint
+            var varDeclaratorsCount = childCount(varDeclarators); // varDeclarators has to be non null because its checked in canHaveBreakpoint
 
             if (container && container.kind == TypeScript.SyntaxKind.VariableStatement) {
                 return this.breakpointSpanOfVariableStatement(container);
             }
 
             if (this.canHaveBreakpointInVariableDeclaration(varDeclarationNode)) {
-                return createBreakpointSpanInfoWithLimChar(varDeclarationNode, end(varDeclarators.childAt(0)));
+                return createBreakpointSpanInfoWithLimChar(varDeclarationNode, end(childAt(varDeclarators, 0)));
             }
             else {
                 return null;
@@ -830,7 +830,7 @@ module TypeScript.Services.Breakpoints {
             var variableDeclaration = <TypeScript.SyntaxNode>variableStatement.variableDeclaration;
             var varDeclarationSyntax = <TypeScript.VariableDeclarationSyntax>variableDeclaration;
             var varDeclarators = varDeclarationSyntax.variableDeclarators;
-            return createBreakpointSpanInfoWithLimChar(varStatementNode, end(varDeclarators.childAt(0)));
+            return createBreakpointSpanInfoWithLimChar(varStatementNode, end(childAt(varDeclarators, 0)));
         }
 
         private breakpointSpanOfParameter(parameterNode: TypeScript.SyntaxNode): SpanInfo {
@@ -881,8 +881,8 @@ module TypeScript.Services.Breakpoints {
         private breakpointSpanOfFirstEnumElement(enumDeclarationNode: TypeScript.SyntaxNode): SpanInfo {
             var enumDeclarationSyntax = <TypeScript.EnumDeclarationSyntax>enumDeclarationNode;
             var enumElements = enumDeclarationSyntax.enumElements;
-            if (enumElements && enumElements.childCount()) {
-                return this.breakpointSpanOf(enumElements.childAt(0));
+            if (enumElements && childCount(enumElements)) {
+                return this.breakpointSpanOf(childAt(enumElements, 0));
             }
 
             return null;

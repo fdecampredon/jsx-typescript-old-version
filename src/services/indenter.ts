@@ -140,8 +140,8 @@ module TypeScript.Services {
             switch (list.kind) {
                 case TypeScript.SyntaxKind.SeparatedList:
                     // If it is the first in the list, let it have its parents indentation; no custom indentation here.
-                    for (var i = 0, n = list.childCount(); i < n ; i++) {
-                        var child = list.childAt(i);
+                    for (var i = 0, n = childCount(list); i < n ; i++) {
+                        var child = childAt(list, i);
                         if (child !== null && child === element)
                             return Indenter.getListItemIndentation(list, i - 1);
                     }
@@ -153,7 +153,7 @@ module TypeScript.Services {
                     var argumentList = <TypeScript.ArgumentListSyntax> list;
                     var _arguments = argumentList.arguments;
                     if (_arguments !== null && argumentList.closeParenToken === element) {
-                        return Indenter.getListItemIndentation(_arguments, _arguments.childCount() - 1);
+                        return Indenter.getListItemIndentation(_arguments, childCount(_arguments) - 1);
                     }
                     break;
 
@@ -163,7 +163,7 @@ module TypeScript.Services {
                     var parameterList = <TypeScript.ParameterListSyntax> list;
                     var parameters = parameterList.parameters;
                     if (parameters !== null && parameterList.closeParenToken === element) {
-                        return Indenter.getListItemIndentation(parameters, parameters.childCount() - 1);
+                        return Indenter.getListItemIndentation(parameters, childCount(parameters) - 1);
                     }
                     break;
 
@@ -173,7 +173,7 @@ module TypeScript.Services {
                     var typeArgumentList = <TypeScript.TypeArgumentListSyntax> list;
                     var typeArguments = typeArgumentList.typeArguments;
                     if (typeArguments !== null && typeArgumentList.greaterThanToken === element) {
-                        return Indenter.getListItemIndentation(typeArguments, typeArguments.childCount() - 1);
+                        return Indenter.getListItemIndentation(typeArguments, childCount(typeArguments) - 1);
                     }
                     break;
 
@@ -183,7 +183,7 @@ module TypeScript.Services {
                     var typeParameterList = <TypeScript.TypeParameterListSyntax> list;
                     var typeParameters = typeParameterList.typeParameters;
                     if (typeParameters !== null && typeParameterList.greaterThanToken === element) {
-                        return Indenter.getListItemIndentation(typeParameters, typeParameters.childCount() - 1);
+                        return Indenter.getListItemIndentation(typeParameters, childCount(typeParameters) - 1);
                     }
                     break;
             }
@@ -192,8 +192,8 @@ module TypeScript.Services {
 
         private static getListItemIndentation(list: TypeScript.ISyntaxElement, elementIndex: number): number {
             for (var i = elementIndex; i > 0 ; i--) {
-                var child = list.childAt(i);
-                var previousChild = list.childAt(i - 1);
+                var child = childAt(list, i);
+                var previousChild = childAt(list, i - 1);
                 if ((child !== null && firstToken(child).leadingTrivia().hasNewLine()) ||
                     (previousChild !== null && lastToken(previousChild).trailingTrivia().hasNewLine())) {
 

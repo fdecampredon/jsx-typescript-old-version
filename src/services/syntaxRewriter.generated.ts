@@ -33,14 +33,14 @@ module TypeScript {
                 }
             }
 
-            // Debug.assert(newItems === null || newItems.length === list.childCount());
+            // Debug.assert(newItems === null || newItems.length === childCount(list));
             return newItems === null ? list : Syntax.list<T>(newItems);
         }
 
         public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: T[]): T[] {
             var newItems: ISyntaxNodeOrToken[] = null;
 
-            for (var i = 0, n = list.childCount(); i < n; i++) {
+            for (var i = 0, n = childCount(list); i < n; i++) {
                 var item = list.childAt(i);
                 var newItem = isToken(item) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>item) : this.visitNode(<SyntaxNode>item);
 
@@ -56,7 +56,7 @@ module TypeScript {
                 }
             }
 
-            // Debug.assert(newItems === null || newItems.length === list.childCount());
+            // Debug.assert(newItems === null || newItems.length === childCount(list));
             return newItems === null ? list : Syntax.separatedList<T>(newItems);
         }
 
