@@ -1496,7 +1496,7 @@ module TypeScript.Parser {
                 return token;
             }
 
-            // If we have a keyword, then it cna be used as an identifier name.  However, we need 
+            // If we have a keyword, then it can be used as an identifier name.  However, we need 
             // to convert it to an identifier so that no later parts of the systems see it as a 
             // keyword.
             if (SyntaxFacts.isAnyKeyword(token.kind())) {

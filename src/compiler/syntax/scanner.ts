@@ -3,7 +3,7 @@
 module TypeScript {
     // To save space in a token we use 60 bits to encode the following.
     //
-    //   _packedFullStartAndTriviaInfo:
+    //   _packedFullStartAndInfo:
     //
     //      0000 0000 0000 0000 0000 0000 0000 0xxx    <-- Leading trivia info.
     //      0000 0000 0000 0000 0000 0000 00xx x000    <-- Trailing trivia info.
@@ -15,18 +15,28 @@ module TypeScript {
     //      0xxx xxxx xxxx xxxx xxxx xxxx x000 0000    <-- Full width.
 
     enum ScannerConstants {
-        LeadingTriviaShift      = 0,
-        TrailingTriviaShift     = 3,
-        FullStartShift          = 6,
+        LeadingTriviaShift         = 0,
+        TrailingTriviaShift        = 3,
+        FullStartShift             = 6,
 
-        KindShift               = 0,
-        FullWidthShift          = 7,
+        KindShift                  = 0,
+        FullWidthShift             = 7,
 
-        KindBitMask             = 0x7F, // 01111111
-        TriviaBitMask           = 0x07, // 00000111
-        CommentTriviaBitMask    = 0x01, // 00000001
-        NewLineTriviaBitMask    = 0x02, // 00000010
-        WhitespaceTriviaBitMask = 0x04, // 00000100
+        KindBitMask                = 0x7F, // 01111111
+        TriviaBitMask              = 0x07, // 00000111
+        CommentTriviaBitMask       = 0x01, // 00000001
+        NewLineTriviaBitMask       = 0x02, // 00000010
+        WhitespaceTriviaBitMask    = 0x04, // 00000100
+    }
+
+    function packFullStartAndInfo(fullStart: number, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
+        return (fullStart << ScannerConstants.FullStartShift) | 
+            (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) |
+            (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
+    }
+
+    function packFullWidthAndKind(fullWidth: number, kind: SyntaxKind): number {
+        return (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
     }
 
     function unpackKind(_packedFullWidthAndKind: number): SyntaxKind {
@@ -37,17 +47,16 @@ module TypeScript {
         return _packedFullWidthAndKind >> ScannerConstants.FullWidthShift;
     }
 
-    function unpackFullStart(_packedFullStartAndTriviaInfo: number): number {
-        return _packedFullStartAndTriviaInfo >> ScannerConstants.FullStartShift;
+    function unpackFullStart(_packedFullStartAndInfo: number): number {
+        return _packedFullStartAndInfo >> ScannerConstants.FullStartShift;
     }
 
-    function unpackLeadingTriviaInfo(_packedFullStartAndTriviaInfo: number): number {
-        return (_packedFullStartAndTriviaInfo >> ScannerConstants.LeadingTriviaShift) & ScannerConstants.TriviaBitMask;
+    function unpackLeadingTriviaInfo(_packedFullStartAndInfo: number): number {
+        return (_packedFullStartAndInfo >> ScannerConstants.LeadingTriviaShift) & ScannerConstants.TriviaBitMask;
     }
 
-    function unpackTrailingTriviaInfo(_packedFullStartAndTriviaInfo: number): number {
-        // The next two bits following the leading trivia are the trailing trivia info.
-        return (_packedFullStartAndTriviaInfo >> ScannerConstants.TrailingTriviaShift) & ScannerConstants.TriviaBitMask;
+    function unpackTrailingTriviaInfo(_packedFullStartAndInfo: number): number {
+        return (_packedFullStartAndInfo >> ScannerConstants.TrailingTriviaShift) & ScannerConstants.TriviaBitMask;
     }
 
     var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
@@ -94,17 +103,16 @@ module TypeScript {
         public _isExpression: any;
 
         constructor(public _text: ISimpleText,
-                    private _packedFullStartAndTriviaInfo: number,
+                    private _packedFullStartAndInfo: number,
                     private _packedFullWidthAndKind: number) {
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
             this._text = text;
 
-            this._packedFullStartAndTriviaInfo =
-                (fullStart << ScannerConstants.FullStartShift) |
-                (unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo) << ScannerConstants.LeadingTriviaShift) |
-                (unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo) << ScannerConstants.TrailingTriviaShift);
+            this._packedFullStartAndInfo = packFullStartAndInfo(fullStart,
+                unpackLeadingTriviaInfo(this._packedFullStartAndInfo),
+                unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
         }
 
         public kind(): SyntaxKind {
@@ -115,10 +123,11 @@ module TypeScript {
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind()); }
+
         public isKeywordConvertedToIdentifier(): boolean { return false; }
 
         public fullWidth(): number { return unpackFullWidth(this._packedFullWidthAndKind); }
-        public fullStart(): number { return unpackFullStart(this._packedFullStartAndTriviaInfo); }
+        public fullStart(): number { return unpackFullStart(this._packedFullStartAndInfo); }
 
         private fillSizeInfo(): void {
             if (ScannerToken.lastTokenInfoToken !== this) {
@@ -135,9 +144,6 @@ module TypeScript {
             this.fillSizeInfo();
             return this._text.substr(this.fullStart() + ScannerToken.lastTokenInfo.leadingTriviaWidth, ScannerToken.lastTokenInfo.width);
         }
-
-        public value(): any { return Syntax.value(this); }
-        public valueText(): string { return Syntax.valueText(this); }
 
         public leadingTrivia(): ISyntaxTriviaList {
             if (!this.hasLeadingTrivia()) {
@@ -174,32 +180,32 @@ module TypeScript {
         }
 
         public hasLeadingTrivia(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return info !== 0;
         }
 
         public hasLeadingComment(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
         }
 
         public hasLeadingNewLine(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
         }
 
         public hasTrailingTrivia(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return info !== 0;
         }
 
         public hasTrailingComment(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
         }
 
         public hasTrailingNewLine(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndTriviaInfo);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
         }
 
@@ -219,7 +225,7 @@ module TypeScript {
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
 
         public clone(): ISyntaxToken {
-            return new ScannerToken(this._text, this._packedFullStartAndTriviaInfo, this._packedFullWidthAndKind);
+            return new ScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind);
         }
     }
 
@@ -287,14 +293,7 @@ module TypeScript {
 
             var fullEnd = index;
 
-            //function packFullStartAndTriviaInfo(fullStart: number, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
-            //    return ;
-            //}
-
-            //function packFullWidthAndKind(fullWidth: number, kind: SyntaxKind): number {
-            //    return (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
-            //}
-
+            // Pack functions inlined for perf.
             var fullWidth = fullEnd - fullStart;
             var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.FullStartShift) | leadingTriviaInfo | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
             var packedFullWidthAndKind = (fullWidth << ScannerConstants.FullWidthShift) | kind;
@@ -773,7 +772,7 @@ module TypeScript {
             // i.e. "\u0076ar" is the keyword 'var'.  Check for that here.
             var length = index - startIndex;
             var text = str.substr(startIndex, length);
-            var valueText = Syntax.massageEscapes(text);
+            var valueText = massageEscapes(text);
 
             var keywordKind = SyntaxFacts.getTokenKind(valueText);
             if (keywordKind >= SyntaxKind.FirstKeyword && keywordKind <= SyntaxKind.LastKeyword) {

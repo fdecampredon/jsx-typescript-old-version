@@ -1318,17 +1318,17 @@ module TypeScript {
                     var id = parameterList.identifierAt(i);
                     var decl = this.semanticInfoChain.getDeclForAST(argDecl);
                     var isProperty = hasFlag(decl.flags, PullElementFlags.PropertyParameter);
-                    var parameterSymbol = new PullSymbol(id.valueText(), PullElementKind.Parameter, this.semanticInfoChain);
+                    var parameterSymbol = new PullSymbol(tokenValueText(id), PullElementKind.Parameter, this.semanticInfoChain);
 
                     if ((i === (n - 1)) && parameterList.lastParameterIsRest()) {
                         parameterSymbol.isVarArg = true;
                     }
 
-                    if (params[id.valueText()]) {
+                    if (params[tokenValueText(id)]) {
                         this.semanticInfoChain.addDiagnosticFromAST(argDecl, DiagnosticCode.Duplicate_identifier_0, [id.text()]);
                     }
                     else {
-                        params[id.valueText()] = true;
+                        params[tokenValueText(id)] = true;
                     }
 
                     if (decl) {

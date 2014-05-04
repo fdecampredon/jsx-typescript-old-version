@@ -55,10 +55,10 @@ function tokenToJSON(token: TypeScript.ISyntaxToken): any {
 
     result.text = token.text();
 
-    var value = token.value();
+    var value = TypeScript.tokenValue(token);
     if (value !== null) {
         result.value = value;
-        result.valueText = token.valueText();
+        result.valueText = TypeScript.tokenValueText(token);
     }
 
     if (token.isKeywordConvertedToIdentifier()) {

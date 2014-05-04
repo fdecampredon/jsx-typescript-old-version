@@ -203,7 +203,7 @@ module TypeScript {
                 var pre = function (cur: TypeScript.ISyntaxElement) {
                     if (ASTHelpers.isValidAstNode(cur)) {
                         if (cur.kind() === SyntaxKind.IdentifierName) {
-                            var nodeText = (<TypeScript.ISyntaxToken>cur).valueText();
+                            var nodeText = tokenValueText((<TypeScript.ISyntaxToken>cur));
 
                             identifiers[nodeText] = true;
                         }

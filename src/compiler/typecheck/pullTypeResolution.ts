@@ -49,8 +49,8 @@ module TypeScript {
         exports
     }
 
-        function getCompilerReservedName(name: ISyntaxToken): number {
-        var nameText = name.valueText();
+    function getCompilerReservedName(name: ISyntaxToken): number {
+        var nameText = tokenValueText(name);
         return (<IIndexable<CompilerReservedName>><any>CompilerReservedName)[nameText];
     }
 
@@ -1265,7 +1265,7 @@ module TypeScript {
             this.validateVariableDeclarationGroups(containerDecl, context);
 
             if (ast.stringLiteral) {
-                if (isRelative(ast.stringLiteral.valueText())) {
+                if (isRelative(tokenValueText(ast.stringLiteral))) {
                     this.semanticInfoChain.addDiagnosticFromAST(
                         ast.stringLiteral, DiagnosticCode.Ambient_external_module_declaration_cannot_specify_relative_module_name);
                 }
@@ -1851,7 +1851,7 @@ module TypeScript {
             {
                 valueSymbol: PullSymbol; typeSymbol: PullTypeSymbol; containerSymbol: PullContainerSymbol; aliasSymbol: PullTypeAliasSymbol;
             } {
-            var rhsName = identifier.valueText();
+            var rhsName = tokenValueText(identifier);
             if (rhsName.length === 0) {
                 return null;
             }
@@ -1938,7 +1938,7 @@ module TypeScript {
 
                 var moduleContainer = this.resolveModuleReference(importDecl, dottedNameAST.left, enclosingDecl, context, declPath);
                 if (moduleContainer) {
-                    moduleName = dottedNameAST.right.valueText();
+                    moduleName = tokenValueText(dottedNameAST.right);
                     // We dont care about setting alias symbol here, because it has to be exported member which would make the import statement to emit anyways
                     moduleSymbol = this.getMemberSymbolOfKind(moduleName, PullElementKind.Container, moduleContainer.type, enclosingDecl, context).symbol;
                     if (!moduleSymbol) {
@@ -1947,7 +1947,7 @@ module TypeScript {
                 }
             }
             else {
-                var valueText = moduleNameExpr.kind() === SyntaxKind.IdentifierName ? (<ISyntaxToken>moduleNameExpr).valueText() : (<ISyntaxToken>moduleNameExpr).valueText();
+                var valueText = moduleNameExpr.kind() === SyntaxKind.IdentifierName ? tokenValueText((<ISyntaxToken>moduleNameExpr)) : tokenValueText((<ISyntaxToken>moduleNameExpr));
                 var text = moduleNameExpr.kind() === SyntaxKind.IdentifierName ? (<ISyntaxToken>moduleNameExpr).text() : (<ISyntaxToken>moduleNameExpr).text();
 
                 if (text.length > 0) {
@@ -1992,7 +1992,7 @@ module TypeScript {
                     aliasedType = moduleSymbol.type;
                     this.semanticInfoChain.setAliasSymbolForAST(moduleReference, this.semanticInfoChain.getAliasSymbolForAST(aliasExpr));
                     if (aliasedType.anyDeclHasFlag(PullElementFlags.InitializedModule)) {
-                        var moduleName = aliasExpr.kind() === SyntaxKind.IdentifierName ? (<ISyntaxToken>aliasExpr).valueText() : (<ISyntaxToken>aliasExpr).valueText();
+                        var moduleName = aliasExpr.kind() === SyntaxKind.IdentifierName ? tokenValueText((<ISyntaxToken>aliasExpr)) : tokenValueText((<ISyntaxToken>aliasExpr));
                         var valueSymbol = this.getSymbolFromDeclPath(moduleName, declPath, PullElementKind.SomeValue);
                         var instanceSymbol = (<PullContainerSymbol>aliasedType).getInstanceSymbol();
                         // If there is module and it is instantiated, value symbol needs to refer to the module instance symbol
@@ -2052,7 +2052,7 @@ module TypeScript {
             // reference
             if (importStatementAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
                 // dynamic module name (string literal)
-                var modPath = (<ExternalModuleReferenceSyntax>importStatementAST.moduleReference).stringLiteral.valueText();
+                var modPath = tokenValueText((<ExternalModuleReferenceSyntax>importStatementAST.moduleReference).stringLiteral);
                 var declPath = enclosingDecl.getParentPath();
 
                 aliasedType = this.resolveExternalModuleReference(modPath, importDecl.fileName());
@@ -2121,7 +2121,7 @@ module TypeScript {
                         DiagnosticCode.Import_declaration_cannot_refer_to_external_module_reference_when_noResolve_option_is_set, null));
                 }
 
-                var modPath = (<ExternalModuleReferenceSyntax>importStatementAST.moduleReference).stringLiteral.valueText();
+                var modPath = tokenValueText((<ExternalModuleReferenceSyntax>importStatementAST.moduleReference).stringLiteral);
                 if (enclosingDecl.kind === PullElementKind.DynamicModule) {
                     var ast = ASTHelpers.getEnclosingModuleDeclaration(this.getASTForDecl(enclosingDecl));
                     if (ast && ast.kind() === SyntaxKind.ModuleDeclaration) {
@@ -2200,7 +2200,7 @@ module TypeScript {
         }
 
         private resolveExportAssignmentStatement(exportAssignmentAST: ExportAssignmentSyntax, context: PullTypeResolutionContext): PullSymbol {
-            var id = exportAssignmentAST.identifier.valueText();
+            var id = tokenValueText(exportAssignmentAST.identifier);
             if (id.length === 0) {
                 // No point trying to resolve an export assignment without an actual identifier.
                 return this.semanticInfoChain.anyTypeSymbol;
@@ -2611,7 +2611,7 @@ module TypeScript {
                 // This is not ambient declaration, then there would be code gen
                 if (!hasFlag(decl.flags, PullElementFlags.Ambient)) { 
                     // It is error to use 'require' or 'exports' as name for the declaration
-                    var nameText = name.valueText();
+                    var nameText = tokenValueText(name);
                     context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Duplicate_identifier_0_Compiler_reserves_name_1_in_top_level_scope_of_an_external_module, [nameText, nameText]));
                 }
             }
@@ -5508,12 +5508,12 @@ module TypeScript {
 
             // In other words, you can 'break' to any enclosing statement.  But you can only 'continue'
             // to an enclosing *iteration* statement.
-            var labelIdentifier = ast.identifier.valueText();
+            var labelIdentifier = tokenValueText(ast.identifier);
 
             var breakableLabels = this.getEnclosingLabels(ast, /*breakable:*/ true, /*crossFunctions:*/ false);
 
             // It is invalid to have a label enclosed in a label of the same name.
-            var matchingLabel = ArrayUtilities.firstOrDefault(breakableLabels, s => s.identifier.valueText() === labelIdentifier);
+            var matchingLabel = ArrayUtilities.firstOrDefault(breakableLabels, s => tokenValueText(s.identifier) === labelIdentifier);
             if (matchingLabel) {
                 context.postDiagnostic(this.semanticInfoChain.duplicateIdentifierDiagnosticFromAST(
                     ast.identifier, labelIdentifier, matchingLabel));
@@ -5660,14 +5660,14 @@ module TypeScript {
             else if (ast.identifier) {
                 var continuableLabels = this.getEnclosingLabels(ast, /*breakable:*/ false, /*crossFunctions:*/ false);
 
-                if (!ArrayUtilities.any(continuableLabels, s => s.identifier.valueText() === ast.identifier.valueText())) {
+                if (!ArrayUtilities.any(continuableLabels, s => tokenValueText(s.identifier) === tokenValueText(ast.identifier))) {
                     // The target of the continue statement wasn't to a reachable label.
                     //
                     // Let hte user know, with a specialized message if the target was to an
                     // unreachable label (as opposed to a non-existed label)
                     var continuableLabels = this.getEnclosingLabels(ast, /*breakable:*/ false, /*crossFunctions:*/ true);
 
-                    if (ArrayUtilities.any(continuableLabels, s => s.identifier.valueText() === ast.identifier.valueText())) {
+                    if (ArrayUtilities.any(continuableLabels, s => tokenValueText(s.identifier) === tokenValueText(ast.identifier))) {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast,
                             DiagnosticCode.Jump_target_cannot_cross_function_boundary));
                     }
@@ -5696,13 +5696,13 @@ module TypeScript {
             if (ast.identifier) {
                 var breakableLabels = this.getEnclosingLabels(ast, /*breakable:*/ true, /*crossFunctions:*/ false);
 
-                if (!ArrayUtilities.any(breakableLabels, s => s.identifier.valueText() === ast.identifier.valueText())) {
+                if (!ArrayUtilities.any(breakableLabels, s => tokenValueText(s.identifier) === tokenValueText(ast.identifier))) {
                     // The target of the continue statement wasn't to a reachable label.
                     //
                     // Let hte user know, with a specialized message if the target was to an
                     // unreachable label (as opposed to a non-existed label)
                     var breakableLabels = this.getEnclosingLabels(ast, /*breakable:*/ true, /*crossFunctions:*/ true);
-                    if (ArrayUtilities.any(breakableLabels, s => s.identifier.valueText() === ast.identifier.valueText())) {
+                    if (ArrayUtilities.any(breakableLabels, s => tokenValueText(s.identifier) === tokenValueText(ast.identifier))) {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast,
                             DiagnosticCode.Jump_target_cannot_cross_function_boundary));
                     }
@@ -6388,7 +6388,7 @@ module TypeScript {
 
         private checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST: ISyntaxToken,
             nameSymbol: PullSymbol, context: PullTypeResolutionContext): boolean {
-            var id = nameAST.valueText();
+            var id = tokenValueText(nameAST);
             if (id.length === 0) {
                 return false;
             }
@@ -6428,7 +6428,7 @@ module TypeScript {
         }
 
         private computeNameExpression(nameAST: ISyntaxToken, context: PullTypeResolutionContext): PullSymbol {
-            var id = nameAST.valueText();
+            var id = tokenValueText(nameAST);
             if (id.length === 0) {
                 return this.semanticInfoChain.anyTypeSymbol;
             }
@@ -6528,7 +6528,7 @@ module TypeScript {
                     if (parameterList) {
                         for (var i = 0; i <= currentParameterIndex; i++) {
                             var candidateParameter = parameterList.parameters[i];
-                            if (candidateParameter && candidateParameter.identifier.valueText() === id) {
+                            if (candidateParameter && tokenValueText(candidateParameter.identifier) === id) {
                                 matchingParameter = candidateParameter;
                                 break;
                             }
@@ -6620,7 +6620,7 @@ module TypeScript {
         }
 
         private computeDottedNameExpression(expression: ISyntaxElement, name: ISyntaxToken, context: PullTypeResolutionContext, checkSuperPrivateAndStaticAccess: boolean): PullSymbol {
-            var rhsName = name.valueText();
+            var rhsName = tokenValueText(name);
             if (rhsName.length === 0) {
                 return this.semanticInfoChain.anyTypeSymbol;
             }
@@ -6632,7 +6632,7 @@ module TypeScript {
 
         private computeDottedNameExpressionFromLHS(lhs: PullSymbol, expression: ISyntaxElement, name: ISyntaxToken, context: PullTypeResolutionContext, checkSuperPrivateAndStaticAccess: boolean): PullSymbol {
             // This can be case if incomplete qualified name
-            var rhsName = name.valueText();
+            var rhsName = tokenValueText(name);
             if (rhsName.length === 0) {
                 return this.semanticInfoChain.anyTypeSymbol;
             }
@@ -6757,7 +6757,7 @@ module TypeScript {
         }
 
         private computeTypeNameExpression(nameAST: ISyntaxToken, context: PullTypeResolutionContext): PullTypeSymbol {
-            var id = nameAST.valueText();
+            var id = tokenValueText(nameAST);
             if (id.length === 0) {
                 return this.semanticInfoChain.anyTypeSymbol;
             }
@@ -7002,7 +7002,7 @@ module TypeScript {
         }
 
         private computeQualifiedName(dottedNameAST: QualifiedNameSyntax, context: PullTypeResolutionContext): PullTypeSymbol {
-            var rhsName = dottedNameAST.right.valueText();
+            var rhsName = tokenValueText(dottedNameAST.right);
             if (rhsName.length === 0) {
                 return this.semanticInfoChain.anyTypeSymbol;
             }
@@ -8168,7 +8168,7 @@ module TypeScript {
             if (callEx.argumentExpression.kind() === SyntaxKind.StringLiteral || callEx.argumentExpression.kind() === SyntaxKind.NumericLiteral) {
                 var memberName = callEx.argumentExpression.kind() === SyntaxKind.StringLiteral
                     ? stripStartAndEndQuotes((<ISyntaxToken>callEx.argumentExpression).text())
-                    : (<ISyntaxToken>callEx.argumentExpression).valueText();
+                    : tokenValueText((<ISyntaxToken>callEx.argumentExpression));
 
                 // November 18, 2013, Section 4.10:
                 // If IndexExpr is a string literal or a numeric literal and ObjExpr's apparent type
@@ -13608,13 +13608,13 @@ module TypeScript {
 
     export function getPropertyAssignmentNameTextFromIdentifier(identifier: ISyntaxElement): { actualText: string; memberName: string } {
         if (identifier.kind() === SyntaxKind.IdentifierName) {
-            return { actualText: (<ISyntaxToken>identifier).text(), memberName: (<ISyntaxToken>identifier).valueText() };
+            return { actualText: (<ISyntaxToken>identifier).text(), memberName: tokenValueText((<ISyntaxToken>identifier)) };
         }
         else if (identifier.kind() === SyntaxKind.StringLiteral) {
-            return { actualText: (<ISyntaxToken>identifier).text(), memberName: (<ISyntaxToken>identifier).valueText() };
+            return { actualText: (<ISyntaxToken>identifier).text(), memberName: tokenValueText((<ISyntaxToken>identifier)) };
         }
         else if (identifier.kind() === SyntaxKind.NumericLiteral) {
-            return { actualText: (<ISyntaxToken>identifier).text(), memberName: (<ISyntaxToken>identifier).valueText() };
+            return { actualText: (<ISyntaxToken>identifier).text(), memberName: tokenValueText((<ISyntaxToken>identifier)) };
         }
         else {
             throw Errors.invalidOperation();

@@ -438,7 +438,7 @@ module TypeScript {
                         }
 
                         var functionDeclaration = <FunctionDeclarationSyntax>moduleElement;
-                        if (functionDeclaration.identifier.valueText() !== functionOverloadChainName) {
+                        if (tokenValueText(functionDeclaration.identifier) !== functionOverloadChainName) {
                             this.pushDiagnostic(functionDeclaration.identifier,
                                 DiagnosticCode.Function_overload_name_must_be_0, [functionOverloadChainName]);
                             return true;
@@ -449,7 +449,7 @@ module TypeScript {
                         functionDeclaration = <FunctionDeclarationSyntax>moduleElement;
                         if (!SyntaxUtilities.containsToken(functionDeclaration.modifiers, SyntaxKind.DeclareKeyword)) {
                             inFunctionOverloadChain = functionDeclaration.block === null;
-                            functionOverloadChainName = functionDeclaration.identifier.valueText();
+                            functionOverloadChainName = tokenValueText(functionDeclaration.identifier);
 
                             if (inFunctionOverloadChain) {
                                 if (lastElement) {
@@ -465,7 +465,7 @@ module TypeScript {
                                     if (nextElement.kind() === SyntaxKind.FunctionDeclaration) {
                                         var nextFunction = <FunctionDeclarationSyntax>nextElement;
 
-                                        if (nextFunction.identifier.valueText() !== functionOverloadChainName &&
+                                        if (tokenValueText(nextFunction.identifier) !== functionOverloadChainName &&
                                             nextFunction.block === null) {
 
                                             this.pushDiagnostic(functionDeclaration.identifier, DiagnosticCode.Function_implementation_expected);
@@ -507,7 +507,7 @@ module TypeScript {
                         }
 
                         memberFunctionDeclaration = <MemberFunctionDeclarationSyntax>classElement;
-                        if (memberFunctionDeclaration.propertyName.valueText() !== functionOverloadChainName) {
+                        if (tokenValueText(memberFunctionDeclaration.propertyName) !== functionOverloadChainName) {
                             this.pushDiagnostic(memberFunctionDeclaration.propertyName,
                                 DiagnosticCode.Function_overload_name_must_be_0, [functionOverloadChainName]);
                             return true;
@@ -531,7 +531,7 @@ module TypeScript {
                         memberFunctionDeclaration = <MemberFunctionDeclarationSyntax>classElement;
 
                         inFunctionOverloadChain = memberFunctionDeclaration.block === null;
-                        functionOverloadChainName = memberFunctionDeclaration.propertyName.valueText();
+                        functionOverloadChainName = tokenValueText(memberFunctionDeclaration.propertyName);
                         isInStaticOverloadChain = SyntaxUtilities.containsToken(memberFunctionDeclaration.modifiers, SyntaxKind.StaticKeyword);
 
                         if (inFunctionOverloadChain) {
@@ -548,7 +548,7 @@ module TypeScript {
                                 if (nextElement.kind() === SyntaxKind.MemberFunctionDeclaration) {
                                     var nextMemberFunction = <MemberFunctionDeclarationSyntax>nextElement;
 
-                                    if (nextMemberFunction.propertyName.valueText() !== functionOverloadChainName &&
+                                    if (tokenValueText(nextMemberFunction.propertyName) !== functionOverloadChainName &&
                                         nextMemberFunction.block === null) {
 
                                         this.pushDiagnostic(memberFunctionDeclaration.propertyName, DiagnosticCode.Function_implementation_expected);
@@ -589,13 +589,13 @@ module TypeScript {
                     current = null;
                 }
 
-                switch (token.valueText()) {
+                switch (tokenValueText(token)) {
                     case "any":
                     case "number":
                     case "boolean":
                     case "string":
                     case "void":
-                        this.pushDiagnostic(token, diagnosticKey, [token.valueText()]);
+                        this.pushDiagnostic(token, diagnosticKey, [tokenValueText(token)]);
                         return true;
                 }
             }

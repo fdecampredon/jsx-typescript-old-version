@@ -1094,7 +1094,7 @@ module TypeScript {
             var svModuleName = this.moduleName;
 
             if (moduleDecl.stringLiteral) {
-                this.moduleName = moduleDecl.stringLiteral.valueText();
+                this.moduleName = tokenValueText(moduleDecl.stringLiteral);
                 if (isTSFile(this.moduleName)) {
                     this.moduleName = this.moduleName.substring(0, this.moduleName.length - ".ts".length);
                 }
@@ -1227,7 +1227,7 @@ module TypeScript {
 
             var representation = (varDecl.propertyName.kind() === SyntaxKind.StringLiteral)
                 ? varDecl.propertyName.text()
-                : ('"' + varDecl.propertyName.valueText() + '"');
+                : ('"' + tokenValueText(varDecl.propertyName) + '"');
 
             this.writeToOutput(this.moduleName);
             this.writeToOutput('[');
