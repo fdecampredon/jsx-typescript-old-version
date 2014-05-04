@@ -121,7 +121,7 @@ module TypeScript.PrettyPrinter {
             this.appendToken(token);
         }
 
-        private appendSpaceList(list: ISyntaxList<ISyntaxNodeOrToken>): void {
+        private appendSpaceList(list: ISyntaxNodeOrToken[]): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 if (isNode(list.childAt(i))) {
                     this.appendNode(list.childAt(i));
@@ -134,7 +134,7 @@ module TypeScript.PrettyPrinter {
             }
         }
 
-        private appendSeparatorSpaceList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {
+        private appendSeparatorSpaceList(list: ISyntaxNodeOrToken[]): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 if (i % 2 === 0) {
                     if (i > 0) {
@@ -149,7 +149,7 @@ module TypeScript.PrettyPrinter {
             }
         }
 
-        private appendSeparatorNewLineList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {
+        private appendSeparatorNewLineList(list: ISyntaxNodeOrToken[]): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 if (i % 2 === 0) {
                     if (i > 0) {
@@ -164,7 +164,7 @@ module TypeScript.PrettyPrinter {
             }
         }
 
-        private appendModuleElements(list: ISyntaxList<IModuleElementSyntax>): void {
+        private appendModuleElements(list: IModuleElementSyntax[]): void {
             var lastModuleElement: IModuleElementSyntax = null;
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var moduleElement = list.childAt(i);
@@ -456,7 +456,7 @@ module TypeScript.PrettyPrinter {
             visitNodeOrToken(this, node.type);
         }
 
-        private appendStatements(statements: ISyntaxList<IStatementSyntax>): void {
+        private appendStatements(statements: IStatementSyntax[]): void {
             var lastStatement: IStatementSyntax = null;
             for (var i = 0, n = statements.childCount(); i < n; i++) {
                 var statement = statements.childAt(i);

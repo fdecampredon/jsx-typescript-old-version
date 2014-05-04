@@ -1,5 +1,5 @@
 module TypeScript {
-    function isSeparatedListTypeScriptSpecific(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): boolean {
+    function isSeparatedListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {
         for (var i = 0, n = this.nonSeparatorCount(); i < n; i++) {
             if (this.nonSeparatorAt(i).isTypeScriptSpecific()) {
                 return true;
@@ -9,7 +9,7 @@ module TypeScript {
         return false;
     }
 
-    function isListTypeScriptSpecific(list: ISyntaxList<ISyntaxNodeOrToken>): boolean {
+    function isListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {
         for (var i = 0, n = this.childCount(); i < n; i++) {
             if (this.childAt(i).isTypeScriptSpecific()) {
                 return true;
@@ -22,8 +22,8 @@ module TypeScript {
     export function isTypeScriptSpecific(element: ISyntaxElement): boolean {
         if (element === null) { return false; }
         if (isToken(element)) { return false; }
-        if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxList<ISyntaxNodeOrToken>>element); }
-        if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element); }
+        if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }
+        if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }
 
         switch (element.kind()) {
             case SyntaxKind.ExternalModuleReference:

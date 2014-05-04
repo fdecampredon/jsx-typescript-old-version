@@ -1225,7 +1225,7 @@ module TypeScript {
             return containerSymbol;
         }
 
-        private resolveFirstExportAssignmentStatement(moduleElements: ISyntaxList<IModuleElementSyntax>, context: PullTypeResolutionContext): void {
+        private resolveFirstExportAssignmentStatement(moduleElements: IModuleElementSyntax[], context: PullTypeResolutionContext): void {
             for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
                 var moduleElement = moduleElements.childAt(i);
                 if (moduleElement.kind() === SyntaxKind.ExportAssignment) {
@@ -1439,7 +1439,7 @@ module TypeScript {
         private resolveReferenceTypeDeclaration(
             classOrInterface: ISyntaxElement,
             name: ISyntaxToken,
-            heritageClauses: ISyntaxList<HeritageClauseSyntax>,
+            heritageClauses: HeritageClauseSyntax[],
             context: PullTypeResolutionContext): PullSymbol {
 
             var typeDecl = this.semanticInfoChain.getDeclForAST(classOrInterface);
@@ -2914,7 +2914,7 @@ module TypeScript {
 
         private resolveVariableDeclaratorOrParameterOrEnumElement(
             varDeclOrParameter: ISyntaxElement,
-            modifiers: ISyntaxList<ISyntaxToken>,
+            modifiers: ISyntaxToken[],
             name: ISyntaxToken,
             typeExpr: ISyntaxElement,
             init: EqualsValueClauseSyntax,
@@ -3167,7 +3167,7 @@ module TypeScript {
                 parameter, parameter.modifiers, parameter.identifier, ASTHelpers.getType(parameter), parameter.equalsValueClause, context);
         }
 
-        private typeCheckVariableDeclaratorOrParameterOrEnumElement(varDeclOrParameter: ISyntaxElement, modifiers: ISyntaxList<ISyntaxToken>, name: ISyntaxToken, typeExpr: ISyntaxElement, init: EqualsValueClauseSyntax, context: PullTypeResolutionContext) {
+        private typeCheckVariableDeclaratorOrParameterOrEnumElement(varDeclOrParameter: ISyntaxElement, modifiers: ISyntaxToken[], name: ISyntaxToken, typeExpr: ISyntaxElement, init: EqualsValueClauseSyntax, context: PullTypeResolutionContext) {
             this.setTypeChecked(varDeclOrParameter, context);
 
             var hasTypeExpr = typeExpr !== null || varDeclOrParameter.kind() === SyntaxKind.EnumElement;
@@ -3437,7 +3437,7 @@ module TypeScript {
             if (constraint) {
                 // Get all type parameters and create a map that has entries at pullSymbolID for each of the type parameter
                 // The value doesnt matter, the entry needs to be present for the wrapsSomeTypeParameter to be able to give the correct answer
-                var typeParametersAST = <ISeparatedSyntaxList<TypeParameterSyntax>>typeParameterAST.parent;
+                var typeParametersAST = <TypeParameterSyntax[]>typeParameterAST.parent;
                 var typeParameters: PullTypeSymbol[] = [];
                 for (var i = 0; i < typeParametersAST.nonSeparatorCount(); i++) {
                     var currentTypeParameterAST = typeParametersAST.nonSeparatorAt(i);
@@ -4740,7 +4740,7 @@ module TypeScript {
                 ASTHelpers.parametersFromParameterList(funcDeclAST.parameterList), null, funcDeclAST.block, context);
         }
 
-        private resolveList(list: ISyntaxList<ISyntaxNodeOrToken>, context: PullTypeResolutionContext): PullSymbol {
+        private resolveList(list: ISyntaxNodeOrToken[], context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(list, context)) {
                 this.setTypeChecked(list, context);
 
@@ -4753,7 +4753,7 @@ module TypeScript {
             return this.semanticInfoChain.voidTypeSymbol;
         }
 
-        private resolveSeparatedList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>, context: PullTypeResolutionContext): PullSymbol {
+        private resolveSeparatedList(list: ISyntaxNodeOrToken[], context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(list, context)) {
                 this.setTypeChecked(list, context);
 
@@ -5762,10 +5762,10 @@ module TypeScript {
                     return this.resolveTypeReference(ast, context);
 
                 case SyntaxKind.List:
-                    return this.resolveList(<ISyntaxList<ISyntaxNodeOrToken>>ast, context);
+                    return this.resolveList(<ISyntaxNodeOrToken[]>ast, context);
 
                 case SyntaxKind.SeparatedList:
-                    return this.resolveSeparatedList(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>ast, context);
+                    return this.resolveSeparatedList(<ISyntaxNodeOrToken[]>ast, context);
 
                 case SyntaxKind.SourceUnit:
                     return this.resolveSourceUnit(<SourceUnitSyntax>ast, context);
@@ -7771,7 +7771,7 @@ module TypeScript {
         private bindObjectLiteralMembers(
                 objectLiteralDeclaration: PullDecl,
                 objectLiteralTypeSymbol: PullTypeSymbol,
-                objectLiteralMembers: ISeparatedSyntaxList<IPropertyAssignmentSyntax>,
+                objectLiteralMembers: IPropertyAssignmentSyntax[],
                 isUsingExistingSymbol: boolean,
                 pullTypeContext: PullTypeResolutionContext): PullSymbol[]{
 
@@ -7826,7 +7826,7 @@ module TypeScript {
                 objectLiteralDeclaration: PullDecl,
                 objectLiteralTypeSymbol: PullTypeSymbol,
                 objectLiteralContextualType: PullTypeSymbol,
-                objectLiteralMembers: ISeparatedSyntaxList<IPropertyAssignmentSyntax>,
+                objectLiteralMembers: IPropertyAssignmentSyntax[],
                 stringIndexerSignature: PullSignatureSymbol,
                 numericIndexerSignature: PullSignatureSymbol,
                 allMemberTypes: PullTypeSymbol[],
@@ -11104,7 +11104,7 @@ module TypeScript {
             return callEx.expression;
         }
 
-        private overloadHasCorrectArity(signature: PullSignatureSymbol, args: ISeparatedSyntaxList<IExpressionSyntax>): boolean {
+        private overloadHasCorrectArity(signature: PullSignatureSymbol, args: IExpressionSyntax[]): boolean {
             if (args == null) {
                 return signature.nonOptionalParamCount === 0;
             }
@@ -11126,7 +11126,7 @@ module TypeScript {
             return true;
         }
 
-        private overloadIsApplicable(signature: PullSignatureSymbol, args: ISeparatedSyntaxList<IExpressionSyntax>, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo): OverloadApplicabilityStatus {
+        private overloadIsApplicable(signature: PullSignatureSymbol, args: IExpressionSyntax[], context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo): OverloadApplicabilityStatus {
             // Already checked for arity, so it's automatically applicable if there are no args
             if (args === null) {
                 return OverloadApplicabilityStatus.Subtype;
@@ -13036,7 +13036,7 @@ module TypeScript {
                 this.baseListPrivacyErrorReporter(classOrInterface, typeSymbol, baseDeclAST, isExtendedType, errorSymbol, context));
         }
 
-        private typeCheckBases(classOrInterface: ISyntaxElement, name: ISyntaxToken, heritageClauses: ISyntaxList<HeritageClauseSyntax>, typeSymbol: PullTypeSymbol, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckBases(classOrInterface: ISyntaxElement, name: ISyntaxToken, heritageClauses: HeritageClauseSyntax[], typeSymbol: PullTypeSymbol, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             var extendsClause = ASTHelpers.getExtendsHeritageClause(heritageClauses);
             var implementsClause = ASTHelpers.getImplementsHeritageClause(heritageClauses);
             if (!extendsClause && !implementsClause) {

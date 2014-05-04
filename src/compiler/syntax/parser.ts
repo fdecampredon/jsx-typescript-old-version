@@ -1717,7 +1717,7 @@ module TypeScript.Parser {
                 }
             }
             else if (isList(parent)) {
-                var list1 = <ISyntaxList<ISyntaxNodeOrToken>>parent;
+                var list1 = <ISyntaxNodeOrToken[]>parent;
                 for (var i = 0, n = list1.childCount(); i < n; i++) {
                     if (list1.childAt(i) === oldToken) {
                         list1.setChildAt(i, newToken);
@@ -1726,7 +1726,7 @@ module TypeScript.Parser {
                 }
             }
             else if (isSeparatedList(parent)) {
-                var list2 = <ISeparatedSyntaxList<ISyntaxNodeOrToken>>parent;
+                var list2 = <ISyntaxNodeOrToken[]>parent;
                 for (var i = 0, n = list2.childCount(); i < n; i++) {
                     if (list2.childAt(i) === oldToken) {
                         list2.setChildAt(i, newToken);
@@ -2030,8 +2030,8 @@ module TypeScript.Parser {
 
             var lessThanToken: ISyntaxToken;
             var greaterThanToken: ISyntaxToken;
-            var result: { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList<ITypeSyntax>; };
-            var typeArguments: ISeparatedSyntaxList<ITypeSyntax>;
+            var result: { skippedTokens: ISyntaxToken[]; list: ITypeSyntax[]; };
+            var typeArguments: ITypeSyntax[];
 
             if (!inExpression) {
                 // if we're not in an expression, this must be a type argument list.  Just parse
@@ -2266,7 +2266,7 @@ module TypeScript.Parser {
             return modifierCount;
         }
 
-        private parseModifiers(): ISyntaxList<ISyntaxToken> {
+        private parseModifiers(): ISyntaxToken[] {
             var tokens: ISyntaxToken[] = getArray();
 
             while (true) {
@@ -2301,7 +2301,7 @@ module TypeScript.Parser {
                    this.isIdentifier(nextToken);
         }
 
-        private parseHeritageClauses(): ISyntaxList<HeritageClauseSyntax> {
+        private parseHeritageClauses(): HeritageClauseSyntax[] {
             var heritageClauses = Syntax.emptyList<HeritageClauseSyntax>();
             
             if (this.isHeritageClause()) {
@@ -2377,7 +2377,7 @@ module TypeScript.Parser {
             }
         }
 
-        private parseGetMemberAccessorDeclaration(modifiers: ISyntaxList<ISyntaxToken>, checkForStrictMode: boolean): GetAccessorSyntax {
+        private parseGetMemberAccessorDeclaration(modifiers: ISyntaxToken[], checkForStrictMode: boolean): GetAccessorSyntax {
             // Debug.assert(this.currentToken().kind() === SyntaxKind.GetKeyword);
 
             var getKeyword = this.eatKeyword(SyntaxKind.GetKeyword);
@@ -2390,7 +2390,7 @@ module TypeScript.Parser {
                 modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block, this.parseNodeData);
         }
 
-        private parseSetMemberAccessorDeclaration(modifiers: ISyntaxList<ISyntaxToken>, checkForStrictMode: boolean): SetAccessorSyntax {
+        private parseSetMemberAccessorDeclaration(modifiers: ISyntaxToken[], checkForStrictMode: boolean): SetAccessorSyntax {
             // Debug.assert(this.currentToken().kind() === SyntaxKind.SetKeyword);
 
             var setKeyword = this.eatKeyword(SyntaxKind.SetKeyword);
@@ -5371,7 +5371,7 @@ module TypeScript.Parser {
 
         private parseSyntaxList<T extends ISyntaxNodeOrToken>(
                 currentListType: ListParsingState,
-                processItems: (parser: ParserImpl, items: any[]) => void = null): { skippedTokens: ISyntaxToken[]; list: ISyntaxList<T>; } {
+                processItems: (parser: ParserImpl, items: any[]) => void = null): { skippedTokens: ISyntaxToken[]; list: T[]; } {
             var savedListParsingState = this.listParsingState;
             this.listParsingState |= currentListType;
 
@@ -5382,7 +5382,7 @@ module TypeScript.Parser {
             return result;
         }
 
-        private parseSeparatedSyntaxList<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList<T>; } {
+        private parseSeparatedSyntaxList<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: T[]; } {
             var savedListParsingState = this.listParsingState;
             this.listParsingState |= currentListType;
 
@@ -5484,7 +5484,7 @@ module TypeScript.Parser {
 
         private parseSyntaxListWorker<T extends ISyntaxNodeOrToken>(
                 currentListType: ListParsingState,
-                processItems: (parser: ParserImpl, items: any[]) => void ): { skippedTokens: ISyntaxToken[]; list: ISyntaxList<T>; } {
+                processItems: (parser: ParserImpl, items: any[]) => void ): { skippedTokens: ISyntaxToken[]; list: T[]; } {
             var items: T[] = getArray();
             var skippedTokens: ISyntaxToken[] = getArray();
 
@@ -5525,7 +5525,7 @@ module TypeScript.Parser {
             return { skippedTokens: skippedTokens, list: result };
         }
 
-        private parseSeparatedSyntaxListWorker<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList<T>; } {
+        private parseSeparatedSyntaxListWorker<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: T[]; } {
             var nodes: T[] = getArray();
             var separators: ISyntaxToken[] = getArray();
             var skippedTokens: ISyntaxToken[] = getArray();

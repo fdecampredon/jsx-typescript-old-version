@@ -62,13 +62,13 @@ module TypeScript {
             this.emitDeclarationsForSourceUnit(sourceUnit);
         }
 
-        private emitDeclarationsForList(list: ISyntaxList<ISyntaxNodeOrToken>) {
+        private emitDeclarationsForList(list: ISyntaxNodeOrToken[]) {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 this.emitDeclarationsForAST(list.childAt(i));
             }
         }
 
-        private emitSeparatedList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>) {
+        private emitSeparatedList(list: ISyntaxNodeOrToken[]) {
             for (var i = 0, n = list.nonSeparatorCount(); i < n; i++) {
                 this.emitDeclarationsForAST(list.nonSeparatorAt(i));
             }
@@ -376,7 +376,7 @@ module TypeScript {
             }
         }
 
-        private emitClassElementModifiers(modifiers: ISyntaxList<ISyntaxToken>): void {
+        private emitClassElementModifiers(modifiers: ISyntaxToken[]): void {
             if (hasModifier(modifiers, PullElementFlags.Static)) {
                 if (hasModifier(modifiers, PullElementFlags.Private)) {
                     this.declFile.Write("private ");
@@ -732,7 +732,7 @@ module TypeScript {
             this.declFile.WriteLine(";");
         }
 
-        private emitBaseList(bases: ISeparatedSyntaxList<INameSyntax>, useExtendsList: boolean) {
+        private emitBaseList(bases: INameSyntax[], useExtendsList: boolean) {
             if (bases && (bases.nonSeparatorCount() > 0)) {
                 var qual = useExtendsList ? "extends" : "implements";
                 this.declFile.Write(" " + qual + " ");
@@ -776,7 +776,7 @@ module TypeScript {
             this.emitMemberAccessorDeclaration(funcDecl, funcDecl.modifiers, funcDecl.propertyName);
         }
 
-        private emitMemberAccessorDeclaration(funcDecl: ISyntaxElement, modifiers: ISyntaxList<ISyntaxToken>, name: ISyntaxToken) {
+        private emitMemberAccessorDeclaration(funcDecl: ISyntaxElement, modifiers: ISyntaxToken[], name: ISyntaxToken) {
             var start = new Date().getTime();
             var accessorSymbol = PullHelpers.getAccessorSymbol(funcDecl, this.semanticInfoChain);
             TypeScript.declarationEmitGetAccessorFunctionTime += new Date().getTime();
@@ -852,7 +852,7 @@ module TypeScript {
             this.declFile.WriteLine("}");
         }
 
-        private emitHeritageClauses(clauses: ISyntaxList<HeritageClauseSyntax>): void {
+        private emitHeritageClauses(clauses: HeritageClauseSyntax[]): void {
             if (clauses) {
                 for (var i = 0, n = clauses.childCount(); i < n; i++) {
                     this.emitHeritageClause(clauses.childAt(i));

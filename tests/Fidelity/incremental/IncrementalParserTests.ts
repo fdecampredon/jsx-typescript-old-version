@@ -16,13 +16,13 @@ module TypeScript {
             this.elements.push(token);
         }
 
-        public visitSyntaxList(list: ISyntaxList<ISyntaxNodeOrToken>) {
+        public visitSyntaxList(list: ISyntaxNodeOrToken[]) {
             if (!isShared(list)) {
                 this.elements.push(list);
             }
         }
 
-        public visitSeparatedSyntaxList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>) {
+        public visitSeparatedSyntaxList(list: ISyntaxNodeOrToken[]) {
             if (!isShared(list)) {
                 this.elements.push(list);
             }

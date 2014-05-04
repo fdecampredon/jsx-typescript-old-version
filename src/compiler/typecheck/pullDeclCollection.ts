@@ -28,7 +28,7 @@ module TypeScript {
         }
     }
 
-    function moduleElementsHasExportAssignment(moduleElements: ISyntaxList<IModuleElementSyntax>): boolean {
+    function moduleElementsHasExportAssignment(moduleElements: IModuleElementSyntax[]): boolean {
         for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
             if (moduleElements.childAt(i).kind() === SyntaxKind.ExportAssignment) {
                 return true;
@@ -248,7 +248,7 @@ module TypeScript {
         context.setASTForDecl(valueDecl, moduleNameAST);
     }
 
-    function containsExecutableCode(members: ISyntaxList<IModuleElementSyntax>): boolean {
+    function containsExecutableCode(members: IModuleElementSyntax[]): boolean {
         for (var i = 0, n = members.childCount(); i < n; i++) {
             var member = members.childAt(i);
 

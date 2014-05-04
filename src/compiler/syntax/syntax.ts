@@ -195,7 +195,7 @@ module TypeScript.Syntax {
             trivia1.fullText() === trivia2.fullText();
     }
 
-    export function listStructuralEquals<T extends ISyntaxNodeOrToken>(list1: ISyntaxList<T>, list2: ISyntaxList<T>): boolean {
+    export function listStructuralEquals<T extends ISyntaxNodeOrToken>(list1: T[], list2: T[]): boolean {
         if (list1.childCount() !== list2.childCount()) {
             return false;
         }
@@ -212,7 +212,7 @@ module TypeScript.Syntax {
         return true;
     }
 
-    export function separatedListStructuralEquals<T extends ISyntaxNodeOrToken>(list1: ISeparatedSyntaxList<T>, list2: ISeparatedSyntaxList<T>): boolean {
+    export function separatedListStructuralEquals<T extends ISyntaxNodeOrToken>(list1: T[], list2: T[]): boolean {
         if (list1.childCount() !== list2.childCount()) {
             return false;
         }
@@ -264,10 +264,10 @@ module TypeScript.Syntax {
             return nodeStructuralEquals(<SyntaxNode>element1, <SyntaxNode>element2);
         }
         else if (isList(element1)) {
-            return listStructuralEquals(<ISyntaxList<ISyntaxNodeOrToken>>element1, <ISyntaxList<ISyntaxNodeOrToken>>element2);
+            return listStructuralEquals(<ISyntaxNodeOrToken[]>element1, <ISyntaxNodeOrToken[]>element2);
         }
         else if (isSeparatedList(element1)) {
-            return separatedListStructuralEquals(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element1, <ISeparatedSyntaxList<ISyntaxNodeOrToken>>element2);
+            return separatedListStructuralEquals(<ISyntaxNodeOrToken[]>element1, <ISyntaxNodeOrToken[]>element2);
         }
 
         throw Errors.invalidOperation();

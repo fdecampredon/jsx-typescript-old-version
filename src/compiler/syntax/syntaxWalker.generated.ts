@@ -42,13 +42,13 @@ module TypeScript {
             this.visitNodeOrToken(nodeOrToken);
         }
 
-        public visitList(list: ISyntaxList<ISyntaxNodeOrToken>): void {
+        public visitList(list: ISyntaxNodeOrToken[]): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                this.visitNodeOrToken(list.childAt(i));
             }
         }
 
-        public visitSeparatedList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {
+        public visitSeparatedList(list: ISyntaxNodeOrToken[]): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var item = list.childAt(i);
                 this.visitNodeOrToken(item);

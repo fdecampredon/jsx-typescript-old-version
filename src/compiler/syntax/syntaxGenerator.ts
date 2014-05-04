@@ -1006,10 +1006,10 @@ function getType(child: IMemberDefinition): string {
         return "ISyntaxToken";
     }
     else if (child.isSeparatedList) {
-        return "ISeparatedSyntaxList<" + child.elementType + ">";
+        return child.elementType + "[]";
     }
     else if (child.isList) {
-        return "ISyntaxList<" + child.elementType + ">";
+        return child.elementType + "[]";
     }
     else {
         return child.type;
@@ -2135,7 +2135,7 @@ function generateRewriter(): string {
 "            return isToken(node) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>node) : this.visitNode(<SyntaxNode>node);\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public visitList<T extends ISyntaxNodeOrToken>(list: ISyntaxList<T>): ISyntaxList<T> {\r\n" +
+"        public visitList<T extends ISyntaxNodeOrToken>(list: T[]): T[] {\r\n" +
 "            var newItems: T[] = null;\r\n" +
 "\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
@@ -2158,7 +2158,7 @@ function generateRewriter(): string {
 "            return newItems === null ? list : Syntax.list<T>(newItems);\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: ISeparatedSyntaxList<T>): ISeparatedSyntaxList<T> {\r\n" +
+"        public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: T[]): T[] {\r\n" +
 "            var newItems: ISyntaxNodeOrToken[] = null;\r\n" +
 "\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
@@ -2289,13 +2289,13 @@ function generateWalker(): string {
 "            this.visitNodeOrToken(nodeOrToken);\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public visitList(list: ISyntaxList<ISyntaxNodeOrToken>): void {\r\n" +
+"        public visitList(list: ISyntaxNodeOrToken[]): void {\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
 "               this.visitNodeOrToken(list.childAt(i));\r\n" +
 "            }\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public visitSeparatedList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {\r\n" +
+"        public visitSeparatedList(list: ISyntaxNodeOrToken[]): void {\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
 "                var item = list.childAt(i);\r\n" +
 "                this.visitNodeOrToken(item);\r\n" + 
@@ -2633,7 +2633,7 @@ function generateIsTypeScriptSpecific(): string {
 
     result += "module TypeScript {\r\n";
 
-    result += "    function isSeparatedListTypeScriptSpecific(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): boolean {\r\n"
+    result += "    function isSeparatedListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {\r\n"
     result += "        for (var i = 0, n = this.nonSeparatorCount(); i < n; i++) {\r\n";
     result += "            if (this.nonSeparatorAt(i).isTypeScriptSpecific()) {\r\n";
     result += "                return true;\r\n";
@@ -2642,7 +2642,7 @@ function generateIsTypeScriptSpecific(): string {
     result += "        return false;\r\n";
     result += "    }\r\n\r\n";
 
-    result += "    function isListTypeScriptSpecific(list: ISyntaxList<ISyntaxNodeOrToken>): boolean {\r\n"
+    result += "    function isListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {\r\n"
     result += "        for (var i = 0, n = this.childCount(); i < n; i++) {\r\n";
     result += "            if (this.childAt(i).isTypeScriptSpecific()) {\r\n";
     result += "                return true;\r\n";
@@ -2654,8 +2654,8 @@ function generateIsTypeScriptSpecific(): string {
     result += "    export function isTypeScriptSpecific(element: ISyntaxElement): boolean {\r\n"
     result += "        if (element === null) { return false; }\r\n";
     result += "        if (isToken(element)) { return false; }\r\n";
-    result += "        if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxList<ISyntaxNodeOrToken>>element); }\r\n";
-    result += "        if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element); }\r\n\r\n";
+    result += "        if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }\r\n";
+    result += "        if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }\r\n\r\n";
     result += "        switch (element.kind()) {\r\n";
 
     for (var i = 0; i < definitions.length; i++) {

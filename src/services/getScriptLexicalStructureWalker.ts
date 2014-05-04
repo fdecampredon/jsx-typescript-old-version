@@ -72,12 +72,7 @@ module TypeScript.Services {
             visitor.collectItems(items);
         }
 
-        private createItem(
-                node: TypeScript.SyntaxNode,
-                modifiers: TypeScript.ISyntaxList < ISyntaxToken>,
-                kind: string,
-                name: string): void {
-
+        private createItem(node: TypeScript.SyntaxNode, modifiers: ISyntaxToken[], kind: string, name: string): void {
             var key = kind + "+" + name;
 
             if (this.currentScope.items[key] !== undefined) {
@@ -119,7 +114,7 @@ module TypeScript.Services {
             }
         }
 
-        private getKindModifiers(modifiers: TypeScript.ISyntaxList<ISyntaxToken>): string {
+        private getKindModifiers(modifiers: TypeScript.ISyntaxToken[]): string {
             var result: string[] = [];
 
             for (var i = 0, n = modifiers.childCount(); i < n; i++) {

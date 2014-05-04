@@ -330,7 +330,7 @@ module TypeScript.Services.Breakpoints {
             }
         }
 
-        private breakpointSpanOfFirstChildOfSyntaxList(positionedList: TypeScript.ISyntaxList<ISyntaxNodeOrToken>): SpanInfo {
+        private breakpointSpanOfFirstChildOfSyntaxList(positionedList: TypeScript.ISyntaxNodeOrToken[]): SpanInfo {
             if (!positionedList) {
                 return null;
             }
@@ -354,7 +354,7 @@ module TypeScript.Services.Breakpoints {
             }
         }
 
-        private breakpointSpanOfLastChildOfSyntaxList(positionedList: TypeScript.ISyntaxList<ISyntaxNodeOrToken>): SpanInfo {
+        private breakpointSpanOfLastChildOfSyntaxList(positionedList: TypeScript.ISyntaxNodeOrToken[]): SpanInfo {
             if (!positionedList) {
                 return null;
             }
@@ -652,7 +652,7 @@ module TypeScript.Services.Breakpoints {
 
         private getSyntaxListOfDeclarationWithElements(positionedNode: TypeScript.SyntaxNode) {
             var node = positionedNode;
-            var elementsList: TypeScript.ISyntaxList<ISyntaxNodeOrToken>;
+            var elementsList: TypeScript.ISyntaxNodeOrToken[];
             var block: TypeScript.BlockSyntax;
 
             switch (node.kind()) {
@@ -749,7 +749,7 @@ module TypeScript.Services.Breakpoints {
 
             var container = Syntax.containingNode(varDeclaratorNode);
             if (container && container.kind() == TypeScript.SyntaxKind.VariableDeclaration) {
-                var parentDeclaratorsList = <TypeScript.ISeparatedSyntaxList<VariableDeclaratorSyntax>>varDeclaratorNode.parent;
+                var parentDeclaratorsList = <TypeScript.VariableDeclaratorSyntax[]>varDeclaratorNode.parent;
                 // If this is the first declarator in the list use the declaration instead
                 if (parentDeclaratorsList && parentDeclaratorsList.childAt(0) == varDeclaratorNode) {
                     return this.breakpointSpanOfVariableDeclaration(container);

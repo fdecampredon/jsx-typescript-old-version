@@ -37,7 +37,7 @@ module TypeScript.ASTHelpers {
         return hasModifier(declaration.modifiers, PullElementFlags.Ambient) || moduleMembersAreElided(declaration.moduleElements);
     }
 
-    function moduleMembersAreElided(members: ISyntaxList<IModuleElementSyntax>): boolean {
+    function moduleMembersAreElided(members: IModuleElementSyntax[]): boolean {
         for (var i = 0, n = members.childCount(); i < n; i++) {
             var member = members.childAt(i);
 
@@ -148,15 +148,15 @@ module TypeScript.ASTHelpers {
         return top;
     }
 
-    export function getExtendsHeritageClause(clauses: ISyntaxList<HeritageClauseSyntax>): HeritageClauseSyntax {
+    export function getExtendsHeritageClause(clauses: HeritageClauseSyntax[]): HeritageClauseSyntax {
         return getHeritageClause(clauses, SyntaxKind.ExtendsHeritageClause);
     }
 
-    export function getImplementsHeritageClause(clauses: ISyntaxList<HeritageClauseSyntax>): HeritageClauseSyntax {
+    export function getImplementsHeritageClause(clauses: HeritageClauseSyntax[]): HeritageClauseSyntax {
         return getHeritageClause(clauses, SyntaxKind.ImplementsHeritageClause);
     }
 
-    function getHeritageClause(clauses: ISyntaxList<HeritageClauseSyntax>, kind: SyntaxKind): HeritageClauseSyntax {
+    function getHeritageClause(clauses: HeritageClauseSyntax[], kind: SyntaxKind): HeritageClauseSyntax {
         if (clauses) {
             for (var i = 0, n = clauses.childCount(); i < n; i++) {
                 var child = clauses.childAt(i);
@@ -682,7 +682,7 @@ module TypeScript.ASTHelpers {
         return null;
     }
 
-    export function getVariableDeclaratorModifiers(variableDeclarator: VariableDeclaratorSyntax): ISyntaxList<ISyntaxToken> {
+    export function getVariableDeclaratorModifiers(variableDeclarator: VariableDeclaratorSyntax): ISyntaxToken[] {
         var variableStatement = getVariableStatement(variableDeclarator);
         return variableStatement ? variableStatement.modifiers : Syntax.emptyList<ISyntaxToken>();
     }

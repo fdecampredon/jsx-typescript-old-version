@@ -276,7 +276,7 @@ module TypeScript {
 
     export interface ISwitchClauseSyntax extends ISyntaxNode {
         _isSwitchClause: any;
-        statements: ISyntaxList<IStatementSyntax>;
+        statements: IStatementSyntax[];
     }
 
     export interface IExpressionSyntax extends ISyntaxNodeOrToken {

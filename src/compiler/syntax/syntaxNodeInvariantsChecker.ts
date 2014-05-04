@@ -19,12 +19,12 @@ module TypeScript {
             super.visitNode(node);
         }
 
-        public visitList(list: ISyntaxList<ISyntaxNodeOrToken>): void {
+        public visitList(list: ISyntaxNodeOrToken[]): void {
             Debug.assert(isShared(list) || list.parent);
             super.visitList(list);
         }
 
-        public visitSeparatedList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {
+        public visitSeparatedList(list: ISyntaxNodeOrToken[]): void {
             Debug.assert(isShared(list) || list.parent);
             super.visitSeparatedList(list);
         }

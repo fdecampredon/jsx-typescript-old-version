@@ -14,7 +14,7 @@ module TypeScript {
             return isToken(node) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>node) : this.visitNode(<SyntaxNode>node);
         }
 
-        public visitList<T extends ISyntaxNodeOrToken>(list: ISyntaxList<T>): ISyntaxList<T> {
+        public visitList<T extends ISyntaxNodeOrToken>(list: T[]): T[] {
             var newItems: T[] = null;
 
             for (var i = 0, n = list.childCount(); i < n; i++) {
@@ -37,7 +37,7 @@ module TypeScript {
             return newItems === null ? list : Syntax.list<T>(newItems);
         }
 
-        public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: ISeparatedSyntaxList<T>): ISeparatedSyntaxList<T> {
+        public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: T[]): T[] {
             var newItems: ISyntaxNodeOrToken[] = null;
 
             for (var i = 0, n = list.childCount(); i < n; i++) {
