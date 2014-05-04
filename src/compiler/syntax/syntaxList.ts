@@ -12,10 +12,6 @@ module TypeScript.Syntax {
     export class EmptySyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
 
-        public fileName(): string {
-            throw Errors.invalidOperation("Shared lists do not belong to a single file.");
-        }
-
         public kind(): SyntaxKind { return SyntaxKind.List; }
 
         public childCount(): number {
@@ -28,18 +24,6 @@ module TypeScript.Syntax {
 
         public setChildAt(index: number, value: T): void {
             throw Errors.argumentOutOfRange("index");
-        }
-
-        public fullWidth(): number {
-            return 0;
-        }
-
-        public fullStart(): number {
-            throw Errors.invalidOperation("'fullStart' invalid on a singleton element.");
-        }
-
-        public isIncrementallyUnusable(): boolean {
-            return false;
         }
     }
 
