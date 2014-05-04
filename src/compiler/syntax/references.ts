@@ -13,7 +13,6 @@
 ///<reference path='scanner.ts' />
 
 ///<reference path='scannerUtilities.generated.ts' />
-///<reference path='separatedSyntaxList.ts' />
 ///<reference path='slidingWindow.ts' />
 ///<reference path='syntax.ts' />
 ///<reference path='syntaxElement.ts' />

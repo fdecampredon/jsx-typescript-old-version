@@ -5,6 +5,17 @@ module TypeScript {
         childAt(index: number): T;
         setChildAt(index: number, value: T): void;
     }
+
+    export interface ISeparatedSyntaxList<T extends ISyntaxNodeOrToken> extends ISyntaxElement {
+        childAt(index: number): ISyntaxNodeOrToken;
+        setChildAt(index: number, value: ISyntaxNodeOrToken): void;
+
+        separatorCount(): number;
+        separatorAt(index: number): ISyntaxToken;
+
+        nonSeparatorCount(): number;
+        nonSeparatorAt(index: number): T;
+    }
 }
 
 interface Array<T> {
@@ -31,9 +42,9 @@ module TypeScript.Syntax {
     (<any>_emptySeparatedList).separators = _emptySeparators;
 
     function assertEmptyLists() {
-        Debug.assert(_emptyList.length === 0);
+        // Debug.assert(_emptyList.length === 0);
         var separators = (<any>_emptySeparatedList).separators;
-        Debug.assert(!separators || separators.length === 0);
+        // Debug.assert(!separators || separators.length === 0);
     }
 
     Array.prototype.kind = function (): SyntaxKind {
@@ -43,7 +54,7 @@ module TypeScript.Syntax {
 
     Array.prototype.setChildAt = function (index: number, value: any): void {
         assertEmptyLists();
-        Debug.assert(index >= 0 && index < this.childCount());
+        // Debug.assert(index >= 0 && index < this.childCount());
         if (this.kind() === SyntaxKind.SeparatedList) {
             if (index % 2 === 0) {
                 // Even elements are the non-separators.
@@ -75,7 +86,7 @@ module TypeScript.Syntax {
 
     Array.prototype.childAt = function (index: number): any {
         assertEmptyLists();
-        Debug.assert(index >= 0 && index < this.childCount());
+        // Debug.assert(index >= 0 && index < this.childCount());
         if (this.kind() === SyntaxKind.SeparatedList) {
             if (index % 2 === 0) {
                 // Even elements are the non-separators.
@@ -93,27 +104,27 @@ module TypeScript.Syntax {
 
     Array.prototype.separatorCount = function (): number {
         assertEmptyLists();
-        Debug.assert(this.kind() === SyntaxKind.SeparatedList);
+        // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
         return this.separators.length;
     }
 
     Array.prototype.separatorAt = function (index: number): ISyntaxToken {
         assertEmptyLists();
-        Debug.assert(this.kind() === SyntaxKind.SeparatedList);
-        Debug.assert(index >= 0 && index < this.separators.length);
+        // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
+        // Debug.assert(index >= 0 && index < this.separators.length);
         return this.separators[index];
     }
 
     Array.prototype.nonSeparatorCount = function () {
         assertEmptyLists();
-        Debug.assert(this.kind() === SyntaxKind.SeparatedList);
+        // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
         return this.length;
     }
 
     Array.prototype.nonSeparatorAt = function (index: number) {
         assertEmptyLists();
-        Debug.assert(this.kind() === SyntaxKind.SeparatedList);
-        Debug.assert(index >= 0 && index < this.length);
+        // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
+        // Debug.assert(index >= 0 && index < this.length);
         return this[index];
     }
 
@@ -142,7 +153,7 @@ module TypeScript.Syntax {
             return emptySeparatedList<T>();
         }
 
-        Debug.assert(separators.length === nodes.length || separators.length == (nodes.length - 1));
+        // Debug.assert(separators.length === nodes.length || separators.length == (nodes.length - 1));
 
         for (var i = 0, n = nodes.length; i < n; i++) {
             nodes[i].parent = nodes;
