@@ -93,8 +93,8 @@ module TypeScript {
             Debug.assert(this.mappingLevel.length > 0, "Mapping level should never be less than 0. This suggests a missing start call.");
             var expectedAst = this.mappingLevel.pop();
             if (ast !== expectedAst) {
-                var expectedAstInfo: any = (<any>expectedAst).kind ? SyntaxKind[(<any>expectedAst).kind()] : [expectedAst.start(), expectedAst.end()];
-                var astInfo: any = (<any>ast).kind ? SyntaxKind[(<any>ast).kind()] : [ast.start(), ast.end()]
+                var expectedAstInfo: any = (<any>expectedAst).kind ? SyntaxKind[(<any>expectedAst).kind] : [expectedAst.start(), expectedAst.end()];
+                var astInfo: any = (<any>ast).kind ? SyntaxKind[(<any>ast).kind] : [ast.start(), ast.end()]
                 Debug.fail(
                     "Provided ast is not the expected ISyntaxElement, Expected: " + expectedAstInfo + " Given: " + astInfo)
 
@@ -166,7 +166,7 @@ module TypeScript {
             Debug.assert(
                 this.mappingLevel.length === 0,
                 "Mapping level is not 0. This suggest a missing end call. Value: " +
-                this.mappingLevel.map(item => ['Node of type', SyntaxKind[(<any>item).kind()], 'at', item.start(), 'to', item.end()].join(' ')).join(', '));
+                this.mappingLevel.map(item => ['Node of type', SyntaxKind[(<any>item).kind], 'at', item.start(), 'to', item.end()].join(' ')).join(', '));
             // Output map file name into the js file
             this.jsFile.WriteLine("//# sourceMappingURL=" + this.sourceMapPath);
 

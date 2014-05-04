@@ -90,11 +90,11 @@ module TypeScript.Services {
                 this.lastDiagnosticKey = null;
 
                 token = this.scanner.scan(!noRegexTable[lastTokenKind]);
-                lastTokenKind = token.kind();
+                lastTokenKind = token.kind;
 
                 this.processToken(text, offset, token, result);
             }
-            while (token.kind() !== SyntaxKind.EndOfFileToken);
+            while (token.kind !== SyntaxKind.EndOfFileToken);
 
             this.lastDiagnosticKey = null;
             return result;
@@ -102,7 +102,7 @@ module TypeScript.Services {
 
         private processToken(text: string, offset: number, token: TypeScript.ISyntaxToken, result: ClassificationResult): void {
             this.processTriviaList(text, offset, token.leadingTrivia(), result);
-            this.addResult(text, offset, result, width(token), token.kind());
+            this.addResult(text, offset, result, width(token), token.kind);
             this.processTriviaList(text, offset, token.trailingTrivia(), result);
 
             if (fullEnd(token) >= text.length) {
@@ -112,7 +112,7 @@ module TypeScript.Services {
                     return;
                 }
 
-                if (token.kind() === TypeScript.SyntaxKind.StringLiteral) {
+                if (token.kind === TypeScript.SyntaxKind.StringLiteral) {
                     var tokenText = token.text();
                     if (tokenText.length > 0 && tokenText.charCodeAt(tokenText.length - 1) === TypeScript.CharacterCodes.backslash) {
                         var quoteChar = tokenText.charCodeAt(0);
@@ -128,7 +128,7 @@ module TypeScript.Services {
         private processTriviaList(text: string, offset: number, triviaList: TypeScript.ISyntaxTriviaList, result: ClassificationResult): void {
             for (var i = 0, n = triviaList.count(); i < n; i++) {
                 var trivia = triviaList.syntaxTriviaAt(i);
-                this.addResult(text, offset, result, trivia.fullWidth(), trivia.kind());
+                this.addResult(text, offset, result, trivia.fullWidth(), trivia.kind);
             }
         }
 

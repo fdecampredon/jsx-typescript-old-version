@@ -65,8 +65,8 @@ module TypeScript.Services.Formatting {
             return this._depth;
         }
 
-        public kind(): SyntaxKind {
-            return this._node.kind();
+        public get kind(): SyntaxKind {
+            return this._node.kind;
         }
 
         public hasSkippedOrMissingTokenChild(): boolean {

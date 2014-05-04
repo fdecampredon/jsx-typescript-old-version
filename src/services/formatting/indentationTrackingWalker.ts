@@ -91,7 +91,7 @@ module TypeScript.Services.Formatting {
 
                 // Only track new lines on tokens within the range. Make sure to check that the last trivia is a newline, and not just one of the trivia
                 var trivia = token.trailingTrivia();
-                this._lastTriviaWasNewLine = token.hasTrailingNewLine() && trivia.syntaxTriviaAt(trivia.count() - 1).kind() == SyntaxKind.NewLineTrivia;
+                this._lastTriviaWasNewLine = token.hasTrailingNewLine() && trivia.syntaxTriviaAt(trivia.count() - 1).kind == SyntaxKind.NewLineTrivia;
             }
 
             // Update the position
@@ -130,9 +130,9 @@ module TypeScript.Services.Formatting {
             // }
             // Also in a do-while statement, the while should be indented like the parent.
             if (firstToken(this._parent.node()) === token ||
-                token.kind() === SyntaxKind.OpenBraceToken || token.kind() === SyntaxKind.CloseBraceToken ||
-                token.kind() === SyntaxKind.OpenBracketToken || token.kind() === SyntaxKind.CloseBracketToken ||
-                (token.kind() === SyntaxKind.WhileKeyword && this._parent.node().kind() == SyntaxKind.DoStatement)) {
+                token.kind === SyntaxKind.OpenBraceToken || token.kind === SyntaxKind.CloseBraceToken ||
+                token.kind === SyntaxKind.OpenBracketToken || token.kind === SyntaxKind.CloseBracketToken ||
+                (token.kind === SyntaxKind.WhileKeyword && this._parent.node().kind == SyntaxKind.DoStatement)) {
                 return this._parent.indentationAmount();
             }
 
@@ -143,7 +143,7 @@ module TypeScript.Services.Formatting {
             // If this is token terminating an indentation scope, leading comments should be indented to follow the children 
             // indentation level and not the node
 
-            if (token.kind() === SyntaxKind.CloseBraceToken || token.kind() === SyntaxKind.CloseBracketToken) {
+            if (token.kind === SyntaxKind.CloseBraceToken || token.kind === SyntaxKind.CloseBracketToken) {
                 return (this._parent.indentationAmount() + this._parent.childIndentationAmountDelta());
             }
             return this._parent.indentationAmount();
@@ -159,7 +159,7 @@ module TypeScript.Services.Formatting {
                 parentIndentationAmount = parent.indentationAmount();
             }
             else {
-                if (parent.kind() === SyntaxKind.Block && !this.shouldIndentBlockInParent(this._parent.parent())) {
+                if (parent.kind === SyntaxKind.Block && !this.shouldIndentBlockInParent(this._parent.parent())) {
                     // Blocks preserve the indentation of their containing node (unless they're a 
                     // standalone block in a list).  i.e. if you have:
                     //
@@ -195,7 +195,7 @@ module TypeScript.Services.Formatting {
             var indentationAmountDelta: number;
             var parentNode = parent.node();
 
-            switch (node.kind()) {
+            switch (node.kind) {
                 default:
                     // General case
                     // This node should follow the child indentation set by its parent
@@ -253,7 +253,7 @@ module TypeScript.Services.Formatting {
                     break;
 
                 case SyntaxKind.IfStatement:
-                    if (parent.kind() === SyntaxKind.ElseClause &&
+                    if (parent.kind === SyntaxKind.ElseClause &&
                         !(<ElseClauseSyntax>parentNode).elseKeyword.hasTrailingNewLine() &&
                         !(<IfStatementSyntax>node).ifKeyword.hasLeadingNewLine()) {
                         // This is an else if statement with the if on the same line as the else, do not indent the if statmement.
@@ -321,7 +321,7 @@ module TypeScript.Services.Formatting {
         }
 
         private shouldIndentBlockInParent(parent: IndentationNodeContext): boolean {
-            switch (parent.kind()) {
+            switch (parent.kind) {
                 case SyntaxKind.SourceUnit:
                 case SyntaxKind.ModuleDeclaration:
                 case SyntaxKind.Block:

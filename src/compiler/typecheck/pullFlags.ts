@@ -63,7 +63,7 @@ module TypeScript {
         for (var i = 0, n = modifiers.length; i < n; i++) {
             var modifier = modifiers[i];
 
-            if (modifier.kind() === kind) {
+            if (modifier.kind === kind) {
                 return true;
             }
         }

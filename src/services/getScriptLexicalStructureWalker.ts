@@ -168,7 +168,7 @@ module TypeScript.Services {
         }
 
         private getModuleNamesHelper(name: TypeScript.INameSyntax, result: string[]): void {
-            if (name.kind() === TypeScript.SyntaxKind.QualifiedName) {
+            if (name.kind === TypeScript.SyntaxKind.QualifiedName) {
                 var qualifiedName = <TypeScript.QualifiedNameSyntax>name;
                 this.getModuleNamesHelper(qualifiedName.left, result);
                 result.push(qualifiedName.right.text());
@@ -207,7 +207,7 @@ module TypeScript.Services {
         public visitObjectType(node: TypeScript.ObjectTypeSyntax): void {
             // Ignore an object type if we aren't inside an interface declaration.  We don't want
             // to add some random object type's members to the nav bar.
-            if (node.parent.kind() === SyntaxKind.InterfaceDeclaration) {
+            if (node.parent.kind === SyntaxKind.InterfaceDeclaration) {
                 super.visitObjectType(node);
             }
         }
@@ -234,7 +234,7 @@ module TypeScript.Services {
                 for (var i = 0, n = parameters.length; i < n; i++) {
                     var parameter = <ParameterSyntax>parameters[i];
 
-                    Debug.assert(parameter.kind() === SyntaxKind.Parameter);
+                    Debug.assert(parameter.kind === SyntaxKind.Parameter);
 
                     if (SyntaxUtilities.containsToken(parameter.modifiers, SyntaxKind.PublicKeyword) ||
                         SyntaxUtilities.containsToken(parameter.modifiers, SyntaxKind.PrivateKeyword)) {
@@ -265,10 +265,10 @@ module TypeScript.Services {
         }
 
         public visitVariableDeclarator(node: TypeScript.VariableDeclaratorSyntax): void {
-            var modifiers = node.parent.kind() === SyntaxKind.MemberVariableDeclaration
+            var modifiers = node.parent.kind === SyntaxKind.MemberVariableDeclaration
                 ? (<MemberVariableDeclarationSyntax>node.parent).modifiers
                 : TypeScript.Syntax.emptyList<ISyntaxToken>();
-            var kind = node.parent.kind() === SyntaxKind.MemberVariableDeclaration
+            var kind = node.parent.kind === SyntaxKind.MemberVariableDeclaration
                 ? ScriptElementKind.memberVariableElement
                 : ScriptElementKind.variableElement;
             this.createItem(node, modifiers, kind, node.propertyName.text());

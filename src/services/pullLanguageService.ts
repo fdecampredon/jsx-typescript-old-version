@@ -49,7 +49,7 @@ module TypeScript.Services {
             /// TODO: this does not allow getting references on "constructor"
 
             var topNode = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, pos);
-            if (topNode === null || (requireName && topNode.kind() !== TypeScript.SyntaxKind.IdentifierName)) {
+            if (topNode === null || (requireName && topNode.kind !== TypeScript.SyntaxKind.IdentifierName)) {
                 this.logger.log("No name found at the given position");
                 return null;
             }
@@ -131,8 +131,8 @@ module TypeScript.Services {
                 // The compiler shares class method type parameter symbols.  So if we get one, 
                 // scope our search down to the method ast so we don't find other hits elsewhere.
                 while (ast) {
-                    if (ast.kind() === TypeScript.SyntaxKind.FunctionDeclaration ||
-                        ast.kind() === TypeScript.SyntaxKind.MemberFunctionDeclaration) {
+                    if (ast.kind === TypeScript.SyntaxKind.FunctionDeclaration ||
+                        ast.kind === TypeScript.SyntaxKind.MemberFunctionDeclaration) {
                         return ast;
                     }
 
@@ -169,7 +169,7 @@ module TypeScript.Services {
             var sourceUnit = document.sourceUnit();
 
             var node = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, position);
-            if (node === null || node.kind() !== TypeScript.SyntaxKind.IdentifierName) {
+            if (node === null || node.kind !== TypeScript.SyntaxKind.IdentifierName) {
                 return [];
             }
 
@@ -186,7 +186,7 @@ module TypeScript.Services {
             var sourceUnit = document.sourceUnit();
 
             var ast = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, pos);
-            if (ast === null || ast.kind() !== TypeScript.SyntaxKind.IdentifierName) {
+            if (ast === null || ast.kind !== TypeScript.SyntaxKind.IdentifierName) {
                 this.logger.log("No identifier at the specified location.");
                 return result;
             }
@@ -293,7 +293,7 @@ module TypeScript.Services {
 
                 possiblePositions.forEach(p => {
                     var nameAST = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, p);
-                    if (nameAST === null || nameAST.kind() !== TypeScript.SyntaxKind.IdentifierName) {
+                    if (nameAST === null || nameAST.kind !== TypeScript.SyntaxKind.IdentifierName) {
                         return;
                     }
                     var searchSymbolInfoAtPosition = this.compiler.getSymbolInformationFromAST(nameAST, document);
@@ -342,7 +342,7 @@ module TypeScript.Services {
                     var nameAST = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, p, /*useTrailingTriviaAsLimChar:*/ false);
 
                     // Compare the length so we filter out strict superstrings of the symbol we are looking for
-                    if (nameAST === null || nameAST.kind() !== TypeScript.SyntaxKind.IdentifierName || (end(nameAST) - start(nameAST) !== symbolName.length)) {
+                    if (nameAST === null || nameAST.kind !== TypeScript.SyntaxKind.IdentifierName || (end(nameAST) - start(nameAST) !== symbolName.length)) {
                         return;
                     }
 
@@ -364,7 +364,7 @@ module TypeScript.Services {
         private isWriteAccess(current: TypeScript.ISyntaxElement): boolean {
             var parent = current.parent;
             if (parent !== null) {
-                var parentNodeType = parent.kind();
+                var parentNodeType = parent.kind;
                 switch (parentNodeType) {
                     case TypeScript.SyntaxKind.ClassDeclaration:
                         return (<TypeScript.ClassDeclarationSyntax>parent).identifier === current;
@@ -494,8 +494,8 @@ module TypeScript.Services {
 
             // Find call expression
             while (node) {
-                if (node.kind() === TypeScript.SyntaxKind.InvocationExpression ||
-                    node.kind() === TypeScript.SyntaxKind.ObjectCreationExpression ||  // Valid call or new expressions
+                if (node.kind === TypeScript.SyntaxKind.InvocationExpression ||
+                    node.kind === TypeScript.SyntaxKind.ObjectCreationExpression ||  // Valid call or new expressions
                     (isSignatureHelpBlocker(node) && position > start(node))) // Its a declaration node - call expression cannot be in parent scope
                 {
                     break;
@@ -508,13 +508,13 @@ module TypeScript.Services {
                 return null;
             }
 
-            if (node.kind() !== TypeScript.SyntaxKind.InvocationExpression && node.kind() !== TypeScript.SyntaxKind.ObjectCreationExpression) {
+            if (node.kind !== TypeScript.SyntaxKind.InvocationExpression && node.kind !== TypeScript.SyntaxKind.ObjectCreationExpression) {
                 this.logger.log("No call expression or generic arguments found for the given position");
                 return null;
             }
 
             var callExpression = <TypeScript.InvocationExpressionSyntax>node;
-            var isNew = (callExpression.kind() === TypeScript.SyntaxKind.ObjectCreationExpression);
+            var isNew = (callExpression.kind === TypeScript.SyntaxKind.ObjectCreationExpression);
 
             if (isNew && callExpression.argumentList === null) {
                 this.logger.log("No signature help for a object creation expression without arguments");
@@ -560,8 +560,8 @@ module TypeScript.Services {
 
             // Get the identifier information
             var ast = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, start(genericTypeArgumentListInfo.genericIdentifer));
-            if (ast === null || ast.kind() !== TypeScript.SyntaxKind.IdentifierName) {
-                this.logger.log(["getTypeParameterSignatureAtPosition: Unexpected ast found at position:", position, ast === null ? "ast was null" : "ast kind: " + SyntaxKind[ast.kind()]].join(' '));
+            if (ast === null || ast.kind !== TypeScript.SyntaxKind.IdentifierName) {
+                this.logger.log(["getTypeParameterSignatureAtPosition: Unexpected ast found at position:", position, ast === null ? "ast was null" : "ast kind: " + SyntaxKind[ast.kind]].join(' '));
                 return null;
             }
 
@@ -1022,11 +1022,11 @@ module TypeScript.Services {
                 return null;
             }
 
-            if (ast.kind() === SyntaxKind.ParameterList && ast.parent.kind() === SyntaxKind.CallSignature && ast.parent.parent.kind() === SyntaxKind.ConstructorDeclaration) {
+            if (ast.kind === SyntaxKind.ParameterList && ast.parent.kind === SyntaxKind.CallSignature && ast.parent.parent.kind === SyntaxKind.ConstructorDeclaration) {
                 ast = ast.parent.parent;
             }
 
-            switch (ast.kind()) {
+            switch (ast.kind) {
                 default:
                     return null;
                 case TypeScript.SyntaxKind.ConstructorDeclaration:
@@ -1079,14 +1079,14 @@ module TypeScript.Services {
                 symbol = declarationInformation.symbol;
                 enclosingScopeSymbol = declarationInformation.enclosingScopeSymbol;
 
-                if (node.kind() === TypeScript.SyntaxKind.ConstructorDeclaration ||
-                    node.kind() === TypeScript.SyntaxKind.FunctionDeclaration ||
-                    node.kind() === TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression ||
-                    node.kind() === TypeScript.SyntaxKind.SimpleArrowFunctionExpression ||
-                    node.kind() === TypeScript.SyntaxKind.MemberFunctionDeclaration ||
+                if (node.kind === TypeScript.SyntaxKind.ConstructorDeclaration ||
+                    node.kind === TypeScript.SyntaxKind.FunctionDeclaration ||
+                    node.kind === TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression ||
+                    node.kind === TypeScript.SyntaxKind.SimpleArrowFunctionExpression ||
+                    node.kind === TypeScript.SyntaxKind.MemberFunctionDeclaration ||
                     TypeScript.ASTHelpers.isNameOfFunction(node) ||
                     TypeScript.ASTHelpers.isNameOfMemberFunction(node)) {
-                    var funcDecl = node.kind() === TypeScript.SyntaxKind.IdentifierName ? node.parent : node;
+                    var funcDecl = node.kind === TypeScript.SyntaxKind.IdentifierName ? node.parent : node;
                     if (symbol && symbol.kind != TypeScript.PullElementKind.Property) {
                         var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(this.compiler.getDeclForAST(funcDecl), symbol.semanticInfoChain);
                         _isCallExpression = true;
@@ -1188,7 +1188,7 @@ module TypeScript.Services {
 
             var node = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, position, /*useTrailingTriviaAsLimChar*/ true, /*forceInclusive*/ true);
 
-            if (node && node.kind() === TypeScript.SyntaxKind.IdentifierName &&
+            if (node && node.kind === TypeScript.SyntaxKind.IdentifierName &&
                 start(node) === end(node)) {
                 // Ignore missing name nodes
                 node = node.parent;
@@ -1196,30 +1196,30 @@ module TypeScript.Services {
 
             var isRightOfDot = false;
             if (node &&
-                node.kind() === TypeScript.SyntaxKind.MemberAccessExpression &&
+                node.kind === TypeScript.SyntaxKind.MemberAccessExpression &&
                 end((<TypeScript.MemberAccessExpressionSyntax>node).expression) < position) {
 
                 isRightOfDot = true;
                 node = (<TypeScript.MemberAccessExpressionSyntax>node).expression;
             }
             else if (node &&
-                node.kind() === TypeScript.SyntaxKind.QualifiedName &&
+                node.kind === TypeScript.SyntaxKind.QualifiedName &&
                 end((<TypeScript.QualifiedNameSyntax>node).left) < position) {
 
                 isRightOfDot = true;
                 node = (<TypeScript.QualifiedNameSyntax>node).left;
             }
             else if (node && node.parent &&
-                node.kind() === TypeScript.SyntaxKind.IdentifierName &&
-                node.parent.kind() === TypeScript.SyntaxKind.MemberAccessExpression &&
+                node.kind === TypeScript.SyntaxKind.IdentifierName &&
+                node.parent.kind === TypeScript.SyntaxKind.MemberAccessExpression &&
                 (<TypeScript.MemberAccessExpressionSyntax>node.parent).name === node) {
 
                 isRightOfDot = true;
                 node = (<TypeScript.MemberAccessExpressionSyntax>node.parent).expression;
             }
             else if (node && node.parent &&
-                node.kind() === TypeScript.SyntaxKind.IdentifierName &&
-                node.parent.kind() === TypeScript.SyntaxKind.QualifiedName &&
+                node.kind === TypeScript.SyntaxKind.IdentifierName &&
+                node.parent.kind === TypeScript.SyntaxKind.QualifiedName &&
                 (<TypeScript.QualifiedNameSyntax>node.parent).right === node) {
 
                 isRightOfDot = true;
@@ -1248,11 +1248,11 @@ module TypeScript.Services {
                     var path = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, searchPosition);
                     // Get the object literal node
 
-                    while (node && node.kind() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
+                    while (node && node.kind !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
                         node = node.parent;
                     }
 
-                    if (!node || node.kind() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
+                    if (!node || node.kind !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
                         // AST Path look up did not result in the same node as Fidelity Syntax Tree look up.
                         // Once we remove AST this will no longer be a problem.
                         return null;
@@ -1843,7 +1843,7 @@ module TypeScript.Services {
 
     function isSignatureHelpBlocker(ast: TypeScript.ISyntaxElement): boolean {
         if (ast) {
-            switch (ast.kind()) {
+            switch (ast.kind) {
                 case TypeScript.SyntaxKind.ClassDeclaration:
                 case TypeScript.SyntaxKind.InterfaceDeclaration:
                 case TypeScript.SyntaxKind.ModuleDeclaration:

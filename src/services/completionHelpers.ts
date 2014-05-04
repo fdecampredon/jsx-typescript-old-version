@@ -73,14 +73,14 @@ module TypeScript.Services {
             if (previousToken) {
                 var parent = previousToken.parent;
 
-                switch (previousToken.kind()) {
+                switch (previousToken.kind) {
                     case TypeScript.SyntaxKind.OpenBraceToken:  // var x = { |
                     case TypeScript.SyntaxKind.CommaToken:      // var x = { a: 0, |
-                        if (parent && parent.kind() === TypeScript.SyntaxKind.SeparatedList) {
+                        if (parent && parent.kind === TypeScript.SyntaxKind.SeparatedList) {
                             parent = parent.parent;
                         }
 
-                        if (parent && parent.kind() === TypeScript.SyntaxKind.ObjectLiteralExpression) {
+                        if (parent && parent.kind === TypeScript.SyntaxKind.ObjectLiteralExpression) {
                             return parent;
                         }
 
@@ -95,8 +95,8 @@ module TypeScript.Services {
             var positionedToken = CompletionHelpers.getNonIdentifierCompleteTokenOnLeft(sourceUnit, position);
 
             if (positionedToken) {
-                var containingNodeKind = Syntax.containingNode(positionedToken) && Syntax.containingNode(positionedToken).kind();
-                switch (positionedToken.kind()) {
+                var containingNodeKind = Syntax.containingNode(positionedToken) && Syntax.containingNode(positionedToken).kind;
+                switch (positionedToken.kind) {
                     case TypeScript.SyntaxKind.CommaToken:
                         return containingNodeKind === TypeScript.SyntaxKind.ParameterList ||
                             containingNodeKind === TypeScript.SyntaxKind.VariableDeclaration ||
@@ -142,12 +142,12 @@ module TypeScript.Services {
         public static getNonIdentifierCompleteTokenOnLeft(sourceUnit: TypeScript.SourceUnitSyntax, position: number): TypeScript.ISyntaxToken {
             var positionedToken = Syntax.findCompleteTokenOnLeft(sourceUnit, position, /*includeSkippedTokens*/true);
 
-            if (positionedToken && position === end(positionedToken) && positionedToken.kind() == TypeScript.SyntaxKind.EndOfFileToken) {
+            if (positionedToken && position === end(positionedToken) && positionedToken.kind == TypeScript.SyntaxKind.EndOfFileToken) {
                 // EndOfFile token is not intresting, get the one before it
                 positionedToken = positionedToken.previousToken(/*includeSkippedTokens*/true);
             }
 
-            if (positionedToken && position === end(positionedToken) && positionedToken.kind() === TypeScript.SyntaxKind.IdentifierName) {
+            if (positionedToken && position === end(positionedToken) && positionedToken.kind === TypeScript.SyntaxKind.IdentifierName) {
                 // The caret is at the end of an identifier, the decession to provide completion depends on the previous token
                 positionedToken = positionedToken.previousToken(/*includeSkippedTokens*/true);
             }
@@ -159,10 +159,10 @@ module TypeScript.Services {
             var positionedToken = CompletionHelpers.getNonIdentifierCompleteTokenOnLeft(sourceUnit, position);
 
             if (positionedToken) {
-                switch (positionedToken.kind()) {
+                switch (positionedToken.kind) {
                     case TypeScript.SyntaxKind.DotToken:
                         var leftOfDotPositionedToken = positionedToken.previousToken(/*includeSkippedTokens*/true);
-                        return leftOfDotPositionedToken && leftOfDotPositionedToken.kind() === TypeScript.SyntaxKind.NumericLiteral;
+                        return leftOfDotPositionedToken && leftOfDotPositionedToken.kind === TypeScript.SyntaxKind.NumericLiteral;
 
                     case TypeScript.SyntaxKind.NumericLiteral:
                         var text = positionedToken.text();

@@ -38,7 +38,7 @@ function tokenToJSON(token: TypeScript.ISyntaxToken): any {
     var result: any = {};
 
     for (var name in TypeScript.SyntaxKind) {
-        if (<any>TypeScript.SyntaxKind[name] === token.kind()) {
+        if (<any>TypeScript.SyntaxKind[name] === token.kind) {
             result.kind = name;
             break;
         }
@@ -124,7 +124,7 @@ function triviaToJSON(trivia: TypeScript.ISyntaxTrivia): any {
     var result: any = {};
 
     for (var name in TypeScript.SyntaxKind) {
-        if (<any>TypeScript.SyntaxKind[name] === trivia.kind()) {
+        if (<any>TypeScript.SyntaxKind[name] === trivia.kind) {
             result.kind = name;
             break;
         }
@@ -146,7 +146,7 @@ function nodeToJSON(node: TypeScript.SyntaxNode): any {
     var result: any = {}
 
     for (var name in TypeScript.SyntaxKind) {
-        if (<any>TypeScript.SyntaxKind[name] === node.kind()) {
+        if (<any>TypeScript.SyntaxKind[name] === node.kind) {
             result.kind = name;
             break;
         }
@@ -698,10 +698,10 @@ class Program {
 
             TypeScript.Debug.assert(TypeScript.isToken(token));
             if (i === contents.length) {
-                TypeScript.Debug.assert(token.kind() === TypeScript.SyntaxKind.EndOfFileToken);
+                TypeScript.Debug.assert(token.kind === TypeScript.SyntaxKind.EndOfFileToken);
             }
             else {
-                TypeScript.Debug.assert(TypeScript.width(token) > 0 || token.kind() === TypeScript.SyntaxKind.EndOfFileToken);
+                TypeScript.Debug.assert(TypeScript.width(token) > 0 || token.kind === TypeScript.SyntaxKind.EndOfFileToken);
                 TypeScript.Debug.assert(token.fullWidth() > 0);
             }
 
@@ -749,7 +749,7 @@ class Program {
             var token = scanner.scan(/*allowRegularExpression:*/ false);
             tokens.push(tokenToJSON(token));
 
-            if (token.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
+            if (token.kind === TypeScript.SyntaxKind.EndOfFileToken) {
                 break;
             }
         }
@@ -785,7 +785,7 @@ class Program {
             TypeScript.Debug.assert(position === token.fullStart());
             position += token.fullWidth();
 
-            if (token.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
+            if (token.kind === TypeScript.SyntaxKind.EndOfFileToken) {
                 break;
             }
         }

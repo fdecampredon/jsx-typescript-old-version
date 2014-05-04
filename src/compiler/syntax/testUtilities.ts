@@ -2,7 +2,7 @@ module TypeScript {
     export function nodeStructuralEquals(node1: TypeScript.SyntaxNode, node2: TypeScript.SyntaxNode): boolean {
         if (node1 === node2) { return true; }
         if (node1 === null || node2 === null) { return false; }
-        if (node1.kind() !== node2.kind()) { return false; }
+        if (node1.kind !== node2.kind) { return false; }
         if (node1.childCount() !== node2.childCount()) { return false; }
 
         for (var i = 0, n = node1.childCount(); i < n; i++) {
@@ -42,7 +42,7 @@ module TypeScript {
             return false;
         }
 
-        return token1.kind() === token2.kind() &&
+        return token1.kind === token2.kind &&
             TypeScript.width(token1) === TypeScript.width(token2) &&
             token1.fullWidth() === token2.fullWidth() &&
             token1.fullStart() === token2.fullStart() &&
@@ -69,7 +69,7 @@ module TypeScript {
     }
 
     export function triviaStructuralEquals(trivia1: TypeScript.ISyntaxTrivia, trivia2: TypeScript.ISyntaxTrivia): boolean {
-        return trivia1.kind() === trivia2.kind() &&
+        return trivia1.kind === trivia2.kind &&
             trivia1.fullWidth() === trivia2.fullWidth() &&
             trivia1.fullText() === trivia2.fullText();
     }
@@ -116,7 +116,7 @@ module TypeScript {
             return false;
         }
 
-        if (element2.kind() !== element2.kind()) {
+        if (element2.kind !== element2.kind) {
             return false;
         }
 

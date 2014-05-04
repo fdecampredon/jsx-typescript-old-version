@@ -3,7 +3,7 @@
 module TypeScript {
     export interface ISyntaxTrivia {
         parent: ISyntaxTriviaList;
-        kind(): SyntaxKind;
+        kind: SyntaxKind;
 
         isWhitespace(): boolean;
         isComment(): boolean;
@@ -27,7 +27,7 @@ module TypeScript.Syntax {
     class AbstractTrivia implements ISyntaxTrivia {
         public parent: ISyntaxTriviaList = null;
 
-        constructor(private _kind: SyntaxKind) {
+        constructor(public kind: SyntaxKind) {
         }
 
         public clone(): ISyntaxTrivia {
@@ -50,24 +50,20 @@ module TypeScript.Syntax {
             throw Errors.abstract();
         }
 
-        public kind(): SyntaxKind {
-            return this._kind;
-        }
-
         public isWhitespace(): boolean {
-            return this.kind() === SyntaxKind.WhitespaceTrivia;
+            return this.kind === SyntaxKind.WhitespaceTrivia;
         }
 
         public isComment(): boolean {
-            return this.kind() === SyntaxKind.SingleLineCommentTrivia || this.kind() === SyntaxKind.MultiLineCommentTrivia;
+            return this.kind === SyntaxKind.SingleLineCommentTrivia || this.kind === SyntaxKind.MultiLineCommentTrivia;
         }
 
         public isNewLine(): boolean {
-            return this.kind() === SyntaxKind.NewLineTrivia;
+            return this.kind === SyntaxKind.NewLineTrivia;
         }
 
         public isSkippedToken(): boolean {
-            return this.kind() === SyntaxKind.SkippedTokenTrivia;
+            return this.kind === SyntaxKind.SkippedTokenTrivia;
         }
     }
 
@@ -77,7 +73,7 @@ module TypeScript.Syntax {
         }
 
         public clone(): ISyntaxTrivia {
-            return new NormalTrivia(this.kind(), this._text, this._fullStart);
+            return new NormalTrivia(this.kind, this._text, this._fullStart);
         }
 
         public fullStart(): number {
@@ -131,7 +127,7 @@ module TypeScript.Syntax {
         }
 
         public clone(): ISyntaxTrivia {
-            return new DeferredTrivia(this.kind(), this._text, this._fullStart, this._fullWidth);
+            return new DeferredTrivia(this.kind, this._text, this._fullStart, this._fullWidth);
         }
 
         public fullStart(): number {
@@ -194,7 +190,7 @@ module TypeScript.Syntax {
     // Otherwise, there will be one entry in the array for each line spanned by the trivia.  Each
     // entry will contain the line separator at the end of the string.
     export function splitMultiLineCommentTriviaIntoMultipleLines(trivia: ISyntaxTrivia): string[] {
-        // Debug.assert(trivia.kind() === SyntaxKind.MultiLineCommentTrivia);
+        // Debug.assert(trivia.kind === SyntaxKind.MultiLineCommentTrivia);
         var result: string[] = [];
 
         var triviaText = trivia.fullText();

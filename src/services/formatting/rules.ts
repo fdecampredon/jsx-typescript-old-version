@@ -437,7 +437,7 @@ module TypeScript.Services.Formatting {
         ///
 
         static IsForContext(context: FormattingContext): boolean {
-            return context.contextNode.kind() === SyntaxKind.ForStatement;
+            return context.contextNode.kind === SyntaxKind.ForStatement;
         }
 
         static IsNotForContext(context: FormattingContext): boolean {
@@ -446,7 +446,7 @@ module TypeScript.Services.Formatting {
 
         static IsBinaryOpContext(context: FormattingContext): boolean {
 
-            switch (context.contextNode.kind()) {
+            switch (context.contextNode.kind) {
                 // binary expressions
                 case SyntaxKind.AssignmentExpression:
                 case SyntaxKind.AddAssignmentExpression:
@@ -491,10 +491,10 @@ module TypeScript.Services.Formatting {
                 // equal in var a = 0;
                 case SyntaxKind.VariableDeclarator:
                 case SyntaxKind.EqualsValueClause:
-                    return context.currentTokenSpan.kind() === SyntaxKind.EqualsToken || context.nextTokenSpan.kind() === SyntaxKind.EqualsToken;
+                    return context.currentTokenSpan.kind === SyntaxKind.EqualsToken || context.nextTokenSpan.kind === SyntaxKind.EqualsToken;
                 // "in" keyword in for (var x in []) { }
                 case SyntaxKind.ForInStatement:
-                    return context.currentTokenSpan.kind() === SyntaxKind.InKeyword || context.nextTokenSpan.kind() === SyntaxKind.InKeyword;
+                    return context.currentTokenSpan.kind === SyntaxKind.InKeyword || context.nextTokenSpan.kind === SyntaxKind.InKeyword;
             }
             return false;
         }
@@ -552,7 +552,7 @@ module TypeScript.Services.Formatting {
                 return true;
             }
 
-            switch (node.kind()) {
+            switch (node.kind) {
                 case SyntaxKind.Block:
                 case SyntaxKind.SwitchStatement:
                 case SyntaxKind.ObjectLiteralExpression:
@@ -563,7 +563,7 @@ module TypeScript.Services.Formatting {
         }
 
         static IsFunctionDeclContext(context: FormattingContext): boolean {
-            switch (context.contextNode.kind()) {
+            switch (context.contextNode.kind) {
                 case SyntaxKind.FunctionDeclaration:
                 case SyntaxKind.MemberFunctionDeclaration:
                 case SyntaxKind.GetAccessor:
@@ -586,7 +586,7 @@ module TypeScript.Services.Formatting {
         }
 
         static NodeIsTypeScriptDeclWithBlockContext(node: IndentationNodeContext): boolean {
-            switch (node.kind()) {
+            switch (node.kind) {
                 case SyntaxKind.ClassDeclaration:
                 case SyntaxKind.EnumDeclaration:
                 case SyntaxKind.ObjectType:
@@ -598,7 +598,7 @@ module TypeScript.Services.Formatting {
         }
 
         static IsAfterCodeBlockContext(context: FormattingContext): boolean {
-            switch (context.currentTokenParent.kind()) {
+            switch (context.currentTokenParent.kind) {
                 case SyntaxKind.ClassDeclaration:
                 case SyntaxKind.ModuleDeclaration:
                 case SyntaxKind.EnumDeclaration:
@@ -610,7 +610,7 @@ module TypeScript.Services.Formatting {
         }
 
         static IsControlDeclContext(context: FormattingContext): boolean {
-            switch (context.contextNode.kind()) {
+            switch (context.contextNode.kind) {
                 case SyntaxKind.IfStatement:
                 case SyntaxKind.SwitchStatement:
                 case SyntaxKind.ForStatement:
@@ -630,15 +630,15 @@ module TypeScript.Services.Formatting {
         }
 
         static IsObjectContext(context: FormattingContext): boolean {
-            return context.contextNode.kind() === SyntaxKind.ObjectLiteralExpression;
+            return context.contextNode.kind === SyntaxKind.ObjectLiteralExpression;
         }
 
         static IsFunctionCallContext(context: FormattingContext): boolean {
-            return context.contextNode.kind() === SyntaxKind.InvocationExpression;
+            return context.contextNode.kind === SyntaxKind.InvocationExpression;
         }
 
         static IsNewContext(context: FormattingContext): boolean {
-            return context.contextNode.kind() === SyntaxKind.ObjectCreationExpression;
+            return context.contextNode.kind === SyntaxKind.ObjectCreationExpression;
         }
 
         static IsFunctionCallOrNewContext(context: FormattingContext): boolean {
@@ -654,11 +654,11 @@ module TypeScript.Services.Formatting {
         }
 
         static IsModuleDeclContext(context: FormattingContext): boolean {
-            return context.contextNode.kind() === SyntaxKind.ModuleDeclaration;
+            return context.contextNode.kind === SyntaxKind.ModuleDeclaration;
         }
 
         static IsObjectTypeContext(context: FormattingContext): boolean {
-            return context.contextNode.kind() === SyntaxKind.ObjectType && context.contextNode.parent().kind() !== SyntaxKind.InterfaceDeclaration;
+            return context.contextNode.kind === SyntaxKind.ObjectType && context.contextNode.parent().kind !== SyntaxKind.InterfaceDeclaration;
         }
 
         static IsTypeArgumentOrParameter(tokenKind: SyntaxKind, parentKind: SyntaxKind): boolean {
@@ -667,12 +667,12 @@ module TypeScript.Services.Formatting {
         }
 
         static IsTypeArgumentOrParameterContext(context: FormattingContext): boolean {
-            return Rules.IsTypeArgumentOrParameter(context.currentTokenSpan.kind(), context.currentTokenParent.kind()) ||
-                Rules.IsTypeArgumentOrParameter(context.nextTokenSpan.kind(), context.nextTokenParent.kind());
+            return Rules.IsTypeArgumentOrParameter(context.currentTokenSpan.kind, context.currentTokenParent.kind) ||
+                Rules.IsTypeArgumentOrParameter(context.nextTokenSpan.kind, context.nextTokenParent.kind);
         }
 
         static IsVoidOpContext(context: FormattingContext): boolean {
-            return context.currentTokenSpan.kind() === SyntaxKind.VoidKeyword && context.currentTokenParent.kind() === SyntaxKind.VoidExpression;
+            return context.currentTokenSpan.kind === SyntaxKind.VoidKeyword && context.currentTokenParent.kind === SyntaxKind.VoidExpression;
         }
     }
 }

@@ -173,7 +173,7 @@ module TypeScript {
         }
 
         private checkParameterAccessibilityModifier(parameterList: ParameterListSyntax, modifier: ISyntaxToken, modifierIndex: number): boolean {
-            if (modifier.kind() !== SyntaxKind.PublicKeyword && modifier.kind() !== SyntaxKind.PrivateKeyword) {
+            if (modifier.kind !== SyntaxKind.PublicKeyword && modifier.kind !== SyntaxKind.PrivateKeyword) {
                 this.pushDiagnostic(modifier,
                     DiagnosticCode._0_modifier_cannot_appear_on_a_parameter, [modifier.text()]);
                 return true;
@@ -324,8 +324,8 @@ module TypeScript {
                     DiagnosticCode.Index_signature_parameter_must_have_a_type_annotation);
                 return true;
             }
-            else if (parameter.typeAnnotation.type.kind() !== SyntaxKind.StringKeyword &&
-                     parameter.typeAnnotation.type.kind() !== SyntaxKind.NumberKeyword) {
+            else if (parameter.typeAnnotation.type.kind !== SyntaxKind.StringKeyword &&
+                     parameter.typeAnnotation.type.kind !== SyntaxKind.NumberKeyword) {
                 this.pushDiagnostic(
                     parameter,
                     DiagnosticCode.Index_signature_parameter_type_must_be_string_or_number);
@@ -356,7 +356,7 @@ module TypeScript {
                 Debug.assert(i <= 2);
                 var heritageClause = node.heritageClauses[i];
 
-                if (heritageClause.extendsOrImplementsKeyword.kind() === SyntaxKind.ExtendsKeyword) {
+                if (heritageClause.extendsOrImplementsKeyword.kind === SyntaxKind.ExtendsKeyword) {
                     if (seenExtendsClause) {
                         this.pushDiagnostic(heritageClause,
                             DiagnosticCode.extends_clause_already_seen);
@@ -378,7 +378,7 @@ module TypeScript {
                     seenExtendsClause = true;
                 }
                 else {
-                    Debug.assert(heritageClause.extendsOrImplementsKeyword.kind() === SyntaxKind.ImplementsKeyword);
+                    Debug.assert(heritageClause.extendsOrImplementsKeyword.kind === SyntaxKind.ImplementsKeyword);
                     if (seenImplementsClause) {
                         this.pushDiagnostic(heritageClause,
                             DiagnosticCode.implements_clause_already_seen);
@@ -431,7 +431,7 @@ module TypeScript {
                     var lastElement = i === (n - 1);
 
                     if (inFunctionOverloadChain) {
-                        if (moduleElement.kind() !== SyntaxKind.FunctionDeclaration) {
+                        if (moduleElement.kind !== SyntaxKind.FunctionDeclaration) {
                             this.pushDiagnostic(firstToken(moduleElement),
                                 DiagnosticCode.Function_implementation_expected);
                             return true;
@@ -445,7 +445,7 @@ module TypeScript {
                         }
                     }
 
-                    if (moduleElement.kind() === SyntaxKind.FunctionDeclaration) {
+                    if (moduleElement.kind === SyntaxKind.FunctionDeclaration) {
                         functionDeclaration = <FunctionDeclarationSyntax>moduleElement;
                         if (!SyntaxUtilities.containsToken(functionDeclaration.modifiers, SyntaxKind.DeclareKeyword)) {
                             inFunctionOverloadChain = functionDeclaration.block === null;
@@ -462,7 +462,7 @@ module TypeScript {
                                     // then report an error that we're missing an implementation here.
 
                                     var nextElement = moduleElements.childAt(i + 1);
-                                    if (nextElement.kind() === SyntaxKind.FunctionDeclaration) {
+                                    if (nextElement.kind === SyntaxKind.FunctionDeclaration) {
                                         var nextFunction = <FunctionDeclarationSyntax>nextElement;
 
                                         if (tokenValueText(nextFunction.identifier) !== functionOverloadChainName &&
@@ -501,7 +501,7 @@ module TypeScript {
                     var isStaticOverload: boolean = null;
 
                     if (inFunctionOverloadChain) {
-                        if (classElement.kind() !== SyntaxKind.MemberFunctionDeclaration) {
+                        if (classElement.kind !== SyntaxKind.MemberFunctionDeclaration) {
                             this.pushDiagnostic(firstToken(classElement), DiagnosticCode.Function_implementation_expected);
                             return true;
                         }
@@ -521,13 +521,13 @@ module TypeScript {
                         }
                     }
                     else if (inConstructorOverloadChain) {
-                        if (classElement.kind() !== SyntaxKind.ConstructorDeclaration) {
+                        if (classElement.kind !== SyntaxKind.ConstructorDeclaration) {
                             this.pushDiagnostic(firstToken(classElement), DiagnosticCode.Constructor_implementation_expected);
                             return true;
                         }
                     }
 
-                    if (classElement.kind() === SyntaxKind.MemberFunctionDeclaration) {
+                    if (classElement.kind === SyntaxKind.MemberFunctionDeclaration) {
                         memberFunctionDeclaration = <MemberFunctionDeclarationSyntax>classElement;
 
                         inFunctionOverloadChain = memberFunctionDeclaration.block === null;
@@ -545,7 +545,7 @@ module TypeScript {
                                 // then report an error that we're missing an implementation here.
 
                                 var nextElement = node.classElements.childAt(i + 1);
-                                if (nextElement.kind() === SyntaxKind.MemberFunctionDeclaration) {
+                                if (nextElement.kind === SyntaxKind.MemberFunctionDeclaration) {
                                     var nextMemberFunction = <MemberFunctionDeclarationSyntax>nextElement;
 
                                     if (tokenValueText(nextMemberFunction.propertyName) !== functionOverloadChainName &&
@@ -558,7 +558,7 @@ module TypeScript {
                             }
                         }
                     }
-                    else if (classElement.kind() === SyntaxKind.ConstructorDeclaration) {
+                    else if (classElement.kind === SyntaxKind.ConstructorDeclaration) {
                         var constructorDeclaration = <ConstructorDeclarationSyntax>classElement;
 
                         inConstructorOverloadChain = constructorDeclaration.block === null;
@@ -578,13 +578,13 @@ module TypeScript {
 
             var current = name;
             while (current !== null) {
-                if (current.kind() === SyntaxKind.QualifiedName) {
+                if (current.kind === SyntaxKind.QualifiedName) {
                     var qualifiedName = <QualifiedNameSyntax>current;
                     token = qualifiedName.right;
                     current = qualifiedName.left;
                 }
                 else {
-                    Debug.assert(current.kind() === SyntaxKind.IdentifierName);
+                    Debug.assert(current.kind === SyntaxKind.IdentifierName);
                     token = <ISyntaxToken>current;
                     current = null;
                 }
@@ -627,7 +627,7 @@ module TypeScript {
                 Debug.assert(i <= 1);
                 var heritageClause = node.heritageClauses[i];
 
-                if (heritageClause.extendsOrImplementsKeyword.kind() === SyntaxKind.ExtendsKeyword) {
+                if (heritageClause.extendsOrImplementsKeyword.kind === SyntaxKind.ExtendsKeyword) {
                     if (seenExtendsClause) {
                         this.pushDiagnostic(heritageClause,
                             DiagnosticCode.extends_clause_already_seen);
@@ -637,7 +637,7 @@ module TypeScript {
                     seenExtendsClause = true;
                 }
                 else {
-                    Debug.assert(heritageClause.extendsOrImplementsKeyword.kind() === SyntaxKind.ImplementsKeyword);
+                    Debug.assert(heritageClause.extendsOrImplementsKeyword.kind === SyntaxKind.ImplementsKeyword);
                     this.pushDiagnostic(heritageClause,
                         DiagnosticCode.Interface_declaration_cannot_have_implements_clause);
                     return true;
@@ -650,7 +650,7 @@ module TypeScript {
         private checkInterfaceModifiers(modifiers: ISyntaxToken[]): boolean {
             for (var i = 0, n = modifiers.length; i < n; i++) {
                 var modifier = modifiers[i];
-                if (modifier.kind() === SyntaxKind.DeclareKeyword) {
+                if (modifier.kind === SyntaxKind.DeclareKeyword) {
                     this.pushDiagnostic(modifier,
                         DiagnosticCode.declare_modifier_cannot_appear_on_an_interface_declaration);
                     return true;
@@ -678,8 +678,8 @@ module TypeScript {
 
             for (var i = 0, n = list.length; i < n; i++) {
                 var modifier = list[i];
-                if (modifier.kind() === SyntaxKind.PublicKeyword ||
-                    modifier.kind() === SyntaxKind.PrivateKeyword) {
+                if (modifier.kind === SyntaxKind.PublicKeyword ||
+                    modifier.kind === SyntaxKind.PrivateKeyword) {
 
                     if (seenAccessibilityModifier) {
                         this.pushDiagnostic(modifier,
@@ -696,7 +696,7 @@ module TypeScript {
 
                     seenAccessibilityModifier = true;
                 }
-                else if (modifier.kind() === SyntaxKind.StaticKeyword) {
+                else if (modifier.kind === SyntaxKind.StaticKeyword) {
                     if (seenStaticModifier) {
                         this.pushDiagnostic(modifier,
                             DiagnosticCode._0_modifier_already_seen, [modifier.text()]);
@@ -890,7 +890,7 @@ module TypeScript {
         }
 
         public visitInvocationExpression(node: InvocationExpressionSyntax): void {
-            if (node.expression.kind() === SyntaxKind.SuperKeyword &&
+            if (node.expression.kind === SyntaxKind.SuperKeyword &&
                 node.argumentList.typeArgumentList !== null) {
                 this.pushDiagnostic(node,
                     DiagnosticCode.super_invocation_cannot_have_type_arguments);
@@ -905,15 +905,15 @@ module TypeScript {
 
             for (var i = 0, n = modifiers.length; i < n; i++) {
                 var modifier = modifiers[i];
-                if (modifier.kind() === SyntaxKind.PublicKeyword ||
-                    modifier.kind() === SyntaxKind.PrivateKeyword ||
-                    modifier.kind() === SyntaxKind.StaticKeyword) {
+                if (modifier.kind === SyntaxKind.PublicKeyword ||
+                    modifier.kind === SyntaxKind.PrivateKeyword ||
+                    modifier.kind === SyntaxKind.StaticKeyword) {
                     this.pushDiagnostic(modifier,
                         DiagnosticCode._0_modifier_cannot_appear_on_a_module_element, [modifier.text()]);
                     return true;
                 }
 
-                if (modifier.kind() === SyntaxKind.DeclareKeyword) {
+                if (modifier.kind === SyntaxKind.DeclareKeyword) {
                     if (seenDeclareModifier) {
                         this.pushDiagnostic(modifier,
                             DiagnosticCode.Accessibility_modifier_already_seen);
@@ -922,7 +922,7 @@ module TypeScript {
 
                     seenDeclareModifier = true;
                 }
-                else if (modifier.kind() === SyntaxKind.ExportKeyword) {
+                else if (modifier.kind === SyntaxKind.ExportKeyword) {
                     if (seenExportModifier) {
                         this.pushDiagnostic(modifier,
                             DiagnosticCode._0_modifier_already_seen, [modifier.text()]);
@@ -946,9 +946,9 @@ module TypeScript {
         private checkForDisallowedImportDeclaration(node: ModuleDeclarationSyntax): boolean {
             for (var i = 0, n = node.moduleElements.length; i < n; i++) {
                 var child = node.moduleElements[i];
-                if (child.kind() === SyntaxKind.ImportDeclaration) {
+                if (child.kind === SyntaxKind.ImportDeclaration) {
                     var importDeclaration = <ImportDeclarationSyntax>child;
-                    if (importDeclaration.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
+                    if (importDeclaration.moduleReference.kind === SyntaxKind.ExternalModuleReference) {
                         if (node.stringLiteral === null) {
                             this.pushDiagnostic(importDeclaration,
                                 DiagnosticCode.Import_declarations_in_an_internal_module_cannot_reference_an_external_module, null);
@@ -1030,7 +1030,7 @@ module TypeScript {
                 for (var i = 0, n = moduleElements.length; i < n; i++) {
                     var child = moduleElements[i];
 
-                    if (child.kind() === SyntaxKind.ExportAssignment) {
+                    if (child.kind === SyntaxKind.ExportAssignment) {
                         this.pushDiagnostic(child, DiagnosticCode.Export_assignment_not_allowed_in_module_with_exported_element);
                         return true;
                     }
@@ -1045,7 +1045,7 @@ module TypeScript {
             var errorFound = false;
             for (var i = 0, n = moduleElements.length; i < n; i++) {
                 var child = moduleElements[i];
-                if (child.kind() === SyntaxKind.ExportAssignment) {
+                if (child.kind === SyntaxKind.ExportAssignment) {
                     if (seenExportAssignment) {
                         this.pushDiagnostic(child, DiagnosticCode.Module_cannot_have_multiple_export_assignments);
                         errorFound = true;
@@ -1061,7 +1061,7 @@ module TypeScript {
             for (var i = 0, n = node.moduleElements.length; i < n; i++) {
                 var child = node.moduleElements[i];
 
-                if (child.kind() === SyntaxKind.ExportAssignment) {
+                if (child.kind === SyntaxKind.ExportAssignment) {
                     this.pushDiagnostic(child, DiagnosticCode.Export_assignment_cannot_be_used_in_internal_modules);
 
                     return true;
@@ -1282,7 +1282,7 @@ module TypeScript {
         private checkListSeparators<T extends ISyntaxNodeOrToken>(parent: ISyntaxElement, list: T[], kind: SyntaxKind): boolean {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var child = list.childAt(i);
-                if (i % 2 === 1 && child.kind() !== kind) {
+                if (i % 2 === 1 && child.kind !== kind) {
                     this.pushDiagnostic(child, DiagnosticCode._0_expected, [SyntaxFacts.getText(kind)]);
                 }
             }
@@ -1354,8 +1354,8 @@ module TypeScript {
         private checkConstructorModifiers(modifiers: ISyntaxToken[]): boolean {
             for (var i = 0, n = modifiers.length; i < n; i++) {
                 var child = modifiers[i];
-                if (child.kind() !== SyntaxKind.PublicKeyword) {
-                    this.pushDiagnostic(child, DiagnosticCode._0_modifier_cannot_appear_on_a_constructor_declaration, [SyntaxFacts.getText(child.kind())]);
+                if (child.kind !== SyntaxKind.PublicKeyword) {
+                    this.pushDiagnostic(child, DiagnosticCode._0_modifier_cannot_appear_on_a_constructor_declaration, [SyntaxFacts.getText(child.kind)]);
                     return true;
                 }
             }

@@ -104,13 +104,13 @@ module TypeScript {
                 var moduleElement = node.moduleElements[i];
 
                 var _firstToken = firstToken(moduleElement);
-                if (_firstToken !== null && _firstToken.kind() === SyntaxKind.ExportKeyword) {
+                if (_firstToken !== null && _firstToken.kind === SyntaxKind.ExportKeyword) {
                     return new TextSpan(start(_firstToken), width(_firstToken));
                 }
 
-                if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
+                if (moduleElement.kind === SyntaxKind.ImportDeclaration) {
                     var importDecl = <ImportDeclarationSyntax>moduleElement;
-                    if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
+                    if (importDecl.moduleReference.kind === SyntaxKind.ExternalModuleReference) {
                         return new TextSpan(start(importDecl), width(importDecl));
                     }
                 }
@@ -202,7 +202,7 @@ module TypeScript {
                 var identifiers = createIntrinsicsObject<boolean>();
                 var pre = function (cur: TypeScript.ISyntaxElement) {
                     if (ASTHelpers.isValidAstNode(cur)) {
-                        if (cur.kind() === SyntaxKind.IdentifierName) {
+                        if (cur.kind === SyntaxKind.IdentifierName) {
                             var nodeText = tokenValueText((<TypeScript.ISyntaxToken>cur));
 
                             identifiers[nodeText] = true;
@@ -290,7 +290,7 @@ module TypeScript {
         }
 
         public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
-            if (ast.kind() === SyntaxKind.SourceUnit) {
+            if (ast.kind === SyntaxKind.SourceUnit) {
                 return this._getDeclForAST(ast);
             }
 
@@ -298,7 +298,7 @@ module TypeScript {
             ast = ast.parent;
             var decl: PullDecl = null;
             while (ast) {
-                //if (ast.kind() === SyntaxKind.ModuleDeclaration) {
+                //if (ast.kind === SyntaxKind.ModuleDeclaration) {
                 //    var moduleDecl = <ModuleDeclarationSyntax>ast;
                 //    decl = this._getDeclForAST(<ISyntaxElement>moduleDecl.stringLiteral || ArrayUtilities.last(getModuleNames(moduleDecl.name)));
                 //}

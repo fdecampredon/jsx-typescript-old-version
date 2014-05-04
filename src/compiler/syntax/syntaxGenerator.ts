@@ -1523,7 +1523,7 @@ function generateKindMethod(definition: ITypeDefinition): string {
 
     if (!hasKind) {
         result += "\r\n";
-        result += "        public kind(): SyntaxKind {\r\n";
+        result += "        public get kind(): SyntaxKind {\r\n";
         result += "            return SyntaxKind." + getNameWithoutSuffix(definition) + ";\r\n";
         result += "        }\r\n";
     }
@@ -1711,7 +1711,7 @@ function generateAccessors(definition: ITypeDefinition): string {
         
         if (child.type === "SyntaxKind") {
             result += "\r\n";
-            result += "        public " + child.name + "(): " + getType(child) + " {\r\n";
+            result += "        public get " + child.name + "(): " + getType(child) + " {\r\n";
             result += "            return " + getPropertyAccess(child) + ";\r\n";
             result += "        }\r\n";
         }
@@ -1868,7 +1868,7 @@ function generateStructuralEqualsMethod(definition: ITypeDefinition): string {
     var result = "\r\n    private structuralEquals(node: SyntaxNode): boolean {\r\n";
     result += "        if (this === node) { return true; }\r\n";
     result += "        if (node === null) { return false; }\r\n";
-    result += "        if (this.kind() !== node.kind()) { return false; }\r\n";
+    result += "        if (this.kind !== node.kind) { return false; }\r\n";
     result += "        var other = <" + definition.name + ">node;\r\n";
 
     for (var i = 0; i < definition.children.length; i++) {
@@ -2218,7 +2218,7 @@ function generateRewriter(): string {
                 result += "this.visitSeparatedList(node." + child.name + ")";
             }
             else if (child.type === "SyntaxKind") {
-                result += "node.kind()";
+                result += "node.kind";
             }
             else if (isNodeOrToken(child)) {
                 result += "<" + child.type + ">this.visitNodeOrToken(node." + child.name + ")";
@@ -2462,7 +2462,7 @@ function generateVisitor(): string {
     result += "    export function visitNodeOrToken(visitor: ISyntaxVisitor, element: ISyntaxNodeOrToken): any {\r\n";
     result += "        if (element === null) { return null; }\r\n";
     result += "        if (isToken(element)) { return visitor.visitToken(<ISyntaxToken>element); }\r\n";
-    result += "        switch (element.kind()) {\r\n";
+    result += "        switch (element.kind) {\r\n";
 
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];
@@ -2656,7 +2656,7 @@ function generateIsTypeScriptSpecific(): string {
     result += "        if (isToken(element)) { return false; }\r\n";
     result += "        if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }\r\n";
     result += "        if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }\r\n\r\n";
-    result += "        switch (element.kind()) {\r\n";
+    result += "        switch (element.kind) {\r\n";
 
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];

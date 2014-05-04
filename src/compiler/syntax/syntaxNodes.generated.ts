@@ -12,7 +12,7 @@ module TypeScript {
             endOfFileToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.SourceUnit;
         }
 
@@ -45,7 +45,7 @@ module TypeScript {
             closeParenToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ExternalModuleReference;
         }
 
@@ -74,7 +74,7 @@ module TypeScript {
             moduleName.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ModuleNameModuleReference;
         }
 
@@ -110,7 +110,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ImportDeclaration;
         }
 
@@ -147,7 +147,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ExportAssignment;
         }
 
@@ -190,7 +190,7 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ClassDeclaration;
         }
 
@@ -233,7 +233,7 @@ module TypeScript {
             body.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.InterfaceDeclaration;
         }
 
@@ -280,7 +280,7 @@ module TypeScript {
             }
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return this._kind;
         }
     }
@@ -307,7 +307,7 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ModuleDeclaration;
         }
 
@@ -350,7 +350,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.FunctionDeclaration;
         }
 
@@ -386,7 +386,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.VariableStatement;
         }
 
@@ -414,7 +414,7 @@ module TypeScript {
             !isShared(variableDeclarators) && (variableDeclarators.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.VariableDeclaration;
         }
 
@@ -443,7 +443,7 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.VariableDeclarator;
         }
 
@@ -471,7 +471,7 @@ module TypeScript {
             value.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.EqualsValueClause;
         }
 
@@ -517,7 +517,7 @@ module TypeScript {
             }
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return this._kind;
         }
     }
@@ -541,7 +541,7 @@ module TypeScript {
             closeBracketToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ArrayLiteralExpression;
         }
 
@@ -566,7 +566,7 @@ module TypeScript {
             super(data); 
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.OmittedExpression;
         }
 
@@ -598,7 +598,7 @@ module TypeScript {
             closeParenToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ParenthesizedExpression;
         }
 
@@ -633,7 +633,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.SimpleArrowFunctionExpression;
         }
 
@@ -669,7 +669,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ParenthesizedArrowFunctionExpression;
         }
 
@@ -703,7 +703,7 @@ module TypeScript {
             right.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.QualifiedName;
         }
 
@@ -733,7 +733,7 @@ module TypeScript {
             greaterThanToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.TypeArgumentList;
         }
 
@@ -769,7 +769,7 @@ module TypeScript {
             type.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ConstructorType;
         }
 
@@ -805,7 +805,7 @@ module TypeScript {
             type.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.FunctionType;
         }
 
@@ -838,7 +838,7 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ObjectType;
         }
 
@@ -870,7 +870,7 @@ module TypeScript {
             closeBracketToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ArrayType;
         }
 
@@ -900,7 +900,7 @@ module TypeScript {
             typeArgumentList.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.GenericType;
         }
 
@@ -929,7 +929,7 @@ module TypeScript {
             name.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.TypeQuery;
         }
 
@@ -956,7 +956,7 @@ module TypeScript {
             type.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.TypeAnnotation;
         }
 
@@ -988,7 +988,7 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.Block;
         }
 
@@ -1024,7 +1024,7 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.Parameter;
         }
 
@@ -1064,7 +1064,7 @@ module TypeScript {
             name.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.MemberAccessExpression;
         }
 
@@ -1112,7 +1112,7 @@ module TypeScript {
             }
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return this._kind;
         }
     }
@@ -1138,7 +1138,7 @@ module TypeScript {
             closeBracketToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ElementAccessExpression;
         }
 
@@ -1173,7 +1173,7 @@ module TypeScript {
             argumentList.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.InvocationExpression;
         }
 
@@ -1206,7 +1206,7 @@ module TypeScript {
             closeParenToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ArgumentList;
         }
 
@@ -1256,7 +1256,7 @@ module TypeScript {
             }
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return this._kind;
         }
     }
@@ -1279,7 +1279,7 @@ module TypeScript {
             whenFalse.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ConditionalExpression;
         }
 
@@ -1311,7 +1311,7 @@ module TypeScript {
             callSignature.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ConstructSignature;
         }
 
@@ -1342,7 +1342,7 @@ module TypeScript {
             callSignature.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.MethodSignature;
         }
 
@@ -1376,7 +1376,7 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.IndexSignature;
         }
 
@@ -1409,7 +1409,7 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.PropertySignature;
         }
 
@@ -1441,7 +1441,7 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.CallSignature;
         }
 
@@ -1471,7 +1471,7 @@ module TypeScript {
             closeParenToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ParameterList;
         }
 
@@ -1501,7 +1501,7 @@ module TypeScript {
             greaterThanToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.TypeParameterList;
         }
 
@@ -1529,7 +1529,7 @@ module TypeScript {
             constraint && (constraint.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.TypeParameter;
         }
 
@@ -1556,7 +1556,7 @@ module TypeScript {
             type.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.Constraint;
         }
 
@@ -1583,7 +1583,7 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ElseClause;
         }
 
@@ -1621,7 +1621,7 @@ module TypeScript {
             elseClause && (elseClause.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.IfStatement;
         }
 
@@ -1655,7 +1655,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ExpressionStatement;
         }
 
@@ -1690,7 +1690,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ConstructorDeclaration;
         }
 
@@ -1729,7 +1729,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.MemberFunctionDeclaration;
         }
 
@@ -1771,7 +1771,7 @@ module TypeScript {
             block.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.GetAccessor;
         }
 
@@ -1812,7 +1812,7 @@ module TypeScript {
             block.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.SetAccessor;
         }
 
@@ -1847,7 +1847,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.MemberVariableDeclaration;
         }
 
@@ -1879,7 +1879,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.IndexMemberDeclaration;
         }
 
@@ -1912,7 +1912,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ThrowStatement;
         }
 
@@ -1945,7 +1945,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ReturnStatement;
         }
 
@@ -1981,7 +1981,7 @@ module TypeScript {
             argumentList && (argumentList.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ObjectCreationExpression;
         }
 
@@ -2022,7 +2022,7 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.SwitchStatement;
         }
 
@@ -2060,7 +2060,7 @@ module TypeScript {
             !isShared(statements) && (statements.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.CaseSwitchClause;
         }
 
@@ -2093,7 +2093,7 @@ module TypeScript {
             !isShared(statements) && (statements.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.DefaultSwitchClause;
         }
 
@@ -2126,7 +2126,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.BreakStatement;
         }
 
@@ -2159,7 +2159,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ContinueStatement;
         }
 
@@ -2206,7 +2206,7 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ForStatement;
         }
 
@@ -2256,7 +2256,7 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ForInStatement;
         }
 
@@ -2298,7 +2298,7 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.WhileStatement;
         }
 
@@ -2337,7 +2337,7 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.WithStatement;
         }
 
@@ -2377,7 +2377,7 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.EnumDeclaration;
         }
 
@@ -2408,7 +2408,7 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.EnumElement;
         }
 
@@ -2442,7 +2442,7 @@ module TypeScript {
             expression.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.CastExpression;
         }
 
@@ -2480,7 +2480,7 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.ObjectLiteralExpression;
         }
 
@@ -2512,7 +2512,7 @@ module TypeScript {
             expression.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.SimplePropertyAssignment;
         }
 
@@ -2544,7 +2544,7 @@ module TypeScript {
             block.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.FunctionPropertyAssignment;
         }
 
@@ -2583,7 +2583,7 @@ module TypeScript {
             block.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.FunctionExpression;
         }
 
@@ -2613,7 +2613,7 @@ module TypeScript {
             semicolonToken.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.EmptyStatement;
         }
 
@@ -2646,7 +2646,7 @@ module TypeScript {
             finallyClause && (finallyClause.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.TryStatement;
         }
 
@@ -2683,7 +2683,7 @@ module TypeScript {
             block.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.CatchClause;
         }
 
@@ -2714,7 +2714,7 @@ module TypeScript {
             block.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.FinallyClause;
         }
 
@@ -2746,7 +2746,7 @@ module TypeScript {
             statement.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.LabeledStatement;
         }
 
@@ -2787,7 +2787,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.DoStatement;
         }
 
@@ -2822,7 +2822,7 @@ module TypeScript {
             expression.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.TypeOfExpression;
         }
 
@@ -2852,7 +2852,7 @@ module TypeScript {
             expression.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.DeleteExpression;
         }
 
@@ -2882,7 +2882,7 @@ module TypeScript {
             expression.parent = this;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.VoidExpression;
         }
 
@@ -2912,7 +2912,7 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return SyntaxKind.DebuggerStatement;
         }
 

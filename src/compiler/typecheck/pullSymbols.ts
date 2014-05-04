@@ -786,7 +786,7 @@ module TypeScript {
                     return ASTHelpers.docComments(enclosingModuleDeclaration);
                 }
 
-                if (ast.kind() !== TypeScript.SyntaxKind.ModuleDeclaration || decl.kind !== TypeScript.PullElementKind.Variable) {
+                if (ast.kind !== TypeScript.SyntaxKind.ModuleDeclaration || decl.kind !== TypeScript.PullElementKind.Variable) {
                     return ASTHelpers.docComments(ast);
                 }
             }
@@ -913,7 +913,7 @@ module TypeScript {
         }
 
         private getParameterDocCommentText(param: string, fncDocComments: Comment[]) {
-            if (fncDocComments.length === 0 || fncDocComments[0].kind() !== SyntaxKind.MultiLineCommentTrivia) {
+            if (fncDocComments.length === 0 || fncDocComments[0].kind !== SyntaxKind.MultiLineCommentTrivia) {
                 // there were no fnc doc comments and the comment is not block comment then it cannot have 
                 // @param comment that can be parsed
                 return "";

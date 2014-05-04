@@ -12,7 +12,7 @@ module TypeScript {
             this._data = this._data & SyntaxConstants.NodeParsedInStrictModeMask;
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             throw Errors.abstract();
         }
 

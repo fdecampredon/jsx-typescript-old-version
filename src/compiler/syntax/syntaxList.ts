@@ -3,7 +3,7 @@
 interface Array<T> {
     separators?: TypeScript.ISyntaxToken[];
 
-    kind(): TypeScript.SyntaxKind;
+    kind: TypeScript.SyntaxKind;
     parent: TypeScript.ISyntaxElement;
 
     childCount(): number;
@@ -28,15 +28,19 @@ module TypeScript.Syntax {
         // Debug.assert(!separators || separators.length === 0);
     }
 
-    Array.prototype.kind = function (): SyntaxKind {
-        assertEmptyLists();
-        return this.separators !== undefined ? SyntaxKind.SeparatedList : SyntaxKind.List;
-    }
+    Object.defineProperty(Array.prototype, "kind", {
+        get: function (): SyntaxKind {
+            assertEmptyLists();
+            return this.separators !== undefined ? SyntaxKind.SeparatedList : SyntaxKind.List;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Array.prototype.setChildAt = function (index: number, value: any): void {
         assertEmptyLists();
         // Debug.assert(index >= 0 && index < this.childCount());
-        if (this.kind() === SyntaxKind.SeparatedList) {
+        if (this.kind === SyntaxKind.SeparatedList) {
             if (index % 2 === 0) {
                 // Even elements are the non-separators.
                 this[index / 2] = value;
@@ -68,7 +72,7 @@ module TypeScript.Syntax {
     Array.prototype.childAt = function (index: number): any {
         assertEmptyLists();
         // Debug.assert(index >= 0 && index < this.childCount());
-        if (this.kind() === SyntaxKind.SeparatedList) {
+        if (this.kind === SyntaxKind.SeparatedList) {
             if (index % 2 === 0) {
                 // Even elements are the non-separators.
                 return this[index / 2];
@@ -85,13 +89,13 @@ module TypeScript.Syntax {
 
     Array.prototype.separatorCount = function (): number {
         assertEmptyLists();
-        // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
+        // Debug.assert(this.kind === SyntaxKind.SeparatedList);
         return this.separators.length;
     }
 
     Array.prototype.separatorAt = function (index: number): ISyntaxToken {
         assertEmptyLists();
-        // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
+        // Debug.assert(this.kind === SyntaxKind.SeparatedList);
         // Debug.assert(index >= 0 && index < this.separators.length);
         return this.separators[index];
     }

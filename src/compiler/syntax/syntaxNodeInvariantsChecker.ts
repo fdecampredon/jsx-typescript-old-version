@@ -15,7 +15,7 @@ module TypeScript {
         }
 
         public visitNode(node: SyntaxNode): void {
-            Debug.assert(node.kind() === SyntaxKind.SourceUnit || node.parent);
+            Debug.assert(node.kind === SyntaxKind.SourceUnit || node.parent);
             super.visitNode(node);
         }
 

@@ -75,7 +75,7 @@ module TypeScript {
         }
 
         private emitDeclarationsForAST(ast: ISyntaxElement) {
-            switch (ast.kind()) {
+            switch (ast.kind) {
                 case SyntaxKind.VariableStatement:
                     return this.emitDeclarationsForVariableStatement(<VariableStatementSyntax>ast);
                 case SyntaxKind.PropertySignature:
@@ -129,7 +129,7 @@ module TypeScript {
 
         private canEmitDeclarations(declAST: ISyntaxElement): boolean {
             var container = DeclarationEmitter.getEnclosingContainer(declAST);
-            if (container.kind() === SyntaxKind.ModuleDeclaration || container.kind() === SyntaxKind.SourceUnit) {
+            if (container.kind === SyntaxKind.ModuleDeclaration || container.kind === SyntaxKind.SourceUnit) {
                 var pullDecl = this.semanticInfoChain.getDeclForAST(declAST);
                 if (!hasFlag(pullDecl.flags, PullElementFlags.Exported)) {
                     var start = new Date().getTime();
@@ -168,7 +168,7 @@ module TypeScript {
                     var declAST = this.semanticInfoChain.getASTForDecl(pullDecl);
                     var container = DeclarationEmitter.getEnclosingContainer(declAST);
 
-                    var isExternalModule = container.kind() === SyntaxKind.SourceUnit && this.document.isExternalModule();
+                    var isExternalModule = container.kind === SyntaxKind.SourceUnit && this.document.isExternalModule();
 
                     // Emit export only for global export statements. 
                     // The container for this would be dynamic module which is whole file
@@ -178,7 +178,7 @@ module TypeScript {
                     }
 
                     // Emit declare only in global context
-                    if (isExternalModule || container.kind() === SyntaxKind.SourceUnit) {
+                    if (isExternalModule || container.kind === SyntaxKind.SourceUnit) {
                         // Emit declare if not interface declaration or import declaration && is not from module
                         if (emitDeclare && typeString !== "interface" && typeString !== "import") {
                             result += "declare ";
@@ -251,7 +251,7 @@ module TypeScript {
             var declarationPullSymbol = declarationContainerDecl.getSymbol(this.semanticInfoChain);
             TypeScript.declarationEmitTypeSignatureTime += new Date().getTime() - start;
 
-            var isNotAGenericType = ast.kind() !== SyntaxKind.GenericType;
+            var isNotAGenericType = ast.kind !== SyntaxKind.GenericType;
 
             var typeNameMembers = type.getScopedNameEx(
                 declarationPullSymbol, 
@@ -269,7 +269,7 @@ module TypeScript {
             if (this.declFile.onNewLine) {
                 this.emitIndent();
             }
-            else if (comment.kind() !== SyntaxKind.MultiLineCommentTrivia) {
+            else if (comment.kind !== SyntaxKind.MultiLineCommentTrivia) {
                 this.declFile.WriteLine("");
                 this.emitIndent();
             }
@@ -282,7 +282,7 @@ module TypeScript {
                 this.declFile.Write(text[i]);
             }
 
-            if (comment.endsLine || comment.kind() !== SyntaxKind.MultiLineCommentTrivia) {
+            if (comment.endsLine || comment.kind !== SyntaxKind.MultiLineCommentTrivia) {
                 this.declFile.WriteLine("");
             }
             else {
@@ -781,7 +781,7 @@ module TypeScript {
             var accessorSymbol = PullHelpers.getAccessorSymbol(funcDecl, this.semanticInfoChain);
             TypeScript.declarationEmitGetAccessorFunctionTime += new Date().getTime();
 
-            if (funcDecl.kind() === SyntaxKind.SetAccessor && accessorSymbol.getGetter()) {
+            if (funcDecl.kind === SyntaxKind.SetAccessor && accessorSymbol.getGetter()) {
                 // Setter is being used to emit the type info. 
                 return;
             }
@@ -861,7 +861,7 @@ module TypeScript {
         }
 
         private emitHeritageClause(clause: HeritageClauseSyntax) {
-            this.emitBaseList(clause.typeNames, clause.kind() === SyntaxKind.ExtendsHeritageClause);
+            this.emitBaseList(clause.typeNames, clause.kind === SyntaxKind.ExtendsHeritageClause);
         }
 
         static getEnclosingContainer(ast: ISyntaxElement): ISyntaxElement {
@@ -872,10 +872,10 @@ module TypeScript {
 
             ast = ast.parent;
             while (ast) {
-                if (ast.kind() === SyntaxKind.ClassDeclaration ||
-                    ast.kind() === SyntaxKind.InterfaceDeclaration ||
-                    ast.kind() === SyntaxKind.ModuleDeclaration ||
-                    ast.kind() === SyntaxKind.SourceUnit) {
+                if (ast.kind === SyntaxKind.ClassDeclaration ||
+                    ast.kind === SyntaxKind.InterfaceDeclaration ||
+                    ast.kind === SyntaxKind.ModuleDeclaration ||
+                    ast.kind === SyntaxKind.SourceUnit) {
 
                     return ast;
                 }
@@ -957,7 +957,7 @@ module TypeScript {
                 }
                 this.declFile.Write("import ");
                 this.declFile.Write(importDeclAST.identifier.text() + " = ");
-                if (importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
+                if (importDeclAST.moduleReference.kind === SyntaxKind.ExternalModuleReference) {
                     this.declFile.WriteLine("require(" + (<ExternalModuleReferenceSyntax>importDeclAST.moduleReference).stringLiteral.text() + ");");
                 }
                 else {

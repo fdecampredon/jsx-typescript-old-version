@@ -115,14 +115,14 @@ module TypeScript {
                 unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
         }
 
-        public kind(): SyntaxKind {
+        public get kind(): SyntaxKind {
             return unpackKind(this._packedFullWidthAndKind);
         }
 
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
-        public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind()); }
+        public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind); }
 
         public isKeywordConvertedToIdentifier(): boolean { return false; }
 
@@ -1345,7 +1345,7 @@ module TypeScript {
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
-            scanSyntaxKind(token.kind() === SyntaxKind.RegularExpressionLiteral);
+            scanSyntaxKind(token.kind === SyntaxKind.RegularExpressionLiteral);
             var end = index;
 
             tokenInfo.leadingTriviaWidth = start - fullStart;
