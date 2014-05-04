@@ -2,12 +2,12 @@
 
 module TypeScript.Indentation {
     export function columnForEndOfTokenAtPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {
-        var token = Syntax.findToken(syntaxTree.sourceUnit(), position);
+        var token = findToken(syntaxTree.sourceUnit(), position);
         return columnForStartOfTokenAtPosition(syntaxTree, position, options) + width(token);
     }
 
     export function columnForStartOfTokenAtPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {
-        var token = Syntax.findToken(syntaxTree.sourceUnit(), position);
+        var token = findToken(syntaxTree.sourceUnit(), position);
 
         // Walk backward from this token until we find the first token in the line.  For each token 
         // we see (that is not the first tokem in line), push the entirety of the text into the text 
@@ -30,7 +30,7 @@ module TypeScript.Indentation {
 
         var current = token;
         while (current !== firstTokenInLine) {
-            current = current.previousToken();
+            current = previousToken(current);
 
             if (current === firstTokenInLine) {
                 // We're at the first token in teh line.

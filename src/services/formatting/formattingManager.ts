@@ -42,7 +42,7 @@ module TypeScript.Services.Formatting {
 
         public formatOnSemicolon(caretPosition: number): TypeScript.Services.TextEdit[] {
             var sourceUnit = this.syntaxTree.sourceUnit();
-            var semicolonPositionedToken = TypeScript.Syntax.findToken(sourceUnit, caretPosition - 1);
+            var semicolonPositionedToken = findToken(sourceUnit, caretPosition - 1);
 
             if (semicolonPositionedToken.kind === SyntaxKind.SemicolonToken) {
                 // Find the outer most parent that this semicolon terminates
@@ -65,7 +65,7 @@ module TypeScript.Services.Formatting {
 
         public formatOnClosingCurlyBrace(caretPosition: number): TypeScript.Services.TextEdit[] {
             var sourceUnit = this.syntaxTree.sourceUnit();
-            var closeBracePositionedToken = TypeScript.Syntax.findToken(sourceUnit, caretPosition - 1);
+            var closeBracePositionedToken = findToken(sourceUnit, caretPosition - 1);
 
             if (closeBracePositionedToken.kind === SyntaxKind.CloseBraceToken) {
                 // Find the outer most parent that this closing brace terminates

@@ -24,7 +24,7 @@ module TypeScript.Services {
         public static getMatchSpans(syntaxTree: TypeScript.SyntaxTree, position: number): TypeScript.TextSpan[] {
             var result: TypeScript.TextSpan[] = [];
 
-            var currentToken = Syntax.findToken(syntaxTree.sourceUnit(), position);
+            var currentToken = findToken(syntaxTree.sourceUnit(), position);
 
             BraceMatcher.getMatchingCloseBrace(currentToken, position, result);
             BraceMatcher.getMatchingOpenBrace(currentToken, position, result);
@@ -58,7 +58,7 @@ module TypeScript.Services {
         private static getMatchingOpenBrace(currentToken: TypeScript.ISyntaxToken, position: number, result: TypeScript.TextSpan[]) {
             // Check if the current token to the left is a close brace
             if (currentToken.fullStart() === position) {
-                currentToken = currentToken.previousToken();
+                currentToken = previousToken(currentToken);
             }
 
             if (currentToken !== null && start(currentToken) === (position - 1)) {

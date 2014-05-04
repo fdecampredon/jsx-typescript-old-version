@@ -19,12 +19,12 @@ module TypeScript.Services {
     export class Indenter {
         public static getIndentation(node: TypeScript.SourceUnitSyntax, soruceText: TypeScript.IScriptSnapshot, position: number, editorOptions: TypeScript.Services.EditorOptions): number {
             var indentation = 0;
-            var currentToken = TypeScript.Syntax.findToken(node, position);
+            var currentToken = TypeScript.findToken(node, position);
             var currentNode: TypeScript.ISyntaxElement = currentToken;
 
             if (currentToken.kind === TypeScript.SyntaxKind.EndOfFileToken) {
                 // Ignore EOF tokens, pick the one before it
-                currentNode = currentToken.previousToken();
+                currentNode = previousToken(currentToken);
             }
             else if (Indenter.belongsToBracket(soruceText, currentToken, position)) {
                 // Let braces and brackets take the indentation of thier parents

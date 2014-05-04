@@ -41,7 +41,7 @@ module TypeScript.Services {
                         if (stack === 0) {
                             // Found the beginning of the generic argument expression
                             var lessThanToken = token;
-                            token = token.previousToken(/*includeSkippedTokens*/ true);
+                            token = previousToken(token, /*includeSkippedTokens*/ true);
                             if (!token || token.kind !== TypeScript.SyntaxKind.IdentifierName) {
                                 break whileLoop;
                             }
@@ -93,7 +93,7 @@ module TypeScript.Services {
 
                     case TypeScript.SyntaxKind.EqualsGreaterThanToken:
                         // This can be a function type or a constructor type. In either case, we want to skip the function defintion
-                        token = token.previousToken(/*includeSkippedTokens*/ true);
+                        token = previousToken(token, /*includeSkippedTokens*/ true);
 
                         if (token && token.kind === TypeScript.SyntaxKind.CloseParenToken) {
                             // Skip untill the matching open paren token
@@ -106,7 +106,7 @@ module TypeScript.Services {
 
                             if (token && token.kind === TypeScript.SyntaxKind.NewKeyword) {
                                 // In case this was a constructor type, skip the new keyword
-                                token = token.previousToken(/*includeSkippedTokens*/ true);
+                                token = previousToken(token, /*includeSkippedTokens*/ true);
                             }
 
                             if (!token) {
@@ -137,7 +137,7 @@ module TypeScript.Services {
                         break whileLoop;
                 }
 
-                token = token.previousToken(/*includeSkippedTokens*/ true);
+                token = previousToken(token, /*includeSkippedTokens*/ true);
             }
 
             return null;
@@ -315,7 +315,7 @@ module TypeScript.Services {
             }
 
             // Skip the current token
-            token = token.previousToken(/*includeSkippedTokens*/ true);
+            token = previousToken(token, /*includeSkippedTokens*/ true);
 
             var stack = 0;
 
@@ -338,7 +338,7 @@ module TypeScript.Services {
                 }
 
                 // Move back
-                token = token.previousToken(/*includeSkippedTokens*/ true);
+                token = previousToken(token, /*includeSkippedTokens*/ true);
             }
 
             // Did not find matching token

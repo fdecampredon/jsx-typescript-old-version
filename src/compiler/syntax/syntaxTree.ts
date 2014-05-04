@@ -218,7 +218,7 @@ module TypeScript {
             }
 
             var listFullStart = fullStart(parent) + Syntax.childOffset(parent, list);
-            var tokenAtStart = Syntax.findToken(this.syntaxTree.sourceUnit(), listFullStart);
+            var tokenAtStart = findToken(this.syntaxTree.sourceUnit(), listFullStart);
 
             this.pushDiagnostic(tokenAtStart, DiagnosticCode.Unexpected_token_0_expected, [expected]);
 
@@ -265,8 +265,8 @@ module TypeScript {
                 var lastComma = declarators.separatorAt(declarators.separatorCount() - 1);
                 Debug.assert(isToken(lastComma));
 
-                var nextToken = Syntax.nextToken(lastComma, /*includeSkippedTokens:*/ true);
-                this.pushDiagnostic(nextToken, DiagnosticCode.Identifier_expected);
+                var _nextToken = nextToken(lastComma, /*includeSkippedTokens:*/ true);
+                this.pushDiagnostic(_nextToken, DiagnosticCode.Identifier_expected);
                 return;
             }
 

@@ -49,7 +49,7 @@ module TypeScript.Services.Breakpoints {
 
                 case TypeScript.SyntaxKind.SemicolonToken:
                 case TypeScript.SyntaxKind.EndOfFileToken:
-                    return this.breakpointSpanIfStartsOnSameLine(positionedToken.previousToken());
+                    return this.breakpointSpanIfStartsOnSameLine(previousToken(positionedToken));
 
                 case TypeScript.SyntaxKind.CloseParenToken:
                     return this.breakpointSpanOfCloseParen(positionedToken);
@@ -57,7 +57,7 @@ module TypeScript.Services.Breakpoints {
                 case TypeScript.SyntaxKind.DoKeyword:
                     var parentElement = positionedToken.parent;
                     if (parentElement && parentElement.kind == TypeScript.SyntaxKind.DoStatement) {
-                        return this.breakpointSpanIfStartsOnSameLine(positionedToken.nextToken());
+                        return this.breakpointSpanIfStartsOnSameLine(nextToken(positionedToken));
                     }
                     break;
             }
@@ -135,7 +135,7 @@ module TypeScript.Services.Breakpoints {
                             return this.breakpointSpanOfFirstStatementInBlock(originalContainer);
                         }
                         else {
-                            return this.breakpointSpanOf(openBraceToken.previousToken());
+                            return this.breakpointSpanOf(previousToken(openBraceToken));
                         }
 
                     case TypeScript.SyntaxKind.ElseClause:
@@ -268,7 +268,7 @@ module TypeScript.Services.Breakpoints {
                 switch (closeParenParent.kind) {
                     case TypeScript.SyntaxKind.ForStatement:
                     case TypeScript.SyntaxKind.ParameterList:
-                        return this.breakpointSpanOf(closeParenToken.previousToken());
+                        return this.breakpointSpanOf(previousToken(closeParenToken));
                 }
             }
 
@@ -1069,7 +1069,7 @@ module TypeScript.Services.Breakpoints {
         }
 
         var sourceUnit = syntaxTree.sourceUnit();
-        var positionedToken = TypeScript.Syntax.findToken(sourceUnit, askedPos);
+        var positionedToken = TypeScript.findToken(sourceUnit, askedPos);
 
         var lineMap = syntaxTree.lineMap();
         var posLine = lineMap.getLineNumberFromPosition(askedPos);

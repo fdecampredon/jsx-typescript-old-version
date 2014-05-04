@@ -144,12 +144,12 @@ module TypeScript.Services {
 
             if (positionedToken && position === end(positionedToken) && positionedToken.kind == TypeScript.SyntaxKind.EndOfFileToken) {
                 // EndOfFile token is not intresting, get the one before it
-                positionedToken = positionedToken.previousToken(/*includeSkippedTokens*/true);
+                positionedToken = previousToken(positionedToken, /*includeSkippedTokens*/true);
             }
 
             if (positionedToken && position === end(positionedToken) && positionedToken.kind === TypeScript.SyntaxKind.IdentifierName) {
                 // The caret is at the end of an identifier, the decession to provide completion depends on the previous token
-                positionedToken = positionedToken.previousToken(/*includeSkippedTokens*/true);
+                positionedToken = previousToken(positionedToken, /*includeSkippedTokens*/true);
             }
 
             return positionedToken;
@@ -161,7 +161,7 @@ module TypeScript.Services {
             if (positionedToken) {
                 switch (positionedToken.kind) {
                     case TypeScript.SyntaxKind.DotToken:
-                        var leftOfDotPositionedToken = positionedToken.previousToken(/*includeSkippedTokens*/true);
+                        var leftOfDotPositionedToken = previousToken(positionedToken, /*includeSkippedTokens*/true);
                         return leftOfDotPositionedToken && leftOfDotPositionedToken.kind === TypeScript.SyntaxKind.NumericLiteral;
 
                     case TypeScript.SyntaxKind.NumericLiteral:

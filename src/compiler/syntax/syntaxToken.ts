@@ -36,9 +36,6 @@ module TypeScript {
         withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken;
         withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken;
 
-        previousToken(includeSkippedTokens?: boolean): ISyntaxToken;
-        nextToken(includeSkippedTokens?: boolean): ISyntaxToken;
-
         // True if this was a keyword that the parser converted to an identifier.  i.e. if you have
         //      x.public
         //
@@ -419,14 +416,6 @@ module TypeScript.Syntax {
         public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
-
-        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken {
-            return Syntax.previousToken(this, includeSkippedTokens);
-        }
-
-        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken {
-            return Syntax.nextToken(this, includeSkippedTokens);
-        }
     }
 
     class ConvertedIdentifierToken implements ISyntaxToken {
@@ -515,14 +504,6 @@ module TypeScript.Syntax {
         public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return new RealizedToken(
                 this.fullStart(), this.kind, this.isKeywordConvertedToIdentifier(), this.leadingTrivia(), this.text(), trailingTrivia);
-        }
-
-        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken {
-            return Syntax.previousToken(this, includeSkippedTokens);
-        }
-
-        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken {
-            return Syntax.nextToken(this, includeSkippedTokens);
         }
     }
 
@@ -619,14 +600,6 @@ module TypeScript.Syntax {
 
         public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return new RealizedToken(this._fullStart, this.kind, this._isKeywordConvertedToIdentifier, this._leadingTrivia, this._text, trailingTrivia);
-        }
-
-        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken {
-            return Syntax.previousToken(this, includeSkippedTokens);
-        }
-
-        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken {
-            return Syntax.nextToken(this, includeSkippedTokens);
         }
     }
 

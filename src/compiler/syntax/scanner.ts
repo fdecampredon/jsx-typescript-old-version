@@ -215,9 +215,6 @@ module TypeScript {
             return Syntax.realizeToken(this).withTrailingTrivia(trailingTrivia);
         }
 
-        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
-        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
-
         public clone(): ISyntaxToken {
             return new ScannerToken(this._text, this._packedFullStartAndInfo, this.kind, this._fullWidth);
         }
