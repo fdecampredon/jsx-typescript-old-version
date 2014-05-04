@@ -269,7 +269,7 @@ var useDebugMode = false;
 function compileFile(outFile, sources, prereqs, prefixes, useBuiltCompiler) {
 	file(outFile, prereqs, function() {
 		var dir = useBuiltCompiler ? builtLocalDirectory : LKGDirectory;
-		var cmd = (process.env.host || process.env.TYPESCRIPT_HOST || "node") + " " + dir + "tsc.js -t ES5 -removeComments -propagateEnumConstants -declaration -noImplicitAny --module commonjs " + sources.join(" ") + " -out " + outFile;
+		var cmd = (process.env.host || process.env.TYPESCRIPT_HOST || "node") + " " + dir + "tsc.js -removeComments -propagateEnumConstants -declaration -noImplicitAny --module commonjs " + sources.join(" ") + " -out " + outFile;
 		if (useDebugMode) {
 			cmd = cmd + " -sourcemap -mapRoot file:///" + path.resolve(path.dirname(outFile));
 		}
