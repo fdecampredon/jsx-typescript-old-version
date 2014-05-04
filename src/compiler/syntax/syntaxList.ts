@@ -6,8 +6,6 @@ interface Array<T> {
     kind: TypeScript.SyntaxKind;
     parent: TypeScript.ISyntaxElement;
 
-    setChildAt(index: number, value: T): void;
-
     separatorCount(): number;
     separatorAt(index: number): TypeScript.ISyntaxToken;
 }
@@ -26,28 +24,6 @@ module TypeScript.Syntax {
         // Debug.assert(_emptyList.length === 0);
         // var separators = _emptySeparatedList.separators;
         // Debug.assert(!separators || separators.length === 0);
-    }
-
-    Array.prototype.setChildAt = function (index: number, value: any): void {
-        assertEmptyLists();
-        // Debug.assert(index >= 0 && index < childCount(this));
-        if (this.kind === SyntaxKind.SeparatedList) {
-            if (index % 2 === 0) {
-                // Even elements are the non-separators.
-                this[index / 2] = value;
-            }
-            else {
-                // Odd elements are the separators.  1 is the first separator, 3 is the second, 5 is the third.
-                this.separators[(index - 1) / 2] = value;
-            }
-        }
-        else {
-            this[index] = value;
-        }
-
-        // Clear any cached data we may have.  We'll need to recompute it.
-        this._data = 0;
-        value.parent = this;
     }
 
     Array.prototype.separatorCount = function (): number {

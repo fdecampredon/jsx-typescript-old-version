@@ -1702,16 +1702,28 @@ module TypeScript.Parser {
             }
         }
 
+        private clearCachedNodeData(element: ISyntaxElement): void {
+        }
+
         private replaceTokenInParent(oldToken: ISyntaxToken, newToken: ISyntaxToken): void {
             // oldToken may be parented by a node or a list.
+            this.replaceTokenInParentWorker(oldToken, newToken);
+
             var parent: any = oldToken.parent;
+            newToken.parent = parent;
+            if (parent._data) {
+                parent._data &= SyntaxConstants.NodeParsedInStrictModeMask
+            }
+        }
+
+        private replaceTokenInParentWorker(oldToken: ISyntaxToken, newToken: ISyntaxToken): void {
+            var parent = oldToken.parent;
+
             if (isNode(parent)) {
-                var node = <SyntaxNode>parent;
-                for (var key in parent) {
-                    if (parent[key] === oldToken) {
-                        parent[key] = newToken;
-                        newToken.parent = parent;
-                        node.resetData();
+                var node = <any>parent;
+                for (var key in node) {
+                    if (node[key] === oldToken) {
+                        node[key] = newToken;
                         return;
                     }
                 }
@@ -1720,7 +1732,7 @@ module TypeScript.Parser {
                 var list1 = <ISyntaxNodeOrToken[]>parent;
                 for (var i = 0, n = list1.length; i < n; i++) {
                     if (list1[i] === oldToken) {
-                        list1.setChildAt(i, newToken);
+                        list1[i] = newToken;
                         return;
                     }
                 }
@@ -1729,7 +1741,12 @@ module TypeScript.Parser {
                 var list2 = <ISyntaxNodeOrToken[]>parent;
                 for (var i = 0, n = childCount(list2); i < n; i++) {
                     if (childAt(list2, i) === oldToken) {
-                        list2.setChildAt(i, newToken);
+                        if (i % 2 === 0) {
+                            list2[i / 2] = newToken;
+                        }
+                        else {
+                            list2.separators[(i - 1) / 2] = newToken;
+                        }
                         return;
                     }
                 }
