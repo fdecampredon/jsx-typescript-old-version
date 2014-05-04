@@ -1,7 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    var nodeMetadata: string[][] = new Array<string[]>(SyntaxKind.LastNode);
+    var nodeMetadata: string[][] = new Array<string[]>(SyntaxKind.LastNode + 1);
     nodeMetadata[SyntaxKind.SourceUnit] = ["moduleElements", "endOfFileToken"];
     nodeMetadata[SyntaxKind.ExternalModuleReference] = ["requireKeyword", "openParenToken", "stringLiteral", "closeParenToken"];
     nodeMetadata[SyntaxKind.ModuleNameModuleReference] = ["moduleName"];
@@ -131,39 +131,32 @@ module TypeScript {
     nodeMetadata[SyntaxKind.DebuggerStatement] = ["debuggerKeyword", "semicolonToken"];
 
     export function childCount(element: ISyntaxElement): number {
-        if (isToken(element)) {
+        var kind = element.kind;
+        if (kind === SyntaxKind.List) {
+            return (<ISyntaxNodeOrToken[]>element).length;
+        }
+        else if (kind === SyntaxKind.SeparatedList) {
+            return (<ISyntaxNodeOrToken[]>element).length + (<ISyntaxNodeOrToken[]>element).separators.length;
+        }
+        else if (kind >= SyntaxKind.FirstToken && kind <= SyntaxKind.LastToken) {
             return 0;
         }
-        else if (isList(element)) {
-            var array = <ISyntaxNodeOrToken[]>element;
-            return array.length;
-        }
-        else if (isSeparatedList(element)) {
-            var array = <ISyntaxNodeOrToken[]>element;
-            return array.length + array.separators.length;
-        }
         else {
-            Debug.assert(isNode(element));
-            return nodeMetadata[element.kind].length;
+            return nodeMetadata[kind].length;
         }
     }
 
     export function childAt(element: ISyntaxElement, index: number): ISyntaxElement {
-        if (isToken(element)) {
-            throw Errors.invalidOperation();
+        var kind = element.kind;
+        if (kind === SyntaxKind.List) {
+            return (<ISyntaxNodeOrToken[]>element)[index];
         }
-        else if (isList(element)) {
-            var array = <ISyntaxNodeOrToken[]>element;
-            return array[index];
-        }
-        else if (isSeparatedList(element)) {
-            var array = <ISyntaxNodeOrToken[]>element;
-            return (index % 2 === 0) ? array[index / 2] : array.separators[(index - 1) / 2];
+        else if (kind === SyntaxKind.SeparatedList) {
+            return (index % 2 === 0) ? (<ISyntaxNodeOrToken[]>element)[index / 2] : (<ISyntaxNodeOrToken[]>element).separators[(index - 1) / 2];
         }
         else {
-            Debug.assert(isNode(element));
-            var childName = nodeMetadata[element.kind][index];
-            return (<any>element)[childName];
+            // Debug.assert(isNode(element));
+            return (<any>element)[nodeMetadata[element.kind][index]];
         }
     }
 
