@@ -13,9 +13,6 @@ interface Array<T> {
 
     separatorCount(): number;
     separatorAt(index: number): TypeScript.ISyntaxToken;
-
-    nonSeparatorCount(): number;
-    nonSeparatorAt(index: number): T;
 }
 
 module TypeScript.Syntax {
@@ -97,19 +94,6 @@ module TypeScript.Syntax {
         // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
         // Debug.assert(index >= 0 && index < this.separators.length);
         return this.separators[index];
-    }
-
-    Array.prototype.nonSeparatorCount = function () {
-        assertEmptyLists();
-        // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
-        return this.length;
-    }
-
-    Array.prototype.nonSeparatorAt = function (index: number) {
-        assertEmptyLists();
-        // Debug.assert(this.kind() === SyntaxKind.SeparatedList);
-        // Debug.assert(index >= 0 && index < this.length);
-        return this[index];
     }
 
     export function emptyList<T extends ISyntaxNodeOrToken>(): T[] {
