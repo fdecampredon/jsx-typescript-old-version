@@ -7,7 +7,8 @@ module TypeScript {
     // instance instead of creating new objects for each case.  Note: because of this, shared
     // nodes don't have positions or parents.
     export function isShared(element: ISyntaxElement): boolean {
-        return (isList(element) || isSeparatedList(element)) && childCount(element) === 0;
+        var kind = element.kind;
+        return (kind === SyntaxKind.List || kind === SyntaxKind.SeparatedList) && (<ISyntaxNodeOrToken[]>element).length === 0;
     }
 
     export function syntaxTree(element: ISyntaxElement): SyntaxTree {

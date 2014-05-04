@@ -41,13 +41,13 @@ module TypeScript {
             var newItems: ISyntaxNodeOrToken[] = null;
 
             for (var i = 0, n = childCount(list); i < n; i++) {
-                var item = list.childAt(i);
+                var item = childAt(list, i);
                 var newItem = isToken(item) ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>item) : this.visitNode(<SyntaxNode>item);
 
                 if (item !== newItem && newItems === null) {
                     newItems = [];
                     for (var j = 0; j < i; j++) {
-                        newItems.push(list.childAt(j));
+                        newItems.push(childAt(list, j));
                     }
                 }
 

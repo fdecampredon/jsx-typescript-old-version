@@ -2100,31 +2100,44 @@ function generateSyntaxInterfaces(): string {
     return result;
 }
 
+function syntaxKindName(kind: TypeScript.SyntaxKind): string {
+    for (var name in TypeScript.SyntaxKind) {
+        if (<any>TypeScript.SyntaxKind[name] === kind) {
+            return name;
+        }
+    }
+
+    throw new Error();
+}
+
 function generateNodes(): string {
     var result = "///<reference path='references.ts' />\r\n\r\n";
 
     result += "module TypeScript {\r\n";
 
-    result += "    var nodeMetadata: string[][] = new Array<string[]>(SyntaxKind.LastNode);\r\n";
-    //result += "    for (var i = 0; i < SyntaxKind.FirstNode; i++) {\r\n";
-    //result += "        nodeMetadata[i] = [];\r\n";
-    //result += "    }\r\n\r\n";
+    result += "    var nodeMetadata: string[][] = ArrayUtilities.createArray<string[]>(SyntaxKind.LastNode + 1, []);\r\n\r\n";
 
-    for (var i = 0; i < definitions.length; i++) {
-        var definition = definitions[i];
+    for (var i = <number>TypeScript.SyntaxKind.FirstNode; i <= TypeScript.SyntaxKind.LastNode; i++) {
+        var kindName = syntaxKindName(i);
+
+        var definition = TypeScript.ArrayUtilities.firstOrDefault(definitions, d => {
+            if (getNameWithoutSuffix(d) === kindName) {
+                return true;
+            }
+
+            if (d.syntaxKinds) {
+                return TypeScript.ArrayUtilities.contains(d.syntaxKinds, kindName);
+            }
+
+            return false;
+        });
+
         var metadata = "[";
         var children = definition.children.filter(m => m.type !== "SyntaxKind").map(m => '"' + m.name + '"');
         metadata += children.join(", ");
         metadata += "];\r\n";
 
-        if (definition.syntaxKinds) {
-            for (var j = 0; j < definition.syntaxKinds.length; j++) {
-                result += "    nodeMetadata[SyntaxKind." + definition.syntaxKinds[j] + "] = " + metadata;
-            }
-        }
-        else {
-            result += "    nodeMetadata[SyntaxKind." + getNameWithoutSuffix(definition) + "] = " + metadata;
-        }
+        result += "    nodeMetadata[SyntaxKind." + kindName + "] = " + metadata;
     }
 
     result += "\r\n";
