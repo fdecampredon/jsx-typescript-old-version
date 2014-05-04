@@ -130,6 +130,43 @@ module TypeScript {
     nodeMetadata[SyntaxKind.VoidExpression] = ["voidKeyword", "expression"];
     nodeMetadata[SyntaxKind.DebuggerStatement] = ["debuggerKeyword", "semicolonToken"];
 
+    export function childCount(element: ISyntaxElement): number {
+        if (isToken(element)) {
+            return 0;
+        }
+        else if (isList(element)) {
+            var array = <ISyntaxNodeOrToken[]>element;
+            return array.length;
+        }
+        else if (isSeparatedList(element)) {
+            var array = <ISyntaxNodeOrToken[]>element;
+            return array.length + array.separators.length;
+        }
+        else {
+            Debug.assert(isNode(element));
+            return nodeMetadata[element.kind].length;
+        }
+    }
+
+    export function childAt(element: ISyntaxElement, index: number): ISyntaxElement {
+        if (isToken(element)) {
+            throw Errors.invalidOperation();
+        }
+        else if (isList(element)) {
+            var array = <ISyntaxNodeOrToken[]>element;
+            return array[index];
+        }
+        else if (isSeparatedList(element)) {
+            var array = <ISyntaxNodeOrToken[]>element;
+            return (index % 2 === 0) ? array[index / 2] : array.separators[(index - 1) / 2];
+        }
+        else {
+            Debug.assert(isNode(element));
+            var childName = nodeMetadata[element.kind][index];
+            return (<any>element)[childName];
+        }
+    }
+
     export class SourceUnitSyntax extends SyntaxNode {
         public syntaxTree: SyntaxTree = null;
         constructor(public moduleElements: IModuleElementSyntax[],

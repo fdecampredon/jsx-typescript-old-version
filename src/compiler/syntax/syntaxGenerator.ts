@@ -2128,6 +2128,43 @@ function generateNodes(): string {
 
     result += "\r\n";
 
+    result += "    export function childCount(element: ISyntaxElement): number {\r\n";
+    result += "        if (isToken(element)) {\r\n";
+    result += "            return 0;\r\n";
+    result += "        }\r\n";
+    result += "        else if (isList(element)) {\r\n";
+    result += "            var array = <ISyntaxNodeOrToken[]>element;\r\n";
+    result += "            return array.length;\r\n";
+    result += "        }\r\n";
+    result += "        else if (isSeparatedList(element)) {\r\n";
+    result += "            var array = <ISyntaxNodeOrToken[]>element;\r\n";
+    result += "            return array.length + array.separators.length;\r\n";
+    result += "        }\r\n";
+    result += "        else {\r\n";
+    result += "            Debug.assert(isNode(element));\r\n";
+    result += "            return nodeMetadata[element.kind].length;\r\n";
+    result += "        }\r\n";
+    result += "    }\r\n\r\n";
+
+    result += "    export function childAt(element: ISyntaxElement, index: number): ISyntaxElement {\r\n";
+    result += "        if (isToken(element)) {\r\n";
+    result += "            throw Errors.invalidOperation();\r\n";
+    result += "        }\r\n";
+    result += "        else if (isList(element)) {\r\n";
+    result += "            var array = <ISyntaxNodeOrToken[]>element;\r\n";
+    result += "            return array[index];\r\n";
+    result += "        }\r\n";
+    result += "        else if (isSeparatedList(element)) {\r\n";
+    result += "            var array = <ISyntaxNodeOrToken[]>element;\r\n";
+    result += "            return (index % 2 === 0) ? array[index / 2] : array.separators[(index - 1) / 2];\r\n";
+    result += "        }\r\n";
+    result += "        else {\r\n";
+    result += "            Debug.assert(isNode(element));\r\n";
+    result += "            var childName = nodeMetadata[element.kind][index];\r\n";
+    result += "            return (<any>element)[childName];\r\n";
+    result += "        }\r\n";
+    result += "    }\r\n\r\n";
+
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];
 
