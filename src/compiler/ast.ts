@@ -35,7 +35,7 @@ module TypeScript {
             return this._trivia.fullText();
         }
 
-        public get kind(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._trivia.kind;
         }
 

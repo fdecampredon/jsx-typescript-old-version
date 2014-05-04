@@ -582,7 +582,7 @@ module TypeScript.ASTHelpers {
     }
 
     export function isDocComment(comment: Comment) {
-        if (comment.kind === SyntaxKind.MultiLineCommentTrivia) {
+        if (comment.kind() === SyntaxKind.MultiLineCommentTrivia) {
             var fullText = comment.fullText();
             return fullText.charAt(2) === "*" && fullText.charAt(3) !== "/";
         }

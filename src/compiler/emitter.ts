@@ -475,7 +475,7 @@ module TypeScript {
                 this.writeToOutput(" ");
             }
 
-            if (comment.kind === SyntaxKind.MultiLineCommentTrivia) {
+            if (comment.kind() === SyntaxKind.MultiLineCommentTrivia) {
                 this.recordSourceMappingCommentStart(comment);
                 this.writeToOutput(text[0]);
 
@@ -3729,7 +3729,7 @@ module TypeScript {
     }
 
     export function getTrimmedTextLines(comment: Comment): string[] {
-        if (comment.kind === SyntaxKind.MultiLineCommentTrivia) {
+        if (comment.kind() === SyntaxKind.MultiLineCommentTrivia) {
             return comment.fullText().split("\n").map(s => s.trim());
         }
         else {

@@ -65,7 +65,7 @@ module TypeScript.Services.Formatting {
             return this._depth;
         }
 
-        public get kind(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._node.kind;
         }
 

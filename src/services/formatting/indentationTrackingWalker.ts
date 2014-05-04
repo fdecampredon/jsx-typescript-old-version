@@ -159,7 +159,7 @@ module TypeScript.Services.Formatting {
                 parentIndentationAmount = parent.indentationAmount();
             }
             else {
-                if (parent.kind === SyntaxKind.Block && !this.shouldIndentBlockInParent(this._parent.parent())) {
+                if (parent.kind() === SyntaxKind.Block && !this.shouldIndentBlockInParent(this._parent.parent())) {
                     // Blocks preserve the indentation of their containing node (unless they're a 
                     // standalone block in a list).  i.e. if you have:
                     //
@@ -253,7 +253,7 @@ module TypeScript.Services.Formatting {
                     break;
 
                 case SyntaxKind.IfStatement:
-                    if (parent.kind === SyntaxKind.ElseClause &&
+                    if (parent.kind() === SyntaxKind.ElseClause &&
                         !(<ElseClauseSyntax>parentNode).elseKeyword.hasTrailingNewLine() &&
                         !(<IfStatementSyntax>node).ifKeyword.hasLeadingNewLine()) {
                         // This is an else if statement with the if on the same line as the else, do not indent the if statmement.
@@ -321,7 +321,7 @@ module TypeScript.Services.Formatting {
         }
 
         private shouldIndentBlockInParent(parent: IndentationNodeContext): boolean {
-            switch (parent.kind) {
+            switch (parent.kind()) {
                 case SyntaxKind.SourceUnit:
                 case SyntaxKind.ModuleDeclaration:
                 case SyntaxKind.Block:

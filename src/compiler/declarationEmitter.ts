@@ -269,7 +269,7 @@ module TypeScript {
             if (this.declFile.onNewLine) {
                 this.emitIndent();
             }
-            else if (comment.kind !== SyntaxKind.MultiLineCommentTrivia) {
+            else if (comment.kind() !== SyntaxKind.MultiLineCommentTrivia) {
                 this.declFile.WriteLine("");
                 this.emitIndent();
             }
@@ -282,7 +282,7 @@ module TypeScript {
                 this.declFile.Write(text[i]);
             }
 
-            if (comment.endsLine || comment.kind !== SyntaxKind.MultiLineCommentTrivia) {
+            if (comment.endsLine || comment.kind() !== SyntaxKind.MultiLineCommentTrivia) {
                 this.declFile.WriteLine("");
             }
             else {
