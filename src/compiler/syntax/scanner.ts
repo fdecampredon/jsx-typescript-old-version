@@ -104,7 +104,8 @@ module TypeScript {
 
         constructor(public _text: ISimpleText,
                     private _packedFullStartAndInfo: number,
-                    private _packedFullWidthAndKind: number) {
+                    public kind: SyntaxKind,
+                    private _fullWidth: number) {
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
@@ -115,10 +116,6 @@ module TypeScript {
                 unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
         }
 
-        public get kind(): SyntaxKind {
-            return unpackKind(this._packedFullWidthAndKind);
-        }
-
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -126,7 +123,7 @@ module TypeScript {
 
         public isKeywordConvertedToIdentifier(): boolean { return false; }
 
-        public fullWidth(): number { return unpackFullWidth(this._packedFullWidthAndKind); }
+        public fullWidth(): number { return this._fullWidth; }
         public fullStart(): number { return unpackFullStart(this._packedFullStartAndInfo); }
 
         private fillSizeInfo(): void {
@@ -225,7 +222,7 @@ module TypeScript {
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
 
         public clone(): ISyntaxToken {
-            return new ScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind);
+            return new ScannerToken(this._text, this._packedFullStartAndInfo, this.kind, this._fullWidth);
         }
     }
 
@@ -294,10 +291,8 @@ module TypeScript {
             var fullEnd = index;
 
             // Pack functions inlined for perf.
-            var fullWidth = fullEnd - fullStart;
             var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.FullStartShift) | leadingTriviaInfo | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
-            var packedFullWidthAndKind = (fullWidth << ScannerConstants.FullWidthShift) | kind;
-            return new ScannerToken(text, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
+            return new ScannerToken(text, packedFullStartAndTriviaInfo, kind, index - fullStart);
         }
 
         function scanTrivia(parent: ScannerToken, isTrailing: boolean): ISyntaxTriviaList {
