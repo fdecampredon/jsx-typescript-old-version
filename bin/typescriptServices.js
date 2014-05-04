@@ -5997,13 +5997,6 @@ var TypeScript;
             this._packedFullStartAndInfo = packFullStartAndInfo(fullStart, unpackLeadingTriviaInfo(this._packedFullStartAndInfo), unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
         };
 
-        ScannerToken.prototype.childCount = function () {
-            return 0;
-        };
-        ScannerToken.prototype.childAt = function (index) {
-            throw TypeScript.Errors.argumentOutOfRange('index');
-        };
-
         ScannerToken.prototype.isIncrementallyUnusable = function () {
             return this.fullWidth() === 0 || TypeScript.SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind);
         };
@@ -7495,8 +7488,8 @@ var TypeScript;
         Syntax._nextSyntaxID = 1;
 
         function setParentForChildren(element) {
-            for (var i = 0, n = element.childCount(); i < n; i++) {
-                var child = element.childAt(i);
+            for (var i = 0, n = TypeScript.childCount(element); i < n; i++) {
+                var child = TypeScript.childAt(element, i);
 
                 if (child && !TypeScript.isShared(child)) {
                     child.parent = element;
@@ -7570,8 +7563,8 @@ var TypeScript;
 
         function childOffset(parent, child) {
             var offset = 0;
-            for (var i = 0, n = parent.childCount(); i < n; i++) {
-                var current = parent.childAt(i);
+            for (var i = 0, n = TypeScript.childCount(parent); i < n; i++) {
+                var current = TypeScript.childAt(parent, i);
                 if (current === child) {
                     return offset;
                 }
@@ -7588,7 +7581,7 @@ var TypeScript;
         function childOffsetAt(parent, index) {
             var offset = 0;
             for (var i = 0; i < index; i++) {
-                var current = parent.childAt(i);
+                var current = TypeScript.childAt(parent, i);
                 if (current !== null) {
                     offset += TypeScript.fullWidth(current);
                 }
@@ -7599,8 +7592,8 @@ var TypeScript;
         Syntax.childOffsetAt = childOffsetAt;
 
         function childIndex(parent, child) {
-            for (var i = 0, n = parent.childCount(); i < n; i++) {
-                var current = parent.childAt(i);
+            for (var i = 0, n = TypeScript.childCount(parent); i < n; i++) {
+                var current = TypeScript.childAt(parent, i);
                 if (current === child) {
                     return i;
                 }
@@ -7657,8 +7650,8 @@ var TypeScript;
         Syntax.isSuperMemberAccessInvocationExpression = isSuperMemberAccessInvocationExpression;
 
         function nodeHasSkippedOrMissingTokens(node) {
-            for (var i = 0; i < node.childCount(); i++) {
-                var child = node.childAt(i);
+            for (var i = 0; i < TypeScript.childCount(node); i++) {
+                var child = TypeScript.childAt(node, i);
                 if (TypeScript.isToken(child)) {
                     var token = child;
 
@@ -7968,8 +7961,8 @@ var TypeScript;
                 throw TypeScript.Errors.invalidOperation();
             }
 
-            for (var i = 0, n = element.childCount(); i < n; i++) {
-                var child = element.childAt(i);
+            for (var i = 0, n = TypeScript.childCount(element); i < n; i++) {
+                var child = TypeScript.childAt(element, i);
 
                 if (child !== null && TypeScript.fullWidth(child) > 0) {
                     var childFullStart = TypeScript.fullStart(child);
@@ -8057,7 +8050,7 @@ var TypeScript;
 var TypeScript;
 (function (TypeScript) {
     function isShared(element) {
-        return (isList(element) || isSeparatedList(element)) && element.childCount() === 0;
+        return (isList(element) || isSeparatedList(element)) && TypeScript.childCount(element) === 0;
     }
     TypeScript.isShared = isShared;
 
@@ -8137,8 +8130,8 @@ var TypeScript;
             if (isToken(element)) {
                 elements.push(element.fullText());
             } else {
-                for (var i = 0, n = element.childCount(); i < n; i++) {
-                    collectTextElements(element.childAt(i), elements);
+                for (var i = 0, n = TypeScript.childCount(element); i < n; i++) {
+                    collectTextElements(TypeScript.childAt(element, i), elements);
                 }
             }
         }
@@ -8173,8 +8166,8 @@ var TypeScript;
             return fullWidth(element) > 0 || element.kind === 10 /* EndOfFileToken */ ? element : null;
         }
 
-        for (var i = 0, n = element.childCount(); i < n; i++) {
-            var child = element.childAt(i);
+        for (var i = 0, n = TypeScript.childCount(element); i < n; i++) {
+            var child = TypeScript.childAt(element, i);
             if (child !== null) {
                 var token = firstToken(child);
                 if (token) {
@@ -8200,8 +8193,8 @@ var TypeScript;
             return element.endOfFileToken;
         }
 
-        for (var i = element.childCount() - 1; i >= 0; i--) {
-            var child = element.childAt(i);
+        for (var i = TypeScript.childCount(element) - 1; i >= 0; i--) {
+            var child = TypeScript.childAt(element, i);
             if (child !== null) {
                 var token = lastToken(child);
                 if (token) {
@@ -8264,14 +8257,14 @@ var TypeScript;
     }
 
     function computeData(element) {
-        var slotCount = element.childCount();
+        var slotCount = TypeScript.childCount(element);
 
         var fullWidth = 0;
 
         var isIncrementallyUnusable = slotCount === 0;
 
         for (var i = 0, n = slotCount; i < n; i++) {
-            var child = element.childAt(i);
+            var child = TypeScript.childAt(element, i);
 
             if (child !== null) {
                 fullWidth += TypeScript.fullWidth(child);
@@ -8372,29 +8365,6 @@ var TypeScript;
             value.parent = this;
         };
 
-        Array.prototype.childCount = function () {
-            assertEmptyLists();
-            if (this.separators) {
-                return this.length + this.separators.length;
-            } else {
-                return this.length;
-            }
-        };
-
-        Array.prototype.childAt = function (index) {
-            assertEmptyLists();
-
-            if (this.kind === 2 /* SeparatedList */) {
-                if (index % 2 === 0) {
-                    return this[index / 2];
-                } else {
-                    return this.separators[(index - 1) / 2];
-                }
-            } else {
-                return this[index];
-            }
-        };
-
         Array.prototype.separatorCount = function () {
             assertEmptyLists();
 
@@ -8475,20 +8445,167 @@ var TypeScript;
         SyntaxNode.prototype.resetData = function () {
             this._data = this._data & 4 /* NodeParsedInStrictModeMask */;
         };
-
-        SyntaxNode.prototype.childCount = function () {
-            throw TypeScript.Errors.abstract();
-        };
-
-        SyntaxNode.prototype.childAt = function (slot) {
-            throw TypeScript.Errors.abstract();
-        };
         return SyntaxNode;
     })();
     TypeScript.SyntaxNode = SyntaxNode;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
+    var nodeMetadata = new Array(246 /* LastNode */ + 1);
+    nodeMetadata[120 /* SourceUnit */] = ["moduleElements", "endOfFileToken"];
+    nodeMetadata[245 /* ExternalModuleReference */] = ["requireKeyword", "openParenToken", "stringLiteral", "closeParenToken"];
+    nodeMetadata[246 /* ModuleNameModuleReference */] = ["moduleName"];
+    nodeMetadata[133 /* ImportDeclaration */] = ["modifiers", "importKeyword", "identifier", "equalsToken", "moduleReference", "semicolonToken"];
+    nodeMetadata[134 /* ExportAssignment */] = ["exportKeyword", "equalsToken", "identifier", "semicolonToken"];
+    nodeMetadata[131 /* ClassDeclaration */] = ["modifiers", "classKeyword", "identifier", "typeParameterList", "heritageClauses", "openBraceToken", "classElements", "closeBraceToken"];
+    nodeMetadata[128 /* InterfaceDeclaration */] = ["modifiers", "interfaceKeyword", "identifier", "typeParameterList", "heritageClauses", "body"];
+    nodeMetadata[230 /* ExtendsHeritageClause */] = ["extendsOrImplementsKeyword", "typeNames"];
+    nodeMetadata[231 /* ImplementsHeritageClause */] = ["extendsOrImplementsKeyword", "typeNames"];
+    nodeMetadata[130 /* ModuleDeclaration */] = ["modifiers", "moduleKeyword", "name", "stringLiteral", "openBraceToken", "moduleElements", "closeBraceToken"];
+    nodeMetadata[129 /* FunctionDeclaration */] = ["modifiers", "functionKeyword", "identifier", "callSignature", "block", "semicolonToken"];
+    nodeMetadata[148 /* VariableStatement */] = ["modifiers", "variableDeclaration", "semicolonToken"];
+    nodeMetadata[224 /* VariableDeclaration */] = ["varKeyword", "variableDeclarators"];
+    nodeMetadata[225 /* VariableDeclarator */] = ["propertyName", "typeAnnotation", "equalsValueClause"];
+    nodeMetadata[232 /* EqualsValueClause */] = ["equalsToken", "value"];
+    nodeMetadata[168 /* PreIncrementExpression */] = ["operatorToken", "operand"];
+    nodeMetadata[169 /* PreDecrementExpression */] = ["operatorToken", "operand"];
+    nodeMetadata[164 /* PlusExpression */] = ["operatorToken", "operand"];
+    nodeMetadata[165 /* NegateExpression */] = ["operatorToken", "operand"];
+    nodeMetadata[166 /* BitwiseNotExpression */] = ["operatorToken", "operand"];
+    nodeMetadata[167 /* LogicalNotExpression */] = ["operatorToken", "operand"];
+    nodeMetadata[214 /* ArrayLiteralExpression */] = ["openBracketToken", "expressions", "closeBracketToken"];
+    nodeMetadata[223 /* OmittedExpression */] = [];
+    nodeMetadata[217 /* ParenthesizedExpression */] = ["openParenToken", "expression", "closeParenToken"];
+    nodeMetadata[219 /* SimpleArrowFunctionExpression */] = ["identifier", "equalsGreaterThanToken", "block", "expression"];
+    nodeMetadata[218 /* ParenthesizedArrowFunctionExpression */] = ["callSignature", "equalsGreaterThanToken", "block", "expression"];
+    nodeMetadata[121 /* QualifiedName */] = ["left", "dotToken", "right"];
+    nodeMetadata[228 /* TypeArgumentList */] = ["lessThanToken", "typeArguments", "greaterThanToken"];
+    nodeMetadata[125 /* ConstructorType */] = ["newKeyword", "typeParameterList", "parameterList", "equalsGreaterThanToken", "type"];
+    nodeMetadata[123 /* FunctionType */] = ["typeParameterList", "parameterList", "equalsGreaterThanToken", "type"];
+    nodeMetadata[122 /* ObjectType */] = ["openBraceToken", "typeMembers", "closeBraceToken"];
+    nodeMetadata[124 /* ArrayType */] = ["type", "openBracketToken", "closeBracketToken"];
+    nodeMetadata[126 /* GenericType */] = ["name", "typeArgumentList"];
+    nodeMetadata[127 /* TypeQuery */] = ["typeOfKeyword", "name"];
+    nodeMetadata[244 /* TypeAnnotation */] = ["colonToken", "type"];
+    nodeMetadata[146 /* Block */] = ["openBraceToken", "statements", "closeBraceToken"];
+    nodeMetadata[242 /* Parameter */] = ["dotDotDotToken", "modifiers", "identifier", "questionToken", "typeAnnotation", "equalsValueClause"];
+    nodeMetadata[212 /* MemberAccessExpression */] = ["expression", "dotToken", "name"];
+    nodeMetadata[210 /* PostIncrementExpression */] = ["operand", "operatorToken"];
+    nodeMetadata[211 /* PostDecrementExpression */] = ["operand", "operatorToken"];
+    nodeMetadata[221 /* ElementAccessExpression */] = ["expression", "openBracketToken", "argumentExpression", "closeBracketToken"];
+    nodeMetadata[213 /* InvocationExpression */] = ["expression", "argumentList"];
+    nodeMetadata[226 /* ArgumentList */] = ["typeArgumentList", "openParenToken", "arguments", "closeParenToken"];
+    nodeMetadata[205 /* MultiplyExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[206 /* DivideExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[207 /* ModuloExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[208 /* AddExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[209 /* SubtractExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[202 /* LeftShiftExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[203 /* SignedRightShiftExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[204 /* UnsignedRightShiftExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[196 /* LessThanExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[197 /* GreaterThanExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[198 /* LessThanOrEqualExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[199 /* GreaterThanOrEqualExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[200 /* InstanceOfExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[201 /* InExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[192 /* EqualsWithTypeConversionExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[193 /* NotEqualsWithTypeConversionExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[194 /* EqualsExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[195 /* NotEqualsExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[191 /* BitwiseAndExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[190 /* BitwiseExclusiveOrExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[189 /* BitwiseOrExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[188 /* LogicalAndExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[187 /* LogicalOrExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[182 /* OrAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[180 /* AndAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[181 /* ExclusiveOrAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[183 /* LeftShiftAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[184 /* SignedRightShiftAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[185 /* UnsignedRightShiftAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[175 /* AddAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[176 /* SubtractAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[177 /* MultiplyAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[178 /* DivideAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[179 /* ModuloAssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[174 /* AssignmentExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[173 /* CommaExpression */] = ["left", "operatorToken", "right"];
+    nodeMetadata[186 /* ConditionalExpression */] = ["condition", "questionToken", "whenTrue", "colonToken", "whenFalse"];
+    nodeMetadata[143 /* ConstructSignature */] = ["newKeyword", "callSignature"];
+    nodeMetadata[145 /* MethodSignature */] = ["propertyName", "questionToken", "callSignature"];
+    nodeMetadata[144 /* IndexSignature */] = ["openBracketToken", "parameter", "closeBracketToken", "typeAnnotation"];
+    nodeMetadata[141 /* PropertySignature */] = ["propertyName", "questionToken", "typeAnnotation"];
+    nodeMetadata[142 /* CallSignature */] = ["typeParameterList", "parameterList", "typeAnnotation"];
+    nodeMetadata[227 /* ParameterList */] = ["openParenToken", "parameters", "closeParenToken"];
+    nodeMetadata[229 /* TypeParameterList */] = ["lessThanToken", "typeParameters", "greaterThanToken"];
+    nodeMetadata[238 /* TypeParameter */] = ["identifier", "constraint"];
+    nodeMetadata[239 /* Constraint */] = ["extendsKeyword", "type"];
+    nodeMetadata[235 /* ElseClause */] = ["elseKeyword", "statement"];
+    nodeMetadata[147 /* IfStatement */] = ["ifKeyword", "openParenToken", "condition", "closeParenToken", "statement", "elseClause"];
+    nodeMetadata[149 /* ExpressionStatement */] = ["expression", "semicolonToken"];
+    nodeMetadata[137 /* ConstructorDeclaration */] = ["modifiers", "constructorKeyword", "callSignature", "block", "semicolonToken"];
+    nodeMetadata[135 /* MemberFunctionDeclaration */] = ["modifiers", "propertyName", "callSignature", "block", "semicolonToken"];
+    nodeMetadata[139 /* GetAccessor */] = ["modifiers", "getKeyword", "propertyName", "parameterList", "typeAnnotation", "block"];
+    nodeMetadata[140 /* SetAccessor */] = ["modifiers", "setKeyword", "propertyName", "parameterList", "block"];
+    nodeMetadata[136 /* MemberVariableDeclaration */] = ["modifiers", "variableDeclarator", "semicolonToken"];
+    nodeMetadata[138 /* IndexMemberDeclaration */] = ["modifiers", "indexSignature", "semicolonToken"];
+    nodeMetadata[157 /* ThrowStatement */] = ["throwKeyword", "expression", "semicolonToken"];
+    nodeMetadata[150 /* ReturnStatement */] = ["returnKeyword", "expression", "semicolonToken"];
+    nodeMetadata[216 /* ObjectCreationExpression */] = ["newKeyword", "expression", "argumentList"];
+    nodeMetadata[151 /* SwitchStatement */] = ["switchKeyword", "openParenToken", "expression", "closeParenToken", "openBraceToken", "switchClauses", "closeBraceToken"];
+    nodeMetadata[233 /* CaseSwitchClause */] = ["caseKeyword", "expression", "colonToken", "statements"];
+    nodeMetadata[234 /* DefaultSwitchClause */] = ["defaultKeyword", "colonToken", "statements"];
+    nodeMetadata[152 /* BreakStatement */] = ["breakKeyword", "identifier", "semicolonToken"];
+    nodeMetadata[153 /* ContinueStatement */] = ["continueKeyword", "identifier", "semicolonToken"];
+    nodeMetadata[154 /* ForStatement */] = ["forKeyword", "openParenToken", "variableDeclaration", "initializer", "firstSemicolonToken", "condition", "secondSemicolonToken", "incrementor", "closeParenToken", "statement"];
+    nodeMetadata[155 /* ForInStatement */] = ["forKeyword", "openParenToken", "variableDeclaration", "left", "inKeyword", "expression", "closeParenToken", "statement"];
+    nodeMetadata[158 /* WhileStatement */] = ["whileKeyword", "openParenToken", "condition", "closeParenToken", "statement"];
+    nodeMetadata[163 /* WithStatement */] = ["withKeyword", "openParenToken", "condition", "closeParenToken", "statement"];
+    nodeMetadata[132 /* EnumDeclaration */] = ["modifiers", "enumKeyword", "identifier", "openBraceToken", "enumElements", "closeBraceToken"];
+    nodeMetadata[243 /* EnumElement */] = ["propertyName", "equalsValueClause"];
+    nodeMetadata[220 /* CastExpression */] = ["lessThanToken", "type", "greaterThanToken", "expression"];
+    nodeMetadata[215 /* ObjectLiteralExpression */] = ["openBraceToken", "propertyAssignments", "closeBraceToken"];
+    nodeMetadata[240 /* SimplePropertyAssignment */] = ["propertyName", "colonToken", "expression"];
+    nodeMetadata[241 /* FunctionPropertyAssignment */] = ["propertyName", "callSignature", "block"];
+    nodeMetadata[222 /* FunctionExpression */] = ["functionKeyword", "identifier", "callSignature", "block"];
+    nodeMetadata[156 /* EmptyStatement */] = ["semicolonToken"];
+    nodeMetadata[159 /* TryStatement */] = ["tryKeyword", "block", "catchClause", "finallyClause"];
+    nodeMetadata[236 /* CatchClause */] = ["catchKeyword", "openParenToken", "identifier", "typeAnnotation", "closeParenToken", "block"];
+    nodeMetadata[237 /* FinallyClause */] = ["finallyKeyword", "block"];
+    nodeMetadata[160 /* LabeledStatement */] = ["identifier", "colonToken", "statement"];
+    nodeMetadata[161 /* DoStatement */] = ["doKeyword", "statement", "whileKeyword", "openParenToken", "condition", "closeParenToken", "semicolonToken"];
+    nodeMetadata[171 /* TypeOfExpression */] = ["typeOfKeyword", "expression"];
+    nodeMetadata[170 /* DeleteExpression */] = ["deleteKeyword", "expression"];
+    nodeMetadata[172 /* VoidExpression */] = ["voidKeyword", "expression"];
+    nodeMetadata[162 /* DebuggerStatement */] = ["debuggerKeyword", "semicolonToken"];
+
+    function childCount(element) {
+        var kind = element.kind;
+        if (kind === 1 /* List */) {
+            return element.length;
+        } else if (kind === 2 /* SeparatedList */) {
+            return element.length + element.separators.length;
+        } else if (kind >= 9 /* FirstToken */ && kind <= 119 /* LastToken */) {
+            return 0;
+        } else {
+            return nodeMetadata[kind].length;
+        }
+    }
+    TypeScript.childCount = childCount;
+
+    function childAt(element, index) {
+        var kind = element.kind;
+        if (kind === 1 /* List */) {
+            return element[index];
+        } else if (kind === 2 /* SeparatedList */) {
+            return (index % 2 === 0) ? element[index / 2] : element.separators[(index - 1) / 2];
+        } else {
+            return element[nodeMetadata[element.kind][index]];
+        }
+    }
+    TypeScript.childAt = childAt;
+
     var SourceUnitSyntax = (function (_super) {
         __extends(SourceUnitSyntax, _super);
         function SourceUnitSyntax(moduleElements, endOfFileToken, data) {
@@ -8500,20 +8617,6 @@ var TypeScript;
             !TypeScript.isShared(moduleElements) && (moduleElements.parent = this);
             endOfFileToken.parent = this;
         }
-        SourceUnitSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        SourceUnitSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.moduleElements;
-                case 1:
-                    return this.endOfFileToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return SourceUnitSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SourceUnitSyntax = SourceUnitSyntax;
@@ -8532,24 +8635,6 @@ var TypeScript;
             stringLiteral.parent = this;
             closeParenToken.parent = this;
         }
-        ExternalModuleReferenceSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        ExternalModuleReferenceSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.requireKeyword;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.stringLiteral;
-                case 3:
-                    return this.closeParenToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ExternalModuleReferenceSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ExternalModuleReferenceSyntax = ExternalModuleReferenceSyntax;
@@ -8562,18 +8647,6 @@ var TypeScript;
 
             moduleName.parent = this;
         }
-        ModuleNameModuleReferenceSyntax.prototype.childCount = function () {
-            return 1;
-        };
-
-        ModuleNameModuleReferenceSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.moduleName;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ModuleNameModuleReferenceSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ModuleNameModuleReferenceSyntax = ModuleNameModuleReferenceSyntax;
@@ -8596,28 +8669,6 @@ var TypeScript;
             moduleReference.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        ImportDeclarationSyntax.prototype.childCount = function () {
-            return 6;
-        };
-
-        ImportDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.importKeyword;
-                case 2:
-                    return this.identifier;
-                case 3:
-                    return this.equalsToken;
-                case 4:
-                    return this.moduleReference;
-                case 5:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ImportDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ImportDeclarationSyntax = ImportDeclarationSyntax;
@@ -8636,24 +8687,6 @@ var TypeScript;
             identifier.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        ExportAssignmentSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        ExportAssignmentSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.exportKeyword;
-                case 1:
-                    return this.equalsToken;
-                case 2:
-                    return this.identifier;
-                case 3:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ExportAssignmentSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ExportAssignmentSyntax = ExportAssignmentSyntax;
@@ -8680,32 +8713,6 @@ var TypeScript;
             !TypeScript.isShared(classElements) && (classElements.parent = this);
             closeBraceToken.parent = this;
         }
-        ClassDeclarationSyntax.prototype.childCount = function () {
-            return 8;
-        };
-
-        ClassDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.classKeyword;
-                case 2:
-                    return this.identifier;
-                case 3:
-                    return this.typeParameterList;
-                case 4:
-                    return this.heritageClauses;
-                case 5:
-                    return this.openBraceToken;
-                case 6:
-                    return this.classElements;
-                case 7:
-                    return this.closeBraceToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ClassDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ClassDeclarationSyntax = ClassDeclarationSyntax;
@@ -8728,28 +8735,6 @@ var TypeScript;
             !TypeScript.isShared(heritageClauses) && (heritageClauses.parent = this);
             body.parent = this;
         }
-        InterfaceDeclarationSyntax.prototype.childCount = function () {
-            return 6;
-        };
-
-        InterfaceDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.interfaceKeyword;
-                case 2:
-                    return this.identifier;
-                case 3:
-                    return this.typeParameterList;
-                case 4:
-                    return this.heritageClauses;
-                case 5:
-                    return this.body;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return InterfaceDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.InterfaceDeclarationSyntax = InterfaceDeclarationSyntax;
@@ -8765,20 +8750,6 @@ var TypeScript;
             extendsOrImplementsKeyword.parent = this;
             !TypeScript.isShared(typeNames) && (typeNames.parent = this);
         }
-        HeritageClauseSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        HeritageClauseSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.extendsOrImplementsKeyword;
-                case 1:
-                    return this.typeNames;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return HeritageClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.HeritageClauseSyntax = HeritageClauseSyntax;
@@ -8803,30 +8774,6 @@ var TypeScript;
             !TypeScript.isShared(moduleElements) && (moduleElements.parent = this);
             closeBraceToken.parent = this;
         }
-        ModuleDeclarationSyntax.prototype.childCount = function () {
-            return 7;
-        };
-
-        ModuleDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.moduleKeyword;
-                case 2:
-                    return this.name;
-                case 3:
-                    return this.stringLiteral;
-                case 4:
-                    return this.openBraceToken;
-                case 5:
-                    return this.moduleElements;
-                case 6:
-                    return this.closeBraceToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ModuleDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ModuleDeclarationSyntax = ModuleDeclarationSyntax;
@@ -8849,28 +8796,6 @@ var TypeScript;
             block && (block.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-        FunctionDeclarationSyntax.prototype.childCount = function () {
-            return 6;
-        };
-
-        FunctionDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.functionKeyword;
-                case 2:
-                    return this.identifier;
-                case 3:
-                    return this.callSignature;
-                case 4:
-                    return this.block;
-                case 5:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return FunctionDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionDeclarationSyntax = FunctionDeclarationSyntax;
@@ -8887,22 +8812,6 @@ var TypeScript;
             variableDeclaration.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        VariableStatementSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        VariableStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.variableDeclaration;
-                case 2:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return VariableStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.VariableStatementSyntax = VariableStatementSyntax;
@@ -8917,20 +8826,6 @@ var TypeScript;
             varKeyword.parent = this;
             !TypeScript.isShared(variableDeclarators) && (variableDeclarators.parent = this);
         }
-        VariableDeclarationSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        VariableDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.varKeyword;
-                case 1:
-                    return this.variableDeclarators;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return VariableDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.VariableDeclarationSyntax = VariableDeclarationSyntax;
@@ -8947,22 +8842,6 @@ var TypeScript;
             typeAnnotation && (typeAnnotation.parent = this);
             equalsValueClause && (equalsValueClause.parent = this);
         }
-        VariableDeclaratorSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        VariableDeclaratorSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.propertyName;
-                case 1:
-                    return this.typeAnnotation;
-                case 2:
-                    return this.equalsValueClause;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return VariableDeclaratorSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.VariableDeclaratorSyntax = VariableDeclaratorSyntax;
@@ -8977,20 +8856,6 @@ var TypeScript;
             equalsToken.parent = this;
             value.parent = this;
         }
-        EqualsValueClauseSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        EqualsValueClauseSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.equalsToken;
-                case 1:
-                    return this.value;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return EqualsValueClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.EqualsValueClauseSyntax = EqualsValueClauseSyntax;
@@ -9006,20 +8871,6 @@ var TypeScript;
             operatorToken.parent = this;
             operand.parent = this;
         }
-        PrefixUnaryExpressionSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        PrefixUnaryExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.operatorToken;
-                case 1:
-                    return this.operand;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return PrefixUnaryExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.PrefixUnaryExpressionSyntax = PrefixUnaryExpressionSyntax;
@@ -9036,22 +8887,6 @@ var TypeScript;
             !TypeScript.isShared(expressions) && (expressions.parent = this);
             closeBracketToken.parent = this;
         }
-        ArrayLiteralExpressionSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ArrayLiteralExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.openBracketToken;
-                case 1:
-                    return this.expressions;
-                case 2:
-                    return this.closeBracketToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ArrayLiteralExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ArrayLiteralExpressionSyntax = ArrayLiteralExpressionSyntax;
@@ -9061,13 +8896,6 @@ var TypeScript;
         function OmittedExpressionSyntax(data) {
             _super.call(this, 223 /* OmittedExpression */, data);
         }
-        OmittedExpressionSyntax.prototype.childCount = function () {
-            return 0;
-        };
-
-        OmittedExpressionSyntax.prototype.childAt = function (slot) {
-            throw TypeScript.Errors.invalidOperation();
-        };
         return OmittedExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.OmittedExpressionSyntax = OmittedExpressionSyntax;
@@ -9084,22 +8912,6 @@ var TypeScript;
             expression.parent = this;
             closeParenToken.parent = this;
         }
-        ParenthesizedExpressionSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ParenthesizedExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.openParenToken;
-                case 1:
-                    return this.expression;
-                case 2:
-                    return this.closeParenToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ParenthesizedExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ParenthesizedExpressionSyntax = ParenthesizedExpressionSyntax;
@@ -9118,24 +8930,6 @@ var TypeScript;
             block && (block.parent = this);
             expression && (expression.parent = this);
         }
-        SimpleArrowFunctionExpressionSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        SimpleArrowFunctionExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.identifier;
-                case 1:
-                    return this.equalsGreaterThanToken;
-                case 2:
-                    return this.block;
-                case 3:
-                    return this.expression;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return SimpleArrowFunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SimpleArrowFunctionExpressionSyntax = SimpleArrowFunctionExpressionSyntax;
@@ -9154,24 +8948,6 @@ var TypeScript;
             block && (block.parent = this);
             expression && (expression.parent = this);
         }
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        ParenthesizedArrowFunctionExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.callSignature;
-                case 1:
-                    return this.equalsGreaterThanToken;
-                case 2:
-                    return this.block;
-                case 3:
-                    return this.expression;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ParenthesizedArrowFunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ParenthesizedArrowFunctionExpressionSyntax = ParenthesizedArrowFunctionExpressionSyntax;
@@ -9188,22 +8964,6 @@ var TypeScript;
             dotToken.parent = this;
             right.parent = this;
         }
-        QualifiedNameSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        QualifiedNameSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.left;
-                case 1:
-                    return this.dotToken;
-                case 2:
-                    return this.right;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return QualifiedNameSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.QualifiedNameSyntax = QualifiedNameSyntax;
@@ -9220,22 +8980,6 @@ var TypeScript;
             !TypeScript.isShared(typeArguments) && (typeArguments.parent = this);
             greaterThanToken.parent = this;
         }
-        TypeArgumentListSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        TypeArgumentListSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.lessThanToken;
-                case 1:
-                    return this.typeArguments;
-                case 2:
-                    return this.greaterThanToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return TypeArgumentListSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TypeArgumentListSyntax = TypeArgumentListSyntax;
@@ -9256,26 +9000,6 @@ var TypeScript;
             equalsGreaterThanToken.parent = this;
             type.parent = this;
         }
-        ConstructorTypeSyntax.prototype.childCount = function () {
-            return 5;
-        };
-
-        ConstructorTypeSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.newKeyword;
-                case 1:
-                    return this.typeParameterList;
-                case 2:
-                    return this.parameterList;
-                case 3:
-                    return this.equalsGreaterThanToken;
-                case 4:
-                    return this.type;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ConstructorTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConstructorTypeSyntax = ConstructorTypeSyntax;
@@ -9294,24 +9018,6 @@ var TypeScript;
             equalsGreaterThanToken.parent = this;
             type.parent = this;
         }
-        FunctionTypeSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        FunctionTypeSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.typeParameterList;
-                case 1:
-                    return this.parameterList;
-                case 2:
-                    return this.equalsGreaterThanToken;
-                case 3:
-                    return this.type;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return FunctionTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionTypeSyntax = FunctionTypeSyntax;
@@ -9328,22 +9034,6 @@ var TypeScript;
             !TypeScript.isShared(typeMembers) && (typeMembers.parent = this);
             closeBraceToken.parent = this;
         }
-        ObjectTypeSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ObjectTypeSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.openBraceToken;
-                case 1:
-                    return this.typeMembers;
-                case 2:
-                    return this.closeBraceToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ObjectTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ObjectTypeSyntax = ObjectTypeSyntax;
@@ -9360,22 +9050,6 @@ var TypeScript;
             openBracketToken.parent = this;
             closeBracketToken.parent = this;
         }
-        ArrayTypeSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ArrayTypeSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.type;
-                case 1:
-                    return this.openBracketToken;
-                case 2:
-                    return this.closeBracketToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ArrayTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ArrayTypeSyntax = ArrayTypeSyntax;
@@ -9390,20 +9064,6 @@ var TypeScript;
             name.parent = this;
             typeArgumentList.parent = this;
         }
-        GenericTypeSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        GenericTypeSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.name;
-                case 1:
-                    return this.typeArgumentList;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return GenericTypeSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.GenericTypeSyntax = GenericTypeSyntax;
@@ -9418,20 +9078,6 @@ var TypeScript;
             typeOfKeyword.parent = this;
             name.parent = this;
         }
-        TypeQuerySyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        TypeQuerySyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.typeOfKeyword;
-                case 1:
-                    return this.name;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return TypeQuerySyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TypeQuerySyntax = TypeQuerySyntax;
@@ -9446,20 +9092,6 @@ var TypeScript;
             colonToken.parent = this;
             type.parent = this;
         }
-        TypeAnnotationSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        TypeAnnotationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.colonToken;
-                case 1:
-                    return this.type;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return TypeAnnotationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TypeAnnotationSyntax = TypeAnnotationSyntax;
@@ -9476,22 +9108,6 @@ var TypeScript;
             !TypeScript.isShared(statements) && (statements.parent = this);
             closeBraceToken.parent = this;
         }
-        BlockSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        BlockSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.openBraceToken;
-                case 1:
-                    return this.statements;
-                case 2:
-                    return this.closeBraceToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return BlockSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.BlockSyntax = BlockSyntax;
@@ -9514,28 +9130,6 @@ var TypeScript;
             typeAnnotation && (typeAnnotation.parent = this);
             equalsValueClause && (equalsValueClause.parent = this);
         }
-        ParameterSyntax.prototype.childCount = function () {
-            return 6;
-        };
-
-        ParameterSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.dotDotDotToken;
-                case 1:
-                    return this.modifiers;
-                case 2:
-                    return this.identifier;
-                case 3:
-                    return this.questionToken;
-                case 4:
-                    return this.typeAnnotation;
-                case 5:
-                    return this.equalsValueClause;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ParameterSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ParameterSyntax = ParameterSyntax;
@@ -9552,22 +9146,6 @@ var TypeScript;
             dotToken.parent = this;
             name.parent = this;
         }
-        MemberAccessExpressionSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        MemberAccessExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.expression;
-                case 1:
-                    return this.dotToken;
-                case 2:
-                    return this.name;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return MemberAccessExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.MemberAccessExpressionSyntax = MemberAccessExpressionSyntax;
@@ -9583,20 +9161,6 @@ var TypeScript;
             operand.parent = this;
             operatorToken.parent = this;
         }
-        PostfixUnaryExpressionSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        PostfixUnaryExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.operand;
-                case 1:
-                    return this.operatorToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return PostfixUnaryExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.PostfixUnaryExpressionSyntax = PostfixUnaryExpressionSyntax;
@@ -9615,24 +9179,6 @@ var TypeScript;
             argumentExpression.parent = this;
             closeBracketToken.parent = this;
         }
-        ElementAccessExpressionSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        ElementAccessExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.expression;
-                case 1:
-                    return this.openBracketToken;
-                case 2:
-                    return this.argumentExpression;
-                case 3:
-                    return this.closeBracketToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ElementAccessExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ElementAccessExpressionSyntax = ElementAccessExpressionSyntax;
@@ -9647,20 +9193,6 @@ var TypeScript;
             expression.parent = this;
             argumentList.parent = this;
         }
-        InvocationExpressionSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        InvocationExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.expression;
-                case 1:
-                    return this.argumentList;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return InvocationExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.InvocationExpressionSyntax = InvocationExpressionSyntax;
@@ -9679,24 +9211,6 @@ var TypeScript;
             !TypeScript.isShared(_arguments) && (_arguments.parent = this);
             closeParenToken.parent = this;
         }
-        ArgumentListSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        ArgumentListSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.typeArgumentList;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.arguments;
-                case 3:
-                    return this.closeParenToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ArgumentListSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ArgumentListSyntax = ArgumentListSyntax;
@@ -9714,22 +9228,6 @@ var TypeScript;
             operatorToken.parent = this;
             right.parent = this;
         }
-        BinaryExpressionSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        BinaryExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.left;
-                case 1:
-                    return this.operatorToken;
-                case 2:
-                    return this.right;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return BinaryExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.BinaryExpressionSyntax = BinaryExpressionSyntax;
@@ -9750,26 +9248,6 @@ var TypeScript;
             colonToken.parent = this;
             whenFalse.parent = this;
         }
-        ConditionalExpressionSyntax.prototype.childCount = function () {
-            return 5;
-        };
-
-        ConditionalExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.condition;
-                case 1:
-                    return this.questionToken;
-                case 2:
-                    return this.whenTrue;
-                case 3:
-                    return this.colonToken;
-                case 4:
-                    return this.whenFalse;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ConditionalExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConditionalExpressionSyntax = ConditionalExpressionSyntax;
@@ -9784,20 +9262,6 @@ var TypeScript;
             newKeyword.parent = this;
             callSignature.parent = this;
         }
-        ConstructSignatureSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        ConstructSignatureSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.newKeyword;
-                case 1:
-                    return this.callSignature;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ConstructSignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConstructSignatureSyntax = ConstructSignatureSyntax;
@@ -9814,22 +9278,6 @@ var TypeScript;
             questionToken && (questionToken.parent = this);
             callSignature.parent = this;
         }
-        MethodSignatureSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        MethodSignatureSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.propertyName;
-                case 1:
-                    return this.questionToken;
-                case 2:
-                    return this.callSignature;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return MethodSignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.MethodSignatureSyntax = MethodSignatureSyntax;
@@ -9848,24 +9296,6 @@ var TypeScript;
             closeBracketToken.parent = this;
             typeAnnotation && (typeAnnotation.parent = this);
         }
-        IndexSignatureSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        IndexSignatureSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.openBracketToken;
-                case 1:
-                    return this.parameter;
-                case 2:
-                    return this.closeBracketToken;
-                case 3:
-                    return this.typeAnnotation;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return IndexSignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.IndexSignatureSyntax = IndexSignatureSyntax;
@@ -9882,22 +9312,6 @@ var TypeScript;
             questionToken && (questionToken.parent = this);
             typeAnnotation && (typeAnnotation.parent = this);
         }
-        PropertySignatureSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        PropertySignatureSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.propertyName;
-                case 1:
-                    return this.questionToken;
-                case 2:
-                    return this.typeAnnotation;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return PropertySignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.PropertySignatureSyntax = PropertySignatureSyntax;
@@ -9914,22 +9328,6 @@ var TypeScript;
             parameterList.parent = this;
             typeAnnotation && (typeAnnotation.parent = this);
         }
-        CallSignatureSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        CallSignatureSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.typeParameterList;
-                case 1:
-                    return this.parameterList;
-                case 2:
-                    return this.typeAnnotation;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return CallSignatureSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CallSignatureSyntax = CallSignatureSyntax;
@@ -9946,22 +9344,6 @@ var TypeScript;
             !TypeScript.isShared(parameters) && (parameters.parent = this);
             closeParenToken.parent = this;
         }
-        ParameterListSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ParameterListSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.openParenToken;
-                case 1:
-                    return this.parameters;
-                case 2:
-                    return this.closeParenToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ParameterListSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ParameterListSyntax = ParameterListSyntax;
@@ -9978,22 +9360,6 @@ var TypeScript;
             !TypeScript.isShared(typeParameters) && (typeParameters.parent = this);
             greaterThanToken.parent = this;
         }
-        TypeParameterListSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        TypeParameterListSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.lessThanToken;
-                case 1:
-                    return this.typeParameters;
-                case 2:
-                    return this.greaterThanToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return TypeParameterListSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TypeParameterListSyntax = TypeParameterListSyntax;
@@ -10008,20 +9374,6 @@ var TypeScript;
             identifier.parent = this;
             constraint && (constraint.parent = this);
         }
-        TypeParameterSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        TypeParameterSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.identifier;
-                case 1:
-                    return this.constraint;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return TypeParameterSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TypeParameterSyntax = TypeParameterSyntax;
@@ -10036,20 +9388,6 @@ var TypeScript;
             extendsKeyword.parent = this;
             type.parent = this;
         }
-        ConstraintSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        ConstraintSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.extendsKeyword;
-                case 1:
-                    return this.type;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ConstraintSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConstraintSyntax = ConstraintSyntax;
@@ -10064,20 +9402,6 @@ var TypeScript;
             elseKeyword.parent = this;
             statement.parent = this;
         }
-        ElseClauseSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        ElseClauseSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.elseKeyword;
-                case 1:
-                    return this.statement;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ElseClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ElseClauseSyntax = ElseClauseSyntax;
@@ -10100,28 +9424,6 @@ var TypeScript;
             statement.parent = this;
             elseClause && (elseClause.parent = this);
         }
-        IfStatementSyntax.prototype.childCount = function () {
-            return 6;
-        };
-
-        IfStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.ifKeyword;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.condition;
-                case 3:
-                    return this.closeParenToken;
-                case 4:
-                    return this.statement;
-                case 5:
-                    return this.elseClause;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return IfStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.IfStatementSyntax = IfStatementSyntax;
@@ -10136,20 +9438,6 @@ var TypeScript;
             expression.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        ExpressionStatementSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        ExpressionStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.expression;
-                case 1:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ExpressionStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ExpressionStatementSyntax = ExpressionStatementSyntax;
@@ -10170,26 +9458,6 @@ var TypeScript;
             block && (block.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-        ConstructorDeclarationSyntax.prototype.childCount = function () {
-            return 5;
-        };
-
-        ConstructorDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.constructorKeyword;
-                case 2:
-                    return this.callSignature;
-                case 3:
-                    return this.block;
-                case 4:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ConstructorDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ConstructorDeclarationSyntax = ConstructorDeclarationSyntax;
@@ -10210,26 +9478,6 @@ var TypeScript;
             block && (block.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-        MemberFunctionDeclarationSyntax.prototype.childCount = function () {
-            return 5;
-        };
-
-        MemberFunctionDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.propertyName;
-                case 2:
-                    return this.callSignature;
-                case 3:
-                    return this.block;
-                case 4:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return MemberFunctionDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.MemberFunctionDeclarationSyntax = MemberFunctionDeclarationSyntax;
@@ -10252,28 +9500,6 @@ var TypeScript;
             typeAnnotation && (typeAnnotation.parent = this);
             block.parent = this;
         }
-        GetAccessorSyntax.prototype.childCount = function () {
-            return 6;
-        };
-
-        GetAccessorSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.getKeyword;
-                case 2:
-                    return this.propertyName;
-                case 3:
-                    return this.parameterList;
-                case 4:
-                    return this.typeAnnotation;
-                case 5:
-                    return this.block;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return GetAccessorSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.GetAccessorSyntax = GetAccessorSyntax;
@@ -10294,26 +9520,6 @@ var TypeScript;
             parameterList.parent = this;
             block.parent = this;
         }
-        SetAccessorSyntax.prototype.childCount = function () {
-            return 5;
-        };
-
-        SetAccessorSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.setKeyword;
-                case 2:
-                    return this.propertyName;
-                case 3:
-                    return this.parameterList;
-                case 4:
-                    return this.block;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return SetAccessorSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SetAccessorSyntax = SetAccessorSyntax;
@@ -10330,22 +9536,6 @@ var TypeScript;
             variableDeclarator.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        MemberVariableDeclarationSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        MemberVariableDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.variableDeclarator;
-                case 2:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return MemberVariableDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.MemberVariableDeclarationSyntax = MemberVariableDeclarationSyntax;
@@ -10362,22 +9552,6 @@ var TypeScript;
             indexSignature.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        IndexMemberDeclarationSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        IndexMemberDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.indexSignature;
-                case 2:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return IndexMemberDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.IndexMemberDeclarationSyntax = IndexMemberDeclarationSyntax;
@@ -10394,22 +9568,6 @@ var TypeScript;
             expression.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        ThrowStatementSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ThrowStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.throwKeyword;
-                case 1:
-                    return this.expression;
-                case 2:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ThrowStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ThrowStatementSyntax = ThrowStatementSyntax;
@@ -10426,22 +9584,6 @@ var TypeScript;
             expression && (expression.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-        ReturnStatementSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ReturnStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.returnKeyword;
-                case 1:
-                    return this.expression;
-                case 2:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ReturnStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ReturnStatementSyntax = ReturnStatementSyntax;
@@ -10458,22 +9600,6 @@ var TypeScript;
             expression.parent = this;
             argumentList && (argumentList.parent = this);
         }
-        ObjectCreationExpressionSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ObjectCreationExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.newKeyword;
-                case 1:
-                    return this.expression;
-                case 2:
-                    return this.argumentList;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ObjectCreationExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ObjectCreationExpressionSyntax = ObjectCreationExpressionSyntax;
@@ -10498,30 +9624,6 @@ var TypeScript;
             !TypeScript.isShared(switchClauses) && (switchClauses.parent = this);
             closeBraceToken.parent = this;
         }
-        SwitchStatementSyntax.prototype.childCount = function () {
-            return 7;
-        };
-
-        SwitchStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.switchKeyword;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.expression;
-                case 3:
-                    return this.closeParenToken;
-                case 4:
-                    return this.openBraceToken;
-                case 5:
-                    return this.switchClauses;
-                case 6:
-                    return this.closeBraceToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return SwitchStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SwitchStatementSyntax = SwitchStatementSyntax;
@@ -10540,24 +9642,6 @@ var TypeScript;
             colonToken.parent = this;
             !TypeScript.isShared(statements) && (statements.parent = this);
         }
-        CaseSwitchClauseSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        CaseSwitchClauseSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.caseKeyword;
-                case 1:
-                    return this.expression;
-                case 2:
-                    return this.colonToken;
-                case 3:
-                    return this.statements;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return CaseSwitchClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CaseSwitchClauseSyntax = CaseSwitchClauseSyntax;
@@ -10574,22 +9658,6 @@ var TypeScript;
             colonToken.parent = this;
             !TypeScript.isShared(statements) && (statements.parent = this);
         }
-        DefaultSwitchClauseSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        DefaultSwitchClauseSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.defaultKeyword;
-                case 1:
-                    return this.colonToken;
-                case 2:
-                    return this.statements;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return DefaultSwitchClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DefaultSwitchClauseSyntax = DefaultSwitchClauseSyntax;
@@ -10606,22 +9674,6 @@ var TypeScript;
             identifier && (identifier.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-        BreakStatementSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        BreakStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.breakKeyword;
-                case 1:
-                    return this.identifier;
-                case 2:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return BreakStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.BreakStatementSyntax = BreakStatementSyntax;
@@ -10638,22 +9690,6 @@ var TypeScript;
             identifier && (identifier.parent = this);
             semicolonToken && (semicolonToken.parent = this);
         }
-        ContinueStatementSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ContinueStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.continueKeyword;
-                case 1:
-                    return this.identifier;
-                case 2:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ContinueStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ContinueStatementSyntax = ContinueStatementSyntax;
@@ -10684,36 +9720,6 @@ var TypeScript;
             closeParenToken.parent = this;
             statement.parent = this;
         }
-        ForStatementSyntax.prototype.childCount = function () {
-            return 10;
-        };
-
-        ForStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.forKeyword;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.variableDeclaration;
-                case 3:
-                    return this.initializer;
-                case 4:
-                    return this.firstSemicolonToken;
-                case 5:
-                    return this.condition;
-                case 6:
-                    return this.secondSemicolonToken;
-                case 7:
-                    return this.incrementor;
-                case 8:
-                    return this.closeParenToken;
-                case 9:
-                    return this.statement;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ForStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ForStatementSyntax = ForStatementSyntax;
@@ -10740,32 +9746,6 @@ var TypeScript;
             closeParenToken.parent = this;
             statement.parent = this;
         }
-        ForInStatementSyntax.prototype.childCount = function () {
-            return 8;
-        };
-
-        ForInStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.forKeyword;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.variableDeclaration;
-                case 3:
-                    return this.left;
-                case 4:
-                    return this.inKeyword;
-                case 5:
-                    return this.expression;
-                case 6:
-                    return this.closeParenToken;
-                case 7:
-                    return this.statement;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ForInStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ForInStatementSyntax = ForInStatementSyntax;
@@ -10786,26 +9766,6 @@ var TypeScript;
             closeParenToken.parent = this;
             statement.parent = this;
         }
-        WhileStatementSyntax.prototype.childCount = function () {
-            return 5;
-        };
-
-        WhileStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.whileKeyword;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.condition;
-                case 3:
-                    return this.closeParenToken;
-                case 4:
-                    return this.statement;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return WhileStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.WhileStatementSyntax = WhileStatementSyntax;
@@ -10826,26 +9786,6 @@ var TypeScript;
             closeParenToken.parent = this;
             statement.parent = this;
         }
-        WithStatementSyntax.prototype.childCount = function () {
-            return 5;
-        };
-
-        WithStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.withKeyword;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.condition;
-                case 3:
-                    return this.closeParenToken;
-                case 4:
-                    return this.statement;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return WithStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.WithStatementSyntax = WithStatementSyntax;
@@ -10868,28 +9808,6 @@ var TypeScript;
             !TypeScript.isShared(enumElements) && (enumElements.parent = this);
             closeBraceToken.parent = this;
         }
-        EnumDeclarationSyntax.prototype.childCount = function () {
-            return 6;
-        };
-
-        EnumDeclarationSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.modifiers;
-                case 1:
-                    return this.enumKeyword;
-                case 2:
-                    return this.identifier;
-                case 3:
-                    return this.openBraceToken;
-                case 4:
-                    return this.enumElements;
-                case 5:
-                    return this.closeBraceToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return EnumDeclarationSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.EnumDeclarationSyntax = EnumDeclarationSyntax;
@@ -10904,20 +9822,6 @@ var TypeScript;
             propertyName.parent = this;
             equalsValueClause && (equalsValueClause.parent = this);
         }
-        EnumElementSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        EnumElementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.propertyName;
-                case 1:
-                    return this.equalsValueClause;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return EnumElementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.EnumElementSyntax = EnumElementSyntax;
@@ -10936,24 +9840,6 @@ var TypeScript;
             greaterThanToken.parent = this;
             expression.parent = this;
         }
-        CastExpressionSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        CastExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.lessThanToken;
-                case 1:
-                    return this.type;
-                case 2:
-                    return this.greaterThanToken;
-                case 3:
-                    return this.expression;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return CastExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CastExpressionSyntax = CastExpressionSyntax;
@@ -10970,22 +9856,6 @@ var TypeScript;
             !TypeScript.isShared(propertyAssignments) && (propertyAssignments.parent = this);
             closeBraceToken.parent = this;
         }
-        ObjectLiteralExpressionSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        ObjectLiteralExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.openBraceToken;
-                case 1:
-                    return this.propertyAssignments;
-                case 2:
-                    return this.closeBraceToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return ObjectLiteralExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.ObjectLiteralExpressionSyntax = ObjectLiteralExpressionSyntax;
@@ -11002,22 +9872,6 @@ var TypeScript;
             colonToken.parent = this;
             expression.parent = this;
         }
-        SimplePropertyAssignmentSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        SimplePropertyAssignmentSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.propertyName;
-                case 1:
-                    return this.colonToken;
-                case 2:
-                    return this.expression;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return SimplePropertyAssignmentSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.SimplePropertyAssignmentSyntax = SimplePropertyAssignmentSyntax;
@@ -11034,22 +9888,6 @@ var TypeScript;
             callSignature.parent = this;
             block.parent = this;
         }
-        FunctionPropertyAssignmentSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        FunctionPropertyAssignmentSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.propertyName;
-                case 1:
-                    return this.callSignature;
-                case 2:
-                    return this.block;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return FunctionPropertyAssignmentSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionPropertyAssignmentSyntax = FunctionPropertyAssignmentSyntax;
@@ -11068,24 +9906,6 @@ var TypeScript;
             callSignature.parent = this;
             block.parent = this;
         }
-        FunctionExpressionSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        FunctionExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.functionKeyword;
-                case 1:
-                    return this.identifier;
-                case 2:
-                    return this.callSignature;
-                case 3:
-                    return this.block;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return FunctionExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FunctionExpressionSyntax = FunctionExpressionSyntax;
@@ -11098,18 +9918,6 @@ var TypeScript;
 
             semicolonToken.parent = this;
         }
-        EmptyStatementSyntax.prototype.childCount = function () {
-            return 1;
-        };
-
-        EmptyStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return EmptyStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.EmptyStatementSyntax = EmptyStatementSyntax;
@@ -11128,24 +9936,6 @@ var TypeScript;
             catchClause && (catchClause.parent = this);
             finallyClause && (finallyClause.parent = this);
         }
-        TryStatementSyntax.prototype.childCount = function () {
-            return 4;
-        };
-
-        TryStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.tryKeyword;
-                case 1:
-                    return this.block;
-                case 2:
-                    return this.catchClause;
-                case 3:
-                    return this.finallyClause;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return TryStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TryStatementSyntax = TryStatementSyntax;
@@ -11168,28 +9958,6 @@ var TypeScript;
             closeParenToken.parent = this;
             block.parent = this;
         }
-        CatchClauseSyntax.prototype.childCount = function () {
-            return 6;
-        };
-
-        CatchClauseSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.catchKeyword;
-                case 1:
-                    return this.openParenToken;
-                case 2:
-                    return this.identifier;
-                case 3:
-                    return this.typeAnnotation;
-                case 4:
-                    return this.closeParenToken;
-                case 5:
-                    return this.block;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return CatchClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.CatchClauseSyntax = CatchClauseSyntax;
@@ -11204,20 +9972,6 @@ var TypeScript;
             finallyKeyword.parent = this;
             block.parent = this;
         }
-        FinallyClauseSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        FinallyClauseSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.finallyKeyword;
-                case 1:
-                    return this.block;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return FinallyClauseSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.FinallyClauseSyntax = FinallyClauseSyntax;
@@ -11234,22 +9988,6 @@ var TypeScript;
             colonToken.parent = this;
             statement.parent = this;
         }
-        LabeledStatementSyntax.prototype.childCount = function () {
-            return 3;
-        };
-
-        LabeledStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.identifier;
-                case 1:
-                    return this.colonToken;
-                case 2:
-                    return this.statement;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return LabeledStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.LabeledStatementSyntax = LabeledStatementSyntax;
@@ -11274,30 +10012,6 @@ var TypeScript;
             closeParenToken.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        DoStatementSyntax.prototype.childCount = function () {
-            return 7;
-        };
-
-        DoStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.doKeyword;
-                case 1:
-                    return this.statement;
-                case 2:
-                    return this.whileKeyword;
-                case 3:
-                    return this.openParenToken;
-                case 4:
-                    return this.condition;
-                case 5:
-                    return this.closeParenToken;
-                case 6:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return DoStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DoStatementSyntax = DoStatementSyntax;
@@ -11312,20 +10026,6 @@ var TypeScript;
             typeOfKeyword.parent = this;
             expression.parent = this;
         }
-        TypeOfExpressionSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        TypeOfExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.typeOfKeyword;
-                case 1:
-                    return this.expression;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return TypeOfExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.TypeOfExpressionSyntax = TypeOfExpressionSyntax;
@@ -11340,20 +10040,6 @@ var TypeScript;
             deleteKeyword.parent = this;
             expression.parent = this;
         }
-        DeleteExpressionSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        DeleteExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.deleteKeyword;
-                case 1:
-                    return this.expression;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return DeleteExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DeleteExpressionSyntax = DeleteExpressionSyntax;
@@ -11368,20 +10054,6 @@ var TypeScript;
             voidKeyword.parent = this;
             expression.parent = this;
         }
-        VoidExpressionSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        VoidExpressionSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.voidKeyword;
-                case 1:
-                    return this.expression;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return VoidExpressionSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.VoidExpressionSyntax = VoidExpressionSyntax;
@@ -11396,20 +10068,6 @@ var TypeScript;
             debuggerKeyword.parent = this;
             semicolonToken && (semicolonToken.parent = this);
         }
-        DebuggerStatementSyntax.prototype.childCount = function () {
-            return 2;
-        };
-
-        DebuggerStatementSyntax.prototype.childAt = function (slot) {
-            switch (slot) {
-                case 0:
-                    return this.debuggerKeyword;
-                case 1:
-                    return this.semicolonToken;
-                default:
-                    throw TypeScript.Errors.invalidOperation();
-            }
-        };
         return DebuggerStatementSyntax;
     })(TypeScript.SyntaxNode);
     TypeScript.DebuggerStatementSyntax = DebuggerStatementSyntax;
@@ -11620,14 +10278,6 @@ var TypeScript;
                 return new EmptyToken(this.kind);
             };
 
-            EmptyToken.prototype.childCount = function () {
-                return 0;
-            };
-
-            EmptyToken.prototype.childAt = function (index) {
-                throw TypeScript.Errors.argumentOutOfRange("index");
-            };
-
             EmptyToken.prototype.findTokenInternal = function (parent, position, fullStart) {
                 return this;
             };
@@ -11659,8 +10309,8 @@ var TypeScript;
                         return null;
                     }
 
-                    for (var i = 0, n = parent.childCount(); i < n; i++) {
-                        if (parent.childAt(i) === current) {
+                    for (var i = 0, n = TypeScript.childCount(parent); i < n; i++) {
+                        if (TypeScript.childAt(parent, i) === current) {
                             break;
                         }
                     }
@@ -11668,7 +10318,7 @@ var TypeScript;
                     TypeScript.Debug.assert(i !== n, "Could not find current element in parent's child list!");
 
                     for (var j = i - 1; j >= 0; j--) {
-                        var sibling = parent.childAt(j);
+                        var sibling = TypeScript.childAt(parent, j);
                         if (sibling && TypeScript.fullWidth(sibling) > 0) {
                             return sibling;
                         }
@@ -11772,14 +10422,6 @@ var TypeScript;
             };
             ConvertedIdentifierToken.prototype.isKeywordConvertedToIdentifier = function () {
                 return true;
-            };
-
-            ConvertedIdentifierToken.prototype.childCount = function () {
-                return 0;
-            };
-
-            ConvertedIdentifierToken.prototype.childAt = function (index) {
-                throw TypeScript.Errors.argumentOutOfRange("index");
             };
 
             ConvertedIdentifierToken.prototype.fullStart = function () {
@@ -13420,8 +12062,8 @@ var TypeScript;
         };
 
         SyntaxWalker.prototype.visitSeparatedList = function (list) {
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                var item = list.childAt(i);
+            for (var i = 0, n = TypeScript.childCount(list); i < n; i++) {
+                var item = TypeScript.childAt(list, i);
                 this.visitNodeOrToken(item);
             }
         };
@@ -14193,8 +12835,8 @@ var TypeScript;
                     return;
                 }
 
-                for (var i = 0, n = nodeOrToken.childCount(); i < n; i++) {
-                    var child = nodeOrToken.childAt(i);
+                for (var i = 0, n = TypeScript.childCount(nodeOrToken); i < n; i++) {
+                    var child = TypeScript.childAt(nodeOrToken, i);
                     if (child !== null && !TypeScript.isShared(child)) {
                         this.pushElement(child, i);
 
@@ -14211,8 +12853,8 @@ var TypeScript;
                     var currentPiece = this.pieces[this.currentPieceIndex];
                     var parent = currentPiece.element.parent;
 
-                    for (var i = currentPiece.indexInParent + 1, n = parent.childCount(); i < n; i++) {
-                        var sibling = parent.childAt(i);
+                    for (var i = currentPiece.indexInParent + 1, n = TypeScript.childCount(parent); i < n; i++) {
+                        var sibling = TypeScript.childAt(parent, i);
 
                         if (sibling !== null && !TypeScript.isShared(sibling)) {
                             currentPiece.element = sibling;
@@ -14234,7 +12876,7 @@ var TypeScript;
                 var element = this.pieces[this.currentPieceIndex].element;
 
                 if (TypeScript.isList(element) || TypeScript.isSeparatedList(element)) {
-                    this.pushElement(element.childAt(0), 0);
+                    this.pushElement(TypeScript.childAt(element, 0), 0);
                 }
             };
 
@@ -14419,7 +13061,7 @@ var TypeScript;
                 this._oldSourceUnitCursor = getSyntaxCursor();
 
                 if (oldSourceUnit.moduleElements.length > 0) {
-                    this._oldSourceUnitCursor.pushElement(oldSourceUnit.moduleElements.childAt(0), 0);
+                    this._oldSourceUnitCursor.pushElement(TypeScript.childAt(oldSourceUnit.moduleElements, 0), 0);
                 }
 
                 this._changeRange = IncrementalParserSource.extendToAffectedRange(textChangeRange, oldSourceUnit);
@@ -15097,8 +13739,8 @@ var TypeScript;
                     }
                 } else if (TypeScript.isSeparatedList(parent)) {
                     var list2 = parent;
-                    for (var i = 0, n = list2.childCount(); i < n; i++) {
-                        if (list2.childAt(i) === oldToken) {
+                    for (var i = 0, n = TypeScript.childCount(list2); i < n; i++) {
+                        if (TypeScript.childAt(list2, i) === oldToken) {
                             list2.setChildAt(i, newToken);
                             return;
                         }
@@ -18643,18 +17285,18 @@ var TypeScript;
         };
 
         GrammarCheckerWalker.prototype.checkForTrailingSeparator = function (parent, list) {
-            if (list.childCount() === 0 || list.childCount() % 2 === 1) {
+            if (TypeScript.childCount(list) === 0 || TypeScript.childCount(list) % 2 === 1) {
                 return false;
             }
 
-            var child = list.childAt(list.childCount() - 1);
+            var child = TypeScript.childAt(list, TypeScript.childCount(list) - 1);
             this.pushDiagnostic(child, TypeScript.DiagnosticCode.Trailing_separator_not_allowed);
 
             return true;
         };
 
         GrammarCheckerWalker.prototype.checkForAtLeastOneElement = function (parent, list, expected) {
-            if (list.childCount() > 0) {
+            if (TypeScript.childCount(list) > 0) {
                 return false;
             }
 
@@ -18696,7 +17338,7 @@ var TypeScript;
             }
 
             var declarators = node.variableDeclarators;
-            if (declarators.childCount() % 2 === 0) {
+            if (TypeScript.childCount(declarators) % 2 === 0) {
                 var lastComma = declarators.separatorAt(declarators.separatorCount() - 1);
                 TypeScript.Debug.assert(TypeScript.isToken(lastComma));
 
@@ -18857,7 +17499,7 @@ var TypeScript;
                                     this.pushDiagnostic(TypeScript.firstToken(moduleElement), TypeScript.DiagnosticCode.Function_implementation_expected);
                                     return true;
                                 } else {
-                                    var nextElement = moduleElements.childAt(i + 1);
+                                    var nextElement = TypeScript.childAt(moduleElements, i + 1);
                                     if (nextElement.kind === 129 /* FunctionDeclaration */) {
                                         var nextFunction = nextElement;
 
@@ -18930,7 +17572,7 @@ var TypeScript;
                                 this.pushDiagnostic(TypeScript.firstToken(classElement), TypeScript.DiagnosticCode.Function_implementation_expected);
                                 return true;
                             } else {
-                                var nextElement = node.classElements.childAt(i + 1);
+                                var nextElement = TypeScript.childAt(node.classElements, i + 1);
                                 if (nextElement.kind === 135 /* MemberFunctionDeclaration */) {
                                     var nextMemberFunction = nextElement;
 
@@ -19110,7 +17752,7 @@ var TypeScript;
 
         GrammarCheckerWalker.prototype.checkIndexMemberModifiers = function (node) {
             if (node.modifiers.length > 0) {
-                this.pushDiagnostic(node.modifiers.childAt(0), TypeScript.DiagnosticCode.Modifiers_cannot_appear_here);
+                this.pushDiagnostic(TypeScript.childAt(node.modifiers, 0), TypeScript.DiagnosticCode.Modifiers_cannot_appear_here);
                 return true;
             }
 
@@ -19151,12 +17793,12 @@ var TypeScript;
         };
 
         GrammarCheckerWalker.prototype.checkSetAccessorParameter = function (node, setKeyword, parameterList) {
-            if (parameterList.parameters.childCount() !== 1) {
+            if (TypeScript.childCount(parameterList.parameters) !== 1) {
                 this.pushDiagnostic(setKeyword, TypeScript.DiagnosticCode.set_accessor_must_have_one_and_only_one_parameter);
                 return true;
             }
 
-            var parameter = parameterList.parameters.childAt(0);
+            var parameter = TypeScript.childAt(parameterList.parameters, 0);
 
             if (parameter.questionToken) {
                 this.pushDiagnostic(parameter, TypeScript.DiagnosticCode.set_accessor_parameter_cannot_be_optional);
@@ -19197,8 +17839,8 @@ var TypeScript;
 
         GrammarCheckerWalker.prototype.checkEnumElements = function (node) {
             var previousValueWasComputed = false;
-            for (var i = 0, n = node.enumElements.childCount(); i < n; i++) {
-                var child = node.enumElements.childAt(i);
+            for (var i = 0, n = TypeScript.childCount(node.enumElements); i < n; i++) {
+                var child = TypeScript.childAt(node.enumElements, i);
 
                 if (i % 2 === 0) {
                     var enumElement = child;
@@ -19554,7 +18196,7 @@ var TypeScript;
         GrammarCheckerWalker.prototype.checkForDisallowedModifiers = function (parent, modifiers) {
             if (this.inBlock || this.inObjectLiteralExpression) {
                 if (modifiers.length > 0) {
-                    this.pushDiagnostic(modifiers.childAt(0), TypeScript.DiagnosticCode.Modifiers_cannot_appear_here);
+                    this.pushDiagnostic(TypeScript.childAt(modifiers, 0), TypeScript.DiagnosticCode.Modifiers_cannot_appear_here);
                     return true;
                 }
             }
@@ -19585,8 +18227,8 @@ var TypeScript;
         };
 
         GrammarCheckerWalker.prototype.checkListSeparators = function (parent, list, kind) {
-            for (var i = 0, n = list.childCount(); i < n; i++) {
-                var child = list.childAt(i);
+            for (var i = 0, n = TypeScript.childCount(list); i < n; i++) {
+                var child = TypeScript.childAt(list, i);
                 if (i % 2 === 1 && child.kind !== kind) {
                     this.pushDiagnostic(child, TypeScript.DiagnosticCode._0_expected, [TypeScript.SyntaxFacts.getText(kind)]);
                 }
@@ -24014,7 +22656,7 @@ var TypeScript;
 
         Emitter.prototype.emitDetachedComments = function (list) {
             if (list.length > 0) {
-                var firstElement = list.childAt(0);
+                var firstElement = TypeScript.childAt(list, 0);
 
                 this.detachedCommentsElement = firstElement;
                 this.emitCommentsArray(this.getDetachedComments(this.detachedCommentsElement), false);
@@ -25022,8 +23664,8 @@ var TypeScript;
         };
 
         Emitter.prototype.emitSwitchClauseBody = function (body) {
-            if (body.length === 1 && body.childAt(0).kind === 146 /* Block */) {
-                this.emit(body.childAt(0));
+            if (body.length === 1 && TypeScript.childAt(body, 0).kind === 146 /* Block */) {
+                this.emit(TypeScript.childAt(body, 0));
                 this.writeLineToOutput("");
             } else {
                 this.writeLineToOutput("");
@@ -35441,7 +34083,7 @@ var TypeScript;
         };
 
         PullTypeResolver.prototype.containsSingleThrowStatement = function (block) {
-            return block !== null && block.statements.length === 1 && block.statements.childAt(0).kind === 157 /* ThrowStatement */;
+            return block !== null && block.statements.length === 1 && block.statements[0].kind === 157 /* ThrowStatement */;
         };
 
         PullTypeResolver.prototype.typeCheckAnyFunctionDeclaration = function (funcDeclAST, isStatic, name, typeParameters, parameters, returnTypeAnnotation, block, context) {
@@ -42629,7 +41271,7 @@ var TypeScript;
 
         PullTypeResolver.prototype.getFirstStatementOfBlockOrNull = function (block) {
             if (block && block.statements && block.statements.length > 0) {
-                return block.statements.childAt(0);
+                return block.statements[0];
             }
 
             return null;
@@ -50026,8 +48668,8 @@ if (!Array.prototype.some) {
 var TypeScript;
 (function (TypeScript) {
     function isSeparatedListTypeScriptSpecific(list) {
-        for (var i = 0, n = this.childCount(); i < n; i++) {
-            if (isTypeScriptSpecific(list.childAt(i))) {
+        for (var i = 0, n = TypeScript.childCount(list); i < n; i++) {
+            if (isTypeScriptSpecific(TypeScript.childAt(list, i))) {
                 return true;
             }
         }
@@ -50036,7 +48678,7 @@ var TypeScript;
     }
 
     function isListTypeScriptSpecific(list) {
-        for (var i = 0, n = this.length; i < n; i++) {
+        for (var i = 0, n = list.length; i < n; i++) {
             if (isTypeScriptSpecific(list[i])) {
                 return true;
             }
@@ -56663,8 +55305,8 @@ var TypeScript;
             Indenter.getCustomListIndentation = function (list, element) {
                 switch (list.kind) {
                     case 2 /* SeparatedList */:
-                        for (var i = 0, n = list.childCount(); i < n; i++) {
-                            var child = list.childAt(i);
+                        for (var i = 0, n = TypeScript.childCount(list); i < n; i++) {
+                            var child = TypeScript.childAt(list, i);
                             if (child !== null && child === element)
                                 return Indenter.getListItemIndentation(list, i - 1);
                         }
@@ -56674,7 +55316,7 @@ var TypeScript;
                         var argumentList = list;
                         var _arguments = argumentList.arguments;
                         if (_arguments !== null && argumentList.closeParenToken === element) {
-                            return Indenter.getListItemIndentation(_arguments, _arguments.childCount() - 1);
+                            return Indenter.getListItemIndentation(_arguments, TypeScript.childCount(_arguments) - 1);
                         }
                         break;
 
@@ -56682,7 +55324,7 @@ var TypeScript;
                         var parameterList = list;
                         var parameters = parameterList.parameters;
                         if (parameters !== null && parameterList.closeParenToken === element) {
-                            return Indenter.getListItemIndentation(parameters, parameters.childCount() - 1);
+                            return Indenter.getListItemIndentation(parameters, TypeScript.childCount(parameters) - 1);
                         }
                         break;
 
@@ -56690,7 +55332,7 @@ var TypeScript;
                         var typeArgumentList = list;
                         var typeArguments = typeArgumentList.typeArguments;
                         if (typeArguments !== null && typeArgumentList.greaterThanToken === element) {
-                            return Indenter.getListItemIndentation(typeArguments, typeArguments.childCount() - 1);
+                            return Indenter.getListItemIndentation(typeArguments, TypeScript.childCount(typeArguments) - 1);
                         }
                         break;
 
@@ -56698,7 +55340,7 @@ var TypeScript;
                         var typeParameterList = list;
                         var typeParameters = typeParameterList.typeParameters;
                         if (typeParameters !== null && typeParameterList.greaterThanToken === element) {
-                            return Indenter.getListItemIndentation(typeParameters, typeParameters.childCount() - 1);
+                            return Indenter.getListItemIndentation(typeParameters, TypeScript.childCount(typeParameters) - 1);
                         }
                         break;
                 }
@@ -56707,8 +55349,8 @@ var TypeScript;
 
             Indenter.getListItemIndentation = function (list, elementIndex) {
                 for (var i = elementIndex; i > 0; i--) {
-                    var child = list.childAt(i);
-                    var previousChild = list.childAt(i - 1);
+                    var child = TypeScript.childAt(list, i);
+                    var previousChild = TypeScript.childAt(list, i - 1);
                     if ((child !== null && TypeScript.firstToken(child).leadingTrivia().hasNewLine()) || (previousChild !== null && TypeScript.lastToken(previousChild).trailingTrivia().hasNewLine())) {
                         return TypeScript.leadingTriviaWidth(child);
                     }
@@ -56963,7 +55605,7 @@ var TypeScript;
                                     var index = TypeScript.Syntax.childIndex(commaParent, commaToken);
 
                                     if (index > 0) {
-                                        var child = commaParent.childAt(index - 1);
+                                        var child = TypeScript.childAt(commaParent, index - 1);
                                         return this.breakpointSpanOf(child);
                                     }
 
@@ -57011,7 +55653,7 @@ var TypeScript;
                         return null;
                     }
 
-                    var firstStatement = statementsNode.childAt(0);
+                    var firstStatement = TypeScript.childAt(statementsNode, 0);
                     if (firstStatement && firstStatement.kind == 146 /* Block */) {
                         if (this.canHaveBreakpointInBlock(firstStatement)) {
                             return this.breakpointSpanOfFirstStatementInBlock(firstStatement);
@@ -57033,7 +55675,7 @@ var TypeScript;
                         return null;
                     }
 
-                    var lastStatement = statementsNode.childAt(statementsNode.length - 1);
+                    var lastStatement = TypeScript.childAt(statementsNode, statementsNode.length - 1);
                     if (lastStatement && lastStatement.kind == 146 /* Block */) {
                         if (this.canHaveBreakpointInBlock(lastStatement)) {
                             return this.breakpointSpanOfLastStatementInBlock(lastStatement);
@@ -57054,7 +55696,7 @@ var TypeScript;
                         return null;
                     }
 
-                    var firstStatement = positionedList.childAt(0);
+                    var firstStatement = TypeScript.childAt(positionedList, 0);
                     if (firstStatement && firstStatement.kind == 146 /* Block */) {
                         if (this.canHaveBreakpointInBlock(firstStatement)) {
                             return this.breakpointSpanOfFirstStatementInBlock(firstStatement);
@@ -57075,7 +55717,7 @@ var TypeScript;
                     if (listSyntax.length == 0) {
                         return null;
                     }
-                    var lastStatement = positionedList.childAt(0);
+                    var lastStatement = TypeScript.childAt(positionedList, 0);
                     if (lastStatement && lastStatement.kind == 146 /* Block */) {
                         if (this.canHaveBreakpointInBlock(lastStatement)) {
                             return this.breakpointSpanOfLastStatementInBlock(lastStatement);
@@ -57438,7 +56080,7 @@ var TypeScript;
                     if (container && container.kind == 224 /* VariableDeclaration */) {
                         var parentDeclaratorsList = varDeclaratorNode.parent;
 
-                        if (parentDeclaratorsList && parentDeclaratorsList.childAt(0) == varDeclaratorNode) {
+                        if (parentDeclaratorsList && TypeScript.childAt(parentDeclaratorsList, 0) == varDeclaratorNode) {
                             return this.breakpointSpanOfVariableDeclaration(container);
                         }
 
@@ -57461,11 +56103,11 @@ var TypeScript;
 
                     var varDeclarationSyntax = varDeclarationNode;
                     var containerChildren = varDeclarationSyntax.variableDeclarators;
-                    if (!containerChildren || containerChildren.childCount() == 0) {
+                    if (!containerChildren || TypeScript.childCount(containerChildren) == 0) {
                         return false;
                     }
 
-                    var child = containerChildren.childAt(0);
+                    var child = TypeScript.childAt(containerChildren, 0);
                     if (TypeScript.isNode(child)) {
                         return this.canHaveBreakpointInVariableDeclarator(child);
                     }
@@ -57481,14 +56123,14 @@ var TypeScript;
                     var container = TypeScript.Syntax.containingNode(varDeclarationNode);
                     var varDeclarationSyntax = varDeclarationNode;
                     var varDeclarators = varDeclarationSyntax.variableDeclarators;
-                    var varDeclaratorsCount = varDeclarators.childCount();
+                    var varDeclaratorsCount = TypeScript.childCount(varDeclarators);
 
                     if (container && container.kind == 148 /* VariableStatement */) {
                         return this.breakpointSpanOfVariableStatement(container);
                     }
 
                     if (this.canHaveBreakpointInVariableDeclaration(varDeclarationNode)) {
-                        return createBreakpointSpanInfoWithLimChar(varDeclarationNode, TypeScript.end(varDeclarators.childAt(0)));
+                        return createBreakpointSpanInfoWithLimChar(varDeclarationNode, TypeScript.end(TypeScript.childAt(varDeclarators, 0)));
                     } else {
                         return null;
                     }
@@ -57512,7 +56154,7 @@ var TypeScript;
                     var variableDeclaration = variableStatement.variableDeclaration;
                     var varDeclarationSyntax = variableDeclaration;
                     var varDeclarators = varDeclarationSyntax.variableDeclarators;
-                    return createBreakpointSpanInfoWithLimChar(varStatementNode, TypeScript.end(varDeclarators.childAt(0)));
+                    return createBreakpointSpanInfoWithLimChar(varStatementNode, TypeScript.end(TypeScript.childAt(varDeclarators, 0)));
                 };
 
                 BreakpointResolver.prototype.breakpointSpanOfParameter = function (parameterNode) {
@@ -57561,8 +56203,8 @@ var TypeScript;
                 BreakpointResolver.prototype.breakpointSpanOfFirstEnumElement = function (enumDeclarationNode) {
                     var enumDeclarationSyntax = enumDeclarationNode;
                     var enumElements = enumDeclarationSyntax.enumElements;
-                    if (enumElements && enumElements.childCount()) {
-                        return this.breakpointSpanOf(enumElements.childAt(0));
+                    if (enumElements && TypeScript.childCount(enumElements)) {
+                        return this.breakpointSpanOf(TypeScript.childAt(enumElements, 0));
                     }
 
                     return null;
@@ -58184,8 +56826,8 @@ var TypeScript;
                     if (closingBraceKind !== null) {
                         var parentElement = currentToken.parent;
                         var currentPosition = TypeScript.fullStart(currentToken.parent);
-                        for (var i = 0, n = parentElement.childCount(); i < n; i++) {
-                            var element = parentElement.childAt(i);
+                        for (var i = 0, n = TypeScript.childCount(parentElement); i < n; i++) {
+                            var element = TypeScript.childAt(parentElement, i);
                             if (element !== null && TypeScript.fullWidth(element) > 0) {
                                 if (element.kind === closingBraceKind) {
                                     var range1 = new TypeScript.TextSpan(position, TypeScript.width(currentToken));
@@ -58211,8 +56853,8 @@ var TypeScript;
                     if (openBraceKind !== null) {
                         var parentElement = currentToken.parent;
                         var currentPosition = TypeScript.fullStart(currentToken.parent) + TypeScript.fullWidth(parentElement);
-                        for (var i = parentElement.childCount() - 1; i >= 0; i--) {
-                            var element = parentElement.childAt(i);
+                        for (var i = TypeScript.childCount(parentElement) - 1; i >= 0; i--) {
+                            var element = TypeScript.childAt(parentElement, i);
                             if (element !== null && TypeScript.fullWidth(element) > 0) {
                                 if (element.kind === openBraceKind) {
                                     var range1 = new TypeScript.TextSpan(position - 1, TypeScript.width(currentToken));
