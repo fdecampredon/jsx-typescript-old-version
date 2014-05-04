@@ -261,10 +261,10 @@ module TypeScript.Services {
                 result.currentParameterIsTypeParameter = true;
                 result.currentParameter = typeParameterInformation.argumentIndex;
             }
-            else if (ast.argumentList.arguments && ast.argumentList.arguments.nonSeparatorCount() > 0) {
+            else if (ast.argumentList.arguments && ast.argumentList.arguments.length > 0) {
                 result.currentParameter = 0;
-                for (var index = 0; index < ast.argumentList.arguments.nonSeparatorCount(); index++) {
-                    if (caretPosition > end(ast.argumentList.arguments.nonSeparatorAt(index)) + lastToken(ast.argumentList.arguments.nonSeparatorAt(index)).trailingTriviaWidth()) {
+                for (var index = 0; index < ast.argumentList.arguments.length; index++) {
+                    if (caretPosition > end(ast.argumentList.arguments[index]) + lastToken(ast.argumentList.arguments[index]).trailingTriviaWidth()) {
                         result.currentParameter++;
                     }
                 }

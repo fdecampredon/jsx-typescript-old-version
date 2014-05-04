@@ -153,8 +153,8 @@ module TypeScript.Syntax {
     }
 
     export function nonSeparatorIndexOf<T extends ISyntaxNodeOrToken>(list: T[], ast: ISyntaxNodeOrToken): number {
-        for (var i = 0, n = list.nonSeparatorCount(); i < n; i++) {
-            if (list.nonSeparatorAt(i) === ast) {
+        for (var i = 0, n = list.length; i < n; i++) {
+            if (list[i] === ast) {
                 return i;
             }
         }

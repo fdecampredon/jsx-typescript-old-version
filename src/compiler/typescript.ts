@@ -873,8 +873,8 @@ module TypeScript {
                                 if (callResolutionResults.actualParametersContextTypeSymbols) {
                                     var argExpression = path[i + 3];
                                     if (argExpression) {
-                                        for (var j = 0, m = callExpression.argumentList.arguments.nonSeparatorCount(); j < m; j++) {
-                                            if (callExpression.argumentList.arguments.nonSeparatorAt(j) === argExpression) {
+                                        for (var j = 0, m = callExpression.argumentList.arguments.length; j < m; j++) {
+                                            if (callExpression.argumentList.arguments[j] === argExpression) {
                                                 var callContextualType = callResolutionResults.actualParametersContextTypeSymbols[j];
                                                 if (callContextualType) {
                                                     contextualType = callContextualType;
@@ -927,8 +927,8 @@ module TypeScript {
                                 var contextualType: PullTypeSymbol = null;
                                 var memberDecls = objectLiteralExpression.propertyAssignments;
                                 if (memberDecls && objectLiteralResolutionContext.membersContextTypeSymbols) {
-                                    for (var j = 0, m = memberDecls.nonSeparatorCount(); j < m; j++) {
-                                        if (memberDecls.nonSeparatorAt(j) === memeberAST) {
+                                    for (var j = 0, m = memberDecls.length; j < m; j++) {
+                                        if (memberDecls[j] === memeberAST) {
                                             var memberContextualType = objectLiteralResolutionContext.membersContextTypeSymbols[j];
                                             if (memberContextualType) {
                                                 contextualType = memberContextualType;

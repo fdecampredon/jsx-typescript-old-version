@@ -231,8 +231,8 @@ module TypeScript.Services {
             // Search the parameter list of class properties
             var parameters = node.callSignature.parameterList.parameters;
             if (parameters) {
-                for (var i = 0, n = parameters.nonSeparatorCount(); i < n; i++) {
-                    var parameter = <ParameterSyntax>parameters.nonSeparatorAt(i);
+                for (var i = 0, n = parameters.length; i < n; i++) {
+                    var parameter = <ParameterSyntax>parameters[i];
 
                     Debug.assert(parameter.kind() === SyntaxKind.Parameter);
 

@@ -69,8 +69,8 @@ module TypeScript {
         }
 
         private emitSeparatedList(list: ISyntaxNodeOrToken[]) {
-            for (var i = 0, n = list.nonSeparatorCount(); i < n; i++) {
-                this.emitDeclarationsForAST(list.nonSeparatorAt(i));
+            for (var i = 0, n = list.length; i < n; i++) {
+                this.emitDeclarationsForAST(list[i]);
             }
         }
 
@@ -415,9 +415,9 @@ module TypeScript {
         }
 
         private emitDeclarationsForVariableDeclaration(variableDeclaration: VariableDeclarationSyntax) {
-            var varListCount = variableDeclaration.variableDeclarators.nonSeparatorCount();
+            var varListCount = variableDeclaration.variableDeclarators.length;
             for (var i = 0; i < varListCount; i++) {
-                this.emitVariableDeclarator(variableDeclaration.variableDeclarators.nonSeparatorAt(i), i === 0, i === varListCount - 1);
+                this.emitVariableDeclarator(variableDeclaration.variableDeclarators[i], i === 0, i === varListCount - 1);
             }
         }
 
@@ -733,15 +733,15 @@ module TypeScript {
         }
 
         private emitBaseList(bases: INameSyntax[], useExtendsList: boolean) {
-            if (bases && (bases.nonSeparatorCount() > 0)) {
+            if (bases && (bases.length > 0)) {
                 var qual = useExtendsList ? "extends" : "implements";
                 this.declFile.Write(" " + qual + " ");
-                var basesLen = bases.nonSeparatorCount();
+                var basesLen = bases.length;
                 for (var i = 0; i < basesLen; i++) {
                     if (i > 0) {
                         this.declFile.Write(", ");
                     }
-                    var base = bases.nonSeparatorAt(i);
+                    var base = bases[i];
                     var baseType = <PullTypeSymbol>this.semanticInfoChain.getSymbolForAST(base);
                     this.emitTypeSignature(base, baseType);
                 }
@@ -800,13 +800,13 @@ module TypeScript {
         }
 
         private emitClassMembersFromConstructorDefinition(funcDecl: ConstructorDeclarationSyntax) {
-            var argsLen = funcDecl.callSignature.parameterList.parameters.nonSeparatorCount();
+            var argsLen = funcDecl.callSignature.parameterList.parameters.length;
             if (lastParameterIsRest(funcDecl.callSignature.parameterList)) {
                 argsLen--;
             }
 
             for (var i = 0; i < argsLen; i++) {
-                var parameter = funcDecl.callSignature.parameterList.parameters.nonSeparatorAt(i);
+                var parameter = funcDecl.callSignature.parameterList.parameters[i];
                 var parameterDecl = this.semanticInfoChain.getDeclForAST(parameter);
                 if (hasFlag(parameterDecl.flags, PullElementFlags.PropertyParameter)) {
                     var funcPullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
@@ -887,7 +887,7 @@ module TypeScript {
         }
 
         private emitTypeParameters(typeParams: TypeParameterListSyntax, funcSignature?: PullSignatureSymbol) {
-            if (!typeParams || !typeParams.typeParameters.nonSeparatorCount()) {
+            if (!typeParams || !typeParams.typeParameters.length) {
                 return;
             }
 
@@ -977,9 +977,9 @@ module TypeScript {
             this.declFile.WriteLine(moduleDecl.identifier.text() + " {");
 
             this.indenter.increaseIndent();
-            var membersLen = moduleDecl.enumElements.nonSeparatorCount();
+            var membersLen = moduleDecl.enumElements.length;
             for (var j = 0; j < membersLen; j++) {
-                var enumElement = moduleDecl.enumElements.nonSeparatorAt(j);
+                var enumElement = moduleDecl.enumElements[j];
                 var enumElementDecl = <PullEnumElementDecl>this.semanticInfoChain.getDeclForAST(enumElement);
                 this.emitDeclarationComments(enumElement);
                 this.emitIndent();

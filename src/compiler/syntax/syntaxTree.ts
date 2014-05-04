@@ -102,10 +102,10 @@ module TypeScript {
 
         private checkParameterListOrder(node: ParameterListSyntax): boolean {
             var seenOptionalParameter = false;
-            var parameterCount = node.parameters.nonSeparatorCount();
+            var parameterCount = node.parameters.length;
 
             for (var i = 0; i < parameterCount; i++) {
-                var parameter = node.parameters.nonSeparatorAt(i);
+                var parameter = node.parameters[i];
 
                 if (parameter.dotDotDotToken) {
                     if (i !== (parameterCount - 1)) {
@@ -153,8 +153,8 @@ module TypeScript {
         }
 
         private checkParameterListAcessibilityModifiers(node: ParameterListSyntax): boolean {
-            for (var i = 0, n = node.parameters.nonSeparatorCount(); i < n; i++) {
-                var parameter = node.parameters.nonSeparatorAt(i);
+            for (var i = 0, n = node.parameters.length; i < n; i++) {
+                var parameter = node.parameters[i];
 
                 if (this.checkParameterAccessibilityModifiers(node, parameter)) {
                     return true;
@@ -377,7 +377,7 @@ module TypeScript {
                         return true;
                     }
 
-                    if (heritageClause.typeNames.nonSeparatorCount() > 1) {
+                    if (heritageClause.typeNames.length > 1) {
                         this.pushDiagnostic(heritageClause,
                             DiagnosticCode.Classes_can_only_extend_a_single_class);
                         return true;
@@ -1166,7 +1166,7 @@ module TypeScript {
             // The parser accepts a Variable Declaration in a ForInStatement, but the grammar only
             // allows a very restricted form.  Specifically, there must be only a single Variable
             // Declarator in the Declaration.
-            if (node.variableDeclaration && node.variableDeclaration.variableDeclarators.nonSeparatorCount() > 1) {
+            if (node.variableDeclaration && node.variableDeclaration.variableDeclarators.length > 1) {
                 this.pushDiagnostic(node.variableDeclaration, DiagnosticCode.Only_a_single_variable_declaration_is_allowed_in_a_for_in_statement);
                 return true;
             }

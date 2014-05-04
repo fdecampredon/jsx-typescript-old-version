@@ -2634,8 +2634,8 @@ function generateIsTypeScriptSpecific(): string {
     result += "module TypeScript {\r\n";
 
     result += "    function isSeparatedListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {\r\n"
-    result += "        for (var i = 0, n = this.nonSeparatorCount(); i < n; i++) {\r\n";
-    result += "            if (this.nonSeparatorAt(i).isTypeScriptSpecific()) {\r\n";
+    result += "        for (var i = 0, n = this.length; i < n; i++) {\r\n";
+    result += "            if (this[i].isTypeScriptSpecific()) {\r\n";
     result += "                return true;\r\n";
     result += "            }\r\n";
     result += "        }\r\n\r\n";

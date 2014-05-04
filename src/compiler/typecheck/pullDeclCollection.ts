@@ -1110,8 +1110,8 @@ module TypeScript {
         var currentConstantValue = 0;
         var enumMemberDecls = <PullEnumElementDecl[]>enumDecl.getChildDecls();
 
-        for (var i = 0, n = ast.enumElements.nonSeparatorCount(); i < n; i++) {
-            var enumElement = ast.enumElements.nonSeparatorAt(i);
+        for (var i = 0, n = ast.enumElements.length; i < n; i++) {
+            var enumElement = ast.enumElements[i];
             var enumElementDecl = ArrayUtilities.first(enumMemberDecls, d =>
                 d.ast() === enumElement);
 

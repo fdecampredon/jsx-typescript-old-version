@@ -139,8 +139,8 @@ module TypeScript {
 
         public inferTypeArguments(): PullTypeSymbol[] {
             // Resolve all of the argument ASTs in the callback
-            this.signatureBeingInferred.forAllParameterTypes(/*length*/ this.argumentList.arguments.nonSeparatorCount(), (parameterType, argumentIndex) => {
-                var argumentAST = this.argumentList.arguments.nonSeparatorAt(argumentIndex);
+            this.signatureBeingInferred.forAllParameterTypes(/*length*/ this.argumentList.arguments.length, (parameterType, argumentIndex) => {
+                var argumentAST = this.argumentList.arguments[argumentIndex];
 
                 this.context.pushInferentialType(parameterType, this);
                 var argumentType = this.resolver.resolveAST(argumentAST, /*isContextuallyTyped*/ true, this.context).type;

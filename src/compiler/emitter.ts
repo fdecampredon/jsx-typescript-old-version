@@ -208,7 +208,7 @@ module TypeScript {
 
     export function lastParameterIsRest(parameterList: ParameterListSyntax): boolean {
         var parameters = parameterList.parameters;
-        return parameters.nonSeparatorCount() > 0 && (parameters.nonSeparatorAt(parameters.nonSeparatorCount() - 1)).dotDotDotToken !== null;
+        return parameters.length > 0 && (parameters[parameters.length - 1]).dotDotDotToken !== null;
     }
 
     export class Emitter {
@@ -645,7 +645,7 @@ module TypeScript {
                 this.recordSourceMappingStart(args);
                 this.writeToOutput("(");
                 this.emitThis();
-                if (args && args.nonSeparatorCount() > 0) {
+                if (args && args.length > 0) {
                     this.writeToOutput(", ");
                     this.emitCommaSeparatedList(callNode.argumentList, args, /*buffer:*/ "", /*preserveNewLines:*/ false);
                 }
@@ -661,7 +661,7 @@ module TypeScript {
                 this.writeToOutput("(");
                 if (callNode.expression.kind() === SyntaxKind.SuperKeyword && this.emitState.container === EmitContainer.Constructor) {
                     this.writeToOutput("this");
-                    if (args && args.nonSeparatorCount() > 0) {
+                    if (args && args.length > 0) {
                         this.writeToOutput(", ");
                     }
                 }
@@ -1557,7 +1557,7 @@ module TypeScript {
         }
 
         public emitVariableDeclaration(declaration: VariableDeclarationSyntax) {
-            var varDecl = declaration.variableDeclarators.nonSeparatorAt(0);
+            var varDecl = declaration.variableDeclarators[0];
 
             var symbol = this.semanticInfoChain.getSymbolForAST(varDecl);
 
@@ -1572,8 +1572,8 @@ module TypeScript {
                 var prevVariableDeclaration = this.currentVariableDeclaration;
                 this.currentVariableDeclaration = declaration;
 
-                for (var i = 0, n = declaration.variableDeclarators.nonSeparatorCount(); i < n; i++) {
-                    var declarator = declaration.variableDeclarators.nonSeparatorAt(i);
+                for (var i = 0, n = declaration.variableDeclarators.length; i < n; i++) {
+                    var declarator = declaration.variableDeclarators[i];
 
                     if (i > 0) {
                         this.writeToOutput(", ");
@@ -1978,8 +1978,8 @@ module TypeScript {
             var constructorDecl = getLastConstructor(this.thisClassNode);
 
             if (constructorDecl) {
-                for (var i = 0, n = constructorDecl.callSignature.parameterList.parameters.nonSeparatorCount(); i < n; i++) {
-                    var parameter = constructorDecl.callSignature.parameterList.parameters.nonSeparatorAt(i);
+                for (var i = 0, n = constructorDecl.callSignature.parameterList.parameters.length; i < n; i++) {
+                    var parameter = constructorDecl.callSignature.parameterList.parameters[i];
 
                     var parameterDecl = this.semanticInfoChain.getDeclForAST(parameter);
                     if (hasFlag(parameterDecl.flags, PullElementFlags.PropertyParameter)) {
@@ -2017,13 +2017,13 @@ module TypeScript {
         }
 
         private emitCommaSeparatedList<T extends ISyntaxNodeOrToken>(parent: ISyntaxElement, list: T[], buffer: string, preserveNewLines: boolean): void {
-            if (list === null || list.nonSeparatorCount() === 0) {
+            if (list === null || list.length === 0) {
                 return;
             }
 
             // If the first element isn't on hte same line as the parent node, then we need to 
             // start with a newline.
-            var startLine = preserveNewLines && !this.isOnSameLine(end(parent), end(list.nonSeparatorAt(0)));
+            var startLine = preserveNewLines && !this.isOnSameLine(end(parent), end(list[0]));
 
             if (preserveNewLines) {
                 // Any elements on a new line will have to be indented.
@@ -2039,8 +2039,8 @@ module TypeScript {
                 this.writeToOutput(buffer);
             }
 
-            for (var i = 0, n = list.nonSeparatorCount(); i < n; i++) {
-                var emitNode = list.nonSeparatorAt(i);
+            for (var i = 0, n = list.length; i < n; i++) {
+                var emitNode = list[i];
 
                 // Write out the element, emitting an indent if we're on a new line.
                 this.emitJavascript(emitNode, startLine);
@@ -2049,7 +2049,7 @@ module TypeScript {
                     // If the next element start on a different line than this element ended on, 
                     // then we want to start on a newline.  Emit the comma with a newline.  
                     // Otherwise, emit the comma with the space.
-                    startLine = preserveNewLines && !this.isOnSameLine(end(emitNode), start(list.nonSeparatorAt(i + 1)));
+                    startLine = preserveNewLines && !this.isOnSameLine(end(emitNode), start(list[i + 1]));
                     if (startLine) {
                         this.writeLineToOutput(",");
                     }
@@ -2068,7 +2068,7 @@ module TypeScript {
             // after the last element and emit our indent so the list's terminator will be
             // on the right line.  Otherwise, emit the buffer string between the last value
             // and the terminator.
-            if (preserveNewLines && !this.isOnSameLine(end(parent), end(list.nonSeparatorAt(list.nonSeparatorCount() - 1)))) {
+            if (preserveNewLines && !this.isOnSameLine(end(parent), end(list[list.length - 1]))) {
                 this.writeLineToOutput("");
                 this.emitIndent();
             }
@@ -2103,7 +2103,7 @@ module TypeScript {
             this.emitComments(list, false);
         }
 
-        public emitSeparatedList<T extends ISyntaxNodeOrToken>(list: T[], useNewLineSeparator = true, startInclusive = 0, endExclusive = list.nonSeparatorCount()) {
+        public emitSeparatedList<T extends ISyntaxNodeOrToken>(list: T[], useNewLineSeparator = true, startInclusive = 0, endExclusive = list.length) {
             if (list === null) {
                 return;
             }
@@ -2112,7 +2112,7 @@ module TypeScript {
             var lastEmittedNode: ISyntaxElement = null;
 
             for (var i = startInclusive; i < endExclusive; i++) {
-                var node = list.nonSeparatorAt(i);
+                var node = list[i];
 
                 if (this.shouldEmit(node)) {
                     this.emitSpaceBetweenConstructs(lastEmittedNode, node);
@@ -2477,7 +2477,7 @@ module TypeScript {
             this.indenter.increaseIndent();
 
             if (hasBaseClass) {
-                baseTypeReference = ASTHelpers.getExtendsHeritageClause(classDecl.heritageClauses).typeNames.nonSeparatorAt(0);
+                baseTypeReference = ASTHelpers.getExtendsHeritageClause(classDecl.heritageClauses).typeNames[0];
                 this.emitIndent();
                 this.writeToOutputWithSourceMapRecord("__extends(" + className + ", _super)", baseTypeReference);
                 this.writeLineToOutput(";");
@@ -3456,7 +3456,7 @@ module TypeScript {
         }
 
         private firstVariableDeclarator(statement: VariableStatementSyntax): VariableDeclaratorSyntax {
-            return statement.variableDeclaration.variableDeclarators.nonSeparatorAt(0);
+            return statement.variableDeclaration.variableDeclarators[0];
         }
 
         private isNotAmbientOrHasInitializer(variableStatement: VariableStatementSyntax): boolean {

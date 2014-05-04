@@ -161,7 +161,7 @@ module TypeScript.ASTHelpers {
             for (var i = 0, n = clauses.childCount(); i < n; i++) {
                 var child = clauses.childAt(i);
 
-                if (child.typeNames.nonSeparatorCount() > 0 && child.kind() === kind) {
+                if (child.typeNames.length > 0 && child.kind() === kind) {
                     return child;
                 }
             }
@@ -361,14 +361,14 @@ module TypeScript.ASTHelpers {
 
     export function parametersFromParameterList(list: ParameterListSyntax): IParameters {
         return {
-            length: list.parameters.nonSeparatorCount(),
+            length: list.parameters.length,
             lastParameterIsRest: () => lastParameterIsRest(list),
             ast: list.parameters,
-            astAt: (index: number) => list.parameters.nonSeparatorAt(index),
-            identifierAt: (index: number) => list.parameters.nonSeparatorAt(index).identifier,
-            typeAt: (index: number) => getType(list.parameters.nonSeparatorAt(index)),
-            initializerAt: (index: number) => list.parameters.nonSeparatorAt(index).equalsValueClause,
-            isOptionalAt: (index: number) => parameterIsOptional(list.parameters.nonSeparatorAt(index)),
+            astAt: (index: number) => list.parameters[index],
+            identifierAt: (index: number) => list.parameters[index].identifier,
+            typeAt: (index: number) => getType(list.parameters[index]),
+            initializerAt: (index: number) => list.parameters[index].equalsValueClause,
+            isOptionalAt: (index: number) => parameterIsOptional(list.parameters[index]),
         };
     }
 

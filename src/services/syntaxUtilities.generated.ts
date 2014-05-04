@@ -1,7 +1,7 @@
 module TypeScript {
     function isSeparatedListTypeScriptSpecific(list: ISyntaxNodeOrToken[]): boolean {
-        for (var i = 0, n = this.nonSeparatorCount(); i < n; i++) {
-            if (this.nonSeparatorAt(i).isTypeScriptSpecific()) {
+        for (var i = 0, n = this.length; i < n; i++) {
+            if (this[i].isTypeScriptSpecific()) {
                 return true;
             }
         }

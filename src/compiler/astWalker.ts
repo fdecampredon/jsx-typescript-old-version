@@ -78,8 +78,8 @@ module TypeScript {
     }
 
     function walkSeparatedListChildren(preAst: ISyntaxNodeOrToken[], walker: AstWalker): void {
-        for (var i = 0, n = preAst.nonSeparatorCount(); i < n; i++) {
-            walker.walk(preAst.nonSeparatorAt(i));
+        for (var i = 0, n = preAst.length; i < n; i++) {
+            walker.walk(preAst[i]);
         }
     }
 
