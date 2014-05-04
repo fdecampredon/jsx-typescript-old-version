@@ -10,6 +10,20 @@ module TypeScript {
         return (isList(element) || isSeparatedList(element)) && element.childCount() === 0;
     }
 
+    //export function childCount(element: ISyntaxElement): number {
+    //    if (isToken(element)) {
+    //        return 0;
+    //    }
+    //    else if (isList(element)) {
+    //        var array: ISyntaxNodeOrToken[] = element;
+    //        return array.length;
+    //    }
+    //    else if (isSeparatedList(element) {
+    //        var array = ISyntaxNodeOrToken[] = element;
+    //        return array.length + array.separators.length;
+    //    }
+    //}
+
     export function syntaxTree(element: ISyntaxElement): SyntaxTree {
         if (element) {
             Debug.assert(!isShared(element));

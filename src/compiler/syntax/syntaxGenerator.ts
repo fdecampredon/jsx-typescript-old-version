@@ -2104,6 +2104,30 @@ function generateNodes(): string {
 
     result += "module TypeScript {\r\n";
 
+    result += "    var nodeMetadata: string[][] = new Array<string[]>(SyntaxKind.LastNode);\r\n";
+    //result += "    for (var i = 0; i < SyntaxKind.FirstNode; i++) {\r\n";
+    //result += "        nodeMetadata[i] = [];\r\n";
+    //result += "    }\r\n\r\n";
+
+    for (var i = 0; i < definitions.length; i++) {
+        var definition = definitions[i];
+        var metadata = "[";
+        var children = definition.children.filter(m => m.type !== "SyntaxKind").map(m => '"' + m.name + '"');
+        metadata += children.join(", ");
+        metadata += "];\r\n";
+
+        if (definition.syntaxKinds) {
+            for (var j = 0; j < definition.syntaxKinds.length; j++) {
+                result += "    nodeMetadata[SyntaxKind." + definition.syntaxKinds[j] + "] = " + metadata;
+            }
+        }
+        else {
+            result += "    nodeMetadata[SyntaxKind." + getNameWithoutSuffix(definition) + "] = " + metadata;
+        }
+    }
+
+    result += "\r\n";
+
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];
 
