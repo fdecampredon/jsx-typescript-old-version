@@ -17,9 +17,12 @@ interface Array<T> {
 
 module TypeScript.Syntax {
     var _emptyList: ISyntaxNodeOrToken[] = [];
+    _emptyList.kind = SyntaxKind.List;
+
     var _emptySeparatedList: ISyntaxNodeOrToken[] = [];
     var _emptySeparators: ISyntaxToken[] = [];
 
+    _emptySeparatedList.kind = SyntaxKind.SeparatedList;
     _emptySeparatedList.separators = _emptySeparators;
 
     function assertEmptyLists() {
@@ -27,15 +30,6 @@ module TypeScript.Syntax {
         // var separators = _emptySeparatedList.separators;
         // Debug.assert(!separators || separators.length === 0);
     }
-
-    Object.defineProperty(Array.prototype, "kind", {
-        get: function (): SyntaxKind {
-            assertEmptyLists();
-            return this.separators !== undefined ? SyntaxKind.SeparatedList : SyntaxKind.List;
-        },
-        enumerable: true,
-        configurable: true
-    });
 
     Array.prototype.setChildAt = function (index: number, value: any): void {
         assertEmptyLists();
@@ -117,6 +111,7 @@ module TypeScript.Syntax {
             nodes[i].parent = nodes;
         }
 
+        nodes.kind = SyntaxKind.List;
         return nodes;
     }
 
@@ -135,6 +130,7 @@ module TypeScript.Syntax {
             separators[i].parent = nodes;
         }
 
+        nodes.kind = SyntaxKind.SeparatedList;
         nodes.separators = separators.length === 0 ? _emptySeparators : separators;
 
         return nodes;
