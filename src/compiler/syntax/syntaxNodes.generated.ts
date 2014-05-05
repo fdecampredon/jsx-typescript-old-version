@@ -1,7 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    var nodeMetadata: string[][] = ArrayUtilities.createArray<string[]>(SyntaxKind.LastNode + 1, []);
+    export var nodeMetadata: string[][] = ArrayUtilities.createArray<string[]>(SyntaxKind.LastNode + 1, []);
 
     nodeMetadata[SyntaxKind.SourceUnit] = ["moduleElements", "endOfFileToken"];
     nodeMetadata[SyntaxKind.QualifiedName] = ["left", "dotToken", "right"];
@@ -131,35 +131,6 @@ module TypeScript {
     nodeMetadata[SyntaxKind.ExternalModuleReference] = ["requireKeyword", "openParenToken", "stringLiteral", "closeParenToken"];
     nodeMetadata[SyntaxKind.ModuleNameModuleReference] = ["moduleName"];
 
-    export function childCount(element: ISyntaxElement): number {
-        var kind = element.kind;
-        if (kind === SyntaxKind.List) {
-            return (<ISyntaxNodeOrToken[]>element).length;
-        }
-        else if (kind === SyntaxKind.SeparatedList) {
-            return (<ISyntaxNodeOrToken[]>element).length + (<ISyntaxNodeOrToken[]>element).separators.length;
-        }
-        else if (kind >= SyntaxKind.FirstToken && kind <= SyntaxKind.LastToken) {
-            return 0;
-        }
-        else {
-            return nodeMetadata[kind].length;
-        }
-    }
-
-    export function childAt(element: ISyntaxElement, index: number): ISyntaxElement {
-        var kind = element.kind;
-        if (kind === SyntaxKind.List) {
-            return (<ISyntaxNodeOrToken[]>element)[index];
-        }
-        else if (kind === SyntaxKind.SeparatedList) {
-            return (index % 2 === 0) ? (<ISyntaxNodeOrToken[]>element)[index / 2] : (<ISyntaxNodeOrToken[]>element).separators[(index - 1) / 2];
-        }
-        else {
-            // Debug.assert(isNode(element));
-            return (<any>element)[nodeMetadata[element.kind][index]];
-        }
-    }
 
     export interface SourceUnitSyntax extends ISyntaxNode {
         syntaxTree: SyntaxTree;

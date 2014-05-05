@@ -11,6 +11,36 @@ module TypeScript {
         return (kind === SyntaxKind.List || kind === SyntaxKind.SeparatedList) && (<ISyntaxNodeOrToken[]>element).length === 0;
     }
 
+    export function childCount(element: ISyntaxElement): number {
+        var kind = element.kind;
+        if (kind === SyntaxKind.List) {
+            return (<ISyntaxNodeOrToken[]>element).length;
+        }
+        else if (kind === SyntaxKind.SeparatedList) {
+            return (<ISyntaxNodeOrToken[]>element).length + (<ISyntaxNodeOrToken[]>element).separators.length;
+        }
+        else if (kind >= SyntaxKind.FirstToken && kind <= SyntaxKind.LastToken) {
+            return 0;
+        }
+        else {
+            return nodeMetadata[kind].length;
+        }
+    }
+
+    export function childAt(element: ISyntaxElement, index: number): ISyntaxElement {
+        var kind = element.kind;
+        if (kind === SyntaxKind.List) {
+            return (<ISyntaxNodeOrToken[]>element)[index];
+        }
+        else if (kind === SyntaxKind.SeparatedList) {
+            return (index % 2 === 0) ? (<ISyntaxNodeOrToken[]>element)[index / 2] : (<ISyntaxNodeOrToken[]>element).separators[(index - 1) / 2];
+        }
+        else {
+            // Debug.assert(isNode(element));
+            return (<any>element)[nodeMetadata[element.kind][index]];
+        }
+    }
+
     export function syntaxTree(element: ISyntaxElement): SyntaxTree {
         if (element) {
             Debug.assert(!isShared(element));
@@ -204,10 +234,13 @@ module TypeScript {
         return false;
     }
 
+    function isTokenKind(kind: SyntaxKind) {
+        return kind >= SyntaxKind.FirstToken && kind <= SyntaxKind.LastToken
+    }
+
     export function isToken(element: ISyntaxElement): boolean {
         if (element !== null) {
-            var kind = element.kind;
-            return kind >= SyntaxKind.FirstToken && kind <= SyntaxKind.LastToken;
+            return isTokenKind(element.kind);
         }
 
         return false;
@@ -269,22 +302,46 @@ module TypeScript {
     }
 
     export function firstToken(element: ISyntaxElement): ISyntaxToken {
-        if (isToken(element)) {
-            return fullWidth(element) > 0 || element.kind === SyntaxKind.EndOfFileToken ? <ISyntaxToken>element : null;
-        }
+        if (element) {
+            var kind = element.kind;
 
-        for (var i = 0, n = childCount(element); i < n; i++) {
-            var child = childAt(element, i);
-            if (child !== null) {
-                var token = firstToken(child);
-                if (token) {
-                    return token;
+            if (isTokenKind(kind)) {
+                return fullWidth(element) > 0 || element.kind === SyntaxKind.EndOfFileToken ? <ISyntaxToken>element : null;
+            }
+
+            if (kind === SyntaxKind.List) {
+                var array = <ISyntaxNodeOrToken[]>element;
+                for (var i = 0, n = array.length; i < n; i++) {
+                    var token = firstToken(array[i]);
+                    if (token) {
+                        return token;
+                    }
                 }
             }
-        }
+            else if (kind === SyntaxKind.SeparatedList) {
+                var array = <ISyntaxNodeOrToken[]>element;
+                var separators = array.separators;
+                for (var i = 0, n = array.length + separators.length; i < n; i++) {
+                    var token = firstToken(i % 2 === 0 ? array[i / 2] : separators[(i - 1) / 2]);
+                    if (token) {
+                        return token;
+                    }
+                }
+            }
+            else {
+                var metadata = nodeMetadata[kind];
+                for (var i = 0, n = metadata.length; i < n; i++) {
+                    var child = (<any>element)[metadata[i]];
+                    var token = firstToken(child);
+                    if (token) {
+                        return token;
+                    }
+                }
 
-        if (element.kind === SyntaxKind.SourceUnit) {
-            return (<SourceUnitSyntax>element).endOfFileToken;
+                if (element.kind === SyntaxKind.SourceUnit) {
+                    return (<SourceUnitSyntax>element).endOfFileToken;
+                }
+            }
         }
 
         return null;

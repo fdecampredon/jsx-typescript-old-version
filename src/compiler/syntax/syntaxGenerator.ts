@@ -2181,7 +2181,7 @@ function generateNodes(): string {
 
     result += "module TypeScript {\r\n";
 
-    result += "    var nodeMetadata: string[][] = ArrayUtilities.createArray<string[]>(SyntaxKind.LastNode + 1, []);\r\n\r\n";
+    result += "    export var nodeMetadata: string[][] = ArrayUtilities.createArray<string[]>(SyntaxKind.LastNode + 1, []);\r\n\r\n";
 
     for (var i = <number>TypeScript.SyntaxKind.FirstNode; i <= TypeScript.SyntaxKind.LastNode; i++) {
         var kindName = syntaxKindName(i);
@@ -2206,37 +2206,7 @@ function generateNodes(): string {
         result += "    nodeMetadata[SyntaxKind." + kindName + "] = " + metadata;
     }
 
-    result += "\r\n";
-
-    result += "    export function childCount(element: ISyntaxElement): number {\r\n";
-    result += "        var kind = element.kind;\r\n";
-    result += "        if (kind === SyntaxKind.List) {\r\n";
-    result += "            return (<ISyntaxNodeOrToken[]>element).length;\r\n";
-    result += "        }\r\n";
-    result += "        else if (kind === SyntaxKind.SeparatedList) {\r\n";
-    result += "            return (<ISyntaxNodeOrToken[]>element).length + (<ISyntaxNodeOrToken[]>element).separators.length;\r\n";
-    result += "        }\r\n";
-    result += "        else if (kind >= SyntaxKind.FirstToken && kind <= SyntaxKind.LastToken) {\r\n";
-    result += "            return 0;\r\n";
-    result += "        }\r\n";
-    result += "        else {\r\n";
-    result += "            return nodeMetadata[kind].length;\r\n";
-    result += "        }\r\n";
-    result += "    }\r\n\r\n";
-
-    result += "    export function childAt(element: ISyntaxElement, index: number): ISyntaxElement {\r\n";
-    result += "        var kind = element.kind;\r\n";
-    result += "        if (kind === SyntaxKind.List) {\r\n";
-    result += "            return (<ISyntaxNodeOrToken[]>element)[index];\r\n";
-    result += "        }\r\n";
-    result += "        else if (kind === SyntaxKind.SeparatedList) {\r\n";
-    result += "            return (index % 2 === 0) ? (<ISyntaxNodeOrToken[]>element)[index / 2] : (<ISyntaxNodeOrToken[]>element).separators[(index - 1) / 2];\r\n";
-    result += "        }\r\n";
-    result += "        else {\r\n";
-    result += "            // Debug.assert(isNode(element));\r\n";
-    result += "            return (<any>element)[nodeMetadata[element.kind][index]];\r\n";
-    result += "        }\r\n";
-    result += "    }\r\n\r\n";
+    result += "\r\n\r\n";
 
     /*
     result += "    function setParentForArray(parent: ISyntaxElement, array: ISyntaxNodeOrToken[]): void {\r\n";
