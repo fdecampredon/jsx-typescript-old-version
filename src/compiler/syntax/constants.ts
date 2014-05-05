@@ -2,6 +2,8 @@
 
 module TypeScript {
     export enum SyntaxConstants {
+        None = 0,
+
         // Masks that we use to place information about a node into a single int.  The first bit tells
         // us if we've computed the data for a node.
         //
