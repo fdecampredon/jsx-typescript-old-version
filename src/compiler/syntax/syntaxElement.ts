@@ -27,7 +27,7 @@ module TypeScript {
         return null;
     }
 
-    export function parsedInStrictMode(node: SyntaxNode): boolean {
+    export function parsedInStrictMode(node: ISyntaxNode): boolean {
         var info = node.data;
         if (info === undefined) {
             return false;
@@ -345,15 +345,19 @@ module TypeScript {
     }
 
     function data(element: ISyntaxElement): number {
-        Debug.assert(!isToken(element));
-        var info = element.data;
+        Debug.assert(isNode(element) || isList(element) || isSeparatedList(element));
+
+        // Lists and nodes all have a 'data' element.
+        var dataElement = <{ data: number }><any>element;
+
+        var info = dataElement.data;
         if (info === undefined) {
             info = 0;
         }
 
         if ((info & SyntaxConstants.NodeDataComputed) === 0) {
             info |= computeData(element);
-            element.data = info;
+            dataElement.data = info;
         }
 
         return info;
@@ -402,11 +406,11 @@ module TypeScript {
 
     export interface ISyntaxElement {
         kind: SyntaxKind;
-        parent: ISyntaxElement;
-        data: number;
+        parent?: ISyntaxElement;
     }
 
     export interface ISyntaxNode extends ISyntaxNodeOrToken {
+        data: number;
     }
 
     export interface IModuleReferenceSyntax extends ISyntaxNode {

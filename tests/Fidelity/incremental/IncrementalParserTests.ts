@@ -7,7 +7,7 @@ module TypeScript {
     export class SyntaxElementsCollector extends SyntaxWalker {
         private elements: ISyntaxElement[] = [];
         
-        public visitNode(node: SyntaxNode) {
+        public visitNode(node: ISyntaxNode) {
             this.elements.push(node);
             super.visitNode(node);
         }

@@ -98,7 +98,7 @@ module TypeScript.Services.Formatting {
             this._position += token.fullWidth();
         }
 
-        public visitNode(node: SyntaxNode): void {
+        public visitNode(node: ISyntaxNode): void {
             var nodeSpan = new TextSpan(this._position, fullWidth(node));
 
             if (nodeSpan.intersectsWithTextSpan(this._textSpan)) {
@@ -149,7 +149,7 @@ module TypeScript.Services.Formatting {
             return this._parent.indentationAmount();
         }
 
-        private getNodeIndentation(node: SyntaxNode, newLineInsertedByFormatting?: boolean): { indentationAmount: number; indentationAmountDelta: number; } {
+        private getNodeIndentation(node: ISyntaxNode, newLineInsertedByFormatting?: boolean): { indentationAmount: number; indentationAmountDelta: number; } {
             var parent = this._parent;
 
             // We need to get the parent's indentation, which could be one of 2 things. If first token of the parent is in the span, use the parent's computed indentation.

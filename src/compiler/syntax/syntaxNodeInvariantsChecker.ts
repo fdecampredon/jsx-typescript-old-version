@@ -10,11 +10,11 @@ module TypeScript {
     export class SyntaxNodeInvariantsChecker extends SyntaxWalker {
         private tokenTable = Collections.createHashTable(Collections.DefaultHashTableCapacity, Collections.identityHashCode);
 
-        public static checkInvariants(node: SyntaxNode): void {
+        public static checkInvariants(node: ISyntaxNode): void {
             visitNodeOrToken(new SyntaxNodeInvariantsChecker(), node);
         }
 
-        public visitNode(node: SyntaxNode): void {
+        public visitNode(node: ISyntaxNode): void {
             Debug.assert(node.kind === SyntaxKind.SourceUnit || node.parent);
             super.visitNode(node);
         }

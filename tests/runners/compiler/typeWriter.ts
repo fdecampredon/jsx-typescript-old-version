@@ -48,7 +48,7 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
         return super.visitToken(token);
     }
 
-    public visitNode(node: TypeScript.SyntaxNode) {
+    public visitNode(node: TypeScript.ISyntaxNode) {
         return super.visitNode(node);
     }
 

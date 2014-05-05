@@ -161,1437 +161,599 @@ module TypeScript {
         }
     }
 
-    export class SourceUnitSyntax extends SyntaxNode {
-        public syntaxTree: SyntaxTree = null;
-        constructor(public moduleElements: IModuleElementSyntax[],
-                    public endOfFileToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.SourceUnit, data); 
-
-            !isShared(moduleElements) && (moduleElements.parent = this);
-            endOfFileToken.parent = this;
+    function setParentForArray(parent: ISyntaxElement, array: ISyntaxNodeOrToken[]): void {
+        for (var i = 0, n = array.length; i < n; i++) {
+            var child = array[i];
+            if (child && !isShared(child)) {
+                child.parent = parent;
+            }
         }
     }
 
-    export class ExternalModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
-        public _isModuleReference: any;
-
-        constructor(public requireKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public stringLiteral: ISyntaxToken,
-                    public closeParenToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ExternalModuleReference, data); 
-
-            requireKeyword.parent = this;
-            openParenToken.parent = this;
-            stringLiteral.parent = this;
-            closeParenToken.parent = this;
+    export function setParentForChildren<T extends ISyntaxElement>(parent: T): T {
+        var kind = parent.kind;
+        if (kind === SyntaxKind.List) {
+            setParentForArray(parent, <ISyntaxNodeOrToken[]><ISyntaxElement>parent);
         }
-    }
-
-    export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
-        public _isModuleReference: any;
-
-        constructor(public moduleName: INameSyntax,
-                    data: number) {
-            super(SyntaxKind.ModuleNameModuleReference, data); 
-
-            moduleName.parent = this;
+        else if (kind === SyntaxKind.SeparatedList) {
+            var array = <ISyntaxNodeOrToken[]><ISyntaxElement>parent;
+            setParentForArray(parent, array);
+            setParentForArray(parent, array.separators);
         }
-    }
+        else {
+            Debug.assert(isNode(parent));
+            var childNames = nodeMetadata[kind];
 
-    export class ImportDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
-        public _isModuleElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public importKeyword: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public equalsToken: ISyntaxToken,
-                    public moduleReference: IModuleReferenceSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ImportDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            importKeyword.parent = this;
-            identifier.parent = this;
-            equalsToken.parent = this;
-            moduleReference.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            for (var i = 0, n = childNames.length; i < n; i++) {
+                var child: ISyntaxElement = (<any>parent)[childNames[i]];
+                if (child && !isShared(child)) {
+                    child.parent = parent;
+                }
+            }
         }
-    }
 
-    export class ExportAssignmentSyntax extends SyntaxNode implements IModuleElementSyntax {
-        public _isModuleElement: any;
-
-        constructor(public exportKeyword: ISyntaxToken,
-                    public equalsToken: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ExportAssignment, data); 
-
-            exportKeyword.parent = this;
-            equalsToken.parent = this;
-            identifier.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
-        }
+        return parent;
     }
 
-    export class ClassDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
-        public _isModuleElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public classKeyword: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public typeParameterList: TypeParameterListSyntax,
-                    public heritageClauses: HeritageClauseSyntax[],
-                    public openBraceToken: ISyntaxToken,
-                    public classElements: IClassElementSyntax[],
-                    public closeBraceToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ClassDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            classKeyword.parent = this;
-            identifier.parent = this;
-            typeParameterList && (typeParameterList.parent = this);
-            !isShared(heritageClauses) && (heritageClauses.parent = this);
-            openBraceToken.parent = this;
-            !isShared(classElements) && (classElements.parent = this);
-            closeBraceToken.parent = this;
-        }
+    export interface SourceUnitSyntax extends ISyntaxNode {
+        syntaxTree: SyntaxTree;
+        moduleElements: IModuleElementSyntax[];
+        endOfFileToken: ISyntaxToken;
     }
 
-    export class InterfaceDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
-        public _isModuleElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public interfaceKeyword: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public typeParameterList: TypeParameterListSyntax,
-                    public heritageClauses: HeritageClauseSyntax[],
-                    public body: ObjectTypeSyntax,
-                    data: number) {
-            super(SyntaxKind.InterfaceDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            interfaceKeyword.parent = this;
-            identifier.parent = this;
-            typeParameterList && (typeParameterList.parent = this);
-            !isShared(heritageClauses) && (heritageClauses.parent = this);
-            body.parent = this;
-        }
+    export interface ExternalModuleReferenceSyntax extends ISyntaxNode, IModuleReferenceSyntax {
+        requireKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        stringLiteral: ISyntaxToken;
+        closeParenToken: ISyntaxToken;
     }
 
-    export class HeritageClauseSyntax extends SyntaxNode {
-        private _kind: SyntaxKind;
-
-        constructor(kind: SyntaxKind,
-                    public extendsOrImplementsKeyword: ISyntaxToken,
-                    public typeNames: INameSyntax[],
-                    data: number) {
-            super(kind, data); 
-
-            this._kind = kind;
-            extendsOrImplementsKeyword.parent = this;
-            !isShared(typeNames) && (typeNames.parent = this);
-        }
+    export interface ModuleNameModuleReferenceSyntax extends ISyntaxNode, IModuleReferenceSyntax {
+        moduleName: INameSyntax;
     }
 
-    export class ModuleDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
-        public _isModuleElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public moduleKeyword: ISyntaxToken,
-                    public name: INameSyntax,
-                    public stringLiteral: ISyntaxToken,
-                    public openBraceToken: ISyntaxToken,
-                    public moduleElements: IModuleElementSyntax[],
-                    public closeBraceToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ModuleDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            moduleKeyword.parent = this;
-            name && (name.parent = this);
-            stringLiteral && (stringLiteral.parent = this);
-            openBraceToken.parent = this;
-            !isShared(moduleElements) && (moduleElements.parent = this);
-            closeBraceToken.parent = this;
-        }
+    export interface ImportDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        importKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        equalsToken: ISyntaxToken;
+        moduleReference: IModuleReferenceSyntax;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class FunctionDeclarationSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public functionKeyword: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public callSignature: CallSignatureSyntax,
-                    public block: BlockSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.FunctionDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            functionKeyword.parent = this;
-            identifier.parent = this;
-            callSignature.parent = this;
-            block && (block.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface ExportAssignmentSyntax extends ISyntaxNode, IModuleElementSyntax {
+        exportKeyword: ISyntaxToken;
+        equalsToken: ISyntaxToken;
+        identifier: ISyntaxToken;
+        semicolonToken: ISyntaxToken;
     }
-
-    export class VariableStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
 
-        constructor(public modifiers: ISyntaxToken[],
-                    public variableDeclaration: VariableDeclarationSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.VariableStatement, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            variableDeclaration.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface ClassDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        classKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        typeParameterList: TypeParameterListSyntax;
+        heritageClauses: HeritageClauseSyntax[];
+        openBraceToken: ISyntaxToken;
+        classElements: IClassElementSyntax[];
+        closeBraceToken: ISyntaxToken;
     }
-
-    export class VariableDeclarationSyntax extends SyntaxNode {
-        constructor(public varKeyword: ISyntaxToken,
-                    public variableDeclarators: VariableDeclaratorSyntax[],
-                    data: number) {
-            super(SyntaxKind.VariableDeclaration, data); 
 
-            varKeyword.parent = this;
-            !isShared(variableDeclarators) && (variableDeclarators.parent = this);
-        }
+    export interface InterfaceDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        interfaceKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        typeParameterList: TypeParameterListSyntax;
+        heritageClauses: HeritageClauseSyntax[];
+        body: ObjectTypeSyntax;
     }
-
-    export class VariableDeclaratorSyntax extends SyntaxNode {
-        constructor(public propertyName: ISyntaxToken,
-                    public typeAnnotation: TypeAnnotationSyntax,
-                    public equalsValueClause: EqualsValueClauseSyntax,
-                    data: number) {
-            super(SyntaxKind.VariableDeclarator, data); 
 
-            propertyName.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
-            equalsValueClause && (equalsValueClause.parent = this);
-        }
+    export interface HeritageClauseSyntax extends ISyntaxNode {
+        extendsOrImplementsKeyword: ISyntaxToken;
+        typeNames: INameSyntax[];
     }
 
-    export class EqualsValueClauseSyntax extends SyntaxNode {
-        constructor(public equalsToken: ISyntaxToken,
-                    public value: IExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.EqualsValueClause, data); 
-
-            equalsToken.parent = this;
-            value.parent = this;
-        }
+    export interface ModuleDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        moduleKeyword: ISyntaxToken;
+        name: INameSyntax;
+        stringLiteral: ISyntaxToken;
+        openBraceToken: ISyntaxToken;
+        moduleElements: IModuleElementSyntax[];
+        closeBraceToken: ISyntaxToken;
     }
 
-    export class PrefixUnaryExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        private _kind: SyntaxKind;
-
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(kind: SyntaxKind,
-                    public operatorToken: ISyntaxToken,
-                    public operand: IUnaryExpressionSyntax,
-                    data: number) {
-            super(kind, data); 
-
-            this._kind = kind;
-            operatorToken.parent = this;
-            operand.parent = this;
-        }
+    export interface FunctionDeclarationSyntax extends ISyntaxNode, IStatementSyntax {
+        modifiers: ISyntaxToken[];
+        functionKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+        block: BlockSyntax;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class ArrayLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public openBracketToken: ISyntaxToken,
-                    public expressions: IExpressionSyntax[],
-                    public closeBracketToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ArrayLiteralExpression, data); 
-
-            openBracketToken.parent = this;
-            !isShared(expressions) && (expressions.parent = this);
-            closeBracketToken.parent = this;
-        }
+    export interface VariableStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        modifiers: ISyntaxToken[];
+        variableDeclaration: VariableDeclarationSyntax;
+        semicolonToken: ISyntaxToken;
     }
-
-    export class OmittedExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
-        public _isExpression: any;
 
-        constructor(data: number) {
-            super(SyntaxKind.OmittedExpression, data); 
-        }
+    export interface VariableDeclarationSyntax extends ISyntaxNode {
+        varKeyword: ISyntaxToken;
+        variableDeclarators: VariableDeclaratorSyntax[];
     }
 
-    export class ParenthesizedExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public openParenToken: ISyntaxToken,
-                    public expression: IExpressionSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ParenthesizedExpression, data); 
-
-            openParenToken.parent = this;
-            expression.parent = this;
-            closeParenToken.parent = this;
-        }
+    export interface VariableDeclaratorSyntax extends ISyntaxNode {
+        propertyName: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
+        equalsValueClause: EqualsValueClauseSyntax;
     }
 
-    export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public identifier: ISyntaxToken,
-                    public equalsGreaterThanToken: ISyntaxToken,
-                    public block: BlockSyntax,
-                    public expression: IExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.SimpleArrowFunctionExpression, data); 
-
-            identifier.parent = this;
-            equalsGreaterThanToken.parent = this;
-            block && (block.parent = this);
-            expression && (expression.parent = this);
-        }
+    export interface EqualsValueClauseSyntax extends ISyntaxNode {
+        equalsToken: ISyntaxToken;
+        value: IExpressionSyntax;
     }
 
-    export class ParenthesizedArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public callSignature: CallSignatureSyntax,
-                    public equalsGreaterThanToken: ISyntaxToken,
-                    public block: BlockSyntax,
-                    public expression: IExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.ParenthesizedArrowFunctionExpression, data); 
-
-            callSignature.parent = this;
-            equalsGreaterThanToken.parent = this;
-            block && (block.parent = this);
-            expression && (expression.parent = this);
-        }
+    export interface PrefixUnaryExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        operatorToken: ISyntaxToken;
+        operand: IUnaryExpressionSyntax;
     }
-
-    export class QualifiedNameSyntax extends SyntaxNode implements INameSyntax {
-        public _isName: any;
-        public _isType: any;
 
-        constructor(public left: INameSyntax,
-                    public dotToken: ISyntaxToken,
-                    public right: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.QualifiedName, data); 
-
-            left.parent = this;
-            dotToken.parent = this;
-            right.parent = this;
-        }
+    export interface ArrayLiteralExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
+        openBracketToken: ISyntaxToken;
+        expressions: IExpressionSyntax[];
+        closeBracketToken: ISyntaxToken;
     }
-
-    export class TypeArgumentListSyntax extends SyntaxNode {
-        constructor(public lessThanToken: ISyntaxToken,
-                    public typeArguments: ITypeSyntax[],
-                    public greaterThanToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.TypeArgumentList, data); 
 
-            lessThanToken.parent = this;
-            !isShared(typeArguments) && (typeArguments.parent = this);
-            greaterThanToken.parent = this;
-        }
+    export interface OmittedExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
     }
 
-    export class ConstructorTypeSyntax extends SyntaxNode implements ITypeSyntax {
-        public _isType: any;
-
-        constructor(public newKeyword: ISyntaxToken,
-                    public typeParameterList: TypeParameterListSyntax,
-                    public parameterList: ParameterListSyntax,
-                    public equalsGreaterThanToken: ISyntaxToken,
-                    public type: ITypeSyntax,
-                    data: number) {
-            super(SyntaxKind.ConstructorType, data); 
-
-            newKeyword.parent = this;
-            typeParameterList && (typeParameterList.parent = this);
-            parameterList.parent = this;
-            equalsGreaterThanToken.parent = this;
-            type.parent = this;
-        }
+    export interface ParenthesizedExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
+        openParenToken: ISyntaxToken;
+        expression: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
     }
-
-    export class FunctionTypeSyntax extends SyntaxNode implements ITypeSyntax {
-        public _isType: any;
 
-        constructor(public typeParameterList: TypeParameterListSyntax,
-                    public parameterList: ParameterListSyntax,
-                    public equalsGreaterThanToken: ISyntaxToken,
-                    public type: ITypeSyntax,
-                    data: number) {
-            super(SyntaxKind.FunctionType, data); 
-
-            typeParameterList && (typeParameterList.parent = this);
-            parameterList.parent = this;
-            equalsGreaterThanToken.parent = this;
-            type.parent = this;
-        }
+    export interface SimpleArrowFunctionExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        identifier: ISyntaxToken;
+        equalsGreaterThanToken: ISyntaxToken;
+        block: BlockSyntax;
+        expression: IExpressionSyntax;
     }
 
-    export class ObjectTypeSyntax extends SyntaxNode implements ITypeSyntax {
-        public _isType: any;
-
-        constructor(public openBraceToken: ISyntaxToken,
-                    public typeMembers: ITypeMemberSyntax[],
-                    public closeBraceToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ObjectType, data); 
-
-            openBraceToken.parent = this;
-            !isShared(typeMembers) && (typeMembers.parent = this);
-            closeBraceToken.parent = this;
-        }
+    export interface ParenthesizedArrowFunctionExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        callSignature: CallSignatureSyntax;
+        equalsGreaterThanToken: ISyntaxToken;
+        block: BlockSyntax;
+        expression: IExpressionSyntax;
     }
 
-    export class ArrayTypeSyntax extends SyntaxNode implements ITypeSyntax {
-        public _isType: any;
-
-        constructor(public type: ITypeSyntax,
-                    public openBracketToken: ISyntaxToken,
-                    public closeBracketToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ArrayType, data); 
-
-            type.parent = this;
-            openBracketToken.parent = this;
-            closeBracketToken.parent = this;
-        }
+    export interface QualifiedNameSyntax extends ISyntaxNode, INameSyntax {
+        left: INameSyntax;
+        dotToken: ISyntaxToken;
+        right: ISyntaxToken;
     }
 
-    export class GenericTypeSyntax extends SyntaxNode implements ITypeSyntax {
-        public _isType: any;
-
-        constructor(public name: INameSyntax,
-                    public typeArgumentList: TypeArgumentListSyntax,
-                    data: number) {
-            super(SyntaxKind.GenericType, data); 
-
-            name.parent = this;
-            typeArgumentList.parent = this;
-        }
+    export interface TypeArgumentListSyntax extends ISyntaxNode {
+        lessThanToken: ISyntaxToken;
+        typeArguments: ITypeSyntax[];
+        greaterThanToken: ISyntaxToken;
     }
 
-    export class TypeQuerySyntax extends SyntaxNode implements ITypeSyntax {
-        public _isType: any;
-
-        constructor(public typeOfKeyword: ISyntaxToken,
-                    public name: INameSyntax,
-                    data: number) {
-            super(SyntaxKind.TypeQuery, data); 
-
-            typeOfKeyword.parent = this;
-            name.parent = this;
-        }
+    export interface ConstructorTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        newKeyword: ISyntaxToken;
+        typeParameterList: TypeParameterListSyntax;
+        parameterList: ParameterListSyntax;
+        equalsGreaterThanToken: ISyntaxToken;
+        type: ITypeSyntax;
     }
 
-    export class TypeAnnotationSyntax extends SyntaxNode {
-        constructor(public colonToken: ISyntaxToken,
-                    public type: ITypeSyntax,
-                    data: number) {
-            super(SyntaxKind.TypeAnnotation, data); 
-
-            colonToken.parent = this;
-            type.parent = this;
-        }
+    export interface FunctionTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        typeParameterList: TypeParameterListSyntax;
+        parameterList: ParameterListSyntax;
+        equalsGreaterThanToken: ISyntaxToken;
+        type: ITypeSyntax;
     }
 
-    export class BlockSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public openBraceToken: ISyntaxToken,
-                    public statements: IStatementSyntax[],
-                    public closeBraceToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.Block, data); 
-
-            openBraceToken.parent = this;
-            !isShared(statements) && (statements.parent = this);
-            closeBraceToken.parent = this;
-        }
+    export interface ObjectTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        openBraceToken: ISyntaxToken;
+        typeMembers: ITypeMemberSyntax[];
+        closeBraceToken: ISyntaxToken;
     }
 
-    export class ParameterSyntax extends SyntaxNode {
-        constructor(public dotDotDotToken: ISyntaxToken,
-                    public modifiers: ISyntaxToken[],
-                    public identifier: ISyntaxToken,
-                    public questionToken: ISyntaxToken,
-                    public typeAnnotation: TypeAnnotationSyntax,
-                    public equalsValueClause: EqualsValueClauseSyntax,
-                    data: number) {
-            super(SyntaxKind.Parameter, data); 
-
-            dotDotDotToken && (dotDotDotToken.parent = this);
-            !isShared(modifiers) && (modifiers.parent = this);
-            identifier.parent = this;
-            questionToken && (questionToken.parent = this);
-            typeAnnotation && (typeAnnotation.parent = this);
-            equalsValueClause && (equalsValueClause.parent = this);
-        }
+    export interface ArrayTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        type: ITypeSyntax;
+        openBracketToken: ISyntaxToken;
+        closeBracketToken: ISyntaxToken;
     }
 
-    export class MemberAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
-        public _isMemberExpression: any;
-        public _isCallExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public expression: ILeftHandSideExpressionSyntax,
-                    public dotToken: ISyntaxToken,
-                    public name: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.MemberAccessExpression, data); 
-
-            expression.parent = this;
-            dotToken.parent = this;
-            name.parent = this;
-        }
+    export interface GenericTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        name: INameSyntax;
+        typeArgumentList: TypeArgumentListSyntax;
     }
-
-    export class PostfixUnaryExpressionSyntax extends SyntaxNode implements IPostfixExpressionSyntax {
-        private _kind: SyntaxKind;
 
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(kind: SyntaxKind,
-                    public operand: ILeftHandSideExpressionSyntax,
-                    public operatorToken: ISyntaxToken,
-                    data: number) {
-            super(kind, data); 
-
-            this._kind = kind;
-            operand.parent = this;
-            operatorToken.parent = this;
-        }
+    export interface TypeQuerySyntax extends ISyntaxNode, ITypeSyntax {
+        typeOfKeyword: ISyntaxToken;
+        name: INameSyntax;
     }
 
-    export class ElementAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
-        public _isMemberExpression: any;
-        public _isCallExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public expression: ILeftHandSideExpressionSyntax,
-                    public openBracketToken: ISyntaxToken,
-                    public argumentExpression: IExpressionSyntax,
-                    public closeBracketToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ElementAccessExpression, data); 
-
-            expression.parent = this;
-            openBracketToken.parent = this;
-            argumentExpression.parent = this;
-            closeBracketToken.parent = this;
-        }
+    export interface TypeAnnotationSyntax extends ISyntaxNode {
+        colonToken: ISyntaxToken;
+        type: ITypeSyntax;
     }
-
-    export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax {
-        public _isCallExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
 
-        constructor(public expression: ILeftHandSideExpressionSyntax,
-                    public argumentList: ArgumentListSyntax,
-                    data: number) {
-            super(SyntaxKind.InvocationExpression, data); 
-
-            expression.parent = this;
-            argumentList.parent = this;
-        }
+    export interface BlockSyntax extends ISyntaxNode, IStatementSyntax {
+        openBraceToken: ISyntaxToken;
+        statements: IStatementSyntax[];
+        closeBraceToken: ISyntaxToken;
     }
 
-    export class ArgumentListSyntax extends SyntaxNode {
-    public arguments: IExpressionSyntax[];
-        constructor(public typeArgumentList: TypeArgumentListSyntax,
-                    public openParenToken: ISyntaxToken,
-                    _arguments: IExpressionSyntax[],
-                    public closeParenToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ArgumentList, data); 
-
-            this.arguments = _arguments;
-            typeArgumentList && (typeArgumentList.parent = this);
-            openParenToken.parent = this;
-            !isShared(_arguments) && (_arguments.parent = this);
-            closeParenToken.parent = this;
-        }
+    export interface ParameterSyntax extends ISyntaxNode {
+        dotDotDotToken: ISyntaxToken;
+        modifiers: ISyntaxToken[];
+        identifier: ISyntaxToken;
+        questionToken: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
+        equalsValueClause: EqualsValueClauseSyntax;
     }
-
-    export class BinaryExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
-        private _kind: SyntaxKind;
-
-        public _isExpression: any;
-
-        constructor(kind: SyntaxKind,
-                    public left: IExpressionSyntax,
-                    public operatorToken: ISyntaxToken,
-                    public right: IExpressionSyntax,
-                    data: number) {
-            super(kind, data); 
 
-            this._kind = kind;
-            left.parent = this;
-            operatorToken.parent = this;
-            right.parent = this;
-        }
+    export interface MemberAccessExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax, ICallExpressionSyntax {
+        expression: ILeftHandSideExpressionSyntax;
+        dotToken: ISyntaxToken;
+        name: ISyntaxToken;
     }
 
-    export class ConditionalExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
-        public _isExpression: any;
-
-        constructor(public condition: IExpressionSyntax,
-                    public questionToken: ISyntaxToken,
-                    public whenTrue: IExpressionSyntax,
-                    public colonToken: ISyntaxToken,
-                    public whenFalse: IExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.ConditionalExpression, data); 
-
-            condition.parent = this;
-            questionToken.parent = this;
-            whenTrue.parent = this;
-            colonToken.parent = this;
-            whenFalse.parent = this;
-        }
+    export interface PostfixUnaryExpressionSyntax extends ISyntaxNode, IPostfixExpressionSyntax {
+        operand: ILeftHandSideExpressionSyntax;
+        operatorToken: ISyntaxToken;
     }
 
-    export class ConstructSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
-        public _isTypeMember: any;
-
-        constructor(public newKeyword: ISyntaxToken,
-                    public callSignature: CallSignatureSyntax,
-                    data: number) {
-            super(SyntaxKind.ConstructSignature, data); 
-
-            newKeyword.parent = this;
-            callSignature.parent = this;
-        }
+    export interface ElementAccessExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax, ICallExpressionSyntax {
+        expression: ILeftHandSideExpressionSyntax;
+        openBracketToken: ISyntaxToken;
+        argumentExpression: IExpressionSyntax;
+        closeBracketToken: ISyntaxToken;
     }
 
-    export class MethodSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
-        public _isTypeMember: any;
-
-        constructor(public propertyName: ISyntaxToken,
-                    public questionToken: ISyntaxToken,
-                    public callSignature: CallSignatureSyntax,
-                    data: number) {
-            super(SyntaxKind.MethodSignature, data); 
-
-            propertyName.parent = this;
-            questionToken && (questionToken.parent = this);
-            callSignature.parent = this;
-        }
+    export interface InvocationExpressionSyntax extends ISyntaxNode, ICallExpressionSyntax {
+        expression: ILeftHandSideExpressionSyntax;
+        argumentList: ArgumentListSyntax;
     }
 
-    export class IndexSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
-        public _isTypeMember: any;
-
-        constructor(public openBracketToken: ISyntaxToken,
-                    public parameter: ParameterSyntax,
-                    public closeBracketToken: ISyntaxToken,
-                    public typeAnnotation: TypeAnnotationSyntax,
-                    data: number) {
-            super(SyntaxKind.IndexSignature, data); 
-
-            openBracketToken.parent = this;
-            parameter.parent = this;
-            closeBracketToken.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
-        }
+    export interface ArgumentListSyntax extends ISyntaxNode {
+        typeArgumentList: TypeArgumentListSyntax;
+        openParenToken: ISyntaxToken;
+        arguments: IExpressionSyntax[];
+        closeParenToken: ISyntaxToken;
     }
 
-    export class PropertySignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
-        public _isTypeMember: any;
-
-        constructor(public propertyName: ISyntaxToken,
-                    public questionToken: ISyntaxToken,
-                    public typeAnnotation: TypeAnnotationSyntax,
-                    data: number) {
-            super(SyntaxKind.PropertySignature, data); 
-
-            propertyName.parent = this;
-            questionToken && (questionToken.parent = this);
-            typeAnnotation && (typeAnnotation.parent = this);
-        }
+    export interface BinaryExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
+        left: IExpressionSyntax;
+        operatorToken: ISyntaxToken;
+        right: IExpressionSyntax;
     }
-
-    export class CallSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
-        public _isTypeMember: any;
-
-        constructor(public typeParameterList: TypeParameterListSyntax,
-                    public parameterList: ParameterListSyntax,
-                    public typeAnnotation: TypeAnnotationSyntax,
-                    data: number) {
-            super(SyntaxKind.CallSignature, data); 
 
-            typeParameterList && (typeParameterList.parent = this);
-            parameterList.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
-        }
+    export interface ConditionalExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
+        condition: IExpressionSyntax;
+        questionToken: ISyntaxToken;
+        whenTrue: IExpressionSyntax;
+        colonToken: ISyntaxToken;
+        whenFalse: IExpressionSyntax;
     }
 
-    export class ParameterListSyntax extends SyntaxNode {
-        constructor(public openParenToken: ISyntaxToken,
-                    public parameters: ParameterSyntax[],
-                    public closeParenToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ParameterList, data); 
-
-            openParenToken.parent = this;
-            !isShared(parameters) && (parameters.parent = this);
-            closeParenToken.parent = this;
-        }
+    export interface ConstructSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        newKeyword: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
     }
 
-    export class TypeParameterListSyntax extends SyntaxNode {
-        constructor(public lessThanToken: ISyntaxToken,
-                    public typeParameters: TypeParameterSyntax[],
-                    public greaterThanToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.TypeParameterList, data); 
-
-            lessThanToken.parent = this;
-            !isShared(typeParameters) && (typeParameters.parent = this);
-            greaterThanToken.parent = this;
-        }
+    export interface MethodSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        propertyName: ISyntaxToken;
+        questionToken: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
     }
-
-    export class TypeParameterSyntax extends SyntaxNode {
-        constructor(public identifier: ISyntaxToken,
-                    public constraint: ConstraintSyntax,
-                    data: number) {
-            super(SyntaxKind.TypeParameter, data); 
 
-            identifier.parent = this;
-            constraint && (constraint.parent = this);
-        }
+    export interface IndexSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        openBracketToken: ISyntaxToken;
+        parameter: ParameterSyntax;
+        closeBracketToken: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
     }
-
-    export class ConstraintSyntax extends SyntaxNode {
-        constructor(public extendsKeyword: ISyntaxToken,
-                    public type: ITypeSyntax,
-                    data: number) {
-            super(SyntaxKind.Constraint, data); 
 
-            extendsKeyword.parent = this;
-            type.parent = this;
-        }
+    export interface PropertySignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        propertyName: ISyntaxToken;
+        questionToken: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
     }
 
-    export class ElseClauseSyntax extends SyntaxNode {
-        constructor(public elseKeyword: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    data: number) {
-            super(SyntaxKind.ElseClause, data); 
-
-            elseKeyword.parent = this;
-            statement.parent = this;
-        }
+    export interface CallSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        typeParameterList: TypeParameterListSyntax;
+        parameterList: ParameterListSyntax;
+        typeAnnotation: TypeAnnotationSyntax;
     }
 
-    export class IfStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public ifKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public condition: IExpressionSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    public elseClause: ElseClauseSyntax,
-                    data: number) {
-            super(SyntaxKind.IfStatement, data); 
-
-            ifKeyword.parent = this;
-            openParenToken.parent = this;
-            condition.parent = this;
-            closeParenToken.parent = this;
-            statement.parent = this;
-            elseClause && (elseClause.parent = this);
-        }
+    export interface ParameterListSyntax extends ISyntaxNode {
+        openParenToken: ISyntaxToken;
+        parameters: ParameterSyntax[];
+        closeParenToken: ISyntaxToken;
     }
-
-    export class ExpressionStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public expression: IExpressionSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ExpressionStatement, data); 
 
-            expression.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface TypeParameterListSyntax extends ISyntaxNode {
+        lessThanToken: ISyntaxToken;
+        typeParameters: TypeParameterSyntax[];
+        greaterThanToken: ISyntaxToken;
     }
 
-    export class ConstructorDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
-        public _isClassElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public constructorKeyword: ISyntaxToken,
-                    public callSignature: CallSignatureSyntax,
-                    public block: BlockSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ConstructorDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            constructorKeyword.parent = this;
-            callSignature.parent = this;
-            block && (block.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface TypeParameterSyntax extends ISyntaxNode {
+        identifier: ISyntaxToken;
+        constraint: ConstraintSyntax;
     }
 
-    export class MemberFunctionDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
-        public _isMemberDeclaration: any;
-        public _isClassElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public propertyName: ISyntaxToken,
-                    public callSignature: CallSignatureSyntax,
-                    public block: BlockSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.MemberFunctionDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            propertyName.parent = this;
-            callSignature.parent = this;
-            block && (block.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface ConstraintSyntax extends ISyntaxNode {
+        extendsKeyword: ISyntaxToken;
+        type: ITypeSyntax;
     }
 
-    export class GetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
-        public _isMemberDeclaration: any;
-        public _isPropertyAssignment: any;
-        public _isClassElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public getKeyword: ISyntaxToken,
-                    public propertyName: ISyntaxToken,
-                    public parameterList: ParameterListSyntax,
-                    public typeAnnotation: TypeAnnotationSyntax,
-                    public block: BlockSyntax,
-                    data: number) {
-            super(SyntaxKind.GetAccessor, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            getKeyword.parent = this;
-            propertyName.parent = this;
-            parameterList.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
-            block.parent = this;
-        }
+    export interface ElseClauseSyntax extends ISyntaxNode {
+        elseKeyword: ISyntaxToken;
+        statement: IStatementSyntax;
     }
 
-    export class SetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
-        public _isMemberDeclaration: any;
-        public _isPropertyAssignment: any;
-        public _isClassElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public setKeyword: ISyntaxToken,
-                    public propertyName: ISyntaxToken,
-                    public parameterList: ParameterListSyntax,
-                    public block: BlockSyntax,
-                    data: number) {
-            super(SyntaxKind.SetAccessor, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            setKeyword.parent = this;
-            propertyName.parent = this;
-            parameterList.parent = this;
-            block.parent = this;
-        }
+    export interface IfStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        ifKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        condition: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        statement: IStatementSyntax;
+        elseClause: ElseClauseSyntax;
     }
 
-    export class MemberVariableDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
-        public _isMemberDeclaration: any;
-        public _isClassElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public variableDeclarator: VariableDeclaratorSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.MemberVariableDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            variableDeclarator.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface ExpressionStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        expression: IExpressionSyntax;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class IndexMemberDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
-        public _isClassElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public indexSignature: IndexSignatureSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.IndexMemberDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            indexSignature.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface ConstructorDeclarationSyntax extends ISyntaxNode, IClassElementSyntax {
+        modifiers: ISyntaxToken[];
+        constructorKeyword: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+        block: BlockSyntax;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class ThrowStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public throwKeyword: ISyntaxToken,
-                    public expression: IExpressionSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ThrowStatement, data); 
-
-            throwKeyword.parent = this;
-            expression.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface MemberFunctionDeclarationSyntax extends ISyntaxNode, IMemberDeclarationSyntax {
+        modifiers: ISyntaxToken[];
+        propertyName: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+        block: BlockSyntax;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class ReturnStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public returnKeyword: ISyntaxToken,
-                    public expression: IExpressionSyntax,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ReturnStatement, data); 
-
-            returnKeyword.parent = this;
-            expression && (expression.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface GetAccessorSyntax extends ISyntaxNode, IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
+        modifiers: ISyntaxToken[];
+        getKeyword: ISyntaxToken;
+        propertyName: ISyntaxToken;
+        parameterList: ParameterListSyntax;
+        typeAnnotation: TypeAnnotationSyntax;
+        block: BlockSyntax;
     }
 
-    export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public newKeyword: ISyntaxToken,
-                    public expression: IMemberExpressionSyntax,
-                    public argumentList: ArgumentListSyntax,
-                    data: number) {
-            super(SyntaxKind.ObjectCreationExpression, data); 
-
-            newKeyword.parent = this;
-            expression.parent = this;
-            argumentList && (argumentList.parent = this);
-        }
+    export interface SetAccessorSyntax extends ISyntaxNode, IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
+        modifiers: ISyntaxToken[];
+        setKeyword: ISyntaxToken;
+        propertyName: ISyntaxToken;
+        parameterList: ParameterListSyntax;
+        block: BlockSyntax;
     }
 
-    export class SwitchStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public switchKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public expression: IExpressionSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    public openBraceToken: ISyntaxToken,
-                    public switchClauses: ISwitchClauseSyntax[],
-                    public closeBraceToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.SwitchStatement, data); 
-
-            switchKeyword.parent = this;
-            openParenToken.parent = this;
-            expression.parent = this;
-            closeParenToken.parent = this;
-            openBraceToken.parent = this;
-            !isShared(switchClauses) && (switchClauses.parent = this);
-            closeBraceToken.parent = this;
-        }
+    export interface MemberVariableDeclarationSyntax extends ISyntaxNode, IMemberDeclarationSyntax {
+        modifiers: ISyntaxToken[];
+        variableDeclarator: VariableDeclaratorSyntax;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class CaseSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
-        public _isSwitchClause: any;
-
-        constructor(public caseKeyword: ISyntaxToken,
-                    public expression: IExpressionSyntax,
-                    public colonToken: ISyntaxToken,
-                    public statements: IStatementSyntax[],
-                    data: number) {
-            super(SyntaxKind.CaseSwitchClause, data); 
-
-            caseKeyword.parent = this;
-            expression.parent = this;
-            colonToken.parent = this;
-            !isShared(statements) && (statements.parent = this);
-        }
+    export interface IndexMemberDeclarationSyntax extends ISyntaxNode, IClassElementSyntax {
+        modifiers: ISyntaxToken[];
+        indexSignature: IndexSignatureSyntax;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class DefaultSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
-        public _isSwitchClause: any;
-
-        constructor(public defaultKeyword: ISyntaxToken,
-                    public colonToken: ISyntaxToken,
-                    public statements: IStatementSyntax[],
-                    data: number) {
-            super(SyntaxKind.DefaultSwitchClause, data); 
-
-            defaultKeyword.parent = this;
-            colonToken.parent = this;
-            !isShared(statements) && (statements.parent = this);
-        }
+    export interface ThrowStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        throwKeyword: ISyntaxToken;
+        expression: IExpressionSyntax;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class BreakStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public breakKeyword: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.BreakStatement, data); 
-
-            breakKeyword.parent = this;
-            identifier && (identifier.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface ReturnStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        returnKeyword: ISyntaxToken;
+        expression: IExpressionSyntax;
+        semicolonToken: ISyntaxToken;
     }
-
-    export class ContinueStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public continueKeyword: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ContinueStatement, data); 
 
-            continueKeyword.parent = this;
-            identifier && (identifier.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface ObjectCreationExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax {
+        newKeyword: ISyntaxToken;
+        expression: IMemberExpressionSyntax;
+        argumentList: ArgumentListSyntax;
     }
 
-    export class ForStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public forKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public variableDeclaration: VariableDeclarationSyntax,
-                    public initializer: IExpressionSyntax,
-                    public firstSemicolonToken: ISyntaxToken,
-                    public condition: IExpressionSyntax,
-                    public secondSemicolonToken: ISyntaxToken,
-                    public incrementor: IExpressionSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    data: number) {
-            super(SyntaxKind.ForStatement, data); 
-
-            forKeyword.parent = this;
-            openParenToken.parent = this;
-            variableDeclaration && (variableDeclaration.parent = this);
-            initializer && (initializer.parent = this);
-            firstSemicolonToken.parent = this;
-            condition && (condition.parent = this);
-            secondSemicolonToken.parent = this;
-            incrementor && (incrementor.parent = this);
-            closeParenToken.parent = this;
-            statement.parent = this;
-        }
+    export interface SwitchStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        switchKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        expression: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        openBraceToken: ISyntaxToken;
+        switchClauses: ISwitchClauseSyntax[];
+        closeBraceToken: ISyntaxToken;
     }
 
-    export class ForInStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public forKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public variableDeclaration: VariableDeclarationSyntax,
-                    public left: IExpressionSyntax,
-                    public inKeyword: ISyntaxToken,
-                    public expression: IExpressionSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    data: number) {
-            super(SyntaxKind.ForInStatement, data); 
-
-            forKeyword.parent = this;
-            openParenToken.parent = this;
-            variableDeclaration && (variableDeclaration.parent = this);
-            left && (left.parent = this);
-            inKeyword.parent = this;
-            expression.parent = this;
-            closeParenToken.parent = this;
-            statement.parent = this;
-        }
+    export interface CaseSwitchClauseSyntax extends ISyntaxNode, ISwitchClauseSyntax {
+        caseKeyword: ISyntaxToken;
+        expression: IExpressionSyntax;
+        colonToken: ISyntaxToken;
+        statements: IStatementSyntax[];
     }
 
-    export class WhileStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public whileKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public condition: IExpressionSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    data: number) {
-            super(SyntaxKind.WhileStatement, data); 
-
-            whileKeyword.parent = this;
-            openParenToken.parent = this;
-            condition.parent = this;
-            closeParenToken.parent = this;
-            statement.parent = this;
-        }
+    export interface DefaultSwitchClauseSyntax extends ISyntaxNode, ISwitchClauseSyntax {
+        defaultKeyword: ISyntaxToken;
+        colonToken: ISyntaxToken;
+        statements: IStatementSyntax[];
     }
 
-    export class WithStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public withKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public condition: IExpressionSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    data: number) {
-            super(SyntaxKind.WithStatement, data); 
-
-            withKeyword.parent = this;
-            openParenToken.parent = this;
-            condition.parent = this;
-            closeParenToken.parent = this;
-            statement.parent = this;
-        }
+    export interface BreakStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        breakKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class EnumDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
-        public _isModuleElement: any;
-
-        constructor(public modifiers: ISyntaxToken[],
-                    public enumKeyword: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public openBraceToken: ISyntaxToken,
-                    public enumElements: EnumElementSyntax[],
-                    public closeBraceToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.EnumDeclaration, data); 
-
-            !isShared(modifiers) && (modifiers.parent = this);
-            enumKeyword.parent = this;
-            identifier.parent = this;
-            openBraceToken.parent = this;
-            !isShared(enumElements) && (enumElements.parent = this);
-            closeBraceToken.parent = this;
-        }
+    export interface ContinueStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        continueKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        semicolonToken: ISyntaxToken;
     }
 
-    export class EnumElementSyntax extends SyntaxNode {
-        constructor(public propertyName: ISyntaxToken,
-                    public equalsValueClause: EqualsValueClauseSyntax,
-                    data: number) {
-            super(SyntaxKind.EnumElement, data); 
-
-            propertyName.parent = this;
-            equalsValueClause && (equalsValueClause.parent = this);
-        }
+    export interface ForStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        forKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        variableDeclaration: VariableDeclarationSyntax;
+        initializer: IExpressionSyntax;
+        firstSemicolonToken: ISyntaxToken;
+        condition: IExpressionSyntax;
+        secondSemicolonToken: ISyntaxToken;
+        incrementor: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        statement: IStatementSyntax;
     }
 
-    export class CastExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public lessThanToken: ISyntaxToken,
-                    public type: ITypeSyntax,
-                    public greaterThanToken: ISyntaxToken,
-                    public expression: IUnaryExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.CastExpression, data); 
-
-            lessThanToken.parent = this;
-            type.parent = this;
-            greaterThanToken.parent = this;
-            expression.parent = this;
-        }
+    export interface ForInStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        forKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        variableDeclaration: VariableDeclarationSyntax;
+        left: IExpressionSyntax;
+        inKeyword: ISyntaxToken;
+        expression: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        statement: IStatementSyntax;
     }
 
-    export class ObjectLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public openBraceToken: ISyntaxToken,
-                    public propertyAssignments: IPropertyAssignmentSyntax[],
-                    public closeBraceToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.ObjectLiteralExpression, data); 
-
-            openBraceToken.parent = this;
-            !isShared(propertyAssignments) && (propertyAssignments.parent = this);
-            closeBraceToken.parent = this;
-        }
+    export interface WhileStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        whileKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        condition: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        statement: IStatementSyntax;
     }
-
-    export class SimplePropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
-        public _isPropertyAssignment: any;
 
-        constructor(public propertyName: ISyntaxToken,
-                    public colonToken: ISyntaxToken,
-                    public expression: IExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.SimplePropertyAssignment, data); 
-
-            propertyName.parent = this;
-            colonToken.parent = this;
-            expression.parent = this;
-        }
+    export interface WithStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        withKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        condition: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        statement: IStatementSyntax;
     }
-
-    export class FunctionPropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
-        public _isPropertyAssignment: any;
 
-        constructor(public propertyName: ISyntaxToken,
-                    public callSignature: CallSignatureSyntax,
-                    public block: BlockSyntax,
-                    data: number) {
-            super(SyntaxKind.FunctionPropertyAssignment, data); 
-
-            propertyName.parent = this;
-            callSignature.parent = this;
-            block.parent = this;
-        }
+    export interface EnumDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        enumKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        openBraceToken: ISyntaxToken;
+        enumElements: EnumElementSyntax[];
+        closeBraceToken: ISyntaxToken;
     }
 
-    export class FunctionExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public functionKeyword: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public callSignature: CallSignatureSyntax,
-                    public block: BlockSyntax,
-                    data: number) {
-            super(SyntaxKind.FunctionExpression, data); 
-
-            functionKeyword.parent = this;
-            identifier && (identifier.parent = this);
-            callSignature.parent = this;
-            block.parent = this;
-        }
+    export interface EnumElementSyntax extends ISyntaxNode {
+        propertyName: ISyntaxToken;
+        equalsValueClause: EqualsValueClauseSyntax;
     }
 
-    export class EmptyStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.EmptyStatement, data); 
-
-            semicolonToken.parent = this;
-        }
+    export interface CastExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        lessThanToken: ISyntaxToken;
+        type: ITypeSyntax;
+        greaterThanToken: ISyntaxToken;
+        expression: IUnaryExpressionSyntax;
     }
 
-    export class TryStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public tryKeyword: ISyntaxToken,
-                    public block: BlockSyntax,
-                    public catchClause: CatchClauseSyntax,
-                    public finallyClause: FinallyClauseSyntax,
-                    data: number) {
-            super(SyntaxKind.TryStatement, data); 
-
-            tryKeyword.parent = this;
-            block.parent = this;
-            catchClause && (catchClause.parent = this);
-            finallyClause && (finallyClause.parent = this);
-        }
+    export interface ObjectLiteralExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
+        openBraceToken: ISyntaxToken;
+        propertyAssignments: IPropertyAssignmentSyntax[];
+        closeBraceToken: ISyntaxToken;
     }
 
-    export class CatchClauseSyntax extends SyntaxNode {
-        constructor(public catchKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public identifier: ISyntaxToken,
-                    public typeAnnotation: TypeAnnotationSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    public block: BlockSyntax,
-                    data: number) {
-            super(SyntaxKind.CatchClause, data); 
-
-            catchKeyword.parent = this;
-            openParenToken.parent = this;
-            identifier.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
-            closeParenToken.parent = this;
-            block.parent = this;
-        }
+    export interface SimplePropertyAssignmentSyntax extends ISyntaxNode, IPropertyAssignmentSyntax {
+        propertyName: ISyntaxToken;
+        colonToken: ISyntaxToken;
+        expression: IExpressionSyntax;
     }
 
-    export class FinallyClauseSyntax extends SyntaxNode {
-        constructor(public finallyKeyword: ISyntaxToken,
-                    public block: BlockSyntax,
-                    data: number) {
-            super(SyntaxKind.FinallyClause, data); 
-
-            finallyKeyword.parent = this;
-            block.parent = this;
-        }
+    export interface FunctionPropertyAssignmentSyntax extends ISyntaxNode, IPropertyAssignmentSyntax {
+        propertyName: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+        block: BlockSyntax;
     }
-
-    export class LabeledStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
 
-        constructor(public identifier: ISyntaxToken,
-                    public colonToken: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    data: number) {
-            super(SyntaxKind.LabeledStatement, data); 
-
-            identifier.parent = this;
-            colonToken.parent = this;
-            statement.parent = this;
-        }
+    export interface FunctionExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
+        functionKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+        block: BlockSyntax;
     }
 
-    export class DoStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
-        constructor(public doKeyword: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    public whileKeyword: ISyntaxToken,
-                    public openParenToken: ISyntaxToken,
-                    public condition: IExpressionSyntax,
-                    public closeParenToken: ISyntaxToken,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.DoStatement, data); 
-
-            doKeyword.parent = this;
-            statement.parent = this;
-            whileKeyword.parent = this;
-            openParenToken.parent = this;
-            condition.parent = this;
-            closeParenToken.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface EmptyStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        semicolonToken: ISyntaxToken;
     }
 
-    export class TypeOfExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public typeOfKeyword: ISyntaxToken,
-                    public expression: IUnaryExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.TypeOfExpression, data); 
-
-            typeOfKeyword.parent = this;
-            expression.parent = this;
-        }
+    export interface TryStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        tryKeyword: ISyntaxToken;
+        block: BlockSyntax;
+        catchClause: CatchClauseSyntax;
+        finallyClause: FinallyClauseSyntax;
     }
 
-    export class DeleteExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(public deleteKeyword: ISyntaxToken,
-                    public expression: IUnaryExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.DeleteExpression, data); 
+    export interface CatchClauseSyntax extends ISyntaxNode {
+        catchKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        identifier: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
+        closeParenToken: ISyntaxToken;
+        block: BlockSyntax;
+    }
 
-            deleteKeyword.parent = this;
-            expression.parent = this;
-        }
+    export interface FinallyClauseSyntax extends ISyntaxNode {
+        finallyKeyword: ISyntaxToken;
+        block: BlockSyntax;
     }
 
-    export class VoidExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
+    export interface LabeledStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        identifier: ISyntaxToken;
+        colonToken: ISyntaxToken;
+        statement: IStatementSyntax;
+    }
 
-        constructor(public voidKeyword: ISyntaxToken,
-                    public expression: IUnaryExpressionSyntax,
-                    data: number) {
-            super(SyntaxKind.VoidExpression, data); 
+    export interface DoStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        doKeyword: ISyntaxToken;
+        statement: IStatementSyntax;
+        whileKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        condition: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        semicolonToken: ISyntaxToken;
+    }
 
-            voidKeyword.parent = this;
-            expression.parent = this;
-        }
+    export interface TypeOfExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        typeOfKeyword: ISyntaxToken;
+        expression: IUnaryExpressionSyntax;
     }
 
-    export class DebuggerStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
+    export interface DeleteExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        deleteKeyword: ISyntaxToken;
+        expression: IUnaryExpressionSyntax;
+    }
 
-        constructor(public debuggerKeyword: ISyntaxToken,
-                    public semicolonToken: ISyntaxToken,
-                    data: number) {
-            super(SyntaxKind.DebuggerStatement, data); 
+    export interface VoidExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        voidKeyword: ISyntaxToken;
+        expression: IUnaryExpressionSyntax;
+    }
 
-            debuggerKeyword.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
-        }
+    export interface DebuggerStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        debuggerKeyword: ISyntaxToken;
+        semicolonToken: ISyntaxToken;
     }
 }

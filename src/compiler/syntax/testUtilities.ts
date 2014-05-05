@@ -1,5 +1,5 @@
 module TypeScript {
-    export function nodeStructuralEquals(node1: TypeScript.SyntaxNode, node2: TypeScript.SyntaxNode): boolean {
+    export function nodeStructuralEquals(node1: TypeScript.ISyntaxNode, node2: TypeScript.ISyntaxNode): boolean {
         if (node1 === node2) { return true; }
         if (node1 === null || node2 === null) { return false; }
         if (node1.kind !== node2.kind) { return false; }
@@ -30,7 +30,7 @@ module TypeScript {
             return TypeScript.isToken(node2) ? tokenStructuralEquals(<TypeScript.ISyntaxToken>node1, <TypeScript.ISyntaxToken>node2) : false;
         }
 
-        return TypeScript.isNode(node2) ? nodeStructuralEquals(<TypeScript.SyntaxNode>node1, <TypeScript.SyntaxNode>node2) : false;
+        return TypeScript.isNode(node2) ? nodeStructuralEquals(<TypeScript.ISyntaxNode>node1, <TypeScript.ISyntaxNode>node2) : false;
     }
 
     export function tokenStructuralEquals(token1: TypeScript.ISyntaxToken, token2: TypeScript.ISyntaxToken): boolean {
@@ -140,7 +140,7 @@ module TypeScript {
             return tokenStructuralEquals(<TypeScript.ISyntaxToken>element1, <TypeScript.ISyntaxToken>element2);
         }
         else if (TypeScript.isNode(element1)) {
-            return nodeStructuralEquals(<TypeScript.SyntaxNode>element1, <TypeScript.SyntaxNode>element2);
+            return nodeStructuralEquals(<TypeScript.ISyntaxNode>element1, <TypeScript.ISyntaxNode>element2);
         }
         else if (TypeScript.isList(element1)) {
             return listStructuralEquals(<TypeScript.ISyntaxNodeOrToken[]>element1, <TypeScript.ISyntaxNodeOrToken[]>element2);

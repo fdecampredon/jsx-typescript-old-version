@@ -3,9 +3,10 @@
 module TypeScript {
     export class SyntaxWalker implements ISyntaxVisitor {
         public visitToken(token: ISyntaxToken): void {
+            Debug.assert(token !== undefined);
         }
 
-        public visitNode(node: SyntaxNode): void {
+        public visitNode(node: ISyntaxNode): void {
             visitNodeOrToken(this, node);
         }
 
@@ -14,7 +15,7 @@ module TypeScript {
                 this.visitToken(<ISyntaxToken>nodeOrToken);
             }
             else {
-                this.visitNode(<SyntaxNode>nodeOrToken);
+                this.visitNode(<ISyntaxNode>nodeOrToken);
             }
         }
 
@@ -26,7 +27,7 @@ module TypeScript {
             this.visitToken(token);
         }
 
-        public visitOptionalNode(node: SyntaxNode): void {
+        public visitOptionalNode(node: ISyntaxNode): void {
             if (node === null) {
                 return;
             }

@@ -142,7 +142,7 @@ function triviaToJSON(trivia: TypeScript.ISyntaxTrivia): any {
     return result;
 }
 
-function nodeToJSON(node: TypeScript.SyntaxNode): any {
+function nodeToJSON(node: TypeScript.ISyntaxNode): any {
     var result: any = {}
 
     for (var name in TypeScript.SyntaxKind) {
@@ -200,7 +200,7 @@ function elementToJSON(element: TypeScript.ISyntaxElement): any {
         return result;
     }
     else {
-        return nodeToJSON(<TypeScript.SyntaxNode>element);
+        return nodeToJSON(<TypeScript.ISyntaxNode>element);
     }
 }
 
@@ -221,8 +221,14 @@ function syntaxTreeToJSON(tree: TypeScript.SyntaxTree): any {
     return result;
 }
 
-function emptySourceUnit() {
-    return new TypeScript.SourceUnitSyntax(TypeScript.Syntax.emptyList<TypeScript.IModuleElementSyntax>(), TypeScript.Syntax.token(TypeScript.SyntaxKind.EndOfFileToken, { text: "" }, 0), 0);
+function emptySourceUnit(): TypeScript.SourceUnitSyntax {
+    return {
+        parent: null,
+        syntaxTree: null,
+        kind: TypeScript.SyntaxKind.SourceUnit, data: 0,
+        moduleElements: TypeScript.Syntax.emptyList<TypeScript.IModuleElementSyntax>(),
+        endOfFileToken: TypeScript.Syntax.token(TypeScript.SyntaxKind.EndOfFileToken, { text: "" }, 0)
+    };
 }
 
 class Program {

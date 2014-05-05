@@ -72,7 +72,7 @@ module TypeScript.Services {
             visitor.collectItems(items);
         }
 
-        private createItem(node: TypeScript.SyntaxNode, modifiers: ISyntaxToken[], kind: string, name: string): void {
+        private createItem(node: TypeScript.ISyntaxNode, modifiers: ISyntaxToken[], kind: string, name: string): void {
             var key = kind + "+" + name;
 
             if (this.currentScope.items[key] !== undefined) {
@@ -96,7 +96,7 @@ module TypeScript.Services {
         }
 
         private addAdditionalSpan(
-            node: TypeScript.SyntaxNode,
+            node: TypeScript.ISyntaxNode,
             key: string) {
 
             var item = this.currentScope.items[key]

@@ -3,18 +3,6 @@
 module TypeScript.Syntax {
     export var _nextSyntaxID: number = 1;
 
-    export function setParentForChildren(element: ISyntaxElement): void {
-        for (var i = 0, n = childCount(element); i < n; i++) {
-            var child = childAt(element, i);
-
-            // Don't set the parent for this child if it is a shared child.  This child can be 
-            // found under multiple parents, and thus has no valid 'parent' reference.
-            if (child && !isShared(child)) {
-                child.parent = element;
-            }
-        }
-    }
-
     export function getStandaloneExpression(positionedToken: ISyntaxToken): ISyntaxNodeOrToken {
         var token = positionedToken;
         if (positionedToken !== null && positionedToken.kind === SyntaxKind.IdentifierName) {
@@ -145,7 +133,7 @@ module TypeScript.Syntax {
             (<InvocationExpressionSyntax>node).expression.kind === SyntaxKind.SuperKeyword;
     }
 
-    export function isSuperInvocationExpressionStatement(node: SyntaxNode): boolean {
+    export function isSuperInvocationExpressionStatement(node: ISyntaxNode): boolean {
         return node.kind === SyntaxKind.ExpressionStatement &&
             isSuperInvocationExpression((<ExpressionStatementSyntax>node).expression);
     }
@@ -155,7 +143,7 @@ module TypeScript.Syntax {
             (<MemberAccessExpressionSyntax>node).expression.kind === SyntaxKind.SuperKeyword;
     }
 
-    export function isSuperMemberAccessInvocationExpression(node: SyntaxNode): boolean {
+    export function isSuperMemberAccessInvocationExpression(node: ISyntaxNode): boolean {
         return node.kind === SyntaxKind.InvocationExpression &&
             isSuperMemberAccessExpression((<InvocationExpressionSyntax>node).expression);
     }
@@ -164,7 +152,7 @@ module TypeScript.Syntax {
     //    return new BinaryExpressionSyntax(SyntaxKind.AssignmentExpression, left, token, right);
     //}
 
-    export function nodeHasSkippedOrMissingTokens(node: SyntaxNode): boolean {
+    export function nodeHasSkippedOrMissingTokens(node: ISyntaxNode): boolean {
         for (var i = 0; i < childCount(node); i++) {
             var child = childAt(node, i);
             if (isToken(child)) {
@@ -354,14 +342,14 @@ module TypeScript.Syntax {
         return false;
     }
 
-    export function containingNode(element: ISyntaxElement): SyntaxNode {
+    export function containingNode(element: ISyntaxElement): ISyntaxNode {
         var current = element.parent;
 
         while (current !== null && !isNode(current)) {
             current = current.parent;
         }
 
-        return <SyntaxNode>current;
+        return <ISyntaxNode>current;
     }
 
     export function findTokenOnLeft(element: ISyntaxElement, position: number, includeSkippedTokens: boolean = false): ISyntaxToken {

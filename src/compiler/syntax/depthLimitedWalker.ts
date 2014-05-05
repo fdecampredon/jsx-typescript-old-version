@@ -10,7 +10,7 @@ module TypeScript {
             this._maximumDepth = maximumDepth;
         }
 
-        public visitNode(node: SyntaxNode): void {
+        public visitNode(node: ISyntaxNode): void {
             if (this._depth < this._maximumDepth) {
                 this._depth++;
                 super.visitNode(node);

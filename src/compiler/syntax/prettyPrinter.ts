@@ -1,7 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript.PrettyPrinter {
-    export function prettyPrint(node: SyntaxNode, indentWhitespace: string = "    "): string {
+    export function prettyPrint(node: ISyntaxNode, indentWhitespace: string = "    "): string {
         var impl = new PrettyPrinterImpl(indentWhitespace);
         visitNodeOrToken(impl, node);
         return impl.result.join("");
@@ -106,6 +106,15 @@ module TypeScript.PrettyPrinter {
             this.result.push(text);
         }
 
+        private appendElement(element: ISyntaxElement): void {
+            if (isToken(element)) {
+                this.appendToken(<ISyntaxToken>element);
+            }
+            else if (isNode(element)) {
+                this.appendNode(<ISyntaxNode>element);
+            }
+        }
+
         private appendNode(node: ISyntaxNode): void {
             visitNodeOrToken(this, node);
         }
@@ -124,7 +133,7 @@ module TypeScript.PrettyPrinter {
         private appendSpaceList(list: ISyntaxNodeOrToken[]): void {
             for (var i = 0, n = childCount(list); i < n; i++) {
                 if (isNode(childAt(list, i))) {
-                    this.appendNode(childAt(list, i));
+                    this.appendNode(<ISyntaxNode>childAt(list, i));
                 }
                 else {
                     this.appendToken(<ISyntaxToken>childAt(list, i));
@@ -294,7 +303,7 @@ module TypeScript.PrettyPrinter {
             this.ensureSpace();
             this.appendToken(node.moduleKeyword);
             this.ensureSpace();
-            this.appendNode(node.name);
+            this.appendElement(node.name);
             this.ensureSpace();
             this.appendToken(node.stringLiteral);
             this.ensureSpace();
@@ -382,7 +391,7 @@ module TypeScript.PrettyPrinter {
             this.appendToken(node.equalsGreaterThanToken);
             this.ensureSpace();
             this.appendNode(node.block);
-            this.appendNode(node.expression);
+            this.appendElement(node.expression);
         }
 
         public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): void {
@@ -391,7 +400,7 @@ module TypeScript.PrettyPrinter {
             this.appendToken(node.equalsGreaterThanToken);
             this.ensureSpace();
             this.appendNode(node.block);
-            this.appendNode(node.expression);
+            this.appendElement(node.expression);
         }
 
         public visitQualifiedName(node: QualifiedNameSyntax): void {
@@ -798,7 +807,7 @@ module TypeScript.PrettyPrinter {
             this.ensureSpace();
             this.appendToken(node.openParenToken);
             this.appendNode(node.variableDeclaration);
-            this.appendNode(node.initializer);
+            this.appendElement(node.initializer);
             this.appendToken(node.firstSemicolonToken);
 
             if (node.condition) {
@@ -822,11 +831,11 @@ module TypeScript.PrettyPrinter {
             this.ensureSpace();
             this.appendToken(node.openParenToken);
             this.appendNode(node.variableDeclaration);
-            this.appendNode(node.left);
+            this.appendElement(node.left);
             this.ensureSpace();
             this.appendToken(node.inKeyword);
             this.ensureSpace();
-            this.appendNode(node.expression);
+            this.appendElement(node.expression);
             this.appendToken(node.closeParenToken);
             this.appendBlockOrStatement(node.statement);
         }

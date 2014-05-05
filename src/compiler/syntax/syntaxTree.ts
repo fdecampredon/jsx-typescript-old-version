@@ -731,7 +731,7 @@ module TypeScript {
             super.visitMemberFunctionDeclaration(node);
         }
 
-        private checkGetAccessorParameter(node: SyntaxNode, getKeyword: ISyntaxToken, parameterList: ParameterListSyntax): boolean {
+        private checkGetAccessorParameter(node: ISyntaxNode, getKeyword: ISyntaxToken, parameterList: ParameterListSyntax): boolean {
             if (parameterList.parameters.length !== 0) {
                 this.pushDiagnostic(getKeyword,
                     DiagnosticCode.get_accessor_cannot_have_parameters);
@@ -786,7 +786,7 @@ module TypeScript {
             super.visitGetAccessor(node);
         }
 
-        private checkForAccessorDeclarationInAmbientContext(accessor: SyntaxNode): boolean {
+        private checkForAccessorDeclarationInAmbientContext(accessor: ISyntaxNode): boolean {
             if (this.inAmbientDeclaration) {
                 this.pushDiagnostic(accessor, DiagnosticCode.Accessors_are_not_allowed_in_ambient_contexts, null);
                 return true;
@@ -795,7 +795,7 @@ module TypeScript {
             return false;
         }
 
-        private checkSetAccessorParameter(node: SyntaxNode, setKeyword: ISyntaxToken, parameterList: ParameterListSyntax): boolean {
+        private checkSetAccessorParameter(node: ISyntaxNode, setKeyword: ISyntaxToken, parameterList: ParameterListSyntax): boolean {
             if (childCount(parameterList.parameters) !== 1) {
                 this.pushDiagnostic(setKeyword,
                     DiagnosticCode.set_accessor_must_have_one_and_only_one_parameter);
