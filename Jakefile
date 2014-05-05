@@ -67,7 +67,6 @@ var compilerSources = [
 	"syntax/constants.ts",
 	"syntax/depthLimitedWalker.ts",
 	"syntax/formattingOptions.ts",
-	"syntax/indentation.ts",
 	"syntax/languageVersion.ts",
 	"syntax/parseOptions.ts",
 	"syntax/parser.ts",

@@ -19,6 +19,7 @@
 ///<reference path='coreServices.ts' />
 ///<reference path='classifier.ts' />
 ///<reference path='compilerState.ts' />
+///<reference path='indentation.ts' />
 ///<reference path='languageService.ts' />
 ///<reference path='completionHelpers.ts' />
 ///<reference path='keywordCompletions.ts' />

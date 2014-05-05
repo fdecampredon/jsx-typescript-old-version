@@ -3,7 +3,7 @@
 ///<reference path='characterInfo.ts' />
 ///<reference path='constants.ts' />
 ///<reference path='formattingOptions.ts' />
-///<reference path='indentation.ts' />
+// ///<reference path='indentation.ts' />
 ///<reference path='languageVersion.ts' />
 ///<reference path='parseOptions.ts' />
 
