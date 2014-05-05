@@ -103,7 +103,7 @@ module TypeScript {
         public _isExpression: any;
 
         constructor(public _text: ISimpleText,
-                    private _packedFullStartAndInfo: number,
+                    public data: number,
                     public kind: SyntaxKind,
                     private _fullWidth: number) {
         }
@@ -111,9 +111,9 @@ module TypeScript {
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
             this._text = text;
 
-            this._packedFullStartAndInfo = packFullStartAndInfo(fullStart,
-                unpackLeadingTriviaInfo(this._packedFullStartAndInfo),
-                unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
+            this.data = packFullStartAndInfo(fullStart,
+                unpackLeadingTriviaInfo(this.data),
+                unpackTrailingTriviaInfo(this.data));
         }
 
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind); }
@@ -121,7 +121,7 @@ module TypeScript {
         public isKeywordConvertedToIdentifier(): boolean { return false; }
 
         public fullWidth(): number { return this._fullWidth; }
-        public fullStart(): number { return unpackFullStart(this._packedFullStartAndInfo); }
+        public fullStart(): number { return unpackFullStart(this.data); }
 
         private fillSizeInfo(): void {
             if (ScannerToken.lastTokenInfoToken !== this) {
@@ -174,32 +174,32 @@ module TypeScript {
         }
 
         public hasLeadingTrivia(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
+            var info = unpackLeadingTriviaInfo(this.data);
             return info !== 0;
         }
 
         public hasLeadingComment(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
+            var info = unpackLeadingTriviaInfo(this.data);
             return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
         }
 
         public hasLeadingNewLine(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
+            var info = unpackLeadingTriviaInfo(this.data);
             return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
         }
 
         public hasTrailingTrivia(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
+            var info = unpackTrailingTriviaInfo(this.data);
             return info !== 0;
         }
 
         public hasTrailingComment(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
+            var info = unpackTrailingTriviaInfo(this.data);
             return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
         }
 
         public hasTrailingNewLine(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
+            var info = unpackTrailingTriviaInfo(this.data);
             return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
         }
 
@@ -216,7 +216,7 @@ module TypeScript {
         }
 
         public clone(): ISyntaxToken {
-            return new ScannerToken(this._text, this._packedFullStartAndInfo, this.kind, this._fullWidth);
+            return new ScannerToken(this._text, this.data, this.kind, this._fullWidth);
         }
     }
 

@@ -1709,10 +1709,10 @@ module TypeScript.Parser {
             // oldToken may be parented by a node or a list.
             this.replaceTokenInParentWorker(oldToken, newToken);
 
-            var parent: any = oldToken.parent;
+            var parent = oldToken.parent;
             newToken.parent = parent;
-            if (parent._data) {
-                parent._data &= SyntaxConstants.NodeParsedInStrictModeMask
+            if (parent.data) {
+                parent.data &= SyntaxConstants.NodeParsedInStrictModeMask
             }
         }
 

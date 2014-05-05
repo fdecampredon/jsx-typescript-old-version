@@ -1,6 +1,7 @@
 ///<reference path='references.ts' />
 
 interface Array<T> {
+    data: number;
     separators?: TypeScript.ISyntaxToken[];
 
     kind: TypeScript.SyntaxKind;

@@ -4,7 +4,7 @@ module TypeScript {
     export class SyntaxNode implements ISyntaxNodeOrToken {
         public parent: ISyntaxElement = null;
 
-        constructor(public kind: SyntaxKind, private _data: number) {
+        constructor(public kind: SyntaxKind, public data: number) {
         }
     }
 }

@@ -28,7 +28,7 @@ module TypeScript {
     }
 
     export function parsedInStrictMode(node: SyntaxNode): boolean {
-        var info = (<any>node)._data;
+        var info = node.data;
         if (info === undefined) {
             return false;
         }
@@ -346,14 +346,14 @@ module TypeScript {
 
     function data(element: ISyntaxElement): number {
         Debug.assert(!isToken(element));
-        var info: number = (<any>element)._data;
+        var info = element.data;
         if (info === undefined) {
             info = 0;
         }
 
         if ((info & SyntaxConstants.NodeDataComputed) === 0) {
             info |= computeData(element);
-            (<any>element)._data = info;
+            element.data = info;
         }
 
         return info;
@@ -403,6 +403,7 @@ module TypeScript {
     export interface ISyntaxElement {
         kind: SyntaxKind;
         parent: ISyntaxElement;
+        data: number;
     }
 
     export interface ISyntaxNode extends ISyntaxNodeOrToken {

@@ -290,6 +290,7 @@ module TypeScript.Syntax {
 
     class EmptyToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
+        public data: number;
 
         public _isPrimaryExpression: any;
         public _isMemberExpression: any;
@@ -420,6 +421,7 @@ module TypeScript.Syntax {
 
     class ConvertedIdentifierToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
+        public data: number;
         public kind: SyntaxKind = SyntaxKind.IdentifierName;
         private _underlyingToken: ISyntaxToken;
 
@@ -509,6 +511,7 @@ module TypeScript.Syntax {
 
     class RealizedToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
+        public data: number;
         private _fullStart: number;
         public kind: SyntaxKind;
         private _isKeywordConvertedToIdentifier: boolean;
