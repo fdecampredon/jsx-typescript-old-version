@@ -35,7 +35,7 @@
 ///<reference path='syntaxWalker.generated.ts' />
 
 // SyntaxInformationMap depends on SyntaxWalker
-///<reference path='syntaxNodeInvariantsChecker.ts' />
+// ///<reference path='syntaxNodeInvariantsChecker.ts' />
 
 // DepthLimitedWalker depends on PositionTrackingWalker
 ///<reference path='depthLimitedWalker.ts' />
