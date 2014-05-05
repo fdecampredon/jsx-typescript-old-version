@@ -27,4 +27,3 @@ class c44 {
     }
 }
 
-//import c44 = require(''); // BUG?: not currently allowed

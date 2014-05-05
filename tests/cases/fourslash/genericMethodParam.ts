@@ -16,4 +16,3 @@ goTo.marker('2');
 edit.insertLine("var x = new C<number>();");
 edit.insertLine("var y: number = x.foo(5);");
 verify.numberOfErrorsInCurrentFile(0);
-//debug.printCurrentFileState();

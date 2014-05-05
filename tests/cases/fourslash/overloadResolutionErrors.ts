@@ -1,7 +1,5 @@
 /// <reference path="fourslash.ts"/>
 
-// Bug 687800: Error Span: When qualified method is parenthesized, error should still be on the last identifier in the chain
-
 // Tests that the error spans are correct for a signature mismatch
 
 /////*1*/'foo'.replace('o', '3')./*2*/replace/*3*/('f', 5)/*4*/;
@@ -28,20 +26,13 @@
 
 
 verify.errorExistsBetweenMarkers('2', '3');
-//verify.errorExistsBetweenMarkers('55', '6');
 verify.errorExistsBetweenMarkers('8', '9');
 verify.errorExistsBetweenMarkers('11', '12');
 verify.errorExistsBetweenMarkers('14', '15');
 verify.errorExistsBetweenMarkers('17', '18');
-//verify.errorExistsBetweenMarkers('195', '20');
 verify.not.errorExistsBetweenMarkers('1', '2');
 verify.not.errorExistsBetweenMarkers('3', '4');
-//verify.not.errorExistsBetweenMarkers('5', '55');
 verify.not.errorExistsBetweenMarkers('7', '8');
 verify.not.errorExistsBetweenMarkers('10', '11');
 verify.not.errorExistsBetweenMarkers('13', '14');
 verify.not.errorExistsBetweenMarkers('16', '17');
-//verify.not.errorExistsBetweenMarkers('19', '195');
-// The following should not pass
-verify.errorExistsBetweenMarkers('5', '65');
-verify.errorExistsBetweenMarkers('19', '21');

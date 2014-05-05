@@ -1,4 +1,3 @@
-// BUG 756210
 module A {
     export function B<T>(x: T) { return x; }
     export module B {

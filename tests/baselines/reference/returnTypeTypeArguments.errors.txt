@@ -1,5 +1,4 @@
 ==== tests/cases/compiler/returnTypeTypeArguments.ts (37 errors) ====
-    // bug 754858: TypeParameters not required for return types
     class One<T>{
         value: T;
     }
@@ -15,63 +14,63 @@
     
     function A1(): One { return null; }
                    ~~~
-!!! returnTypeTypeArguments.ts(15,16): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(14,16): error TS2173: Generic type references must include all type arguments.
     function A2(): Two { return null; }
                    ~~~
-!!! returnTypeTypeArguments.ts(16,16): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(15,16): error TS2173: Generic type references must include all type arguments.
     function A3(): Three { return null; }
                    ~~~~~
-!!! returnTypeTypeArguments.ts(17,16): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(16,16): error TS2173: Generic type references must include all type arguments.
     
     function B1(): Two<number> { return null; }
                    ~~~~~~~~~~~
-!!! returnTypeTypeArguments.ts(19,16): error TS2090: Generic type 'Two<T, U>' requires 2 type argument(s).
+!!! returnTypeTypeArguments.ts(18,16): error TS2090: Generic type 'Two<T, U>' requires 2 type argument(s).
     function B2(): Three<string> { return null; }
                    ~~~~~~~~~~~~~
-!!! returnTypeTypeArguments.ts(20,16): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
+!!! returnTypeTypeArguments.ts(19,16): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
     function B3(): Three<string, number> { return null; }
                    ~~~~~~~~~~~~~~~~~~~~~
-!!! returnTypeTypeArguments.ts(21,16): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
+!!! returnTypeTypeArguments.ts(20,16): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
     
     class C {
         A1(): One { return null; }
               ~~~
-!!! returnTypeTypeArguments.ts(24,11): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(23,11): error TS2173: Generic type references must include all type arguments.
         A2(): Two { return null; }
               ~~~
-!!! returnTypeTypeArguments.ts(25,11): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(24,11): error TS2173: Generic type references must include all type arguments.
         A3(): Three { return null; }
               ~~~~~
-!!! returnTypeTypeArguments.ts(26,11): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(25,11): error TS2173: Generic type references must include all type arguments.
     
         B1(): Two<number> { return null; }
               ~~~~~~~~~~~
-!!! returnTypeTypeArguments.ts(28,11): error TS2090: Generic type 'Two<T, U>' requires 2 type argument(s).
+!!! returnTypeTypeArguments.ts(27,11): error TS2090: Generic type 'Two<T, U>' requires 2 type argument(s).
         B2(): Three<string> { return null; }
               ~~~~~~~~~~~~~
-!!! returnTypeTypeArguments.ts(29,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
+!!! returnTypeTypeArguments.ts(28,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
         B3(): Three<string, number> { return null; }
               ~~~~~~~~~~~~~~~~~~~~~
-!!! returnTypeTypeArguments.ts(30,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
+!!! returnTypeTypeArguments.ts(29,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
     }
     
     class D<T> {
         A2(): Two<T> { return null; }
               ~~~~~~
-!!! returnTypeTypeArguments.ts(34,11): error TS2090: Generic type 'Two<T, U>' requires 2 type argument(s).
+!!! returnTypeTypeArguments.ts(33,11): error TS2090: Generic type 'Two<T, U>' requires 2 type argument(s).
         A3(): Three<T> { return null; }
               ~~~~~~~~
-!!! returnTypeTypeArguments.ts(35,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
+!!! returnTypeTypeArguments.ts(34,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
     
         B1(): Two<T> { return null; }
               ~~~~~~
-!!! returnTypeTypeArguments.ts(37,11): error TS2090: Generic type 'Two<T, U>' requires 2 type argument(s).
+!!! returnTypeTypeArguments.ts(36,11): error TS2090: Generic type 'Two<T, U>' requires 2 type argument(s).
         B2(): Three<T> { return null; }
               ~~~~~~~~
-!!! returnTypeTypeArguments.ts(38,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
+!!! returnTypeTypeArguments.ts(37,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
         B3(): Three<string, T> { return null; }
               ~~~~~~~~~~~~~~~~
-!!! returnTypeTypeArguments.ts(39,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
+!!! returnTypeTypeArguments.ts(38,11): error TS2090: Generic type 'Three<T, U, V>' requires 3 type argument(s).
     }
     
     interface I<T> {
@@ -87,66 +86,66 @@
     {
         p1: () => X;
                   ~
-!!! returnTypeTypeArguments.ts(53,15): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(52,15): error TS2173: Generic type references must include all type arguments.
         p2: { [idx: number]: X }
                              ~
-!!! returnTypeTypeArguments.ts(54,26): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(53,26): error TS2173: Generic type references must include all type arguments.
         p3: X[]
             ~
-!!! returnTypeTypeArguments.ts(55,9): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(54,9): error TS2173: Generic type references must include all type arguments.
         p4: I<X>
               ~
-!!! returnTypeTypeArguments.ts(56,11): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(55,11): error TS2173: Generic type references must include all type arguments.
         p5: X
             ~
-!!! returnTypeTypeArguments.ts(57,9): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(56,9): error TS2173: Generic type references must include all type arguments.
         p6: () => Y;
                   ~
-!!! returnTypeTypeArguments.ts(58,15): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(57,15): error TS2173: Generic type references must include all type arguments.
         p7: { [idx: number]: Y }
                              ~
-!!! returnTypeTypeArguments.ts(59,26): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(58,26): error TS2173: Generic type references must include all type arguments.
         p8: Y[]
             ~
-!!! returnTypeTypeArguments.ts(60,9): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(59,9): error TS2173: Generic type references must include all type arguments.
         p9: I<Y>
               ~
-!!! returnTypeTypeArguments.ts(61,11): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(60,11): error TS2173: Generic type references must include all type arguments.
         pa: Y
             ~
-!!! returnTypeTypeArguments.ts(62,9): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(61,9): error TS2173: Generic type references must include all type arguments.
     }
     
     declare var a: {
         p1: () => X;
                   ~
-!!! returnTypeTypeArguments.ts(66,15): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(65,15): error TS2173: Generic type references must include all type arguments.
         p2: { [idx: number]: X }
                              ~
-!!! returnTypeTypeArguments.ts(67,26): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(66,26): error TS2173: Generic type references must include all type arguments.
         p3: X[]
             ~
-!!! returnTypeTypeArguments.ts(68,9): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(67,9): error TS2173: Generic type references must include all type arguments.
         p4: I<X>
               ~
-!!! returnTypeTypeArguments.ts(69,11): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(68,11): error TS2173: Generic type references must include all type arguments.
         p5: X
             ~
-!!! returnTypeTypeArguments.ts(70,9): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(69,9): error TS2173: Generic type references must include all type arguments.
         p6: () => Y;
                   ~
-!!! returnTypeTypeArguments.ts(71,15): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(70,15): error TS2173: Generic type references must include all type arguments.
         p7: { [idx: number]: Y }
                              ~
-!!! returnTypeTypeArguments.ts(72,26): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(71,26): error TS2173: Generic type references must include all type arguments.
         p8: Y[]
             ~
-!!! returnTypeTypeArguments.ts(73,9): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(72,9): error TS2173: Generic type references must include all type arguments.
         p9: I<Y>
               ~
-!!! returnTypeTypeArguments.ts(74,11): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(73,11): error TS2173: Generic type references must include all type arguments.
         pa: Y
             ~
-!!! returnTypeTypeArguments.ts(75,9): error TS2173: Generic type references must include all type arguments.
+!!! returnTypeTypeArguments.ts(74,9): error TS2173: Generic type references must include all type arguments.
     };
     

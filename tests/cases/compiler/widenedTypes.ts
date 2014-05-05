@@ -1,3 +1,5 @@
+//@declaration: true
+
 null instanceof (() => { });
 ({}) instanceof null; // Ok because null is a subtype of function
 
@@ -9,7 +11,6 @@ for (var a in null) { }
 var t = [3, (3, null)];
 t[3] = "";
 
-// Bug 774508: typeof undefined has the type undefined
 var x: typeof undefined = 3;
 x = 3;
 
@@ -17,7 +18,6 @@ var y;
 var u = [3, (y = null)];
 u[3] = "";
 
-// Bug 774508: typeof undefined has the type undefined
 var ob: { x: typeof undefined } = { x: "" };
 
 // Highlights the difference between array literals and object literals

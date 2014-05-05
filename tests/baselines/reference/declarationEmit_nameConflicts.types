@@ -65,7 +65,7 @@ export module M.P {
 >P : P
 >f : typeof im
 
-    // Bug 887180
+    // Bug 887180: Invalid .d.ts when an aliased entity is referenced, and a different entity is closer in scope
     export var a = M.a; // emitted incorrectly as typeof f
 >a : typeof f
 >M.a : typeof f

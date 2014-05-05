@@ -1,7 +1,7 @@
-class IHeapObjectProperty {}
-class IDirectChildrenMap { 
-        // BUG 765883
-        hasOwnProperty(objectId: number) : boolean
-        [objectId: number] : IHeapObjectProperty[] 
-}    
+class IHeapObjectProperty { }
+class IDirectChildrenMap {
+    // Decided to enforce a semicolon after declarations
+    hasOwnProperty(objectId: number): boolean
+    [objectId: number]: IHeapObjectProperty[]
+}
 var directChildrenMap = <IDirectChildrenMap>{}; 

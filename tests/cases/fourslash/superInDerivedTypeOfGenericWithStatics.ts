@@ -9,7 +9,7 @@
 ////}
 ////class D extends M.C<Date> {
 ////    constructor() {
-////        /**/ // bug was an error appearing on super in editing scenarios
+////        /**/ // was an error appearing on super in editing scenarios
 ////       }
 ////}
 

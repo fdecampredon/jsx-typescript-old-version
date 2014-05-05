@@ -1,6 +1,4 @@
 //// [interMixingModulesInterfaces0.ts]
-// bug 742098: intermixing modules and interfaces causes errors at call site and order matters
-
 module A {
 
     export module B {
@@ -18,7 +16,6 @@ module A {
 var x: A.B = A.B.createB();
 
 //// [interMixingModulesInterfaces0.js]
-// bug 742098: intermixing modules and interfaces causes errors at call site and order matters
 var A;
 (function (A) {
     (function (B) {

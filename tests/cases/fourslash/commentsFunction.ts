@@ -77,7 +77,6 @@ goTo.marker('13');
 verify.completionListContains('lambdaFoo', '(a: number, b: number) => number', 'lamdaFoo var comment', "lambdaFoo", "var");
 verify.completionListContains('lambddaNoVarComment', '(a: number, b: number) => number', '', "lambddaNoVarComment", "var");
 
-debugger;
 goTo.marker('14');
 verify.currentParameterHelpArgumentDocCommentIs("param a");
 

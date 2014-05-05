@@ -13,7 +13,7 @@
 ////}
 
 ////var n = new N.D1();
-////var n2/*1*/ = new N.D2<number>(); // bug was an error here
+////var n2/*1*/ = new N.D2<number>();
 ////var n3/*2*/ = new N.D2();
 
 goTo.marker('1');

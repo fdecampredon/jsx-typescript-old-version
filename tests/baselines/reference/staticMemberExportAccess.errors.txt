@@ -12,7 +12,7 @@
         sammy: Sammy; // class instance
     }
     var $: JQueryStatic;
-    var instanceOfClassSammy: Sammy = new $.sammy(); // should be error (bug 725997)
+    var instanceOfClassSammy: Sammy = new $.sammy(); // should be error
                                             ~~~~~
 !!! staticMemberExportAccess.ts(14,41): error TS2083: Invalid 'new' expression.
     var r1 = instanceOfClassSammy.foo(); // r1 is string

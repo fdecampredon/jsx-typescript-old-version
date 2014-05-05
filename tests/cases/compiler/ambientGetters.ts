@@ -1,5 +1,3 @@
-// bug 751241: ambient getters
-
 declare class A {
     get length() : number;
 }

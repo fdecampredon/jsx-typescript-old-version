@@ -1,5 +1,4 @@
 //// [genericFunduleInModule.js]
-// BUG 756210
 var A;
 (function (A) {
     function B(x) {

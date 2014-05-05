@@ -11,9 +11,7 @@
 ////}
 
 goTo.marker('1');
-// BUG 805412
 verify.quickInfoIs('typeof C');
 
 goTo.marker('2');
-// BUG 805412
 verify.quickInfoIs('typeof C');

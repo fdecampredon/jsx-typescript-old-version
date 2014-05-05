@@ -1,4 +1,3 @@
-// BUG 756210
 module A {
     export class B<T> {
         foo() { }

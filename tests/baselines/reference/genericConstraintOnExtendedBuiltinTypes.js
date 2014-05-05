@@ -1,6 +1,4 @@
 //// [genericConstraintOnExtendedBuiltinTypes.ts]
-// bug 757836: number not being Recognized as Number when extended and used as generic constraint
-
 declare module EndGate {
     export interface ICloneable {
         Clone(): any;
@@ -29,14 +27,12 @@ module EndGate.Tweening {
 }
 
 //// [genericConstraintOnExtendedBuiltinTypes.js]
-// bug 757836: number not being Recognized as Number when extended and used as generic constraint
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-
 var EndGate;
 (function (EndGate) {
     (function (Tweening) {

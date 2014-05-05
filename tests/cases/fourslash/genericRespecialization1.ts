@@ -63,14 +63,11 @@
 //// }
 ////  /*1*/
 
-//debug.printErrorList();
 verify.numberOfErrorsInCurrentFile(0);
 goTo.marker('1');
 edit.insertLine('');
 edit.insertLine('');
-//debug.printErrorList();
 verify.numberOfErrorsInCurrentFile(0);
-//debug.printErrorList();
 goTo.marker('2');
 edit.deleteAtCaret("Cookie".length);
 edit.insert("any");

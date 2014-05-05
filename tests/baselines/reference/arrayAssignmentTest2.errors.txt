@@ -18,7 +18,7 @@
     
     /*
     
-    This behaves unexpectedly with teh following types:
+    This behaves unexpectedly with the following types:
     
     Type 1 of any[]:
     
@@ -44,7 +44,7 @@
     var arr_c2_2: C2[] = [];
     var arr_c3: C3[] = [];
     
-    // "clean up bug" occurs at this point
+    // "clean up error" occurs at this point
     arr_c3 = arr_c2_2; // should be an error - is
     ~~~~~~
 !!! arrayAssignmentTest2.ts(47,1): error TS2012: Cannot convert 'C2[]' to 'C3[]':

@@ -8,5 +8,5 @@
 //// }
 
 goTo.marker();
-// Bug 857590: Crash here
-// edit.insert(' ');
+// Used to crash here
+edit.insert(' ');

@@ -1,14 +1,14 @@
 declare module M {
-	interface iBar { t: any; }
-	interface iFoo extends iBar {
-		s:any;
-	}
+    interface iBar { t: any; }
+    interface iFoo extends iBar {
+        s: any;
+    }
 
-	class cFoo {
-		t:any;
-	}
+    class cFoo {
+        t: any;
+    }
 
-	var foo: { [index: any]; }; // expect an error here
+    var foo: { [index: any]; }; // expect an error here
 }
 
 interface myInt {
@@ -21,9 +21,7 @@ var strArray: string[] = [myVar.voidFn()];
 var myArray: number[][][];
 myArray = [[1, 2]];
 
-// regression for 604980
-function isEmpty(l: { length: number })
-{
+function isEmpty(l: { length: number }) {
     return l.length === 0;
 }
 

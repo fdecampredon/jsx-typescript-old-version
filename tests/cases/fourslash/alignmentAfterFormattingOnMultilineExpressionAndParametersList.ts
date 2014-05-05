@@ -18,14 +18,8 @@
 
 format.document();
 goTo.marker("1");
-// The expected scenario is failing due to bug 674623 - 'If' expression formatting is very broken.
-//verify.indentationIs(24);
 verify.indentationIs(8);
 goTo.marker("2");
-// The expected scenario is failing due to bug 674623 - 'If' expression formatting is very broken.
-//verify.indentationIs(17);
 verify.indentationIs(12);
 goTo.marker("3");
-// The expected scenario is failing due to bug 674623 - 'If' expression formatting is very broken.
-//verify.indentationIs(17);
 verify.indentationIs(12);

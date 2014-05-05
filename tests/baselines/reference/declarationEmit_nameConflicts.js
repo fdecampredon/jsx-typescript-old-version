@@ -22,7 +22,7 @@ export module M.P {
         export interface I { }
     }
     export import im = M.P.f;
-    // Bug 887180
+    // Bug 887180: Invalid .d.ts when an aliased entity is referenced, and a different entity is closer in scope
     export var a = M.a; // emitted incorrectly as typeof f
     export var b = M.b; // ok
     export var c = M.c; // ok
@@ -100,7 +100,7 @@ var M = exports.M;
         var im = M.P.f;
         P.im = im;
 
-        // Bug 887180
+        // Bug 887180: Invalid .d.ts when an aliased entity is referenced, and a different entity is closer in scope
         P.a = M.a;
         P.b = M.b;
         P.c = M.c;

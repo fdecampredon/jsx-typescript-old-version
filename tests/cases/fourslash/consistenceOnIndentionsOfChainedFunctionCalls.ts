@@ -17,6 +17,5 @@
 goTo.marker("1");
 edit.insert("\r\n");
 goTo.marker("0");
-// The expected scenario is failing due to bug 680754 - Wrong indent on chained function calls.
-//verify.indentationIs(0);
+// Won't-fixed: Smart indent during chained function calls
 verify.indentationIs(4);

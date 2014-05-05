@@ -14,5 +14,5 @@
 ////}
 
 goTo.marker();
-// Bug 853415: Exception here
-// verify.quickInfoExists();
+// Verify no crash
+verify.quickInfoExists();

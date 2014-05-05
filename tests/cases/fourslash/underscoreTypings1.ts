@@ -16,7 +16,7 @@
 ////declare var _: Underscore;
 ////
 ////var a: string[];
-////var b/*1*/ = _.map(a, x/*2*/ => x.length);    // Bug was typed any[], should be number[]
+////var b/*1*/ = _.map(a, x/*2*/ => x.length);    // Was typed any[], should be number[]
 ////var c/*3*/ = _(a).map(x/*4*/ => x.length);
 ////var d/*5*/ = a.map(x/*6*/ => x.length);
 ////

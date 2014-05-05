@@ -237,7 +237,6 @@ verify.currentSignatureHelpDocCommentIs("jsdoc comment \nanother jsDocComment");
 goTo.marker('7q');
 verify.quickInfoIs("(): void", "jsdoc comment \nanother jsDocComment", "jsDocMixedComments2", "function");
 
-debugger;
 goTo.marker('8');
 verify.currentSignatureHelpDocCommentIs("jsdoc comment \nanother jsDocComment");
 goTo.marker('8q');

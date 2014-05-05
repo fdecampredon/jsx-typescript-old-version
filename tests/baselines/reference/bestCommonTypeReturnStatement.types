@@ -1,5 +1,4 @@
 === tests/cases/compiler/bestCommonTypeReturnStatement.ts ===
-// bug 804258: cannot determine return type
 interface IPromise<T> {
 >IPromise : IPromise<T>
 >T : T

@@ -7,17 +7,17 @@ class C1 implements I1 {
 	C1M1():C1[] {return null;}
  }
 class C2 extends C1 {
-    C2M1():C2[] { return null;}
+	C2M1():C2[] { return null;}
 }
 
 class C3 {
-    CM3M1() { return 3;}
+	CM3M1() { return 3;}
 }
 
 
 /*
 
-This behaves unexpectedly with teh following types:
+This behaves unexpectedly with the following types:
 
 Type 1 of any[]:
 
@@ -43,7 +43,7 @@ var arr_c1_2: C1[] = [];
 var arr_c2_2: C2[] = [];
 var arr_c3: C3[] = [];
 
-// "clean up bug" occurs at this point
+// "clean up error" occurs at this point
 arr_c3 = arr_c2_2; // should be an error - is
 arr_c3 = arr_c1_2; // should be an error - is
 arr_c3 = arr_i1_2; // should be an error - is

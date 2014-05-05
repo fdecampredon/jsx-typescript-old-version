@@ -2,16 +2,16 @@
     declare module M {
         interface iBar { t: any; }
         interface iFoo extends iBar {
-            s:any;
+            s: any;
         }
     
         class cFoo {
-            t:any;
+            t: any;
         }
     
         var foo: { [index: any]; }; // expect an error here
-                 ~~~~~~~~~~
-!!! arraySigChecking.ts(11,14): error TS1023: Index signature parameter type must be 'string' or 'number'.
+                    ~~~~~~~~~~
+!!! arraySigChecking.ts(11,17): error TS1023: Index signature parameter type must be 'string' or 'number'.
     }
     
     interface myInt {
@@ -35,9 +35,7 @@
 !!! 				Call signatures of types '() => {}' and '() => number[]' are incompatible:
 !!! 					Type '{}' is missing property 'concat' from type 'number[]'.
     
-    // regression for 604980
-    function isEmpty(l: { length: number })
-    {
+    function isEmpty(l: { length: number }) {
         return l.length === 0;
     }
     

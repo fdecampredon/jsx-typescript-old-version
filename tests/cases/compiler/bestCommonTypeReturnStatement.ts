@@ -1,4 +1,3 @@
-// bug 804258: cannot determine return type
 interface IPromise<T> {
     then(successCallback: (promiseValue: T) => any, errorCallback?: (reason: any) => any): IPromise<any>;
 }

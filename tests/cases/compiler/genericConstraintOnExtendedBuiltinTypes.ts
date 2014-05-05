@@ -1,5 +1,3 @@
-// bug 757836: number not being Recognized as Number when extended and used as generic constraint
-
 declare module EndGate {
     export interface ICloneable {
         Clone(): any;

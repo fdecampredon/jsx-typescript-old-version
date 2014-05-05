@@ -1,5 +1,3 @@
-// bug 742098: intermixing modules and interfaces causes errors at call site and order matters
-
 module A {
 
     export module B {

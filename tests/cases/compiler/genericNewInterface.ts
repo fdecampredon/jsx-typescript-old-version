@@ -1,5 +1,3 @@
-// bug 771191: Generic new() Interface contract not enforced
-
 function createInstance<T>(ctor: new (s: string) => T): T {
     return new ctor(42); //should be an error
 }

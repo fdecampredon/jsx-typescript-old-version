@@ -118,20 +118,14 @@ verify.currentLineContentIs("() => 1;");
 goTo.marker("2");
 verify.currentLineContentIs("(arg) => 2;");
 goTo.marker("3");
-//bug 696460 expected result: "arg => 2;", actual result: "arg       => 2;"
-//verify.currentLineContentIs("arg => 2;");
 verify.currentLineContentIs("arg       => 2;");
 goTo.marker("4");
-//bug 696460 expect result: "(arg = 1) => 3;", actual result: "(arg     = 1) => 3;"
-//verify.currentLineContentIs("(arg = 1) => 3;");
 verify.currentLineContentIs("(arg     = 1) => 3;");
 goTo.marker("5");
 verify.currentLineContentIs("(arg?) => 4;");
 goTo.marker("6");
 verify.currentLineContentIs("(arg: number) => 5;");
 goTo.marker("7");
-//bug 696460 expect result: "(arg: number = 0) => 6;", actual result: "(arg: number     = 0) => 6;"
-//verify.currentLineContentIs("(arg: number = 0) => 6;");
 verify.currentLineContentIs("(arg: number     = 0) => 6;");
 goTo.marker("8");
 verify.currentLineContentIs("(arg?: number) => 7;");
@@ -140,16 +134,12 @@ verify.currentLineContentIs("(...arg: number[]) => 8;");
 goTo.marker("10");
 verify.currentLineContentIs("(arg1, arg2) => 12;");
 goTo.marker("11");
-//bug 696460 expect result: "(arg1 = 1, arg2 = 3) => 13;", actual result: "(arg1     = 1, arg2     = 3) => 13;"
-//verify.currentLineContentIs("(arg1 = 1, arg2 = 3) => 13;");
 verify.currentLineContentIs("(arg1     = 1, arg2     = 3) => 13;");
 goTo.marker("12");
 verify.currentLineContentIs("(arg1?, arg2?) => 14;");
 goTo.marker("13");
 verify.currentLineContentIs("(arg1: number, arg2: number) => 15;");
 goTo.marker("14");
-//bug 696460 expect result: "(arg1: number = 0, arg2: number = 1) => 16;", actual result: "(arg1: number     = 0, arg2: number     = 1) => 16;"
-//verify.currentLineContentIs("(arg1: number = 0, arg2: number = 1) => 16;");
 verify.currentLineContentIs("(arg1: number     = 0, arg2: number     = 1) => 16;");
 goTo.marker("15");
 verify.currentLineContentIs("(arg1?: number, arg2?: number) => 17;");
@@ -162,16 +152,12 @@ verify.currentLineContentIs("(() => 21);");
 goTo.marker("19");
 verify.currentLineContentIs("((arg) => 22);");
 goTo.marker("20");
-//bug 696460 expect result: "((arg = 1) => 23);", actual result: "((arg     = 1) => 23);"
-//verify.currentLineContentIs("((arg = 1) => 23);");
 verify.currentLineContentIs("((arg     = 1) => 23);");
 goTo.marker("21");
 verify.currentLineContentIs("((arg?) => 24);");
 goTo.marker("22");
 verify.currentLineContentIs("((arg: number) => 25);");
 goTo.marker("23");
-//bug 696460 expect result: "((arg: number = 0) => 26);", actual result: "((arg: number     = 0) => 26);"
-//verify.currentLineContentIs("((arg: number = 0) => 26);");
 verify.currentLineContentIs("((arg: number     = 0) => 26);");
 goTo.marker("24");
 verify.currentLineContentIs("((arg?: number) => 27);");
@@ -184,8 +170,6 @@ verify.currentLineContentIs("false ? () => 41 : null;");
 goTo.marker("28");
 verify.currentLineContentIs("false ? (arg) => 42 : null;");
 goTo.marker("29");
-//bug 696460 expect result: "false ? (arg = 1) => 43 : null;", actual result: "false ? (arg     = 1) => 43 : null;"
-//verify.currentLineContentIs("false ? (arg = 1) => 43 : null;");
 verify.currentLineContentIs("false ? (arg     = 1) => 43 : null;");
 goTo.marker("30");
 verify.currentLineContentIs("false ? (arg?) => 44 : null;");
@@ -194,8 +178,6 @@ verify.currentLineContentIs("false ? (arg: number) => 45 : null;");
 goTo.marker("32");
 verify.currentLineContentIs("false ? (arg?: number) => 46 : null;");
 goTo.marker("33");
-//bug 696460 expect result: "false ? (arg: number = 0) => 47 : null;", actual result: "false ? (arg?: number     = 0) => 47 : null;"
-//verify.currentLineContentIs("false ? (arg: number = 0) => 47 : null;");
 verify.currentLineContentIs("false ? (arg?: number     = 0) => 47 : null;");
 goTo.marker("34");
 verify.currentLineContentIs("false ? (...arg: number[]) => 48 : null;");
@@ -204,8 +186,6 @@ verify.currentLineContentIs("false ? (() => 51) : null;");
 goTo.marker("36");
 verify.currentLineContentIs("false ? ((arg) => 52) : null;");
 goTo.marker("37");
-//bug 696460 expect result: "false ? ((arg = 1) => 53) : null;", actual result: "false ? ((arg     = 1) => 53) : null;"
-//verify.currentLineContentIs("false ? ((arg = 1) => 53) : null;");
 verify.currentLineContentIs("false ? ((arg     = 1) => 53) : null;");
 goTo.marker("38");
 verify.currentLineContentIs("false ? ((arg?) => 54) : null;");
@@ -214,8 +194,6 @@ verify.currentLineContentIs("false ? ((arg: number) => 55) : null;");
 goTo.marker("40");
 verify.currentLineContentIs("false ? ((arg?: number) => 56) : null;");
 goTo.marker("41");
-//bug 696460 expect result: "false ? ((arg: number = 0) => 57) : null;", actual result: "false ? ((arg?: number     = 0) => 57) : null;"
-//verify.currentLineContentIs("false ? ((arg: number = 0) => 57) : null;");
 verify.currentLineContentIs("false ? ((arg?: number     = 0) => 57) : null;");
 goTo.marker("42");
 verify.currentLineContentIs("false ? ((...arg: number[]) => 58) : null;");
@@ -224,8 +202,6 @@ verify.currentLineContentIs("false ? null : () => 61;");
 goTo.marker("44");
 verify.currentLineContentIs("false ? null : (arg) => 62;");
 goTo.marker("45");
-//bug 696460 expect result: "false ? null : (arg = 1) => 63;", actual result: "false ? null : (arg     = 1) => 63;"
-//verify.currentLineContentIs("false ? null : (arg = 1) => 63;");
 verify.currentLineContentIs("false ? null : (arg     = 1) => 63;");
 goTo.marker("46");
 verify.currentLineContentIs("false ? null : (arg?) => 64;");
@@ -234,8 +210,6 @@ verify.currentLineContentIs("false ? null : (arg: number) => 65;");
 goTo.marker("48");
 verify.currentLineContentIs("false ? null : (arg?: number) => 66;");
 goTo.marker("49");
-//bug 696460 expect result: "false ? null : (arg: number = 0) => 67;", actual result: "false ? null : (arg?: number     = 0) => 67;"
-//verify.currentLineContentIs("false ? null : (arg: number = 0) => 67;");
 verify.currentLineContentIs("false ? null : (arg?: number     = 0) => 67;");
 goTo.marker("50");
 verify.currentLineContentIs("false ? null : (...arg: number[]) => 68;");
@@ -246,16 +220,12 @@ verify.currentLineContentIs("((a?) => { return a; }) ? (b) => (c) => 81 : (c) =>
 goTo.marker("53");
 verify.currentLineContentIs("((arg) => 90) instanceof Function;");
 goTo.marker("54");
-//bug 696460 expect result: "((arg = 1) => 91) instanceof Function;", actual result: "((arg     = 1) => 91) instanceof Function;"
-//verify.currentLineContentIs("((arg = 1) => 91) instanceof Function;");
 verify.currentLineContentIs("((arg     = 1) => 91) instanceof Function;");
 goTo.marker("55");
 verify.currentLineContentIs("((arg?) => 92) instanceof Function;");
 goTo.marker("56");
 verify.currentLineContentIs("((arg: number) => 93) instanceof Function;");
 goTo.marker("57");
-//bug 696460 expect result: "((arg: number = 1) => 94) instanceof Function;", actual result: "((arg: number     = 1) => 94) instanceof Function;"
-//verify.currentLineContentIs("((arg: number = 1) => 94) instanceof Function;");
 verify.currentLineContentIs("((arg: number     = 1) => 94) instanceof Function;");
 goTo.marker("58");
 verify.currentLineContentIs("((arg?: number) => 95) instanceof Function;");
@@ -267,16 +237,12 @@ verify.currentLineContentIs("'' + ((arg) => 100);");
 goTo.marker("61");
 verify.currentLineContentIs("((arg) => 0) + '' + ((arg) => 101);");
 goTo.marker("62");
-//bug 696460 expect result: "((arg = 1) => 0) + '' + (arg = 2) => 102;", actual result: "((arg     = 1) => 0) + '' + (arg     = 2) => 102;"
-//verify.currentLineContentIs("((arg = 1) => 0) + '' + (arg = 2) => 102;");
 verify.currentLineContentIs("((arg     = 1) => 0) + '' + ((arg     = 2) => 102);");
 goTo.marker("63");
 verify.currentLineContentIs("((arg?) => 0) + '' + ((arg?) => 103);");
 goTo.marker("64");
 verify.currentLineContentIs("((arg: number) => 0) + '' + ((arg: number) => 104);");
 goTo.marker("65");
-//bug 696460 expect result: "((arg: number = 1) => 0) + '' + (arg: number = 2) => 105;", actual result: "((arg: number     = 1) => 0) + '' + (arg: number     = 2) => 105;"
-//verify.currentLineContentIs("((arg: number = 1) => 0) + '' + (arg: number = 2) => 105;");
 verify.currentLineContentIs("((arg: number     = 1) => 0) + '' + ((arg: number     = 2) => 105);");
 goTo.marker("66");
 verify.currentLineContentIs("((arg?: number) => 0) + '' + ((arg?: number) => 106);");
@@ -307,30 +273,18 @@ verify.currentLineContentIs("    (a, b?) => 114,");
 goTo.marker("79");
 verify.currentLineContentIs("    (a: number) => 115,");
 goTo.marker("80");
-//bug 696460 expect result: "    (a: number = 0) => 116,", actual result: "    (a: number     = 0) => 116,"
-//verify.currentLineContentIs("    (a: number = 0) => 116,");
 verify.currentLineContentIs("    (a: number     = 0) => 116,");
 goTo.marker("81");
-//bug 696460 expect result: "    (a = 0) => 117,", actual result: "    (a     = 0) => 117,"
-//verify.currentLineContentIs("    (a = 0) => 117,");
 verify.currentLineContentIs("    (a     = 0) => 117,");
 goTo.marker("82");
-//bug 696460 expect result: "    (a: number = 0) => 118,", actual result: "    (a: number     = 0) => 118,"
-//verify.currentLineContentIs("    (a: number = 0) => 118,");
 verify.currentLineContentIs("    (a: number     = 0) => 118,");
 goTo.marker("83");
 verify.currentLineContentIs("    (a?, b?: number) => 118,");
 goTo.marker("84");
 verify.currentLineContentIs("    (...a: number[]) => 119,");
 goTo.marker("85");
-//bug 696460 expect result: "    (a, b = 0, ...c: number[]) => 120,", actual result: "    (a, b                = 0, ...c: number[]) => 120,"
-//verify.currentLineContentIs("    (a, b = 0, ...c: number[]) => 120,");
 verify.currentLineContentIs("    (a, b                = 0, ...c: number[]) => 120,");
 goTo.marker("86");
 verify.currentLineContentIs("    (a) => (b) => (c) => 121,");
 goTo.marker("87");
 verify.currentLineContentIs("    false ? (a) => 0 : (b) => 122");
-goTo.marker("88");
-//bug 698895 expect result: "    );", actual result: "    );   "
-//verify.currentLineContentIs("    );");
-//verify.currentLineContentIs("    );   ");

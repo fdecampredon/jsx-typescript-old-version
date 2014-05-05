@@ -1,6 +1,6 @@
 /// <reference path='fourslash.ts'/>
 
-////module BugFixes {
+////module Fixes {
 ////    enum Foo {
 ////        bar,
 ////        baz

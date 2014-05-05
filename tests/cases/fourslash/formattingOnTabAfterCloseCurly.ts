@@ -25,8 +25,6 @@ verify.currentLineContentIs("    }");
 goTo.marker("6");
 verify.currentLineContentIs("    export enum foob {");
 goTo.marker("7");
-// The expected scenario is failing due to bug 696460 - Bad formatting on assignment and fat arrow operators.
-//verify.currentLineContentIs("        Blah = 1, Bleah = 2");
 verify.currentLineContentIs("        Blah= 1, Bleah= 2");
 goTo.marker("8");
 verify.currentLineContentIs("    }");
