@@ -1383,144 +1383,6 @@ var TypeScript;
     })();
     TypeScript.Hash = Hash;
 })(TypeScript || (TypeScript = {}));
-var TypeScript;
-(function (TypeScript) {
-    (function (Collections) {
-        Collections.DefaultHashTableCapacity = 1024;
-
-        var HashTableEntry = (function () {
-            function HashTableEntry(Key, Value, HashCode, Next) {
-                this.Key = Key;
-                this.Value = Value;
-                this.HashCode = HashCode;
-                this.Next = Next;
-            }
-            return HashTableEntry;
-        })();
-
-        var HashTable = (function () {
-            function HashTable(capacity, hash) {
-                this.hash = hash;
-                this.count = 0;
-                var size = TypeScript.Hash.getPrime(capacity);
-                this.entries = TypeScript.ArrayUtilities.createArray(size, null);
-            }
-            HashTable.prototype.set = function (key, value) {
-                this.addOrSet(key, value, false);
-            };
-
-            HashTable.prototype.add = function (key, value) {
-                this.addOrSet(key, value, true);
-            };
-
-            HashTable.prototype.containsKey = function (key) {
-                var hashCode = this.computeHashCode(key);
-                var entry = this.findEntry(key, hashCode);
-                return entry !== null;
-            };
-
-            HashTable.prototype.get = function (key) {
-                var hashCode = this.computeHashCode(key);
-                var entry = this.findEntry(key, hashCode);
-
-                return entry === null ? null : entry.Value;
-            };
-
-            HashTable.prototype.computeHashCode = function (key) {
-                var hashCode = this.hash === null ? key.hashCode : this.hash(key);
-
-                hashCode = hashCode & 0x7FFFFFFF;
-                TypeScript.Debug.assert(hashCode >= 0);
-
-                return hashCode;
-            };
-
-            HashTable.prototype.addOrSet = function (key, value, throwOnExistingEntry) {
-                var hashCode = this.computeHashCode(key);
-
-                var entry = this.findEntry(key, hashCode);
-                if (entry !== null) {
-                    if (throwOnExistingEntry) {
-                        throw TypeScript.Errors.argument('key', "Key was already in table.");
-                    }
-
-                    entry.Key = key;
-                    entry.Value = value;
-                    return;
-                }
-
-                return this.addEntry(key, value, hashCode);
-            };
-
-            HashTable.prototype.findEntry = function (key, hashCode) {
-                for (var e = this.entries[hashCode % this.entries.length]; e !== null; e = e.Next) {
-                    if (e.HashCode === hashCode && key === e.Key) {
-                        return e;
-                    }
-                }
-
-                return null;
-            };
-
-            HashTable.prototype.addEntry = function (key, value, hashCode) {
-                var index = hashCode % this.entries.length;
-
-                var e = new HashTableEntry(key, value, hashCode, this.entries[index]);
-
-                this.entries[index] = e;
-
-                if (this.count >= (this.entries.length / 2)) {
-                    this.grow();
-                }
-
-                this.count++;
-                return e.Key;
-            };
-
-            HashTable.prototype.grow = function () {
-                var newSize = TypeScript.Hash.expandPrime(this.entries.length);
-
-                var oldEntries = this.entries;
-                var newEntries = TypeScript.ArrayUtilities.createArray(newSize, null);
-
-                this.entries = newEntries;
-
-                for (var i = 0; i < oldEntries.length; i++) {
-                    var e = oldEntries[i];
-
-                    while (e !== null) {
-                        var newIndex = e.HashCode % newSize;
-                        var tmp = e.Next;
-                        e.Next = newEntries[newIndex];
-                        newEntries[newIndex] = e;
-                        e = tmp;
-                    }
-                }
-            };
-            return HashTable;
-        })();
-        Collections.HashTable = HashTable;
-
-        function createHashTable(capacity, hash) {
-            if (typeof capacity === "undefined") { capacity = Collections.DefaultHashTableCapacity; }
-            if (typeof hash === "undefined") { hash = null; }
-            return new HashTable(capacity, hash);
-        }
-        Collections.createHashTable = createHashTable;
-
-        var currentHashCode = 1;
-        function identityHashCode(value) {
-            if (value.__hash === undefined) {
-                value.__hash = currentHashCode;
-                currentHashCode++;
-            }
-
-            return value.__hash;
-        }
-        Collections.identityHashCode = identityHashCode;
-    })(TypeScript.Collections || (TypeScript.Collections = {}));
-    var Collections = TypeScript.Collections;
-})(TypeScript || (TypeScript = {}));
 
 var TypeScript;
 (function (TypeScript) {
@@ -2015,116 +1877,11 @@ var TypeScript;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
-    (function (Collections) {
-        Collections.DefaultStringTableCapacity = 256;
-
-        var StringTableEntry = (function () {
-            function StringTableEntry(Text, HashCode, Next) {
-                this.Text = Text;
-                this.HashCode = HashCode;
-                this.Next = Next;
-            }
-            return StringTableEntry;
-        })();
-
-        var StringTable = (function () {
-            function StringTable(capacity) {
-                this.count = 0;
-                var size = TypeScript.Hash.getPrime(capacity);
-                this.entries = TypeScript.ArrayUtilities.createArray(size, null);
-            }
-            StringTable.prototype.addCharArray = function (key, start, len) {
-                var hashCode = TypeScript.Hash.computeSimple31BitCharArrayHashCode(key, start, len) & 0x7FFFFFFF;
-
-                var entry = this.findCharArrayEntry(key, start, len, hashCode);
-                if (entry !== null) {
-                    return entry.Text;
-                }
-
-                var slice = key.slice(start, start + len);
-                return this.addEntry(TypeScript.StringUtilities.fromCharCodeArray(slice), hashCode);
-            };
-
-            StringTable.prototype.findCharArrayEntry = function (key, start, len, hashCode) {
-                for (var e = this.entries[hashCode % this.entries.length]; e !== null; e = e.Next) {
-                    if (e.HashCode === hashCode && StringTable.textCharArrayEquals(e.Text, key, start, len)) {
-                        return e;
-                    }
-                }
-
-                return null;
-            };
-
-            StringTable.prototype.addEntry = function (text, hashCode) {
-                var index = hashCode % this.entries.length;
-
-                var e = new StringTableEntry(text, hashCode, this.entries[index]);
-
-                this.entries[index] = e;
-
-                if (this.count === this.entries.length) {
-                    this.grow();
-                }
-
-                this.count++;
-                return e.Text;
-            };
-
-            StringTable.prototype.grow = function () {
-                var newSize = TypeScript.Hash.expandPrime(this.entries.length);
-
-                var oldEntries = this.entries;
-                var newEntries = TypeScript.ArrayUtilities.createArray(newSize, null);
-
-                this.entries = newEntries;
-
-                for (var i = 0; i < oldEntries.length; i++) {
-                    var e = oldEntries[i];
-                    while (e !== null) {
-                        var newIndex = e.HashCode % newSize;
-                        var tmp = e.Next;
-                        e.Next = newEntries[newIndex];
-                        newEntries[newIndex] = e;
-                        e = tmp;
-                    }
-                }
-            };
-
-            StringTable.textCharArrayEquals = function (text, array, start, length) {
-                if (text.length !== length) {
-                    return false;
-                }
-
-                var s = start;
-                for (var i = 0; i < length; i++) {
-                    if (text.charCodeAt(i) !== array[s]) {
-                        return false;
-                    }
-
-                    s++;
-                }
-
-                return true;
-            };
-            return StringTable;
-        })();
-        Collections.StringTable = StringTable;
-
-        Collections.DefaultStringTable = new StringTable(Collections.DefaultStringTableCapacity);
-    })(TypeScript.Collections || (TypeScript.Collections = {}));
-    var Collections = TypeScript.Collections;
-})(TypeScript || (TypeScript = {}));
-var TypeScript;
-(function (TypeScript) {
     var StringUtilities = (function () {
         function StringUtilities() {
         }
         StringUtilities.isString = function (value) {
             return Object.prototype.toString.apply(value, []) === '[object String]';
-        };
-
-        StringUtilities.fromCharCodeArray = function (array) {
-            return String.fromCharCode.apply(null, array);
         };
 
         StringUtilities.endsWith = function (string, value) {
@@ -2143,10 +1900,6 @@ var TypeScript;
 
         StringUtilities.repeat = function (value, count) {
             return Array(count + 1).join(value);
-        };
-
-        StringUtilities.stringEquals = function (val1, val2) {
-            return val1 === val2;
         };
         return StringUtilities;
     })();
@@ -4978,136 +4731,6 @@ var FormattingOptions = (function () {
     FormattingOptions.defaultOptions = new FormattingOptions(false, 4, 4, "\r\n");
     return FormattingOptions;
 })();
-var TypeScript;
-(function (TypeScript) {
-    (function (Indentation) {
-        function columnForEndOfTokenAtPosition(syntaxTree, position, options) {
-            var token = TypeScript.findToken(syntaxTree.sourceUnit(), position);
-            return columnForStartOfTokenAtPosition(syntaxTree, position, options) + TypeScript.width(token);
-        }
-        Indentation.columnForEndOfTokenAtPosition = columnForEndOfTokenAtPosition;
-
-        function columnForStartOfTokenAtPosition(syntaxTree, position, options) {
-            var token = TypeScript.findToken(syntaxTree.sourceUnit(), position);
-
-            var firstTokenInLine = TypeScript.Syntax.firstTokenInLineContainingPosition(syntaxTree, token.fullStart());
-            var leadingTextInReverse = [];
-
-            var current = token;
-            while (current !== firstTokenInLine) {
-                current = TypeScript.previousToken(current);
-
-                if (current === firstTokenInLine) {
-                    leadingTextInReverse.push(current.trailingTrivia().fullText());
-                    leadingTextInReverse.push(current.text());
-                } else {
-                    leadingTextInReverse.push(current.fullText());
-                }
-            }
-
-            collectLeadingTriviaTextToStartOfLine(firstTokenInLine, leadingTextInReverse);
-
-            return columnForLeadingTextInReverse(leadingTextInReverse, options);
-        }
-        Indentation.columnForStartOfTokenAtPosition = columnForStartOfTokenAtPosition;
-
-        function columnForStartOfFirstTokenInLineContainingPosition(syntaxTree, position, options) {
-            var firstTokenInLine = TypeScript.Syntax.firstTokenInLineContainingPosition(syntaxTree, position);
-            var leadingTextInReverse = [];
-
-            collectLeadingTriviaTextToStartOfLine(firstTokenInLine, leadingTextInReverse);
-
-            return columnForLeadingTextInReverse(leadingTextInReverse, options);
-        }
-        Indentation.columnForStartOfFirstTokenInLineContainingPosition = columnForStartOfFirstTokenInLineContainingPosition;
-
-        function collectLeadingTriviaTextToStartOfLine(firstTokenInLine, leadingTextInReverse) {
-            var leadingTrivia = firstTokenInLine.leadingTrivia();
-
-            for (var i = leadingTrivia.count() - 1; i >= 0; i--) {
-                var trivia = leadingTrivia.syntaxTriviaAt(i);
-                if (trivia.kind === 5 /* NewLineTrivia */) {
-                    break;
-                }
-
-                if (trivia.kind === 6 /* MultiLineCommentTrivia */) {
-                    var lineSegments = TypeScript.Syntax.splitMultiLineCommentTriviaIntoMultipleLines(trivia);
-                    leadingTextInReverse.push(TypeScript.ArrayUtilities.last(lineSegments));
-
-                    if (lineSegments.length > 0) {
-                        break;
-                    }
-                }
-
-                leadingTextInReverse.push(trivia.fullText());
-            }
-        }
-
-        function columnForLeadingTextInReverse(leadingTextInReverse, options) {
-            var column = 0;
-
-            for (var i = leadingTextInReverse.length - 1; i >= 0; i--) {
-                var text = leadingTextInReverse[i];
-                column = columnForPositionInStringWorker(text, text.length, column, options);
-            }
-
-            return column;
-        }
-
-        function columnForPositionInString(input, position, options) {
-            return columnForPositionInStringWorker(input, position, 0, options);
-        }
-        Indentation.columnForPositionInString = columnForPositionInString;
-
-        function columnForPositionInStringWorker(input, position, startColumn, options) {
-            var column = startColumn;
-            var spacesPerTab = options.spacesPerTab;
-
-            for (var j = 0; j < position; j++) {
-                var ch = input.charCodeAt(j);
-
-                if (ch === 9 /* tab */) {
-                    column += spacesPerTab - column % spacesPerTab;
-                } else {
-                    column++;
-                }
-            }
-
-            return column;
-        }
-
-        function indentationString(column, options) {
-            var numberOfTabs = 0;
-            var numberOfSpaces = TypeScript.MathPrototype.max(0, column);
-
-            if (options.useTabs) {
-                numberOfTabs = Math.floor(column / options.spacesPerTab);
-                numberOfSpaces -= numberOfTabs * options.spacesPerTab;
-            }
-
-            return TypeScript.StringUtilities.repeat('\t', numberOfTabs) + TypeScript.StringUtilities.repeat(' ', numberOfSpaces);
-        }
-        Indentation.indentationString = indentationString;
-
-        function indentationTrivia(column, options) {
-            return TypeScript.Syntax.whitespace(this.indentationString(column, options));
-        }
-        Indentation.indentationTrivia = indentationTrivia;
-
-        function firstNonWhitespacePosition(value) {
-            for (var i = 0; i < value.length; i++) {
-                var ch = value.charCodeAt(i);
-                if (!TypeScript.CharacterInfo.isWhitespace(ch)) {
-                    return i;
-                }
-            }
-
-            return value.length;
-        }
-        Indentation.firstNonWhitespacePosition = firstNonWhitespacePosition;
-    })(TypeScript.Indentation || (TypeScript.Indentation = {}));
-    var Indentation = TypeScript.Indentation;
-})(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
     (function (LanguageVersion) {
@@ -11904,41 +11527,6 @@ var TypeScript;
         return SyntaxWalker;
     })();
     TypeScript.SyntaxWalker = SyntaxWalker;
-})(TypeScript || (TypeScript = {}));
-var TypeScript;
-(function (TypeScript) {
-    var SyntaxNodeInvariantsChecker = (function (_super) {
-        __extends(SyntaxNodeInvariantsChecker, _super);
-        function SyntaxNodeInvariantsChecker() {
-            _super.apply(this, arguments);
-            this.tokenTable = TypeScript.Collections.createHashTable(TypeScript.Collections.DefaultHashTableCapacity, TypeScript.Collections.identityHashCode);
-        }
-        SyntaxNodeInvariantsChecker.checkInvariants = function (node) {
-            TypeScript.visitNodeOrToken(new SyntaxNodeInvariantsChecker(), node);
-        };
-
-        SyntaxNodeInvariantsChecker.prototype.visitNode = function (node) {
-            TypeScript.Debug.assert(node.kind === 120 /* SourceUnit */ || node.parent);
-            _super.prototype.visitNode.call(this, node);
-        };
-
-        SyntaxNodeInvariantsChecker.prototype.visitList = function (list) {
-            TypeScript.Debug.assert(TypeScript.isShared(list) || list.parent);
-            _super.prototype.visitList.call(this, list);
-        };
-
-        SyntaxNodeInvariantsChecker.prototype.visitSeparatedList = function (list) {
-            TypeScript.Debug.assert(TypeScript.isShared(list) || list.parent);
-            _super.prototype.visitSeparatedList.call(this, list);
-        };
-
-        SyntaxNodeInvariantsChecker.prototype.visitToken = function (token) {
-            TypeScript.Debug.assert(token.parent);
-            this.tokenTable.add(token, token);
-        };
-        return SyntaxNodeInvariantsChecker;
-    })(TypeScript.SyntaxWalker);
-    TypeScript.SyntaxNodeInvariantsChecker = SyntaxNodeInvariantsChecker;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
@@ -47563,6 +47151,144 @@ var TypeScript;
     })();
     TypeScript.Comment = Comment;
 })(TypeScript || (TypeScript = {}));
+var TypeScript;
+(function (TypeScript) {
+    (function (Collections) {
+        Collections.DefaultHashTableCapacity = 1024;
+
+        var HashTableEntry = (function () {
+            function HashTableEntry(Key, Value, HashCode, Next) {
+                this.Key = Key;
+                this.Value = Value;
+                this.HashCode = HashCode;
+                this.Next = Next;
+            }
+            return HashTableEntry;
+        })();
+
+        var HashTable = (function () {
+            function HashTable(capacity, hash) {
+                this.hash = hash;
+                this.count = 0;
+                var size = TypeScript.Hash.getPrime(capacity);
+                this.entries = TypeScript.ArrayUtilities.createArray(size, null);
+            }
+            HashTable.prototype.set = function (key, value) {
+                this.addOrSet(key, value, false);
+            };
+
+            HashTable.prototype.add = function (key, value) {
+                this.addOrSet(key, value, true);
+            };
+
+            HashTable.prototype.containsKey = function (key) {
+                var hashCode = this.computeHashCode(key);
+                var entry = this.findEntry(key, hashCode);
+                return entry !== null;
+            };
+
+            HashTable.prototype.get = function (key) {
+                var hashCode = this.computeHashCode(key);
+                var entry = this.findEntry(key, hashCode);
+
+                return entry === null ? null : entry.Value;
+            };
+
+            HashTable.prototype.computeHashCode = function (key) {
+                var hashCode = this.hash === null ? key.hashCode : this.hash(key);
+
+                hashCode = hashCode & 0x7FFFFFFF;
+                TypeScript.Debug.assert(hashCode >= 0);
+
+                return hashCode;
+            };
+
+            HashTable.prototype.addOrSet = function (key, value, throwOnExistingEntry) {
+                var hashCode = this.computeHashCode(key);
+
+                var entry = this.findEntry(key, hashCode);
+                if (entry !== null) {
+                    if (throwOnExistingEntry) {
+                        throw TypeScript.Errors.argument('key', "Key was already in table.");
+                    }
+
+                    entry.Key = key;
+                    entry.Value = value;
+                    return;
+                }
+
+                return this.addEntry(key, value, hashCode);
+            };
+
+            HashTable.prototype.findEntry = function (key, hashCode) {
+                for (var e = this.entries[hashCode % this.entries.length]; e !== null; e = e.Next) {
+                    if (e.HashCode === hashCode && key === e.Key) {
+                        return e;
+                    }
+                }
+
+                return null;
+            };
+
+            HashTable.prototype.addEntry = function (key, value, hashCode) {
+                var index = hashCode % this.entries.length;
+
+                var e = new HashTableEntry(key, value, hashCode, this.entries[index]);
+
+                this.entries[index] = e;
+
+                if (this.count >= (this.entries.length / 2)) {
+                    this.grow();
+                }
+
+                this.count++;
+                return e.Key;
+            };
+
+            HashTable.prototype.grow = function () {
+                var newSize = TypeScript.Hash.expandPrime(this.entries.length);
+
+                var oldEntries = this.entries;
+                var newEntries = TypeScript.ArrayUtilities.createArray(newSize, null);
+
+                this.entries = newEntries;
+
+                for (var i = 0; i < oldEntries.length; i++) {
+                    var e = oldEntries[i];
+
+                    while (e !== null) {
+                        var newIndex = e.HashCode % newSize;
+                        var tmp = e.Next;
+                        e.Next = newEntries[newIndex];
+                        newEntries[newIndex] = e;
+                        e = tmp;
+                    }
+                }
+            };
+            return HashTable;
+        })();
+        Collections.HashTable = HashTable;
+
+        function createHashTable(capacity, hash) {
+            if (typeof capacity === "undefined") { capacity = Collections.DefaultHashTableCapacity; }
+            if (typeof hash === "undefined") { hash = null; }
+            return new HashTable(capacity, hash);
+        }
+        Collections.createHashTable = createHashTable;
+
+        var currentHashCode = 1;
+        function identityHashCode(value) {
+            if (value.__hash === undefined) {
+                value.__hash = currentHashCode;
+                currentHashCode++;
+            }
+
+            return value.__hash;
+        }
+        Collections.identityHashCode = identityHashCode;
+    })(TypeScript.Collections || (TypeScript.Collections = {}));
+    var Collections = TypeScript.Collections;
+})(TypeScript || (TypeScript = {}));
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^\s+|\s+$/g, '');
@@ -51275,6 +51001,136 @@ var TypeScript;
         Services.LanguageServiceCompiler = LanguageServiceCompiler;
     })(TypeScript.Services || (TypeScript.Services = {}));
     var Services = TypeScript.Services;
+})(TypeScript || (TypeScript = {}));
+var TypeScript;
+(function (TypeScript) {
+    (function (Indentation) {
+        function columnForEndOfTokenAtPosition(syntaxTree, position, options) {
+            var token = TypeScript.findToken(syntaxTree.sourceUnit(), position);
+            return columnForStartOfTokenAtPosition(syntaxTree, position, options) + TypeScript.width(token);
+        }
+        Indentation.columnForEndOfTokenAtPosition = columnForEndOfTokenAtPosition;
+
+        function columnForStartOfTokenAtPosition(syntaxTree, position, options) {
+            var token = TypeScript.findToken(syntaxTree.sourceUnit(), position);
+
+            var firstTokenInLine = TypeScript.Syntax.firstTokenInLineContainingPosition(syntaxTree, token.fullStart());
+            var leadingTextInReverse = [];
+
+            var current = token;
+            while (current !== firstTokenInLine) {
+                current = TypeScript.previousToken(current);
+
+                if (current === firstTokenInLine) {
+                    leadingTextInReverse.push(current.trailingTrivia().fullText());
+                    leadingTextInReverse.push(current.text());
+                } else {
+                    leadingTextInReverse.push(current.fullText());
+                }
+            }
+
+            collectLeadingTriviaTextToStartOfLine(firstTokenInLine, leadingTextInReverse);
+
+            return columnForLeadingTextInReverse(leadingTextInReverse, options);
+        }
+        Indentation.columnForStartOfTokenAtPosition = columnForStartOfTokenAtPosition;
+
+        function columnForStartOfFirstTokenInLineContainingPosition(syntaxTree, position, options) {
+            var firstTokenInLine = TypeScript.Syntax.firstTokenInLineContainingPosition(syntaxTree, position);
+            var leadingTextInReverse = [];
+
+            collectLeadingTriviaTextToStartOfLine(firstTokenInLine, leadingTextInReverse);
+
+            return columnForLeadingTextInReverse(leadingTextInReverse, options);
+        }
+        Indentation.columnForStartOfFirstTokenInLineContainingPosition = columnForStartOfFirstTokenInLineContainingPosition;
+
+        function collectLeadingTriviaTextToStartOfLine(firstTokenInLine, leadingTextInReverse) {
+            var leadingTrivia = firstTokenInLine.leadingTrivia();
+
+            for (var i = leadingTrivia.count() - 1; i >= 0; i--) {
+                var trivia = leadingTrivia.syntaxTriviaAt(i);
+                if (trivia.kind === 5 /* NewLineTrivia */) {
+                    break;
+                }
+
+                if (trivia.kind === 6 /* MultiLineCommentTrivia */) {
+                    var lineSegments = TypeScript.Syntax.splitMultiLineCommentTriviaIntoMultipleLines(trivia);
+                    leadingTextInReverse.push(TypeScript.ArrayUtilities.last(lineSegments));
+
+                    if (lineSegments.length > 0) {
+                        break;
+                    }
+                }
+
+                leadingTextInReverse.push(trivia.fullText());
+            }
+        }
+
+        function columnForLeadingTextInReverse(leadingTextInReverse, options) {
+            var column = 0;
+
+            for (var i = leadingTextInReverse.length - 1; i >= 0; i--) {
+                var text = leadingTextInReverse[i];
+                column = columnForPositionInStringWorker(text, text.length, column, options);
+            }
+
+            return column;
+        }
+
+        function columnForPositionInString(input, position, options) {
+            return columnForPositionInStringWorker(input, position, 0, options);
+        }
+        Indentation.columnForPositionInString = columnForPositionInString;
+
+        function columnForPositionInStringWorker(input, position, startColumn, options) {
+            var column = startColumn;
+            var spacesPerTab = options.spacesPerTab;
+
+            for (var j = 0; j < position; j++) {
+                var ch = input.charCodeAt(j);
+
+                if (ch === 9 /* tab */) {
+                    column += spacesPerTab - column % spacesPerTab;
+                } else {
+                    column++;
+                }
+            }
+
+            return column;
+        }
+
+        function indentationString(column, options) {
+            var numberOfTabs = 0;
+            var numberOfSpaces = TypeScript.MathPrototype.max(0, column);
+
+            if (options.useTabs) {
+                numberOfTabs = Math.floor(column / options.spacesPerTab);
+                numberOfSpaces -= numberOfTabs * options.spacesPerTab;
+            }
+
+            return TypeScript.StringUtilities.repeat('\t', numberOfTabs) + TypeScript.StringUtilities.repeat(' ', numberOfSpaces);
+        }
+        Indentation.indentationString = indentationString;
+
+        function indentationTrivia(column, options) {
+            return TypeScript.Syntax.whitespace(this.indentationString(column, options));
+        }
+        Indentation.indentationTrivia = indentationTrivia;
+
+        function firstNonWhitespacePosition(value) {
+            for (var i = 0; i < value.length; i++) {
+                var ch = value.charCodeAt(i);
+                if (!TypeScript.CharacterInfo.isWhitespace(ch)) {
+                    return i;
+                }
+            }
+
+            return value.length;
+        }
+        Indentation.firstNonWhitespacePosition = firstNonWhitespacePosition;
+    })(TypeScript.Indentation || (TypeScript.Indentation = {}));
+    var Indentation = TypeScript.Indentation;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
