@@ -1928,6 +1928,61 @@ function generateNode(definition: ITypeDefinition): string {
             result += "        " + child.name + ": " + getType(child) + ";\r\n";
         }
     }
+    result += "    }\r\n\r\n";
+
+    result += "    export function create" + getNameWithoutSuffix(definition) + "(data: number";
+
+    for (var i = 0; i < definition.children.length; i++) {
+        var child = definition.children[i];
+
+        result += ", " + child.name + ": " + getType(child);
+    }
+
+    result += "): " + definition.name + " {\r\n";
+
+    result += "        var result = <" + definition.name + ">{ data: data"
+
+    if (definition.syntaxKinds) {
+        result += ", kind: kind";
+    }
+    else {
+        result += ", kind: SyntaxKind." + getNameWithoutSuffix(definition);
+    }
+
+    if (definition.name === "SourceUnitSyntax") {
+        result += ", syntaxTree: null, parent: null";
+    }
+
+    for (var i = 0; i < definition.children.length; i++) {
+        var child = definition.children[i];
+
+        if (child.type !== "SyntaxKind") {
+            result += ", " + child.name + ": " + child.name;
+        }
+    }
+
+    result += " };\r\n";
+
+    for (var i = 0; i < definition.children.length; i++) {
+        var child = definition.children[i];
+
+        if (child.type === "SyntaxKind") {
+            continue;
+        }
+
+        if (child.isList || child.isSeparatedList) {
+            result += "        !isShared(" + child.name + ") && (" + child.name + ".parent = result);\r\n";
+        }
+        else if (child.isOptional) {
+            result += "        " + child.name + " && (" + child.name + ".parent = result);\r\n";
+        }
+        else {
+            result += "        " + child.name + ".parent = result;\r\n";
+        }
+    }
+    result += "        return result;\r\n";
+    result += "    }"
+
 
     //hasKind = false;
 
@@ -1951,7 +2006,6 @@ function generateNode(definition: ITypeDefinition): string {
     // result += generateCollectTextElementsMethod(definition);
     // result += generateFindTokenInternalMethod(definition);
     // result += generateStructuralEqualsMethod(definition);
-    result += "    }";
 
     return result;
 }
@@ -2184,6 +2238,7 @@ function generateNodes(): string {
     result += "        }\r\n";
     result += "    }\r\n\r\n";
 
+    /*
     result += "    function setParentForArray(parent: ISyntaxElement, array: ISyntaxNodeOrToken[]): void {\r\n";
     result += "        for (var i = 0, n = array.length; i < n; i++) {\r\n";
     result += "            var child = array[i];\r\n";
@@ -2216,6 +2271,7 @@ function generateNodes(): string {
     result += "        }\r\n\r\n";
     result += "        return parent;\r\n";
     result += "    }\r\n\r\n";
+    */
 
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];

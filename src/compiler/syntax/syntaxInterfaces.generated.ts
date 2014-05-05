@@ -15,8 +15,7 @@ module TypeScript {
         kind: SyntaxKind;
     }
 
-    // Should be called SyntaxNode.  But we already have that type.  Calling 'Node' for now.
-    interface Node extends SyntaxElement {
+    interface SyntaxNode extends SyntaxElement {
         flags: NodeFlags;
     }
 

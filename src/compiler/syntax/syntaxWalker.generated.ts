@@ -3,7 +3,6 @@
 module TypeScript {
     export class SyntaxWalker implements ISyntaxVisitor {
         public visitToken(token: ISyntaxToken): void {
-            Debug.assert(token !== undefined);
         }
 
         public visitNode(node: ISyntaxNode): void {
