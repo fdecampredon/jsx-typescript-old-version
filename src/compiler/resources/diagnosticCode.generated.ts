@@ -61,7 +61,6 @@ module TypeScript {
         Class_name_cannot_be_0: "Class name cannot be '{0}'.",
         Interface_name_cannot_be_0: "Interface name cannot be '{0}'.",
         Enum_name_cannot_be_0: "Enum name cannot be '{0}'.",
-        Module_name_cannot_be_0: "Module name cannot be '{0}'.",
         Enum_member_must_have_initializer: "Enum member must have initializer.",
         Export_assignment_cannot_be_used_in_internal_modules: "Export assignment cannot be used in internal modules.",
         Export_assignment_not_allowed_in_module_with_exported_element: "Export assignment not allowed in module with exported element.",

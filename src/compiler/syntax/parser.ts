@@ -5125,6 +5125,12 @@ module TypeScript.Parser {
                 case SyntaxKind.BooleanKeyword:
                 case SyntaxKind.StringKeyword:
                 case SyntaxKind.VoidKeyword:
+                    // if any of these are followed by '.', then this is actually a module name,
+                    // and these keywords will be reinterpreted as an identifier.
+                    if (this.peekToken(1).kind === SyntaxKind.DotToken) {
+                        break;
+                    }
+
                     this.moveToNextToken();
                     return currentToken;
 

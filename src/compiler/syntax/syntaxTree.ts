@@ -573,31 +573,15 @@ module TypeScript {
             return false;
         }
 
-        private checkForReservedName(parent: ISyntaxElement, name: INameSyntax, diagnosticKey: string): boolean {
-            var token: ISyntaxToken;
-
-            var current = name;
-            while (current !== null) {
-                if (current.kind === SyntaxKind.QualifiedName) {
-                    var qualifiedName = <QualifiedNameSyntax>current;
-                    token = qualifiedName.right;
-                    current = qualifiedName.left;
-                }
-                else {
-                    Debug.assert(current.kind === SyntaxKind.IdentifierName);
-                    token = <ISyntaxToken>current;
-                    current = null;
-                }
-
-                switch (tokenValueText(token)) {
-                    case "any":
-                    case "number":
-                    case "boolean":
-                    case "string":
-                    case "void":
-                        this.pushDiagnostic(token, diagnosticKey, [tokenValueText(token)]);
-                        return true;
-                }
+        private checkForReservedName(parent: ISyntaxElement, name: ISyntaxToken, diagnosticKey: string): boolean {
+            switch (tokenValueText(name)) {
+                case "any":
+                case "number":
+                case "boolean":
+                case "string":
+                case "void":
+                    this.pushDiagnostic(name, diagnosticKey, [tokenValueText(name)]);
+                    return true;
             }
 
             return false;
@@ -980,8 +964,7 @@ module TypeScript {
         }
 
         public visitModuleDeclaration(node: ModuleDeclarationSyntax): void {
-            if (this.checkForReservedName(node, node.name, DiagnosticCode.Module_name_cannot_be_0) ||
-                this.checkForDisallowedDeclareModifier(node.modifiers) ||
+            if (this.checkForDisallowedDeclareModifier(node.modifiers) ||
                 this.checkForRequiredDeclareModifier(node, node.moduleKeyword, node.modifiers) ||
                 this.checkModuleElementModifiers(node.modifiers) ||
                 this.checkForDisallowedImportDeclaration(node) ||

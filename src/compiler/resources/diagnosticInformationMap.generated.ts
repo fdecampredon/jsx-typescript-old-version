@@ -62,7 +62,6 @@ module TypeScript {
     "Class name cannot be '{0}'.": { "code": 1057, "category": DiagnosticCategory.Error },
     "Interface name cannot be '{0}'.": { "code": 1058, "category": DiagnosticCategory.Error },
     "Enum name cannot be '{0}'.": { "code": 1059, "category": DiagnosticCategory.Error },
-    "Module name cannot be '{0}'.": { "code": 1060, "category": DiagnosticCategory.Error },
     "Enum member must have initializer.": { "code": 1061, "category": DiagnosticCategory.Error },
     "Export assignment cannot be used in internal modules.": { "code": 1063, "category": DiagnosticCategory.Error },
     "Export assignment not allowed in module with exported element.": { "code": 1064, "category": DiagnosticCategory.Error },
