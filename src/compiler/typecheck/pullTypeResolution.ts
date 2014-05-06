@@ -3758,10 +3758,10 @@ module TypeScript {
                 this.checkNameForCompilerGeneratedDeclarationCollision(funcDeclAST, /*isDeclaration*/ true, name, context);
             } 
 
-            // Check for implicit `any` return types on signatures.
+            // Check for implicit any return types on signatures.
             // In cases where a function has a body, the return type can be inferred from the body.
-            // In such cases, we do not consider the inferred type to be implicit.
-            if (this.compilationSettings.noImplicitAny() && block == null && returnTypeAnnotation == null ) {
+            // In such cases, we do not consider an inferred any type to be implicit.
+            if (this.compilationSettings.noImplicitAny() && block === null && returnTypeAnnotation === null ) {
                 this.checkAndReportImplicitAnyOnFunctionSignature(funcDeclAST, name, context);
             }
 
@@ -3778,7 +3778,7 @@ module TypeScript {
             // Don't report an error to the user if the field is a private ambient member.
             // Private fields don't actually need their types exposed, and in generated
             // .d.ts files, they are given no type annotations.
-            if (this.isFunctionPrivateWithinAmbientDeclaration(funcDecl)) {
+            if (this.isPrivateWithinAmbientDeclaration(funcDecl)) {
                 return;
             }
 
@@ -3795,16 +3795,17 @@ module TypeScript {
             }
         }
         
-        private isFunctionPrivateWithinAmbientDeclaration(funcDecl: PullDecl): boolean {
-            var parentDecl = funcDecl.getParentDecl();
+        private isPrivateWithinAmbientDeclaration(funcDecl: PullDecl): boolean {
+            if (TypeScript.hasFlag(funcDecl.flags, PullElementFlags.Private)) {
+                var parentDecl = funcDecl.getParentDecl();
 
-            if (parentDecl !== null) {
-                var parentDeclFlags = funcDecl.getParentDecl().flags;
-
-                return (TypeScript.hasFlag(parentDeclFlags, PullElementFlags.Ambient) && TypeScript.hasFlag(funcDecl.flags, PullElementFlags.Private));
+                if (parentDecl !== null) {
+                    return TypeScript.hasFlag(parentDecl.flags, PullElementFlags.Ambient);
+                }
+            
             }
 
-            return true;
+            return false;
         }
 
         private checkThatNonVoidFunctionHasReturnExpressionOrThrowStatement(
