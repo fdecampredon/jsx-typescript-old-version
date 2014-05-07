@@ -1129,8 +1129,7 @@ module TypeScript.Parser {
 
             this._oldSourceUnitCursor.moveToNextSibling();
 
-            // Update the underlying source with where it should now be currently pointing, and 
-            // what the previous token is before that position.
+            // Update the underlying source with where it should now be currently pointin.
             var absolutePosition = this.absolutePosition() + fullWidth(node);
             this._normalParserSource.resetToPosition(absolutePosition);
 
@@ -1157,10 +1156,9 @@ module TypeScript.Parser {
 
                 // Debug.assert(!this._normalParserSource.isPinned());
                 
-                // Update the underlying source with where it should now be currently pointing, and 
-                // what the previous token is before that position.  We don't need to do this when
-                // the token came from the new text as the source will automatically be placed in
-                // the right position.
+                // Update the underlying source with where it should now be currently pointing. We 
+                // don't need to do this when the token came from the new text as the source will
+                // automatically be placed in the right position.
                 var absolutePosition = this.absolutePosition() + currentToken.fullWidth();
                 this._normalParserSource.resetToPosition(absolutePosition);
 

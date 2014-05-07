@@ -327,8 +327,6 @@ module TypeScript {
             var kind = scanSyntaxKind(allowContextualToken);
             var trailingTriviaInfo = scanTriviaInfo(/*isTrailing: */true);
 
-            var fullEnd = index;
-
             // inline the packing logic for perf.
             var packedFullStartAndTriviaInfo = (fullStart * ScannerConstants.FullStartAdjust) +
                 ((leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) |
