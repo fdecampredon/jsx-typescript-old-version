@@ -2308,10 +2308,6 @@ module TypeScript.Parser {
             return createClassDeclaration(parseNodeData, modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken);
         }
 
-        function isPublicOrPrivateKeyword(token: ISyntaxToken): boolean {
-            return token.kind === SyntaxKind.PublicKeyword || token.kind === SyntaxKind.PrivateKeyword;
-        }
-
         function isAccessor(inErrorRecovery: boolean): boolean {
             var index = modifierCount();
 
@@ -3584,12 +3580,8 @@ module TypeScript.Parser {
                 parseOptionalElseClause());
         }
 
-        function isElseClause(): boolean {
-            return currentToken().kind === SyntaxKind.ElseKeyword;
-        }
-
         function parseOptionalElseClause(): ElseClauseSyntax {
-            return isElseClause() ? parseElseClause() : null;
+            return currentToken().kind === SyntaxKind.ElseKeyword ? parseElseClause() : null;
         }
 
         function parseElseClause(): ElseClauseSyntax {
@@ -3692,10 +3684,6 @@ module TypeScript.Parser {
             }
 
             return createVariableDeclarator(parseNodeData, propertyName, typeAnnotation, equalsValueClause);
-        }
-
-        function isColonValueClause(): boolean {
-            return currentToken().kind === SyntaxKind.ColonToken;
         }
 
         function isEqualsValueClause(inParameter: boolean): boolean {
@@ -4913,14 +4901,8 @@ module TypeScript.Parser {
             return createParameterList(parseNodeData, openParenToken, parameters, closeParenToken);
         }
 
-        function isTypeAnnotation(): boolean {
-            return currentToken().kind === SyntaxKind.ColonToken;
-        }
-
         function parseOptionalTypeAnnotation(allowStringLiteral: boolean): TypeAnnotationSyntax {
-            return isTypeAnnotation()
-                ? parseTypeAnnotation(allowStringLiteral)
-                : null;
+            return currentToken().kind === SyntaxKind.ColonToken ? parseTypeAnnotation(allowStringLiteral) : null;
         }
 
         function parseTypeAnnotation(allowStringLiteral: boolean): TypeAnnotationSyntax {
@@ -4983,10 +4965,6 @@ module TypeScript.Parser {
             }
 
             return type;
-        }
-
-        function isTypeQuery(): boolean {
-            return currentToken().kind === SyntaxKind.TypeOfKeyword;
         }
 
         function parseTypeQuery(): TypeQuerySyntax {

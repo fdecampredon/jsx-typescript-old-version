@@ -32,7 +32,7 @@ verify.referencesCountIs(2);
 
 cancellation.setCancelled();
 goTo.marker("1");
-verifyOperationIsCancelled(() => verify.referencesCountIs(0); );
+verifyOperationIsCancelled(() => verify.referencesCountIs(0));
 
 // verify that internal state is still correct
 cancellation.resetCancelled();
