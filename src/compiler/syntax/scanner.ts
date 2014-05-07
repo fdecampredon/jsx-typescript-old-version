@@ -96,12 +96,22 @@ module TypeScript {
         isKeywordStartCharacter[keyword.charCodeAt(0)] = true;
     }
 
-    function isParserGenerated(kind: SyntaxKind): boolean {
+    function isParserGeneratedToken(kind: SyntaxKind): boolean {
+        // These tokens are contextually created based on parsing decisions.  We can't reuse 
+        // them in incremental scenarios as we may be in a context where the parser would not
+        // create them.
         switch (kind) {
-            case SyntaxKind.SlashEqualsToken:
-            case SyntaxKind.SlashToken:
+            // Created by the parser when it sees / or /= in a location where it needs an expression.
             case SyntaxKind.RegularExpressionLiteral:
+
+            // Created by the parser when it sees > in a binary expression operator context.
+            case SyntaxKind.GreaterThanGreaterThanToken:
+            case SyntaxKind.GreaterThanGreaterThanGreaterThanToken:
+            case SyntaxKind.GreaterThanEqualsToken:
+            case SyntaxKind.GreaterThanGreaterThanEqualsToken:
+            case SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken:
                 return true;
+
             default:
                 return false;
         }
@@ -136,9 +146,10 @@ module TypeScript {
                 unpackTrailingTriviaInfo(this.data));
         }
 
-        public isIncrementallyUnusable(): boolean { 
-            Debug.assert(this.fullWidth() !== 0 || this.kind === SyntaxKind.EndOfFileToken);
-            return isParserGenerated(this.kind);;// SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind);
+        public isIncrementallyUnusable(): boolean {
+            Debug.assert(this.fullWidth() !== 0 || this.kind === SyntaxKind.EndOfFileToken,
+                "Scanner tokens should never be empty (unless they are the end of file token).");
+            return isParserGeneratedToken(this.kind);
         }
 
         public isKeywordConvertedToIdentifier(): boolean {
@@ -270,7 +281,7 @@ module TypeScript {
 
     export interface Scanner {
         setIndex(index: number): void;
-        scan(allowRegularExpression: boolean): ISyntaxToken;
+        scan(allowContextualToken: boolean): ISyntaxToken;
     }
 
     export function createScanner(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): Scanner {
@@ -309,11 +320,11 @@ module TypeScript {
             return index >= end;
         }
 
-        function scan(allowRegularExpression: boolean): ISyntaxToken {
+        function scan(allowContextualToken: boolean): ISyntaxToken {
             var fullStart = index;
 
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);
-            var kind = scanSyntaxKind(allowRegularExpression);
+            var kind = scanSyntaxKind(allowContextualToken);
             var trailingTriviaInfo = scanTriviaInfo(/*isTrailing: */true);
 
             var fullEnd = index;
@@ -612,7 +623,7 @@ module TypeScript {
             }
         }
 
-        function scanSyntaxKind(allowRegularExpression: boolean): SyntaxKind {
+        function scanSyntaxKind(allowContextualToken: boolean): SyntaxKind {
             if (isAtEndOfSource()) {
                 return SyntaxKind.EndOfFileToken;
             }
@@ -626,7 +637,7 @@ module TypeScript {
 
                 // These are the set of variable width punctuation tokens.
                 case CharacterCodes.slash:
-                    return scanSlashToken(allowRegularExpression);
+                    return scanSlashToken(allowContextualToken);
 
                 case CharacterCodes.dot:
                     return scanDotToken();
@@ -664,7 +675,7 @@ module TypeScript {
                 // These are the set of fixed, single character length punctuation tokens.
                 // The token kind does not depend on what follows.
                 case CharacterCodes.greaterThan:
-                    return advanceAndSetTokenKind(SyntaxKind.GreaterThanToken);
+                    return scanGreaterThanToken(allowContextualToken);
 
                 case CharacterCodes.comma:
                     return advanceAndSetTokenKind(SyntaxKind.CommaToken);
@@ -933,6 +944,46 @@ module TypeScript {
             }
         }
 
+        function scanGreaterThanToken(allowContextualToken: boolean): SyntaxKind {
+            index++;
+            if (allowContextualToken) {
+                var ch0 = str.charCodeAt(index);
+                if (ch0 === CharacterCodes.greaterThan) {
+                    // >>
+                    index++;
+                    var ch1 = str.charCodeAt(index);
+                    if (ch1 === CharacterCodes.greaterThan) {
+                        // >>>
+                        index++;
+                        var ch2 = str.charCodeAt(index);
+                        if (ch2 === CharacterCodes.equals) {
+                            // >>>=
+                            index++;
+                            return SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken;
+                        }
+                        else {
+                            return SyntaxKind.GreaterThanGreaterThanGreaterThanToken;
+                        }
+                    }
+                    else if (ch1 === CharacterCodes.equals) {
+                        // >>=
+                        index++;
+                        return SyntaxKind.GreaterThanGreaterThanEqualsToken;
+                    }
+                    else {
+                        return SyntaxKind.GreaterThanGreaterThanToken;
+                    }
+                }
+                else if (ch0 === CharacterCodes.equals) {
+                    // >=
+                    index++;
+                    return SyntaxKind.GreaterThanEqualsToken;
+                }
+            }
+
+            return SyntaxKind.GreaterThanToken;
+        }
+
         function scanBarToken(): SyntaxKind {
             index++;
             var ch = str.charCodeAt(index);
@@ -1081,12 +1132,12 @@ module TypeScript {
             }
         }
 
-        function scanSlashToken(allowRegularExpression: boolean): SyntaxKind {
+        function scanSlashToken(allowContextualToken: boolean): SyntaxKind {
             // NOTE: By default, we do not try scanning a / as a regexp here.  We instead consider it a
             // div or div-assign.  Later on, if the parser runs into a situation where it would like a 
             // term, and it sees one of these then it may restart us asking specifically if we could 
             // scan out a regex.
-            if (allowRegularExpression) {
+            if (allowContextualToken) {
                 var result = tryScanRegularExpressionToken();
                 if (result !== SyntaxKind.None) {
                     return result;
@@ -1371,7 +1422,7 @@ module TypeScript {
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
-            scanSyntaxKind(token.kind === SyntaxKind.RegularExpressionLiteral);
+            scanSyntaxKind(isParserGeneratedToken(token.kind));
             var end = index;
 
             tokenInfo.leadingTriviaWidth = start - fullStart;
@@ -1392,7 +1443,7 @@ module TypeScript {
         var hadError = false;
         var scanner = createScanner(languageVersion, text, () => hadError = true);
 
-        var token = scanner.scan(/*allowRegularExpression:*/ false);
+        var token = scanner.scan(/*allowContextualToken:*/ false);
 
         return !hadError && SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && width(token) === text.length();
     }

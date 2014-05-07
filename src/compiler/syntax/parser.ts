@@ -426,10 +426,6 @@ module TypeScript.Parser {
         // The text we are parsing.
         text: ISimpleText;
 
-        // The absolute index that the current token starts at.  'currentToken' and 'currentNode'
-        // have their fullStart at this position.
-        absolutePosition(): number;
-
         // The current syntax node the source is pointing at.  Only available in incremental settings.
         // The source can point at a node if that node doesn't intersect any of the text changes in
         // the file, and doesn't contain certain unacceptable constructs.  For example, if the node
@@ -439,9 +435,10 @@ module TypeScript.Parser {
         // The current token the source is pointing at.
         currentToken(): ISyntaxToken;
 
-        // The current token reinterpretted as a regex token.  This must only be called when the 
-        // source is pointing at a "/" or "/=" token. 
-        currentTokenAllowingRegularExpression(): ISyntaxToken;
+        // The current token reinterpretted contextually based on where the parser is.  If the
+        // source is on a / or /= token, then it can be reinterpretted as a regex token.  If the
+        // source is on a > token, it may be reinterpretted to: >>  >>>  >=  >>=  >>>=
+        currentContextualToken(): ISyntaxToken;
 
         // Peek any number of tokens ahead from the current location in source.  peekToken(0) is
         // equivalent to 'currentToken', peekToken(1) is the next token, peekToken(2) the token
@@ -451,8 +448,8 @@ module TypeScript.Parser {
 
         // Called to move the source to the next node or token once the parser has consumed the 
         // current one.
-        moveToNextNode(): void;
-        moveToNextToken(): void;
+        consumeNode(node: ISyntaxNode): void;
+        consumeToken(token: ISyntaxToken): void;
 
         // Gets a rewind point that the parser can use to move back to after it speculatively 
         // parses something.  The source guarantees that if the parser calls 'rewind' with that 
@@ -535,7 +532,7 @@ module TypeScript.Parser {
             return null;
         }
 
-        public moveToNextNode(): void {
+        public consumeNode(node: ISyntaxNode): void {
             // Should never get called.
             throw Errors.invalidOperation();
         }
@@ -590,10 +587,10 @@ module TypeScript.Parser {
             this.rewindPointPoolCount++;
         }
 
-        public fetchNextItem(allowRegularExpression: boolean): ISyntaxToken {
+        public fetchNextItem(allowContextualToken: boolean): ISyntaxToken {
             // Assert disabled because it is actually expensive enugh to affect perf.
             // Debug.assert(spaceAvailable > 0);
-            var token = this.scanner.scan(allowRegularExpression);
+            var token = this.scanner.scan(allowContextualToken);
 
             var lastDiagnostic = this.lastDiagnostic;
             if (lastDiagnostic === null) {
@@ -612,15 +609,15 @@ module TypeScript.Parser {
             return this.slidingWindow.peekItemN(n);
         }
 
-        public moveToNextToken(): void {
-            var currentToken = this.currentToken();
-            this._absolutePosition += currentToken.fullWidth();
+        public consumeToken(token: ISyntaxToken): void {
+            Debug.assert(this.currentToken() === token);
+            this._absolutePosition += token.fullWidth();
 
             this.slidingWindow.moveToNextItem();
         }
 
         public currentToken(): ISyntaxToken {
-            return this.slidingWindow.currentItem(/*allowRegularExpression:*/ false);
+            return this.slidingWindow.currentItem(/*allowContextualToken:*/ false);
         }
 
         private removeDiagnosticsOnOrAfterPosition(position: number): void {
@@ -654,8 +651,8 @@ module TypeScript.Parser {
             this.scanner.setIndex(absolutePosition);
         }
 
-        public currentTokenAllowingRegularExpression(): ISyntaxToken {
-            // We better be on a divide token right now.
+        public currentContextualToken(): ISyntaxToken {
+            // We better be on a / or > token right now.
             // Debug.assert(SyntaxFacts.isAnyDivideToken(this.currentToken().kind));
 
             // First, we're going to rewind all our data to the point where this / or /= token started.
@@ -672,7 +669,7 @@ module TypeScript.Parser {
 
             // Now actually fetch the token again from the scanner. This time let it know that it
             // can scan it as a regex token if it wants to.
-            var token = this.slidingWindow.currentItem(/*allowRegularExpression:*/ true);
+            var token = this.slidingWindow.currentItem(/*allowContextualToken:*/ true);
 
             // We have better gotten some sort of regex token.  Otherwise, something *very* wrong has
             // occurred.
@@ -805,7 +802,7 @@ module TypeScript.Parser {
             return new TextChangeRange(finalSpan, finalLength);
         }
 
-        public absolutePosition() {
+        private absolutePosition() {
             return this._normalParserSource.absolutePosition();
         }
 
@@ -933,9 +930,9 @@ module TypeScript.Parser {
             return this._normalParserSource.currentToken();
         }
 
-        public currentTokenAllowingRegularExpression(): ISyntaxToken {
+        public currentContextualToken(): ISyntaxToken {
             // Just delegate to the underlying source to handle this.
-            return this._normalParserSource.currentTokenAllowingRegularExpression();
+            return this._normalParserSource.currentContextualToken();
         }
 
         private syncCursorToNewTextIfBehind() {
@@ -1124,22 +1121,17 @@ module TypeScript.Parser {
                 ? token : null;
         }
 
-        public moveToNextNode(): void {
+        public consumeNode(node: ISyntaxNode): void {
             // A node could have only come from the old source unit cursor.  Update it and our 
             // current state.
-            // Debug.assert(this._changeDelta === 0);
+            Debug.assert(this._changeDelta === 0);
+            Debug.assert(this.currentNode() === node);
 
-            // Get the current node we were pointing at, and move to the next element.
-            var currentElement = this._oldSourceUnitCursor.currentNodeOrToken();
-            var currentNode = this._oldSourceUnitCursor.currentNode();
-
-            // We better still be pointing at the node.
-            // Debug.assert(currentElement === currentNode);
             this._oldSourceUnitCursor.moveToNextSibling();
 
             // Update the underlying source with where it should now be currently pointing, and 
             // what the previous token is before that position.
-            var absolutePosition = this.absolutePosition() + fullWidth(currentNode);
+            var absolutePosition = this.absolutePosition() + fullWidth(node);
             this._normalParserSource.resetToPosition(absolutePosition);
 
             // Debug.assert(previousToken !== null);
@@ -1148,18 +1140,17 @@ module TypeScript.Parser {
             if (!this.isPastChangeRange()) {
                 // If we still have a change range, then this node must have ended before the 
                 // change range starts.  Thus, we don't need to call 'skipPastChanges'.
-                // Debug.assert(this.absolutePosition() < this._changeRange.span().start());
+                Debug.assert(this.absolutePosition() < this._changeRange.span().start());
             }
         }
 
-        public moveToNextToken(): void {
+        public consumeToken(currentToken: ISyntaxToken): void {
             // This token may have come from the old source unit, or from the new text.  Handle
             // both accordingly.
-            var currentToken = this.currentToken();
 
             if (this._oldSourceUnitCursor.currentToken() === currentToken) {
                 // The token came from the old source unit.  So our tree and text must be in sync.
-                // Debug.assert(this._changeDelta === 0);
+                Debug.assert(this._changeDelta === 0);
 
                 // Move the cursor past this token.
                 this._oldSourceUnitCursor.moveToNextSibling();
@@ -1176,18 +1167,20 @@ module TypeScript.Parser {
                 // Debug.assert(previousToken !== null);
                 // Debug.assert(previousToken.width() > 0);
 
-                // if (!this.isPastChangeRange()) {
-                //     // If we still have a change range, then this token must have ended before the 
-                //     // change range starts.  Thus, we don't need to call 'skipPastChanges'.
-                //     // Debug.assert(this.absolutePosition() < this._changeRange.span().start());
-                // }
+                 if (!this.isPastChangeRange()) {
+                     // If we still have a change range, then this token must have ended before the 
+                     // change range starts.  Thus, we don't need to call 'skipPastChanges'.
+                     Debug.assert(this.absolutePosition() < this._changeRange.span().start());
+                 }
             }
             else {
-                // the token came from the new text.  We have to update our delta appropriately.
+                // the token came from the new text.  That means the normal source moved forward,
+                // while the syntax cursor stayed in the same place.  Thus our delta moves even 
+                // further back.
                 this._changeDelta -= currentToken.fullWidth();
 
                 // Move our underlying source forward.
-                this._normalParserSource.moveToNextToken();
+                this._normalParserSource.consumeToken(currentToken);
 
                 // Because we read a token from the new text, we may have moved ourselves past the
                 // change range.  If we did, then we may also have to update our change delta to
@@ -1296,16 +1289,6 @@ module TypeScript.Parser {
 
         var parseNodeData: number = 0;
 
-        // It can be expensive to compute these values, and we find ourselves accessing them quite
-        // a lot (esp due to the nature of our "isXXX / parseXXX" pattern).  So cache these values
-        // to save time.
-        //
-        // Note: any time we access our 'source' object, we need to thoughtfully consider if we need
-        // to clear these values.  Fortunately, all those accesses are contined in just a few methods
-        // at the start of this class.
-        var _currentToken: ISyntaxToken = null;
-        var _currentNode: ISyntaxNode = null;
-
         function parseSyntaxTree(_fileName: string, _source: IParserSource, _parseOptions: ParseOptions, isDeclaration: boolean): SyntaxTree {
             // First, set up our state.
             fileName = _fileName;
@@ -1321,8 +1304,6 @@ module TypeScript.Parser {
             fileName = null;
             source = null;
             parseOptions = null;
-            _currentNode = null;
-            _currentToken = null;
 
             return result;
         }
@@ -1337,14 +1318,7 @@ module TypeScript.Parser {
             return new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, fileName, source.text.lineMap(), parseOptions);
         }
 
-        function clearCachedData(): void {
-            _currentNode = null;
-            _currentToken = null;
-        }
-
         function getRewindPoint(): IParserRewindPoint {
-            clearCachedData();
-
             var rewindPoint = source.getRewindPoint();
 
             rewindPoint.diagnosticsCount = diagnostics.length;
@@ -1357,16 +1331,12 @@ module TypeScript.Parser {
         }
 
         function rewind(rewindPoint: IParserRewindPoint): void {
-            clearCachedData();
-
             source.rewind(rewindPoint);
 
             diagnostics.length = rewindPoint.diagnosticsCount;
         }
 
         function releaseRewindPoint(rewindPoint: IParserRewindPoint): void {
-            clearCachedData();
-
             // Debug.assert(listParsingState === rewindPoint.listParsingState);
             // Debug.assert(isInStrictMode === rewindPoint.isInStrictMode);
 
@@ -1374,16 +1344,6 @@ module TypeScript.Parser {
         }
 
         function currentNode(): ISyntaxNode {
-            _currentToken = null;
-
-            if (_currentNode === null) {
-                _currentNode = currentNodeWorker();
-            }
-
-            return _currentNode;
-        }
-
-        function currentNodeWorker(): ISyntaxNode {
             var node = source.currentNode();
 
             // We can only reuse a node if it was parsed under the same strict mode that we're 
@@ -1403,45 +1363,25 @@ module TypeScript.Parser {
         }
 
         function currentToken(): ISyntaxToken {
-            _currentNode = null;
-
-            if (_currentToken === null) {
-                _currentToken = source.currentToken();
-            }
-
-            return _currentToken;
+            return source.currentToken();
         }
 
-        function currentTokenAllowingRegularExpression(): ISyntaxToken {
+        function currentContextualToken(): ISyntaxToken {
             // We're mutating the source here.  We are potentially overwriting the original token we
             // scanned with a regex token.  So we have to clear our state.
-            clearCachedData();
-
-            return source.currentTokenAllowingRegularExpression();
+            return source.currentContextualToken();
         }
 
         function peekToken(n: number): ISyntaxToken {
-            clearCachedData();
-
             return source.peekToken(n);
         }
 
-        function moveToNextToken(): void {
-            clearCachedData();
-
-            source.moveToNextToken();
+        function consumeToken(token: ISyntaxToken): void {
+            source.consumeToken(token);
         }
 
-        function moveToNextTokenN(count: number): void {
-            for (var i = 0; i < count; i++) {
-                moveToNextToken();
-            }
-        }
-
-        function moveToNextNode(): void {
-            clearCachedData();
-
-            source.moveToNextNode();
+        function consumeNode(node: ISyntaxNode): void {
+            source.consumeNode(node);
         }
 
         //this method is called very frequently
@@ -1452,7 +1392,7 @@ module TypeScript.Parser {
 
             var token = currentToken();
             if (token.kind === kind) {
-                moveToNextToken();
+                consumeToken(token);
                 return token;
             }
 
@@ -1474,7 +1414,7 @@ module TypeScript.Parser {
 
             var token = currentToken();
             if (token.kind === kind) {
-                moveToNextToken();
+                consumeToken(token);
                 return token;
             }
 
@@ -1517,7 +1457,7 @@ module TypeScript.Parser {
 
             // If we have an identifier name, then consume and return it.
             if (token.kind === SyntaxKind.IdentifierName) {
-                moveToNextToken();
+                consumeToken(token);
                 return token;
             }
 
@@ -1525,7 +1465,7 @@ module TypeScript.Parser {
             // to convert it to an identifier so that no later parts of the systems see it as a 
             // keyword.
             if (SyntaxFacts.isAnyKeyword(token.kind)) {
-                moveToNextToken();
+                consumeToken(token);
                 return token.convertKeywordToIdentifier();
             }
 
@@ -1541,7 +1481,7 @@ module TypeScript.Parser {
         function eatIdentifierToken(): ISyntaxToken {
             var token = currentToken();
             if (isIdentifier(token)) {
-                moveToNextToken();
+                consumeToken(token);
 
                 if (token.kind === SyntaxKind.IdentifierName) {
                     return token;
@@ -1950,7 +1890,7 @@ module TypeScript.Parser {
         function tryParseModuleElement(inErrorRecovery: boolean): IModuleElementSyntax {
             var node = currentNode();
             if (SyntaxUtilities.isModuleElement(node)) {
-                moveToNextNode();
+                consumeNode(node);
                 return <IModuleElementSyntax>node;
             }
 
@@ -2255,7 +2195,7 @@ module TypeScript.Parser {
             // Debug.assert(isEnumElement());
             var node = currentNode();
             if (node !== null && node.kind === SyntaxKind.EnumElement) {
-                moveToNextNode();
+                consumeNode(node);
                 return <EnumElementSyntax>node;
             }
 
@@ -2295,7 +2235,7 @@ module TypeScript.Parser {
             while (true) {
                 var token = currentToken();
                 if (isModifier(token)) {
-                    moveToNextToken();
+                    consumeToken(token);
                     tokens.push(token);
                     continue;
                 }
@@ -2439,7 +2379,7 @@ module TypeScript.Parser {
             // Debug.assert(isClassElement());
             var node = currentNode();
             if (SyntaxUtilities.isClassElement(node)) {
-                moveToNextNode();
+                consumeNode(node);
                 return <IClassElementSyntax>node;
             }
 
@@ -2538,7 +2478,7 @@ module TypeScript.Parser {
                 }
 
                 // Debug.assert(ParserImpl.isModifier(currentToken));
-                moveToNextToken();
+                consumeToken(_currentToken);
                 modifierArray.push(_currentToken);
             }
 
@@ -2636,7 +2576,7 @@ module TypeScript.Parser {
                 }
 
                 // Debug.assert(ParserImpl.isModifier(currentToken));
-                moveToNextToken();
+                consumeToken(_currentToken);
                 modifierArray.push(_currentToken);
             }
 
@@ -2681,7 +2621,7 @@ module TypeScript.Parser {
                         start(token0), width(token0), DiagnosticCode.Unexpected_token_0_expected, [SyntaxFacts.getText(SyntaxKind.OpenBraceToken)]);
                     addDiagnostic(diagnostic);
 
-                    moveToNextToken();
+                    consumeToken(token0);
                     addSkippedTokenAfterNode(callSignature, token0);
 
                     return true;
@@ -2824,7 +2764,7 @@ module TypeScript.Parser {
         function tryParseTypeMember(inErrorRecovery: boolean): ITypeMemberSyntax {
             var node = currentNode();
             if (SyntaxUtilities.isTypeMember(node)) {
-                moveToNextNode();
+                consumeNode(node);
                 return <ITypeMemberSyntax>node;
             }
 
@@ -2971,7 +2911,7 @@ module TypeScript.Parser {
                 return null;
             }
 
-            moveToNextToken();
+            consumeToken(extendsOrImplementsKeyword);
 
             var listResult = parseSeparatedSyntaxList<INameSyntax>(ListParsingState.HeritageClause_TypeNameList);
             var typeNames = listResult.list;
@@ -3063,7 +3003,7 @@ module TypeScript.Parser {
         function tryParseStatement(inErrorRecovery: boolean): IStatementSyntax {
             var node = currentNode();
             if (SyntaxUtilities.isStatement(node)) {
-                moveToNextNode();
+                consumeNode(node);
                 return <IStatementSyntax><ISyntaxNode>node;
             }
 
@@ -3448,7 +3388,7 @@ module TypeScript.Parser {
             // Debug.assert(isSwitchClause());
             var node = currentNode();
             if (SyntaxUtilities.isSwitchClause(node)) {
-                moveToNextNode();
+                consumeNode(node);
                 return <ISwitchClauseSyntax><ISyntaxNode>node;
             }
 
@@ -3729,7 +3669,7 @@ module TypeScript.Parser {
             // to hit this case.
             var node = currentNode();
             if (canReuseVariableDeclaratorNode(node)) {
-                moveToNextNode();
+                consumeNode(node);
                 return <VariableDeclaratorSyntax>node;
             }
 
@@ -3815,7 +3755,7 @@ module TypeScript.Parser {
                     break;
                 }
 
-                moveToNextToken();
+                consumeToken(token0);
 
                 var rightOperand = tryParseAssignmentExpressionOrHigher(/*force:*/ true, allowIn);
                 leftOperand = createBinaryExpression(parseNodeData, SyntaxKind.CommaExpression, leftOperand, token0, rightOperand);
@@ -3882,7 +3822,7 @@ module TypeScript.Parser {
 
                 // Check for recursive assignment expressions.
                 if (isAssignmentOperatorToken(token0Kind)) {
-                    moveToNextTokenN(unmergedTokenCount(token0Kind));
+                    consumeToken(token0);
 
                     var rightOperand = tryParseAssignmentExpressionOrHigher(/*force:*/ true, allowIn);
                     var binaryExpressionKind = SyntaxFacts.getBinaryExpressionFromOperatorToken(token0Kind);
@@ -3930,10 +3870,9 @@ module TypeScript.Parser {
             var operatorKind = SyntaxFacts.getPrefixUnaryExpressionFromOperatorToken(currentTokenKind);
 
             if (operatorKind !== SyntaxKind.None) {
-                moveToNextToken();
+                consumeToken(_currentToken);
                 return createPrefixUnaryExpression(parseNodeData, operatorKind,
-                    _currentToken,
-                    tryParseUnaryExpressionOrHigher(/*force:*/ true));
+                    _currentToken, tryParseUnaryExpressionOrHigher(/*force:*/ true));
             }
             else if (currentTokenKind === SyntaxKind.TypeOfKeyword) {
                 return parseTypeOfExpression();
@@ -4026,9 +3965,8 @@ module TypeScript.Parser {
                 }
 
                 // Precedence is okay, so we'll "take" this operator.
-                // Now skip the operator token we're on, or the tokens we merged.
-                var skipCount = unmergedTokenCount(operatorToken.kind);
-                moveToNextTokenN(skipCount);
+                // Now skip the operator token we're on.
+                consumeToken(operatorToken);
 
                 var rightOperand = tryParseBinaryExpressionOrHigher(/*force:*/ true, newPrecedence, allowIn);
                 leftOperand = createBinaryExpression(parseNodeData, binaryExpressionKind, leftOperand, operatorToken, rightOperand);
@@ -4042,81 +3980,17 @@ module TypeScript.Parser {
         function currentOperatorToken(): ISyntaxToken {
             var token0 = currentToken();
 
-            // Only merge if we have a '>' token with no trailing trivia.
-            if (token0.kind === SyntaxKind.GreaterThanToken && !token0.hasTrailingTrivia()) {
-                var storage = mergeTokensStorage;
-                storage[0] = SyntaxKind.None;
-                storage[1] = SyntaxKind.None;
-                storage[2] = SyntaxKind.None;
-
-                for (var i = 0; i < storage.length; i++) {
-                    var nextToken = peekToken(i + 1);
-
-                    // We can merge with the next token if it doesn't have any leading trivia.
-                    if (!nextToken.hasLeadingTrivia()) {
-                        storage[i] = nextToken.kind;
-                    }
-
-                    // Stop merging additional tokens if this token has any trailing trivia.
-                    if (nextToken.hasTrailingTrivia()) {
-                        break;
-                    }
-                }
-
-                if (storage[0] === SyntaxKind.GreaterThanToken) {
-                    if (storage[1] === SyntaxKind.GreaterThanToken) {
-                        if (storage[2] === SyntaxKind.EqualsToken) {
-                            // >>>=
-                            return createMergedToken(SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken); 
-                        }
-                        else {
-                            // >>>
-                            return createMergedToken(SyntaxKind.GreaterThanGreaterThanGreaterThanToken);
-                        }
-                    }
-                    else if (storage[1] === SyntaxKind.EqualsToken) {
-                        // >>=
-                        return createMergedToken(SyntaxKind.GreaterThanGreaterThanEqualsToken);
-                    }
-                    else {
-                        // >>
-                        return createMergedToken(SyntaxKind.GreaterThanGreaterThanToken);
-                    }
-                }
-                else if (storage[0] === SyntaxKind.EqualsToken) {
-                    // >=
-                    return createMergedToken(SyntaxKind.GreaterThanEqualsToken);
-                }
+            // If we see a > we need to see if we can actually merge this contextually into a 
+            // >>  >>>  >=  >>=  >>>=  token.
+            if (token0.kind === SyntaxKind.GreaterThanToken) {
+                token0 = currentContextualToken();
+                var kind = token0.kind;
+                Debug.assert(kind === SyntaxKind.GreaterThanToken || kind === SyntaxKind.GreaterThanGreaterThanToken ||
+                             kind === SyntaxKind.GreaterThanGreaterThanGreaterThanToken || kind === SyntaxKind.GreaterThanEqualsToken ||
+                             kind === SyntaxKind.GreaterThanGreaterThanEqualsToken || kind === SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken);
             }
 
-            // Just use the normal logic as we're not merging the token with anything.
             return token0;
-        }
-
-        function createMergedToken(kind: SyntaxKind): ISyntaxToken {
-            var token0 = currentToken();
-            var tokenCount = unmergedTokenCount(kind);
-            var mergedToken = Syntax.token(kind)
-                .withLeadingTrivia(token0.leadingTrivia())
-                .withTrailingTrivia(peekToken(tokenCount - 1).trailingTrivia());
-
-            // We're synthesizing a new operator token.  We need to ensure it starts at 
-            // the right position.
-            mergedToken.setTextAndFullStart(source.text, token0.fullStart());
-
-            return mergedToken;
-        }
-
-        function unmergedTokenCount(tokenKind: SyntaxKind): number {
-            switch (tokenKind) {
-                case SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken: /* >>>= */ return 4;
-                case SyntaxKind.GreaterThanGreaterThanGreaterThanToken:       /* >>>  */ return 3;
-                case SyntaxKind.GreaterThanGreaterThanEqualsToken:            /* >>=  */ return 3;
-                case SyntaxKind.GreaterThanGreaterThanToken:                  /* >>   */ return 2;
-                case SyntaxKind.GreaterThanEqualsToken:                       /* >=   */ return 2;
-            }
-
-            return 1;
         }
 
         function tryParseMemberExpressionOrHigher(force: boolean, inObjectCreation: boolean): IMemberExpressionSyntax {
@@ -4299,7 +4173,7 @@ module TypeScript.Parser {
                         break;
                     }
 
-                    moveToNextToken();
+                    consumeToken(_currentToken);
                     return createPostfixUnaryExpression(parseNodeData,
                         SyntaxFacts.getPostfixUnaryExpressionFromOperatorToken(currentTokenKind),
                         expression, _currentToken);
@@ -4437,7 +4311,7 @@ module TypeScript.Parser {
                 case SyntaxKind.NumericLiteral:
                 case SyntaxKind.RegularExpressionLiteral:
                 case SyntaxKind.StringLiteral:
-                    moveToNextToken();
+                    consumeToken(_currentToken);
                     return _currentToken;
 
                 case SyntaxKind.FunctionKeyword:
@@ -4474,25 +4348,25 @@ module TypeScript.Parser {
             // If we see a / or /= token, then that may actually be the start of a regex in certain 
             // contexts.
 
-            var _currentToken = currentToken();
+            // var currentToken = this.currentToken();
             // Debug.assert(SyntaxFacts.isAnyDivideToken(currentToken.kind));
 
             // Ok, from our quick lexical check, this could be a place where a regular expression could
             // go.  Now we have to do a bunch of work.  Ask the source to retrive the token at the 
             // current position again.  But this time allow it to retrieve it as a regular expression.
-            _currentToken = currentTokenAllowingRegularExpression();
+            var currentToken = currentContextualToken();
 
             // Note: we *must* have gotten a /, /= or regular expression.  Or else something went *very*
             // wrong with our logic above.
             // Debug.assert(SyntaxFacts.isAnyDivideOrRegularExpressionToken(currentToken.kind));
 
-            if (_currentToken.kind === SyntaxKind.SlashToken || _currentToken.kind === SyntaxKind.SlashEqualsToken) {
+            if (currentToken.kind === SyntaxKind.SlashToken || currentToken.kind === SyntaxKind.SlashEqualsToken) {
                 // Still came back as a / or /=.   This is not a regular expression literal.
                 return null;
             }
-            else if (_currentToken.kind === SyntaxKind.RegularExpressionLiteral) {
-                moveToNextToken();
-                return _currentToken;
+            else if (currentToken.kind === SyntaxKind.RegularExpressionLiteral) {
+                consumeToken(currentToken);
+                return currentToken;
             }
             else {
                 // Something *very* wrong happened.  This is an internal parser fault that we need 
@@ -4875,7 +4749,7 @@ module TypeScript.Parser {
             }
 
             // Debug.assert(isPropertyName(currentToken, false));
-            moveToNextToken();
+            consumeToken(_currentToken);
             return _currentToken;
         }
 
@@ -5136,7 +5010,7 @@ module TypeScript.Parser {
                         break;
                     }
 
-                    moveToNextToken();
+                    consumeToken(_currentToken);
                     return _currentToken;
 
                 // Object type
@@ -5251,7 +5125,7 @@ module TypeScript.Parser {
         function tryParseParameter(): ParameterSyntax {
             var node = currentNode();
             if (node !== null && node.kind === SyntaxKind.Parameter) {
-                moveToNextNode();
+                consumeNode(node);
                 return <ParameterSyntax>node;
             }
 
@@ -5262,7 +5136,7 @@ module TypeScript.Parser {
             while (true) {
                 var _currentToken = currentToken();
                 if (isModifier(_currentToken) && !isModifierUsedAsParameterIdentifier(_currentToken)) {
-                    moveToNextToken();
+                    consumeToken(_currentToken);
                     modifierArray.push(_currentToken);
                     continue;
                 }
@@ -5346,7 +5220,7 @@ module TypeScript.Parser {
             var skippedToken = currentToken();
 
             // Consume this token and move onto the next item in the list.
-            moveToNextToken();
+            consumeToken(skippedToken);
 
             addSkippedTokenToList(nodes, separators, skippedTokens, skippedToken);
 
@@ -5509,7 +5383,7 @@ module TypeScript.Parser {
                 var _currentToken = currentToken();
                 if (_currentToken.kind === _separatorKind || _currentToken.kind === SyntaxKind.CommaToken) {
                     // Consume the last separator and continue parsing list elements.
-                    moveToNextToken();
+                    consumeToken(_currentToken);
                     separators.push(_currentToken);
                     continue;
                 }
