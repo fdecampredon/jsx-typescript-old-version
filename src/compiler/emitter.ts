@@ -590,7 +590,8 @@ module TypeScript {
 
         public emitObjectCreationExpression(objectCreationExpression: ObjectCreationExpressionSyntax) {
             this.recordSourceMappingStart(objectCreationExpression);
-            this.writeToOutputWithSourceMapRecord("new ", objectCreationExpression.newKeyword);
+            this.writeToOutputWithSourceMapRecord("new", objectCreationExpression.newKeyword);
+            this.writeToOutput(" ");
             var target = objectCreationExpression.expression;
 
             this.emit(target);
@@ -1115,9 +1116,7 @@ module TypeScript {
             if (!isExported) {
                 this.recordSourceMappingStart(moduleDecl);
                 this.writeToOutput("var ");
-                this.recordSourceMappingStart(moduleName);
-                this.writeToOutput(this.moduleName);
-                this.recordSourceMappingEnd(moduleName);
+                this.writeToOutputWithSourceMapRecord(this.moduleName, moduleName);
                 this.writeLineToOutput(";");
                 this.recordSourceMappingEnd(moduleDecl);
                 this.emitIndent();
@@ -1451,7 +1450,8 @@ module TypeScript {
             this.pushDecl(pullDecl);
 
             this.recordSourceMappingStart(funcDecl);
-            this.writeToOutputWithSourceMapRecord("function ", funcDecl.functionKeyword);
+            this.writeToOutputWithSourceMapRecord("function", funcDecl.functionKeyword);
+            this.writeToOutput(" ");
 
             //var id = funcDecl.getNameText();
             if (funcDecl.identifier) {
@@ -1494,7 +1494,8 @@ module TypeScript {
             this.emitComments(funcDecl, true);
 
             this.recordSourceMappingStart(funcDecl);
-            this.writeToOutputWithSourceMapRecord("function ", funcDecl.functionKeyword);
+            this.writeToOutputWithSourceMapRecord("function", funcDecl.functionKeyword);
+            this.writeToOutput(" ");
 
             if (printName) {
                 var id = funcDecl.identifier.text();
@@ -2892,21 +2893,24 @@ module TypeScript {
 
         public emitTypeOfExpression(expression: TypeOfExpressionSyntax): void {
             this.recordSourceMappingStart(expression);
-            this.writeToOutputWithSourceMapRecord("typeof ", expression.typeOfKeyword);
+            this.writeToOutputWithSourceMapRecord("typeof", expression.typeOfKeyword);
+            this.writeToOutput(" ");
             this.emit(expression.expression);
             this.recordSourceMappingEnd(expression);
         }
 
         public emitDeleteExpression(expression: DeleteExpressionSyntax): void {
             this.recordSourceMappingStart(expression);
-            this.writeToOutputWithSourceMapRecord("delete ", expression.deleteKeyword);
+            this.writeToOutputWithSourceMapRecord("delete", expression.deleteKeyword);
+            this.writeToOutput(" ");
             this.emit(expression.expression);
             this.recordSourceMappingEnd(expression);
         }
 
         public emitVoidExpression(expression: VoidExpressionSyntax): void {
             this.recordSourceMappingStart(expression);
-            this.writeToOutputWithSourceMapRecord("void ", expression.voidKeyword);
+            this.writeToOutputWithSourceMapRecord("void", expression.voidKeyword);
+            this.writeToOutput(" ");
             this.emit(expression.expression);
             this.recordSourceMappingEnd(expression);
         }
@@ -2998,22 +3002,17 @@ module TypeScript {
             switch (expression.kind) {
                 case SyntaxKind.CommaExpression:
                     this.emit(expression.left);
-                    this.writeToOutputWithSourceMapRecord(", ", expression.operatorToken);
+                    this.writeToOutputWithSourceMapRecord(",", expression.operatorToken);
+                    this.writeToOutput(" ");
                     this.emit(expression.right);
                     break;
                 default:
                     {
                         this.emit(expression.left);
                         var binOp = SyntaxFacts.getText(SyntaxFacts.getOperatorTokenFromBinaryExpression(expression.kind));
-                        //if (binOp === "instanceof") {
-                        //    this.writeToOutputWithSourceMapRecord(" instanceof ", expression.operatorToken);
-                        //}
-                        //else if (binOp === "in") {
-                        //    this.writeToOutputWithSourceMapRecord(" in ", expression.operatorToken);
-                        //}
-                        //else {
-                            this.writeToOutputWithSourceMapRecord(" " + binOp + " ", expression.operatorToken);
-                        // }
+                        this.writeToOutput(" ");
+                        this.writeToOutputWithSourceMapRecord(binOp, expression.operatorToken);
+                        this.writeToOutput(" ");
                         this.emit(expression.right);
                     }
             }
@@ -3024,7 +3023,8 @@ module TypeScript {
             this.recordSourceMappingStart(property);
             this.emit(property.propertyName);
 
-            this.writeToOutputWithSourceMapRecord(": ", property.colonToken);
+            this.writeToOutputWithSourceMapRecord(":", property.colonToken);
+            this.writeToOutput(" ");
             this.emitCommentsArray(ASTHelpers.convertTokenTrailingComments(property.colonToken), /*trailing:*/ true, /*noLeadingSpace:*/ true);
 
             this.emit(property.expression);
@@ -3075,18 +3075,23 @@ module TypeScript {
 
         public emitConditionalExpression(expression: ConditionalExpressionSyntax): void {
             this.emit(expression.condition);
-            this.writeToOutput(" ? ");
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("?", expression.questionToken);
+            this.writeToOutput(" ");
             this.emit(expression.whenTrue);
-            this.writeToOutput(" : ");
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord(":", expression.colonToken);
+            this.writeToOutput(" ");
             this.emit(expression.whenFalse);
         }
 
         public emitThrowStatement(statement: ThrowStatementSyntax): void {
             this.recordSourceMappingStart(statement);
-            this.writeToOutputWithSourceMapRecord("throw ", statement.throwKeyword);
+            this.writeToOutputWithSourceMapRecord("throw", statement.throwKeyword);
+            this.writeToOutput(" ");
             this.emit(statement.expression);
-            this.recordSourceMappingEnd(statement);
             this.writeToOutputWithSourceMapRecord(";", statement.semicolonToken);
+            this.recordSourceMappingEnd(statement);
         }
 
         public emitExpressionStatement(statement: ExpressionStatementSyntax): void {
@@ -3103,13 +3108,14 @@ module TypeScript {
                 this.writeToOutput(")");
             }
 
-            this.recordSourceMappingEnd(statement);
             this.writeToOutputWithSourceMapRecord(";", statement.semicolonToken);
+            this.recordSourceMappingEnd(statement);
         }
 
         public emitLabeledStatement(statement: LabeledStatementSyntax): void {
             this.writeToOutputWithSourceMapRecord(statement.identifier.text(), statement.identifier);
             this.writeToOutputWithSourceMapRecord(":", statement.colonToken);
+            this.writeLineToOutput("");
             this.emitJavascript(statement.statement, /*startLine:*/ true);
         }
 
@@ -3132,11 +3138,12 @@ module TypeScript {
             this.writeToOutputWithSourceMapRecord("break", jump.breakKeyword);
 
             if (jump.identifier) {
-                this.writeToOutputWithSourceMapRecord(" " + jump.identifier.text(), jump.identifier);
+                this.writeToOutput(" ");
+                this.writeToOutputWithSourceMapRecord(jump.identifier.text(), jump.identifier);
             }
 
-            this.recordSourceMappingEnd(jump);
             this.writeToOutputWithSourceMapRecord(";", jump.semicolonToken);
+            this.recordSourceMappingEnd(jump);
         }
 
         public emitContinueStatement(jump: ContinueStatementSyntax): void {
@@ -3144,16 +3151,18 @@ module TypeScript {
             this.writeToOutputWithSourceMapRecord("continue", jump.continueKeyword);
 
             if (jump.identifier) {
-                this.writeToOutputWithSourceMapRecord(" " + jump.identifier.text(), jump.identifier);
+                this.writeToOutput(" ");
+                this.writeToOutputWithSourceMapRecord(jump.identifier.text(), jump.identifier);
             }
 
-            this.recordSourceMappingEnd(jump);
             this.writeToOutputWithSourceMapRecord(";", jump.semicolonToken);
+            this.recordSourceMappingEnd(jump);
         }
 
         public emitWhileStatement(statement: WhileStatementSyntax): void {
             this.recordSourceMappingStart(statement);
-            this.writeToOutputWithSourceMapRecord("while ", statement.whileKeyword);
+            this.writeToOutputWithSourceMapRecord("while", statement.whileKeyword);
+            this.writeToOutput(" ");
             this.writeToOutputWithSourceMapRecord("(", statement.openParenToken);
             this.emit(statement.condition);
             this.writeToOutputWithSourceMapRecord(")", statement.closeParenToken);
@@ -3165,19 +3174,22 @@ module TypeScript {
             this.recordSourceMappingStart(statement);
             this.writeToOutputWithSourceMapRecord("do", statement.doKeyword);
             this.emitBlockOrStatement(statement.statement);
-            this.writeToOutputWithSourceMapRecord(" while", statement.whileKeyword);
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("while", statement.whileKeyword);
             this.writeToOutputWithSourceMapRecord("(", statement.openParenToken);
             this.emit(statement.condition);
             this.writeToOutputWithSourceMapRecord(")", statement.closeParenToken);
-            this.recordSourceMappingEnd(statement);
             this.writeToOutputWithSourceMapRecord(";", statement.semicolonToken);
+            this.recordSourceMappingEnd(statement);
         }
 
         public emitIfStatement(statement: IfStatementSyntax): void {
             this.recordSourceMappingStart(statement);
-            this.writeToOutput("if (");
+            this.writeToOutputWithSourceMapRecord("if", statement.ifKeyword);
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("(", statement.openParenToken);
             this.emit(statement.condition);
-            this.writeToOutput(")");
+            this.writeToOutputWithSourceMapRecord(")", statement.closeParenToken);
 
             this.emitBlockOrStatement(statement.statement);
 
@@ -3196,48 +3208,55 @@ module TypeScript {
         }
 
         public emitElseClause(elseClause: ElseClauseSyntax): void {
+            this.writeToOutputWithSourceMapRecord("else", elseClause.elseKeyword);
             if (elseClause.statement.kind === SyntaxKind.IfStatement) {
-                this.writeToOutput("else ");
+                this.writeToOutput(" ");
                 this.emit(elseClause.statement);
             }
             else {
-                this.writeToOutput("else");
                 this.emitBlockOrStatement(elseClause.statement);
             }
         }
 
         public emitReturnStatement(statement: ReturnStatementSyntax): void {
             this.recordSourceMappingStart(statement);
+            this.writeToOutputWithSourceMapRecord("return", statement.returnKeyword);
             if (statement.expression) {
-                this.writeToOutput("return ");
+                this.writeToOutput(" ");
                 this.emit(statement.expression);
             }
-            else {
-                this.writeToOutput("return");
-            }
+
+            this.writeToOutputWithSourceMapRecord(";", statement.semicolonToken);
             this.recordSourceMappingEnd(statement);
-            this.writeToOutput(";");
         }
 
         public emitForInStatement(statement: ForInStatementSyntax): void {
             this.recordSourceMappingStart(statement);
-            this.writeToOutput("for (");
+            this.writeToOutputWithSourceMapRecord("for", statement.forKeyword);
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("(", statement.openParenToken);
+
             if (statement.left) {
                 this.emit(statement.left);
             }
             else {
                 this.emit(statement.variableDeclaration);
             }
-            this.writeToOutput(" in ");
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("in", statement.inKeyword);
+            this.writeToOutput(" ");
             this.emit(statement.expression);
-            this.writeToOutput(")");
+            this.writeToOutputWithSourceMapRecord(")", statement.closeParenToken);
             this.emitBlockOrStatement(statement.statement);
             this.recordSourceMappingEnd(statement);
         }
 
         public emitForStatement(statement: ForStatementSyntax): void {
             this.recordSourceMappingStart(statement);
-            this.writeToOutput("for (");
+            this.writeToOutputWithSourceMapRecord("for", statement.forKeyword);
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("(", statement.openParenToken);
+
             if (statement.variableDeclaration) {
                 this.emit(statement.variableDeclaration);
             }
@@ -3245,26 +3264,29 @@ module TypeScript {
                 this.emit(statement.initializer);
             }
 
-            this.writeToOutput("; ");
+            this.writeToOutputWithSourceMapRecord(";", statement.firstSemicolonToken);
+            this.writeToOutput(" ");
             this.emitJavascript(statement.condition, false);
-            this.writeToOutput(";");
+            this.writeToOutputWithSourceMapRecord(";", statement.secondSemicolonToken);
             if (statement.incrementor) {
                 this.writeToOutput(" ");
                 this.emitJavascript(statement.incrementor, false);
             }
-            this.writeToOutput(")");
+            this.writeToOutputWithSourceMapRecord(")", statement.closeParenToken);
             this.emitBlockOrStatement(statement.statement);
             this.recordSourceMappingEnd(statement);
         }
 
         public emitWithStatement(statement: WithStatementSyntax): void {
             this.recordSourceMappingStart(statement);
-            this.writeToOutput("with (");
+            this.writeToOutputWithSourceMapRecord("with", statement.withKeyword);
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("(", statement.openParenToken);
             if (statement.condition) {
                 this.emit(statement.condition);
             }
 
-            this.writeToOutput(")");
+            this.writeToOutputWithSourceMapRecord(")", statement.closeParenToken);
             var prevInWithBlock = this.inWithBlock;
             this.inWithBlock = true;
             this.emitBlockOrStatement(statement.statement);
@@ -3274,7 +3296,8 @@ module TypeScript {
 
         public emitSwitchStatement(statement: SwitchStatementSyntax): void {
             this.recordSourceMappingStart(statement);
-            this.writeToOutputWithSourceMapRecord("switch ", statement.switchKeyword);
+            this.writeToOutputWithSourceMapRecord("switch", statement.switchKeyword);
+            this.writeToOutput(" ");
             this.writeToOutputWithSourceMapRecord("(", statement.openParenToken);
             this.emit(statement.expression);
             this.writeToOutputWithSourceMapRecord(")", statement.closeParenToken);
@@ -3289,7 +3312,8 @@ module TypeScript {
 
         public emitCaseSwitchClause(clause: CaseSwitchClauseSyntax): void {
             this.recordSourceMappingStart(clause);
-            this.writeToOutputWithSourceMapRecord("case ", clause.caseKeyword);
+            this.writeToOutputWithSourceMapRecord("case", clause.caseKeyword);
+            this.writeToOutput(" ");
             this.emit(clause.expression);
             this.writeToOutputWithSourceMapRecord(":", clause.colonToken);
 
@@ -3323,7 +3347,8 @@ module TypeScript {
 
         public emitTryStatement(statement: TryStatementSyntax): void {
             this.recordSourceMappingStart(statement);
-            this.writeToOutputWithSourceMapRecord("try ", statement.tryKeyword);
+            this.writeToOutputWithSourceMapRecord("try", statement.tryKeyword);
+            this.writeToOutput(" ");
             this.emit(statement.block);
             this.emitJavascript(statement.catchClause, false);
 
@@ -3336,7 +3361,8 @@ module TypeScript {
         public emitCatchClause(clause: CatchClauseSyntax): void {
             this.writeToOutput(" ");
             this.recordSourceMappingStart(clause);
-            this.writeToOutputWithSourceMapRecord("catch ", clause.catchKeyword);
+            this.writeToOutputWithSourceMapRecord("catch", clause.catchKeyword);
+            this.writeToOutput(" ");
             this.writeToOutputWithSourceMapRecord("(", clause.openParenToken);
             this.emit(clause.identifier);
             this.writeToOutputWithSourceMapRecord(")", clause.closeParenToken);
@@ -3345,7 +3371,8 @@ module TypeScript {
         }
 
         public emitFinallyClause(clause: FinallyClauseSyntax): void {
-            this.writeToOutputWithSourceMapRecord(" finally", clause.finallyKeyword);
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("finally", clause.finallyKeyword);
             this.emit(clause.block);
         }
 
@@ -3367,7 +3394,9 @@ module TypeScript {
         }
 
         public emitEqualsValueClause(clause: EqualsValueClauseSyntax): void {
-            this.writeToOutputWithSourceMapRecord(" = ", clause.equalsToken);
+            this.writeToOutput(" ");
+            this.writeToOutputWithSourceMapRecord("=", clause.equalsToken);
+            this.writeToOutput(" ");
             this.emitCommentsArray(ASTHelpers.convertTokenTrailingComments(clause.equalsToken), /*trailing:*/ true, /*noLeadingSpace:*/ true);
 
             this.emit(clause.value);
