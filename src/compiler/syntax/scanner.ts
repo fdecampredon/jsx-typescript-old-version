@@ -308,7 +308,10 @@ module TypeScript {
 
             var fullEnd = index;
 
-            var packedFullStartAndTriviaInfo = packFullStartAndInfo(fullStart, /*isKeywordConvertedToIdentifier:*/ false, leadingTriviaInfo, trailingTriviaInfo);
+            // inline the packing logic for perf.
+            var packedFullStartAndTriviaInfo = (fullStart * ScannerConstants.FullStartAdjust) +
+                ((leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) |
+                 (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift));
             return new ScannerToken(text, packedFullStartAndTriviaInfo, kind, index - fullStart);
         }
 

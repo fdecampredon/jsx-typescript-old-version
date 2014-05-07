@@ -48,7 +48,8 @@ module TypeScript {
         }
 
         private addMoreItemsToWindow(argument: any): boolean {
-            if (this.sourceLength >= 0 && this.absoluteIndex() >= this.sourceLength) {
+            var sourceLength = this.sourceLength;
+            if (sourceLength >= 0 && this.absoluteIndex() >= sourceLength) {
                 return false;
             }
 
