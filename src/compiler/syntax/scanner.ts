@@ -74,7 +74,6 @@ module TypeScript {
     var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
     var isIdentifierStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
     var isIdentifierPartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
-    var isNumericLiteralStart: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
 
     for (var character = 0; character < CharacterCodes.maxAsciiCharacter; character++) {
         if (character >= CharacterCodes.a && character <= CharacterCodes.z) {
@@ -89,11 +88,8 @@ module TypeScript {
         }
         else if (character >= CharacterCodes._0 && character <= CharacterCodes._9) {
             isIdentifierPartCharacter[character] = true;
-            isNumericLiteralStart[character] = true;
         }
     }
-
-    isNumericLiteralStart[CharacterCodes.dot] = true;
 
     for (var keywordKind = SyntaxKind.FirstKeyword; keywordKind <= SyntaxKind.LastKeyword; keywordKind++) {
         var keyword = SyntaxFacts.getText(keywordKind);
@@ -688,10 +684,11 @@ module TypeScript {
 
                 case CharacterCodes.question:
                     return advanceAndSetTokenKind(SyntaxKind.QuestionToken);
-            }
 
-            if (isNumericLiteralStart[character]) {
-                return scanNumericLiteral();
+                case CharacterCodes._0: case CharacterCodes._1: case CharacterCodes._2: case CharacterCodes._3:
+                case CharacterCodes._4: case CharacterCodes._5: case CharacterCodes._6: case CharacterCodes._7:
+                case CharacterCodes._8: case CharacterCodes._9:
+                    return scanNumericLiteral();
             }
 
             // We run into so many identifiers (and keywords) when scanning, that we want the code to
