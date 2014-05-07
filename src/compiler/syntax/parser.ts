@@ -610,7 +610,7 @@ module TypeScript.Parser {
         }
 
         public consumeToken(token: ISyntaxToken): void {
-            Debug.assert(this.currentToken() === token);
+            // Debug.assert(this.currentToken() === token);
             this._absolutePosition += token.fullWidth();
 
             this.slidingWindow.moveToNextItem();
@@ -1124,8 +1124,8 @@ module TypeScript.Parser {
         public consumeNode(node: ISyntaxNode): void {
             // A node could have only come from the old source unit cursor.  Update it and our 
             // current state.
-            Debug.assert(this._changeDelta === 0);
-            Debug.assert(this.currentNode() === node);
+            // Debug.assert(this._changeDelta === 0);
+            // Debug.assert(this.currentNode() === node);
 
             this._oldSourceUnitCursor.moveToNextSibling();
 
@@ -1137,11 +1137,11 @@ module TypeScript.Parser {
             // Debug.assert(previousToken !== null);
             // Debug.assert(previousToken.width() > 0);
 
-            if (!this.isPastChangeRange()) {
-                // If we still have a change range, then this node must have ended before the 
-                // change range starts.  Thus, we don't need to call 'skipPastChanges'.
-                Debug.assert(this.absolutePosition() < this._changeRange.span().start());
-            }
+            //if (!this.isPastChangeRange()) {
+            //    // If we still have a change range, then this node must have ended before the 
+            //    // change range starts.  Thus, we don't need to call 'skipPastChanges'.
+            //    Debug.assert(this.absolutePosition() < this._changeRange.span().start());
+            //}
         }
 
         public consumeToken(currentToken: ISyntaxToken): void {
@@ -1150,7 +1150,7 @@ module TypeScript.Parser {
 
             if (this._oldSourceUnitCursor.currentToken() === currentToken) {
                 // The token came from the old source unit.  So our tree and text must be in sync.
-                Debug.assert(this._changeDelta === 0);
+                // Debug.assert(this._changeDelta === 0);
 
                 // Move the cursor past this token.
                 this._oldSourceUnitCursor.moveToNextSibling();
@@ -1167,11 +1167,11 @@ module TypeScript.Parser {
                 // Debug.assert(previousToken !== null);
                 // Debug.assert(previousToken.width() > 0);
 
-                 if (!this.isPastChangeRange()) {
-                     // If we still have a change range, then this token must have ended before the 
-                     // change range starts.  Thus, we don't need to call 'skipPastChanges'.
-                     Debug.assert(this.absolutePosition() < this._changeRange.span().start());
-                 }
+                //if (!this.isPastChangeRange()) {
+                //    // If we still have a change range, then this token must have ended before the 
+                //    // change range starts.  Thus, we don't need to call 'skipPastChanges'.
+                //    Debug.assert(this.absolutePosition() < this._changeRange.span().start());
+                //}
             }
             else {
                 // the token came from the new text.  That means the normal source moved forward,
@@ -3985,9 +3985,9 @@ module TypeScript.Parser {
             if (token0.kind === SyntaxKind.GreaterThanToken) {
                 token0 = currentContextualToken();
                 var kind = token0.kind;
-                Debug.assert(kind === SyntaxKind.GreaterThanToken || kind === SyntaxKind.GreaterThanGreaterThanToken ||
-                             kind === SyntaxKind.GreaterThanGreaterThanGreaterThanToken || kind === SyntaxKind.GreaterThanEqualsToken ||
-                             kind === SyntaxKind.GreaterThanGreaterThanEqualsToken || kind === SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken);
+                //Debug.assert(kind === SyntaxKind.GreaterThanToken || kind === SyntaxKind.GreaterThanGreaterThanToken ||
+                //             kind === SyntaxKind.GreaterThanGreaterThanGreaterThanToken || kind === SyntaxKind.GreaterThanEqualsToken ||
+                //             kind === SyntaxKind.GreaterThanGreaterThanEqualsToken || kind === SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken);
             }
 
             return token0;
