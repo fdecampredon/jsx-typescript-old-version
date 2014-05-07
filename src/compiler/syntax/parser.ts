@@ -1426,12 +1426,6 @@ module TypeScript.Parser {
             return source.peekToken(n);
         }
 
-        function eatAnyToken(): ISyntaxToken {
-            var token = currentToken();
-            moveToNextToken();
-            return token;
-        }
-
         function moveToNextToken(): void {
             clearCachedData();
 
@@ -2299,8 +2293,10 @@ module TypeScript.Parser {
             var tokens: ISyntaxToken[] = getArray();
 
             while (true) {
-                if (isModifier(currentToken())) {
-                    tokens.push(eatAnyToken());
+                var token = currentToken();
+                if (isModifier(token)) {
+                    moveToNextToken();
+                    tokens.push(token);
                     continue;
                 }
 
@@ -2542,7 +2538,8 @@ module TypeScript.Parser {
                 }
 
                 // Debug.assert(ParserImpl.isModifier(currentToken));
-                modifierArray.push(eatAnyToken());
+                moveToNextToken();
+                modifierArray.push(_currentToken);
             }
 
             var modifiers = Syntax.list(modifierArray);
@@ -2639,7 +2636,8 @@ module TypeScript.Parser {
                 }
 
                 // Debug.assert(ParserImpl.isModifier(currentToken));
-                modifierArray.push(eatAnyToken());
+                moveToNextToken();
+                modifierArray.push(_currentToken);
             }
 
             var modifiers = Syntax.list(modifierArray);
@@ -2683,7 +2681,7 @@ module TypeScript.Parser {
                         start(token0), width(token0), DiagnosticCode.Unexpected_token_0_expected, [SyntaxFacts.getText(SyntaxKind.OpenBraceToken)]);
                     addDiagnostic(diagnostic);
 
-                    var token = eatAnyToken();
+                    moveToNextToken();
                     addSkippedTokenAfterNode(callSignature, token0);
 
                     return true;
@@ -3817,7 +3815,7 @@ module TypeScript.Parser {
                     break;
                 }
 
-                eatAnyToken();
+                moveToNextToken();
 
                 var rightOperand = tryParseAssignmentExpressionOrHigher(/*force:*/ true, allowIn);
                 leftOperand = createBinaryExpression(parseNodeData, SyntaxKind.CommaExpression, leftOperand, token0, rightOperand);
@@ -3927,12 +3925,14 @@ module TypeScript.Parser {
         }
 
         function tryParseUnaryExpressionOrHigher(force: boolean): IUnaryExpressionSyntax {
-            var currentTokenKind = currentToken().kind; 
-            if (SyntaxFacts.isPrefixUnaryExpressionOperatorToken(currentTokenKind)) {
-                var operatorKind = SyntaxFacts.getPrefixUnaryExpressionFromOperatorToken(currentTokenKind);
+            var _currentToken = currentToken();
+            var currentTokenKind = _currentToken.kind;
+            var operatorKind = SyntaxFacts.getPrefixUnaryExpressionFromOperatorToken(currentTokenKind);
 
+            if (operatorKind !== SyntaxKind.None) {
+                moveToNextToken();
                 return createPrefixUnaryExpression(parseNodeData, operatorKind,
-                    eatAnyToken(),
+                    _currentToken,
                     tryParseUnaryExpressionOrHigher(/*force:*/ true));
             }
             else if (currentTokenKind === SyntaxKind.TypeOfKeyword) {
@@ -4299,9 +4299,10 @@ module TypeScript.Parser {
                         break;
                     }
 
+                    moveToNextToken();
                     return createPostfixUnaryExpression(parseNodeData,
                         SyntaxFacts.getPostfixUnaryExpressionFromOperatorToken(currentTokenKind),
-                        expression, eatAnyToken());
+                        expression, _currentToken);
             }
 
             return expression;
@@ -4430,26 +4431,17 @@ module TypeScript.Parser {
             var currentTokenKind = _currentToken.kind;
             switch (currentTokenKind) {
                 case SyntaxKind.ThisKeyword:
-                    return parseThisExpression();
-
                 case SyntaxKind.TrueKeyword:
                 case SyntaxKind.FalseKeyword:
-                    return parseLiteralExpression();
-
                 case SyntaxKind.NullKeyword:
-                    return parseLiteralExpression();
+                case SyntaxKind.NumericLiteral:
+                case SyntaxKind.RegularExpressionLiteral:
+                case SyntaxKind.StringLiteral:
+                    moveToNextToken();
+                    return _currentToken;
 
                 case SyntaxKind.FunctionKeyword:
                     return parseFunctionExpression();
-
-                case SyntaxKind.NumericLiteral:
-                    return parseLiteralExpression();
-
-                case SyntaxKind.RegularExpressionLiteral:
-                    return parseLiteralExpression();
-
-                case SyntaxKind.StringLiteral:
-                    return parseLiteralExpression();
 
                 case SyntaxKind.OpenBracketToken:
                     return parseArrayLiteralExpression();
@@ -4499,7 +4491,8 @@ module TypeScript.Parser {
                 return null;
             }
             else if (_currentToken.kind === SyntaxKind.RegularExpressionLiteral) {
-                return parseLiteralExpression();
+                moveToNextToken();
+                return _currentToken;
             }
             else {
                 // Something *very* wrong happened.  This is an internal parser fault that we need 
@@ -4953,16 +4946,6 @@ module TypeScript.Parser {
             return createArrayLiteralExpression(parseNodeData, openBracketToken, expressions, closeBracketToken);
         }
 
-        function parseLiteralExpression(): IPrimaryExpressionSyntax {
-            // TODO: add appropriate asserts here.
-            return eatAnyToken();
-        }
-
-        function parseThisExpression(): IPrimaryExpressionSyntax {
-            // Debug.assert(currentToken().kind === SyntaxKind.ThisKeyword);
-            return eatKeyword(SyntaxKind.ThisKeyword);
-        }
-
         function parseBlock(parseBlockEvenWithNoOpenBrace: boolean, checkForStrictMode: boolean): BlockSyntax {
             var openBraceToken = eatToken(SyntaxKind.OpenBraceToken);
 
@@ -5279,7 +5262,8 @@ module TypeScript.Parser {
             while (true) {
                 var _currentToken = currentToken();
                 if (isModifier(_currentToken) && !isModifierUsedAsParameterIdentifier(_currentToken)) {
-                    modifierArray.push(eatAnyToken());
+                    moveToNextToken();
+                    modifierArray.push(_currentToken);
                     continue;
                 }
 
@@ -5525,7 +5509,8 @@ module TypeScript.Parser {
                 var _currentToken = currentToken();
                 if (_currentToken.kind === _separatorKind || _currentToken.kind === SyntaxKind.CommaToken) {
                     // Consume the last separator and continue parsing list elements.
-                    separators.push(eatAnyToken());
+                    moveToNextToken();
+                    separators.push(_currentToken);
                     continue;
                 }
 
