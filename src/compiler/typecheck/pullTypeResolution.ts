@@ -3576,7 +3576,7 @@ module TypeScript {
                         }
                     };
 
-                    var bestCommonReturnType = this.findBestCommonType(/*contextualType*/ null, collection, context, new TypeComparisonInfo());
+                    var bestCommonReturnType = this.findBestCommonType(/*contextualType*/ null, collection, context);
                     var returnType = bestCommonReturnType;
                     var returnExpression = returnExpressions[returnExpressionSymbols.indexOf(returnType)];
 
@@ -8053,7 +8053,7 @@ module TypeScript {
                     getTypeAtIndex: (index: number) => indexerTypeCandidates[index]
                 };
                 var decl = objectLiteralSymbol.getDeclarations()[0];
-                var indexerReturnType = this.findBestCommonType(context.isInferentiallyTyping() ? null : contextualIndexSignature.returnType, typeCollection, context).widenedType(this, /*ast*/ null, context);
+                var indexerReturnType = this.findBestCommonType(contextualIndexSignature.returnType, typeCollection, context).widenedType(this, /*ast*/ null, context);
                 if (indexerReturnType === contextualIndexSignature.returnType) {
                     objectLiteralSymbol.addIndexSignature(contextualIndexSignature);
                 }
@@ -8081,9 +8081,7 @@ module TypeScript {
         private computeArrayLiteralExpressionSymbol(arrayLit: ArrayLiteralExpressionSyntax, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
             var elements = arrayLit.expressions;
             var elementTypes: PullTypeSymbol[] = [];
-            var comparisonInfo = new TypeComparisonInfo();
             var contextualElementType: PullTypeSymbol = null;
-            comparisonInfo.onlyCaptureFirstError = true;
 
             // if the target type is an array type, extract the element type
             if (isContextuallyTyped) {
@@ -8120,14 +8118,25 @@ module TypeScript {
                 getTypeAtIndex: (index: number) => { return elementTypes[index]; }
             };
 
-            // October 16, 2013: Section 4.12.2: Where a contextual type would be included
-            // in a candidate set for a best common type(such as when inferentially typing
-            // an object or array literal), an inferential type is not.
+            // April 2014, Section 4.6:
+            //      In the absence of a contextual type, the type of an array literal is C[], where C is the
+            //      Undefined type(section 3.2.6) if the array literal is empty, or the best common type of
+            //      the element expressions if the array literal is not empty.
+            //      When an array literal is contextually typed(section 4.19) by an object type containing a
+            //      numeric index signature of type T, each element expression is contextually typed by T and
+            //      the type of the array literal is the best common type of T and the types of the element
+            //      expressions.
+            //
+            // While the spec does not say it, an inferential type causes an empty array literal to have
+            // the undefined[] type. In other words, the first clause from the excerpt above applies even
+            // though there is a "contextual type" present. This is the intention, even though the spec
+            // seems to imply the contrary.
+
             contextualElementType = context.isInferentiallyTyping() ? null : contextualElementType;
 
             var elementType = contextualElementType === null && elements.length === 0 ?
                 this.semanticInfoChain.undefinedTypeSymbol :
-                this.findBestCommonType(contextualElementType, elementTypesCollection, context, comparisonInfo);
+                this.findBestCommonType(contextualElementType, elementTypesCollection, context);
 
             return this.getArrayType(elementType);
         }
@@ -8409,7 +8418,7 @@ module TypeScript {
                 var leftType = this.resolveAST(binex.left, isContextuallyTyped, context).type;
                 var rightType = this.resolveAST(binex.right, isContextuallyTyped, context).type;
 
-                return this.bestCommonTypeOfTwoTypesWithOrWithoutContextualType(context.isInferentiallyTyping() ? null : contextualType, leftType, rightType, context);
+                return this.bestCommonTypeOfTwoTypesWithOrWithoutContextualType(contextualType, leftType, rightType, context);
             }
             else {
                 // If the || expression is not contextually typed, the right operand is contextually 
@@ -8444,10 +8453,7 @@ module TypeScript {
             // (section 3.10) of the contextual type and the types of Expr1 and Expr2. 
             // If the conditional expression is not contextually typed, the result is of the 
             // best common type of the types of Expr1 and Expr2.
-            var contextualType = isContextuallyTyped && !context.isInferentiallyTyping() ?
-                context.getContextualType() :
-                null;
-
+            var contextualType = isContextuallyTyped ? context.getContextualType() : null;
             return this.bestCommonTypeOfTwoTypesWithOrWithoutContextualType(contextualType, leftType, rightType, context);
         }
 
@@ -9538,10 +9544,14 @@ module TypeScript {
             return false;
         }
 
-        public findBestCommonType(contextualType: PullTypeSymbol, nonContextualCandidates: IPullTypeCollection, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo) {
+        // If the expression being typed is not contextually typed, pass in null for contextualType
+        public findBestCommonType(contextualType: PullTypeSymbol, nonContextualCandidates: IPullTypeCollection, context: PullTypeResolutionContext) {
             var len = nonContextualCandidates.getLength();
-
-            if (contextualType !== null && this.typeIsBestCommonTypeCandidate(contextualType, nonContextualCandidates, context)) {
+            
+            // October 16, 2013: Section 4.12.2: Where a contextual type would be included
+            // in a candidate set for a best common type(such as when inferentially typing
+            // an object or array literal), an inferential type is not.
+            if (contextualType !== null && !context.isInferentiallyTyping() && this.typeIsBestCommonTypeCandidate(contextualType, nonContextualCandidates, context)) {
                 return contextualType;
             }
 

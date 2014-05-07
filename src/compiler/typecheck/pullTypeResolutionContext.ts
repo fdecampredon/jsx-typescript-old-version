@@ -29,7 +29,7 @@ module TypeScript {
                     getTypeAtIndex: (index: number) => this.inferenceCandidates[index].type
                 };
 
-                var bestCommonType = resolver.findBestCommonType(/*contextualType*/ null, collection, context, new TypeComparisonInfo());
+                var bestCommonType = resolver.findBestCommonType(/*contextualType*/ null, collection, context);
                 // Now widen (per the spec citation above)
                 this._inferredTypeAfterFixing = bestCommonType.widenedType(resolver, /*ast*/ null, context);
             }
