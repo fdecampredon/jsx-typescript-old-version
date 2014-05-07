@@ -76,13 +76,10 @@ module TypeScript {
     var isIdentifierPartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
 
     for (var character = 0; character < CharacterCodes.maxAsciiCharacter; character++) {
-        if (character >= CharacterCodes.a && character <= CharacterCodes.z) {
-            isIdentifierStartCharacter[character] = true;
-            isIdentifierPartCharacter[character] = true;
-        }
-        else if ((character >= CharacterCodes.A && character <= CharacterCodes.Z) ||
-            character === CharacterCodes._ ||
-            character === CharacterCodes.$) {
+        if ((character >= CharacterCodes.a && character <= CharacterCodes.z) ||
+            (character >= CharacterCodes.A && character <= CharacterCodes.Z) ||
+            character === CharacterCodes._ || character === CharacterCodes.$) {
+
             isIdentifierStartCharacter[character] = true;
             isIdentifierPartCharacter[character] = true;
         }
@@ -269,7 +266,7 @@ module TypeScript {
         (position: number, width: number, key: string, arguments: any[]): void;
     }
 
-    export interface TokenInfo {
+    interface TokenInfo {
         leadingTriviaWidth: number;
         width: number;
     }
@@ -316,10 +313,6 @@ module TypeScript {
             index = _start;
         }
 
-        function isAtEndOfSource(): boolean {
-            return index >= end;
-        }
-
         function scan(allowContextualToken: boolean): ISyntaxToken {
             var fullStart = index;
 
@@ -347,7 +340,7 @@ module TypeScript {
             var trivia: ISyntaxTrivia[] = [];
 
             while (true) {
-                if (!isAtEndOfSource()) {
+                if (index < end) {
                     var ch = str.charCodeAt(index);
                     switch (ch) {
                         // Unicode 3.0 space characters
@@ -588,7 +581,7 @@ module TypeScript {
             index += 2;
 
             while (true) {
-                if (isAtEndOfSource()) {
+                if (index >= end) {
                     reportDiagnostic(end, 0, DiagnosticCode.AsteriskSlash_expected, null);
                     return;
                 }
@@ -622,7 +615,7 @@ module TypeScript {
         }
 
         function scanSyntaxKind(allowContextualToken: boolean): SyntaxKind {
-            if (isAtEndOfSource()) {
+            if (index >= end) {
                 return SyntaxKind.EndOfFileToken;
             }
 
