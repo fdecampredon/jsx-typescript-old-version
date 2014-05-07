@@ -3576,7 +3576,7 @@ module TypeScript {
                         }
                     };
 
-                    var bestCommonReturnType = this.findBestCommonType(collection, context, new TypeComparisonInfo());
+                    var bestCommonReturnType = this.findBestCommonType(/*contextualType*/ null, collection, context, new TypeComparisonInfo());
                     var returnType = bestCommonReturnType;
                     var returnExpression = returnExpressions[returnExpressionSymbols.indexOf(returnType)];
 
@@ -7983,16 +7983,12 @@ module TypeScript {
 
                 // Start collecting the types of all the members so we can stamp the object
                 // literal with the proper index signatures
-                // October 16, 2013: Section 4.12.2: Where a contextual type would be included
-                // in a candidate set for a best common type(such as when inferentially typing
-                // an object or array literal), an inferential type is not.
-                var inInferentialTyping = context.isInferentiallyTyping();
                 if (stringIndexerSignature) {
-                    allMemberTypes = inInferentialTyping ? [] : [stringIndexerSignature.returnType];
+                    allMemberTypes = [];
                 }
 
                 if (numericIndexerSignature) {
-                    allNumericMemberTypes = inInferentialTyping ? [] : [numericIndexerSignature.returnType];
+                    allNumericMemberTypes = [];
                 }
             }
 
@@ -8057,7 +8053,7 @@ module TypeScript {
                     getTypeAtIndex: (index: number) => indexerTypeCandidates[index]
                 };
                 var decl = objectLiteralSymbol.getDeclarations()[0];
-                var indexerReturnType = this.findBestCommonType(typeCollection, context).widenedType(this, /*ast*/ null, context);
+                var indexerReturnType = this.findBestCommonType(context.isInferentiallyTyping() ? null : contextualIndexSignature.returnType, typeCollection, context).widenedType(this, /*ast*/ null, context);
                 if (indexerReturnType === contextualIndexSignature.returnType) {
                     objectLiteralSymbol.addIndexSignature(contextualIndexSignature);
                 }
@@ -8084,7 +8080,6 @@ module TypeScript {
 
         private computeArrayLiteralExpressionSymbol(arrayLit: ArrayLiteralExpressionSyntax, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
             var elements = arrayLit.expressions;
-            var elementType: PullTypeSymbol = null;
             var elementTypes: PullTypeSymbol[] = [];
             var comparisonInfo = new TypeComparisonInfo();
             var contextualElementType: PullTypeSymbol = null;
@@ -8120,36 +8115,19 @@ module TypeScript {
                 }
             }
 
-            // If there is no contextual type to apply attempt to find the best common type
-            if (elementTypes.length) {
-                elementType = elementTypes[0];
-            }
-            var collection: IPullTypeCollection;
+            var elementTypesCollection = {
+                getLength: () => { return elements.length; },
+                getTypeAtIndex: (index: number) => { return elementTypes[index]; }
+            };
+
             // October 16, 2013: Section 4.12.2: Where a contextual type would be included
             // in a candidate set for a best common type(such as when inferentially typing
             // an object or array literal), an inferential type is not.
-            if (contextualElementType && !context.isInferentiallyTyping()) {
-                if (!elementType) { // we have an empty array
-                    elementType = contextualElementType;
-                }
-                // Add the contextual type to the collection as one of the types to be considered for best common type
-                collection = {
-                    getLength: () => { return elements.length + 1; },
-                    getTypeAtIndex: (index: number) => { return index === 0 ? contextualElementType : elementTypes[index - 1]; }
-                };
-            }
-            else {
-                collection = {
-                    getLength: () => { return elements.length; },
-                    getTypeAtIndex: (index: number) => { return elementTypes[index]; }
-                };
-            }
+            contextualElementType = context.isInferentiallyTyping() ? null : contextualElementType;
 
-            elementType = elementType ? this.findBestCommonType(collection, context, comparisonInfo) : elementType;
-
-            if (!elementType) {
-                elementType = this.semanticInfoChain.undefinedTypeSymbol;
-            }
+            var elementType = contextualElementType === null && elements.length === 0 ?
+                this.semanticInfoChain.undefinedTypeSymbol :
+                this.findBestCommonType(contextualElementType, elementTypesCollection, context, comparisonInfo);
 
             return this.getArrayType(elementType);
         }
@@ -8400,8 +8378,8 @@ module TypeScript {
             return exprType;
         }
 
-        private bestCommonTypeOfTwoTypes(type1: PullTypeSymbol, type2: PullTypeSymbol, context: PullTypeResolutionContext): PullTypeSymbol {
-            return this.findBestCommonType({
+        private bestCommonTypeOfTwoTypesWithOrWithoutContextualType(contextualType: PullTypeSymbol, type1: PullTypeSymbol, type2: PullTypeSymbol, context: PullTypeResolutionContext): PullTypeSymbol {
+            return this.findBestCommonType(contextualType, {
                 getLength() {
                     return 2;
                 },
@@ -8409,21 +8387,6 @@ module TypeScript {
                     switch (index) {
                         case 0: return type1;
                         case 1: return type2;
-                    }
-                }
-            }, context);
-        }
-
-        private bestCommonTypeOfThreeTypes(type1: PullTypeSymbol, type2: PullTypeSymbol, type3: PullTypeSymbol, context: PullTypeResolutionContext): PullTypeSymbol {
-            return this.findBestCommonType({
-                getLength() {
-                    return 3;
-                },
-                getTypeAtIndex(index: number) {
-                    switch (index) {
-                        case 0: return type1;
-                        case 1: return type2;
-                        case 2: return type3;
                     }
                 }
             }, context);
@@ -8446,9 +8409,7 @@ module TypeScript {
                 var leftType = this.resolveAST(binex.left, isContextuallyTyped, context).type;
                 var rightType = this.resolveAST(binex.right, isContextuallyTyped, context).type;
 
-                return context.isInferentiallyTyping() ?
-                    this.bestCommonTypeOfTwoTypes(leftType, rightType, context):
-                    this.bestCommonTypeOfThreeTypes(contextualType, leftType, rightType, context);
+                return this.bestCommonTypeOfTwoTypesWithOrWithoutContextualType(context.isInferentiallyTyping() ? null : contextualType, leftType, rightType, context);
             }
             else {
                 // If the || expression is not contextually typed, the right operand is contextually 
@@ -8460,7 +8421,7 @@ module TypeScript {
                 var rightType = this.resolveAST(binex.right, /*isContextuallyTyped:*/ true, context).type;
                 context.popAnyContextualType();
 
-                return this.bestCommonTypeOfTwoTypes(leftType, rightType, context);
+                return this.bestCommonTypeOfTwoTypesWithOrWithoutContextualType(/*contextualType*/ null, leftType, rightType, context);
             }
         }
 
@@ -8477,20 +8438,17 @@ module TypeScript {
         }
 
         private computeTypeOfConditionalExpression(leftType: PullTypeSymbol, rightType: PullTypeSymbol, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullTypeSymbol {
-            if (isContextuallyTyped && !context.isInferentiallyTyping()) {
-                // October 11, 2013
-                // If the conditional expression is contextually typed (section 4.19), Expr1 and Expr2 
-                // are contextually typed by the same type and the result is of the best common type 
-                // (section 3.10) of the contextual type and the types of Expr1 and Expr2. 
-                var contextualType = context.getContextualType();
-                return this.bestCommonTypeOfThreeTypes(contextualType, leftType, rightType, context);
-            }
-            else {
-                // October 11, 2013
-                // If the conditional expression is not contextually typed, the result is of the 
-                // best common type of the types of Expr1 and Expr2. 
-                return this.bestCommonTypeOfTwoTypes(leftType, rightType, context);
-            }
+            // October 11, 2013
+            // If the conditional expression is contextually typed (section 4.19), Expr1 and Expr2 
+            // are contextually typed by the same type and the result is of the best common type 
+            // (section 3.10) of the contextual type and the types of Expr1 and Expr2. 
+            // If the conditional expression is not contextually typed, the result is of the 
+            // best common type of the types of Expr1 and Expr2.
+            var contextualType = isContextuallyTyped && !context.isInferentiallyTyping() ?
+                context.getContextualType() :
+                null;
+
+            return this.bestCommonTypeOfTwoTypesWithOrWithoutContextualType(contextualType, leftType, rightType, context);
         }
 
         private resolveConditionalExpression(trinex: ConditionalExpressionSyntax, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
@@ -9580,12 +9538,16 @@ module TypeScript {
             return false;
         }
 
-        public findBestCommonType(collection: IPullTypeCollection, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo) {
-            var len = collection.getLength();
+        public findBestCommonType(contextualType: PullTypeSymbol, nonContextualCandidates: IPullTypeCollection, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo) {
+            var len = nonContextualCandidates.getLength();
+
+            if (contextualType !== null && this.typeIsBestCommonTypeCandidate(contextualType, nonContextualCandidates, context)) {
+                return contextualType;
+            }
 
             for (var i = 0; i < len; i++) {
-                var candidateType = collection.getTypeAtIndex(i);
-                if (this.typeIsBestCommonTypeCandidate(candidateType, collection, context)) {
+                var candidateType = nonContextualCandidates.getTypeAtIndex(i);
+                if (this.typeIsBestCommonTypeCandidate(candidateType, nonContextualCandidates, context)) {
                     return candidateType;
                 }
             }
