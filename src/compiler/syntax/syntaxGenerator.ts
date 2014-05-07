@@ -977,6 +977,17 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'semicolonToken', isToken: true, isOptional: true }]
     }];
 
+function firstKind(definition: ITypeDefinition): TypeScript.SyntaxKind {
+    var kindName = definition.syntaxKinds ? definition.syntaxKinds[0] : getNameWithoutSuffix(definition);
+    //TypeScript.Environment.standardOut.WriteLine(kindName);
+    var kind = (<any>TypeScript.SyntaxKind)[kindName];
+    //TypeScript.Environment.standardOut.WriteLine(kind);
+
+    return kind;
+}
+
+var sortedDefinitions = definitions.sort((d1, d2) => firstKind(d1) - firstKind(d2));
+
 //function endsWith(string: string, value: string): boolean {
 //    return string.substring(string.length - value.length, string.length) === value;
 //}
@@ -2176,6 +2187,22 @@ function syntaxKindName(kind: TypeScript.SyntaxKind): string {
     throw new Error();
 }
 
+function getDefinitionForKind(kind: TypeScript.SyntaxKind): ITypeDefinition {
+    var kindName = syntaxKindName(kind);
+
+    return TypeScript.ArrayUtilities.firstOrDefault(definitions, d => {
+        if (getNameWithoutSuffix(d) === kindName) {
+            return true;
+        }
+
+        if (d.syntaxKinds) {
+            return TypeScript.ArrayUtilities.contains(d.syntaxKinds, kindName);
+        }
+
+        return false;
+    });
+}
+
 function generateNodes(): string {
     var result = "///<reference path='references.ts' />\r\n\r\n";
 
@@ -2186,17 +2213,7 @@ function generateNodes(): string {
     for (var i = <number>TypeScript.SyntaxKind.FirstNode; i <= TypeScript.SyntaxKind.LastNode; i++) {
         var kindName = syntaxKindName(i);
 
-        var definition = TypeScript.ArrayUtilities.firstOrDefault(definitions, d => {
-            if (getNameWithoutSuffix(d) === kindName) {
-                return true;
-            }
-
-            if (d.syntaxKinds) {
-                return TypeScript.ArrayUtilities.contains(d.syntaxKinds, kindName);
-            }
-
-            return false;
-        });
+        var definition = getDefinitionForKind(i);
 
         var metadata = "[";
         var children = definition.children.filter(m => m.type !== "SyntaxKind").map(m => '"' + m.name + '"');
@@ -2205,8 +2222,77 @@ function generateNodes(): string {
 
         result += "    nodeMetadata[SyntaxKind." + kindName + "] = " + metadata;
     }
+    result += "\r\n";
 
+    /*
+    result += "    function children(nodes: ISyntaxNodeOrToken[], cb: (node: ISyntaxElement) => void) {\r\n";
+    result += "        var len = nodes.length;\r\n";
+    result += "        for (var i = 0; i < len; i++) {\r\n";
+    result += "            var result = forEachChild(nodes[i], cb);\r\n";
+    result += "        }\r\n";
+    result += "        return result;\r\n";
+    result += "    }\r\n\r\n";
+
+    result += "    export function forEachChild(element: ISyntaxElement, cb: (e: ISyntaxElement) => void) {\r\n";
+    result += "        if (element === null) { return; }\r\n";
+    result += "        cb(element);\r\n";
+    result += "        switch (element.kind) {\r\n"
+    //result += "            case SyntaxKind.List: case SyntaxKind.SeparatedList:\r\n";
+    //result += "                children(<ISyntaxNodeOrToken>element);\r\n";
+    
+    for (var i = 0; i < sortedDefinitions.length; i++) {
+        var definition = sortedDefinitions[i];
+
+        var importantChildren = definition.children.filter(c => c.type !== "SyntaxKind" && !c.isToken);
+        if (importantChildren.length === 0) {
+            continue;
+        }
+
+        result += "            "
+
+        if (definition.syntaxKinds) {
+            for (var j = 0; j < definition.syntaxKinds.length; j++) {
+                result += "case SyntaxKind." + definition.syntaxKinds[j] + ": ";
+            }
+        }
+        else {
+            result += "case SyntaxKind." + getNameWithoutSuffix(definition) + ":";
+        }
+
+        result += "\r\n";
+
+        result += "                ";
+
+        result += "return ";
+        for (var j = 0; j < importantChildren.length; j++) {
+            var child = importantChildren[j];
+
+            if (child.type === "SyntaxKind" || child.isToken) {
+                continue;
+            }
+
+            if (j > 0) {
+                result += " || ";
+            }
+
+
+            if (child.isList || child.isSeparatedList) {
+                result += "children((<" + definition.name + ">element)." + child.name + ", cb)";
+            }
+            else {
+                result += "forEachChild((<" + definition.name + ">element)." + child.name + ", cb)";
+            }
+        }
+
+        result += ";\r\n";
+    }
+
+    result += "        }\r\n";
+
+    result += "    }\r\n";
     result += "\r\n\r\n";
+    */
+
 
     /*
     result += "    function setParentForArray(parent: ISyntaxElement, array: ISyntaxNodeOrToken[]): void {\r\n";

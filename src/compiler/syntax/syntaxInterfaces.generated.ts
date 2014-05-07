@@ -49,108 +49,13 @@ module TypeScript {
         moduleElements: SyntaxList<ModuleElement>;
     }
 
-    interface ExternalModuleReference extends ModuleReference {
-        stringLiteral: SyntaxToken;
-    }
-
-    interface ModuleNameModuleReference extends ModuleReference {
-        moduleName: Name;
-    }
-
-    interface ImportDeclaration extends ModuleElement {
-        identifier: SyntaxToken;
-        moduleReference: ModuleReference;
-    }
-
-    interface ExportAssignment extends ModuleElement {
-        identifier: SyntaxToken;
-    }
-
-    interface ClassDeclaration extends ModuleElement {
-        identifier: SyntaxToken;
-        typeParameterList?: TypeParameterList;
-        heritageClauses: SyntaxList<HeritageClause>;
-        classElements: SyntaxList<ClassElement>;
-    }
-
-    interface InterfaceDeclaration extends ModuleElement {
-        identifier: SyntaxToken;
-        typeParameterList?: TypeParameterList;
-        heritageClauses: SyntaxList<HeritageClause>;
-        body: ObjectType;
-    }
-
-    interface HeritageClause extends Node {
-        typeNames: SyntaxList<Name>;
-    }
-
-    interface ModuleDeclaration extends ModuleElement {
-        name?: Name;
-        stringLiteral?: SyntaxToken;
-        moduleElements: SyntaxList<ModuleElement>;
-    }
-
-    interface FunctionDeclaration extends Statement {
-        identifier: SyntaxToken;
-        callSignature: CallSignature;
-        block?: Block;
-    }
-
-    interface VariableStatement extends Statement {
-        variableDeclaration: VariableDeclaration;
-    }
-
-    interface VariableDeclaration extends Node {
-        variableDeclarators: SyntaxList<VariableDeclarator>;
-    }
-
-    interface VariableDeclarator extends Node {
-        propertyName: SyntaxToken;
-        typeAnnotation?: TypeAnnotation;
-        equalsValueClause?: EqualsValueClause;
-    }
-
-    interface EqualsValueClause extends Node {
-        value: Expression;
-    }
-
-    interface PrefixUnaryExpression extends UnaryExpression {
-        operand: UnaryExpression;
-    }
-
-    interface ArrayLiteralExpression extends PrimaryExpression {
-        expressions: SyntaxList<Expression>;
-    }
-
-    interface ParenthesizedExpression extends PrimaryExpression {
-        expression: Expression;
-    }
-
-    interface SimpleArrowFunctionExpression extends UnaryExpression {
-        identifier: SyntaxToken;
-        block?: Block;
-        expression?: Expression;
-    }
-
-    interface ParenthesizedArrowFunctionExpression extends UnaryExpression {
-        callSignature: CallSignature;
-        block?: Block;
-        expression?: Expression;
-    }
-
     interface QualifiedName extends Name {
         left: Name;
         right: SyntaxToken;
     }
 
-    interface TypeArgumentList extends Node {
-        typeArguments: SyntaxList<Type>;
-    }
-
-    interface ConstructorType extends Type {
-        typeParameterList?: TypeParameterList;
-        parameterList: ParameterList;
-        type: Type;
+    interface ObjectType extends Type {
+        typeMembers: SyntaxList<TypeMember>;
     }
 
     interface FunctionType extends Type {
@@ -159,11 +64,13 @@ module TypeScript {
         type: Type;
     }
 
-    interface ObjectType extends Type {
-        typeMembers: SyntaxList<TypeMember>;
+    interface ArrayType extends Type {
+        type: Type;
     }
 
-    interface ArrayType extends Type {
+    interface ConstructorType extends Type {
+        typeParameterList?: TypeParameterList;
+        parameterList: ParameterList;
         type: Type;
     }
 
@@ -176,109 +83,54 @@ module TypeScript {
         name: Name;
     }
 
-    interface TypeAnnotation extends Node {
-        type: Type;
-    }
-
-    interface Block extends Statement {
-        statements: SyntaxList<Statement>;
-    }
-
-    interface Parameter extends Node {
+    interface InterfaceDeclaration extends ModuleElement {
         identifier: SyntaxToken;
-        typeAnnotation?: TypeAnnotation;
-        equalsValueClause?: EqualsValueClause;
-    }
-
-    interface MemberAccessExpression extends MemberExpression, CallExpression {
-        expression: LeftHandSideExpression;
-        name: SyntaxToken;
-    }
-
-    interface PostfixUnaryExpression extends PostfixExpression {
-        operand: LeftHandSideExpression;
-    }
-
-    interface ElementAccessExpression extends MemberExpression, CallExpression {
-        expression: LeftHandSideExpression;
-        argumentExpression: Expression;
-    }
-
-    interface InvocationExpression extends CallExpression {
-        expression: LeftHandSideExpression;
-        argumentList: ArgumentList;
-    }
-
-    interface ArgumentList extends Node {
-        typeArgumentList?: TypeArgumentList;
-        arguments: SyntaxList<Expression>;
-    }
-
-    interface BinaryExpression extends Expression {
-        left: Expression;
-        right: Expression;
-    }
-
-    interface ConditionalExpression extends Expression {
-        condition: Expression;
-        whenTrue: Expression;
-        whenFalse: Expression;
-    }
-
-    interface ConstructSignature extends TypeMember {
-        callSignature: CallSignature;
-    }
-
-    interface MethodSignature extends TypeMember {
-        propertyName: SyntaxToken;
-        callSignature: CallSignature;
-    }
-
-    interface IndexSignature extends TypeMember {
-        parameter: Parameter;
-        typeAnnotation?: TypeAnnotation;
-    }
-
-    interface PropertySignature extends TypeMember {
-        propertyName: SyntaxToken;
-        typeAnnotation?: TypeAnnotation;
-    }
-
-    interface CallSignature extends TypeMember {
         typeParameterList?: TypeParameterList;
-        parameterList: ParameterList;
-        typeAnnotation?: TypeAnnotation;
+        heritageClauses: SyntaxList<HeritageClause>;
+        body: ObjectType;
     }
 
-    interface ParameterList extends Node {
-        parameters: SyntaxList<Parameter>;
-    }
-
-    interface TypeParameterList extends Node {
-        typeParameters: SyntaxList<TypeParameter>;
-    }
-
-    interface TypeParameter extends Node {
+    interface FunctionDeclaration extends Statement {
         identifier: SyntaxToken;
-        constraint?: Constraint;
+        callSignature: CallSignature;
+        block?: Block;
     }
 
-    interface Constraint extends Node {
-        type: Type;
+    interface ModuleDeclaration extends ModuleElement {
+        name?: Name;
+        stringLiteral?: SyntaxToken;
+        moduleElements: SyntaxList<ModuleElement>;
     }
 
-    interface ElseClause extends Node {
-        statement: Statement;
+    interface ClassDeclaration extends ModuleElement {
+        identifier: SyntaxToken;
+        typeParameterList?: TypeParameterList;
+        heritageClauses: SyntaxList<HeritageClause>;
+        classElements: SyntaxList<ClassElement>;
     }
 
-    interface IfStatement extends Statement {
-        condition: Expression;
-        statement: Statement;
-        elseClause?: ElseClause;
+    interface EnumDeclaration extends ModuleElement {
+        identifier: SyntaxToken;
+        enumElements: SyntaxList<EnumElement>;
     }
 
-    interface ExpressionStatement extends Statement {
-        expression: Expression;
+    interface ImportDeclaration extends ModuleElement {
+        identifier: SyntaxToken;
+        moduleReference: ModuleReference;
+    }
+
+    interface ExportAssignment extends ModuleElement {
+        identifier: SyntaxToken;
+    }
+
+    interface MemberFunctionDeclaration extends MemberDeclaration {
+        propertyName: SyntaxToken;
+        callSignature: CallSignature;
+        block?: Block;
+    }
+
+    interface MemberVariableDeclaration extends MemberDeclaration {
+        variableDeclarator: VariableDeclarator;
     }
 
     interface ConstructorDeclaration extends ClassElement {
@@ -286,10 +138,8 @@ module TypeScript {
         block?: Block;
     }
 
-    interface MemberFunctionDeclaration extends MemberDeclaration {
-        propertyName: SyntaxToken;
-        callSignature: CallSignature;
-        block?: Block;
+    interface IndexMemberDeclaration extends ClassElement {
+        indexSignature: IndexSignature;
     }
 
     interface GetAccessor extends MemberDeclaration, PropertyAssignment {
@@ -305,15 +155,46 @@ module TypeScript {
         block: Block;
     }
 
-    interface MemberVariableDeclaration extends MemberDeclaration {
-        variableDeclarator: VariableDeclarator;
+    interface PropertySignature extends TypeMember {
+        propertyName: SyntaxToken;
+        typeAnnotation?: TypeAnnotation;
     }
 
-    interface IndexMemberDeclaration extends ClassElement {
-        indexSignature: IndexSignature;
+    interface CallSignature extends TypeMember {
+        typeParameterList?: TypeParameterList;
+        parameterList: ParameterList;
+        typeAnnotation?: TypeAnnotation;
     }
 
-    interface ThrowStatement extends Statement {
+    interface ConstructSignature extends TypeMember {
+        callSignature: CallSignature;
+    }
+
+    interface IndexSignature extends TypeMember {
+        parameter: Parameter;
+        typeAnnotation?: TypeAnnotation;
+    }
+
+    interface MethodSignature extends TypeMember {
+        propertyName: SyntaxToken;
+        callSignature: CallSignature;
+    }
+
+    interface Block extends Statement {
+        statements: SyntaxList<Statement>;
+    }
+
+    interface IfStatement extends Statement {
+        condition: Expression;
+        statement: Statement;
+        elseClause?: ElseClause;
+    }
+
+    interface VariableStatement extends Statement {
+        variableDeclaration: VariableDeclaration;
+    }
+
+    interface ExpressionStatement extends Statement {
         expression: Expression;
     }
 
@@ -321,23 +202,9 @@ module TypeScript {
         expression?: Expression;
     }
 
-    interface ObjectCreationExpression extends MemberExpression {
-        expression: MemberExpression;
-        argumentList?: ArgumentList;
-    }
-
     interface SwitchStatement extends Statement {
         expression: Expression;
         switchClauses: SyntaxList<SwitchClause>;
-    }
-
-    interface CaseSwitchClause extends SwitchClause {
-        expression: Expression;
-        statements: SyntaxList<Statement>;
-    }
-
-    interface DefaultSwitchClause extends SwitchClause {
-        statements: SyntaxList<Statement>;
     }
 
     interface BreakStatement extends Statement {
@@ -363,9 +230,29 @@ module TypeScript {
         statement: Statement;
     }
 
+    interface ThrowStatement extends Statement {
+        expression: Expression;
+    }
+
     interface WhileStatement extends Statement {
         condition: Expression;
         statement: Statement;
+    }
+
+    interface TryStatement extends Statement {
+        block: Block;
+        catchClause?: CatchClause;
+        finallyClause?: FinallyClause;
+    }
+
+    interface LabeledStatement extends Statement {
+        identifier: SyntaxToken;
+        statement: Statement;
+    }
+
+    interface DoStatement extends Statement {
+        statement: Statement;
+        condition: Expression;
     }
 
     interface WithStatement extends Statement {
@@ -373,14 +260,74 @@ module TypeScript {
         statement: Statement;
     }
 
-    interface EnumDeclaration extends ModuleElement {
-        identifier: SyntaxToken;
-        enumElements: SyntaxList<EnumElement>;
+    interface PrefixUnaryExpression extends UnaryExpression {
+        operand: UnaryExpression;
     }
 
-    interface EnumElement extends Node {
-        propertyName: SyntaxToken;
-        equalsValueClause?: EqualsValueClause;
+    interface DeleteExpression extends UnaryExpression {
+        expression: UnaryExpression;
+    }
+
+    interface TypeOfExpression extends UnaryExpression {
+        expression: UnaryExpression;
+    }
+
+    interface VoidExpression extends UnaryExpression {
+        expression: UnaryExpression;
+    }
+
+    interface ConditionalExpression extends Expression {
+        condition: Expression;
+        whenTrue: Expression;
+        whenFalse: Expression;
+    }
+
+    interface BinaryExpression extends Expression {
+        left: Expression;
+        right: Expression;
+    }
+
+    interface PostfixUnaryExpression extends PostfixExpression {
+        operand: LeftHandSideExpression;
+    }
+
+    interface MemberAccessExpression extends MemberExpression, CallExpression {
+        expression: LeftHandSideExpression;
+        name: SyntaxToken;
+    }
+
+    interface InvocationExpression extends CallExpression {
+        expression: LeftHandSideExpression;
+        argumentList: ArgumentList;
+    }
+
+    interface ArrayLiteralExpression extends PrimaryExpression {
+        expressions: SyntaxList<Expression>;
+    }
+
+    interface ObjectLiteralExpression extends PrimaryExpression {
+        propertyAssignments: SyntaxList<PropertyAssignment>;
+    }
+
+    interface ObjectCreationExpression extends MemberExpression {
+        expression: MemberExpression;
+        argumentList?: ArgumentList;
+    }
+
+    interface ParenthesizedExpression extends PrimaryExpression {
+        expression: Expression;
+    }
+
+    interface ParenthesizedArrowFunctionExpression extends UnaryExpression {
+        callSignature: CallSignature;
+        block?: Block;
+        expression?: Expression;
+    }
+
+    interface SimpleArrowFunctionExpression extends UnaryExpression {
+        identifier: SyntaxToken;
+        block?: Block;
+        expression?: Expression;
     }
 
     interface CastExpression extends UnaryExpression {
@@ -388,8 +335,82 @@ module TypeScript {
         expression: UnaryExpression;
     }
 
-    interface ObjectLiteralExpression extends PrimaryExpression {
-        propertyAssignments: SyntaxList<PropertyAssignment>;
+    interface ElementAccessExpression extends MemberExpression, CallExpression {
+        expression: LeftHandSideExpression;
+        argumentExpression: Expression;
+    }
+
+    interface FunctionExpression extends PrimaryExpression {
+        identifier?: SyntaxToken;
+        callSignature: CallSignature;
+        block: Block;
+    }
+
+    interface VariableDeclaration extends Node {
+        variableDeclarators: SyntaxList<VariableDeclarator>;
+    }
+
+    interface VariableDeclarator extends Node {
+        propertyName: SyntaxToken;
+        typeAnnotation?: TypeAnnotation;
+        equalsValueClause?: EqualsValueClause;
+    }
+
+    interface ArgumentList extends Node {
+        typeArgumentList?: TypeArgumentList;
+        arguments: SyntaxList<Expression>;
+    }
+
+    interface ParameterList extends Node {
+        parameters: SyntaxList<Parameter>;
+    }
+
+    interface TypeArgumentList extends Node {
+        typeArguments: SyntaxList<Type>;
+    }
+
+    interface TypeParameterList extends Node {
+        typeParameters: SyntaxList<TypeParameter>;
+    }
+
+    interface HeritageClause extends Node {
+        typeNames: SyntaxList<Name>;
+    }
+
+    interface EqualsValueClause extends Node {
+        value: Expression;
+    }
+
+    interface CaseSwitchClause extends SwitchClause {
+        expression: Expression;
+        statements: SyntaxList<Statement>;
+    }
+
+    interface DefaultSwitchClause extends SwitchClause {
+        statements: SyntaxList<Statement>;
+    }
+
+    interface ElseClause extends Node {
+        statement: Statement;
+    }
+
+    interface CatchClause extends Node {
+        identifier: SyntaxToken;
+        typeAnnotation?: TypeAnnotation;
+        block: Block;
+    }
+
+    interface FinallyClause extends Node {
+        block: Block;
+    }
+
+    interface TypeParameter extends Node {
+        identifier: SyntaxToken;
+        constraint?: Constraint;
+    }
+
+    interface Constraint extends Node {
+        type: Type;
     }
 
     interface SimplePropertyAssignment extends PropertyAssignment {
@@ -403,48 +424,27 @@ module TypeScript {
         block: Block;
     }
 
-    interface FunctionExpression extends PrimaryExpression {
-        identifier?: SyntaxToken;
-        callSignature: CallSignature;
-        block: Block;
-    }
-
-    interface TryStatement extends Statement {
-        block: Block;
-        catchClause?: CatchClause;
-        finallyClause?: FinallyClause;
-    }
-
-    interface CatchClause extends Node {
+    interface Parameter extends Node {
         identifier: SyntaxToken;
         typeAnnotation?: TypeAnnotation;
-        block: Block;
+        equalsValueClause?: EqualsValueClause;
     }
 
-    interface FinallyClause extends Node {
-        block: Block;
+    interface EnumElement extends Node {
+        propertyName: SyntaxToken;
+        equalsValueClause?: EqualsValueClause;
     }
 
-    interface LabeledStatement extends Statement {
-        identifier: SyntaxToken;
-        statement: Statement;
+    interface TypeAnnotation extends Node {
+        type: Type;
     }
 
-    interface DoStatement extends Statement {
-        statement: Statement;
-        condition: Expression;
+    interface ExternalModuleReference extends ModuleReference {
+        stringLiteral: SyntaxToken;
     }
 
-    interface TypeOfExpression extends UnaryExpression {
-        expression: UnaryExpression;
-    }
-
-    interface DeleteExpression extends UnaryExpression {
-        expression: UnaryExpression;
-    }
-
-    interface VoidExpression extends UnaryExpression {
-        expression: UnaryExpression;
+    interface ModuleNameModuleReference extends ModuleReference {
+        moduleName: Name;
     }
 
     interface MemberDeclaration extends ClassElement {

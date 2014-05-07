@@ -131,7 +131,6 @@ module TypeScript {
     nodeMetadata[SyntaxKind.ExternalModuleReference] = ["requireKeyword", "openParenToken", "stringLiteral", "closeParenToken"];
     nodeMetadata[SyntaxKind.ModuleNameModuleReference] = ["moduleName"];
 
-
     export interface SourceUnitSyntax extends ISyntaxNode {
         syntaxTree: SyntaxTree;
         moduleElements: IModuleElementSyntax[];
@@ -145,29 +144,209 @@ module TypeScript {
         return result;
     }
 
-    export interface ExternalModuleReferenceSyntax extends ISyntaxNode, IModuleReferenceSyntax {
-        requireKeyword: ISyntaxToken;
-        openParenToken: ISyntaxToken;
-        stringLiteral: ISyntaxToken;
-        closeParenToken: ISyntaxToken;
+    export interface QualifiedNameSyntax extends ISyntaxNode, INameSyntax {
+        left: INameSyntax;
+        dotToken: ISyntaxToken;
+        right: ISyntaxToken;
     }
 
-    export function createExternalModuleReference(data: number, requireKeyword: ISyntaxToken, openParenToken: ISyntaxToken, stringLiteral: ISyntaxToken, closeParenToken: ISyntaxToken): ExternalModuleReferenceSyntax {
-        var result = <ExternalModuleReferenceSyntax>{ data: data, kind: SyntaxKind.ExternalModuleReference, requireKeyword: requireKeyword, openParenToken: openParenToken, stringLiteral: stringLiteral, closeParenToken: closeParenToken };
-        requireKeyword.parent = result;
-        openParenToken.parent = result;
-        stringLiteral.parent = result;
-        closeParenToken.parent = result;
+    export function createQualifiedName(data: number, left: INameSyntax, dotToken: ISyntaxToken, right: ISyntaxToken): QualifiedNameSyntax {
+        var result = <QualifiedNameSyntax>{ data: data, kind: SyntaxKind.QualifiedName, left: left, dotToken: dotToken, right: right };
+        left.parent = result;
+        dotToken.parent = result;
+        right.parent = result;
         return result;
     }
 
-    export interface ModuleNameModuleReferenceSyntax extends ISyntaxNode, IModuleReferenceSyntax {
-        moduleName: INameSyntax;
+    export interface ObjectTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        openBraceToken: ISyntaxToken;
+        typeMembers: ITypeMemberSyntax[];
+        closeBraceToken: ISyntaxToken;
     }
 
-    export function createModuleNameModuleReference(data: number, moduleName: INameSyntax): ModuleNameModuleReferenceSyntax {
-        var result = <ModuleNameModuleReferenceSyntax>{ data: data, kind: SyntaxKind.ModuleNameModuleReference, moduleName: moduleName };
-        moduleName.parent = result;
+    export function createObjectType(data: number, openBraceToken: ISyntaxToken, typeMembers: ITypeMemberSyntax[], closeBraceToken: ISyntaxToken): ObjectTypeSyntax {
+        var result = <ObjectTypeSyntax>{ data: data, kind: SyntaxKind.ObjectType, openBraceToken: openBraceToken, typeMembers: typeMembers, closeBraceToken: closeBraceToken };
+        openBraceToken.parent = result;
+        !isShared(typeMembers) && (typeMembers.parent = result);
+        closeBraceToken.parent = result;
+        return result;
+    }
+
+    export interface FunctionTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        typeParameterList: TypeParameterListSyntax;
+        parameterList: ParameterListSyntax;
+        equalsGreaterThanToken: ISyntaxToken;
+        type: ITypeSyntax;
+    }
+
+    export function createFunctionType(data: number, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, equalsGreaterThanToken: ISyntaxToken, type: ITypeSyntax): FunctionTypeSyntax {
+        var result = <FunctionTypeSyntax>{ data: data, kind: SyntaxKind.FunctionType, typeParameterList: typeParameterList, parameterList: parameterList, equalsGreaterThanToken: equalsGreaterThanToken, type: type };
+        typeParameterList && (typeParameterList.parent = result);
+        parameterList.parent = result;
+        equalsGreaterThanToken.parent = result;
+        type.parent = result;
+        return result;
+    }
+
+    export interface ArrayTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        type: ITypeSyntax;
+        openBracketToken: ISyntaxToken;
+        closeBracketToken: ISyntaxToken;
+    }
+
+    export function createArrayType(data: number, type: ITypeSyntax, openBracketToken: ISyntaxToken, closeBracketToken: ISyntaxToken): ArrayTypeSyntax {
+        var result = <ArrayTypeSyntax>{ data: data, kind: SyntaxKind.ArrayType, type: type, openBracketToken: openBracketToken, closeBracketToken: closeBracketToken };
+        type.parent = result;
+        openBracketToken.parent = result;
+        closeBracketToken.parent = result;
+        return result;
+    }
+
+    export interface ConstructorTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        newKeyword: ISyntaxToken;
+        typeParameterList: TypeParameterListSyntax;
+        parameterList: ParameterListSyntax;
+        equalsGreaterThanToken: ISyntaxToken;
+        type: ITypeSyntax;
+    }
+
+    export function createConstructorType(data: number, newKeyword: ISyntaxToken, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, equalsGreaterThanToken: ISyntaxToken, type: ITypeSyntax): ConstructorTypeSyntax {
+        var result = <ConstructorTypeSyntax>{ data: data, kind: SyntaxKind.ConstructorType, newKeyword: newKeyword, typeParameterList: typeParameterList, parameterList: parameterList, equalsGreaterThanToken: equalsGreaterThanToken, type: type };
+        newKeyword.parent = result;
+        typeParameterList && (typeParameterList.parent = result);
+        parameterList.parent = result;
+        equalsGreaterThanToken.parent = result;
+        type.parent = result;
+        return result;
+    }
+
+    export interface GenericTypeSyntax extends ISyntaxNode, ITypeSyntax {
+        name: INameSyntax;
+        typeArgumentList: TypeArgumentListSyntax;
+    }
+
+    export function createGenericType(data: number, name: INameSyntax, typeArgumentList: TypeArgumentListSyntax): GenericTypeSyntax {
+        var result = <GenericTypeSyntax>{ data: data, kind: SyntaxKind.GenericType, name: name, typeArgumentList: typeArgumentList };
+        name.parent = result;
+        typeArgumentList.parent = result;
+        return result;
+    }
+
+    export interface TypeQuerySyntax extends ISyntaxNode, ITypeSyntax {
+        typeOfKeyword: ISyntaxToken;
+        name: INameSyntax;
+    }
+
+    export function createTypeQuery(data: number, typeOfKeyword: ISyntaxToken, name: INameSyntax): TypeQuerySyntax {
+        var result = <TypeQuerySyntax>{ data: data, kind: SyntaxKind.TypeQuery, typeOfKeyword: typeOfKeyword, name: name };
+        typeOfKeyword.parent = result;
+        name.parent = result;
+        return result;
+    }
+
+    export interface InterfaceDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        interfaceKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        typeParameterList: TypeParameterListSyntax;
+        heritageClauses: HeritageClauseSyntax[];
+        body: ObjectTypeSyntax;
+    }
+
+    export function createInterfaceDeclaration(data: number, modifiers: ISyntaxToken[], interfaceKeyword: ISyntaxToken, identifier: ISyntaxToken, typeParameterList: TypeParameterListSyntax, heritageClauses: HeritageClauseSyntax[], body: ObjectTypeSyntax): InterfaceDeclarationSyntax {
+        var result = <InterfaceDeclarationSyntax>{ data: data, kind: SyntaxKind.InterfaceDeclaration, modifiers: modifiers, interfaceKeyword: interfaceKeyword, identifier: identifier, typeParameterList: typeParameterList, heritageClauses: heritageClauses, body: body };
+        !isShared(modifiers) && (modifiers.parent = result);
+        interfaceKeyword.parent = result;
+        identifier.parent = result;
+        typeParameterList && (typeParameterList.parent = result);
+        !isShared(heritageClauses) && (heritageClauses.parent = result);
+        body.parent = result;
+        return result;
+    }
+
+    export interface FunctionDeclarationSyntax extends ISyntaxNode, IStatementSyntax {
+        modifiers: ISyntaxToken[];
+        functionKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+        block: BlockSyntax;
+        semicolonToken: ISyntaxToken;
+    }
+
+    export function createFunctionDeclaration(data: number, modifiers: ISyntaxToken[], functionKeyword: ISyntaxToken, identifier: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax, semicolonToken: ISyntaxToken): FunctionDeclarationSyntax {
+        var result = <FunctionDeclarationSyntax>{ data: data, kind: SyntaxKind.FunctionDeclaration, modifiers: modifiers, functionKeyword: functionKeyword, identifier: identifier, callSignature: callSignature, block: block, semicolonToken: semicolonToken };
+        !isShared(modifiers) && (modifiers.parent = result);
+        functionKeyword.parent = result;
+        identifier.parent = result;
+        callSignature.parent = result;
+        block && (block.parent = result);
+        semicolonToken && (semicolonToken.parent = result);
+        return result;
+    }
+
+    export interface ModuleDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        moduleKeyword: ISyntaxToken;
+        name: INameSyntax;
+        stringLiteral: ISyntaxToken;
+        openBraceToken: ISyntaxToken;
+        moduleElements: IModuleElementSyntax[];
+        closeBraceToken: ISyntaxToken;
+    }
+
+    export function createModuleDeclaration(data: number, modifiers: ISyntaxToken[], moduleKeyword: ISyntaxToken, name: INameSyntax, stringLiteral: ISyntaxToken, openBraceToken: ISyntaxToken, moduleElements: IModuleElementSyntax[], closeBraceToken: ISyntaxToken): ModuleDeclarationSyntax {
+        var result = <ModuleDeclarationSyntax>{ data: data, kind: SyntaxKind.ModuleDeclaration, modifiers: modifiers, moduleKeyword: moduleKeyword, name: name, stringLiteral: stringLiteral, openBraceToken: openBraceToken, moduleElements: moduleElements, closeBraceToken: closeBraceToken };
+        !isShared(modifiers) && (modifiers.parent = result);
+        moduleKeyword.parent = result;
+        name && (name.parent = result);
+        stringLiteral && (stringLiteral.parent = result);
+        openBraceToken.parent = result;
+        !isShared(moduleElements) && (moduleElements.parent = result);
+        closeBraceToken.parent = result;
+        return result;
+    }
+
+    export interface ClassDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        classKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        typeParameterList: TypeParameterListSyntax;
+        heritageClauses: HeritageClauseSyntax[];
+        openBraceToken: ISyntaxToken;
+        classElements: IClassElementSyntax[];
+        closeBraceToken: ISyntaxToken;
+    }
+
+    export function createClassDeclaration(data: number, modifiers: ISyntaxToken[], classKeyword: ISyntaxToken, identifier: ISyntaxToken, typeParameterList: TypeParameterListSyntax, heritageClauses: HeritageClauseSyntax[], openBraceToken: ISyntaxToken, classElements: IClassElementSyntax[], closeBraceToken: ISyntaxToken): ClassDeclarationSyntax {
+        var result = <ClassDeclarationSyntax>{ data: data, kind: SyntaxKind.ClassDeclaration, modifiers: modifiers, classKeyword: classKeyword, identifier: identifier, typeParameterList: typeParameterList, heritageClauses: heritageClauses, openBraceToken: openBraceToken, classElements: classElements, closeBraceToken: closeBraceToken };
+        !isShared(modifiers) && (modifiers.parent = result);
+        classKeyword.parent = result;
+        identifier.parent = result;
+        typeParameterList && (typeParameterList.parent = result);
+        !isShared(heritageClauses) && (heritageClauses.parent = result);
+        openBraceToken.parent = result;
+        !isShared(classElements) && (classElements.parent = result);
+        closeBraceToken.parent = result;
+        return result;
+    }
+
+    export interface EnumDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+        modifiers: ISyntaxToken[];
+        enumKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        openBraceToken: ISyntaxToken;
+        enumElements: EnumElementSyntax[];
+        closeBraceToken: ISyntaxToken;
+    }
+
+    export function createEnumDeclaration(data: number, modifiers: ISyntaxToken[], enumKeyword: ISyntaxToken, identifier: ISyntaxToken, openBraceToken: ISyntaxToken, enumElements: EnumElementSyntax[], closeBraceToken: ISyntaxToken): EnumDeclarationSyntax {
+        var result = <EnumDeclarationSyntax>{ data: data, kind: SyntaxKind.EnumDeclaration, modifiers: modifiers, enumKeyword: enumKeyword, identifier: identifier, openBraceToken: openBraceToken, enumElements: enumElements, closeBraceToken: closeBraceToken };
+        !isShared(modifiers) && (modifiers.parent = result);
+        enumKeyword.parent = result;
+        identifier.parent = result;
+        openBraceToken.parent = result;
+        !isShared(enumElements) && (enumElements.parent = result);
+        closeBraceToken.parent = result;
         return result;
     }
 
@@ -207,660 +386,34 @@ module TypeScript {
         return result;
     }
 
-    export interface ClassDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
+    export interface MemberFunctionDeclarationSyntax extends ISyntaxNode, IMemberDeclarationSyntax {
         modifiers: ISyntaxToken[];
-        classKeyword: ISyntaxToken;
-        identifier: ISyntaxToken;
-        typeParameterList: TypeParameterListSyntax;
-        heritageClauses: HeritageClauseSyntax[];
-        openBraceToken: ISyntaxToken;
-        classElements: IClassElementSyntax[];
-        closeBraceToken: ISyntaxToken;
-    }
-
-    export function createClassDeclaration(data: number, modifiers: ISyntaxToken[], classKeyword: ISyntaxToken, identifier: ISyntaxToken, typeParameterList: TypeParameterListSyntax, heritageClauses: HeritageClauseSyntax[], openBraceToken: ISyntaxToken, classElements: IClassElementSyntax[], closeBraceToken: ISyntaxToken): ClassDeclarationSyntax {
-        var result = <ClassDeclarationSyntax>{ data: data, kind: SyntaxKind.ClassDeclaration, modifiers: modifiers, classKeyword: classKeyword, identifier: identifier, typeParameterList: typeParameterList, heritageClauses: heritageClauses, openBraceToken: openBraceToken, classElements: classElements, closeBraceToken: closeBraceToken };
-        !isShared(modifiers) && (modifiers.parent = result);
-        classKeyword.parent = result;
-        identifier.parent = result;
-        typeParameterList && (typeParameterList.parent = result);
-        !isShared(heritageClauses) && (heritageClauses.parent = result);
-        openBraceToken.parent = result;
-        !isShared(classElements) && (classElements.parent = result);
-        closeBraceToken.parent = result;
-        return result;
-    }
-
-    export interface InterfaceDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
-        modifiers: ISyntaxToken[];
-        interfaceKeyword: ISyntaxToken;
-        identifier: ISyntaxToken;
-        typeParameterList: TypeParameterListSyntax;
-        heritageClauses: HeritageClauseSyntax[];
-        body: ObjectTypeSyntax;
-    }
-
-    export function createInterfaceDeclaration(data: number, modifiers: ISyntaxToken[], interfaceKeyword: ISyntaxToken, identifier: ISyntaxToken, typeParameterList: TypeParameterListSyntax, heritageClauses: HeritageClauseSyntax[], body: ObjectTypeSyntax): InterfaceDeclarationSyntax {
-        var result = <InterfaceDeclarationSyntax>{ data: data, kind: SyntaxKind.InterfaceDeclaration, modifiers: modifiers, interfaceKeyword: interfaceKeyword, identifier: identifier, typeParameterList: typeParameterList, heritageClauses: heritageClauses, body: body };
-        !isShared(modifiers) && (modifiers.parent = result);
-        interfaceKeyword.parent = result;
-        identifier.parent = result;
-        typeParameterList && (typeParameterList.parent = result);
-        !isShared(heritageClauses) && (heritageClauses.parent = result);
-        body.parent = result;
-        return result;
-    }
-
-    export interface HeritageClauseSyntax extends ISyntaxNode {
-        extendsOrImplementsKeyword: ISyntaxToken;
-        typeNames: INameSyntax[];
-    }
-
-    export function createHeritageClause(data: number, kind: SyntaxKind, extendsOrImplementsKeyword: ISyntaxToken, typeNames: INameSyntax[]): HeritageClauseSyntax {
-        var result = <HeritageClauseSyntax>{ data: data, kind: kind, extendsOrImplementsKeyword: extendsOrImplementsKeyword, typeNames: typeNames };
-        extendsOrImplementsKeyword.parent = result;
-        !isShared(typeNames) && (typeNames.parent = result);
-        return result;
-    }
-
-    export interface ModuleDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
-        modifiers: ISyntaxToken[];
-        moduleKeyword: ISyntaxToken;
-        name: INameSyntax;
-        stringLiteral: ISyntaxToken;
-        openBraceToken: ISyntaxToken;
-        moduleElements: IModuleElementSyntax[];
-        closeBraceToken: ISyntaxToken;
-    }
-
-    export function createModuleDeclaration(data: number, modifiers: ISyntaxToken[], moduleKeyword: ISyntaxToken, name: INameSyntax, stringLiteral: ISyntaxToken, openBraceToken: ISyntaxToken, moduleElements: IModuleElementSyntax[], closeBraceToken: ISyntaxToken): ModuleDeclarationSyntax {
-        var result = <ModuleDeclarationSyntax>{ data: data, kind: SyntaxKind.ModuleDeclaration, modifiers: modifiers, moduleKeyword: moduleKeyword, name: name, stringLiteral: stringLiteral, openBraceToken: openBraceToken, moduleElements: moduleElements, closeBraceToken: closeBraceToken };
-        !isShared(modifiers) && (modifiers.parent = result);
-        moduleKeyword.parent = result;
-        name && (name.parent = result);
-        stringLiteral && (stringLiteral.parent = result);
-        openBraceToken.parent = result;
-        !isShared(moduleElements) && (moduleElements.parent = result);
-        closeBraceToken.parent = result;
-        return result;
-    }
-
-    export interface FunctionDeclarationSyntax extends ISyntaxNode, IStatementSyntax {
-        modifiers: ISyntaxToken[];
-        functionKeyword: ISyntaxToken;
-        identifier: ISyntaxToken;
+        propertyName: ISyntaxToken;
         callSignature: CallSignatureSyntax;
         block: BlockSyntax;
         semicolonToken: ISyntaxToken;
     }
 
-    export function createFunctionDeclaration(data: number, modifiers: ISyntaxToken[], functionKeyword: ISyntaxToken, identifier: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax, semicolonToken: ISyntaxToken): FunctionDeclarationSyntax {
-        var result = <FunctionDeclarationSyntax>{ data: data, kind: SyntaxKind.FunctionDeclaration, modifiers: modifiers, functionKeyword: functionKeyword, identifier: identifier, callSignature: callSignature, block: block, semicolonToken: semicolonToken };
+    export function createMemberFunctionDeclaration(data: number, modifiers: ISyntaxToken[], propertyName: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax, semicolonToken: ISyntaxToken): MemberFunctionDeclarationSyntax {
+        var result = <MemberFunctionDeclarationSyntax>{ data: data, kind: SyntaxKind.MemberFunctionDeclaration, modifiers: modifiers, propertyName: propertyName, callSignature: callSignature, block: block, semicolonToken: semicolonToken };
         !isShared(modifiers) && (modifiers.parent = result);
-        functionKeyword.parent = result;
-        identifier.parent = result;
+        propertyName.parent = result;
         callSignature.parent = result;
         block && (block.parent = result);
         semicolonToken && (semicolonToken.parent = result);
         return result;
     }
 
-    export interface VariableStatementSyntax extends ISyntaxNode, IStatementSyntax {
+    export interface MemberVariableDeclarationSyntax extends ISyntaxNode, IMemberDeclarationSyntax {
         modifiers: ISyntaxToken[];
-        variableDeclaration: VariableDeclarationSyntax;
+        variableDeclarator: VariableDeclaratorSyntax;
         semicolonToken: ISyntaxToken;
     }
 
-    export function createVariableStatement(data: number, modifiers: ISyntaxToken[], variableDeclaration: VariableDeclarationSyntax, semicolonToken: ISyntaxToken): VariableStatementSyntax {
-        var result = <VariableStatementSyntax>{ data: data, kind: SyntaxKind.VariableStatement, modifiers: modifiers, variableDeclaration: variableDeclaration, semicolonToken: semicolonToken };
+    export function createMemberVariableDeclaration(data: number, modifiers: ISyntaxToken[], variableDeclarator: VariableDeclaratorSyntax, semicolonToken: ISyntaxToken): MemberVariableDeclarationSyntax {
+        var result = <MemberVariableDeclarationSyntax>{ data: data, kind: SyntaxKind.MemberVariableDeclaration, modifiers: modifiers, variableDeclarator: variableDeclarator, semicolonToken: semicolonToken };
         !isShared(modifiers) && (modifiers.parent = result);
-        variableDeclaration.parent = result;
-        semicolonToken && (semicolonToken.parent = result);
-        return result;
-    }
-
-    export interface VariableDeclarationSyntax extends ISyntaxNode {
-        varKeyword: ISyntaxToken;
-        variableDeclarators: VariableDeclaratorSyntax[];
-    }
-
-    export function createVariableDeclaration(data: number, varKeyword: ISyntaxToken, variableDeclarators: VariableDeclaratorSyntax[]): VariableDeclarationSyntax {
-        var result = <VariableDeclarationSyntax>{ data: data, kind: SyntaxKind.VariableDeclaration, varKeyword: varKeyword, variableDeclarators: variableDeclarators };
-        varKeyword.parent = result;
-        !isShared(variableDeclarators) && (variableDeclarators.parent = result);
-        return result;
-    }
-
-    export interface VariableDeclaratorSyntax extends ISyntaxNode {
-        propertyName: ISyntaxToken;
-        typeAnnotation: TypeAnnotationSyntax;
-        equalsValueClause: EqualsValueClauseSyntax;
-    }
-
-    export function createVariableDeclarator(data: number, propertyName: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, equalsValueClause: EqualsValueClauseSyntax): VariableDeclaratorSyntax {
-        var result = <VariableDeclaratorSyntax>{ data: data, kind: SyntaxKind.VariableDeclarator, propertyName: propertyName, typeAnnotation: typeAnnotation, equalsValueClause: equalsValueClause };
-        propertyName.parent = result;
-        typeAnnotation && (typeAnnotation.parent = result);
-        equalsValueClause && (equalsValueClause.parent = result);
-        return result;
-    }
-
-    export interface EqualsValueClauseSyntax extends ISyntaxNode {
-        equalsToken: ISyntaxToken;
-        value: IExpressionSyntax;
-    }
-
-    export function createEqualsValueClause(data: number, equalsToken: ISyntaxToken, value: IExpressionSyntax): EqualsValueClauseSyntax {
-        var result = <EqualsValueClauseSyntax>{ data: data, kind: SyntaxKind.EqualsValueClause, equalsToken: equalsToken, value: value };
-        equalsToken.parent = result;
-        value.parent = result;
-        return result;
-    }
-
-    export interface PrefixUnaryExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
-        operatorToken: ISyntaxToken;
-        operand: IUnaryExpressionSyntax;
-    }
-
-    export function createPrefixUnaryExpression(data: number, kind: SyntaxKind, operatorToken: ISyntaxToken, operand: IUnaryExpressionSyntax): PrefixUnaryExpressionSyntax {
-        var result = <PrefixUnaryExpressionSyntax>{ data: data, kind: kind, operatorToken: operatorToken, operand: operand };
-        operatorToken.parent = result;
-        operand.parent = result;
-        return result;
-    }
-
-    export interface ArrayLiteralExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
-        openBracketToken: ISyntaxToken;
-        expressions: IExpressionSyntax[];
-        closeBracketToken: ISyntaxToken;
-    }
-
-    export function createArrayLiteralExpression(data: number, openBracketToken: ISyntaxToken, expressions: IExpressionSyntax[], closeBracketToken: ISyntaxToken): ArrayLiteralExpressionSyntax {
-        var result = <ArrayLiteralExpressionSyntax>{ data: data, kind: SyntaxKind.ArrayLiteralExpression, openBracketToken: openBracketToken, expressions: expressions, closeBracketToken: closeBracketToken };
-        openBracketToken.parent = result;
-        !isShared(expressions) && (expressions.parent = result);
-        closeBracketToken.parent = result;
-        return result;
-    }
-
-    export interface OmittedExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
-    }
-
-    export function createOmittedExpression(data: number): OmittedExpressionSyntax {
-        var result = <OmittedExpressionSyntax>{ data: data, kind: SyntaxKind.OmittedExpression };
-        return result;
-    }
-
-    export interface ParenthesizedExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
-        openParenToken: ISyntaxToken;
-        expression: IExpressionSyntax;
-        closeParenToken: ISyntaxToken;
-    }
-
-    export function createParenthesizedExpression(data: number, openParenToken: ISyntaxToken, expression: IExpressionSyntax, closeParenToken: ISyntaxToken): ParenthesizedExpressionSyntax {
-        var result = <ParenthesizedExpressionSyntax>{ data: data, kind: SyntaxKind.ParenthesizedExpression, openParenToken: openParenToken, expression: expression, closeParenToken: closeParenToken };
-        openParenToken.parent = result;
-        expression.parent = result;
-        closeParenToken.parent = result;
-        return result;
-    }
-
-    export interface SimpleArrowFunctionExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
-        identifier: ISyntaxToken;
-        equalsGreaterThanToken: ISyntaxToken;
-        block: BlockSyntax;
-        expression: IExpressionSyntax;
-    }
-
-    export function createSimpleArrowFunctionExpression(data: number, identifier: ISyntaxToken, equalsGreaterThanToken: ISyntaxToken, block: BlockSyntax, expression: IExpressionSyntax): SimpleArrowFunctionExpressionSyntax {
-        var result = <SimpleArrowFunctionExpressionSyntax>{ data: data, kind: SyntaxKind.SimpleArrowFunctionExpression, identifier: identifier, equalsGreaterThanToken: equalsGreaterThanToken, block: block, expression: expression };
-        identifier.parent = result;
-        equalsGreaterThanToken.parent = result;
-        block && (block.parent = result);
-        expression && (expression.parent = result);
-        return result;
-    }
-
-    export interface ParenthesizedArrowFunctionExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
-        callSignature: CallSignatureSyntax;
-        equalsGreaterThanToken: ISyntaxToken;
-        block: BlockSyntax;
-        expression: IExpressionSyntax;
-    }
-
-    export function createParenthesizedArrowFunctionExpression(data: number, callSignature: CallSignatureSyntax, equalsGreaterThanToken: ISyntaxToken, block: BlockSyntax, expression: IExpressionSyntax): ParenthesizedArrowFunctionExpressionSyntax {
-        var result = <ParenthesizedArrowFunctionExpressionSyntax>{ data: data, kind: SyntaxKind.ParenthesizedArrowFunctionExpression, callSignature: callSignature, equalsGreaterThanToken: equalsGreaterThanToken, block: block, expression: expression };
-        callSignature.parent = result;
-        equalsGreaterThanToken.parent = result;
-        block && (block.parent = result);
-        expression && (expression.parent = result);
-        return result;
-    }
-
-    export interface QualifiedNameSyntax extends ISyntaxNode, INameSyntax {
-        left: INameSyntax;
-        dotToken: ISyntaxToken;
-        right: ISyntaxToken;
-    }
-
-    export function createQualifiedName(data: number, left: INameSyntax, dotToken: ISyntaxToken, right: ISyntaxToken): QualifiedNameSyntax {
-        var result = <QualifiedNameSyntax>{ data: data, kind: SyntaxKind.QualifiedName, left: left, dotToken: dotToken, right: right };
-        left.parent = result;
-        dotToken.parent = result;
-        right.parent = result;
-        return result;
-    }
-
-    export interface TypeArgumentListSyntax extends ISyntaxNode {
-        lessThanToken: ISyntaxToken;
-        typeArguments: ITypeSyntax[];
-        greaterThanToken: ISyntaxToken;
-    }
-
-    export function createTypeArgumentList(data: number, lessThanToken: ISyntaxToken, typeArguments: ITypeSyntax[], greaterThanToken: ISyntaxToken): TypeArgumentListSyntax {
-        var result = <TypeArgumentListSyntax>{ data: data, kind: SyntaxKind.TypeArgumentList, lessThanToken: lessThanToken, typeArguments: typeArguments, greaterThanToken: greaterThanToken };
-        lessThanToken.parent = result;
-        !isShared(typeArguments) && (typeArguments.parent = result);
-        greaterThanToken.parent = result;
-        return result;
-    }
-
-    export interface ConstructorTypeSyntax extends ISyntaxNode, ITypeSyntax {
-        newKeyword: ISyntaxToken;
-        typeParameterList: TypeParameterListSyntax;
-        parameterList: ParameterListSyntax;
-        equalsGreaterThanToken: ISyntaxToken;
-        type: ITypeSyntax;
-    }
-
-    export function createConstructorType(data: number, newKeyword: ISyntaxToken, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, equalsGreaterThanToken: ISyntaxToken, type: ITypeSyntax): ConstructorTypeSyntax {
-        var result = <ConstructorTypeSyntax>{ data: data, kind: SyntaxKind.ConstructorType, newKeyword: newKeyword, typeParameterList: typeParameterList, parameterList: parameterList, equalsGreaterThanToken: equalsGreaterThanToken, type: type };
-        newKeyword.parent = result;
-        typeParameterList && (typeParameterList.parent = result);
-        parameterList.parent = result;
-        equalsGreaterThanToken.parent = result;
-        type.parent = result;
-        return result;
-    }
-
-    export interface FunctionTypeSyntax extends ISyntaxNode, ITypeSyntax {
-        typeParameterList: TypeParameterListSyntax;
-        parameterList: ParameterListSyntax;
-        equalsGreaterThanToken: ISyntaxToken;
-        type: ITypeSyntax;
-    }
-
-    export function createFunctionType(data: number, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, equalsGreaterThanToken: ISyntaxToken, type: ITypeSyntax): FunctionTypeSyntax {
-        var result = <FunctionTypeSyntax>{ data: data, kind: SyntaxKind.FunctionType, typeParameterList: typeParameterList, parameterList: parameterList, equalsGreaterThanToken: equalsGreaterThanToken, type: type };
-        typeParameterList && (typeParameterList.parent = result);
-        parameterList.parent = result;
-        equalsGreaterThanToken.parent = result;
-        type.parent = result;
-        return result;
-    }
-
-    export interface ObjectTypeSyntax extends ISyntaxNode, ITypeSyntax {
-        openBraceToken: ISyntaxToken;
-        typeMembers: ITypeMemberSyntax[];
-        closeBraceToken: ISyntaxToken;
-    }
-
-    export function createObjectType(data: number, openBraceToken: ISyntaxToken, typeMembers: ITypeMemberSyntax[], closeBraceToken: ISyntaxToken): ObjectTypeSyntax {
-        var result = <ObjectTypeSyntax>{ data: data, kind: SyntaxKind.ObjectType, openBraceToken: openBraceToken, typeMembers: typeMembers, closeBraceToken: closeBraceToken };
-        openBraceToken.parent = result;
-        !isShared(typeMembers) && (typeMembers.parent = result);
-        closeBraceToken.parent = result;
-        return result;
-    }
-
-    export interface ArrayTypeSyntax extends ISyntaxNode, ITypeSyntax {
-        type: ITypeSyntax;
-        openBracketToken: ISyntaxToken;
-        closeBracketToken: ISyntaxToken;
-    }
-
-    export function createArrayType(data: number, type: ITypeSyntax, openBracketToken: ISyntaxToken, closeBracketToken: ISyntaxToken): ArrayTypeSyntax {
-        var result = <ArrayTypeSyntax>{ data: data, kind: SyntaxKind.ArrayType, type: type, openBracketToken: openBracketToken, closeBracketToken: closeBracketToken };
-        type.parent = result;
-        openBracketToken.parent = result;
-        closeBracketToken.parent = result;
-        return result;
-    }
-
-    export interface GenericTypeSyntax extends ISyntaxNode, ITypeSyntax {
-        name: INameSyntax;
-        typeArgumentList: TypeArgumentListSyntax;
-    }
-
-    export function createGenericType(data: number, name: INameSyntax, typeArgumentList: TypeArgumentListSyntax): GenericTypeSyntax {
-        var result = <GenericTypeSyntax>{ data: data, kind: SyntaxKind.GenericType, name: name, typeArgumentList: typeArgumentList };
-        name.parent = result;
-        typeArgumentList.parent = result;
-        return result;
-    }
-
-    export interface TypeQuerySyntax extends ISyntaxNode, ITypeSyntax {
-        typeOfKeyword: ISyntaxToken;
-        name: INameSyntax;
-    }
-
-    export function createTypeQuery(data: number, typeOfKeyword: ISyntaxToken, name: INameSyntax): TypeQuerySyntax {
-        var result = <TypeQuerySyntax>{ data: data, kind: SyntaxKind.TypeQuery, typeOfKeyword: typeOfKeyword, name: name };
-        typeOfKeyword.parent = result;
-        name.parent = result;
-        return result;
-    }
-
-    export interface TypeAnnotationSyntax extends ISyntaxNode {
-        colonToken: ISyntaxToken;
-        type: ITypeSyntax;
-    }
-
-    export function createTypeAnnotation(data: number, colonToken: ISyntaxToken, type: ITypeSyntax): TypeAnnotationSyntax {
-        var result = <TypeAnnotationSyntax>{ data: data, kind: SyntaxKind.TypeAnnotation, colonToken: colonToken, type: type };
-        colonToken.parent = result;
-        type.parent = result;
-        return result;
-    }
-
-    export interface BlockSyntax extends ISyntaxNode, IStatementSyntax {
-        openBraceToken: ISyntaxToken;
-        statements: IStatementSyntax[];
-        closeBraceToken: ISyntaxToken;
-    }
-
-    export function createBlock(data: number, openBraceToken: ISyntaxToken, statements: IStatementSyntax[], closeBraceToken: ISyntaxToken): BlockSyntax {
-        var result = <BlockSyntax>{ data: data, kind: SyntaxKind.Block, openBraceToken: openBraceToken, statements: statements, closeBraceToken: closeBraceToken };
-        openBraceToken.parent = result;
-        !isShared(statements) && (statements.parent = result);
-        closeBraceToken.parent = result;
-        return result;
-    }
-
-    export interface ParameterSyntax extends ISyntaxNode {
-        dotDotDotToken: ISyntaxToken;
-        modifiers: ISyntaxToken[];
-        identifier: ISyntaxToken;
-        questionToken: ISyntaxToken;
-        typeAnnotation: TypeAnnotationSyntax;
-        equalsValueClause: EqualsValueClauseSyntax;
-    }
-
-    export function createParameter(data: number, dotDotDotToken: ISyntaxToken, modifiers: ISyntaxToken[], identifier: ISyntaxToken, questionToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, equalsValueClause: EqualsValueClauseSyntax): ParameterSyntax {
-        var result = <ParameterSyntax>{ data: data, kind: SyntaxKind.Parameter, dotDotDotToken: dotDotDotToken, modifiers: modifiers, identifier: identifier, questionToken: questionToken, typeAnnotation: typeAnnotation, equalsValueClause: equalsValueClause };
-        dotDotDotToken && (dotDotDotToken.parent = result);
-        !isShared(modifiers) && (modifiers.parent = result);
-        identifier.parent = result;
-        questionToken && (questionToken.parent = result);
-        typeAnnotation && (typeAnnotation.parent = result);
-        equalsValueClause && (equalsValueClause.parent = result);
-        return result;
-    }
-
-    export interface MemberAccessExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax, ICallExpressionSyntax {
-        expression: ILeftHandSideExpressionSyntax;
-        dotToken: ISyntaxToken;
-        name: ISyntaxToken;
-    }
-
-    export function createMemberAccessExpression(data: number, expression: ILeftHandSideExpressionSyntax, dotToken: ISyntaxToken, name: ISyntaxToken): MemberAccessExpressionSyntax {
-        var result = <MemberAccessExpressionSyntax>{ data: data, kind: SyntaxKind.MemberAccessExpression, expression: expression, dotToken: dotToken, name: name };
-        expression.parent = result;
-        dotToken.parent = result;
-        name.parent = result;
-        return result;
-    }
-
-    export interface PostfixUnaryExpressionSyntax extends ISyntaxNode, IPostfixExpressionSyntax {
-        operand: ILeftHandSideExpressionSyntax;
-        operatorToken: ISyntaxToken;
-    }
-
-    export function createPostfixUnaryExpression(data: number, kind: SyntaxKind, operand: ILeftHandSideExpressionSyntax, operatorToken: ISyntaxToken): PostfixUnaryExpressionSyntax {
-        var result = <PostfixUnaryExpressionSyntax>{ data: data, kind: kind, operand: operand, operatorToken: operatorToken };
-        operand.parent = result;
-        operatorToken.parent = result;
-        return result;
-    }
-
-    export interface ElementAccessExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax, ICallExpressionSyntax {
-        expression: ILeftHandSideExpressionSyntax;
-        openBracketToken: ISyntaxToken;
-        argumentExpression: IExpressionSyntax;
-        closeBracketToken: ISyntaxToken;
-    }
-
-    export function createElementAccessExpression(data: number, expression: ILeftHandSideExpressionSyntax, openBracketToken: ISyntaxToken, argumentExpression: IExpressionSyntax, closeBracketToken: ISyntaxToken): ElementAccessExpressionSyntax {
-        var result = <ElementAccessExpressionSyntax>{ data: data, kind: SyntaxKind.ElementAccessExpression, expression: expression, openBracketToken: openBracketToken, argumentExpression: argumentExpression, closeBracketToken: closeBracketToken };
-        expression.parent = result;
-        openBracketToken.parent = result;
-        argumentExpression.parent = result;
-        closeBracketToken.parent = result;
-        return result;
-    }
-
-    export interface InvocationExpressionSyntax extends ISyntaxNode, ICallExpressionSyntax {
-        expression: ILeftHandSideExpressionSyntax;
-        argumentList: ArgumentListSyntax;
-    }
-
-    export function createInvocationExpression(data: number, expression: ILeftHandSideExpressionSyntax, argumentList: ArgumentListSyntax): InvocationExpressionSyntax {
-        var result = <InvocationExpressionSyntax>{ data: data, kind: SyntaxKind.InvocationExpression, expression: expression, argumentList: argumentList };
-        expression.parent = result;
-        argumentList.parent = result;
-        return result;
-    }
-
-    export interface ArgumentListSyntax extends ISyntaxNode {
-        typeArgumentList: TypeArgumentListSyntax;
-        openParenToken: ISyntaxToken;
-        arguments: IExpressionSyntax[];
-        closeParenToken: ISyntaxToken;
-    }
-
-    export function createArgumentList(data: number, typeArgumentList: TypeArgumentListSyntax, openParenToken: ISyntaxToken, arguments: IExpressionSyntax[], closeParenToken: ISyntaxToken): ArgumentListSyntax {
-        var result = <ArgumentListSyntax>{ data: data, kind: SyntaxKind.ArgumentList, typeArgumentList: typeArgumentList, openParenToken: openParenToken, arguments: arguments, closeParenToken: closeParenToken };
-        typeArgumentList && (typeArgumentList.parent = result);
-        openParenToken.parent = result;
-        !isShared(arguments) && (arguments.parent = result);
-        closeParenToken.parent = result;
-        return result;
-    }
-
-    export interface BinaryExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
-        left: IExpressionSyntax;
-        operatorToken: ISyntaxToken;
-        right: IExpressionSyntax;
-    }
-
-    export function createBinaryExpression(data: number, kind: SyntaxKind, left: IExpressionSyntax, operatorToken: ISyntaxToken, right: IExpressionSyntax): BinaryExpressionSyntax {
-        var result = <BinaryExpressionSyntax>{ data: data, kind: kind, left: left, operatorToken: operatorToken, right: right };
-        left.parent = result;
-        operatorToken.parent = result;
-        right.parent = result;
-        return result;
-    }
-
-    export interface ConditionalExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
-        condition: IExpressionSyntax;
-        questionToken: ISyntaxToken;
-        whenTrue: IExpressionSyntax;
-        colonToken: ISyntaxToken;
-        whenFalse: IExpressionSyntax;
-    }
-
-    export function createConditionalExpression(data: number, condition: IExpressionSyntax, questionToken: ISyntaxToken, whenTrue: IExpressionSyntax, colonToken: ISyntaxToken, whenFalse: IExpressionSyntax): ConditionalExpressionSyntax {
-        var result = <ConditionalExpressionSyntax>{ data: data, kind: SyntaxKind.ConditionalExpression, condition: condition, questionToken: questionToken, whenTrue: whenTrue, colonToken: colonToken, whenFalse: whenFalse };
-        condition.parent = result;
-        questionToken.parent = result;
-        whenTrue.parent = result;
-        colonToken.parent = result;
-        whenFalse.parent = result;
-        return result;
-    }
-
-    export interface ConstructSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
-        newKeyword: ISyntaxToken;
-        callSignature: CallSignatureSyntax;
-    }
-
-    export function createConstructSignature(data: number, newKeyword: ISyntaxToken, callSignature: CallSignatureSyntax): ConstructSignatureSyntax {
-        var result = <ConstructSignatureSyntax>{ data: data, kind: SyntaxKind.ConstructSignature, newKeyword: newKeyword, callSignature: callSignature };
-        newKeyword.parent = result;
-        callSignature.parent = result;
-        return result;
-    }
-
-    export interface MethodSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
-        propertyName: ISyntaxToken;
-        questionToken: ISyntaxToken;
-        callSignature: CallSignatureSyntax;
-    }
-
-    export function createMethodSignature(data: number, propertyName: ISyntaxToken, questionToken: ISyntaxToken, callSignature: CallSignatureSyntax): MethodSignatureSyntax {
-        var result = <MethodSignatureSyntax>{ data: data, kind: SyntaxKind.MethodSignature, propertyName: propertyName, questionToken: questionToken, callSignature: callSignature };
-        propertyName.parent = result;
-        questionToken && (questionToken.parent = result);
-        callSignature.parent = result;
-        return result;
-    }
-
-    export interface IndexSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
-        openBracketToken: ISyntaxToken;
-        parameter: ParameterSyntax;
-        closeBracketToken: ISyntaxToken;
-        typeAnnotation: TypeAnnotationSyntax;
-    }
-
-    export function createIndexSignature(data: number, openBracketToken: ISyntaxToken, parameter: ParameterSyntax, closeBracketToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax): IndexSignatureSyntax {
-        var result = <IndexSignatureSyntax>{ data: data, kind: SyntaxKind.IndexSignature, openBracketToken: openBracketToken, parameter: parameter, closeBracketToken: closeBracketToken, typeAnnotation: typeAnnotation };
-        openBracketToken.parent = result;
-        parameter.parent = result;
-        closeBracketToken.parent = result;
-        typeAnnotation && (typeAnnotation.parent = result);
-        return result;
-    }
-
-    export interface PropertySignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
-        propertyName: ISyntaxToken;
-        questionToken: ISyntaxToken;
-        typeAnnotation: TypeAnnotationSyntax;
-    }
-
-    export function createPropertySignature(data: number, propertyName: ISyntaxToken, questionToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax): PropertySignatureSyntax {
-        var result = <PropertySignatureSyntax>{ data: data, kind: SyntaxKind.PropertySignature, propertyName: propertyName, questionToken: questionToken, typeAnnotation: typeAnnotation };
-        propertyName.parent = result;
-        questionToken && (questionToken.parent = result);
-        typeAnnotation && (typeAnnotation.parent = result);
-        return result;
-    }
-
-    export interface CallSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
-        typeParameterList: TypeParameterListSyntax;
-        parameterList: ParameterListSyntax;
-        typeAnnotation: TypeAnnotationSyntax;
-    }
-
-    export function createCallSignature(data: number, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, typeAnnotation: TypeAnnotationSyntax): CallSignatureSyntax {
-        var result = <CallSignatureSyntax>{ data: data, kind: SyntaxKind.CallSignature, typeParameterList: typeParameterList, parameterList: parameterList, typeAnnotation: typeAnnotation };
-        typeParameterList && (typeParameterList.parent = result);
-        parameterList.parent = result;
-        typeAnnotation && (typeAnnotation.parent = result);
-        return result;
-    }
-
-    export interface ParameterListSyntax extends ISyntaxNode {
-        openParenToken: ISyntaxToken;
-        parameters: ParameterSyntax[];
-        closeParenToken: ISyntaxToken;
-    }
-
-    export function createParameterList(data: number, openParenToken: ISyntaxToken, parameters: ParameterSyntax[], closeParenToken: ISyntaxToken): ParameterListSyntax {
-        var result = <ParameterListSyntax>{ data: data, kind: SyntaxKind.ParameterList, openParenToken: openParenToken, parameters: parameters, closeParenToken: closeParenToken };
-        openParenToken.parent = result;
-        !isShared(parameters) && (parameters.parent = result);
-        closeParenToken.parent = result;
-        return result;
-    }
-
-    export interface TypeParameterListSyntax extends ISyntaxNode {
-        lessThanToken: ISyntaxToken;
-        typeParameters: TypeParameterSyntax[];
-        greaterThanToken: ISyntaxToken;
-    }
-
-    export function createTypeParameterList(data: number, lessThanToken: ISyntaxToken, typeParameters: TypeParameterSyntax[], greaterThanToken: ISyntaxToken): TypeParameterListSyntax {
-        var result = <TypeParameterListSyntax>{ data: data, kind: SyntaxKind.TypeParameterList, lessThanToken: lessThanToken, typeParameters: typeParameters, greaterThanToken: greaterThanToken };
-        lessThanToken.parent = result;
-        !isShared(typeParameters) && (typeParameters.parent = result);
-        greaterThanToken.parent = result;
-        return result;
-    }
-
-    export interface TypeParameterSyntax extends ISyntaxNode {
-        identifier: ISyntaxToken;
-        constraint: ConstraintSyntax;
-    }
-
-    export function createTypeParameter(data: number, identifier: ISyntaxToken, constraint: ConstraintSyntax): TypeParameterSyntax {
-        var result = <TypeParameterSyntax>{ data: data, kind: SyntaxKind.TypeParameter, identifier: identifier, constraint: constraint };
-        identifier.parent = result;
-        constraint && (constraint.parent = result);
-        return result;
-    }
-
-    export interface ConstraintSyntax extends ISyntaxNode {
-        extendsKeyword: ISyntaxToken;
-        type: ITypeSyntax;
-    }
-
-    export function createConstraint(data: number, extendsKeyword: ISyntaxToken, type: ITypeSyntax): ConstraintSyntax {
-        var result = <ConstraintSyntax>{ data: data, kind: SyntaxKind.Constraint, extendsKeyword: extendsKeyword, type: type };
-        extendsKeyword.parent = result;
-        type.parent = result;
-        return result;
-    }
-
-    export interface ElseClauseSyntax extends ISyntaxNode {
-        elseKeyword: ISyntaxToken;
-        statement: IStatementSyntax;
-    }
-
-    export function createElseClause(data: number, elseKeyword: ISyntaxToken, statement: IStatementSyntax): ElseClauseSyntax {
-        var result = <ElseClauseSyntax>{ data: data, kind: SyntaxKind.ElseClause, elseKeyword: elseKeyword, statement: statement };
-        elseKeyword.parent = result;
-        statement.parent = result;
-        return result;
-    }
-
-    export interface IfStatementSyntax extends ISyntaxNode, IStatementSyntax {
-        ifKeyword: ISyntaxToken;
-        openParenToken: ISyntaxToken;
-        condition: IExpressionSyntax;
-        closeParenToken: ISyntaxToken;
-        statement: IStatementSyntax;
-        elseClause: ElseClauseSyntax;
-    }
-
-    export function createIfStatement(data: number, ifKeyword: ISyntaxToken, openParenToken: ISyntaxToken, condition: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax, elseClause: ElseClauseSyntax): IfStatementSyntax {
-        var result = <IfStatementSyntax>{ data: data, kind: SyntaxKind.IfStatement, ifKeyword: ifKeyword, openParenToken: openParenToken, condition: condition, closeParenToken: closeParenToken, statement: statement, elseClause: elseClause };
-        ifKeyword.parent = result;
-        openParenToken.parent = result;
-        condition.parent = result;
-        closeParenToken.parent = result;
-        statement.parent = result;
-        elseClause && (elseClause.parent = result);
-        return result;
-    }
-
-    export interface ExpressionStatementSyntax extends ISyntaxNode, IStatementSyntax {
-        expression: IExpressionSyntax;
-        semicolonToken: ISyntaxToken;
-    }
-
-    export function createExpressionStatement(data: number, expression: IExpressionSyntax, semicolonToken: ISyntaxToken): ExpressionStatementSyntax {
-        var result = <ExpressionStatementSyntax>{ data: data, kind: SyntaxKind.ExpressionStatement, expression: expression, semicolonToken: semicolonToken };
-        expression.parent = result;
+        variableDeclarator.parent = result;
         semicolonToken && (semicolonToken.parent = result);
         return result;
     }
@@ -883,20 +436,16 @@ module TypeScript {
         return result;
     }
 
-    export interface MemberFunctionDeclarationSyntax extends ISyntaxNode, IMemberDeclarationSyntax {
+    export interface IndexMemberDeclarationSyntax extends ISyntaxNode, IClassElementSyntax {
         modifiers: ISyntaxToken[];
-        propertyName: ISyntaxToken;
-        callSignature: CallSignatureSyntax;
-        block: BlockSyntax;
+        indexSignature: IndexSignatureSyntax;
         semicolonToken: ISyntaxToken;
     }
 
-    export function createMemberFunctionDeclaration(data: number, modifiers: ISyntaxToken[], propertyName: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax, semicolonToken: ISyntaxToken): MemberFunctionDeclarationSyntax {
-        var result = <MemberFunctionDeclarationSyntax>{ data: data, kind: SyntaxKind.MemberFunctionDeclaration, modifiers: modifiers, propertyName: propertyName, callSignature: callSignature, block: block, semicolonToken: semicolonToken };
+    export function createIndexMemberDeclaration(data: number, modifiers: ISyntaxToken[], indexSignature: IndexSignatureSyntax, semicolonToken: ISyntaxToken): IndexMemberDeclarationSyntax {
+        var result = <IndexMemberDeclarationSyntax>{ data: data, kind: SyntaxKind.IndexMemberDeclaration, modifiers: modifiers, indexSignature: indexSignature, semicolonToken: semicolonToken };
         !isShared(modifiers) && (modifiers.parent = result);
-        propertyName.parent = result;
-        callSignature.parent = result;
-        block && (block.parent = result);
+        indexSignature.parent = result;
         semicolonToken && (semicolonToken.parent = result);
         return result;
     }
@@ -939,43 +488,131 @@ module TypeScript {
         return result;
     }
 
-    export interface MemberVariableDeclarationSyntax extends ISyntaxNode, IMemberDeclarationSyntax {
+    export interface PropertySignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        propertyName: ISyntaxToken;
+        questionToken: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
+    }
+
+    export function createPropertySignature(data: number, propertyName: ISyntaxToken, questionToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax): PropertySignatureSyntax {
+        var result = <PropertySignatureSyntax>{ data: data, kind: SyntaxKind.PropertySignature, propertyName: propertyName, questionToken: questionToken, typeAnnotation: typeAnnotation };
+        propertyName.parent = result;
+        questionToken && (questionToken.parent = result);
+        typeAnnotation && (typeAnnotation.parent = result);
+        return result;
+    }
+
+    export interface CallSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        typeParameterList: TypeParameterListSyntax;
+        parameterList: ParameterListSyntax;
+        typeAnnotation: TypeAnnotationSyntax;
+    }
+
+    export function createCallSignature(data: number, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, typeAnnotation: TypeAnnotationSyntax): CallSignatureSyntax {
+        var result = <CallSignatureSyntax>{ data: data, kind: SyntaxKind.CallSignature, typeParameterList: typeParameterList, parameterList: parameterList, typeAnnotation: typeAnnotation };
+        typeParameterList && (typeParameterList.parent = result);
+        parameterList.parent = result;
+        typeAnnotation && (typeAnnotation.parent = result);
+        return result;
+    }
+
+    export interface ConstructSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        newKeyword: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+    }
+
+    export function createConstructSignature(data: number, newKeyword: ISyntaxToken, callSignature: CallSignatureSyntax): ConstructSignatureSyntax {
+        var result = <ConstructSignatureSyntax>{ data: data, kind: SyntaxKind.ConstructSignature, newKeyword: newKeyword, callSignature: callSignature };
+        newKeyword.parent = result;
+        callSignature.parent = result;
+        return result;
+    }
+
+    export interface IndexSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        openBracketToken: ISyntaxToken;
+        parameter: ParameterSyntax;
+        closeBracketToken: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
+    }
+
+    export function createIndexSignature(data: number, openBracketToken: ISyntaxToken, parameter: ParameterSyntax, closeBracketToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax): IndexSignatureSyntax {
+        var result = <IndexSignatureSyntax>{ data: data, kind: SyntaxKind.IndexSignature, openBracketToken: openBracketToken, parameter: parameter, closeBracketToken: closeBracketToken, typeAnnotation: typeAnnotation };
+        openBracketToken.parent = result;
+        parameter.parent = result;
+        closeBracketToken.parent = result;
+        typeAnnotation && (typeAnnotation.parent = result);
+        return result;
+    }
+
+    export interface MethodSignatureSyntax extends ISyntaxNode, ITypeMemberSyntax {
+        propertyName: ISyntaxToken;
+        questionToken: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+    }
+
+    export function createMethodSignature(data: number, propertyName: ISyntaxToken, questionToken: ISyntaxToken, callSignature: CallSignatureSyntax): MethodSignatureSyntax {
+        var result = <MethodSignatureSyntax>{ data: data, kind: SyntaxKind.MethodSignature, propertyName: propertyName, questionToken: questionToken, callSignature: callSignature };
+        propertyName.parent = result;
+        questionToken && (questionToken.parent = result);
+        callSignature.parent = result;
+        return result;
+    }
+
+    export interface BlockSyntax extends ISyntaxNode, IStatementSyntax {
+        openBraceToken: ISyntaxToken;
+        statements: IStatementSyntax[];
+        closeBraceToken: ISyntaxToken;
+    }
+
+    export function createBlock(data: number, openBraceToken: ISyntaxToken, statements: IStatementSyntax[], closeBraceToken: ISyntaxToken): BlockSyntax {
+        var result = <BlockSyntax>{ data: data, kind: SyntaxKind.Block, openBraceToken: openBraceToken, statements: statements, closeBraceToken: closeBraceToken };
+        openBraceToken.parent = result;
+        !isShared(statements) && (statements.parent = result);
+        closeBraceToken.parent = result;
+        return result;
+    }
+
+    export interface IfStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        ifKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        condition: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        statement: IStatementSyntax;
+        elseClause: ElseClauseSyntax;
+    }
+
+    export function createIfStatement(data: number, ifKeyword: ISyntaxToken, openParenToken: ISyntaxToken, condition: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax, elseClause: ElseClauseSyntax): IfStatementSyntax {
+        var result = <IfStatementSyntax>{ data: data, kind: SyntaxKind.IfStatement, ifKeyword: ifKeyword, openParenToken: openParenToken, condition: condition, closeParenToken: closeParenToken, statement: statement, elseClause: elseClause };
+        ifKeyword.parent = result;
+        openParenToken.parent = result;
+        condition.parent = result;
+        closeParenToken.parent = result;
+        statement.parent = result;
+        elseClause && (elseClause.parent = result);
+        return result;
+    }
+
+    export interface VariableStatementSyntax extends ISyntaxNode, IStatementSyntax {
         modifiers: ISyntaxToken[];
-        variableDeclarator: VariableDeclaratorSyntax;
+        variableDeclaration: VariableDeclarationSyntax;
         semicolonToken: ISyntaxToken;
     }
 
-    export function createMemberVariableDeclaration(data: number, modifiers: ISyntaxToken[], variableDeclarator: VariableDeclaratorSyntax, semicolonToken: ISyntaxToken): MemberVariableDeclarationSyntax {
-        var result = <MemberVariableDeclarationSyntax>{ data: data, kind: SyntaxKind.MemberVariableDeclaration, modifiers: modifiers, variableDeclarator: variableDeclarator, semicolonToken: semicolonToken };
+    export function createVariableStatement(data: number, modifiers: ISyntaxToken[], variableDeclaration: VariableDeclarationSyntax, semicolonToken: ISyntaxToken): VariableStatementSyntax {
+        var result = <VariableStatementSyntax>{ data: data, kind: SyntaxKind.VariableStatement, modifiers: modifiers, variableDeclaration: variableDeclaration, semicolonToken: semicolonToken };
         !isShared(modifiers) && (modifiers.parent = result);
-        variableDeclarator.parent = result;
+        variableDeclaration.parent = result;
         semicolonToken && (semicolonToken.parent = result);
         return result;
     }
 
-    export interface IndexMemberDeclarationSyntax extends ISyntaxNode, IClassElementSyntax {
-        modifiers: ISyntaxToken[];
-        indexSignature: IndexSignatureSyntax;
-        semicolonToken: ISyntaxToken;
-    }
-
-    export function createIndexMemberDeclaration(data: number, modifiers: ISyntaxToken[], indexSignature: IndexSignatureSyntax, semicolonToken: ISyntaxToken): IndexMemberDeclarationSyntax {
-        var result = <IndexMemberDeclarationSyntax>{ data: data, kind: SyntaxKind.IndexMemberDeclaration, modifiers: modifiers, indexSignature: indexSignature, semicolonToken: semicolonToken };
-        !isShared(modifiers) && (modifiers.parent = result);
-        indexSignature.parent = result;
-        semicolonToken && (semicolonToken.parent = result);
-        return result;
-    }
-
-    export interface ThrowStatementSyntax extends ISyntaxNode, IStatementSyntax {
-        throwKeyword: ISyntaxToken;
+    export interface ExpressionStatementSyntax extends ISyntaxNode, IStatementSyntax {
         expression: IExpressionSyntax;
         semicolonToken: ISyntaxToken;
     }
 
-    export function createThrowStatement(data: number, throwKeyword: ISyntaxToken, expression: IExpressionSyntax, semicolonToken: ISyntaxToken): ThrowStatementSyntax {
-        var result = <ThrowStatementSyntax>{ data: data, kind: SyntaxKind.ThrowStatement, throwKeyword: throwKeyword, expression: expression, semicolonToken: semicolonToken };
-        throwKeyword.parent = result;
+    export function createExpressionStatement(data: number, expression: IExpressionSyntax, semicolonToken: ISyntaxToken): ExpressionStatementSyntax {
+        var result = <ExpressionStatementSyntax>{ data: data, kind: SyntaxKind.ExpressionStatement, expression: expression, semicolonToken: semicolonToken };
         expression.parent = result;
         semicolonToken && (semicolonToken.parent = result);
         return result;
@@ -992,20 +629,6 @@ module TypeScript {
         returnKeyword.parent = result;
         expression && (expression.parent = result);
         semicolonToken && (semicolonToken.parent = result);
-        return result;
-    }
-
-    export interface ObjectCreationExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax {
-        newKeyword: ISyntaxToken;
-        expression: IMemberExpressionSyntax;
-        argumentList: ArgumentListSyntax;
-    }
-
-    export function createObjectCreationExpression(data: number, newKeyword: ISyntaxToken, expression: IMemberExpressionSyntax, argumentList: ArgumentListSyntax): ObjectCreationExpressionSyntax {
-        var result = <ObjectCreationExpressionSyntax>{ data: data, kind: SyntaxKind.ObjectCreationExpression, newKeyword: newKeyword, expression: expression, argumentList: argumentList };
-        newKeyword.parent = result;
-        expression.parent = result;
-        argumentList && (argumentList.parent = result);
         return result;
     }
 
@@ -1028,36 +651,6 @@ module TypeScript {
         openBraceToken.parent = result;
         !isShared(switchClauses) && (switchClauses.parent = result);
         closeBraceToken.parent = result;
-        return result;
-    }
-
-    export interface CaseSwitchClauseSyntax extends ISyntaxNode, ISwitchClauseSyntax {
-        caseKeyword: ISyntaxToken;
-        expression: IExpressionSyntax;
-        colonToken: ISyntaxToken;
-        statements: IStatementSyntax[];
-    }
-
-    export function createCaseSwitchClause(data: number, caseKeyword: ISyntaxToken, expression: IExpressionSyntax, colonToken: ISyntaxToken, statements: IStatementSyntax[]): CaseSwitchClauseSyntax {
-        var result = <CaseSwitchClauseSyntax>{ data: data, kind: SyntaxKind.CaseSwitchClause, caseKeyword: caseKeyword, expression: expression, colonToken: colonToken, statements: statements };
-        caseKeyword.parent = result;
-        expression.parent = result;
-        colonToken.parent = result;
-        !isShared(statements) && (statements.parent = result);
-        return result;
-    }
-
-    export interface DefaultSwitchClauseSyntax extends ISyntaxNode, ISwitchClauseSyntax {
-        defaultKeyword: ISyntaxToken;
-        colonToken: ISyntaxToken;
-        statements: IStatementSyntax[];
-    }
-
-    export function createDefaultSwitchClause(data: number, defaultKeyword: ISyntaxToken, colonToken: ISyntaxToken, statements: IStatementSyntax[]): DefaultSwitchClauseSyntax {
-        var result = <DefaultSwitchClauseSyntax>{ data: data, kind: SyntaxKind.DefaultSwitchClause, defaultKeyword: defaultKeyword, colonToken: colonToken, statements: statements };
-        defaultKeyword.parent = result;
-        colonToken.parent = result;
-        !isShared(statements) && (statements.parent = result);
         return result;
     }
 
@@ -1141,6 +734,30 @@ module TypeScript {
         return result;
     }
 
+    export interface EmptyStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        semicolonToken: ISyntaxToken;
+    }
+
+    export function createEmptyStatement(data: number, semicolonToken: ISyntaxToken): EmptyStatementSyntax {
+        var result = <EmptyStatementSyntax>{ data: data, kind: SyntaxKind.EmptyStatement, semicolonToken: semicolonToken };
+        semicolonToken.parent = result;
+        return result;
+    }
+
+    export interface ThrowStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        throwKeyword: ISyntaxToken;
+        expression: IExpressionSyntax;
+        semicolonToken: ISyntaxToken;
+    }
+
+    export function createThrowStatement(data: number, throwKeyword: ISyntaxToken, expression: IExpressionSyntax, semicolonToken: ISyntaxToken): ThrowStatementSyntax {
+        var result = <ThrowStatementSyntax>{ data: data, kind: SyntaxKind.ThrowStatement, throwKeyword: throwKeyword, expression: expression, semicolonToken: semicolonToken };
+        throwKeyword.parent = result;
+        expression.parent = result;
+        semicolonToken && (semicolonToken.parent = result);
+        return result;
+    }
+
     export interface WhileStatementSyntax extends ISyntaxNode, IStatementSyntax {
         whileKeyword: ISyntaxToken;
         openParenToken: ISyntaxToken;
@@ -1159,140 +776,6 @@ module TypeScript {
         return result;
     }
 
-    export interface WithStatementSyntax extends ISyntaxNode, IStatementSyntax {
-        withKeyword: ISyntaxToken;
-        openParenToken: ISyntaxToken;
-        condition: IExpressionSyntax;
-        closeParenToken: ISyntaxToken;
-        statement: IStatementSyntax;
-    }
-
-    export function createWithStatement(data: number, withKeyword: ISyntaxToken, openParenToken: ISyntaxToken, condition: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax): WithStatementSyntax {
-        var result = <WithStatementSyntax>{ data: data, kind: SyntaxKind.WithStatement, withKeyword: withKeyword, openParenToken: openParenToken, condition: condition, closeParenToken: closeParenToken, statement: statement };
-        withKeyword.parent = result;
-        openParenToken.parent = result;
-        condition.parent = result;
-        closeParenToken.parent = result;
-        statement.parent = result;
-        return result;
-    }
-
-    export interface EnumDeclarationSyntax extends ISyntaxNode, IModuleElementSyntax {
-        modifiers: ISyntaxToken[];
-        enumKeyword: ISyntaxToken;
-        identifier: ISyntaxToken;
-        openBraceToken: ISyntaxToken;
-        enumElements: EnumElementSyntax[];
-        closeBraceToken: ISyntaxToken;
-    }
-
-    export function createEnumDeclaration(data: number, modifiers: ISyntaxToken[], enumKeyword: ISyntaxToken, identifier: ISyntaxToken, openBraceToken: ISyntaxToken, enumElements: EnumElementSyntax[], closeBraceToken: ISyntaxToken): EnumDeclarationSyntax {
-        var result = <EnumDeclarationSyntax>{ data: data, kind: SyntaxKind.EnumDeclaration, modifiers: modifiers, enumKeyword: enumKeyword, identifier: identifier, openBraceToken: openBraceToken, enumElements: enumElements, closeBraceToken: closeBraceToken };
-        !isShared(modifiers) && (modifiers.parent = result);
-        enumKeyword.parent = result;
-        identifier.parent = result;
-        openBraceToken.parent = result;
-        !isShared(enumElements) && (enumElements.parent = result);
-        closeBraceToken.parent = result;
-        return result;
-    }
-
-    export interface EnumElementSyntax extends ISyntaxNode {
-        propertyName: ISyntaxToken;
-        equalsValueClause: EqualsValueClauseSyntax;
-    }
-
-    export function createEnumElement(data: number, propertyName: ISyntaxToken, equalsValueClause: EqualsValueClauseSyntax): EnumElementSyntax {
-        var result = <EnumElementSyntax>{ data: data, kind: SyntaxKind.EnumElement, propertyName: propertyName, equalsValueClause: equalsValueClause };
-        propertyName.parent = result;
-        equalsValueClause && (equalsValueClause.parent = result);
-        return result;
-    }
-
-    export interface CastExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
-        lessThanToken: ISyntaxToken;
-        type: ITypeSyntax;
-        greaterThanToken: ISyntaxToken;
-        expression: IUnaryExpressionSyntax;
-    }
-
-    export function createCastExpression(data: number, lessThanToken: ISyntaxToken, type: ITypeSyntax, greaterThanToken: ISyntaxToken, expression: IUnaryExpressionSyntax): CastExpressionSyntax {
-        var result = <CastExpressionSyntax>{ data: data, kind: SyntaxKind.CastExpression, lessThanToken: lessThanToken, type: type, greaterThanToken: greaterThanToken, expression: expression };
-        lessThanToken.parent = result;
-        type.parent = result;
-        greaterThanToken.parent = result;
-        expression.parent = result;
-        return result;
-    }
-
-    export interface ObjectLiteralExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
-        openBraceToken: ISyntaxToken;
-        propertyAssignments: IPropertyAssignmentSyntax[];
-        closeBraceToken: ISyntaxToken;
-    }
-
-    export function createObjectLiteralExpression(data: number, openBraceToken: ISyntaxToken, propertyAssignments: IPropertyAssignmentSyntax[], closeBraceToken: ISyntaxToken): ObjectLiteralExpressionSyntax {
-        var result = <ObjectLiteralExpressionSyntax>{ data: data, kind: SyntaxKind.ObjectLiteralExpression, openBraceToken: openBraceToken, propertyAssignments: propertyAssignments, closeBraceToken: closeBraceToken };
-        openBraceToken.parent = result;
-        !isShared(propertyAssignments) && (propertyAssignments.parent = result);
-        closeBraceToken.parent = result;
-        return result;
-    }
-
-    export interface SimplePropertyAssignmentSyntax extends ISyntaxNode, IPropertyAssignmentSyntax {
-        propertyName: ISyntaxToken;
-        colonToken: ISyntaxToken;
-        expression: IExpressionSyntax;
-    }
-
-    export function createSimplePropertyAssignment(data: number, propertyName: ISyntaxToken, colonToken: ISyntaxToken, expression: IExpressionSyntax): SimplePropertyAssignmentSyntax {
-        var result = <SimplePropertyAssignmentSyntax>{ data: data, kind: SyntaxKind.SimplePropertyAssignment, propertyName: propertyName, colonToken: colonToken, expression: expression };
-        propertyName.parent = result;
-        colonToken.parent = result;
-        expression.parent = result;
-        return result;
-    }
-
-    export interface FunctionPropertyAssignmentSyntax extends ISyntaxNode, IPropertyAssignmentSyntax {
-        propertyName: ISyntaxToken;
-        callSignature: CallSignatureSyntax;
-        block: BlockSyntax;
-    }
-
-    export function createFunctionPropertyAssignment(data: number, propertyName: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax): FunctionPropertyAssignmentSyntax {
-        var result = <FunctionPropertyAssignmentSyntax>{ data: data, kind: SyntaxKind.FunctionPropertyAssignment, propertyName: propertyName, callSignature: callSignature, block: block };
-        propertyName.parent = result;
-        callSignature.parent = result;
-        block.parent = result;
-        return result;
-    }
-
-    export interface FunctionExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
-        functionKeyword: ISyntaxToken;
-        identifier: ISyntaxToken;
-        callSignature: CallSignatureSyntax;
-        block: BlockSyntax;
-    }
-
-    export function createFunctionExpression(data: number, functionKeyword: ISyntaxToken, identifier: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax): FunctionExpressionSyntax {
-        var result = <FunctionExpressionSyntax>{ data: data, kind: SyntaxKind.FunctionExpression, functionKeyword: functionKeyword, identifier: identifier, callSignature: callSignature, block: block };
-        functionKeyword.parent = result;
-        identifier && (identifier.parent = result);
-        callSignature.parent = result;
-        block.parent = result;
-        return result;
-    }
-
-    export interface EmptyStatementSyntax extends ISyntaxNode, IStatementSyntax {
-        semicolonToken: ISyntaxToken;
-    }
-
-    export function createEmptyStatement(data: number, semicolonToken: ISyntaxToken): EmptyStatementSyntax {
-        var result = <EmptyStatementSyntax>{ data: data, kind: SyntaxKind.EmptyStatement, semicolonToken: semicolonToken };
-        semicolonToken.parent = result;
-        return result;
-    }
-
     export interface TryStatementSyntax extends ISyntaxNode, IStatementSyntax {
         tryKeyword: ISyntaxToken;
         block: BlockSyntax;
@@ -1306,38 +789,6 @@ module TypeScript {
         block.parent = result;
         catchClause && (catchClause.parent = result);
         finallyClause && (finallyClause.parent = result);
-        return result;
-    }
-
-    export interface CatchClauseSyntax extends ISyntaxNode {
-        catchKeyword: ISyntaxToken;
-        openParenToken: ISyntaxToken;
-        identifier: ISyntaxToken;
-        typeAnnotation: TypeAnnotationSyntax;
-        closeParenToken: ISyntaxToken;
-        block: BlockSyntax;
-    }
-
-    export function createCatchClause(data: number, catchKeyword: ISyntaxToken, openParenToken: ISyntaxToken, identifier: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, closeParenToken: ISyntaxToken, block: BlockSyntax): CatchClauseSyntax {
-        var result = <CatchClauseSyntax>{ data: data, kind: SyntaxKind.CatchClause, catchKeyword: catchKeyword, openParenToken: openParenToken, identifier: identifier, typeAnnotation: typeAnnotation, closeParenToken: closeParenToken, block: block };
-        catchKeyword.parent = result;
-        openParenToken.parent = result;
-        identifier.parent = result;
-        typeAnnotation && (typeAnnotation.parent = result);
-        closeParenToken.parent = result;
-        block.parent = result;
-        return result;
-    }
-
-    export interface FinallyClauseSyntax extends ISyntaxNode {
-        finallyKeyword: ISyntaxToken;
-        block: BlockSyntax;
-    }
-
-    export function createFinallyClause(data: number, finallyKeyword: ISyntaxToken, block: BlockSyntax): FinallyClauseSyntax {
-        var result = <FinallyClauseSyntax>{ data: data, kind: SyntaxKind.FinallyClause, finallyKeyword: finallyKeyword, block: block };
-        finallyKeyword.parent = result;
-        block.parent = result;
         return result;
     }
 
@@ -1377,15 +828,45 @@ module TypeScript {
         return result;
     }
 
-    export interface TypeOfExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
-        typeOfKeyword: ISyntaxToken;
-        expression: IUnaryExpressionSyntax;
+    export interface DebuggerStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        debuggerKeyword: ISyntaxToken;
+        semicolonToken: ISyntaxToken;
     }
 
-    export function createTypeOfExpression(data: number, typeOfKeyword: ISyntaxToken, expression: IUnaryExpressionSyntax): TypeOfExpressionSyntax {
-        var result = <TypeOfExpressionSyntax>{ data: data, kind: SyntaxKind.TypeOfExpression, typeOfKeyword: typeOfKeyword, expression: expression };
-        typeOfKeyword.parent = result;
-        expression.parent = result;
+    export function createDebuggerStatement(data: number, debuggerKeyword: ISyntaxToken, semicolonToken: ISyntaxToken): DebuggerStatementSyntax {
+        var result = <DebuggerStatementSyntax>{ data: data, kind: SyntaxKind.DebuggerStatement, debuggerKeyword: debuggerKeyword, semicolonToken: semicolonToken };
+        debuggerKeyword.parent = result;
+        semicolonToken && (semicolonToken.parent = result);
+        return result;
+    }
+
+    export interface WithStatementSyntax extends ISyntaxNode, IStatementSyntax {
+        withKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        condition: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+        statement: IStatementSyntax;
+    }
+
+    export function createWithStatement(data: number, withKeyword: ISyntaxToken, openParenToken: ISyntaxToken, condition: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax): WithStatementSyntax {
+        var result = <WithStatementSyntax>{ data: data, kind: SyntaxKind.WithStatement, withKeyword: withKeyword, openParenToken: openParenToken, condition: condition, closeParenToken: closeParenToken, statement: statement };
+        withKeyword.parent = result;
+        openParenToken.parent = result;
+        condition.parent = result;
+        closeParenToken.parent = result;
+        statement.parent = result;
+        return result;
+    }
+
+    export interface PrefixUnaryExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        operatorToken: ISyntaxToken;
+        operand: IUnaryExpressionSyntax;
+    }
+
+    export function createPrefixUnaryExpression(data: number, kind: SyntaxKind, operatorToken: ISyntaxToken, operand: IUnaryExpressionSyntax): PrefixUnaryExpressionSyntax {
+        var result = <PrefixUnaryExpressionSyntax>{ data: data, kind: kind, operatorToken: operatorToken, operand: operand };
+        operatorToken.parent = result;
+        operand.parent = result;
         return result;
     }
 
@@ -1397,6 +878,18 @@ module TypeScript {
     export function createDeleteExpression(data: number, deleteKeyword: ISyntaxToken, expression: IUnaryExpressionSyntax): DeleteExpressionSyntax {
         var result = <DeleteExpressionSyntax>{ data: data, kind: SyntaxKind.DeleteExpression, deleteKeyword: deleteKeyword, expression: expression };
         deleteKeyword.parent = result;
+        expression.parent = result;
+        return result;
+    }
+
+    export interface TypeOfExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        typeOfKeyword: ISyntaxToken;
+        expression: IUnaryExpressionSyntax;
+    }
+
+    export function createTypeOfExpression(data: number, typeOfKeyword: ISyntaxToken, expression: IUnaryExpressionSyntax): TypeOfExpressionSyntax {
+        var result = <TypeOfExpressionSyntax>{ data: data, kind: SyntaxKind.TypeOfExpression, typeOfKeyword: typeOfKeyword, expression: expression };
+        typeOfKeyword.parent = result;
         expression.parent = result;
         return result;
     }
@@ -1413,15 +906,521 @@ module TypeScript {
         return result;
     }
 
-    export interface DebuggerStatementSyntax extends ISyntaxNode, IStatementSyntax {
-        debuggerKeyword: ISyntaxToken;
-        semicolonToken: ISyntaxToken;
+    export interface ConditionalExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
+        condition: IExpressionSyntax;
+        questionToken: ISyntaxToken;
+        whenTrue: IExpressionSyntax;
+        colonToken: ISyntaxToken;
+        whenFalse: IExpressionSyntax;
     }
 
-    export function createDebuggerStatement(data: number, debuggerKeyword: ISyntaxToken, semicolonToken: ISyntaxToken): DebuggerStatementSyntax {
-        var result = <DebuggerStatementSyntax>{ data: data, kind: SyntaxKind.DebuggerStatement, debuggerKeyword: debuggerKeyword, semicolonToken: semicolonToken };
-        debuggerKeyword.parent = result;
-        semicolonToken && (semicolonToken.parent = result);
+    export function createConditionalExpression(data: number, condition: IExpressionSyntax, questionToken: ISyntaxToken, whenTrue: IExpressionSyntax, colonToken: ISyntaxToken, whenFalse: IExpressionSyntax): ConditionalExpressionSyntax {
+        var result = <ConditionalExpressionSyntax>{ data: data, kind: SyntaxKind.ConditionalExpression, condition: condition, questionToken: questionToken, whenTrue: whenTrue, colonToken: colonToken, whenFalse: whenFalse };
+        condition.parent = result;
+        questionToken.parent = result;
+        whenTrue.parent = result;
+        colonToken.parent = result;
+        whenFalse.parent = result;
+        return result;
+    }
+
+    export interface BinaryExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
+        left: IExpressionSyntax;
+        operatorToken: ISyntaxToken;
+        right: IExpressionSyntax;
+    }
+
+    export function createBinaryExpression(data: number, kind: SyntaxKind, left: IExpressionSyntax, operatorToken: ISyntaxToken, right: IExpressionSyntax): BinaryExpressionSyntax {
+        var result = <BinaryExpressionSyntax>{ data: data, kind: kind, left: left, operatorToken: operatorToken, right: right };
+        left.parent = result;
+        operatorToken.parent = result;
+        right.parent = result;
+        return result;
+    }
+
+    export interface PostfixUnaryExpressionSyntax extends ISyntaxNode, IPostfixExpressionSyntax {
+        operand: ILeftHandSideExpressionSyntax;
+        operatorToken: ISyntaxToken;
+    }
+
+    export function createPostfixUnaryExpression(data: number, kind: SyntaxKind, operand: ILeftHandSideExpressionSyntax, operatorToken: ISyntaxToken): PostfixUnaryExpressionSyntax {
+        var result = <PostfixUnaryExpressionSyntax>{ data: data, kind: kind, operand: operand, operatorToken: operatorToken };
+        operand.parent = result;
+        operatorToken.parent = result;
+        return result;
+    }
+
+    export interface MemberAccessExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax, ICallExpressionSyntax {
+        expression: ILeftHandSideExpressionSyntax;
+        dotToken: ISyntaxToken;
+        name: ISyntaxToken;
+    }
+
+    export function createMemberAccessExpression(data: number, expression: ILeftHandSideExpressionSyntax, dotToken: ISyntaxToken, name: ISyntaxToken): MemberAccessExpressionSyntax {
+        var result = <MemberAccessExpressionSyntax>{ data: data, kind: SyntaxKind.MemberAccessExpression, expression: expression, dotToken: dotToken, name: name };
+        expression.parent = result;
+        dotToken.parent = result;
+        name.parent = result;
+        return result;
+    }
+
+    export interface InvocationExpressionSyntax extends ISyntaxNode, ICallExpressionSyntax {
+        expression: ILeftHandSideExpressionSyntax;
+        argumentList: ArgumentListSyntax;
+    }
+
+    export function createInvocationExpression(data: number, expression: ILeftHandSideExpressionSyntax, argumentList: ArgumentListSyntax): InvocationExpressionSyntax {
+        var result = <InvocationExpressionSyntax>{ data: data, kind: SyntaxKind.InvocationExpression, expression: expression, argumentList: argumentList };
+        expression.parent = result;
+        argumentList.parent = result;
+        return result;
+    }
+
+    export interface ArrayLiteralExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
+        openBracketToken: ISyntaxToken;
+        expressions: IExpressionSyntax[];
+        closeBracketToken: ISyntaxToken;
+    }
+
+    export function createArrayLiteralExpression(data: number, openBracketToken: ISyntaxToken, expressions: IExpressionSyntax[], closeBracketToken: ISyntaxToken): ArrayLiteralExpressionSyntax {
+        var result = <ArrayLiteralExpressionSyntax>{ data: data, kind: SyntaxKind.ArrayLiteralExpression, openBracketToken: openBracketToken, expressions: expressions, closeBracketToken: closeBracketToken };
+        openBracketToken.parent = result;
+        !isShared(expressions) && (expressions.parent = result);
+        closeBracketToken.parent = result;
+        return result;
+    }
+
+    export interface ObjectLiteralExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
+        openBraceToken: ISyntaxToken;
+        propertyAssignments: IPropertyAssignmentSyntax[];
+        closeBraceToken: ISyntaxToken;
+    }
+
+    export function createObjectLiteralExpression(data: number, openBraceToken: ISyntaxToken, propertyAssignments: IPropertyAssignmentSyntax[], closeBraceToken: ISyntaxToken): ObjectLiteralExpressionSyntax {
+        var result = <ObjectLiteralExpressionSyntax>{ data: data, kind: SyntaxKind.ObjectLiteralExpression, openBraceToken: openBraceToken, propertyAssignments: propertyAssignments, closeBraceToken: closeBraceToken };
+        openBraceToken.parent = result;
+        !isShared(propertyAssignments) && (propertyAssignments.parent = result);
+        closeBraceToken.parent = result;
+        return result;
+    }
+
+    export interface ObjectCreationExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax {
+        newKeyword: ISyntaxToken;
+        expression: IMemberExpressionSyntax;
+        argumentList: ArgumentListSyntax;
+    }
+
+    export function createObjectCreationExpression(data: number, newKeyword: ISyntaxToken, expression: IMemberExpressionSyntax, argumentList: ArgumentListSyntax): ObjectCreationExpressionSyntax {
+        var result = <ObjectCreationExpressionSyntax>{ data: data, kind: SyntaxKind.ObjectCreationExpression, newKeyword: newKeyword, expression: expression, argumentList: argumentList };
+        newKeyword.parent = result;
+        expression.parent = result;
+        argumentList && (argumentList.parent = result);
+        return result;
+    }
+
+    export interface ParenthesizedExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
+        openParenToken: ISyntaxToken;
+        expression: IExpressionSyntax;
+        closeParenToken: ISyntaxToken;
+    }
+
+    export function createParenthesizedExpression(data: number, openParenToken: ISyntaxToken, expression: IExpressionSyntax, closeParenToken: ISyntaxToken): ParenthesizedExpressionSyntax {
+        var result = <ParenthesizedExpressionSyntax>{ data: data, kind: SyntaxKind.ParenthesizedExpression, openParenToken: openParenToken, expression: expression, closeParenToken: closeParenToken };
+        openParenToken.parent = result;
+        expression.parent = result;
+        closeParenToken.parent = result;
+        return result;
+    }
+
+    export interface ParenthesizedArrowFunctionExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        callSignature: CallSignatureSyntax;
+        equalsGreaterThanToken: ISyntaxToken;
+        block: BlockSyntax;
+        expression: IExpressionSyntax;
+    }
+
+    export function createParenthesizedArrowFunctionExpression(data: number, callSignature: CallSignatureSyntax, equalsGreaterThanToken: ISyntaxToken, block: BlockSyntax, expression: IExpressionSyntax): ParenthesizedArrowFunctionExpressionSyntax {
+        var result = <ParenthesizedArrowFunctionExpressionSyntax>{ data: data, kind: SyntaxKind.ParenthesizedArrowFunctionExpression, callSignature: callSignature, equalsGreaterThanToken: equalsGreaterThanToken, block: block, expression: expression };
+        callSignature.parent = result;
+        equalsGreaterThanToken.parent = result;
+        block && (block.parent = result);
+        expression && (expression.parent = result);
+        return result;
+    }
+
+    export interface SimpleArrowFunctionExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        identifier: ISyntaxToken;
+        equalsGreaterThanToken: ISyntaxToken;
+        block: BlockSyntax;
+        expression: IExpressionSyntax;
+    }
+
+    export function createSimpleArrowFunctionExpression(data: number, identifier: ISyntaxToken, equalsGreaterThanToken: ISyntaxToken, block: BlockSyntax, expression: IExpressionSyntax): SimpleArrowFunctionExpressionSyntax {
+        var result = <SimpleArrowFunctionExpressionSyntax>{ data: data, kind: SyntaxKind.SimpleArrowFunctionExpression, identifier: identifier, equalsGreaterThanToken: equalsGreaterThanToken, block: block, expression: expression };
+        identifier.parent = result;
+        equalsGreaterThanToken.parent = result;
+        block && (block.parent = result);
+        expression && (expression.parent = result);
+        return result;
+    }
+
+    export interface CastExpressionSyntax extends ISyntaxNode, IUnaryExpressionSyntax {
+        lessThanToken: ISyntaxToken;
+        type: ITypeSyntax;
+        greaterThanToken: ISyntaxToken;
+        expression: IUnaryExpressionSyntax;
+    }
+
+    export function createCastExpression(data: number, lessThanToken: ISyntaxToken, type: ITypeSyntax, greaterThanToken: ISyntaxToken, expression: IUnaryExpressionSyntax): CastExpressionSyntax {
+        var result = <CastExpressionSyntax>{ data: data, kind: SyntaxKind.CastExpression, lessThanToken: lessThanToken, type: type, greaterThanToken: greaterThanToken, expression: expression };
+        lessThanToken.parent = result;
+        type.parent = result;
+        greaterThanToken.parent = result;
+        expression.parent = result;
+        return result;
+    }
+
+    export interface ElementAccessExpressionSyntax extends ISyntaxNode, IMemberExpressionSyntax, ICallExpressionSyntax {
+        expression: ILeftHandSideExpressionSyntax;
+        openBracketToken: ISyntaxToken;
+        argumentExpression: IExpressionSyntax;
+        closeBracketToken: ISyntaxToken;
+    }
+
+    export function createElementAccessExpression(data: number, expression: ILeftHandSideExpressionSyntax, openBracketToken: ISyntaxToken, argumentExpression: IExpressionSyntax, closeBracketToken: ISyntaxToken): ElementAccessExpressionSyntax {
+        var result = <ElementAccessExpressionSyntax>{ data: data, kind: SyntaxKind.ElementAccessExpression, expression: expression, openBracketToken: openBracketToken, argumentExpression: argumentExpression, closeBracketToken: closeBracketToken };
+        expression.parent = result;
+        openBracketToken.parent = result;
+        argumentExpression.parent = result;
+        closeBracketToken.parent = result;
+        return result;
+    }
+
+    export interface FunctionExpressionSyntax extends ISyntaxNode, IPrimaryExpressionSyntax {
+        functionKeyword: ISyntaxToken;
+        identifier: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+        block: BlockSyntax;
+    }
+
+    export function createFunctionExpression(data: number, functionKeyword: ISyntaxToken, identifier: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax): FunctionExpressionSyntax {
+        var result = <FunctionExpressionSyntax>{ data: data, kind: SyntaxKind.FunctionExpression, functionKeyword: functionKeyword, identifier: identifier, callSignature: callSignature, block: block };
+        functionKeyword.parent = result;
+        identifier && (identifier.parent = result);
+        callSignature.parent = result;
+        block.parent = result;
+        return result;
+    }
+
+    export interface OmittedExpressionSyntax extends ISyntaxNode, IExpressionSyntax {
+    }
+
+    export function createOmittedExpression(data: number): OmittedExpressionSyntax {
+        var result = <OmittedExpressionSyntax>{ data: data, kind: SyntaxKind.OmittedExpression };
+        return result;
+    }
+
+    export interface VariableDeclarationSyntax extends ISyntaxNode {
+        varKeyword: ISyntaxToken;
+        variableDeclarators: VariableDeclaratorSyntax[];
+    }
+
+    export function createVariableDeclaration(data: number, varKeyword: ISyntaxToken, variableDeclarators: VariableDeclaratorSyntax[]): VariableDeclarationSyntax {
+        var result = <VariableDeclarationSyntax>{ data: data, kind: SyntaxKind.VariableDeclaration, varKeyword: varKeyword, variableDeclarators: variableDeclarators };
+        varKeyword.parent = result;
+        !isShared(variableDeclarators) && (variableDeclarators.parent = result);
+        return result;
+    }
+
+    export interface VariableDeclaratorSyntax extends ISyntaxNode {
+        propertyName: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
+        equalsValueClause: EqualsValueClauseSyntax;
+    }
+
+    export function createVariableDeclarator(data: number, propertyName: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, equalsValueClause: EqualsValueClauseSyntax): VariableDeclaratorSyntax {
+        var result = <VariableDeclaratorSyntax>{ data: data, kind: SyntaxKind.VariableDeclarator, propertyName: propertyName, typeAnnotation: typeAnnotation, equalsValueClause: equalsValueClause };
+        propertyName.parent = result;
+        typeAnnotation && (typeAnnotation.parent = result);
+        equalsValueClause && (equalsValueClause.parent = result);
+        return result;
+    }
+
+    export interface ArgumentListSyntax extends ISyntaxNode {
+        typeArgumentList: TypeArgumentListSyntax;
+        openParenToken: ISyntaxToken;
+        arguments: IExpressionSyntax[];
+        closeParenToken: ISyntaxToken;
+    }
+
+    export function createArgumentList(data: number, typeArgumentList: TypeArgumentListSyntax, openParenToken: ISyntaxToken, arguments: IExpressionSyntax[], closeParenToken: ISyntaxToken): ArgumentListSyntax {
+        var result = <ArgumentListSyntax>{ data: data, kind: SyntaxKind.ArgumentList, typeArgumentList: typeArgumentList, openParenToken: openParenToken, arguments: arguments, closeParenToken: closeParenToken };
+        typeArgumentList && (typeArgumentList.parent = result);
+        openParenToken.parent = result;
+        !isShared(arguments) && (arguments.parent = result);
+        closeParenToken.parent = result;
+        return result;
+    }
+
+    export interface ParameterListSyntax extends ISyntaxNode {
+        openParenToken: ISyntaxToken;
+        parameters: ParameterSyntax[];
+        closeParenToken: ISyntaxToken;
+    }
+
+    export function createParameterList(data: number, openParenToken: ISyntaxToken, parameters: ParameterSyntax[], closeParenToken: ISyntaxToken): ParameterListSyntax {
+        var result = <ParameterListSyntax>{ data: data, kind: SyntaxKind.ParameterList, openParenToken: openParenToken, parameters: parameters, closeParenToken: closeParenToken };
+        openParenToken.parent = result;
+        !isShared(parameters) && (parameters.parent = result);
+        closeParenToken.parent = result;
+        return result;
+    }
+
+    export interface TypeArgumentListSyntax extends ISyntaxNode {
+        lessThanToken: ISyntaxToken;
+        typeArguments: ITypeSyntax[];
+        greaterThanToken: ISyntaxToken;
+    }
+
+    export function createTypeArgumentList(data: number, lessThanToken: ISyntaxToken, typeArguments: ITypeSyntax[], greaterThanToken: ISyntaxToken): TypeArgumentListSyntax {
+        var result = <TypeArgumentListSyntax>{ data: data, kind: SyntaxKind.TypeArgumentList, lessThanToken: lessThanToken, typeArguments: typeArguments, greaterThanToken: greaterThanToken };
+        lessThanToken.parent = result;
+        !isShared(typeArguments) && (typeArguments.parent = result);
+        greaterThanToken.parent = result;
+        return result;
+    }
+
+    export interface TypeParameterListSyntax extends ISyntaxNode {
+        lessThanToken: ISyntaxToken;
+        typeParameters: TypeParameterSyntax[];
+        greaterThanToken: ISyntaxToken;
+    }
+
+    export function createTypeParameterList(data: number, lessThanToken: ISyntaxToken, typeParameters: TypeParameterSyntax[], greaterThanToken: ISyntaxToken): TypeParameterListSyntax {
+        var result = <TypeParameterListSyntax>{ data: data, kind: SyntaxKind.TypeParameterList, lessThanToken: lessThanToken, typeParameters: typeParameters, greaterThanToken: greaterThanToken };
+        lessThanToken.parent = result;
+        !isShared(typeParameters) && (typeParameters.parent = result);
+        greaterThanToken.parent = result;
+        return result;
+    }
+
+    export interface HeritageClauseSyntax extends ISyntaxNode {
+        extendsOrImplementsKeyword: ISyntaxToken;
+        typeNames: INameSyntax[];
+    }
+
+    export function createHeritageClause(data: number, kind: SyntaxKind, extendsOrImplementsKeyword: ISyntaxToken, typeNames: INameSyntax[]): HeritageClauseSyntax {
+        var result = <HeritageClauseSyntax>{ data: data, kind: kind, extendsOrImplementsKeyword: extendsOrImplementsKeyword, typeNames: typeNames };
+        extendsOrImplementsKeyword.parent = result;
+        !isShared(typeNames) && (typeNames.parent = result);
+        return result;
+    }
+
+    export interface EqualsValueClauseSyntax extends ISyntaxNode {
+        equalsToken: ISyntaxToken;
+        value: IExpressionSyntax;
+    }
+
+    export function createEqualsValueClause(data: number, equalsToken: ISyntaxToken, value: IExpressionSyntax): EqualsValueClauseSyntax {
+        var result = <EqualsValueClauseSyntax>{ data: data, kind: SyntaxKind.EqualsValueClause, equalsToken: equalsToken, value: value };
+        equalsToken.parent = result;
+        value.parent = result;
+        return result;
+    }
+
+    export interface CaseSwitchClauseSyntax extends ISyntaxNode, ISwitchClauseSyntax {
+        caseKeyword: ISyntaxToken;
+        expression: IExpressionSyntax;
+        colonToken: ISyntaxToken;
+        statements: IStatementSyntax[];
+    }
+
+    export function createCaseSwitchClause(data: number, caseKeyword: ISyntaxToken, expression: IExpressionSyntax, colonToken: ISyntaxToken, statements: IStatementSyntax[]): CaseSwitchClauseSyntax {
+        var result = <CaseSwitchClauseSyntax>{ data: data, kind: SyntaxKind.CaseSwitchClause, caseKeyword: caseKeyword, expression: expression, colonToken: colonToken, statements: statements };
+        caseKeyword.parent = result;
+        expression.parent = result;
+        colonToken.parent = result;
+        !isShared(statements) && (statements.parent = result);
+        return result;
+    }
+
+    export interface DefaultSwitchClauseSyntax extends ISyntaxNode, ISwitchClauseSyntax {
+        defaultKeyword: ISyntaxToken;
+        colonToken: ISyntaxToken;
+        statements: IStatementSyntax[];
+    }
+
+    export function createDefaultSwitchClause(data: number, defaultKeyword: ISyntaxToken, colonToken: ISyntaxToken, statements: IStatementSyntax[]): DefaultSwitchClauseSyntax {
+        var result = <DefaultSwitchClauseSyntax>{ data: data, kind: SyntaxKind.DefaultSwitchClause, defaultKeyword: defaultKeyword, colonToken: colonToken, statements: statements };
+        defaultKeyword.parent = result;
+        colonToken.parent = result;
+        !isShared(statements) && (statements.parent = result);
+        return result;
+    }
+
+    export interface ElseClauseSyntax extends ISyntaxNode {
+        elseKeyword: ISyntaxToken;
+        statement: IStatementSyntax;
+    }
+
+    export function createElseClause(data: number, elseKeyword: ISyntaxToken, statement: IStatementSyntax): ElseClauseSyntax {
+        var result = <ElseClauseSyntax>{ data: data, kind: SyntaxKind.ElseClause, elseKeyword: elseKeyword, statement: statement };
+        elseKeyword.parent = result;
+        statement.parent = result;
+        return result;
+    }
+
+    export interface CatchClauseSyntax extends ISyntaxNode {
+        catchKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        identifier: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
+        closeParenToken: ISyntaxToken;
+        block: BlockSyntax;
+    }
+
+    export function createCatchClause(data: number, catchKeyword: ISyntaxToken, openParenToken: ISyntaxToken, identifier: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, closeParenToken: ISyntaxToken, block: BlockSyntax): CatchClauseSyntax {
+        var result = <CatchClauseSyntax>{ data: data, kind: SyntaxKind.CatchClause, catchKeyword: catchKeyword, openParenToken: openParenToken, identifier: identifier, typeAnnotation: typeAnnotation, closeParenToken: closeParenToken, block: block };
+        catchKeyword.parent = result;
+        openParenToken.parent = result;
+        identifier.parent = result;
+        typeAnnotation && (typeAnnotation.parent = result);
+        closeParenToken.parent = result;
+        block.parent = result;
+        return result;
+    }
+
+    export interface FinallyClauseSyntax extends ISyntaxNode {
+        finallyKeyword: ISyntaxToken;
+        block: BlockSyntax;
+    }
+
+    export function createFinallyClause(data: number, finallyKeyword: ISyntaxToken, block: BlockSyntax): FinallyClauseSyntax {
+        var result = <FinallyClauseSyntax>{ data: data, kind: SyntaxKind.FinallyClause, finallyKeyword: finallyKeyword, block: block };
+        finallyKeyword.parent = result;
+        block.parent = result;
+        return result;
+    }
+
+    export interface TypeParameterSyntax extends ISyntaxNode {
+        identifier: ISyntaxToken;
+        constraint: ConstraintSyntax;
+    }
+
+    export function createTypeParameter(data: number, identifier: ISyntaxToken, constraint: ConstraintSyntax): TypeParameterSyntax {
+        var result = <TypeParameterSyntax>{ data: data, kind: SyntaxKind.TypeParameter, identifier: identifier, constraint: constraint };
+        identifier.parent = result;
+        constraint && (constraint.parent = result);
+        return result;
+    }
+
+    export interface ConstraintSyntax extends ISyntaxNode {
+        extendsKeyword: ISyntaxToken;
+        type: ITypeSyntax;
+    }
+
+    export function createConstraint(data: number, extendsKeyword: ISyntaxToken, type: ITypeSyntax): ConstraintSyntax {
+        var result = <ConstraintSyntax>{ data: data, kind: SyntaxKind.Constraint, extendsKeyword: extendsKeyword, type: type };
+        extendsKeyword.parent = result;
+        type.parent = result;
+        return result;
+    }
+
+    export interface SimplePropertyAssignmentSyntax extends ISyntaxNode, IPropertyAssignmentSyntax {
+        propertyName: ISyntaxToken;
+        colonToken: ISyntaxToken;
+        expression: IExpressionSyntax;
+    }
+
+    export function createSimplePropertyAssignment(data: number, propertyName: ISyntaxToken, colonToken: ISyntaxToken, expression: IExpressionSyntax): SimplePropertyAssignmentSyntax {
+        var result = <SimplePropertyAssignmentSyntax>{ data: data, kind: SyntaxKind.SimplePropertyAssignment, propertyName: propertyName, colonToken: colonToken, expression: expression };
+        propertyName.parent = result;
+        colonToken.parent = result;
+        expression.parent = result;
+        return result;
+    }
+
+    export interface FunctionPropertyAssignmentSyntax extends ISyntaxNode, IPropertyAssignmentSyntax {
+        propertyName: ISyntaxToken;
+        callSignature: CallSignatureSyntax;
+        block: BlockSyntax;
+    }
+
+    export function createFunctionPropertyAssignment(data: number, propertyName: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax): FunctionPropertyAssignmentSyntax {
+        var result = <FunctionPropertyAssignmentSyntax>{ data: data, kind: SyntaxKind.FunctionPropertyAssignment, propertyName: propertyName, callSignature: callSignature, block: block };
+        propertyName.parent = result;
+        callSignature.parent = result;
+        block.parent = result;
+        return result;
+    }
+
+    export interface ParameterSyntax extends ISyntaxNode {
+        dotDotDotToken: ISyntaxToken;
+        modifiers: ISyntaxToken[];
+        identifier: ISyntaxToken;
+        questionToken: ISyntaxToken;
+        typeAnnotation: TypeAnnotationSyntax;
+        equalsValueClause: EqualsValueClauseSyntax;
+    }
+
+    export function createParameter(data: number, dotDotDotToken: ISyntaxToken, modifiers: ISyntaxToken[], identifier: ISyntaxToken, questionToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, equalsValueClause: EqualsValueClauseSyntax): ParameterSyntax {
+        var result = <ParameterSyntax>{ data: data, kind: SyntaxKind.Parameter, dotDotDotToken: dotDotDotToken, modifiers: modifiers, identifier: identifier, questionToken: questionToken, typeAnnotation: typeAnnotation, equalsValueClause: equalsValueClause };
+        dotDotDotToken && (dotDotDotToken.parent = result);
+        !isShared(modifiers) && (modifiers.parent = result);
+        identifier.parent = result;
+        questionToken && (questionToken.parent = result);
+        typeAnnotation && (typeAnnotation.parent = result);
+        equalsValueClause && (equalsValueClause.parent = result);
+        return result;
+    }
+
+    export interface EnumElementSyntax extends ISyntaxNode {
+        propertyName: ISyntaxToken;
+        equalsValueClause: EqualsValueClauseSyntax;
+    }
+
+    export function createEnumElement(data: number, propertyName: ISyntaxToken, equalsValueClause: EqualsValueClauseSyntax): EnumElementSyntax {
+        var result = <EnumElementSyntax>{ data: data, kind: SyntaxKind.EnumElement, propertyName: propertyName, equalsValueClause: equalsValueClause };
+        propertyName.parent = result;
+        equalsValueClause && (equalsValueClause.parent = result);
+        return result;
+    }
+
+    export interface TypeAnnotationSyntax extends ISyntaxNode {
+        colonToken: ISyntaxToken;
+        type: ITypeSyntax;
+    }
+
+    export function createTypeAnnotation(data: number, colonToken: ISyntaxToken, type: ITypeSyntax): TypeAnnotationSyntax {
+        var result = <TypeAnnotationSyntax>{ data: data, kind: SyntaxKind.TypeAnnotation, colonToken: colonToken, type: type };
+        colonToken.parent = result;
+        type.parent = result;
+        return result;
+    }
+
+    export interface ExternalModuleReferenceSyntax extends ISyntaxNode, IModuleReferenceSyntax {
+        requireKeyword: ISyntaxToken;
+        openParenToken: ISyntaxToken;
+        stringLiteral: ISyntaxToken;
+        closeParenToken: ISyntaxToken;
+    }
+
+    export function createExternalModuleReference(data: number, requireKeyword: ISyntaxToken, openParenToken: ISyntaxToken, stringLiteral: ISyntaxToken, closeParenToken: ISyntaxToken): ExternalModuleReferenceSyntax {
+        var result = <ExternalModuleReferenceSyntax>{ data: data, kind: SyntaxKind.ExternalModuleReference, requireKeyword: requireKeyword, openParenToken: openParenToken, stringLiteral: stringLiteral, closeParenToken: closeParenToken };
+        requireKeyword.parent = result;
+        openParenToken.parent = result;
+        stringLiteral.parent = result;
+        closeParenToken.parent = result;
+        return result;
+    }
+
+    export interface ModuleNameModuleReferenceSyntax extends ISyntaxNode, IModuleReferenceSyntax {
+        moduleName: INameSyntax;
+    }
+
+    export function createModuleNameModuleReference(data: number, moduleName: INameSyntax): ModuleNameModuleReferenceSyntax {
+        var result = <ModuleNameModuleReferenceSyntax>{ data: data, kind: SyntaxKind.ModuleNameModuleReference, moduleName: moduleName };
+        moduleName.parent = result;
         return result;
     }
 }
