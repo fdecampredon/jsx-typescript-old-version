@@ -46,6 +46,7 @@ module TypeScript {
         //
         // Then that entire method node is reusable even if the 'public' identifier is not.
         isKeywordConvertedToIdentifier(): boolean;
+        convertKeywordToIdentifier(): ISyntaxToken;
 
         // True if this element cannot be reused in incremental parsing.  There are several situations
         // in which an element can not be reused.  They are:
@@ -279,11 +280,6 @@ module TypeScript.Syntax {
         return new RealizedToken(token.fullStart(), token.kind, token.isKeywordConvertedToIdentifier(), token.leadingTrivia(), token.text(), token.trailingTrivia());
     }
 
-    export function convertToIdentifierName(token: ISyntaxToken): ISyntaxToken {
-        Debug.assert(SyntaxFacts.isAnyKeyword(token.kind));
-        return new ConvertedIdentifierToken(token);
-    }
-
     export function emptyToken(kind: SyntaxKind): ISyntaxToken {
         return new EmptyToken(kind);
     }
@@ -318,7 +314,14 @@ module TypeScript.Syntax {
         // Empty tokens are never incrementally reusable.
         public isIncrementallyUnusable() { return true; }
 
-        public isKeywordConvertedToIdentifier() { return false; }
+        public isKeywordConvertedToIdentifier() {
+            return false;
+        }
+
+        public convertKeywordToIdentifier(): ISyntaxToken {
+            // We shouldn't ever be called.
+            throw Errors.invalidOperation();
+        }
 
         public fullWidth() { return 0; }
 
@@ -419,96 +422,6 @@ module TypeScript.Syntax {
         }
     }
 
-    class ConvertedIdentifierToken implements ISyntaxToken {
-        public parent: ISyntaxElement = null;
-        public data: number;
-        public kind: SyntaxKind = SyntaxKind.IdentifierName;
-        private _underlyingToken: ISyntaxToken;
-
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
-        constructor(underlyingToken: ISyntaxToken) {
-            this._underlyingToken = underlyingToken;
-        }
-
-        public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
-            this._underlyingToken.setTextAndFullStart(text, fullStart);
-        }
-
-        public clone(): ISyntaxToken {
-            throw Errors.notYetImplemented();
-        }
-
-        // We mark this token as being incrementally *reusable* and also that it was a keyword
-        // that was converted to an identifier.  The incremental parser knows not to return this
-        // token if hte parser is asking for a *token*.  That's because this token would not have
-        // been created by the scanner (and thus the incremental source will be behaving differently
-        // from the normal source).  However, if the parser asks for a *node*, then we can still
-        // reuse a node even if it contains one of these tokens in it.  
-        // 
-        // NOTE: a converted keyword is still unusable if it's underlying token is unusable.  The
-        // underlying token may be unusable if the scanner encountered errors while trying to scan
-        // it.
-        public isIncrementallyUnusable() { return this._underlyingToken.isIncrementallyUnusable(); }
-        public isKeywordConvertedToIdentifier() { return true; }
-
-        public fullStart(): number { return this._underlyingToken.fullStart(); }
-        public fullWidth(): number { return this._underlyingToken.fullWidth(); }
-
-        public text(): string { return this._underlyingToken.text(); }
-        public fullText(): string { return this._underlyingToken.fullText(); }
-
-        public value(): any { return this.text(); }
-        public valueText(): string { return this.text(); }
-
-        public hasLeadingTrivia(): boolean { return this._underlyingToken.hasLeadingTrivia(); }
-        public hasLeadingComment(): boolean { return this._underlyingToken.hasLeadingComment(); }
-        public hasLeadingNewLine(): boolean { return this._underlyingToken.hasLeadingNewLine(); }
-        public hasLeadingSkippedText(): boolean { return this._underlyingToken.hasLeadingSkippedText(); }
-        public leadingTriviaWidth(): number { return this._underlyingToken.leadingTriviaWidth(); }
-
-        public hasTrailingTrivia(): boolean { return this._underlyingToken.hasTrailingTrivia(); }
-        public hasTrailingComment(): boolean { return this._underlyingToken.hasTrailingComment(); }
-        public hasTrailingNewLine(): boolean { return this._underlyingToken.hasTrailingNewLine(); }
-        public hasTrailingSkippedText(): boolean { return this._underlyingToken.hasTrailingSkippedText(); }
-        public trailingTriviaWidth(): number { return this._underlyingToken.trailingTriviaWidth(); }
-
-        public hasSkippedToken(): boolean { return this.hasLeadingSkippedText() || this.hasTrailingSkippedText(); }
-
-        public leadingTrivia(): ISyntaxTriviaList { 
-            var triviaList = this._underlyingToken.leadingTrivia().clone();
-            triviaList.parent = this;
-
-            return triviaList;
-        }
-
-        public trailingTrivia(): ISyntaxTriviaList {
-            var triviaList = this._underlyingToken.trailingTrivia().clone();
-            triviaList.parent = this;
-
-            return triviaList;
-        }
-
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
-
-        public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
-            return new RealizedToken(
-                this.fullStart(), this.kind, this.isKeywordConvertedToIdentifier(), leadingTrivia, this.text(), this.trailingTrivia());
-        }
-
-        public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
-            return new RealizedToken(
-                this.fullStart(), this.kind, this.isKeywordConvertedToIdentifier(), this.leadingTrivia(), this.text(), trailingTrivia);
-        }
-    }
-
     class RealizedToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
         public data: number;
@@ -560,7 +473,14 @@ module TypeScript.Syntax {
 
         // Realized tokens are created from the parser.  They are *never* incrementally reusable.
         public isIncrementallyUnusable() { return true; }
-        public isKeywordConvertedToIdentifier() { return this._isKeywordConvertedToIdentifier; }
+
+        public isKeywordConvertedToIdentifier() { 
+            return this._isKeywordConvertedToIdentifier; 
+        }
+
+        public convertKeywordToIdentifier(): ISyntaxToken {
+            return new RealizedToken(this._fullStart, SyntaxKind.IdentifierName, /*isKeywordConvertedToIdentifier:*/ true, this._leadingTrivia, this._text, this._trailingTrivia);
+        }
 
         public childCount(): number {
             return 0;

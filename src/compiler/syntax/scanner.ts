@@ -4,59 +4,71 @@ module TypeScript {
     // To save space in a token we use 60 bits to encode the following.
     //
     //   _packedFullStartAndInfo:
-    //
-    //      0000 0000 0000 0000 0000 0000 0000 0xxx    <-- Leading trivia info.
-    //      0000 0000 0000 0000 0000 0000 00xx x000    <-- Trailing trivia info.
-    //      0xxx xxxx xxxx xxxx xxxx xxxx xx00 0000    <-- Full start.
-    //
-    //  _packedFullWidthAndKind:
-    //
-    //      0000 0000 0000 0000 0000 0000 0xxx xxxx    <-- Kind.
-    //      0xxx xxxx xxxx xxxx xxxx xxxx x000 0000    <-- Full width.
+    //                                                 
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx    <-- Leading trivia info.
+    // 0000 0000 0000 0000 0000 0000 0000 0000 00xx x000    <-- Trailing trivia info.
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0x00 0000    <-- Is keyword converted to identifier.
+    // 00xx xxxx xxxx xxxx xxxx xxxx xxxx xxxx x000 0000    <-- Full start.
+    // ^                                               ^
+    // |                                               |
+    // Bit 39                                          Bit 0
 
     enum ScannerConstants {
-        LeadingTriviaShift         = 0,
-        TrailingTriviaShift        = 3,
-        FullStartShift             = 6,
+        LeadingTriviaShift                  = 0,
+        TrailingTriviaShift                 = 3,
+        IsKeywordConvertedToIdentifierShift = 6,
 
-        KindShift                  = 0,
-        FullWidthShift             = 7,
+        // We use 31 bits to store the full start of a token.  However, because the bits go past 
+        // the 32 bit mark in the number, we can't use shifts to retrive or store the value.  
+        // This is because javascript says that a bitwise operator immediate truncates values to
+        // 32bits before they are applied.  However, we can effectively shift just by dividing or
+        // multiplying by the right amount. This may result in a fractional number.  but we can 
+        // then extract the bits we want at that point with a mask.
+        //
+        // Here dividing/multiplying by 128 is the same as shifting over 7 bits.
+        FullStartAdjust                      = 128,
 
-        KindBitMask                = 0x7F, // 01111111
-        TriviaBitMask              = 0x07, // 00000111
-        CommentTriviaBitMask       = 0x01, // 00000001
-        NewLineTriviaBitMask       = 0x02, // 00000010
-        WhitespaceTriviaBitMask    = 0x04, // 00000100
+        IsKeywordConvertedToIdentifierMask  = 0x01, // 00000001
+        TriviaBitMask                       = 0x07, // 00000111
+        CommentTriviaBitMask                = 0x01, // 00000001
+        NewLineTriviaBitMask                = 0x02, // 00000010
+        WhitespaceTriviaBitMask             = 0x04, // 00000100
+        FullStartBitMask                    = 0x7FFFFFFF
     }
 
-    function packFullStartAndInfo(fullStart: number, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
-        return (fullStart << ScannerConstants.FullStartShift) | 
+    // Make sure our math works for packing/unpacking large fullStarts.
+    Debug.assert(unpackFullStart(packFullStartAndInfo(1 << 30, true, 0, 0)) === (1 << 30));
+    Debug.assert(unpackFullStart(packFullStartAndInfo(3 << 29, false, 7, 0)) === (3 << 29));
+    Debug.assert(unpackFullStart(packFullStartAndInfo(10 << 27, true, 0, 7)) === (10 << 27));
+
+    function packFullStartAndInfo(fullStart: number, isKeywordConvertedToIdentifier: boolean, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
+        var shiftedFullStart = fullStart * ScannerConstants.FullStartAdjust;
+        var packedInfo = 
+            ((isKeywordConvertedToIdentifier ? 1 : 0) << ScannerConstants.IsKeywordConvertedToIdentifierShift) |
             (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) |
             (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
+
+        // 'shiftedFullInfo' may be larger than 32 bits.  So we need to add here to preserve all
+        // teh values, rather than using bitwise |   
+        return shiftedFullStart + packedInfo;
     }
 
-    function packFullWidthAndKind(fullWidth: number, kind: SyntaxKind): number {
-        return (fullWidth << ScannerConstants.FullWidthShift) | (kind << ScannerConstants.KindShift);
+    function unpackFullStart(packedFullStartAndInfo: number): number {
+        var shiftedValue = packedFullStartAndInfo / ScannerConstants.FullStartAdjust;
+        return shiftedValue & ScannerConstants.FullStartBitMask;
     }
 
-    function unpackKind(_packedFullWidthAndKind: number): SyntaxKind {
-        return <SyntaxKind>((_packedFullWidthAndKind >> ScannerConstants.KindShift) & ScannerConstants.KindBitMask);
+    function unpackIsKeywordConvertedToIdentifier(packedFullStartAndInfo: number): boolean {
+        var val = (packedFullStartAndInfo >> ScannerConstants.IsKeywordConvertedToIdentifierShift) & ScannerConstants.IsKeywordConvertedToIdentifierMask;
+        return val !== 0;
     }
 
-    function unpackFullWidth(_packedFullWidthAndKind: number): number {
-        return _packedFullWidthAndKind >> ScannerConstants.FullWidthShift;
+    function unpackLeadingTriviaInfo(packedFullStartAndInfo: number): number {
+        return (packedFullStartAndInfo >> ScannerConstants.LeadingTriviaShift) & ScannerConstants.TriviaBitMask;
     }
 
-    function unpackFullStart(_packedFullStartAndInfo: number): number {
-        return _packedFullStartAndInfo >> ScannerConstants.FullStartShift;
-    }
-
-    function unpackLeadingTriviaInfo(_packedFullStartAndInfo: number): number {
-        return (_packedFullStartAndInfo >> ScannerConstants.LeadingTriviaShift) & ScannerConstants.TriviaBitMask;
-    }
-
-    function unpackTrailingTriviaInfo(_packedFullStartAndInfo: number): number {
-        return (_packedFullStartAndInfo >> ScannerConstants.TrailingTriviaShift) & ScannerConstants.TriviaBitMask;
+    function unpackTrailingTriviaInfo(packedFullStartAndInfo: number): number {
+        return (packedFullStartAndInfo >> ScannerConstants.TrailingTriviaShift) & ScannerConstants.TriviaBitMask;
     }
 
     var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
@@ -112,13 +124,25 @@ module TypeScript {
             this._text = text;
 
             this.data = packFullStartAndInfo(fullStart,
+                this.isKeywordConvertedToIdentifier(),
                 unpackLeadingTriviaInfo(this.data),
                 unpackTrailingTriviaInfo(this.data));
         }
 
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind); }
 
-        public isKeywordConvertedToIdentifier(): boolean { return false; }
+        public isKeywordConvertedToIdentifier(): boolean {
+            return unpackIsKeywordConvertedToIdentifier(this.data);
+        }
+
+        public convertKeywordToIdentifier(): ISyntaxToken {
+            var data = packFullStartAndInfo(
+                unpackFullStart(this.data),
+                /*isKeywordConvertedToIdentifier:*/ true,
+                unpackLeadingTriviaInfo(this.data),
+                unpackTrailingTriviaInfo(this.data));
+            return new ScannerToken(this._text, data, SyntaxKind.IdentifierName, this._fullWidth);
+        }
 
         public fullWidth(): number { return this._fullWidth; }
         public fullStart(): number { return unpackFullStart(this.data); }
@@ -284,8 +308,7 @@ module TypeScript {
 
             var fullEnd = index;
 
-            // Pack functions inlined for perf.
-            var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.FullStartShift) | leadingTriviaInfo | (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
+            var packedFullStartAndTriviaInfo = packFullStartAndInfo(fullStart, /*isKeywordConvertedToIdentifier:*/ false, leadingTriviaInfo, trailingTriviaInfo);
             return new ScannerToken(text, packedFullStartAndTriviaInfo, kind, index - fullStart);
         }
 
