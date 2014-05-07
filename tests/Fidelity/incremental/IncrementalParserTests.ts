@@ -139,6 +139,17 @@ module TypeScript {
             compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 21);
         }
 
+        public static testIncrementalRegex2() {
+            var source = "class C { public foo1() { ; } public foo2() { return 1/;} public foo3() { } }";
+
+            var semicolonIndex = source.indexOf(";");
+
+            var oldText = TextFactory.createText(source);
+            var newTextAndChange = withInsert(oldText, semicolonIndex, "/");
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 19);
+        }
+
         public static testIncrementalComment1() {
             var source = "class C { public foo1() { /; } public foo2() { return 1; } public foo3() { } }";
 

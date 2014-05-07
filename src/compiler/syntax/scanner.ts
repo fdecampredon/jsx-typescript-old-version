@@ -96,6 +96,17 @@ module TypeScript {
         isKeywordStartCharacter[keyword.charCodeAt(0)] = true;
     }
 
+    function isParserGenerated(kind: SyntaxKind): boolean {
+        switch (kind) {
+            case SyntaxKind.SlashEqualsToken:
+            case SyntaxKind.SlashToken:
+            case SyntaxKind.RegularExpressionLiteral:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     class ScannerToken implements ISyntaxToken {
         private static lastTokenInfo = { leadingTriviaWidth: -1, width: -1 };
         private static lastTokenInfoToken: ScannerToken = null;
@@ -125,7 +136,10 @@ module TypeScript {
                 unpackTrailingTriviaInfo(this.data));
         }
 
-        public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind); }
+        public isIncrementallyUnusable(): boolean { 
+            Debug.assert(this.fullWidth() !== 0 || this.kind === SyntaxKind.EndOfFileToken);
+            return isParserGenerated(this.kind);;// SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.kind);
+        }
 
         public isKeywordConvertedToIdentifier(): boolean {
             return unpackIsKeywordConvertedToIdentifier(this.data);
