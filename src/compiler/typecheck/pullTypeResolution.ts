@@ -548,7 +548,7 @@ module TypeScript {
                 if (decl.flags & PullElementFlags.DeclaredInAWithBlock) {
                     return this.semanticInfoChain.anyTypeSymbol;
                 }
-                
+
                 if (pathDeclKind & allowedContainerDeclKind) {
 
                     // first check locally
@@ -595,7 +595,17 @@ module TypeScript {
                         return childSymbol;
                     }
                 }
-                else if ((declSearchKind & (PullElementKind.SomeType | PullElementKind.SomeContainer)) || !(pathDeclKind & PullElementKind.Class)) {
+                else {
+
+                    // Specification May 7, 2014 - Section 2.4
+                    // Note that class and interface members are never directly in scope — they can only be accessed by applying the dot ('.') operator to a class or interface instance.
+                    // This even includes members of the current instance in a constructor or member function, which are accessed by applying the dot operator to this.
+                    var inClassOrInterface = hasFlag(pathDeclKind, PullElementKind.Class | PullElementKind.Interface);
+
+                    if (inClassOrInterface && hasFlag(declSearchKind, PullElementKind.SomeValue)) {
+                        continue;
+                    }
+
                     var candidateSymbol: PullSymbol = null;
 
                     // If the decl is a function expression, we still want to check its children since it may be shadowed by one

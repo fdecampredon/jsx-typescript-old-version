@@ -239,6 +239,10 @@ module TypeScript.ASTHelpers {
                 return (<EnumElementSyntax>ast.parent).propertyName === ast;
             case SyntaxKind.ImportDeclaration:
                 return (<ImportDeclarationSyntax>ast.parent).identifier === ast;
+            case SyntaxKind.MethodSignature:
+                return (<MethodSignatureSyntax>ast.parent).propertyName === ast;
+            case SyntaxKind.PropertySignature:
+                return (<MethodSignatureSyntax>ast.parent).propertyName === ast;
         }
 
         return false;
