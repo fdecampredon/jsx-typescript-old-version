@@ -114,7 +114,11 @@ module TypeScript {
         }
     }
 
-    class ScannerToken implements ISyntaxToken {
+    export class ScannerToken implements ISyntaxToken {
+        public static clear() {
+            ScannerToken.lastTokenInfoToken = null;
+        }
+
         private static lastTokenInfo = { leadingTriviaWidth: -1, width: -1 };
         private static lastTokenInfoToken: ScannerToken = null;
         private static triviaScanner = createScannerInternal(LanguageVersion.EcmaScript5, SimpleText.fromString(""), () => { });
@@ -279,6 +283,7 @@ module TypeScript {
     export interface Scanner {
         setIndex(index: number): void;
         scan(allowContextualToken: boolean): ISyntaxToken;
+        release(): void;
     }
 
     export function createScanner(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): Scanner {
@@ -286,6 +291,7 @@ module TypeScript {
         return {
             setIndex: scanner.setIndex,
             scan: scanner.scan,
+            release: scanner.release
         };
     }
 
@@ -294,6 +300,11 @@ module TypeScript {
         var index: number;
         var start: number;
         var end: number;
+
+        function release() {
+            text = null;
+            reportDiagnostic = null;
+        }
 
         function setIndex(_index: number) {
             index = _index;
@@ -1427,6 +1438,7 @@ module TypeScript {
             scan: scan,
             fillTokenInfo: fillTokenInfo,
             scanTrivia: scanTrivia,
+            release: release,
         };
     }
 

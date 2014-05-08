@@ -519,6 +519,16 @@ module TypeScript.Parser {
             this.lastDiagnostic = new Diagnostic(this.fileName, this.text.lineMap(), position, fullWidth, diagnosticKey, args);
         }
 
+        public release() {
+            this.slidingWindow = null;
+            this.scanner.release();
+            this.scanner = null;
+            this._tokenDiagnostics = [];
+            this.rewindPointPool = [];
+            this.lastDiagnostic = null;
+            this.reportDiagnostic = null;
+        }
+
         constructor(private fileName: string,
                     languageVersion: LanguageVersion,
                     public text: ISimpleText) {
@@ -728,6 +738,12 @@ module TypeScript.Parser {
 
         // The cursor we use to navigate through and retrieve nodes and tokens from the old tree.
         private _oldSourceUnitCursor: SyntaxCursor;
+
+        public release() {
+            this._normalParserSource.release();
+            this._normalParserSource = null;
+            this._oldSourceUnitCursor = null;
+        }
 
         constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, public text: ISimpleText) {
             var newText = text;
@@ -1301,6 +1317,7 @@ module TypeScript.Parser {
             parseNodeData = SyntaxConstants.None;
             fileName = null;
             source = null;
+            _source = null;
             parseOptions = null;
 
             return result;
@@ -5921,7 +5938,10 @@ module TypeScript.Parser {
                           isDeclaration: boolean,
                           options: ParseOptions): SyntaxTree {
         var source = new NormalParserSource(fileName, options.languageVersion(), text);
-        return parser.parseSyntaxTree(fileName, source, options, isDeclaration);
+        var result = parser.parseSyntaxTree(fileName, source, options, isDeclaration);
+        source.release();
+
+        return result;
     }
 
     export function incrementalParse(oldSyntaxTree: SyntaxTree,
@@ -5932,6 +5952,9 @@ module TypeScript.Parser {
         }
 
         var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText);
-        return parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.parseOptions(), oldSyntaxTree.isDeclaration());
+        var result = parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.parseOptions(), oldSyntaxTree.isDeclaration());
+        source.release();
+
+        return result;
     }
 }
