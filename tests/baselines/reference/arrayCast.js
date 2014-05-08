@@ -1,15 +1,7 @@
-//// [arrayCast.ts]
-// Should succeed.  The array is contextually typed with { id: number }[] type and ends up having 
-// the type { } [].  { id: number }[] is assignable to {}[], so this is ok.
-<{ id: number; }[]>[{ foo: "s" }];
-
-// Should succeed without contextual typing, as the {} element causes the type of the array to be {}[]
-<{ id: number; }[]>[{ foo: "s" }, {}]; 
-
 //// [arrayCast.js]
-// Should succeed.  The array is contextually typed with { id: number }[] type and ends up having
-// the type { } [].  { id: number }[] is assignable to {}[], so this is ok.
+// Should fail. Even though the array is contextually typed with { id: number }[], it still
+// has type { foo: string }[], which is not assignable to { id: number }[].
 [{ foo: "s" }];
 
-// Should succeed without contextual typing, as the {} element causes the type of the array to be {}[]
+// Should succeed, as the {} element causes the type of the array to be {}[]
 [{ foo: "s" }, {}];

@@ -1,0 +1,15 @@
+==== tests/cases/compiler/arrayCast.ts (1 errors) ====
+    // Should fail. Even though the array is contextually typed with { id: number }[], it still
+    // has type { foo: string }[], which is not assignable to { id: number }[].
+    <{ id: number; }[]>[{ foo: "s" }];
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! arrayCast.ts(3,1): error TS2012: Cannot convert '{ foo: string; }[]' to '{ id: number; }[]':
+!!! 	Types of property 'pop' of types '{ foo: string; }[]' and '{ id: number; }[]' are incompatible:
+!!! 		Call signatures of types '() => { foo: string; }' and '() => { id: number; }' are incompatible:
+!!! 			Type '{ foo: string; }' is missing property 'id' from type '{ id: number; }'.
+!!! 	Types of property 'pop' of types '{ id: number; }[]' and '{ foo: string; }[]' are incompatible:
+!!! 		Call signatures of types '() => { id: number; }' and '() => { foo: string; }' are incompatible:
+!!! 			Type '{ id: number; }' is missing property 'foo' from type '{ foo: string; }'.
+    
+    // Should succeed, as the {} element causes the type of the array to be {}[]
+    <{ id: number; }[]>[{ foo: "s" }, {}]; 

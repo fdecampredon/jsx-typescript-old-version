@@ -9,9 +9,9 @@
     var x111 = foo([{a:"s"}]); // error - does not match any signature
                ~~~
 !!! overloadResolutionTest1.ts(8,12): error TS2082: Supplied parameters do not match any signature of call target:
-!!! 	Types of property 'pop' of types '{}[]' and '{ a: number; }[]' are incompatible:
-!!! 		Call signatures of types '() => {}' and '() => { a: number; }' are incompatible:
-!!! 			Type '{}' is missing property 'a' from type '{ a: number; }'.
+!!! 	Types of property 'pop' of types '{ a: string; }[]' and '{ a: number; }[]' are incompatible:
+!!! 		Call signatures of types '() => { a: string; }' and '() => { a: number; }' are incompatible:
+!!! 			Types of property 'a' of types '{ a: string; }' and '{ a: number; }' are incompatible.
                ~~~
 !!! overloadResolutionTest1.ts(8,12): error TS2087: Could not select overload for 'call' expression.
     var x1111 = foo([{a:null}]); // works - ambiguous call is resolved to be the first in the overload set so this returns a string

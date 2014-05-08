@@ -60,6 +60,6 @@
     ~~~~~~~~
     }
     ~
-!!! stringIndexerConstrainsPropertyDeclarations2.ts(36,5): error TS2012: Cannot convert '{ a: typeof A; b: typeof B; [x: string]: {}; }' to '{ [x: string]: A; }':
-!!! 	Index signatures of types '{ a: typeof A; b: typeof B; [x: string]: {}; }' and '{ [x: string]: A; }' are incompatible:
-!!! 		Type '{}' is missing property 'foo' from type 'A'.
+!!! stringIndexerConstrainsPropertyDeclarations2.ts(36,5): error TS2012: Cannot convert '{ a: typeof A; b: typeof B; [x: string]: typeof A; }' to '{ [x: string]: A; }':
+!!! 	Index signatures of types '{ a: typeof A; b: typeof B; [x: string]: typeof A; }' and '{ [x: string]: A; }' are incompatible:
+!!! 		Type 'typeof A' is missing property 'foo' from type 'A'.

@@ -35,10 +35,10 @@
     // Highlights the difference between array literals and object literals
     var arr: string[] = [3, null]; // not assignable because null is not widened. BCT is {}
         ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! widenedTypes.ts(23,5): error TS2012: Cannot convert '{}[]' to 'string[]':
-!!! 	Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
-!!! 		Call signatures of types '() => {}' and '() => string' are incompatible.
+!!! widenedTypes.ts(23,5): error TS2012: Cannot convert 'number[]' to 'string[]':
+!!! 	Types of property 'pop' of types 'number[]' and 'string[]' are incompatible:
+!!! 		Call signatures of types '() => number' and '() => string' are incompatible.
     var obj: { [x: string]: string; } = { x: 3, y: null }; // assignable because null is widened, and therefore BCT is any
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! widenedTypes.ts(24,5): error TS2012: Cannot convert '{ x: number; y: any; [x: string]: {}; }' to '{ [x: string]: string; }':
-!!! 	Index signatures of types '{ x: number; y: any; [x: string]: {}; }' and '{ [x: string]: string; }' are incompatible.
+!!! widenedTypes.ts(24,5): error TS2012: Cannot convert '{ x: number; y: any; [x: string]: number; }' to '{ [x: string]: string; }':
+!!! 	Index signatures of types '{ x: number; y: any; [x: string]: number; }' and '{ [x: string]: string; }' are incompatible.
