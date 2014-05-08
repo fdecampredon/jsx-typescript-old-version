@@ -47,8 +47,11 @@ module TypeScript.Services {
             var sourceUnit = document.sourceUnit();
 
             /// TODO: this does not allow getting references on "constructor"
-
             var topNode = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, pos);
+            return this.getSymbolInfoAtAST(document, topNode, pos, requireName);
+        }
+
+        private getSymbolInfoAtAST(document: Document, topNode: ISyntaxElement, pos: number, requireName: boolean): { symbol: TypeScript.PullSymbol; containingASTOpt: TypeScript.ISyntaxElement } {
             if (topNode === null || (requireName && topNode.kind() !== TypeScript.SyntaxKind.IdentifierName)) {
                 this.logger.log("No name found at the given position");
                 return null;
@@ -615,21 +618,32 @@ module TypeScript.Services {
         public getDefinitionAtPosition(fileName: string, position: number): DefinitionInfo[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
 
-            var symbolInfo = this.getSymbolInfoAtPosition(fileName, position, /*requireName:*/ false);
-            if (symbolInfo === null || symbolInfo.symbol === null) {
-                return null;
-            }
+            var document = this.compiler.getDocument(fileName);
+            var sourceUnit = document.sourceUnit();
+            var currentNode = TypeScript.ASTHelpers.getAstAtPosition(sourceUnit, position);
 
-            var symbol = symbolInfo.symbol;
+            // first check if we are at InvocationExpression\ObjectCreationExpression - if yes then try to obtain concrete overload that was used
+            var callExpressionTarget = ASTHelpers.getCallExpressionTarget(currentNode);
+            var callInformation = callExpressionTarget && callExpressionTarget.parent && this.compiler.getCallInformationFromAST(callExpressionTarget.parent, document);
+            var symbol: PullSymbol = callInformation && callInformation.candidateSignature;
 
-            TypeScript.Debug.assert(symbol.kind !== TypeScript.PullElementKind.None &&
-                symbol.kind !== TypeScript.PullElementKind.Global &&
-                symbol.kind !== TypeScript.PullElementKind.Script, "getDefinitionAtPosition - Invalid symbol kind");
+            if (!symbol) {
+                var symbolInfo = this.getSymbolInfoAtAST(document, currentNode, position, /*requireName:*/ false);
+                if (symbolInfo === null || symbolInfo.symbol === null) {
+                    return null;
+                }
 
-            if (symbol.kind === TypeScript.PullElementKind.Primitive) {
-                // Primitive symbols do not have definition locations that map to host soruces.
-                // Return null to indicate they have no "definition locations".
-                return null;
+                var symbol = symbolInfo.symbol;
+
+                TypeScript.Debug.assert(symbol.kind !== TypeScript.PullElementKind.None &&
+                    symbol.kind !== TypeScript.PullElementKind.Global &&
+                    symbol.kind !== TypeScript.PullElementKind.Script, "getDefinitionAtPosition - Invalid symbol kind");
+
+                if (symbol.kind === TypeScript.PullElementKind.Primitive) {
+                    // Primitive symbols do not have definition locations that map to host soruces.
+                    // Return null to indicate they have no "definition locations".
+                    return null;
+                }
             }
 
             var declarations = symbol.getDeclarations();

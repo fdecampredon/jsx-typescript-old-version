@@ -176,8 +176,12 @@ module TypeScript.ASTHelpers {
     }
 
     export function isCallExpressionTarget(ast: ISyntaxElement): boolean {
+        return !!getCallExpressionTarget(ast);
+    }
+
+    export function getCallExpressionTarget(ast: ISyntaxElement): ISyntaxElement {
         if (!ast) {
-            return false;
+            return null;
         }
 
         var current = ast;
@@ -194,11 +198,10 @@ module TypeScript.ASTHelpers {
 
         if (current && current.parent) {
             if (current.parent.kind() === SyntaxKind.InvocationExpression || current.parent.kind() === SyntaxKind.ObjectCreationExpression) {
-                return current === (<InvocationExpressionSyntax>current.parent).expression;
+                return current === (<InvocationExpressionSyntax>current.parent).expression ? current : null;
             }
         }
-
-        return false;
+        return null;
     }
 
     function isNameOfSomeDeclaration(ast: ISyntaxElement) {
