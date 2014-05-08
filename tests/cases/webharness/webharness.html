@@ -42,15 +42,70 @@
             }
         }
 
+        var tree2;
         function newParse() {
             var batch = new BatchCompiler();
 
             run(function () {
                 var start = new Date().getTime();
-                batch.newParse();
+
+                nodeCount = 0;
+                tokenCount = 0;
+                emptyListCount = 0;
+                singletonListCount = 0;
+                listCount = 0;
+                literalCount = 0;
+                tree2 = batch.newParse();
+                countNodes(tree2.sourceUnit())
+
+                appendTime("nodeCount: " + nodeCount + ", tokenCount: " + tokenCount + ", emptyList: " + emptyListCount + ", " +
+                    "singleton list: " + singletonListCount + ", listCount: " + listCount + ", literals: " + literalCount);
+
                 var end = new Date().getTime();
                 appendTime("New Parse", end - start);
             });
+        }
+
+        var nodeCount = 0;
+        var tokenCount = 0;
+        var emptyListCount = 0;
+        var singletonListCount = 0;
+        var listCount = 0;
+        var literalCount = 0;
+
+        function countNodes(e) {
+            if (!e) { return; }
+            if (e.isNode()) {
+                nodeCount++;
+            }
+            else if (e.isToken()) {
+                tokenCount++;
+                if (e.kind() === TypeScript.SyntaxKind.IdentifierName ||
+                    e.kind() === TypeScript.SyntaxKind.StringLiteral ||
+                    e.kind() === TypeScript.SyntaxKind.NumericLiteral ||
+                    e.kind() === TypeScript.SyntaxKind.RegularExpressionLiteral ||
+                    e.kind() === TypeScript.SyntaxKind.TrueKeyword ||
+                    e.kind() === TypeScript.SyntaxKind.FalseKeyword ||
+                    e.kind() === TypeScript.SyntaxKind.NullKeyword) {
+
+                    literalCount++;
+                }
+            }
+            else if (e.isList() || e.isSeparatedList()) {
+                if (e.childCount() === 0) {
+                    emptyListCount++;
+                }
+                else if (e.childCount() === 1) {
+                    singletonListCount++;
+                }
+                else {
+                    listCount++;
+                }
+            }
+
+            for (var i = 0, n = e.childCount() ; i < n; i++) {
+                countNodes(e.childAt(i));
+            }
         }
 
         function newParseAndAST() {
@@ -74,6 +129,7 @@
             run(function () {
                 var start = new Date().getTime();
                 tree = batch.newIncrementalParse(tree);
+
                 var end = new Date().getTime();
                 appendTime("Incremental Parse", end - start);
             });
