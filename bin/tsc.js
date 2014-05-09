@@ -4279,9 +4279,9 @@ var TypeScript;
     }
 
     var ScannerToken = (function () {
-        function ScannerToken(_text, data, _packedFullWidthAndKind) {
+        function ScannerToken(_text, _packedFullStartAndInfo, _packedFullWidthAndKind) {
             this._text = _text;
-            this.data = data;
+            this._packedFullStartAndInfo = _packedFullStartAndInfo;
             this._packedFullWidthAndKind = _packedFullWidthAndKind;
             this.parent = null;
         }
@@ -4292,7 +4292,7 @@ var TypeScript;
         ScannerToken.prototype.setTextAndFullStart = function (text, fullStart) {
             this._text = text;
 
-            this.data = packFullStartAndInfo(fullStart, this.isKeywordConvertedToIdentifier(), unpackLeadingTriviaInfo(this.data), unpackTrailingTriviaInfo(this.data));
+            this._packedFullStartAndInfo = packFullStartAndInfo(fullStart, this.isKeywordConvertedToIdentifier(), unpackLeadingTriviaInfo(this._packedFullStartAndInfo), unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
         };
 
         ScannerToken.prototype.kind = function () {
@@ -4305,11 +4305,11 @@ var TypeScript;
         };
 
         ScannerToken.prototype.isKeywordConvertedToIdentifier = function () {
-            return unpackIsKeywordConvertedToIdentifier(this.data);
+            return unpackIsKeywordConvertedToIdentifier(this._packedFullStartAndInfo);
         };
 
         ScannerToken.prototype.convertKeywordToIdentifier = function () {
-            var data = packFullStartAndInfo(unpackFullStart(this.data), true, unpackLeadingTriviaInfo(this.data), unpackTrailingTriviaInfo(this.data));
+            var data = packFullStartAndInfo(unpackFullStart(this._packedFullStartAndInfo), true, unpackLeadingTriviaInfo(this._packedFullStartAndInfo), unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
             return new ScannerToken(this._text, data, packFullWidthAndKind(this.fullWidth(), 11 /* IdentifierName */));
         };
 
@@ -4317,7 +4317,7 @@ var TypeScript;
             return unpackFullWidth(this._packedFullWidthAndKind);
         };
         ScannerToken.prototype.fullStart = function () {
-            return unpackFullStart(this.data);
+            return unpackFullStart(this._packedFullStartAndInfo);
         };
 
         ScannerToken.prototype.fillSizeInfo = function () {
@@ -4371,32 +4371,32 @@ var TypeScript;
         };
 
         ScannerToken.prototype.hasLeadingTrivia = function () {
-            var info = unpackLeadingTriviaInfo(this.data);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return info !== 0;
         };
 
         ScannerToken.prototype.hasLeadingComment = function () {
-            var info = unpackLeadingTriviaInfo(this.data);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return (info & 1 /* CommentTriviaBitMask */) !== 0;
         };
 
         ScannerToken.prototype.hasLeadingNewLine = function () {
-            var info = unpackLeadingTriviaInfo(this.data);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return (info & 2 /* NewLineTriviaBitMask */) !== 0;
         };
 
         ScannerToken.prototype.hasTrailingTrivia = function () {
-            var info = unpackTrailingTriviaInfo(this.data);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return info !== 0;
         };
 
         ScannerToken.prototype.hasTrailingComment = function () {
-            var info = unpackTrailingTriviaInfo(this.data);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return (info & 1 /* CommentTriviaBitMask */) !== 0;
         };
 
         ScannerToken.prototype.hasTrailingNewLine = function () {
-            var info = unpackTrailingTriviaInfo(this.data);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return (info & 2 /* NewLineTriviaBitMask */) !== 0;
         };
 
@@ -4419,7 +4419,7 @@ var TypeScript;
         };
 
         ScannerToken.prototype.clone = function () {
-            return new ScannerToken(this._text, this.data, this._packedFullWidthAndKind);
+            return new ScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind);
         };
         ScannerToken.lastTokenInfo = { leadingTriviaWidth: -1, width: -1 };
         ScannerToken.lastTokenInfoToken = null;
@@ -6956,8 +6956,7 @@ var TypeScript;
             this.endOfFileToken = endOfFileToken;
             this.syntaxTree = null;
             this.parent = null;
-            !TypeScript.isShared(moduleElements) && (moduleElements.parent = this);
-            endOfFileToken.parent = this;
+            !TypeScript.isShared(moduleElements) && (moduleElements.parent = this), endOfFileToken.parent = this;
         }
         SourceUnitSyntax.prototype.kind = function () {
             return 120 /* SourceUnit */;
@@ -6973,9 +6972,7 @@ var TypeScript;
             this.left = left;
             this.dotToken = dotToken;
             this.right = right;
-            left.parent = this;
-            dotToken.parent = this;
-            right.parent = this;
+            left.parent = this, dotToken.parent = this, right.parent = this;
         }
         QualifiedNameSyntax.prototype.kind = function () {
             return 121 /* QualifiedName */;
@@ -6991,9 +6988,7 @@ var TypeScript;
             this.openBraceToken = openBraceToken;
             this.typeMembers = typeMembers;
             this.closeBraceToken = closeBraceToken;
-            openBraceToken.parent = this;
-            !TypeScript.isShared(typeMembers) && (typeMembers.parent = this);
-            closeBraceToken.parent = this;
+            openBraceToken.parent = this, !TypeScript.isShared(typeMembers) && (typeMembers.parent = this), closeBraceToken.parent = this;
         }
         ObjectTypeSyntax.prototype.kind = function () {
             return 122 /* ObjectType */;
@@ -7010,10 +7005,7 @@ var TypeScript;
             this.parameterList = parameterList;
             this.equalsGreaterThanToken = equalsGreaterThanToken;
             this.type = type;
-            typeParameterList && (typeParameterList.parent = this);
-            parameterList.parent = this;
-            equalsGreaterThanToken.parent = this;
-            type.parent = this;
+            typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, equalsGreaterThanToken.parent = this, type.parent = this;
         }
         FunctionTypeSyntax.prototype.kind = function () {
             return 123 /* FunctionType */;
@@ -7029,9 +7021,7 @@ var TypeScript;
             this.type = type;
             this.openBracketToken = openBracketToken;
             this.closeBracketToken = closeBracketToken;
-            type.parent = this;
-            openBracketToken.parent = this;
-            closeBracketToken.parent = this;
+            type.parent = this, openBracketToken.parent = this, closeBracketToken.parent = this;
         }
         ArrayTypeSyntax.prototype.kind = function () {
             return 124 /* ArrayType */;
@@ -7049,11 +7039,7 @@ var TypeScript;
             this.parameterList = parameterList;
             this.equalsGreaterThanToken = equalsGreaterThanToken;
             this.type = type;
-            newKeyword.parent = this;
-            typeParameterList && (typeParameterList.parent = this);
-            parameterList.parent = this;
-            equalsGreaterThanToken.parent = this;
-            type.parent = this;
+            newKeyword.parent = this, typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, equalsGreaterThanToken.parent = this, type.parent = this;
         }
         ConstructorTypeSyntax.prototype.kind = function () {
             return 125 /* ConstructorType */;
@@ -7068,8 +7054,7 @@ var TypeScript;
             _super.call(this, data);
             this.name = name;
             this.typeArgumentList = typeArgumentList;
-            name.parent = this;
-            typeArgumentList.parent = this;
+            name.parent = this, typeArgumentList.parent = this;
         }
         GenericTypeSyntax.prototype.kind = function () {
             return 126 /* GenericType */;
@@ -7084,8 +7069,7 @@ var TypeScript;
             _super.call(this, data);
             this.typeOfKeyword = typeOfKeyword;
             this.name = name;
-            typeOfKeyword.parent = this;
-            name.parent = this;
+            typeOfKeyword.parent = this, name.parent = this;
         }
         TypeQuerySyntax.prototype.kind = function () {
             return 127 /* TypeQuery */;
@@ -7104,12 +7088,7 @@ var TypeScript;
             this.typeParameterList = typeParameterList;
             this.heritageClauses = heritageClauses;
             this.body = body;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            interfaceKeyword.parent = this;
-            identifier.parent = this;
-            typeParameterList && (typeParameterList.parent = this);
-            !TypeScript.isShared(heritageClauses) && (heritageClauses.parent = this);
-            body.parent = this;
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), interfaceKeyword.parent = this, identifier.parent = this, typeParameterList && (typeParameterList.parent = this), !TypeScript.isShared(heritageClauses) && (heritageClauses.parent = this), body.parent = this;
         }
         InterfaceDeclarationSyntax.prototype.kind = function () {
             return 128 /* InterfaceDeclaration */;
@@ -7128,12 +7107,7 @@ var TypeScript;
             this.callSignature = callSignature;
             this.block = block;
             this.semicolonToken = semicolonToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            functionKeyword.parent = this;
-            identifier.parent = this;
-            callSignature.parent = this;
-            block && (block.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), functionKeyword.parent = this, identifier.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         FunctionDeclarationSyntax.prototype.kind = function () {
             return 129 /* FunctionDeclaration */;
@@ -7153,13 +7127,7 @@ var TypeScript;
             this.openBraceToken = openBraceToken;
             this.moduleElements = moduleElements;
             this.closeBraceToken = closeBraceToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            moduleKeyword.parent = this;
-            name && (name.parent = this);
-            stringLiteral && (stringLiteral.parent = this);
-            openBraceToken.parent = this;
-            !TypeScript.isShared(moduleElements) && (moduleElements.parent = this);
-            closeBraceToken.parent = this;
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), moduleKeyword.parent = this, name && (name.parent = this), stringLiteral && (stringLiteral.parent = this), openBraceToken.parent = this, !TypeScript.isShared(moduleElements) && (moduleElements.parent = this), closeBraceToken.parent = this;
         }
         ModuleDeclarationSyntax.prototype.kind = function () {
             return 130 /* ModuleDeclaration */;
@@ -7180,14 +7148,7 @@ var TypeScript;
             this.openBraceToken = openBraceToken;
             this.classElements = classElements;
             this.closeBraceToken = closeBraceToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            classKeyword.parent = this;
-            identifier.parent = this;
-            typeParameterList && (typeParameterList.parent = this);
-            !TypeScript.isShared(heritageClauses) && (heritageClauses.parent = this);
-            openBraceToken.parent = this;
-            !TypeScript.isShared(classElements) && (classElements.parent = this);
-            closeBraceToken.parent = this;
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), classKeyword.parent = this, identifier.parent = this, typeParameterList && (typeParameterList.parent = this), !TypeScript.isShared(heritageClauses) && (heritageClauses.parent = this), openBraceToken.parent = this, !TypeScript.isShared(classElements) && (classElements.parent = this), closeBraceToken.parent = this;
         }
         ClassDeclarationSyntax.prototype.kind = function () {
             return 131 /* ClassDeclaration */;
@@ -7206,12 +7167,7 @@ var TypeScript;
             this.openBraceToken = openBraceToken;
             this.enumElements = enumElements;
             this.closeBraceToken = closeBraceToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            enumKeyword.parent = this;
-            identifier.parent = this;
-            openBraceToken.parent = this;
-            !TypeScript.isShared(enumElements) && (enumElements.parent = this);
-            closeBraceToken.parent = this;
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), enumKeyword.parent = this, identifier.parent = this, openBraceToken.parent = this, !TypeScript.isShared(enumElements) && (enumElements.parent = this), closeBraceToken.parent = this;
         }
         EnumDeclarationSyntax.prototype.kind = function () {
             return 132 /* EnumDeclaration */;
@@ -7230,12 +7186,7 @@ var TypeScript;
             this.equalsToken = equalsToken;
             this.moduleReference = moduleReference;
             this.semicolonToken = semicolonToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            importKeyword.parent = this;
-            identifier.parent = this;
-            equalsToken.parent = this;
-            moduleReference.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), importKeyword.parent = this, identifier.parent = this, equalsToken.parent = this, moduleReference.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         ImportDeclarationSyntax.prototype.kind = function () {
             return 133 /* ImportDeclaration */;
@@ -7252,10 +7203,7 @@ var TypeScript;
             this.equalsToken = equalsToken;
             this.identifier = identifier;
             this.semicolonToken = semicolonToken;
-            exportKeyword.parent = this;
-            equalsToken.parent = this;
-            identifier.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            exportKeyword.parent = this, equalsToken.parent = this, identifier.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         ExportAssignmentSyntax.prototype.kind = function () {
             return 134 /* ExportAssignment */;
@@ -7273,11 +7221,7 @@ var TypeScript;
             this.callSignature = callSignature;
             this.block = block;
             this.semicolonToken = semicolonToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            propertyName.parent = this;
-            callSignature.parent = this;
-            block && (block.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), propertyName.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         MemberFunctionDeclarationSyntax.prototype.kind = function () {
             return 135 /* MemberFunctionDeclaration */;
@@ -7293,9 +7237,7 @@ var TypeScript;
             this.modifiers = modifiers;
             this.variableDeclarator = variableDeclarator;
             this.semicolonToken = semicolonToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            variableDeclarator.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), variableDeclarator.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         MemberVariableDeclarationSyntax.prototype.kind = function () {
             return 136 /* MemberVariableDeclaration */;
@@ -7313,11 +7255,7 @@ var TypeScript;
             this.callSignature = callSignature;
             this.block = block;
             this.semicolonToken = semicolonToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            constructorKeyword.parent = this;
-            callSignature.parent = this;
-            block && (block.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), constructorKeyword.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         ConstructorDeclarationSyntax.prototype.kind = function () {
             return 137 /* ConstructorDeclaration */;
@@ -7333,9 +7271,7 @@ var TypeScript;
             this.modifiers = modifiers;
             this.indexSignature = indexSignature;
             this.semicolonToken = semicolonToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            indexSignature.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), indexSignature.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         IndexMemberDeclarationSyntax.prototype.kind = function () {
             return 138 /* IndexMemberDeclaration */;
@@ -7354,12 +7290,7 @@ var TypeScript;
             this.parameterList = parameterList;
             this.typeAnnotation = typeAnnotation;
             this.block = block;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            getKeyword.parent = this;
-            propertyName.parent = this;
-            parameterList.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
-            block.parent = this;
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), getKeyword.parent = this, propertyName.parent = this, parameterList.parent = this, typeAnnotation && (typeAnnotation.parent = this), block.parent = this;
         }
         GetAccessorSyntax.prototype.kind = function () {
             return 139 /* GetAccessor */;
@@ -7377,11 +7308,7 @@ var TypeScript;
             this.propertyName = propertyName;
             this.parameterList = parameterList;
             this.block = block;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            setKeyword.parent = this;
-            propertyName.parent = this;
-            parameterList.parent = this;
-            block.parent = this;
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), setKeyword.parent = this, propertyName.parent = this, parameterList.parent = this, block.parent = this;
         }
         SetAccessorSyntax.prototype.kind = function () {
             return 140 /* SetAccessor */;
@@ -7397,9 +7324,7 @@ var TypeScript;
             this.propertyName = propertyName;
             this.questionToken = questionToken;
             this.typeAnnotation = typeAnnotation;
-            propertyName.parent = this;
-            questionToken && (questionToken.parent = this);
-            typeAnnotation && (typeAnnotation.parent = this);
+            propertyName.parent = this, questionToken && (questionToken.parent = this), typeAnnotation && (typeAnnotation.parent = this);
         }
         PropertySignatureSyntax.prototype.kind = function () {
             return 141 /* PropertySignature */;
@@ -7415,9 +7340,7 @@ var TypeScript;
             this.typeParameterList = typeParameterList;
             this.parameterList = parameterList;
             this.typeAnnotation = typeAnnotation;
-            typeParameterList && (typeParameterList.parent = this);
-            parameterList.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
+            typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, typeAnnotation && (typeAnnotation.parent = this);
         }
         CallSignatureSyntax.prototype.kind = function () {
             return 142 /* CallSignature */;
@@ -7432,8 +7355,7 @@ var TypeScript;
             _super.call(this, data);
             this.newKeyword = newKeyword;
             this.callSignature = callSignature;
-            newKeyword.parent = this;
-            callSignature.parent = this;
+            newKeyword.parent = this, callSignature.parent = this;
         }
         ConstructSignatureSyntax.prototype.kind = function () {
             return 143 /* ConstructSignature */;
@@ -7450,10 +7372,7 @@ var TypeScript;
             this.parameter = parameter;
             this.closeBracketToken = closeBracketToken;
             this.typeAnnotation = typeAnnotation;
-            openBracketToken.parent = this;
-            parameter.parent = this;
-            closeBracketToken.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
+            openBracketToken.parent = this, parameter.parent = this, closeBracketToken.parent = this, typeAnnotation && (typeAnnotation.parent = this);
         }
         IndexSignatureSyntax.prototype.kind = function () {
             return 144 /* IndexSignature */;
@@ -7469,9 +7388,7 @@ var TypeScript;
             this.propertyName = propertyName;
             this.questionToken = questionToken;
             this.callSignature = callSignature;
-            propertyName.parent = this;
-            questionToken && (questionToken.parent = this);
-            callSignature.parent = this;
+            propertyName.parent = this, questionToken && (questionToken.parent = this), callSignature.parent = this;
         }
         MethodSignatureSyntax.prototype.kind = function () {
             return 145 /* MethodSignature */;
@@ -7487,9 +7404,7 @@ var TypeScript;
             this.openBraceToken = openBraceToken;
             this.statements = statements;
             this.closeBraceToken = closeBraceToken;
-            openBraceToken.parent = this;
-            !TypeScript.isShared(statements) && (statements.parent = this);
-            closeBraceToken.parent = this;
+            openBraceToken.parent = this, !TypeScript.isShared(statements) && (statements.parent = this), closeBraceToken.parent = this;
         }
         BlockSyntax.prototype.kind = function () {
             return 146 /* Block */;
@@ -7508,12 +7423,7 @@ var TypeScript;
             this.closeParenToken = closeParenToken;
             this.statement = statement;
             this.elseClause = elseClause;
-            ifKeyword.parent = this;
-            openParenToken.parent = this;
-            condition.parent = this;
-            closeParenToken.parent = this;
-            statement.parent = this;
-            elseClause && (elseClause.parent = this);
+            ifKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this, elseClause && (elseClause.parent = this);
         }
         IfStatementSyntax.prototype.kind = function () {
             return 147 /* IfStatement */;
@@ -7529,9 +7439,7 @@ var TypeScript;
             this.modifiers = modifiers;
             this.variableDeclaration = variableDeclaration;
             this.semicolonToken = semicolonToken;
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            variableDeclaration.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            !TypeScript.isShared(modifiers) && (modifiers.parent = this), variableDeclaration.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         VariableStatementSyntax.prototype.kind = function () {
             return 148 /* VariableStatement */;
@@ -7546,8 +7454,7 @@ var TypeScript;
             _super.call(this, data);
             this.expression = expression;
             this.semicolonToken = semicolonToken;
-            expression.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            expression.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         ExpressionStatementSyntax.prototype.kind = function () {
             return 149 /* ExpressionStatement */;
@@ -7563,9 +7470,7 @@ var TypeScript;
             this.returnKeyword = returnKeyword;
             this.expression = expression;
             this.semicolonToken = semicolonToken;
-            returnKeyword.parent = this;
-            expression && (expression.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
+            returnKeyword.parent = this, expression && (expression.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         ReturnStatementSyntax.prototype.kind = function () {
             return 150 /* ReturnStatement */;
@@ -7585,13 +7490,7 @@ var TypeScript;
             this.openBraceToken = openBraceToken;
             this.switchClauses = switchClauses;
             this.closeBraceToken = closeBraceToken;
-            switchKeyword.parent = this;
-            openParenToken.parent = this;
-            expression.parent = this;
-            closeParenToken.parent = this;
-            openBraceToken.parent = this;
-            !TypeScript.isShared(switchClauses) && (switchClauses.parent = this);
-            closeBraceToken.parent = this;
+            switchKeyword.parent = this, openParenToken.parent = this, expression.parent = this, closeParenToken.parent = this, openBraceToken.parent = this, !TypeScript.isShared(switchClauses) && (switchClauses.parent = this), closeBraceToken.parent = this;
         }
         SwitchStatementSyntax.prototype.kind = function () {
             return 151 /* SwitchStatement */;
@@ -7607,9 +7506,7 @@ var TypeScript;
             this.breakKeyword = breakKeyword;
             this.identifier = identifier;
             this.semicolonToken = semicolonToken;
-            breakKeyword.parent = this;
-            identifier && (identifier.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
+            breakKeyword.parent = this, identifier && (identifier.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         BreakStatementSyntax.prototype.kind = function () {
             return 152 /* BreakStatement */;
@@ -7625,9 +7522,7 @@ var TypeScript;
             this.continueKeyword = continueKeyword;
             this.identifier = identifier;
             this.semicolonToken = semicolonToken;
-            continueKeyword.parent = this;
-            identifier && (identifier.parent = this);
-            semicolonToken && (semicolonToken.parent = this);
+            continueKeyword.parent = this, identifier && (identifier.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         ContinueStatementSyntax.prototype.kind = function () {
             return 153 /* ContinueStatement */;
@@ -7650,16 +7545,7 @@ var TypeScript;
             this.incrementor = incrementor;
             this.closeParenToken = closeParenToken;
             this.statement = statement;
-            forKeyword.parent = this;
-            openParenToken.parent = this;
-            variableDeclaration && (variableDeclaration.parent = this);
-            initializer && (initializer.parent = this);
-            firstSemicolonToken.parent = this;
-            condition && (condition.parent = this);
-            secondSemicolonToken.parent = this;
-            incrementor && (incrementor.parent = this);
-            closeParenToken.parent = this;
-            statement.parent = this;
+            forKeyword.parent = this, openParenToken.parent = this, variableDeclaration && (variableDeclaration.parent = this), initializer && (initializer.parent = this), firstSemicolonToken.parent = this, condition && (condition.parent = this), secondSemicolonToken.parent = this, incrementor && (incrementor.parent = this), closeParenToken.parent = this, statement.parent = this;
         }
         ForStatementSyntax.prototype.kind = function () {
             return 154 /* ForStatement */;
@@ -7680,14 +7566,7 @@ var TypeScript;
             this.expression = expression;
             this.closeParenToken = closeParenToken;
             this.statement = statement;
-            forKeyword.parent = this;
-            openParenToken.parent = this;
-            variableDeclaration && (variableDeclaration.parent = this);
-            left && (left.parent = this);
-            inKeyword.parent = this;
-            expression.parent = this;
-            closeParenToken.parent = this;
-            statement.parent = this;
+            forKeyword.parent = this, openParenToken.parent = this, variableDeclaration && (variableDeclaration.parent = this), left && (left.parent = this), inKeyword.parent = this, expression.parent = this, closeParenToken.parent = this, statement.parent = this;
         }
         ForInStatementSyntax.prototype.kind = function () {
             return 155 /* ForInStatement */;
@@ -7717,9 +7596,7 @@ var TypeScript;
             this.throwKeyword = throwKeyword;
             this.expression = expression;
             this.semicolonToken = semicolonToken;
-            throwKeyword.parent = this;
-            expression.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            throwKeyword.parent = this, expression.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         ThrowStatementSyntax.prototype.kind = function () {
             return 157 /* ThrowStatement */;
@@ -7737,11 +7614,7 @@ var TypeScript;
             this.condition = condition;
             this.closeParenToken = closeParenToken;
             this.statement = statement;
-            whileKeyword.parent = this;
-            openParenToken.parent = this;
-            condition.parent = this;
-            closeParenToken.parent = this;
-            statement.parent = this;
+            whileKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this;
         }
         WhileStatementSyntax.prototype.kind = function () {
             return 158 /* WhileStatement */;
@@ -7758,10 +7631,7 @@ var TypeScript;
             this.block = block;
             this.catchClause = catchClause;
             this.finallyClause = finallyClause;
-            tryKeyword.parent = this;
-            block.parent = this;
-            catchClause && (catchClause.parent = this);
-            finallyClause && (finallyClause.parent = this);
+            tryKeyword.parent = this, block.parent = this, catchClause && (catchClause.parent = this), finallyClause && (finallyClause.parent = this);
         }
         TryStatementSyntax.prototype.kind = function () {
             return 159 /* TryStatement */;
@@ -7777,9 +7647,7 @@ var TypeScript;
             this.identifier = identifier;
             this.colonToken = colonToken;
             this.statement = statement;
-            identifier.parent = this;
-            colonToken.parent = this;
-            statement.parent = this;
+            identifier.parent = this, colonToken.parent = this, statement.parent = this;
         }
         LabeledStatementSyntax.prototype.kind = function () {
             return 160 /* LabeledStatement */;
@@ -7799,13 +7667,7 @@ var TypeScript;
             this.condition = condition;
             this.closeParenToken = closeParenToken;
             this.semicolonToken = semicolonToken;
-            doKeyword.parent = this;
-            statement.parent = this;
-            whileKeyword.parent = this;
-            openParenToken.parent = this;
-            condition.parent = this;
-            closeParenToken.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            doKeyword.parent = this, statement.parent = this, whileKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         DoStatementSyntax.prototype.kind = function () {
             return 161 /* DoStatement */;
@@ -7820,8 +7682,7 @@ var TypeScript;
             _super.call(this, data);
             this.debuggerKeyword = debuggerKeyword;
             this.semicolonToken = semicolonToken;
-            debuggerKeyword.parent = this;
-            semicolonToken && (semicolonToken.parent = this);
+            debuggerKeyword.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         DebuggerStatementSyntax.prototype.kind = function () {
             return 162 /* DebuggerStatement */;
@@ -7839,11 +7700,7 @@ var TypeScript;
             this.condition = condition;
             this.closeParenToken = closeParenToken;
             this.statement = statement;
-            withKeyword.parent = this;
-            openParenToken.parent = this;
-            condition.parent = this;
-            closeParenToken.parent = this;
-            statement.parent = this;
+            withKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this;
         }
         WithStatementSyntax.prototype.kind = function () {
             return 163 /* WithStatement */;
@@ -7858,8 +7715,7 @@ var TypeScript;
             _super.call(this, data);
             this.operatorToken = operatorToken;
             this.operand = operand;
-            operatorToken.parent = this;
-            operand.parent = this;
+            operatorToken.parent = this, operand.parent = this;
         }
         PrefixUnaryExpressionSyntax.prototype.kind = function () {
             return TypeScript.SyntaxFacts.getPrefixUnaryExpressionFromOperatorToken(this.operatorToken.kind());
@@ -7874,8 +7730,7 @@ var TypeScript;
             _super.call(this, data);
             this.deleteKeyword = deleteKeyword;
             this.expression = expression;
-            deleteKeyword.parent = this;
-            expression.parent = this;
+            deleteKeyword.parent = this, expression.parent = this;
         }
         DeleteExpressionSyntax.prototype.kind = function () {
             return 170 /* DeleteExpression */;
@@ -7890,8 +7745,7 @@ var TypeScript;
             _super.call(this, data);
             this.typeOfKeyword = typeOfKeyword;
             this.expression = expression;
-            typeOfKeyword.parent = this;
-            expression.parent = this;
+            typeOfKeyword.parent = this, expression.parent = this;
         }
         TypeOfExpressionSyntax.prototype.kind = function () {
             return 171 /* TypeOfExpression */;
@@ -7906,8 +7760,7 @@ var TypeScript;
             _super.call(this, data);
             this.voidKeyword = voidKeyword;
             this.expression = expression;
-            voidKeyword.parent = this;
-            expression.parent = this;
+            voidKeyword.parent = this, expression.parent = this;
         }
         VoidExpressionSyntax.prototype.kind = function () {
             return 172 /* VoidExpression */;
@@ -7925,11 +7778,7 @@ var TypeScript;
             this.whenTrue = whenTrue;
             this.colonToken = colonToken;
             this.whenFalse = whenFalse;
-            condition.parent = this;
-            questionToken.parent = this;
-            whenTrue.parent = this;
-            colonToken.parent = this;
-            whenFalse.parent = this;
+            condition.parent = this, questionToken.parent = this, whenTrue.parent = this, colonToken.parent = this, whenFalse.parent = this;
         }
         ConditionalExpressionSyntax.prototype.kind = function () {
             return 186 /* ConditionalExpression */;
@@ -7945,9 +7794,7 @@ var TypeScript;
             this.left = left;
             this.operatorToken = operatorToken;
             this.right = right;
-            left.parent = this;
-            operatorToken.parent = this;
-            right.parent = this;
+            left.parent = this, operatorToken.parent = this, right.parent = this;
         }
         BinaryExpressionSyntax.prototype.kind = function () {
             return TypeScript.SyntaxFacts.getBinaryExpressionFromOperatorToken(this.operatorToken.kind());
@@ -7962,8 +7809,7 @@ var TypeScript;
             _super.call(this, data);
             this.operand = operand;
             this.operatorToken = operatorToken;
-            operand.parent = this;
-            operatorToken.parent = this;
+            operand.parent = this, operatorToken.parent = this;
         }
         PostfixUnaryExpressionSyntax.prototype.kind = function () {
             return TypeScript.SyntaxFacts.getPostfixUnaryExpressionFromOperatorToken(this.operatorToken.kind());
@@ -7979,9 +7825,7 @@ var TypeScript;
             this.expression = expression;
             this.dotToken = dotToken;
             this.name = name;
-            expression.parent = this;
-            dotToken.parent = this;
-            name.parent = this;
+            expression.parent = this, dotToken.parent = this, name.parent = this;
         }
         MemberAccessExpressionSyntax.prototype.kind = function () {
             return 212 /* MemberAccessExpression */;
@@ -7996,8 +7840,7 @@ var TypeScript;
             _super.call(this, data);
             this.expression = expression;
             this.argumentList = argumentList;
-            expression.parent = this;
-            argumentList.parent = this;
+            expression.parent = this, argumentList.parent = this;
         }
         InvocationExpressionSyntax.prototype.kind = function () {
             return 213 /* InvocationExpression */;
@@ -8013,9 +7856,7 @@ var TypeScript;
             this.openBracketToken = openBracketToken;
             this.expressions = expressions;
             this.closeBracketToken = closeBracketToken;
-            openBracketToken.parent = this;
-            !TypeScript.isShared(expressions) && (expressions.parent = this);
-            closeBracketToken.parent = this;
+            openBracketToken.parent = this, !TypeScript.isShared(expressions) && (expressions.parent = this), closeBracketToken.parent = this;
         }
         ArrayLiteralExpressionSyntax.prototype.kind = function () {
             return 214 /* ArrayLiteralExpression */;
@@ -8031,9 +7872,7 @@ var TypeScript;
             this.openBraceToken = openBraceToken;
             this.propertyAssignments = propertyAssignments;
             this.closeBraceToken = closeBraceToken;
-            openBraceToken.parent = this;
-            !TypeScript.isShared(propertyAssignments) && (propertyAssignments.parent = this);
-            closeBraceToken.parent = this;
+            openBraceToken.parent = this, !TypeScript.isShared(propertyAssignments) && (propertyAssignments.parent = this), closeBraceToken.parent = this;
         }
         ObjectLiteralExpressionSyntax.prototype.kind = function () {
             return 215 /* ObjectLiteralExpression */;
@@ -8049,9 +7888,7 @@ var TypeScript;
             this.newKeyword = newKeyword;
             this.expression = expression;
             this.argumentList = argumentList;
-            newKeyword.parent = this;
-            expression.parent = this;
-            argumentList && (argumentList.parent = this);
+            newKeyword.parent = this, expression.parent = this, argumentList && (argumentList.parent = this);
         }
         ObjectCreationExpressionSyntax.prototype.kind = function () {
             return 216 /* ObjectCreationExpression */;
@@ -8067,9 +7904,7 @@ var TypeScript;
             this.openParenToken = openParenToken;
             this.expression = expression;
             this.closeParenToken = closeParenToken;
-            openParenToken.parent = this;
-            expression.parent = this;
-            closeParenToken.parent = this;
+            openParenToken.parent = this, expression.parent = this, closeParenToken.parent = this;
         }
         ParenthesizedExpressionSyntax.prototype.kind = function () {
             return 217 /* ParenthesizedExpression */;
@@ -8086,10 +7921,7 @@ var TypeScript;
             this.equalsGreaterThanToken = equalsGreaterThanToken;
             this.block = block;
             this.expression = expression;
-            callSignature.parent = this;
-            equalsGreaterThanToken.parent = this;
-            block && (block.parent = this);
-            expression && (expression.parent = this);
+            callSignature.parent = this, equalsGreaterThanToken.parent = this, block && (block.parent = this), expression && (expression.parent = this);
         }
         ParenthesizedArrowFunctionExpressionSyntax.prototype.kind = function () {
             return 218 /* ParenthesizedArrowFunctionExpression */;
@@ -8106,10 +7938,7 @@ var TypeScript;
             this.equalsGreaterThanToken = equalsGreaterThanToken;
             this.block = block;
             this.expression = expression;
-            identifier.parent = this;
-            equalsGreaterThanToken.parent = this;
-            block && (block.parent = this);
-            expression && (expression.parent = this);
+            identifier.parent = this, equalsGreaterThanToken.parent = this, block && (block.parent = this), expression && (expression.parent = this);
         }
         SimpleArrowFunctionExpressionSyntax.prototype.kind = function () {
             return 219 /* SimpleArrowFunctionExpression */;
@@ -8126,10 +7955,7 @@ var TypeScript;
             this.type = type;
             this.greaterThanToken = greaterThanToken;
             this.expression = expression;
-            lessThanToken.parent = this;
-            type.parent = this;
-            greaterThanToken.parent = this;
-            expression.parent = this;
+            lessThanToken.parent = this, type.parent = this, greaterThanToken.parent = this, expression.parent = this;
         }
         CastExpressionSyntax.prototype.kind = function () {
             return 220 /* CastExpression */;
@@ -8146,10 +7972,7 @@ var TypeScript;
             this.openBracketToken = openBracketToken;
             this.argumentExpression = argumentExpression;
             this.closeBracketToken = closeBracketToken;
-            expression.parent = this;
-            openBracketToken.parent = this;
-            argumentExpression.parent = this;
-            closeBracketToken.parent = this;
+            expression.parent = this, openBracketToken.parent = this, argumentExpression.parent = this, closeBracketToken.parent = this;
         }
         ElementAccessExpressionSyntax.prototype.kind = function () {
             return 221 /* ElementAccessExpression */;
@@ -8166,10 +7989,7 @@ var TypeScript;
             this.identifier = identifier;
             this.callSignature = callSignature;
             this.block = block;
-            functionKeyword.parent = this;
-            identifier && (identifier.parent = this);
-            callSignature.parent = this;
-            block.parent = this;
+            functionKeyword.parent = this, identifier && (identifier.parent = this), callSignature.parent = this, block.parent = this;
         }
         FunctionExpressionSyntax.prototype.kind = function () {
             return 222 /* FunctionExpression */;
@@ -8196,8 +8016,7 @@ var TypeScript;
             _super.call(this, data);
             this.varKeyword = varKeyword;
             this.variableDeclarators = variableDeclarators;
-            varKeyword.parent = this;
-            !TypeScript.isShared(variableDeclarators) && (variableDeclarators.parent = this);
+            varKeyword.parent = this, !TypeScript.isShared(variableDeclarators) && (variableDeclarators.parent = this);
         }
         VariableDeclarationSyntax.prototype.kind = function () {
             return 224 /* VariableDeclaration */;
@@ -8213,9 +8032,7 @@ var TypeScript;
             this.propertyName = propertyName;
             this.typeAnnotation = typeAnnotation;
             this.equalsValueClause = equalsValueClause;
-            propertyName.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
-            equalsValueClause && (equalsValueClause.parent = this);
+            propertyName.parent = this, typeAnnotation && (typeAnnotation.parent = this), equalsValueClause && (equalsValueClause.parent = this);
         }
         VariableDeclaratorSyntax.prototype.kind = function () {
             return 225 /* VariableDeclarator */;
@@ -8232,10 +8049,7 @@ var TypeScript;
             this.openParenToken = openParenToken;
             this.arguments = arguments;
             this.closeParenToken = closeParenToken;
-            typeArgumentList && (typeArgumentList.parent = this);
-            openParenToken.parent = this;
-            !TypeScript.isShared(arguments) && (arguments.parent = this);
-            closeParenToken.parent = this;
+            typeArgumentList && (typeArgumentList.parent = this), openParenToken.parent = this, !TypeScript.isShared(arguments) && (arguments.parent = this), closeParenToken.parent = this;
         }
         ArgumentListSyntax.prototype.kind = function () {
             return 226 /* ArgumentList */;
@@ -8251,9 +8065,7 @@ var TypeScript;
             this.openParenToken = openParenToken;
             this.parameters = parameters;
             this.closeParenToken = closeParenToken;
-            openParenToken.parent = this;
-            !TypeScript.isShared(parameters) && (parameters.parent = this);
-            closeParenToken.parent = this;
+            openParenToken.parent = this, !TypeScript.isShared(parameters) && (parameters.parent = this), closeParenToken.parent = this;
         }
         ParameterListSyntax.prototype.kind = function () {
             return 227 /* ParameterList */;
@@ -8269,9 +8081,7 @@ var TypeScript;
             this.lessThanToken = lessThanToken;
             this.typeArguments = typeArguments;
             this.greaterThanToken = greaterThanToken;
-            lessThanToken.parent = this;
-            !TypeScript.isShared(typeArguments) && (typeArguments.parent = this);
-            greaterThanToken.parent = this;
+            lessThanToken.parent = this, !TypeScript.isShared(typeArguments) && (typeArguments.parent = this), greaterThanToken.parent = this;
         }
         TypeArgumentListSyntax.prototype.kind = function () {
             return 228 /* TypeArgumentList */;
@@ -8287,9 +8097,7 @@ var TypeScript;
             this.lessThanToken = lessThanToken;
             this.typeParameters = typeParameters;
             this.greaterThanToken = greaterThanToken;
-            lessThanToken.parent = this;
-            !TypeScript.isShared(typeParameters) && (typeParameters.parent = this);
-            greaterThanToken.parent = this;
+            lessThanToken.parent = this, !TypeScript.isShared(typeParameters) && (typeParameters.parent = this), greaterThanToken.parent = this;
         }
         TypeParameterListSyntax.prototype.kind = function () {
             return 229 /* TypeParameterList */;
@@ -8304,8 +8112,7 @@ var TypeScript;
             _super.call(this, data);
             this.extendsOrImplementsKeyword = extendsOrImplementsKeyword;
             this.typeNames = typeNames;
-            extendsOrImplementsKeyword.parent = this;
-            !TypeScript.isShared(typeNames) && (typeNames.parent = this);
+            extendsOrImplementsKeyword.parent = this, !TypeScript.isShared(typeNames) && (typeNames.parent = this);
         }
         HeritageClauseSyntax.prototype.kind = function () {
             return this.extendsOrImplementsKeyword.kind() === 48 /* ExtendsKeyword */ ? 230 /* ExtendsHeritageClause */ : 231 /* ImplementsHeritageClause */;
@@ -8320,8 +8127,7 @@ var TypeScript;
             _super.call(this, data);
             this.equalsToken = equalsToken;
             this.value = value;
-            equalsToken.parent = this;
-            value.parent = this;
+            equalsToken.parent = this, value.parent = this;
         }
         EqualsValueClauseSyntax.prototype.kind = function () {
             return 232 /* EqualsValueClause */;
@@ -8338,10 +8144,7 @@ var TypeScript;
             this.expression = expression;
             this.colonToken = colonToken;
             this.statements = statements;
-            caseKeyword.parent = this;
-            expression.parent = this;
-            colonToken.parent = this;
-            !TypeScript.isShared(statements) && (statements.parent = this);
+            caseKeyword.parent = this, expression.parent = this, colonToken.parent = this, !TypeScript.isShared(statements) && (statements.parent = this);
         }
         CaseSwitchClauseSyntax.prototype.kind = function () {
             return 233 /* CaseSwitchClause */;
@@ -8357,9 +8160,7 @@ var TypeScript;
             this.defaultKeyword = defaultKeyword;
             this.colonToken = colonToken;
             this.statements = statements;
-            defaultKeyword.parent = this;
-            colonToken.parent = this;
-            !TypeScript.isShared(statements) && (statements.parent = this);
+            defaultKeyword.parent = this, colonToken.parent = this, !TypeScript.isShared(statements) && (statements.parent = this);
         }
         DefaultSwitchClauseSyntax.prototype.kind = function () {
             return 234 /* DefaultSwitchClause */;
@@ -8374,8 +8175,7 @@ var TypeScript;
             _super.call(this, data);
             this.elseKeyword = elseKeyword;
             this.statement = statement;
-            elseKeyword.parent = this;
-            statement.parent = this;
+            elseKeyword.parent = this, statement.parent = this;
         }
         ElseClauseSyntax.prototype.kind = function () {
             return 235 /* ElseClause */;
@@ -8394,12 +8194,7 @@ var TypeScript;
             this.typeAnnotation = typeAnnotation;
             this.closeParenToken = closeParenToken;
             this.block = block;
-            catchKeyword.parent = this;
-            openParenToken.parent = this;
-            identifier.parent = this;
-            typeAnnotation && (typeAnnotation.parent = this);
-            closeParenToken.parent = this;
-            block.parent = this;
+            catchKeyword.parent = this, openParenToken.parent = this, identifier.parent = this, typeAnnotation && (typeAnnotation.parent = this), closeParenToken.parent = this, block.parent = this;
         }
         CatchClauseSyntax.prototype.kind = function () {
             return 236 /* CatchClause */;
@@ -8414,8 +8209,7 @@ var TypeScript;
             _super.call(this, data);
             this.finallyKeyword = finallyKeyword;
             this.block = block;
-            finallyKeyword.parent = this;
-            block.parent = this;
+            finallyKeyword.parent = this, block.parent = this;
         }
         FinallyClauseSyntax.prototype.kind = function () {
             return 237 /* FinallyClause */;
@@ -8430,8 +8224,7 @@ var TypeScript;
             _super.call(this, data);
             this.identifier = identifier;
             this.constraint = constraint;
-            identifier.parent = this;
-            constraint && (constraint.parent = this);
+            identifier.parent = this, constraint && (constraint.parent = this);
         }
         TypeParameterSyntax.prototype.kind = function () {
             return 238 /* TypeParameter */;
@@ -8446,8 +8239,7 @@ var TypeScript;
             _super.call(this, data);
             this.extendsKeyword = extendsKeyword;
             this.type = type;
-            extendsKeyword.parent = this;
-            type.parent = this;
+            extendsKeyword.parent = this, type.parent = this;
         }
         ConstraintSyntax.prototype.kind = function () {
             return 239 /* Constraint */;
@@ -8463,9 +8255,7 @@ var TypeScript;
             this.propertyName = propertyName;
             this.colonToken = colonToken;
             this.expression = expression;
-            propertyName.parent = this;
-            colonToken.parent = this;
-            expression.parent = this;
+            propertyName.parent = this, colonToken.parent = this, expression.parent = this;
         }
         SimplePropertyAssignmentSyntax.prototype.kind = function () {
             return 240 /* SimplePropertyAssignment */;
@@ -8481,9 +8271,7 @@ var TypeScript;
             this.propertyName = propertyName;
             this.callSignature = callSignature;
             this.block = block;
-            propertyName.parent = this;
-            callSignature.parent = this;
-            block.parent = this;
+            propertyName.parent = this, callSignature.parent = this, block.parent = this;
         }
         FunctionPropertyAssignmentSyntax.prototype.kind = function () {
             return 241 /* FunctionPropertyAssignment */;
@@ -8502,12 +8290,7 @@ var TypeScript;
             this.questionToken = questionToken;
             this.typeAnnotation = typeAnnotation;
             this.equalsValueClause = equalsValueClause;
-            dotDotDotToken && (dotDotDotToken.parent = this);
-            !TypeScript.isShared(modifiers) && (modifiers.parent = this);
-            identifier.parent = this;
-            questionToken && (questionToken.parent = this);
-            typeAnnotation && (typeAnnotation.parent = this);
-            equalsValueClause && (equalsValueClause.parent = this);
+            dotDotDotToken && (dotDotDotToken.parent = this), !TypeScript.isShared(modifiers) && (modifiers.parent = this), identifier.parent = this, questionToken && (questionToken.parent = this), typeAnnotation && (typeAnnotation.parent = this), equalsValueClause && (equalsValueClause.parent = this);
         }
         ParameterSyntax.prototype.kind = function () {
             return 242 /* Parameter */;
@@ -8522,8 +8305,7 @@ var TypeScript;
             _super.call(this, data);
             this.propertyName = propertyName;
             this.equalsValueClause = equalsValueClause;
-            propertyName.parent = this;
-            equalsValueClause && (equalsValueClause.parent = this);
+            propertyName.parent = this, equalsValueClause && (equalsValueClause.parent = this);
         }
         EnumElementSyntax.prototype.kind = function () {
             return 243 /* EnumElement */;
@@ -8538,8 +8320,7 @@ var TypeScript;
             _super.call(this, data);
             this.colonToken = colonToken;
             this.type = type;
-            colonToken.parent = this;
-            type.parent = this;
+            colonToken.parent = this, type.parent = this;
         }
         TypeAnnotationSyntax.prototype.kind = function () {
             return 244 /* TypeAnnotation */;
@@ -8556,10 +8337,7 @@ var TypeScript;
             this.openParenToken = openParenToken;
             this.stringLiteral = stringLiteral;
             this.closeParenToken = closeParenToken;
-            requireKeyword.parent = this;
-            openParenToken.parent = this;
-            stringLiteral.parent = this;
-            closeParenToken.parent = this;
+            requireKeyword.parent = this, openParenToken.parent = this, stringLiteral.parent = this, closeParenToken.parent = this;
         }
         ExternalModuleReferenceSyntax.prototype.kind = function () {
             return 245 /* ExternalModuleReference */;
