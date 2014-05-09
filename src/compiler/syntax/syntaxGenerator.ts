@@ -1953,18 +1953,26 @@ function generateNode(definition: ITypeDefinition): string {
         result += "            this.parent = null;\r\n";
     }
 
-    for (var i = 0; i < definition.children.length; i++) {
-        var child = definition.children[i];
+    if (definition.children.length > 0) {
+        result += "            ";
 
-        if (child.isList || child.isSeparatedList) {
-            result += "            !isShared(" + child.name + ") && (" + child.name + ".parent = this);\r\n";
+        for (var i = 0; i < definition.children.length; i++) {
+            if (i > 0) {
+                result += ", ";
+            }
+            var child = definition.children[i];
+
+            if (child.isList || child.isSeparatedList) {
+                result += "!isShared(" + child.name + ") && (" + child.name + ".parent = this)";
+            }
+            else if (child.isOptional) {
+                result += "" + child.name + " && (" + child.name + ".parent = this)";
+            }
+            else {
+                result += "" + child.name + ".parent = this";
+            }
         }
-        else if (child.isOptional) {
-            result += "            " + child.name + " && (" + child.name + ".parent = this);\r\n";
-        }
-        else {
-            result += "            " + child.name + ".parent = this;\r\n";
-        }
+        result += ";\r\n";
     }
 
     result += "        }\r\n";
