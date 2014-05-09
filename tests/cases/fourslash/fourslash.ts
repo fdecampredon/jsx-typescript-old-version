@@ -520,7 +520,9 @@ module fs {
     export var diagnostics = new FourSlashInterface.diagnostics();
     export var cancellation = new FourSlashInterface.cancellation();
 }
-
+function verifyOperationIsCancelled(f) {
+    FourSlash.verifyOperationIsCancelled(f);
+}
 var test = new FourSlashInterface.test();
 var goTo = new FourSlashInterface.goTo();
 var verify = new FourSlashInterface.verify();
