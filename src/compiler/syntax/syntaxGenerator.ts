@@ -1955,40 +1955,32 @@ function generateNode(definition: ITypeDefinition): string {
     result += "            super(data);\r\n";
 
     if (definition.name === "SourceUnitSyntax") {
-        result += "            this.parent = null;\r\n";
+        result += "            this.parent = null,\r\n";
     }
 
     if (definition.children) {
-        result += "            ";
-
         for (var i = 0; i < definition.children.length; i++) {
-            if (i > 0) {
-                result += ", ";
-            }
             var child = definition.children[i];
 
-            result += "this." + child.name + " = " + getSafeName(child);
+            result += "            this." + child.name + " = " + getSafeName(child) + ",\r\n";
         }
-        result += ";\r\n";
     }
 
     if (definition.children.length > 0) {
-        result += "            ";
-
         for (var i = 0; i < definition.children.length; i++) {
             if (i > 0) {
-                result += ", ";
+                result += ",\r\n";
             }
             var child = definition.children[i];
 
             if (child.isList || child.isSeparatedList) {
-                result += "!isShared(" + getSafeName(child) + ") && (" + getSafeName(child) + ".parent = this)";
+                result += "            !isShared(" + getSafeName(child) + ") && (" + getSafeName(child) + ".parent = this)";
             }
             else if (child.isOptional) {
-                result += "" + getSafeName(child) + " && (" + getSafeName(child) + ".parent = this)";
+                result += "            " + getSafeName(child) + " && (" + getSafeName(child) + ".parent = this)";
             }
             else {
-                result += "" + getSafeName(child) + ".parent = this";
+                result += "            " + getSafeName(child) + ".parent = this";
             }
         }
         result += ";\r\n";

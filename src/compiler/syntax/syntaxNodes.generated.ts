@@ -137,9 +137,11 @@ module TypeScript {
         public endOfFileToken: ISyntaxToken;
         constructor(data: number, moduleElements: IModuleElementSyntax[], endOfFileToken: ISyntaxToken) {
             super(data);
-            this.parent = null;
-            this.moduleElements = moduleElements, this.endOfFileToken = endOfFileToken;
-            !isShared(moduleElements) && (moduleElements.parent = this), endOfFileToken.parent = this;
+            this.parent = null,
+            this.moduleElements = moduleElements,
+            this.endOfFileToken = endOfFileToken,
+            !isShared(moduleElements) && (moduleElements.parent = this),
+            endOfFileToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.SourceUnit; }
     }
@@ -151,8 +153,12 @@ module TypeScript {
         public _isName: any; public _isType: any;
         constructor(data: number, left: INameSyntax, dotToken: ISyntaxToken, right: ISyntaxToken) {
             super(data);
-            this.left = left, this.dotToken = dotToken, this.right = right;
-            left.parent = this, dotToken.parent = this, right.parent = this;
+            this.left = left,
+            this.dotToken = dotToken,
+            this.right = right,
+            left.parent = this,
+            dotToken.parent = this,
+            right.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.QualifiedName; }
     }
@@ -164,8 +170,12 @@ module TypeScript {
         public _isType: any;
         constructor(data: number, openBraceToken: ISyntaxToken, typeMembers: ITypeMemberSyntax[], closeBraceToken: ISyntaxToken) {
             super(data);
-            this.openBraceToken = openBraceToken, this.typeMembers = typeMembers, this.closeBraceToken = closeBraceToken;
-            openBraceToken.parent = this, !isShared(typeMembers) && (typeMembers.parent = this), closeBraceToken.parent = this;
+            this.openBraceToken = openBraceToken,
+            this.typeMembers = typeMembers,
+            this.closeBraceToken = closeBraceToken,
+            openBraceToken.parent = this,
+            !isShared(typeMembers) && (typeMembers.parent = this),
+            closeBraceToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ObjectType; }
     }
@@ -178,8 +188,14 @@ module TypeScript {
         public _isType: any;
         constructor(data: number, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, equalsGreaterThanToken: ISyntaxToken, type: ITypeSyntax) {
             super(data);
-            this.typeParameterList = typeParameterList, this.parameterList = parameterList, this.equalsGreaterThanToken = equalsGreaterThanToken, this.type = type;
-            typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, equalsGreaterThanToken.parent = this, type.parent = this;
+            this.typeParameterList = typeParameterList,
+            this.parameterList = parameterList,
+            this.equalsGreaterThanToken = equalsGreaterThanToken,
+            this.type = type,
+            typeParameterList && (typeParameterList.parent = this),
+            parameterList.parent = this,
+            equalsGreaterThanToken.parent = this,
+            type.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.FunctionType; }
     }
@@ -191,8 +207,12 @@ module TypeScript {
         public _isType: any;
         constructor(data: number, type: ITypeSyntax, openBracketToken: ISyntaxToken, closeBracketToken: ISyntaxToken) {
             super(data);
-            this.type = type, this.openBracketToken = openBracketToken, this.closeBracketToken = closeBracketToken;
-            type.parent = this, openBracketToken.parent = this, closeBracketToken.parent = this;
+            this.type = type,
+            this.openBracketToken = openBracketToken,
+            this.closeBracketToken = closeBracketToken,
+            type.parent = this,
+            openBracketToken.parent = this,
+            closeBracketToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ArrayType; }
     }
@@ -206,8 +226,16 @@ module TypeScript {
         public _isType: any;
         constructor(data: number, newKeyword: ISyntaxToken, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, equalsGreaterThanToken: ISyntaxToken, type: ITypeSyntax) {
             super(data);
-            this.newKeyword = newKeyword, this.typeParameterList = typeParameterList, this.parameterList = parameterList, this.equalsGreaterThanToken = equalsGreaterThanToken, this.type = type;
-            newKeyword.parent = this, typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, equalsGreaterThanToken.parent = this, type.parent = this;
+            this.newKeyword = newKeyword,
+            this.typeParameterList = typeParameterList,
+            this.parameterList = parameterList,
+            this.equalsGreaterThanToken = equalsGreaterThanToken,
+            this.type = type,
+            newKeyword.parent = this,
+            typeParameterList && (typeParameterList.parent = this),
+            parameterList.parent = this,
+            equalsGreaterThanToken.parent = this,
+            type.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ConstructorType; }
     }
@@ -218,8 +246,10 @@ module TypeScript {
         public _isType: any;
         constructor(data: number, name: INameSyntax, typeArgumentList: TypeArgumentListSyntax) {
             super(data);
-            this.name = name, this.typeArgumentList = typeArgumentList;
-            name.parent = this, typeArgumentList.parent = this;
+            this.name = name,
+            this.typeArgumentList = typeArgumentList,
+            name.parent = this,
+            typeArgumentList.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.GenericType; }
     }
@@ -230,8 +260,10 @@ module TypeScript {
         public _isType: any;
         constructor(data: number, typeOfKeyword: ISyntaxToken, name: INameSyntax) {
             super(data);
-            this.typeOfKeyword = typeOfKeyword, this.name = name;
-            typeOfKeyword.parent = this, name.parent = this;
+            this.typeOfKeyword = typeOfKeyword,
+            this.name = name,
+            typeOfKeyword.parent = this,
+            name.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.TypeQuery; }
     }
@@ -246,8 +278,18 @@ module TypeScript {
         public _isModuleElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], interfaceKeyword: ISyntaxToken, identifier: ISyntaxToken, typeParameterList: TypeParameterListSyntax, heritageClauses: HeritageClauseSyntax[], body: ObjectTypeSyntax) {
             super(data);
-            this.modifiers = modifiers, this.interfaceKeyword = interfaceKeyword, this.identifier = identifier, this.typeParameterList = typeParameterList, this.heritageClauses = heritageClauses, this.body = body;
-            !isShared(modifiers) && (modifiers.parent = this), interfaceKeyword.parent = this, identifier.parent = this, typeParameterList && (typeParameterList.parent = this), !isShared(heritageClauses) && (heritageClauses.parent = this), body.parent = this;
+            this.modifiers = modifiers,
+            this.interfaceKeyword = interfaceKeyword,
+            this.identifier = identifier,
+            this.typeParameterList = typeParameterList,
+            this.heritageClauses = heritageClauses,
+            this.body = body,
+            !isShared(modifiers) && (modifiers.parent = this),
+            interfaceKeyword.parent = this,
+            identifier.parent = this,
+            typeParameterList && (typeParameterList.parent = this),
+            !isShared(heritageClauses) && (heritageClauses.parent = this),
+            body.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.InterfaceDeclaration; }
     }
@@ -262,8 +304,18 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], functionKeyword: ISyntaxToken, identifier: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.functionKeyword = functionKeyword, this.identifier = identifier, this.callSignature = callSignature, this.block = block, this.semicolonToken = semicolonToken;
-            !isShared(modifiers) && (modifiers.parent = this), functionKeyword.parent = this, identifier.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
+            this.modifiers = modifiers,
+            this.functionKeyword = functionKeyword,
+            this.identifier = identifier,
+            this.callSignature = callSignature,
+            this.block = block,
+            this.semicolonToken = semicolonToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            functionKeyword.parent = this,
+            identifier.parent = this,
+            callSignature.parent = this,
+            block && (block.parent = this),
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.FunctionDeclaration; }
     }
@@ -279,8 +331,20 @@ module TypeScript {
         public _isModuleElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], moduleKeyword: ISyntaxToken, name: INameSyntax, stringLiteral: ISyntaxToken, openBraceToken: ISyntaxToken, moduleElements: IModuleElementSyntax[], closeBraceToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.moduleKeyword = moduleKeyword, this.name = name, this.stringLiteral = stringLiteral, this.openBraceToken = openBraceToken, this.moduleElements = moduleElements, this.closeBraceToken = closeBraceToken;
-            !isShared(modifiers) && (modifiers.parent = this), moduleKeyword.parent = this, name && (name.parent = this), stringLiteral && (stringLiteral.parent = this), openBraceToken.parent = this, !isShared(moduleElements) && (moduleElements.parent = this), closeBraceToken.parent = this;
+            this.modifiers = modifiers,
+            this.moduleKeyword = moduleKeyword,
+            this.name = name,
+            this.stringLiteral = stringLiteral,
+            this.openBraceToken = openBraceToken,
+            this.moduleElements = moduleElements,
+            this.closeBraceToken = closeBraceToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            moduleKeyword.parent = this,
+            name && (name.parent = this),
+            stringLiteral && (stringLiteral.parent = this),
+            openBraceToken.parent = this,
+            !isShared(moduleElements) && (moduleElements.parent = this),
+            closeBraceToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ModuleDeclaration; }
     }
@@ -297,8 +361,22 @@ module TypeScript {
         public _isModuleElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], classKeyword: ISyntaxToken, identifier: ISyntaxToken, typeParameterList: TypeParameterListSyntax, heritageClauses: HeritageClauseSyntax[], openBraceToken: ISyntaxToken, classElements: IClassElementSyntax[], closeBraceToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.classKeyword = classKeyword, this.identifier = identifier, this.typeParameterList = typeParameterList, this.heritageClauses = heritageClauses, this.openBraceToken = openBraceToken, this.classElements = classElements, this.closeBraceToken = closeBraceToken;
-            !isShared(modifiers) && (modifiers.parent = this), classKeyword.parent = this, identifier.parent = this, typeParameterList && (typeParameterList.parent = this), !isShared(heritageClauses) && (heritageClauses.parent = this), openBraceToken.parent = this, !isShared(classElements) && (classElements.parent = this), closeBraceToken.parent = this;
+            this.modifiers = modifiers,
+            this.classKeyword = classKeyword,
+            this.identifier = identifier,
+            this.typeParameterList = typeParameterList,
+            this.heritageClauses = heritageClauses,
+            this.openBraceToken = openBraceToken,
+            this.classElements = classElements,
+            this.closeBraceToken = closeBraceToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            classKeyword.parent = this,
+            identifier.parent = this,
+            typeParameterList && (typeParameterList.parent = this),
+            !isShared(heritageClauses) && (heritageClauses.parent = this),
+            openBraceToken.parent = this,
+            !isShared(classElements) && (classElements.parent = this),
+            closeBraceToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ClassDeclaration; }
     }
@@ -313,8 +391,18 @@ module TypeScript {
         public _isModuleElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], enumKeyword: ISyntaxToken, identifier: ISyntaxToken, openBraceToken: ISyntaxToken, enumElements: EnumElementSyntax[], closeBraceToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.enumKeyword = enumKeyword, this.identifier = identifier, this.openBraceToken = openBraceToken, this.enumElements = enumElements, this.closeBraceToken = closeBraceToken;
-            !isShared(modifiers) && (modifiers.parent = this), enumKeyword.parent = this, identifier.parent = this, openBraceToken.parent = this, !isShared(enumElements) && (enumElements.parent = this), closeBraceToken.parent = this;
+            this.modifiers = modifiers,
+            this.enumKeyword = enumKeyword,
+            this.identifier = identifier,
+            this.openBraceToken = openBraceToken,
+            this.enumElements = enumElements,
+            this.closeBraceToken = closeBraceToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            enumKeyword.parent = this,
+            identifier.parent = this,
+            openBraceToken.parent = this,
+            !isShared(enumElements) && (enumElements.parent = this),
+            closeBraceToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.EnumDeclaration; }
     }
@@ -329,8 +417,18 @@ module TypeScript {
         public _isModuleElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], importKeyword: ISyntaxToken, identifier: ISyntaxToken, equalsToken: ISyntaxToken, moduleReference: IModuleReferenceSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.importKeyword = importKeyword, this.identifier = identifier, this.equalsToken = equalsToken, this.moduleReference = moduleReference, this.semicolonToken = semicolonToken;
-            !isShared(modifiers) && (modifiers.parent = this), importKeyword.parent = this, identifier.parent = this, equalsToken.parent = this, moduleReference.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.modifiers = modifiers,
+            this.importKeyword = importKeyword,
+            this.identifier = identifier,
+            this.equalsToken = equalsToken,
+            this.moduleReference = moduleReference,
+            this.semicolonToken = semicolonToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            importKeyword.parent = this,
+            identifier.parent = this,
+            equalsToken.parent = this,
+            moduleReference.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ImportDeclaration; }
     }
@@ -343,8 +441,14 @@ module TypeScript {
         public _isModuleElement: any;
         constructor(data: number, exportKeyword: ISyntaxToken, equalsToken: ISyntaxToken, identifier: ISyntaxToken, semicolonToken: ISyntaxToken) {
             super(data);
-            this.exportKeyword = exportKeyword, this.equalsToken = equalsToken, this.identifier = identifier, this.semicolonToken = semicolonToken;
-            exportKeyword.parent = this, equalsToken.parent = this, identifier.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.exportKeyword = exportKeyword,
+            this.equalsToken = equalsToken,
+            this.identifier = identifier,
+            this.semicolonToken = semicolonToken,
+            exportKeyword.parent = this,
+            equalsToken.parent = this,
+            identifier.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ExportAssignment; }
     }
@@ -358,8 +462,16 @@ module TypeScript {
         public _isMemberDeclaration: any; public _isClassElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], propertyName: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.propertyName = propertyName, this.callSignature = callSignature, this.block = block, this.semicolonToken = semicolonToken;
-            !isShared(modifiers) && (modifiers.parent = this), propertyName.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
+            this.modifiers = modifiers,
+            this.propertyName = propertyName,
+            this.callSignature = callSignature,
+            this.block = block,
+            this.semicolonToken = semicolonToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            propertyName.parent = this,
+            callSignature.parent = this,
+            block && (block.parent = this),
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.MemberFunctionDeclaration; }
     }
@@ -371,8 +483,12 @@ module TypeScript {
         public _isMemberDeclaration: any; public _isClassElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], variableDeclarator: VariableDeclaratorSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.variableDeclarator = variableDeclarator, this.semicolonToken = semicolonToken;
-            !isShared(modifiers) && (modifiers.parent = this), variableDeclarator.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.modifiers = modifiers,
+            this.variableDeclarator = variableDeclarator,
+            this.semicolonToken = semicolonToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            variableDeclarator.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.MemberVariableDeclaration; }
     }
@@ -386,8 +502,16 @@ module TypeScript {
         public _isClassElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], constructorKeyword: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.constructorKeyword = constructorKeyword, this.callSignature = callSignature, this.block = block, this.semicolonToken = semicolonToken;
-            !isShared(modifiers) && (modifiers.parent = this), constructorKeyword.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
+            this.modifiers = modifiers,
+            this.constructorKeyword = constructorKeyword,
+            this.callSignature = callSignature,
+            this.block = block,
+            this.semicolonToken = semicolonToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            constructorKeyword.parent = this,
+            callSignature.parent = this,
+            block && (block.parent = this),
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ConstructorDeclaration; }
     }
@@ -399,8 +523,12 @@ module TypeScript {
         public _isClassElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], indexSignature: IndexSignatureSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.indexSignature = indexSignature, this.semicolonToken = semicolonToken;
-            !isShared(modifiers) && (modifiers.parent = this), indexSignature.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.modifiers = modifiers,
+            this.indexSignature = indexSignature,
+            this.semicolonToken = semicolonToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            indexSignature.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.IndexMemberDeclaration; }
     }
@@ -415,8 +543,18 @@ module TypeScript {
         public _isMemberDeclaration: any; public _isPropertyAssignment: any; public _isClassElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], getKeyword: ISyntaxToken, propertyName: ISyntaxToken, parameterList: ParameterListSyntax, typeAnnotation: TypeAnnotationSyntax, block: BlockSyntax) {
             super(data);
-            this.modifiers = modifiers, this.getKeyword = getKeyword, this.propertyName = propertyName, this.parameterList = parameterList, this.typeAnnotation = typeAnnotation, this.block = block;
-            !isShared(modifiers) && (modifiers.parent = this), getKeyword.parent = this, propertyName.parent = this, parameterList.parent = this, typeAnnotation && (typeAnnotation.parent = this), block.parent = this;
+            this.modifiers = modifiers,
+            this.getKeyword = getKeyword,
+            this.propertyName = propertyName,
+            this.parameterList = parameterList,
+            this.typeAnnotation = typeAnnotation,
+            this.block = block,
+            !isShared(modifiers) && (modifiers.parent = this),
+            getKeyword.parent = this,
+            propertyName.parent = this,
+            parameterList.parent = this,
+            typeAnnotation && (typeAnnotation.parent = this),
+            block.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.GetAccessor; }
     }
@@ -430,8 +568,16 @@ module TypeScript {
         public _isMemberDeclaration: any; public _isPropertyAssignment: any; public _isClassElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], setKeyword: ISyntaxToken, propertyName: ISyntaxToken, parameterList: ParameterListSyntax, block: BlockSyntax) {
             super(data);
-            this.modifiers = modifiers, this.setKeyword = setKeyword, this.propertyName = propertyName, this.parameterList = parameterList, this.block = block;
-            !isShared(modifiers) && (modifiers.parent = this), setKeyword.parent = this, propertyName.parent = this, parameterList.parent = this, block.parent = this;
+            this.modifiers = modifiers,
+            this.setKeyword = setKeyword,
+            this.propertyName = propertyName,
+            this.parameterList = parameterList,
+            this.block = block,
+            !isShared(modifiers) && (modifiers.parent = this),
+            setKeyword.parent = this,
+            propertyName.parent = this,
+            parameterList.parent = this,
+            block.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.SetAccessor; }
     }
@@ -443,8 +589,12 @@ module TypeScript {
         public _isTypeMember: any;
         constructor(data: number, propertyName: ISyntaxToken, questionToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax) {
             super(data);
-            this.propertyName = propertyName, this.questionToken = questionToken, this.typeAnnotation = typeAnnotation;
-            propertyName.parent = this, questionToken && (questionToken.parent = this), typeAnnotation && (typeAnnotation.parent = this);
+            this.propertyName = propertyName,
+            this.questionToken = questionToken,
+            this.typeAnnotation = typeAnnotation,
+            propertyName.parent = this,
+            questionToken && (questionToken.parent = this),
+            typeAnnotation && (typeAnnotation.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.PropertySignature; }
     }
@@ -456,8 +606,12 @@ module TypeScript {
         public _isTypeMember: any;
         constructor(data: number, typeParameterList: TypeParameterListSyntax, parameterList: ParameterListSyntax, typeAnnotation: TypeAnnotationSyntax) {
             super(data);
-            this.typeParameterList = typeParameterList, this.parameterList = parameterList, this.typeAnnotation = typeAnnotation;
-            typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, typeAnnotation && (typeAnnotation.parent = this);
+            this.typeParameterList = typeParameterList,
+            this.parameterList = parameterList,
+            this.typeAnnotation = typeAnnotation,
+            typeParameterList && (typeParameterList.parent = this),
+            parameterList.parent = this,
+            typeAnnotation && (typeAnnotation.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.CallSignature; }
     }
@@ -468,8 +622,10 @@ module TypeScript {
         public _isTypeMember: any;
         constructor(data: number, newKeyword: ISyntaxToken, callSignature: CallSignatureSyntax) {
             super(data);
-            this.newKeyword = newKeyword, this.callSignature = callSignature;
-            newKeyword.parent = this, callSignature.parent = this;
+            this.newKeyword = newKeyword,
+            this.callSignature = callSignature,
+            newKeyword.parent = this,
+            callSignature.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ConstructSignature; }
     }
@@ -482,8 +638,14 @@ module TypeScript {
         public _isTypeMember: any;
         constructor(data: number, openBracketToken: ISyntaxToken, parameter: ParameterSyntax, closeBracketToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax) {
             super(data);
-            this.openBracketToken = openBracketToken, this.parameter = parameter, this.closeBracketToken = closeBracketToken, this.typeAnnotation = typeAnnotation;
-            openBracketToken.parent = this, parameter.parent = this, closeBracketToken.parent = this, typeAnnotation && (typeAnnotation.parent = this);
+            this.openBracketToken = openBracketToken,
+            this.parameter = parameter,
+            this.closeBracketToken = closeBracketToken,
+            this.typeAnnotation = typeAnnotation,
+            openBracketToken.parent = this,
+            parameter.parent = this,
+            closeBracketToken.parent = this,
+            typeAnnotation && (typeAnnotation.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.IndexSignature; }
     }
@@ -495,8 +657,12 @@ module TypeScript {
         public _isTypeMember: any;
         constructor(data: number, propertyName: ISyntaxToken, questionToken: ISyntaxToken, callSignature: CallSignatureSyntax) {
             super(data);
-            this.propertyName = propertyName, this.questionToken = questionToken, this.callSignature = callSignature;
-            propertyName.parent = this, questionToken && (questionToken.parent = this), callSignature.parent = this;
+            this.propertyName = propertyName,
+            this.questionToken = questionToken,
+            this.callSignature = callSignature,
+            propertyName.parent = this,
+            questionToken && (questionToken.parent = this),
+            callSignature.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.MethodSignature; }
     }
@@ -508,8 +674,12 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, openBraceToken: ISyntaxToken, statements: IStatementSyntax[], closeBraceToken: ISyntaxToken) {
             super(data);
-            this.openBraceToken = openBraceToken, this.statements = statements, this.closeBraceToken = closeBraceToken;
-            openBraceToken.parent = this, !isShared(statements) && (statements.parent = this), closeBraceToken.parent = this;
+            this.openBraceToken = openBraceToken,
+            this.statements = statements,
+            this.closeBraceToken = closeBraceToken,
+            openBraceToken.parent = this,
+            !isShared(statements) && (statements.parent = this),
+            closeBraceToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.Block; }
     }
@@ -524,8 +694,18 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, ifKeyword: ISyntaxToken, openParenToken: ISyntaxToken, condition: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax, elseClause: ElseClauseSyntax) {
             super(data);
-            this.ifKeyword = ifKeyword, this.openParenToken = openParenToken, this.condition = condition, this.closeParenToken = closeParenToken, this.statement = statement, this.elseClause = elseClause;
-            ifKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this, elseClause && (elseClause.parent = this);
+            this.ifKeyword = ifKeyword,
+            this.openParenToken = openParenToken,
+            this.condition = condition,
+            this.closeParenToken = closeParenToken,
+            this.statement = statement,
+            this.elseClause = elseClause,
+            ifKeyword.parent = this,
+            openParenToken.parent = this,
+            condition.parent = this,
+            closeParenToken.parent = this,
+            statement.parent = this,
+            elseClause && (elseClause.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.IfStatement; }
     }
@@ -537,8 +717,12 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, modifiers: ISyntaxToken[], variableDeclaration: VariableDeclarationSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.modifiers = modifiers, this.variableDeclaration = variableDeclaration, this.semicolonToken = semicolonToken;
-            !isShared(modifiers) && (modifiers.parent = this), variableDeclaration.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.modifiers = modifiers,
+            this.variableDeclaration = variableDeclaration,
+            this.semicolonToken = semicolonToken,
+            !isShared(modifiers) && (modifiers.parent = this),
+            variableDeclaration.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.VariableStatement; }
     }
@@ -549,8 +733,10 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, expression: IExpressionSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.expression = expression, this.semicolonToken = semicolonToken;
-            expression.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.expression = expression,
+            this.semicolonToken = semicolonToken,
+            expression.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ExpressionStatement; }
     }
@@ -562,8 +748,12 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, returnKeyword: ISyntaxToken, expression: IExpressionSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.returnKeyword = returnKeyword, this.expression = expression, this.semicolonToken = semicolonToken;
-            returnKeyword.parent = this, expression && (expression.parent = this), semicolonToken && (semicolonToken.parent = this);
+            this.returnKeyword = returnKeyword,
+            this.expression = expression,
+            this.semicolonToken = semicolonToken,
+            returnKeyword.parent = this,
+            expression && (expression.parent = this),
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ReturnStatement; }
     }
@@ -579,8 +769,20 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, switchKeyword: ISyntaxToken, openParenToken: ISyntaxToken, expression: IExpressionSyntax, closeParenToken: ISyntaxToken, openBraceToken: ISyntaxToken, switchClauses: ISwitchClauseSyntax[], closeBraceToken: ISyntaxToken) {
             super(data);
-            this.switchKeyword = switchKeyword, this.openParenToken = openParenToken, this.expression = expression, this.closeParenToken = closeParenToken, this.openBraceToken = openBraceToken, this.switchClauses = switchClauses, this.closeBraceToken = closeBraceToken;
-            switchKeyword.parent = this, openParenToken.parent = this, expression.parent = this, closeParenToken.parent = this, openBraceToken.parent = this, !isShared(switchClauses) && (switchClauses.parent = this), closeBraceToken.parent = this;
+            this.switchKeyword = switchKeyword,
+            this.openParenToken = openParenToken,
+            this.expression = expression,
+            this.closeParenToken = closeParenToken,
+            this.openBraceToken = openBraceToken,
+            this.switchClauses = switchClauses,
+            this.closeBraceToken = closeBraceToken,
+            switchKeyword.parent = this,
+            openParenToken.parent = this,
+            expression.parent = this,
+            closeParenToken.parent = this,
+            openBraceToken.parent = this,
+            !isShared(switchClauses) && (switchClauses.parent = this),
+            closeBraceToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.SwitchStatement; }
     }
@@ -592,8 +794,12 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, breakKeyword: ISyntaxToken, identifier: ISyntaxToken, semicolonToken: ISyntaxToken) {
             super(data);
-            this.breakKeyword = breakKeyword, this.identifier = identifier, this.semicolonToken = semicolonToken;
-            breakKeyword.parent = this, identifier && (identifier.parent = this), semicolonToken && (semicolonToken.parent = this);
+            this.breakKeyword = breakKeyword,
+            this.identifier = identifier,
+            this.semicolonToken = semicolonToken,
+            breakKeyword.parent = this,
+            identifier && (identifier.parent = this),
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.BreakStatement; }
     }
@@ -605,8 +811,12 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, continueKeyword: ISyntaxToken, identifier: ISyntaxToken, semicolonToken: ISyntaxToken) {
             super(data);
-            this.continueKeyword = continueKeyword, this.identifier = identifier, this.semicolonToken = semicolonToken;
-            continueKeyword.parent = this, identifier && (identifier.parent = this), semicolonToken && (semicolonToken.parent = this);
+            this.continueKeyword = continueKeyword,
+            this.identifier = identifier,
+            this.semicolonToken = semicolonToken,
+            continueKeyword.parent = this,
+            identifier && (identifier.parent = this),
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ContinueStatement; }
     }
@@ -625,8 +835,26 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, forKeyword: ISyntaxToken, openParenToken: ISyntaxToken, variableDeclaration: VariableDeclarationSyntax, initializer: IExpressionSyntax, firstSemicolonToken: ISyntaxToken, condition: IExpressionSyntax, secondSemicolonToken: ISyntaxToken, incrementor: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax) {
             super(data);
-            this.forKeyword = forKeyword, this.openParenToken = openParenToken, this.variableDeclaration = variableDeclaration, this.initializer = initializer, this.firstSemicolonToken = firstSemicolonToken, this.condition = condition, this.secondSemicolonToken = secondSemicolonToken, this.incrementor = incrementor, this.closeParenToken = closeParenToken, this.statement = statement;
-            forKeyword.parent = this, openParenToken.parent = this, variableDeclaration && (variableDeclaration.parent = this), initializer && (initializer.parent = this), firstSemicolonToken.parent = this, condition && (condition.parent = this), secondSemicolonToken.parent = this, incrementor && (incrementor.parent = this), closeParenToken.parent = this, statement.parent = this;
+            this.forKeyword = forKeyword,
+            this.openParenToken = openParenToken,
+            this.variableDeclaration = variableDeclaration,
+            this.initializer = initializer,
+            this.firstSemicolonToken = firstSemicolonToken,
+            this.condition = condition,
+            this.secondSemicolonToken = secondSemicolonToken,
+            this.incrementor = incrementor,
+            this.closeParenToken = closeParenToken,
+            this.statement = statement,
+            forKeyword.parent = this,
+            openParenToken.parent = this,
+            variableDeclaration && (variableDeclaration.parent = this),
+            initializer && (initializer.parent = this),
+            firstSemicolonToken.parent = this,
+            condition && (condition.parent = this),
+            secondSemicolonToken.parent = this,
+            incrementor && (incrementor.parent = this),
+            closeParenToken.parent = this,
+            statement.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ForStatement; }
     }
@@ -643,8 +871,22 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, forKeyword: ISyntaxToken, openParenToken: ISyntaxToken, variableDeclaration: VariableDeclarationSyntax, left: IExpressionSyntax, inKeyword: ISyntaxToken, expression: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax) {
             super(data);
-            this.forKeyword = forKeyword, this.openParenToken = openParenToken, this.variableDeclaration = variableDeclaration, this.left = left, this.inKeyword = inKeyword, this.expression = expression, this.closeParenToken = closeParenToken, this.statement = statement;
-            forKeyword.parent = this, openParenToken.parent = this, variableDeclaration && (variableDeclaration.parent = this), left && (left.parent = this), inKeyword.parent = this, expression.parent = this, closeParenToken.parent = this, statement.parent = this;
+            this.forKeyword = forKeyword,
+            this.openParenToken = openParenToken,
+            this.variableDeclaration = variableDeclaration,
+            this.left = left,
+            this.inKeyword = inKeyword,
+            this.expression = expression,
+            this.closeParenToken = closeParenToken,
+            this.statement = statement,
+            forKeyword.parent = this,
+            openParenToken.parent = this,
+            variableDeclaration && (variableDeclaration.parent = this),
+            left && (left.parent = this),
+            inKeyword.parent = this,
+            expression.parent = this,
+            closeParenToken.parent = this,
+            statement.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ForInStatement; }
     }
@@ -654,7 +896,7 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, semicolonToken: ISyntaxToken) {
             super(data);
-            this.semicolonToken = semicolonToken;
+            this.semicolonToken = semicolonToken,
             semicolonToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.EmptyStatement; }
@@ -667,8 +909,12 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, throwKeyword: ISyntaxToken, expression: IExpressionSyntax, semicolonToken: ISyntaxToken) {
             super(data);
-            this.throwKeyword = throwKeyword, this.expression = expression, this.semicolonToken = semicolonToken;
-            throwKeyword.parent = this, expression.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.throwKeyword = throwKeyword,
+            this.expression = expression,
+            this.semicolonToken = semicolonToken,
+            throwKeyword.parent = this,
+            expression.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ThrowStatement; }
     }
@@ -682,8 +928,16 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, whileKeyword: ISyntaxToken, openParenToken: ISyntaxToken, condition: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax) {
             super(data);
-            this.whileKeyword = whileKeyword, this.openParenToken = openParenToken, this.condition = condition, this.closeParenToken = closeParenToken, this.statement = statement;
-            whileKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this;
+            this.whileKeyword = whileKeyword,
+            this.openParenToken = openParenToken,
+            this.condition = condition,
+            this.closeParenToken = closeParenToken,
+            this.statement = statement,
+            whileKeyword.parent = this,
+            openParenToken.parent = this,
+            condition.parent = this,
+            closeParenToken.parent = this,
+            statement.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.WhileStatement; }
     }
@@ -696,8 +950,14 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, tryKeyword: ISyntaxToken, block: BlockSyntax, catchClause: CatchClauseSyntax, finallyClause: FinallyClauseSyntax) {
             super(data);
-            this.tryKeyword = tryKeyword, this.block = block, this.catchClause = catchClause, this.finallyClause = finallyClause;
-            tryKeyword.parent = this, block.parent = this, catchClause && (catchClause.parent = this), finallyClause && (finallyClause.parent = this);
+            this.tryKeyword = tryKeyword,
+            this.block = block,
+            this.catchClause = catchClause,
+            this.finallyClause = finallyClause,
+            tryKeyword.parent = this,
+            block.parent = this,
+            catchClause && (catchClause.parent = this),
+            finallyClause && (finallyClause.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.TryStatement; }
     }
@@ -709,8 +969,12 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, identifier: ISyntaxToken, colonToken: ISyntaxToken, statement: IStatementSyntax) {
             super(data);
-            this.identifier = identifier, this.colonToken = colonToken, this.statement = statement;
-            identifier.parent = this, colonToken.parent = this, statement.parent = this;
+            this.identifier = identifier,
+            this.colonToken = colonToken,
+            this.statement = statement,
+            identifier.parent = this,
+            colonToken.parent = this,
+            statement.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.LabeledStatement; }
     }
@@ -726,8 +990,20 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, doKeyword: ISyntaxToken, statement: IStatementSyntax, whileKeyword: ISyntaxToken, openParenToken: ISyntaxToken, condition: IExpressionSyntax, closeParenToken: ISyntaxToken, semicolonToken: ISyntaxToken) {
             super(data);
-            this.doKeyword = doKeyword, this.statement = statement, this.whileKeyword = whileKeyword, this.openParenToken = openParenToken, this.condition = condition, this.closeParenToken = closeParenToken, this.semicolonToken = semicolonToken;
-            doKeyword.parent = this, statement.parent = this, whileKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.doKeyword = doKeyword,
+            this.statement = statement,
+            this.whileKeyword = whileKeyword,
+            this.openParenToken = openParenToken,
+            this.condition = condition,
+            this.closeParenToken = closeParenToken,
+            this.semicolonToken = semicolonToken,
+            doKeyword.parent = this,
+            statement.parent = this,
+            whileKeyword.parent = this,
+            openParenToken.parent = this,
+            condition.parent = this,
+            closeParenToken.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.DoStatement; }
     }
@@ -738,8 +1014,10 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, debuggerKeyword: ISyntaxToken, semicolonToken: ISyntaxToken) {
             super(data);
-            this.debuggerKeyword = debuggerKeyword, this.semicolonToken = semicolonToken;
-            debuggerKeyword.parent = this, semicolonToken && (semicolonToken.parent = this);
+            this.debuggerKeyword = debuggerKeyword,
+            this.semicolonToken = semicolonToken,
+            debuggerKeyword.parent = this,
+            semicolonToken && (semicolonToken.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.DebuggerStatement; }
     }
@@ -753,8 +1031,16 @@ module TypeScript {
         public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, withKeyword: ISyntaxToken, openParenToken: ISyntaxToken, condition: IExpressionSyntax, closeParenToken: ISyntaxToken, statement: IStatementSyntax) {
             super(data);
-            this.withKeyword = withKeyword, this.openParenToken = openParenToken, this.condition = condition, this.closeParenToken = closeParenToken, this.statement = statement;
-            withKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this;
+            this.withKeyword = withKeyword,
+            this.openParenToken = openParenToken,
+            this.condition = condition,
+            this.closeParenToken = closeParenToken,
+            this.statement = statement,
+            withKeyword.parent = this,
+            openParenToken.parent = this,
+            condition.parent = this,
+            closeParenToken.parent = this,
+            statement.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.WithStatement; }
     }
@@ -765,8 +1051,10 @@ module TypeScript {
         public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, operatorToken: ISyntaxToken, operand: IUnaryExpressionSyntax) {
             super(data);
-            this.operatorToken = operatorToken, this.operand = operand;
-            operatorToken.parent = this, operand.parent = this;
+            this.operatorToken = operatorToken,
+            this.operand = operand,
+            operatorToken.parent = this,
+            operand.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxFacts.getPrefixUnaryExpressionFromOperatorToken(this.operatorToken.kind()); }
     }
@@ -777,8 +1065,10 @@ module TypeScript {
         public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, deleteKeyword: ISyntaxToken, expression: IUnaryExpressionSyntax) {
             super(data);
-            this.deleteKeyword = deleteKeyword, this.expression = expression;
-            deleteKeyword.parent = this, expression.parent = this;
+            this.deleteKeyword = deleteKeyword,
+            this.expression = expression,
+            deleteKeyword.parent = this,
+            expression.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.DeleteExpression; }
     }
@@ -789,8 +1079,10 @@ module TypeScript {
         public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, typeOfKeyword: ISyntaxToken, expression: IUnaryExpressionSyntax) {
             super(data);
-            this.typeOfKeyword = typeOfKeyword, this.expression = expression;
-            typeOfKeyword.parent = this, expression.parent = this;
+            this.typeOfKeyword = typeOfKeyword,
+            this.expression = expression,
+            typeOfKeyword.parent = this,
+            expression.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.TypeOfExpression; }
     }
@@ -801,8 +1093,10 @@ module TypeScript {
         public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, voidKeyword: ISyntaxToken, expression: IUnaryExpressionSyntax) {
             super(data);
-            this.voidKeyword = voidKeyword, this.expression = expression;
-            voidKeyword.parent = this, expression.parent = this;
+            this.voidKeyword = voidKeyword,
+            this.expression = expression,
+            voidKeyword.parent = this,
+            expression.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.VoidExpression; }
     }
@@ -816,8 +1110,16 @@ module TypeScript {
         public _isExpression: any;
         constructor(data: number, condition: IExpressionSyntax, questionToken: ISyntaxToken, whenTrue: IExpressionSyntax, colonToken: ISyntaxToken, whenFalse: IExpressionSyntax) {
             super(data);
-            this.condition = condition, this.questionToken = questionToken, this.whenTrue = whenTrue, this.colonToken = colonToken, this.whenFalse = whenFalse;
-            condition.parent = this, questionToken.parent = this, whenTrue.parent = this, colonToken.parent = this, whenFalse.parent = this;
+            this.condition = condition,
+            this.questionToken = questionToken,
+            this.whenTrue = whenTrue,
+            this.colonToken = colonToken,
+            this.whenFalse = whenFalse,
+            condition.parent = this,
+            questionToken.parent = this,
+            whenTrue.parent = this,
+            colonToken.parent = this,
+            whenFalse.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ConditionalExpression; }
     }
@@ -829,8 +1131,12 @@ module TypeScript {
         public _isExpression: any;
         constructor(data: number, left: IExpressionSyntax, operatorToken: ISyntaxToken, right: IExpressionSyntax) {
             super(data);
-            this.left = left, this.operatorToken = operatorToken, this.right = right;
-            left.parent = this, operatorToken.parent = this, right.parent = this;
+            this.left = left,
+            this.operatorToken = operatorToken,
+            this.right = right,
+            left.parent = this,
+            operatorToken.parent = this,
+            right.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxFacts.getBinaryExpressionFromOperatorToken(this.operatorToken.kind()); }
     }
@@ -841,8 +1147,10 @@ module TypeScript {
         public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, operand: ILeftHandSideExpressionSyntax, operatorToken: ISyntaxToken) {
             super(data);
-            this.operand = operand, this.operatorToken = operatorToken;
-            operand.parent = this, operatorToken.parent = this;
+            this.operand = operand,
+            this.operatorToken = operatorToken,
+            operand.parent = this,
+            operatorToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxFacts.getPostfixUnaryExpressionFromOperatorToken(this.operatorToken.kind()); }
     }
@@ -854,8 +1162,12 @@ module TypeScript {
         public _isMemberExpression: any; public _isCallExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, expression: ILeftHandSideExpressionSyntax, dotToken: ISyntaxToken, name: ISyntaxToken) {
             super(data);
-            this.expression = expression, this.dotToken = dotToken, this.name = name;
-            expression.parent = this, dotToken.parent = this, name.parent = this;
+            this.expression = expression,
+            this.dotToken = dotToken,
+            this.name = name,
+            expression.parent = this,
+            dotToken.parent = this,
+            name.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.MemberAccessExpression; }
     }
@@ -866,8 +1178,10 @@ module TypeScript {
         public _isCallExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, expression: ILeftHandSideExpressionSyntax, argumentList: ArgumentListSyntax) {
             super(data);
-            this.expression = expression, this.argumentList = argumentList;
-            expression.parent = this, argumentList.parent = this;
+            this.expression = expression,
+            this.argumentList = argumentList,
+            expression.parent = this,
+            argumentList.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.InvocationExpression; }
     }
@@ -879,8 +1193,12 @@ module TypeScript {
         public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, openBracketToken: ISyntaxToken, expressions: IExpressionSyntax[], closeBracketToken: ISyntaxToken) {
             super(data);
-            this.openBracketToken = openBracketToken, this.expressions = expressions, this.closeBracketToken = closeBracketToken;
-            openBracketToken.parent = this, !isShared(expressions) && (expressions.parent = this), closeBracketToken.parent = this;
+            this.openBracketToken = openBracketToken,
+            this.expressions = expressions,
+            this.closeBracketToken = closeBracketToken,
+            openBracketToken.parent = this,
+            !isShared(expressions) && (expressions.parent = this),
+            closeBracketToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ArrayLiteralExpression; }
     }
@@ -892,8 +1210,12 @@ module TypeScript {
         public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, openBraceToken: ISyntaxToken, propertyAssignments: IPropertyAssignmentSyntax[], closeBraceToken: ISyntaxToken) {
             super(data);
-            this.openBraceToken = openBraceToken, this.propertyAssignments = propertyAssignments, this.closeBraceToken = closeBraceToken;
-            openBraceToken.parent = this, !isShared(propertyAssignments) && (propertyAssignments.parent = this), closeBraceToken.parent = this;
+            this.openBraceToken = openBraceToken,
+            this.propertyAssignments = propertyAssignments,
+            this.closeBraceToken = closeBraceToken,
+            openBraceToken.parent = this,
+            !isShared(propertyAssignments) && (propertyAssignments.parent = this),
+            closeBraceToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ObjectLiteralExpression; }
     }
@@ -905,8 +1227,12 @@ module TypeScript {
         public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, newKeyword: ISyntaxToken, expression: IMemberExpressionSyntax, argumentList: ArgumentListSyntax) {
             super(data);
-            this.newKeyword = newKeyword, this.expression = expression, this.argumentList = argumentList;
-            newKeyword.parent = this, expression.parent = this, argumentList && (argumentList.parent = this);
+            this.newKeyword = newKeyword,
+            this.expression = expression,
+            this.argumentList = argumentList,
+            newKeyword.parent = this,
+            expression.parent = this,
+            argumentList && (argumentList.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ObjectCreationExpression; }
     }
@@ -918,8 +1244,12 @@ module TypeScript {
         public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, openParenToken: ISyntaxToken, expression: IExpressionSyntax, closeParenToken: ISyntaxToken) {
             super(data);
-            this.openParenToken = openParenToken, this.expression = expression, this.closeParenToken = closeParenToken;
-            openParenToken.parent = this, expression.parent = this, closeParenToken.parent = this;
+            this.openParenToken = openParenToken,
+            this.expression = expression,
+            this.closeParenToken = closeParenToken,
+            openParenToken.parent = this,
+            expression.parent = this,
+            closeParenToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ParenthesizedExpression; }
     }
@@ -932,8 +1262,14 @@ module TypeScript {
         public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, callSignature: CallSignatureSyntax, equalsGreaterThanToken: ISyntaxToken, block: BlockSyntax, expression: IExpressionSyntax) {
             super(data);
-            this.callSignature = callSignature, this.equalsGreaterThanToken = equalsGreaterThanToken, this.block = block, this.expression = expression;
-            callSignature.parent = this, equalsGreaterThanToken.parent = this, block && (block.parent = this), expression && (expression.parent = this);
+            this.callSignature = callSignature,
+            this.equalsGreaterThanToken = equalsGreaterThanToken,
+            this.block = block,
+            this.expression = expression,
+            callSignature.parent = this,
+            equalsGreaterThanToken.parent = this,
+            block && (block.parent = this),
+            expression && (expression.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.ParenthesizedArrowFunctionExpression; }
     }
@@ -946,8 +1282,14 @@ module TypeScript {
         public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, identifier: ISyntaxToken, equalsGreaterThanToken: ISyntaxToken, block: BlockSyntax, expression: IExpressionSyntax) {
             super(data);
-            this.identifier = identifier, this.equalsGreaterThanToken = equalsGreaterThanToken, this.block = block, this.expression = expression;
-            identifier.parent = this, equalsGreaterThanToken.parent = this, block && (block.parent = this), expression && (expression.parent = this);
+            this.identifier = identifier,
+            this.equalsGreaterThanToken = equalsGreaterThanToken,
+            this.block = block,
+            this.expression = expression,
+            identifier.parent = this,
+            equalsGreaterThanToken.parent = this,
+            block && (block.parent = this),
+            expression && (expression.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.SimpleArrowFunctionExpression; }
     }
@@ -960,8 +1302,14 @@ module TypeScript {
         public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, lessThanToken: ISyntaxToken, type: ITypeSyntax, greaterThanToken: ISyntaxToken, expression: IUnaryExpressionSyntax) {
             super(data);
-            this.lessThanToken = lessThanToken, this.type = type, this.greaterThanToken = greaterThanToken, this.expression = expression;
-            lessThanToken.parent = this, type.parent = this, greaterThanToken.parent = this, expression.parent = this;
+            this.lessThanToken = lessThanToken,
+            this.type = type,
+            this.greaterThanToken = greaterThanToken,
+            this.expression = expression,
+            lessThanToken.parent = this,
+            type.parent = this,
+            greaterThanToken.parent = this,
+            expression.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.CastExpression; }
     }
@@ -974,8 +1322,14 @@ module TypeScript {
         public _isMemberExpression: any; public _isCallExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, expression: ILeftHandSideExpressionSyntax, openBracketToken: ISyntaxToken, argumentExpression: IExpressionSyntax, closeBracketToken: ISyntaxToken) {
             super(data);
-            this.expression = expression, this.openBracketToken = openBracketToken, this.argumentExpression = argumentExpression, this.closeBracketToken = closeBracketToken;
-            expression.parent = this, openBracketToken.parent = this, argumentExpression.parent = this, closeBracketToken.parent = this;
+            this.expression = expression,
+            this.openBracketToken = openBracketToken,
+            this.argumentExpression = argumentExpression,
+            this.closeBracketToken = closeBracketToken,
+            expression.parent = this,
+            openBracketToken.parent = this,
+            argumentExpression.parent = this,
+            closeBracketToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ElementAccessExpression; }
     }
@@ -988,8 +1342,14 @@ module TypeScript {
         public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, functionKeyword: ISyntaxToken, identifier: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax) {
             super(data);
-            this.functionKeyword = functionKeyword, this.identifier = identifier, this.callSignature = callSignature, this.block = block;
-            functionKeyword.parent = this, identifier && (identifier.parent = this), callSignature.parent = this, block.parent = this;
+            this.functionKeyword = functionKeyword,
+            this.identifier = identifier,
+            this.callSignature = callSignature,
+            this.block = block,
+            functionKeyword.parent = this,
+            identifier && (identifier.parent = this),
+            callSignature.parent = this,
+            block.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.FunctionExpression; }
     }
@@ -998,7 +1358,6 @@ module TypeScript {
         public _isExpression: any;
         constructor(data: number) {
             super(data);
-            ;
         }
         public kind(): SyntaxKind { return SyntaxKind.OmittedExpression; }
     }
@@ -1008,8 +1367,10 @@ module TypeScript {
         public variableDeclarators: VariableDeclaratorSyntax[];
         constructor(data: number, varKeyword: ISyntaxToken, variableDeclarators: VariableDeclaratorSyntax[]) {
             super(data);
-            this.varKeyword = varKeyword, this.variableDeclarators = variableDeclarators;
-            varKeyword.parent = this, !isShared(variableDeclarators) && (variableDeclarators.parent = this);
+            this.varKeyword = varKeyword,
+            this.variableDeclarators = variableDeclarators,
+            varKeyword.parent = this,
+            !isShared(variableDeclarators) && (variableDeclarators.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.VariableDeclaration; }
     }
@@ -1020,8 +1381,12 @@ module TypeScript {
         public equalsValueClause: EqualsValueClauseSyntax;
         constructor(data: number, propertyName: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, equalsValueClause: EqualsValueClauseSyntax) {
             super(data);
-            this.propertyName = propertyName, this.typeAnnotation = typeAnnotation, this.equalsValueClause = equalsValueClause;
-            propertyName.parent = this, typeAnnotation && (typeAnnotation.parent = this), equalsValueClause && (equalsValueClause.parent = this);
+            this.propertyName = propertyName,
+            this.typeAnnotation = typeAnnotation,
+            this.equalsValueClause = equalsValueClause,
+            propertyName.parent = this,
+            typeAnnotation && (typeAnnotation.parent = this),
+            equalsValueClause && (equalsValueClause.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.VariableDeclarator; }
     }
@@ -1033,8 +1398,14 @@ module TypeScript {
         public closeParenToken: ISyntaxToken;
         constructor(data: number, typeArgumentList: TypeArgumentListSyntax, openParenToken: ISyntaxToken, _arguments: IExpressionSyntax[], closeParenToken: ISyntaxToken) {
             super(data);
-            this.typeArgumentList = typeArgumentList, this.openParenToken = openParenToken, this.arguments = _arguments, this.closeParenToken = closeParenToken;
-            typeArgumentList && (typeArgumentList.parent = this), openParenToken.parent = this, !isShared(_arguments) && (_arguments.parent = this), closeParenToken.parent = this;
+            this.typeArgumentList = typeArgumentList,
+            this.openParenToken = openParenToken,
+            this.arguments = _arguments,
+            this.closeParenToken = closeParenToken,
+            typeArgumentList && (typeArgumentList.parent = this),
+            openParenToken.parent = this,
+            !isShared(_arguments) && (_arguments.parent = this),
+            closeParenToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ArgumentList; }
     }
@@ -1045,8 +1416,12 @@ module TypeScript {
         public closeParenToken: ISyntaxToken;
         constructor(data: number, openParenToken: ISyntaxToken, parameters: ParameterSyntax[], closeParenToken: ISyntaxToken) {
             super(data);
-            this.openParenToken = openParenToken, this.parameters = parameters, this.closeParenToken = closeParenToken;
-            openParenToken.parent = this, !isShared(parameters) && (parameters.parent = this), closeParenToken.parent = this;
+            this.openParenToken = openParenToken,
+            this.parameters = parameters,
+            this.closeParenToken = closeParenToken,
+            openParenToken.parent = this,
+            !isShared(parameters) && (parameters.parent = this),
+            closeParenToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ParameterList; }
     }
@@ -1057,8 +1432,12 @@ module TypeScript {
         public greaterThanToken: ISyntaxToken;
         constructor(data: number, lessThanToken: ISyntaxToken, typeArguments: ITypeSyntax[], greaterThanToken: ISyntaxToken) {
             super(data);
-            this.lessThanToken = lessThanToken, this.typeArguments = typeArguments, this.greaterThanToken = greaterThanToken;
-            lessThanToken.parent = this, !isShared(typeArguments) && (typeArguments.parent = this), greaterThanToken.parent = this;
+            this.lessThanToken = lessThanToken,
+            this.typeArguments = typeArguments,
+            this.greaterThanToken = greaterThanToken,
+            lessThanToken.parent = this,
+            !isShared(typeArguments) && (typeArguments.parent = this),
+            greaterThanToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.TypeArgumentList; }
     }
@@ -1069,8 +1448,12 @@ module TypeScript {
         public greaterThanToken: ISyntaxToken;
         constructor(data: number, lessThanToken: ISyntaxToken, typeParameters: TypeParameterSyntax[], greaterThanToken: ISyntaxToken) {
             super(data);
-            this.lessThanToken = lessThanToken, this.typeParameters = typeParameters, this.greaterThanToken = greaterThanToken;
-            lessThanToken.parent = this, !isShared(typeParameters) && (typeParameters.parent = this), greaterThanToken.parent = this;
+            this.lessThanToken = lessThanToken,
+            this.typeParameters = typeParameters,
+            this.greaterThanToken = greaterThanToken,
+            lessThanToken.parent = this,
+            !isShared(typeParameters) && (typeParameters.parent = this),
+            greaterThanToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.TypeParameterList; }
     }
@@ -1080,8 +1463,10 @@ module TypeScript {
         public typeNames: INameSyntax[];
         constructor(data: number, extendsOrImplementsKeyword: ISyntaxToken, typeNames: INameSyntax[]) {
             super(data);
-            this.extendsOrImplementsKeyword = extendsOrImplementsKeyword, this.typeNames = typeNames;
-            extendsOrImplementsKeyword.parent = this, !isShared(typeNames) && (typeNames.parent = this);
+            this.extendsOrImplementsKeyword = extendsOrImplementsKeyword,
+            this.typeNames = typeNames,
+            extendsOrImplementsKeyword.parent = this,
+            !isShared(typeNames) && (typeNames.parent = this);
         }
         public kind(): SyntaxKind { return this.extendsOrImplementsKeyword.kind() === SyntaxKind.ExtendsKeyword ? SyntaxKind.ExtendsHeritageClause : SyntaxKind.ImplementsHeritageClause; }
     }
@@ -1091,8 +1476,10 @@ module TypeScript {
         public value: IExpressionSyntax;
         constructor(data: number, equalsToken: ISyntaxToken, value: IExpressionSyntax) {
             super(data);
-            this.equalsToken = equalsToken, this.value = value;
-            equalsToken.parent = this, value.parent = this;
+            this.equalsToken = equalsToken,
+            this.value = value,
+            equalsToken.parent = this,
+            value.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.EqualsValueClause; }
     }
@@ -1105,8 +1492,14 @@ module TypeScript {
         public _isSwitchClause: any;
         constructor(data: number, caseKeyword: ISyntaxToken, expression: IExpressionSyntax, colonToken: ISyntaxToken, statements: IStatementSyntax[]) {
             super(data);
-            this.caseKeyword = caseKeyword, this.expression = expression, this.colonToken = colonToken, this.statements = statements;
-            caseKeyword.parent = this, expression.parent = this, colonToken.parent = this, !isShared(statements) && (statements.parent = this);
+            this.caseKeyword = caseKeyword,
+            this.expression = expression,
+            this.colonToken = colonToken,
+            this.statements = statements,
+            caseKeyword.parent = this,
+            expression.parent = this,
+            colonToken.parent = this,
+            !isShared(statements) && (statements.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.CaseSwitchClause; }
     }
@@ -1118,8 +1511,12 @@ module TypeScript {
         public _isSwitchClause: any;
         constructor(data: number, defaultKeyword: ISyntaxToken, colonToken: ISyntaxToken, statements: IStatementSyntax[]) {
             super(data);
-            this.defaultKeyword = defaultKeyword, this.colonToken = colonToken, this.statements = statements;
-            defaultKeyword.parent = this, colonToken.parent = this, !isShared(statements) && (statements.parent = this);
+            this.defaultKeyword = defaultKeyword,
+            this.colonToken = colonToken,
+            this.statements = statements,
+            defaultKeyword.parent = this,
+            colonToken.parent = this,
+            !isShared(statements) && (statements.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.DefaultSwitchClause; }
     }
@@ -1129,8 +1526,10 @@ module TypeScript {
         public statement: IStatementSyntax;
         constructor(data: number, elseKeyword: ISyntaxToken, statement: IStatementSyntax) {
             super(data);
-            this.elseKeyword = elseKeyword, this.statement = statement;
-            elseKeyword.parent = this, statement.parent = this;
+            this.elseKeyword = elseKeyword,
+            this.statement = statement,
+            elseKeyword.parent = this,
+            statement.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ElseClause; }
     }
@@ -1144,8 +1543,18 @@ module TypeScript {
         public block: BlockSyntax;
         constructor(data: number, catchKeyword: ISyntaxToken, openParenToken: ISyntaxToken, identifier: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, closeParenToken: ISyntaxToken, block: BlockSyntax) {
             super(data);
-            this.catchKeyword = catchKeyword, this.openParenToken = openParenToken, this.identifier = identifier, this.typeAnnotation = typeAnnotation, this.closeParenToken = closeParenToken, this.block = block;
-            catchKeyword.parent = this, openParenToken.parent = this, identifier.parent = this, typeAnnotation && (typeAnnotation.parent = this), closeParenToken.parent = this, block.parent = this;
+            this.catchKeyword = catchKeyword,
+            this.openParenToken = openParenToken,
+            this.identifier = identifier,
+            this.typeAnnotation = typeAnnotation,
+            this.closeParenToken = closeParenToken,
+            this.block = block,
+            catchKeyword.parent = this,
+            openParenToken.parent = this,
+            identifier.parent = this,
+            typeAnnotation && (typeAnnotation.parent = this),
+            closeParenToken.parent = this,
+            block.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.CatchClause; }
     }
@@ -1155,8 +1564,10 @@ module TypeScript {
         public block: BlockSyntax;
         constructor(data: number, finallyKeyword: ISyntaxToken, block: BlockSyntax) {
             super(data);
-            this.finallyKeyword = finallyKeyword, this.block = block;
-            finallyKeyword.parent = this, block.parent = this;
+            this.finallyKeyword = finallyKeyword,
+            this.block = block,
+            finallyKeyword.parent = this,
+            block.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.FinallyClause; }
     }
@@ -1166,8 +1577,10 @@ module TypeScript {
         public constraint: ConstraintSyntax;
         constructor(data: number, identifier: ISyntaxToken, constraint: ConstraintSyntax) {
             super(data);
-            this.identifier = identifier, this.constraint = constraint;
-            identifier.parent = this, constraint && (constraint.parent = this);
+            this.identifier = identifier,
+            this.constraint = constraint,
+            identifier.parent = this,
+            constraint && (constraint.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.TypeParameter; }
     }
@@ -1177,8 +1590,10 @@ module TypeScript {
         public type: ITypeSyntax;
         constructor(data: number, extendsKeyword: ISyntaxToken, type: ITypeSyntax) {
             super(data);
-            this.extendsKeyword = extendsKeyword, this.type = type;
-            extendsKeyword.parent = this, type.parent = this;
+            this.extendsKeyword = extendsKeyword,
+            this.type = type,
+            extendsKeyword.parent = this,
+            type.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.Constraint; }
     }
@@ -1190,8 +1605,12 @@ module TypeScript {
         public _isPropertyAssignment: any;
         constructor(data: number, propertyName: ISyntaxToken, colonToken: ISyntaxToken, expression: IExpressionSyntax) {
             super(data);
-            this.propertyName = propertyName, this.colonToken = colonToken, this.expression = expression;
-            propertyName.parent = this, colonToken.parent = this, expression.parent = this;
+            this.propertyName = propertyName,
+            this.colonToken = colonToken,
+            this.expression = expression,
+            propertyName.parent = this,
+            colonToken.parent = this,
+            expression.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.SimplePropertyAssignment; }
     }
@@ -1203,8 +1622,12 @@ module TypeScript {
         public _isPropertyAssignment: any;
         constructor(data: number, propertyName: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax) {
             super(data);
-            this.propertyName = propertyName, this.callSignature = callSignature, this.block = block;
-            propertyName.parent = this, callSignature.parent = this, block.parent = this;
+            this.propertyName = propertyName,
+            this.callSignature = callSignature,
+            this.block = block,
+            propertyName.parent = this,
+            callSignature.parent = this,
+            block.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.FunctionPropertyAssignment; }
     }
@@ -1218,8 +1641,18 @@ module TypeScript {
         public equalsValueClause: EqualsValueClauseSyntax;
         constructor(data: number, dotDotDotToken: ISyntaxToken, modifiers: ISyntaxToken[], identifier: ISyntaxToken, questionToken: ISyntaxToken, typeAnnotation: TypeAnnotationSyntax, equalsValueClause: EqualsValueClauseSyntax) {
             super(data);
-            this.dotDotDotToken = dotDotDotToken, this.modifiers = modifiers, this.identifier = identifier, this.questionToken = questionToken, this.typeAnnotation = typeAnnotation, this.equalsValueClause = equalsValueClause;
-            dotDotDotToken && (dotDotDotToken.parent = this), !isShared(modifiers) && (modifiers.parent = this), identifier.parent = this, questionToken && (questionToken.parent = this), typeAnnotation && (typeAnnotation.parent = this), equalsValueClause && (equalsValueClause.parent = this);
+            this.dotDotDotToken = dotDotDotToken,
+            this.modifiers = modifiers,
+            this.identifier = identifier,
+            this.questionToken = questionToken,
+            this.typeAnnotation = typeAnnotation,
+            this.equalsValueClause = equalsValueClause,
+            dotDotDotToken && (dotDotDotToken.parent = this),
+            !isShared(modifiers) && (modifiers.parent = this),
+            identifier.parent = this,
+            questionToken && (questionToken.parent = this),
+            typeAnnotation && (typeAnnotation.parent = this),
+            equalsValueClause && (equalsValueClause.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.Parameter; }
     }
@@ -1229,8 +1662,10 @@ module TypeScript {
         public equalsValueClause: EqualsValueClauseSyntax;
         constructor(data: number, propertyName: ISyntaxToken, equalsValueClause: EqualsValueClauseSyntax) {
             super(data);
-            this.propertyName = propertyName, this.equalsValueClause = equalsValueClause;
-            propertyName.parent = this, equalsValueClause && (equalsValueClause.parent = this);
+            this.propertyName = propertyName,
+            this.equalsValueClause = equalsValueClause,
+            propertyName.parent = this,
+            equalsValueClause && (equalsValueClause.parent = this);
         }
         public kind(): SyntaxKind { return SyntaxKind.EnumElement; }
     }
@@ -1240,8 +1675,10 @@ module TypeScript {
         public type: ITypeSyntax;
         constructor(data: number, colonToken: ISyntaxToken, type: ITypeSyntax) {
             super(data);
-            this.colonToken = colonToken, this.type = type;
-            colonToken.parent = this, type.parent = this;
+            this.colonToken = colonToken,
+            this.type = type,
+            colonToken.parent = this,
+            type.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.TypeAnnotation; }
     }
@@ -1254,8 +1691,14 @@ module TypeScript {
         public _isModuleReference: any;
         constructor(data: number, requireKeyword: ISyntaxToken, openParenToken: ISyntaxToken, stringLiteral: ISyntaxToken, closeParenToken: ISyntaxToken) {
             super(data);
-            this.requireKeyword = requireKeyword, this.openParenToken = openParenToken, this.stringLiteral = stringLiteral, this.closeParenToken = closeParenToken;
-            requireKeyword.parent = this, openParenToken.parent = this, stringLiteral.parent = this, closeParenToken.parent = this;
+            this.requireKeyword = requireKeyword,
+            this.openParenToken = openParenToken,
+            this.stringLiteral = stringLiteral,
+            this.closeParenToken = closeParenToken,
+            requireKeyword.parent = this,
+            openParenToken.parent = this,
+            stringLiteral.parent = this,
+            closeParenToken.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ExternalModuleReference; }
     }
@@ -1265,7 +1708,7 @@ module TypeScript {
         public _isModuleReference: any;
         constructor(data: number, moduleName: INameSyntax) {
             super(data);
-            this.moduleName = moduleName;
+            this.moduleName = moduleName,
             moduleName.parent = this;
         }
         public kind(): SyntaxKind { return SyntaxKind.ModuleNameModuleReference; }
