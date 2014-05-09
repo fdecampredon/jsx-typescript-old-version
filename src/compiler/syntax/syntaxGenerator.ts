@@ -1934,7 +1934,12 @@ function generateNode(definition: ITypeDefinition): string {
     result += " {\r\n";
 
     if (definition.name === "SourceUnitSyntax") {
-        result += "        public syntaxTree: SyntaxTree = null;\r\n\r\n";
+        result += "        public syntaxTree: SyntaxTree = null;\r\n";
+    }
+
+    for (var i = 0; i < definition.children.length; i++) {
+        var child = definition.children[i];
+        result += "        public " + child.name + ": " + getType(child) + ";\r\n";
     }
 
     result += generateIsProperties(definition);
@@ -1943,7 +1948,7 @@ function generateNode(definition: ITypeDefinition): string {
 
     for (var i = 0; i < definition.children.length; i++) {
         var child = definition.children[i];
-        result += ", public " + child.name + ": " + getType(child);
+        result += ", " + getSafeName(child) + ": " + getType(child);
     }
 
     result += ") {\r\n";
@@ -1951,6 +1956,20 @@ function generateNode(definition: ITypeDefinition): string {
 
     if (definition.name === "SourceUnitSyntax") {
         result += "            this.parent = null;\r\n";
+    }
+
+    if (definition.children) {
+        result += "            ";
+
+        for (var i = 0; i < definition.children.length; i++) {
+            if (i > 0) {
+                result += ", ";
+            }
+            var child = definition.children[i];
+
+            result += "this." + child.name + " = " + getSafeName(child);
+        }
+        result += ";\r\n";
     }
 
     if (definition.children.length > 0) {
@@ -1963,13 +1982,13 @@ function generateNode(definition: ITypeDefinition): string {
             var child = definition.children[i];
 
             if (child.isList || child.isSeparatedList) {
-                result += "!isShared(" + child.name + ") && (" + child.name + ".parent = this)";
+                result += "!isShared(" + getSafeName(child) + ") && (" + getSafeName(child) + ".parent = this)";
             }
             else if (child.isOptional) {
-                result += "" + child.name + " && (" + child.name + ".parent = this)";
+                result += "" + getSafeName(child) + " && (" + getSafeName(child) + ".parent = this)";
             }
             else {
-                result += "" + child.name + ".parent = this";
+                result += "" + getSafeName(child) + ".parent = this";
             }
         }
         result += ";\r\n";
