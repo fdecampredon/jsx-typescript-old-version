@@ -141,17 +141,17 @@ module TypeScript {
         public _isExpression: any;
 
         constructor(public _text: ISimpleText,
-                    private data: number,
+                    private _packedFullStartAndInfo: number,
                     private _packedFullWidthAndKind: number) {
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
             this._text = text;
 
-            this.data = packFullStartAndInfo(fullStart,
+            this._packedFullStartAndInfo = packFullStartAndInfo(fullStart,
                 this.isKeywordConvertedToIdentifier(),
-                unpackLeadingTriviaInfo(this.data),
-                unpackTrailingTriviaInfo(this.data));
+                unpackLeadingTriviaInfo(this._packedFullStartAndInfo),
+                unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
         }
 
         public kind(): SyntaxKind {
@@ -165,20 +165,20 @@ module TypeScript {
         }
 
         public isKeywordConvertedToIdentifier(): boolean {
-            return unpackIsKeywordConvertedToIdentifier(this.data);
+            return unpackIsKeywordConvertedToIdentifier(this._packedFullStartAndInfo);
         }
 
         public convertKeywordToIdentifier(): ISyntaxToken {
             var data = packFullStartAndInfo(
-                unpackFullStart(this.data),
+                unpackFullStart(this._packedFullStartAndInfo),
                 /*isKeywordConvertedToIdentifier:*/ true,
-                unpackLeadingTriviaInfo(this.data),
-                unpackTrailingTriviaInfo(this.data));
+                unpackLeadingTriviaInfo(this._packedFullStartAndInfo),
+                unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
             return new ScannerToken(this._text, data, packFullWidthAndKind(this.fullWidth(), SyntaxKind.IdentifierName));
         }
 
         public fullWidth(): number { return unpackFullWidth(this._packedFullWidthAndKind); }
-        public fullStart(): number { return unpackFullStart(this.data); }
+        public fullStart(): number { return unpackFullStart(this._packedFullStartAndInfo); }
 
         private fillSizeInfo(): void {
             if (ScannerToken.lastTokenInfoToken !== this) {
@@ -231,32 +231,32 @@ module TypeScript {
         }
 
         public hasLeadingTrivia(): boolean {
-            var info = unpackLeadingTriviaInfo(this.data);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return info !== 0;
         }
 
         public hasLeadingComment(): boolean {
-            var info = unpackLeadingTriviaInfo(this.data);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
         }
 
         public hasLeadingNewLine(): boolean {
-            var info = unpackLeadingTriviaInfo(this.data);
+            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
             return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
         }
 
         public hasTrailingTrivia(): boolean {
-            var info = unpackTrailingTriviaInfo(this.data);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return info !== 0;
         }
 
         public hasTrailingComment(): boolean {
-            var info = unpackTrailingTriviaInfo(this.data);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
         }
 
         public hasTrailingNewLine(): boolean {
-            var info = unpackTrailingTriviaInfo(this.data);
+            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
         }
 
@@ -273,7 +273,7 @@ module TypeScript {
         }
 
         public clone(): ISyntaxToken {
-            return new ScannerToken(this._text, this.data, this._packedFullWidthAndKind);
+            return new ScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind);
         }
     }
 
