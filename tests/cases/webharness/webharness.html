@@ -56,7 +56,9 @@
                 listCount = 0;
                 literalCount = 0;
                 tree2 = batch.newParse();
-                countNodes(tree2.sourceUnit())
+                tree2.sourceUnit().syntaxTree = null;
+                TypeScript.ScannerToken.clear();
+                // countNodes(tree2.sourceUnit())
 
                 appendTime("nodeCount: " + nodeCount + ", tokenCount: " + tokenCount + ", emptyList: " + emptyListCount + ", " +
                     "singleton list: " + singletonListCount + ", listCount: " + listCount + ", literals: " + literalCount);
@@ -75,7 +77,7 @@
 
         function countNodes(e) {
             if (!e) { return; }
-            if (e.isNode()) {
+            if (TypeScript.isNode(e)) {
                 nodeCount++;
             }
             else if (e.isToken()) {
@@ -136,7 +138,6 @@
         }
 
         var batch = new BatchCompiler();
-        var tree2 = batch.newParse2();
 
         function newIncrementalParse2() {
             run(function () {
