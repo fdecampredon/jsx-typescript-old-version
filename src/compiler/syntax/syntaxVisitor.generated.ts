@@ -4,7 +4,7 @@ module TypeScript {
     export function visitNodeOrToken(visitor: ISyntaxVisitor, element: ISyntaxNodeOrToken): any {
         if (element === null) { return null; }
         if (isToken(element)) { return visitor.visitToken(<ISyntaxToken>element); }
-        switch (element.kind) {
+        switch (element.kind()) {
             case SyntaxKind.SourceUnit:
                 return visitor.visitSourceUnit(<SourceUnitSyntax>element);
             case SyntaxKind.QualifiedName:

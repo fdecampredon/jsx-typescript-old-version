@@ -20,7 +20,7 @@ module TypeScript.PrettyPrinter {
                 return 0;
             }
 
-            if (lastToken(element1).kind === SyntaxKind.CloseBraceToken) {
+            if (lastToken(element1).kind() === SyntaxKind.CloseBraceToken) {
                 return 2;
             }
 
@@ -40,7 +40,7 @@ module TypeScript.PrettyPrinter {
                 return 0;
             }
 
-            if (lastToken(element1).kind === SyntaxKind.CloseBraceToken) {
+            if (lastToken(element1).kind() === SyntaxKind.CloseBraceToken) {
                 return 2;
             }
 
@@ -532,7 +532,7 @@ module TypeScript.PrettyPrinter {
         public visitBinaryExpression(node: BinaryExpressionSyntax): void {
             visitNodeOrToken(this, node.left);
 
-            if (node.kind !== SyntaxKind.CommaExpression) {
+            if (node.kind() !== SyntaxKind.CommaExpression) {
                 this.ensureSpace();
             }
 
@@ -608,7 +608,7 @@ module TypeScript.PrettyPrinter {
         }
 
         private appendBlockOrStatement(node: IStatementSyntax): void {
-            if (node.kind === SyntaxKind.Block) {
+            if (node.kind() === SyntaxKind.Block) {
                 this.ensureSpace();
                 visitNodeOrToken(this, node);
             }
@@ -634,7 +634,7 @@ module TypeScript.PrettyPrinter {
             this.ensureNewLine();
             this.appendToken(node.elseKeyword);
 
-            if (node.statement.kind === SyntaxKind.IfStatement) {
+            if (node.statement.kind() === SyntaxKind.IfStatement) {
                 this.ensureSpace();
                 visitNodeOrToken(this, node.statement);
             }
@@ -755,7 +755,7 @@ module TypeScript.PrettyPrinter {
         }
 
         private appendSwitchClauseStatements(node: ISwitchClauseSyntax): void {
-            if (childCount(node.statements) === 1 && childAt(node.statements, 0).kind === SyntaxKind.Block) {
+            if (childCount(node.statements) === 1 && childAt(node.statements, 0).kind() === SyntaxKind.Block) {
                 this.ensureSpace();
                 visitNodeOrToken(this, childAt(node.statements, 0));
             }

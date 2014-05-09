@@ -7,12 +7,12 @@ module TypeScript {
     // instance instead of creating new objects for each case.  Note: because of this, shared
     // nodes don't have positions or parents.
     export function isShared(element: ISyntaxElement): boolean {
-        var kind = element.kind;
+        var kind = element.kind();
         return (kind === SyntaxKind.List || kind === SyntaxKind.SeparatedList) && (<ISyntaxNodeOrToken[]>element).length === 0;
     }
 
     export function childCount(element: ISyntaxElement): number {
-        var kind = element.kind;
+        var kind = element.kind();
         if (kind === SyntaxKind.List) {
             return (<ISyntaxNodeOrToken[]>element).length;
         }
@@ -28,7 +28,7 @@ module TypeScript {
     }
 
     export function childAt(element: ISyntaxElement, index: number): ISyntaxElement {
-        var kind = element.kind;
+        var kind = element.kind();
         if (kind === SyntaxKind.List) {
             return (<ISyntaxNodeOrToken[]>element)[index];
         }
@@ -37,7 +37,7 @@ module TypeScript {
         }
         else {
             // Debug.assert(isNode(element));
-            return (<any>element)[nodeMetadata[element.kind][index]];
+            return (<any>element)[nodeMetadata[element.kind()][index]];
         }
     }
 
@@ -46,7 +46,7 @@ module TypeScript {
             Debug.assert(!isShared(element));
 
             while (element) {
-                if (element.kind === SyntaxKind.SourceUnit) {
+                if (element.kind() === SyntaxKind.SourceUnit) {
                     return (<SourceUnitSyntax>element).syntaxTree;
                 }
 
@@ -199,7 +199,7 @@ module TypeScript {
     }
 
     function tryGetEndOfFileAt(element: ISyntaxElement, position: number): ISyntaxToken {
-        if (element.kind === SyntaxKind.SourceUnit && position === fullWidth(element)) {
+        if (element.kind() === SyntaxKind.SourceUnit && position === fullWidth(element)) {
             var sourceUnit = <SourceUnitSyntax>element;
             return sourceUnit.endOfFileToken;
         }
@@ -208,7 +208,7 @@ module TypeScript {
     }
 
     export function nextToken(token: ISyntaxToken, includeSkippedTokens: boolean = false): ISyntaxToken {
-        if (token.kind === SyntaxKind.EndOfFileToken) {
+        if (token.kind() === SyntaxKind.EndOfFileToken) {
             return null;
         }
 
@@ -227,7 +227,7 @@ module TypeScript {
 
     export function isNode(element: ISyntaxElement): boolean {
         if (element !== null) {
-            var kind = element.kind;
+            var kind = element.kind();
             return kind >= SyntaxKind.FirstNode && kind <= SyntaxKind.LastNode;
         }
 
@@ -240,18 +240,18 @@ module TypeScript {
 
     export function isToken(element: ISyntaxElement): boolean {
         if (element !== null) {
-            return isTokenKind(element.kind);
+            return isTokenKind(element.kind());
         }
 
         return false;
     }
 
     export function isList(element: ISyntaxElement): boolean {
-        return element !== null && element.kind === SyntaxKind.List;
+        return element !== null && element.kind() === SyntaxKind.List;
     }
 
     export function isSeparatedList(element: ISyntaxElement): boolean {
-        return element !== null && element.kind === SyntaxKind.SeparatedList;
+        return element !== null && element.kind() === SyntaxKind.SeparatedList;
     }
 
     export function syntaxID(element: ISyntaxElement): number {
@@ -303,10 +303,10 @@ module TypeScript {
 
     export function firstToken(element: ISyntaxElement): ISyntaxToken {
         if (element) {
-            var kind = element.kind;
+            var kind = element.kind();
 
             if (isTokenKind(kind)) {
-                return fullWidth(element) > 0 || element.kind === SyntaxKind.EndOfFileToken ? <ISyntaxToken>element : null;
+                return fullWidth(element) > 0 || element.kind() === SyntaxKind.EndOfFileToken ? <ISyntaxToken>element : null;
             }
 
             if (kind === SyntaxKind.List) {
@@ -338,7 +338,7 @@ module TypeScript {
                     }
                 }
 
-                if (element.kind === SyntaxKind.SourceUnit) {
+                if (element.kind() === SyntaxKind.SourceUnit) {
                     return (<SourceUnitSyntax>element).endOfFileToken;
                 }
             }
@@ -349,10 +349,10 @@ module TypeScript {
 
     export function lastToken(element: ISyntaxElement): ISyntaxToken {
         if (isToken(element)) {
-            return fullWidth(element) > 0 || element.kind === SyntaxKind.EndOfFileToken ? <ISyntaxToken>element : null;
+            return fullWidth(element) > 0 || element.kind() === SyntaxKind.EndOfFileToken ? <ISyntaxToken>element : null;
         }
 
-        if (element.kind === SyntaxKind.SourceUnit) {
+        if (element.kind() === SyntaxKind.SourceUnit) {
             return (<SourceUnitSyntax>element).endOfFileToken;
         }
 
@@ -462,7 +462,7 @@ module TypeScript {
     }
 
     export interface ISyntaxElement {
-        kind: SyntaxKind;
+        kind(): SyntaxKind;
         parent?: ISyntaxElement;
     }
 

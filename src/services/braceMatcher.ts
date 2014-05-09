@@ -41,7 +41,7 @@ module TypeScript.Services {
                     for (var i = 0, n = childCount(parentElement); i < n; i++) {
                         var element = childAt(parentElement, i);
                         if (element !== null && fullWidth(element) > 0) {
-                            if (element.kind === closingBraceKind) {
+                            if (element.kind() === closingBraceKind) {
                                 var range1 = new TypeScript.TextSpan(position, width(currentToken));
                                 var range2 = new TypeScript.TextSpan(currentPosition + leadingTriviaWidth(element), width(element));
                                 result.push(range1, range2);
@@ -69,7 +69,7 @@ module TypeScript.Services {
                     for (var i = childCount(parentElement) - 1 ; i >= 0; i--) {
                         var element = childAt(parentElement, i);
                         if (element !== null && fullWidth(element) > 0) {
-                            if (element.kind === openBraceKind) {
+                            if (element.kind() === openBraceKind) {
                                 var range1 = new TypeScript.TextSpan(position - 1, width(currentToken));
                                 var range2 = new TypeScript.TextSpan(currentPosition - lastToken(element).trailingTriviaWidth() - width(element), width(element));
                                 result.push(range1, range2);
@@ -85,7 +85,7 @@ module TypeScript.Services {
 
         private static getMatchingCloseBraceTokenKind(positionedElement: TypeScript.ISyntaxElement): TypeScript.SyntaxKind {
             var element = positionedElement !== null && positionedElement;
-            switch (element.kind) {
+            switch (element.kind()) {
                 case TypeScript.SyntaxKind.OpenBraceToken:
                     return TypeScript.SyntaxKind.CloseBraceToken
                 case TypeScript.SyntaxKind.OpenParenToken:
@@ -100,7 +100,7 @@ module TypeScript.Services {
 
         private static getMatchingOpenBraceTokenKind(positionedElement: TypeScript.ISyntaxElement): TypeScript.SyntaxKind {
             var element = positionedElement !== null && positionedElement;
-            switch (element.kind) {
+            switch (element.kind()) {
                 case TypeScript.SyntaxKind.CloseBraceToken:
                     return TypeScript.SyntaxKind.OpenBraceToken
                 case TypeScript.SyntaxKind.CloseParenToken:

@@ -36,7 +36,7 @@ module TypeScript {
         }
 
         public kind(): SyntaxKind {
-            return this._trivia.kind;
+            return this._trivia.kind();
         }
 
         public structuralEquals(ast: Comment, includingPosition: boolean): boolean {

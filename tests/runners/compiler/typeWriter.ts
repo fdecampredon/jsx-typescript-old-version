@@ -26,7 +26,7 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
     private isName(token: TypeScript.ISyntaxToken) {
         var parent = token.parent;
 
-        switch (parent.kind) {
+        switch (parent.kind()) {
             case TypeScript.SyntaxKind.ContinueStatement:
                 return (<TypeScript.ContinueStatementSyntax>parent).identifier === token;
             case TypeScript.SyntaxKind.BreakStatement:
@@ -38,11 +38,11 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
     }
 
     public visitToken(token: TypeScript.ISyntaxToken) {
-        if (token.kind === TypeScript.SyntaxKind.IdentifierName) {
+        if (token.kind() === TypeScript.SyntaxKind.IdentifierName) {
             if (!this.isName(token)) {
                 this.log(token);
             }
-        } else if (token.kind === TypeScript.SyntaxKind.ThisKeyword) {
+        } else if (token.kind() === TypeScript.SyntaxKind.ThisKeyword) {
             this.log(token);
         }
         return super.visitToken(token);
@@ -175,6 +175,6 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
 
     public log(node: TypeScript.ISyntaxNodeOrToken) {
         var pos = this.document.lineMap().getLineAndCharacterFromPosition(TypeScript.fullStart(node));
-        this.results.push({ line: pos.line(), column: pos.character(), syntaxKind: TypeScript.SyntaxKind[node.kind], identifierName: TypeScript.fullText(node).trim(), type: this.getTypeOfElement(node) });
+        this.results.push({ line: pos.line(), column: pos.character(), syntaxKind: TypeScript.SyntaxKind[node.kind()], identifierName: TypeScript.fullText(node).trim(), type: this.getTypeOfElement(node) });
     }
 }

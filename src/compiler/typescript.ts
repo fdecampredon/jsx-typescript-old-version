@@ -795,7 +795,7 @@ module TypeScript {
             }
 
             var enclosingDecl = resolver.getEnclosingDecl(decl);
-            if (ast.kind === SyntaxKind.GetAccessor || ast.kind === SyntaxKind.SetAccessor) {
+            if (ast.kind() === SyntaxKind.GetAccessor || ast.kind() === SyntaxKind.SetAccessor) {
                 return this.getSymbolOfDeclaration(enclosingDecl);
             }
 
@@ -822,7 +822,7 @@ module TypeScript {
             for (var i = 0 , n = path.length; i < n; i++) {
                 var current = path[i];
 
-                switch (current.kind) {
+                switch (current.kind()) {
                     case SyntaxKind.FunctionExpression:
                     case SyntaxKind.SimpleArrowFunctionExpression:
                     case SyntaxKind.ParenthesizedArrowFunctionExpression:
@@ -855,7 +855,7 @@ module TypeScript {
                     case SyntaxKind.InvocationExpression:
                     case SyntaxKind.ObjectCreationExpression:
                         if (propagateContextualTypes) {
-                            var isNew = current.kind === SyntaxKind.ObjectCreationExpression;
+                            var isNew = current.kind() === SyntaxKind.ObjectCreationExpression;
                             var callExpression = <IExpressionWithArgumentListSyntax>current;
                             var contextualType: PullTypeSymbol = null;
 
@@ -921,7 +921,7 @@ module TypeScript {
                             resolver.resolveObjectLiteralExpression(objectLiteralExpression, inContextuallyTypedAssignment, resolutionContext, objectLiteralResolutionContext);
 
                             // find the member in the path
-                            var memeberAST = (path[i + 1] && path[i + 1].kind === SyntaxKind.SeparatedList) ? path[i + 2] : path[i + 1];
+                            var memeberAST = (path[i + 1] && path[i + 1].kind() === SyntaxKind.SeparatedList) ? path[i + 2] : path[i + 1];
                             if (memeberAST) {
                                 // Propagate the member contextual type
                                 var contextualType: PullTypeSymbol = null;
@@ -1048,13 +1048,13 @@ module TypeScript {
 
             // if the found ISyntaxElement is a named, we want to check for previous dotted expressions,
             // since those will give us the right typing
-            if (ast && ast.parent && ast.kind === SyntaxKind.IdentifierName) {
-                if (ast.parent.kind === SyntaxKind.MemberAccessExpression) {
+            if (ast && ast.parent && ast.kind() === SyntaxKind.IdentifierName) {
+                if (ast.parent.kind() === SyntaxKind.MemberAccessExpression) {
                     if ((<MemberAccessExpressionSyntax>ast.parent).name === ast) {
                         ast = ast.parent;
                     }
                 }
-                else if (ast.parent.kind === SyntaxKind.QualifiedName) {
+                else if (ast.parent.kind() === SyntaxKind.QualifiedName) {
                     if ((<QualifiedNameSyntax>ast.parent).right === ast) {
                         ast = ast.parent;
                     }
@@ -1120,8 +1120,8 @@ module TypeScript {
 
             if (!symbol) {
                 Debug.assert(
-                    ast.kind === SyntaxKind.SourceUnit,
-                    "No symbol was found for ast and ast was not source unit. Ast Kind: " + SyntaxKind[ast.kind] );
+                    ast.kind() === SyntaxKind.SourceUnit,
+                    "No symbol was found for ast and ast was not source unit. Ast Kind: " + SyntaxKind[ast.kind()] );
                 return null;
             }
 
@@ -1141,11 +1141,11 @@ module TypeScript {
 
         public pullGetCallInformationFromAST(ast: ISyntaxElement, document: Document): PullCallSymbolInfo {
             // ISyntaxElement has to be a call expression
-            if (ast.kind !== SyntaxKind.InvocationExpression && ast.kind !== SyntaxKind.ObjectCreationExpression) {
+            if (ast.kind() !== SyntaxKind.InvocationExpression && ast.kind() !== SyntaxKind.ObjectCreationExpression) {
                 return null;
             }
 
-            var isNew = ast.kind === SyntaxKind.ObjectCreationExpression;
+            var isNew = ast.kind() === SyntaxKind.ObjectCreationExpression;
 
             var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
@@ -1202,7 +1202,7 @@ module TypeScript {
 
         public pullGetContextualMembersFromAST(ast: ISyntaxElement, document: Document): PullVisibleSymbolsInfo {
             // Input has to be an object literal
-            if (ast.kind !== SyntaxKind.ObjectLiteralExpression) {
+            if (ast.kind() !== SyntaxKind.ObjectLiteralExpression) {
                 return null;
             }
 

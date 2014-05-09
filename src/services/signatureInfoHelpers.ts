@@ -36,13 +36,13 @@ module TypeScript.Services {
 
             whileLoop:
             while (token) {
-                switch (token.kind) {
+                switch (token.kind()) {
                     case TypeScript.SyntaxKind.LessThanToken:
                         if (stack === 0) {
                             // Found the beginning of the generic argument expression
                             var lessThanToken = token;
                             token = previousToken(token, /*includeSkippedTokens*/ true);
-                            if (!token || token.kind !== TypeScript.SyntaxKind.IdentifierName) {
+                            if (!token || token.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                                 break whileLoop;
                             }
 
@@ -95,16 +95,16 @@ module TypeScript.Services {
                         // This can be a function type or a constructor type. In either case, we want to skip the function defintion
                         token = previousToken(token, /*includeSkippedTokens*/ true);
 
-                        if (token && token.kind === TypeScript.SyntaxKind.CloseParenToken) {
+                        if (token && token.kind() === TypeScript.SyntaxKind.CloseParenToken) {
                             // Skip untill the matching open paren token
                             token = SignatureInfoHelpers.moveBackUpTillMatchingTokenKind(token, TypeScript.SyntaxKind.CloseParenToken, TypeScript.SyntaxKind.OpenParenToken);
 
-                            if (token && token.kind === TypeScript.SyntaxKind.GreaterThanToken) {
+                            if (token && token.kind() === TypeScript.SyntaxKind.GreaterThanToken) {
                                 // Another generic type argument list, skip it\
                                 token = SignatureInfoHelpers.moveBackUpTillMatchingTokenKind(token, TypeScript.SyntaxKind.GreaterThanToken, TypeScript.SyntaxKind.LessThanToken);
                             }
 
-                            if (token && token.kind === TypeScript.SyntaxKind.NewKeyword) {
+                            if (token && token.kind() === TypeScript.SyntaxKind.NewKeyword) {
                                 // In case this was a constructor type, skip the new keyword
                                 token = previousToken(token, /*includeSkippedTokens*/ true);
                             }
@@ -310,7 +310,7 @@ module TypeScript.Services {
         }
 
         private static moveBackUpTillMatchingTokenKind(token: TypeScript.ISyntaxToken, tokenKind: TypeScript.SyntaxKind, matchingTokenKind: TypeScript.SyntaxKind): TypeScript.ISyntaxToken {
-            if (!token || token.kind !== tokenKind) {
+            if (!token || token.kind() !== tokenKind) {
                 throw TypeScript.Errors.invalidOperation();
             }
 
@@ -320,7 +320,7 @@ module TypeScript.Services {
             var stack = 0;
 
             while (token) {
-                if (token.kind === matchingTokenKind) {
+                if (token.kind() === matchingTokenKind) {
                     if (stack === 0) {
                         // Found the matching token, return
                         return token;
@@ -333,7 +333,7 @@ module TypeScript.Services {
                         stack--;
                     }
                 }
-                else if (token.kind === tokenKind) {
+                else if (token.kind() === tokenKind) {
                     stack++;
                 }
 

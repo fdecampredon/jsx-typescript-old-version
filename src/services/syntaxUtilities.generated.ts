@@ -25,7 +25,7 @@ module TypeScript {
         if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }
         if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }
 
-        switch (element.kind) {
+        switch (element.kind()) {
             case SyntaxKind.QualifiedName:
             case SyntaxKind.ObjectType:
             case SyntaxKind.FunctionType:

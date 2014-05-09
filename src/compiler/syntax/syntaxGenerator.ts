@@ -134,7 +134,6 @@ var definitions:ITypeDefinition[] = [
         name: 'HeritageClauseSyntax',
         baseType: 'ISyntaxNode',
         children: [
-            <any>{ name: 'kind', type: 'SyntaxKind' },
             <any>{ name: 'extendsOrImplementsKeyword', isToken: true, tokenKinds: ['ExtendsKeyword', 'ImplementsKeyword'] },
             <any>{ name: 'typeNames', isSeparatedList: true, requiresAtLeastOneItem: true, elementType: 'INameSyntax' }
         ],
@@ -209,7 +208,6 @@ var definitions:ITypeDefinition[] = [
         baseType: 'ISyntaxNode',
         interfaces: ['IUnaryExpressionSyntax'],
         children: [
-            <any>{ name: 'kind', type: 'SyntaxKind' },
             <any>{ name: 'operatorToken', isToken: true, tokenKinds: ['PlusPlusToken', 'MinusMinusToken', 'PlusToken', 'MinusToken', 'TildeToken', 'ExclamationToken'] },
             <any>{ name: 'operand', type: 'IUnaryExpressionSyntax' }
         ],
@@ -401,7 +399,6 @@ var definitions:ITypeDefinition[] = [
         baseType: 'ISyntaxNode',
         interfaces: ['IPostfixExpressionSyntax'],
         children: [
-            <any>{ name: 'kind', type: 'SyntaxKind' },
             <any>{ name: 'operand', type: 'ILeftHandSideExpressionSyntax' },
             <any>{ name: 'operatorToken', isToken: true, tokenKinds:['PlusPlusToken', 'MinusMinusToken'] }
         ],
@@ -442,7 +439,6 @@ var definitions:ITypeDefinition[] = [
         baseType: 'ISyntaxNode',
         interfaces: ['IExpressionSyntax'],
         children: [
-            <any>{ name: 'kind', type: 'SyntaxKind' },
             <any>{ name: 'left', type: 'IExpressionSyntax' },
             <any>{ name: 'operatorToken', isToken: true,
                    tokenKinds:['AsteriskToken',  'SlashToken',  'PercentToken', 'PlusToken', 'MinusToken', 'LessThanLessThanToken',
@@ -1921,26 +1917,70 @@ function generateStructuralEqualsMethod(definition: ITypeDefinition): string {
 }
 
 function generateNode(definition: ITypeDefinition): string {
-    var result = "    export interface " + definition.name + " extends ISyntaxNode"
+    var result = "    export class " + definition.name + " extends SyntaxNode"
 
     if (definition.interfaces) {
-        result += ", " + definition.interfaces.join(", ");
+        result += " implements ";
+        result += definition.interfaces.join(", ");
     }
 
     result += " {\r\n";
 
     if (definition.name === "SourceUnitSyntax") {
-        result += "        syntaxTree: SyntaxTree;\r\n";
+        result += "        public syntaxTree: SyntaxTree = null;\r\n\r\n";
+    }
+
+    result += generateIsProperties(definition);
+
+    result += "        constructor(data: number";
+
+    for (var i = 0; i < definition.children.length; i++) {
+        var child = definition.children[i];
+        result += ", public " + child.name + ": " + getType(child);
+    }
+
+    result += ") {\r\n";
+    result += "            super(data);\r\n";
+
+    if (definition.name === "SourceUnitSyntax") {
+        result += "            this.parent = null;\r\n";
     }
 
     for (var i = 0; i < definition.children.length; i++) {
         var child = definition.children[i];
-        if (child.type !== "SyntaxKind") {
-            result += "        " + child.name + ": " + getType(child) + ";\r\n";
+
+        if (child.isList || child.isSeparatedList) {
+            result += "            !isShared(" + child.name + ") && (" + child.name + ".parent = this);\r\n";
+        }
+        else if (child.isOptional) {
+            result += "            " + child.name + " && (" + child.name + ".parent = this);\r\n";
+        }
+        else {
+            result += "            " + child.name + ".parent = this;\r\n";
         }
     }
-    result += "    }\r\n\r\n";
 
+    result += "        }\r\n";
+
+    if (definition.name === "BinaryExpressionSyntax") {
+        result += "        public kind(): SyntaxKind { return SyntaxFacts.getBinaryExpressionFromOperatorToken(this.operatorToken.kind()); }\r\n";
+    }
+    else if (definition.name === "PrefixUnaryExpressionSyntax") {
+        result += "        public kind(): SyntaxKind { return SyntaxFacts.getPrefixUnaryExpressionFromOperatorToken(this.operatorToken.kind()); }\r\n";
+    }
+    else if (definition.name === "PostfixUnaryExpressionSyntax") {
+        result += "        public kind(): SyntaxKind { return SyntaxFacts.getPostfixUnaryExpressionFromOperatorToken(this.operatorToken.kind()); }\r\n";
+    }
+    else if (definition.name === "HeritageClauseSyntax") {
+        result += "        public kind(): SyntaxKind { return this.extendsOrImplementsKeyword.kind() === SyntaxKind.ExtendsKeyword ? SyntaxKind.ExtendsHeritageClause : SyntaxKind.ImplementsHeritageClause; }\r\n";
+    }
+    else {
+        result += "        public kind(): SyntaxKind { return SyntaxKind." + getNameWithoutSuffix(definition) + "; }\r\n";
+    }
+
+    result += "    }";
+
+    /*
     result += "    export function create" + getNameWithoutSuffix(definition) + "(data: number";
 
     for (var i = 0; i < definition.children.length; i++) {
@@ -1993,7 +2033,7 @@ function generateNode(definition: ITypeDefinition): string {
     }
     result += "        return result;\r\n";
     result += "    }"
-
+    */
 
     //hasKind = false;
 
@@ -2697,7 +2737,7 @@ function generateVisitor(): string {
     result += "    export function visitNodeOrToken(visitor: ISyntaxVisitor, element: ISyntaxNodeOrToken): any {\r\n";
     result += "        if (element === null) { return null; }\r\n";
     result += "        if (isToken(element)) { return visitor.visitToken(<ISyntaxToken>element); }\r\n";
-    result += "        switch (element.kind) {\r\n";
+    result += "        switch (element.kind()) {\r\n";
 
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];
@@ -2891,7 +2931,7 @@ function generateIsTypeScriptSpecific(): string {
     result += "        if (isToken(element)) { return false; }\r\n";
     result += "        if (isList(element)) { return isListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }\r\n";
     result += "        if (isSeparatedList(element)) { return isSeparatedListTypeScriptSpecific(<ISyntaxNodeOrToken[]>element); }\r\n\r\n";
-    result += "        switch (element.kind) {\r\n";
+    result += "        switch (element.kind()) {\r\n";
 
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];

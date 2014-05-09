@@ -425,7 +425,6 @@ module TypeScript {
 
         public visitPrefixUnaryExpression(node: PrefixUnaryExpressionSyntax): any {
             return node.update(
-                node.kind,
                 this.visitToken(node.operatorToken),
                 <IUnaryExpressionSyntax>this.visitNodeOrToken(node.operand));
         }
@@ -459,7 +458,6 @@ module TypeScript {
 
         public visitBinaryExpression(node: BinaryExpressionSyntax): any {
             return node.update(
-                node.kind,
                 <IExpressionSyntax>this.visitNodeOrToken(node.left),
                 this.visitToken(node.operatorToken),
                 <IExpressionSyntax>this.visitNodeOrToken(node.right));
@@ -467,7 +465,6 @@ module TypeScript {
 
         public visitPostfixUnaryExpression(node: PostfixUnaryExpressionSyntax): any {
             return node.update(
-                node.kind,
                 <ILeftHandSideExpressionSyntax>this.visitNodeOrToken(node.operand),
                 this.visitToken(node.operatorToken));
         }
@@ -601,7 +598,6 @@ module TypeScript {
 
         public visitHeritageClause(node: HeritageClauseSyntax): any {
             return node.update(
-                node.kind,
                 this.visitToken(node.extendsOrImplementsKeyword),
                 this.visitSeparatedList(node.typeNames));
         }

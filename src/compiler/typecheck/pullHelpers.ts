@@ -46,7 +46,7 @@ module TypeScript {
             }
             var signatures: PullSignatureSymbol[];
 
-            if (funcDecl.kind === SyntaxKind.ConstructorDeclaration || functionDecl.kind === PullElementKind.ConstructSignature) {
+            if (funcDecl.kind() === SyntaxKind.ConstructorDeclaration || functionDecl.kind === PullElementKind.ConstructSignature) {
                 signatures = typeSymbolWithAllSignatures.getConstructSignatures();
             }
             else if (functionDecl.kind === PullElementKind.IndexSignature) {

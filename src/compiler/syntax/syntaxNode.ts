@@ -1,10 +1,14 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    //export class ISyntaxNode implements ISyntaxNodeOrToken {
-    //    public parent: ISyntaxElement = null;
+    export class SyntaxNode implements ISyntaxNodeOrToken {
+        public parent: ISyntaxElement;
 
-    //    constructor(public kind: SyntaxKind, public data: number) {
-    //    }
-    //}
+        constructor(public data: number) {
+        }
+
+        public kind(): SyntaxKind {
+            throw Errors.abstract();
+        }
+    }
 }

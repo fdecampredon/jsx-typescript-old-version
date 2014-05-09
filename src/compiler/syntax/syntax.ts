@@ -5,14 +5,14 @@ module TypeScript.Syntax {
 
     export function getStandaloneExpression(positionedToken: ISyntaxToken): ISyntaxNodeOrToken {
         var token = positionedToken;
-        if (positionedToken !== null && positionedToken.kind === SyntaxKind.IdentifierName) {
+        if (positionedToken !== null && positionedToken.kind() === SyntaxKind.IdentifierName) {
             var parentPositionedNode = containingNode(positionedToken);
             var parentNode = containingNode(parentPositionedNode);
 
-            if (parentNode.kind === SyntaxKind.QualifiedName && (<QualifiedNameSyntax>parentNode).right === token) {
+            if (parentNode.kind() === SyntaxKind.QualifiedName && (<QualifiedNameSyntax>parentNode).right === token) {
                 return parentPositionedNode;
             }
-            else if (parentNode.kind === SyntaxKind.MemberAccessExpression && (<MemberAccessExpressionSyntax>parentNode).name === token) {
+            else if (parentNode.kind() === SyntaxKind.MemberAccessExpression && (<MemberAccessExpressionSyntax>parentNode).name === token) {
                 return parentPositionedNode;
             }
         }
@@ -26,7 +26,7 @@ module TypeScript.Syntax {
             var parent = containingNode(positionedNodeOrToken);
 
             if (parent !== null) {
-                switch (parent.kind) {
+                switch (parent.kind()) {
                     case SyntaxKind.ModuleNameModuleReference:
                         return true;
                     case SyntaxKind.QualifiedName:
@@ -52,7 +52,7 @@ module TypeScript.Syntax {
         var nodeOrToken = positionedNodeOrToken;
 
         if (parent !== null) {
-            switch (parent.kind) {
+            switch (parent.kind()) {
                 case SyntaxKind.ArrayType:
                     return (<ArrayTypeSyntax>parent).type === nodeOrToken;
                 case SyntaxKind.CastExpression:
@@ -129,22 +129,22 @@ module TypeScript.Syntax {
     }
 
     export function isSuperInvocationExpression(node: IExpressionSyntax): boolean {
-        return node.kind === SyntaxKind.InvocationExpression &&
-            (<InvocationExpressionSyntax>node).expression.kind === SyntaxKind.SuperKeyword;
+        return node.kind() === SyntaxKind.InvocationExpression &&
+            (<InvocationExpressionSyntax>node).expression.kind() === SyntaxKind.SuperKeyword;
     }
 
     export function isSuperInvocationExpressionStatement(node: ISyntaxNode): boolean {
-        return node.kind === SyntaxKind.ExpressionStatement &&
+        return node.kind() === SyntaxKind.ExpressionStatement &&
             isSuperInvocationExpression((<ExpressionStatementSyntax>node).expression);
     }
 
     export function isSuperMemberAccessExpression(node: IExpressionSyntax): boolean {
-        return node.kind === SyntaxKind.MemberAccessExpression &&
-            (<MemberAccessExpressionSyntax>node).expression.kind === SyntaxKind.SuperKeyword;
+        return node.kind() === SyntaxKind.MemberAccessExpression &&
+            (<MemberAccessExpressionSyntax>node).expression.kind() === SyntaxKind.SuperKeyword;
     }
 
     export function isSuperMemberAccessInvocationExpression(node: ISyntaxNode): boolean {
-        return node.kind === SyntaxKind.InvocationExpression &&
+        return node.kind() === SyntaxKind.InvocationExpression &&
             isSuperMemberAccessExpression((<InvocationExpressionSyntax>node).expression);
     }
 
@@ -158,7 +158,7 @@ module TypeScript.Syntax {
             if (isToken(child)) {
                 var token = <ISyntaxToken>child;
                 // If a token is skipped, return true. Or if it is a missing token. The only empty token that is not missing is EOF
-                if (token.hasSkippedToken() || (width(token) === 0 && token.kind !== SyntaxKind.EndOfFileToken)) {
+                if (token.hasSkippedToken() || (width(token) === 0 && token.kind() !== SyntaxKind.EndOfFileToken)) {
                     return true;
                 }
             }
@@ -168,7 +168,7 @@ module TypeScript.Syntax {
     }
 
     export function isUnterminatedStringLiteral(token: ISyntaxToken): boolean {
-        if (token && token.kind === SyntaxKind.StringLiteral) {
+        if (token && token.kind() === SyntaxKind.StringLiteral) {
             var text = token.text();
             return text.length < 2 || text.charCodeAt(text.length - 1) !== text.charCodeAt(0);
         }
@@ -177,7 +177,7 @@ module TypeScript.Syntax {
     }
 
     export function isUnterminatedMultilineCommentTrivia(trivia: ISyntaxTrivia): boolean {
-        if (trivia && trivia.kind === SyntaxKind.MultiLineCommentTrivia) {
+        if (trivia && trivia.kind() === SyntaxKind.MultiLineCommentTrivia) {
             var text = trivia.fullText();
             return text.length < 4 || text.substring(text.length - 2) !== "*/";
         }
@@ -191,7 +191,7 @@ module TypeScript.Syntax {
                 return true;
             }
             else if (position === end) {
-                return trivia.kind === SyntaxKind.SingleLineCommentTrivia || isUnterminatedMultilineCommentTrivia(trivia);
+                return trivia.kind() === SyntaxKind.SingleLineCommentTrivia || isUnterminatedMultilineCommentTrivia(trivia);
             }
         }
 
@@ -204,7 +204,7 @@ module TypeScript.Syntax {
         var triviaList: ISyntaxTriviaList = null;
         var lastTriviaBeforeToken: ISyntaxTrivia = null;
 
-        if (positionedToken.kind === SyntaxKind.EndOfFileToken) {
+        if (positionedToken.kind() === SyntaxKind.EndOfFileToken) {
             // Check if the trivia is leading on the EndOfFile token
             if (positionedToken.hasLeadingTrivia()) {
                 triviaList = positionedToken.leadingTrivia();
@@ -255,14 +255,14 @@ module TypeScript.Syntax {
         var positionedToken = findToken(sourceUnit, position);
 
         if (positionedToken) {
-            if (positionedToken.kind === SyntaxKind.EndOfFileToken) {
+            if (positionedToken.kind() === SyntaxKind.EndOfFileToken) {
                 // EndOfFile token, enusre it did not follow an unterminated string literal
                 positionedToken = previousToken(positionedToken);
                 return positionedToken && positionedToken.trailingTriviaWidth() === 0 && isUnterminatedStringLiteral(positionedToken);
             }
             else if (position > start(positionedToken)) {
                 // Ensure position falls enterily within the literal if it is terminated, or the line if it is not
-                return (position < end(positionedToken) && (positionedToken.kind === TypeScript.SyntaxKind.StringLiteral || positionedToken.kind === TypeScript.SyntaxKind.RegularExpressionLiteral)) ||
+                return (position < end(positionedToken) && (positionedToken.kind() === TypeScript.SyntaxKind.StringLiteral || positionedToken.kind() === TypeScript.SyntaxKind.RegularExpressionLiteral)) ||
                     (position <= end(positionedToken) && isUnterminatedStringLiteral(positionedToken));
             }
         }
@@ -306,7 +306,7 @@ module TypeScript.Syntax {
 
     export function getAncestorOfKind(positionedToken: ISyntaxElement, kind: SyntaxKind): ISyntaxElement {
         while (positionedToken && positionedToken.parent) {
-            if (positionedToken.parent.kind === kind) {
+            if (positionedToken.parent.kind() === kind) {
                 return positionedToken.parent;
             }
 
@@ -322,7 +322,7 @@ module TypeScript.Syntax {
 
     export function isIntegerLiteral(expression: IExpressionSyntax): boolean {
         if (expression) {
-            switch (expression.kind) {
+            switch (expression.kind()) {
                 case SyntaxKind.PlusExpression:
                 case SyntaxKind.NegateExpression:
                     // Note: if there is a + or - sign, we can only allow a normal integer following

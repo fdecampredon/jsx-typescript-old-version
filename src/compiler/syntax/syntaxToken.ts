@@ -89,7 +89,7 @@ module TypeScript {
             return null;
         }
 
-        var kind = token.kind;
+        var kind = token.kind();
         var text = token.text();
 
         if (kind === SyntaxKind.IdentifierName) {
@@ -277,7 +277,7 @@ module TypeScript {
 
 module TypeScript.Syntax {
     export function realizeToken(token: ISyntaxToken): ISyntaxToken {
-        return new RealizedToken(token.fullStart(), token.kind, token.isKeywordConvertedToIdentifier(), token.leadingTrivia(), token.text(), token.trailingTrivia());
+        return new RealizedToken(token.fullStart(), token.kind(), token.isKeywordConvertedToIdentifier(), token.leadingTrivia(), token.text(), token.trailingTrivia());
     }
 
     export function emptyToken(kind: SyntaxKind): ISyntaxToken {
@@ -295,7 +295,7 @@ module TypeScript.Syntax {
         public _isUnaryExpression: any;
         public _isExpression: any;
 
-        constructor(public kind: SyntaxKind) {
+        constructor(private _kind: SyntaxKind) {
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
@@ -303,8 +303,12 @@ module TypeScript.Syntax {
             // An empty token has no need to point at an underlying text.
         }
 
+        public kind(): SyntaxKind {
+            return this._kind;
+        }
+
         public clone(): ISyntaxToken {
-            return new EmptyToken(this.kind);
+            return new EmptyToken(this.kind());
         }
 
         private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
@@ -353,7 +357,7 @@ module TypeScript.Syntax {
             while (true) {
                 var parent = current.parent;
                 if (parent === null) {
-                    Debug.assert(current.kind === SyntaxKind.SourceUnit, "We had a node without a parent that was not the root node!");
+                    Debug.assert(current.kind() === SyntaxKind.SourceUnit, "We had a node without a parent that was not the root node!");
 
                     // We walked all the way to the top, and never found a previous element.  This 
                     // can happen with code like:
@@ -426,7 +430,7 @@ module TypeScript.Syntax {
         public parent: ISyntaxElement = null;
         public data: number;
         private _fullStart: number;
-        public kind: SyntaxKind;
+        private _kind: SyntaxKind;
         private _isKeywordConvertedToIdentifier: boolean;
         private _leadingTrivia: ISyntaxTriviaList;
         private _text: string;
@@ -446,7 +450,7 @@ module TypeScript.Syntax {
                     text: string,
                     trailingTrivia: ISyntaxTriviaList) {
             this._fullStart = fullStart;
-            this.kind = kind;
+            this._kind = kind;
             this._isKeywordConvertedToIdentifier = isKeywordConvertedToIdentifier;
             this._text = text;
 
@@ -467,8 +471,12 @@ module TypeScript.Syntax {
             this._fullStart = fullStart;
         }
 
+        public kind(): SyntaxKind {
+            return this._kind;
+        }
+
         public clone(): ISyntaxToken {
-            return new RealizedToken(this._fullStart, this.kind, this._isKeywordConvertedToIdentifier, this._leadingTrivia, this._text, this._trailingTrivia);
+            return new RealizedToken(this._fullStart, this.kind(), this._isKeywordConvertedToIdentifier, this._leadingTrivia, this._text, this._trailingTrivia);
         }
 
         // Realized tokens are created from the parser.  They are *never* incrementally reusable.
@@ -518,11 +526,11 @@ module TypeScript.Syntax {
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
-            return new RealizedToken(this._fullStart, this.kind, this._isKeywordConvertedToIdentifier, leadingTrivia, this._text, this._trailingTrivia);
+            return new RealizedToken(this._fullStart, this.kind(), this._isKeywordConvertedToIdentifier, leadingTrivia, this._text, this._trailingTrivia);
         }
 
         public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
-            return new RealizedToken(this._fullStart, this.kind, this._isKeywordConvertedToIdentifier, this._leadingTrivia, this._text, trailingTrivia);
+            return new RealizedToken(this._fullStart, this.kind(), this._isKeywordConvertedToIdentifier, this._leadingTrivia, this._text, trailingTrivia);
         }
     }
 

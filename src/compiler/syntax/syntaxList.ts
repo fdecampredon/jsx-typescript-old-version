@@ -4,7 +4,7 @@ interface Array<T> {
     data: number;
     separators?: TypeScript.ISyntaxToken[];
 
-    kind: TypeScript.SyntaxKind;
+    kind(): TypeScript.SyntaxKind;
     parent: TypeScript.ISyntaxElement;
 
     separatorCount(): number;
@@ -13,18 +13,20 @@ interface Array<T> {
 
 module TypeScript.Syntax {
     var _emptyList: ISyntaxNodeOrToken[] = [];
-    _emptyList.kind = SyntaxKind.List;
 
     var _emptySeparatedList: ISyntaxNodeOrToken[] = [];
     var _emptySeparators: ISyntaxToken[] = [];
 
-    _emptySeparatedList.kind = SyntaxKind.SeparatedList;
     _emptySeparatedList.separators = _emptySeparators;
 
     function assertEmptyLists() {
         // Debug.assert(_emptyList.length === 0);
         // var separators = _emptySeparatedList.separators;
         // Debug.assert(!separators || separators.length === 0);
+    }
+
+    Array.prototype.kind = function () {
+        return this.separators === undefined ? SyntaxKind.List : SyntaxKind.SeparatedList;
     }
 
     Array.prototype.separatorCount = function (): number {
@@ -57,7 +59,6 @@ module TypeScript.Syntax {
             nodes[i].parent = nodes;
         }
 
-        nodes.kind = SyntaxKind.List;
         return nodes;
     }
 
@@ -76,7 +77,7 @@ module TypeScript.Syntax {
             separators[i].parent = nodes;
         }
 
-        nodes.kind = SyntaxKind.SeparatedList;
+
         nodes.separators = separators.length === 0 ? _emptySeparators : separators;
 
         return nodes;

@@ -3,7 +3,7 @@
 module TypeScript {
     export interface ISyntaxTrivia {
         parent: ISyntaxTriviaList;
-        kind: SyntaxKind;
+        kind(): SyntaxKind;
 
         isWhitespace(): boolean;
         isComment(): boolean;
@@ -27,7 +27,11 @@ module TypeScript.Syntax {
     class AbstractTrivia implements ISyntaxTrivia {
         public parent: ISyntaxTriviaList = null;
 
-        constructor(public kind: SyntaxKind) {
+        constructor(private _kind: SyntaxKind) {
+        }
+
+        public kind(): SyntaxKind {
+            return this._kind;
         }
 
         public clone(): ISyntaxTrivia {
@@ -51,19 +55,19 @@ module TypeScript.Syntax {
         }
 
         public isWhitespace(): boolean {
-            return this.kind === SyntaxKind.WhitespaceTrivia;
+            return this.kind() === SyntaxKind.WhitespaceTrivia;
         }
 
         public isComment(): boolean {
-            return this.kind === SyntaxKind.SingleLineCommentTrivia || this.kind === SyntaxKind.MultiLineCommentTrivia;
+            return this.kind() === SyntaxKind.SingleLineCommentTrivia || this.kind() === SyntaxKind.MultiLineCommentTrivia;
         }
 
         public isNewLine(): boolean {
-            return this.kind === SyntaxKind.NewLineTrivia;
+            return this.kind() === SyntaxKind.NewLineTrivia;
         }
 
         public isSkippedToken(): boolean {
-            return this.kind === SyntaxKind.SkippedTokenTrivia;
+            return this.kind() === SyntaxKind.SkippedTokenTrivia;
         }
     }
 
@@ -73,7 +77,7 @@ module TypeScript.Syntax {
         }
 
         public clone(): ISyntaxTrivia {
-            return new NormalTrivia(this.kind, this._text, this._fullStart);
+            return new NormalTrivia(this.kind(), this._text, this._fullStart);
         }
 
         public fullStart(): number {
@@ -127,7 +131,7 @@ module TypeScript.Syntax {
         }
 
         public clone(): ISyntaxTrivia {
-            return new DeferredTrivia(this.kind, this._text, this._fullStart, this._fullWidth);
+            return new DeferredTrivia(this.kind(), this._text, this._fullStart, this._fullWidth);
         }
 
         public fullStart(): number {

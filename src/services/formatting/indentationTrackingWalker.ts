@@ -91,7 +91,7 @@ module TypeScript.Services.Formatting {
 
                 // Only track new lines on tokens within the range. Make sure to check that the last trivia is a newline, and not just one of the trivia
                 var trivia = token.trailingTrivia();
-                this._lastTriviaWasNewLine = token.hasTrailingNewLine() && trivia.syntaxTriviaAt(trivia.count() - 1).kind == SyntaxKind.NewLineTrivia;
+                this._lastTriviaWasNewLine = token.hasTrailingNewLine() && trivia.syntaxTriviaAt(trivia.count() - 1).kind() == SyntaxKind.NewLineTrivia;
             }
 
             // Update the position
@@ -130,9 +130,9 @@ module TypeScript.Services.Formatting {
             // }
             // Also in a do-while statement, the while should be indented like the parent.
             if (firstToken(this._parent.node()) === token ||
-                token.kind === SyntaxKind.OpenBraceToken || token.kind === SyntaxKind.CloseBraceToken ||
-                token.kind === SyntaxKind.OpenBracketToken || token.kind === SyntaxKind.CloseBracketToken ||
-                (token.kind === SyntaxKind.WhileKeyword && this._parent.node().kind == SyntaxKind.DoStatement)) {
+                token.kind() === SyntaxKind.OpenBraceToken || token.kind() === SyntaxKind.CloseBraceToken ||
+                token.kind() === SyntaxKind.OpenBracketToken || token.kind() === SyntaxKind.CloseBracketToken ||
+                (token.kind() === SyntaxKind.WhileKeyword && this._parent.node().kind() == SyntaxKind.DoStatement)) {
                 return this._parent.indentationAmount();
             }
 
@@ -143,7 +143,7 @@ module TypeScript.Services.Formatting {
             // If this is token terminating an indentation scope, leading comments should be indented to follow the children 
             // indentation level and not the node
 
-            if (token.kind === SyntaxKind.CloseBraceToken || token.kind === SyntaxKind.CloseBracketToken) {
+            if (token.kind() === SyntaxKind.CloseBraceToken || token.kind() === SyntaxKind.CloseBracketToken) {
                 return (this._parent.indentationAmount() + this._parent.childIndentationAmountDelta());
             }
             return this._parent.indentationAmount();
@@ -195,7 +195,7 @@ module TypeScript.Services.Formatting {
             var indentationAmountDelta: number;
             var parentNode = parent.node();
 
-            switch (node.kind) {
+            switch (node.kind()) {
                 default:
                     // General case
                     // This node should follow the child indentation set by its parent

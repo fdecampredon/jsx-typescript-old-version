@@ -786,7 +786,7 @@ module TypeScript {
                     return ASTHelpers.docComments(enclosingModuleDeclaration);
                 }
 
-                if (ast.kind !== TypeScript.SyntaxKind.ModuleDeclaration || decl.kind !== TypeScript.PullElementKind.Variable) {
+                if (ast.kind() !== TypeScript.SyntaxKind.ModuleDeclaration || decl.kind !== TypeScript.PullElementKind.Variable) {
                     return ASTHelpers.docComments(ast);
                 }
             }

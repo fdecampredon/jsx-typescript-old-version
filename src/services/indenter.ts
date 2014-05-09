@@ -22,7 +22,7 @@ module TypeScript.Services {
             var currentToken = TypeScript.findToken(node, position);
             var currentNode: TypeScript.ISyntaxElement = currentToken;
 
-            if (currentToken.kind === TypeScript.SyntaxKind.EndOfFileToken) {
+            if (currentToken.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
                 // Ignore EOF tokens, pick the one before it
                 currentNode = previousToken(currentToken);
             }
@@ -36,8 +36,8 @@ module TypeScript.Services {
             }
             
             // Check if this is a valid node to provide indentation
-            if (currentNode.kind === TypeScript.SyntaxKind.StringLiteral ||
-                currentNode.kind === TypeScript.SyntaxKind.RegularExpressionLiteral) {
+            if (currentNode.kind() === TypeScript.SyntaxKind.StringLiteral ||
+                currentNode.kind() === TypeScript.SyntaxKind.RegularExpressionLiteral) {
                 return indentation;
             }
 
@@ -68,7 +68,7 @@ module TypeScript.Services {
         }
 
         private static belongsToBracket(sourceText: TypeScript.IScriptSnapshot, token: TypeScript.ISyntaxToken, position: number): boolean {
-            switch (token.kind) {
+            switch (token.kind()) {
                 case TypeScript.SyntaxKind.OpenBraceToken:
                 case TypeScript.SyntaxKind.CloseBraceToken:
                 case TypeScript.SyntaxKind.OpenParenToken:
@@ -90,7 +90,7 @@ module TypeScript.Services {
         }
 
         private static isInContainerNode(parent: TypeScript.ISyntaxElement, element: TypeScript.ISyntaxElement): boolean {
-            switch (parent.kind) {
+            switch (parent.kind()) {
                 case TypeScript.SyntaxKind.ClassDeclaration:
                 case TypeScript.SyntaxKind.ModuleDeclaration:
                 case TypeScript.SyntaxKind.EnumDeclaration:
@@ -105,7 +105,7 @@ module TypeScript.Services {
                     return true;
 
                 case TypeScript.SyntaxKind.InterfaceDeclaration:
-                    return element.kind !== TypeScript.SyntaxKind.ObjectType;
+                    return element.kind() !== TypeScript.SyntaxKind.ObjectType;
 
                 case TypeScript.SyntaxKind.FunctionDeclaration:
                 case TypeScript.SyntaxKind.MemberFunctionDeclaration:
@@ -124,7 +124,7 @@ module TypeScript.Services {
                 case TypeScript.SyntaxKind.IfStatement:
                 case TypeScript.SyntaxKind.ElseClause:
                     // The block has already been conted before, ignore the container node
-                    return element.kind !== TypeScript.SyntaxKind.Block;
+                    return element.kind() !== TypeScript.SyntaxKind.Block;
 
                 case TypeScript.SyntaxKind.TryStatement:
                     // If inside the try body, the block element will take care of the indentation
@@ -137,7 +137,7 @@ module TypeScript.Services {
         }
 
         private static getCustomListIndentation(list: TypeScript.ISyntaxElement, element: TypeScript.ISyntaxElement): number {
-            switch (list.kind) {
+            switch (list.kind()) {
                 case TypeScript.SyntaxKind.SeparatedList:
                     // If it is the first in the list, let it have its parents indentation; no custom indentation here.
                     for (var i = 0, n = childCount(list); i < n ; i++) {

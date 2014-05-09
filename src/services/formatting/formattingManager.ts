@@ -44,12 +44,12 @@ module TypeScript.Services.Formatting {
             var sourceUnit = this.syntaxTree.sourceUnit();
             var semicolonPositionedToken = findToken(sourceUnit, caretPosition - 1);
 
-            if (semicolonPositionedToken.kind === SyntaxKind.SemicolonToken) {
+            if (semicolonPositionedToken.kind() === SyntaxKind.SemicolonToken) {
                 // Find the outer most parent that this semicolon terminates
                 var current: ISyntaxElement = semicolonPositionedToken;
                 while (current.parent !== null &&
                        end(current.parent) === end(semicolonPositionedToken) &&
-                       current.parent.kind !== SyntaxKind.List) {
+                    current.parent.kind() !== SyntaxKind.List) {
                     current = current.parent;
                 }
 
@@ -67,12 +67,12 @@ module TypeScript.Services.Formatting {
             var sourceUnit = this.syntaxTree.sourceUnit();
             var closeBracePositionedToken = findToken(sourceUnit, caretPosition - 1);
 
-            if (closeBracePositionedToken.kind === SyntaxKind.CloseBraceToken) {
+            if (closeBracePositionedToken.kind() === SyntaxKind.CloseBraceToken) {
                 // Find the outer most parent that this closing brace terminates
                 var current: ISyntaxElement = closeBracePositionedToken;
                 while (current.parent !== null &&
                        end(current.parent) === end(closeBracePositionedToken) &&
-                       current.parent.kind !== SyntaxKind.List) {
+                        current.parent.kind() !== SyntaxKind.List) {
                     current = current.parent;
                 }
 
