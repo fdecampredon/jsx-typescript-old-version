@@ -42,123 +42,41 @@
             }
         }
 
-        var tree2;
-        function newParse() {
-            var batch = new BatchCompiler();
+        var currentCompilerSourcesTree;
+        var currentLibDTSTree;
 
+        function parseCompilerSources() {
             run(function () {
                 var start = new Date().getTime();
 
-                nodeCount = 0;
-                tokenCount = 0;
-                emptyListCount = 0;
-                singletonListCount = 0;
-                listCount = 0;
-                literalCount = 0;
-                tree2 = batch.newParse();
-                tree2.sourceUnit().syntaxTree = null;
-                TypeScript.ScannerToken.clear();
-                // countNodes(tree2.sourceUnit())
-
-                appendTime("nodeCount: " + nodeCount + ", tokenCount: " + tokenCount + ", emptyList: " + emptyListCount + ", " +
-                    "singleton list: " + singletonListCount + ", listCount: " + listCount + ", literals: " + literalCount);
+                currentCompilerSourcesTree = batch.parseCompilerSources();
 
                 var end = new Date().getTime();
-                appendTime("New Parse", end - start);
+                appendTime("Time: ", end - start);
             });
         }
 
-        var nodeCount = 0;
-        var tokenCount = 0;
-        var emptyListCount = 0;
-        var singletonListCount = 0;
-        var listCount = 0;
-        var literalCount = 0;
-
-        function countNodes(e) {
-            if (!e) { return; }
-            if (TypeScript.isNode(e)) {
-                nodeCount++;
-            }
-            else if (e.isToken()) {
-                tokenCount++;
-                if (e.kind() === TypeScript.SyntaxKind.IdentifierName ||
-                    e.kind() === TypeScript.SyntaxKind.StringLiteral ||
-                    e.kind() === TypeScript.SyntaxKind.NumericLiteral ||
-                    e.kind() === TypeScript.SyntaxKind.RegularExpressionLiteral ||
-                    e.kind() === TypeScript.SyntaxKind.TrueKeyword ||
-                    e.kind() === TypeScript.SyntaxKind.FalseKeyword ||
-                    e.kind() === TypeScript.SyntaxKind.NullKeyword) {
-
-                    literalCount++;
-                }
-            }
-            else if (e.isList() || e.isSeparatedList()) {
-                if (e.childCount() === 0) {
-                    emptyListCount++;
-                }
-                else if (e.childCount() === 1) {
-                    singletonListCount++;
-                }
-                else {
-                    listCount++;
-                }
-            }
-
-            for (var i = 0, n = e.childCount() ; i < n; i++) {
-                countNodes(e.childAt(i));
-            }
-        }
-
-        function newParseAndAST() {
-            var batch = new BatchCompiler();
-
+        function parseLibDTS() {
             run(function () {
                 var start = new Date().getTime();
 
-                var tree = batch.newParse();
-                TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", new TypeScript.CompilationSettings(), false);
+                currentLibDTSTree = batch.parseLibDTSSource();
 
                 var end = new Date().getTime();
-                appendTime("AST", end - start);
+                appendTime("Time: ", end - start);
             });
         }
 
-        function newIncrementalParse() {
-            var batch = new BatchCompiler();
-            var tree = batch.newParse();
+        function incrementalParseLibDTS() {
+            if (!currentLibDTSTree) {
+                currentLibDTSTree = batch.parseLibDTSSource();
+            }
 
             run(function () {
                 var start = new Date().getTime();
-                tree = batch.newIncrementalParse(tree);
-
+                currentLibDTSTree = batch.incrementalParseLibDTSSource(currentLibDTSTree);
                 var end = new Date().getTime();
-                appendTime("Incremental Parse", end - start);
-            });
-        }
-
-        var batch = new BatchCompiler();
-
-        function newIncrementalParse2() {
-            run(function () {
-                var start = new Date().getTime();
-                tree2 = batch.newIncrementalParse2(tree2);
-                var end = new Date().getTime();
-                appendTime("Incremental Parse", end - start);
-            });
-        }
-
-        function newIncrementalParseAndAST() {
-            var batch = new BatchCompiler();
-            var tree = batch.newParse();
-            TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", new TypeScript.CompilationSettings(), false);
-
-            run(function () {
-                var start = new Date().getTime();
-                tree = batch.newIncrementalParse(tree);
-                TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", new TypeScript.CompilationSettings(), false);
-                var end = new Date().getTime();
-                appendTime("Incremental Parse and AST", end - start);
+                appendTime("Time: ", end - start);
             });
         }
 
@@ -166,18 +84,16 @@
             var start = new Date().getTime();
             compile();
             var end = new Date().getTime();
-            appendTime("Compile", end - start);
+            appendTime("Time: ", end - start);
         }
 
     </script>
 </head>
 <body>
     <h1>TypeScript Perf Testbed</h1>
-    <button onclick="newParse()">Parse</button>
-    <button onclick="newParseAndAST()">Parse + AST</button>
-    <button onclick="newIncrementalParse()">Incremental Parse</button>
-    <button onclick="newIncrementalParse2()">Incremental Parse 2</button>
-    <button onclick="newIncrementalParseAndAST()">Incremental Parse + AST</button>
+    <button onclick="parseCompilerSources()">Parse Compiler Sources</button>
+    <button onclick="parseLibDTS()">Parse lib.d.ts</button>
+    <button onclick="incrementalParseLibDTS()">Incremental Parse lib.d.ts</button>
     <button onclick="fullCompile()">Compile</button>
     <button onclick="clear1()">Clear</button>
 </body>

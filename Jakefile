@@ -383,7 +383,7 @@ compileFile(run, harnessSources, [builtTestDirectory, tscFile].concat(libraryTar
 // Webharness
 var frontEndPath = "tests/cases/webharness/frontEnd.ts";
 var perfCompilerPath = "tests/cases/webharness/perfCompiler.js";
-compileFile(perfCompilerPath, [frontEndPath], [tscFile], [], true);
+compileFile(perfCompilerPath, [frontEndPath], [tscFile, frontEndPath], [], true);
 
 // Webhost
 var webhostPath = "tests/cases/webhost/webtsc.ts";
