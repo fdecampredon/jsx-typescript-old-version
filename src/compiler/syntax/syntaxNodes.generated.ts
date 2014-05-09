@@ -144,9 +144,7 @@ module TypeScript {
     }
 
     export class QualifiedNameSyntax extends SyntaxNode implements INameSyntax {
-        public _isName: any;
-        public _isType: any;
-
+        public _isName: any; public _isType: any;
         constructor(data: number, public left: INameSyntax, public dotToken: ISyntaxToken, public right: ISyntaxToken) {
             super(data);
             left.parent = this;
@@ -158,7 +156,6 @@ module TypeScript {
 
     export class ObjectTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public _isType: any;
-
         constructor(data: number, public openBraceToken: ISyntaxToken, public typeMembers: ITypeMemberSyntax[], public closeBraceToken: ISyntaxToken) {
             super(data);
             openBraceToken.parent = this;
@@ -170,7 +167,6 @@ module TypeScript {
 
     export class FunctionTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public _isType: any;
-
         constructor(data: number, public typeParameterList: TypeParameterListSyntax, public parameterList: ParameterListSyntax, public equalsGreaterThanToken: ISyntaxToken, public type: ITypeSyntax) {
             super(data);
             typeParameterList && (typeParameterList.parent = this);
@@ -183,7 +179,6 @@ module TypeScript {
 
     export class ArrayTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public _isType: any;
-
         constructor(data: number, public type: ITypeSyntax, public openBracketToken: ISyntaxToken, public closeBracketToken: ISyntaxToken) {
             super(data);
             type.parent = this;
@@ -195,7 +190,6 @@ module TypeScript {
 
     export class ConstructorTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public _isType: any;
-
         constructor(data: number, public newKeyword: ISyntaxToken, public typeParameterList: TypeParameterListSyntax, public parameterList: ParameterListSyntax, public equalsGreaterThanToken: ISyntaxToken, public type: ITypeSyntax) {
             super(data);
             newKeyword.parent = this;
@@ -209,7 +203,6 @@ module TypeScript {
 
     export class GenericTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public _isType: any;
-
         constructor(data: number, public name: INameSyntax, public typeArgumentList: TypeArgumentListSyntax) {
             super(data);
             name.parent = this;
@@ -220,7 +213,6 @@ module TypeScript {
 
     export class TypeQuerySyntax extends SyntaxNode implements ITypeSyntax {
         public _isType: any;
-
         constructor(data: number, public typeOfKeyword: ISyntaxToken, public name: INameSyntax) {
             super(data);
             typeOfKeyword.parent = this;
@@ -231,7 +223,6 @@ module TypeScript {
 
     export class InterfaceDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public _isModuleElement: any;
-
         constructor(data: number, public modifiers: ISyntaxToken[], public interfaceKeyword: ISyntaxToken, public identifier: ISyntaxToken, public typeParameterList: TypeParameterListSyntax, public heritageClauses: HeritageClauseSyntax[], public body: ObjectTypeSyntax) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -245,9 +236,7 @@ module TypeScript {
     }
 
     export class FunctionDeclarationSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public modifiers: ISyntaxToken[], public functionKeyword: ISyntaxToken, public identifier: ISyntaxToken, public callSignature: CallSignatureSyntax, public block: BlockSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -262,7 +251,6 @@ module TypeScript {
 
     export class ModuleDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public _isModuleElement: any;
-
         constructor(data: number, public modifiers: ISyntaxToken[], public moduleKeyword: ISyntaxToken, public name: INameSyntax, public stringLiteral: ISyntaxToken, public openBraceToken: ISyntaxToken, public moduleElements: IModuleElementSyntax[], public closeBraceToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -278,7 +266,6 @@ module TypeScript {
 
     export class ClassDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public _isModuleElement: any;
-
         constructor(data: number, public modifiers: ISyntaxToken[], public classKeyword: ISyntaxToken, public identifier: ISyntaxToken, public typeParameterList: TypeParameterListSyntax, public heritageClauses: HeritageClauseSyntax[], public openBraceToken: ISyntaxToken, public classElements: IClassElementSyntax[], public closeBraceToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -295,7 +282,6 @@ module TypeScript {
 
     export class EnumDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public _isModuleElement: any;
-
         constructor(data: number, public modifiers: ISyntaxToken[], public enumKeyword: ISyntaxToken, public identifier: ISyntaxToken, public openBraceToken: ISyntaxToken, public enumElements: EnumElementSyntax[], public closeBraceToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -310,7 +296,6 @@ module TypeScript {
 
     export class ImportDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public _isModuleElement: any;
-
         constructor(data: number, public modifiers: ISyntaxToken[], public importKeyword: ISyntaxToken, public identifier: ISyntaxToken, public equalsToken: ISyntaxToken, public moduleReference: IModuleReferenceSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -325,7 +310,6 @@ module TypeScript {
 
     export class ExportAssignmentSyntax extends SyntaxNode implements IModuleElementSyntax {
         public _isModuleElement: any;
-
         constructor(data: number, public exportKeyword: ISyntaxToken, public equalsToken: ISyntaxToken, public identifier: ISyntaxToken, public semicolonToken: ISyntaxToken) {
             super(data);
             exportKeyword.parent = this;
@@ -337,9 +321,7 @@ module TypeScript {
     }
 
     export class MemberFunctionDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
-        public _isMemberDeclaration: any;
-        public _isClassElement: any;
-
+        public _isMemberDeclaration: any; public _isClassElement: any;
         constructor(data: number, public modifiers: ISyntaxToken[], public propertyName: ISyntaxToken, public callSignature: CallSignatureSyntax, public block: BlockSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -352,9 +334,7 @@ module TypeScript {
     }
 
     export class MemberVariableDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
-        public _isMemberDeclaration: any;
-        public _isClassElement: any;
-
+        public _isMemberDeclaration: any; public _isClassElement: any;
         constructor(data: number, public modifiers: ISyntaxToken[], public variableDeclarator: VariableDeclaratorSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -366,7 +346,6 @@ module TypeScript {
 
     export class ConstructorDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
         public _isClassElement: any;
-
         constructor(data: number, public modifiers: ISyntaxToken[], public constructorKeyword: ISyntaxToken, public callSignature: CallSignatureSyntax, public block: BlockSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -380,7 +359,6 @@ module TypeScript {
 
     export class IndexMemberDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
         public _isClassElement: any;
-
         constructor(data: number, public modifiers: ISyntaxToken[], public indexSignature: IndexSignatureSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -391,10 +369,7 @@ module TypeScript {
     }
 
     export class GetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
-        public _isMemberDeclaration: any;
-        public _isPropertyAssignment: any;
-        public _isClassElement: any;
-
+        public _isMemberDeclaration: any; public _isPropertyAssignment: any; public _isClassElement: any;
         constructor(data: number, public modifiers: ISyntaxToken[], public getKeyword: ISyntaxToken, public propertyName: ISyntaxToken, public parameterList: ParameterListSyntax, public typeAnnotation: TypeAnnotationSyntax, public block: BlockSyntax) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -408,10 +383,7 @@ module TypeScript {
     }
 
     export class SetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
-        public _isMemberDeclaration: any;
-        public _isPropertyAssignment: any;
-        public _isClassElement: any;
-
+        public _isMemberDeclaration: any; public _isPropertyAssignment: any; public _isClassElement: any;
         constructor(data: number, public modifiers: ISyntaxToken[], public setKeyword: ISyntaxToken, public propertyName: ISyntaxToken, public parameterList: ParameterListSyntax, public block: BlockSyntax) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -425,7 +397,6 @@ module TypeScript {
 
     export class PropertySignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public _isTypeMember: any;
-
         constructor(data: number, public propertyName: ISyntaxToken, public questionToken: ISyntaxToken, public typeAnnotation: TypeAnnotationSyntax) {
             super(data);
             propertyName.parent = this;
@@ -437,7 +408,6 @@ module TypeScript {
 
     export class CallSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public _isTypeMember: any;
-
         constructor(data: number, public typeParameterList: TypeParameterListSyntax, public parameterList: ParameterListSyntax, public typeAnnotation: TypeAnnotationSyntax) {
             super(data);
             typeParameterList && (typeParameterList.parent = this);
@@ -449,7 +419,6 @@ module TypeScript {
 
     export class ConstructSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public _isTypeMember: any;
-
         constructor(data: number, public newKeyword: ISyntaxToken, public callSignature: CallSignatureSyntax) {
             super(data);
             newKeyword.parent = this;
@@ -460,7 +429,6 @@ module TypeScript {
 
     export class IndexSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public _isTypeMember: any;
-
         constructor(data: number, public openBracketToken: ISyntaxToken, public parameter: ParameterSyntax, public closeBracketToken: ISyntaxToken, public typeAnnotation: TypeAnnotationSyntax) {
             super(data);
             openBracketToken.parent = this;
@@ -473,7 +441,6 @@ module TypeScript {
 
     export class MethodSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public _isTypeMember: any;
-
         constructor(data: number, public propertyName: ISyntaxToken, public questionToken: ISyntaxToken, public callSignature: CallSignatureSyntax) {
             super(data);
             propertyName.parent = this;
@@ -484,9 +451,7 @@ module TypeScript {
     }
 
     export class BlockSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public openBraceToken: ISyntaxToken, public statements: IStatementSyntax[], public closeBraceToken: ISyntaxToken) {
             super(data);
             openBraceToken.parent = this;
@@ -497,9 +462,7 @@ module TypeScript {
     }
 
     export class IfStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public ifKeyword: ISyntaxToken, public openParenToken: ISyntaxToken, public condition: IExpressionSyntax, public closeParenToken: ISyntaxToken, public statement: IStatementSyntax, public elseClause: ElseClauseSyntax) {
             super(data);
             ifKeyword.parent = this;
@@ -513,9 +476,7 @@ module TypeScript {
     }
 
     export class VariableStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public modifiers: ISyntaxToken[], public variableDeclaration: VariableDeclarationSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             !isShared(modifiers) && (modifiers.parent = this);
@@ -526,9 +487,7 @@ module TypeScript {
     }
 
     export class ExpressionStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public expression: IExpressionSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             expression.parent = this;
@@ -538,9 +497,7 @@ module TypeScript {
     }
 
     export class ReturnStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public returnKeyword: ISyntaxToken, public expression: IExpressionSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             returnKeyword.parent = this;
@@ -551,9 +508,7 @@ module TypeScript {
     }
 
     export class SwitchStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public switchKeyword: ISyntaxToken, public openParenToken: ISyntaxToken, public expression: IExpressionSyntax, public closeParenToken: ISyntaxToken, public openBraceToken: ISyntaxToken, public switchClauses: ISwitchClauseSyntax[], public closeBraceToken: ISyntaxToken) {
             super(data);
             switchKeyword.parent = this;
@@ -568,9 +523,7 @@ module TypeScript {
     }
 
     export class BreakStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public breakKeyword: ISyntaxToken, public identifier: ISyntaxToken, public semicolonToken: ISyntaxToken) {
             super(data);
             breakKeyword.parent = this;
@@ -581,9 +534,7 @@ module TypeScript {
     }
 
     export class ContinueStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public continueKeyword: ISyntaxToken, public identifier: ISyntaxToken, public semicolonToken: ISyntaxToken) {
             super(data);
             continueKeyword.parent = this;
@@ -594,9 +545,7 @@ module TypeScript {
     }
 
     export class ForStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public forKeyword: ISyntaxToken, public openParenToken: ISyntaxToken, public variableDeclaration: VariableDeclarationSyntax, public initializer: IExpressionSyntax, public firstSemicolonToken: ISyntaxToken, public condition: IExpressionSyntax, public secondSemicolonToken: ISyntaxToken, public incrementor: IExpressionSyntax, public closeParenToken: ISyntaxToken, public statement: IStatementSyntax) {
             super(data);
             forKeyword.parent = this;
@@ -614,9 +563,7 @@ module TypeScript {
     }
 
     export class ForInStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public forKeyword: ISyntaxToken, public openParenToken: ISyntaxToken, public variableDeclaration: VariableDeclarationSyntax, public left: IExpressionSyntax, public inKeyword: ISyntaxToken, public expression: IExpressionSyntax, public closeParenToken: ISyntaxToken, public statement: IStatementSyntax) {
             super(data);
             forKeyword.parent = this;
@@ -632,9 +579,7 @@ module TypeScript {
     }
 
     export class EmptyStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public semicolonToken: ISyntaxToken) {
             super(data);
             semicolonToken.parent = this;
@@ -643,9 +588,7 @@ module TypeScript {
     }
 
     export class ThrowStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public throwKeyword: ISyntaxToken, public expression: IExpressionSyntax, public semicolonToken: ISyntaxToken) {
             super(data);
             throwKeyword.parent = this;
@@ -656,9 +599,7 @@ module TypeScript {
     }
 
     export class WhileStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public whileKeyword: ISyntaxToken, public openParenToken: ISyntaxToken, public condition: IExpressionSyntax, public closeParenToken: ISyntaxToken, public statement: IStatementSyntax) {
             super(data);
             whileKeyword.parent = this;
@@ -671,9 +612,7 @@ module TypeScript {
     }
 
     export class TryStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public tryKeyword: ISyntaxToken, public block: BlockSyntax, public catchClause: CatchClauseSyntax, public finallyClause: FinallyClauseSyntax) {
             super(data);
             tryKeyword.parent = this;
@@ -685,9 +624,7 @@ module TypeScript {
     }
 
     export class LabeledStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public identifier: ISyntaxToken, public colonToken: ISyntaxToken, public statement: IStatementSyntax) {
             super(data);
             identifier.parent = this;
@@ -698,9 +635,7 @@ module TypeScript {
     }
 
     export class DoStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public doKeyword: ISyntaxToken, public statement: IStatementSyntax, public whileKeyword: ISyntaxToken, public openParenToken: ISyntaxToken, public condition: IExpressionSyntax, public closeParenToken: ISyntaxToken, public semicolonToken: ISyntaxToken) {
             super(data);
             doKeyword.parent = this;
@@ -715,9 +650,7 @@ module TypeScript {
     }
 
     export class DebuggerStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public debuggerKeyword: ISyntaxToken, public semicolonToken: ISyntaxToken) {
             super(data);
             debuggerKeyword.parent = this;
@@ -727,9 +660,7 @@ module TypeScript {
     }
 
     export class WithStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        public _isStatement: any;
-        public _isModuleElement: any;
-
+        public _isStatement: any; public _isModuleElement: any;
         constructor(data: number, public withKeyword: ISyntaxToken, public openParenToken: ISyntaxToken, public condition: IExpressionSyntax, public closeParenToken: ISyntaxToken, public statement: IStatementSyntax) {
             super(data);
             withKeyword.parent = this;
@@ -742,9 +673,7 @@ module TypeScript {
     }
 
     export class PrefixUnaryExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public operatorToken: ISyntaxToken, public operand: IUnaryExpressionSyntax) {
             super(data);
             operatorToken.parent = this;
@@ -754,9 +683,7 @@ module TypeScript {
     }
 
     export class DeleteExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public deleteKeyword: ISyntaxToken, public expression: IUnaryExpressionSyntax) {
             super(data);
             deleteKeyword.parent = this;
@@ -766,9 +693,7 @@ module TypeScript {
     }
 
     export class TypeOfExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public typeOfKeyword: ISyntaxToken, public expression: IUnaryExpressionSyntax) {
             super(data);
             typeOfKeyword.parent = this;
@@ -778,9 +703,7 @@ module TypeScript {
     }
 
     export class VoidExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public voidKeyword: ISyntaxToken, public expression: IUnaryExpressionSyntax) {
             super(data);
             voidKeyword.parent = this;
@@ -791,7 +714,6 @@ module TypeScript {
 
     export class ConditionalExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
         public _isExpression: any;
-
         constructor(data: number, public condition: IExpressionSyntax, public questionToken: ISyntaxToken, public whenTrue: IExpressionSyntax, public colonToken: ISyntaxToken, public whenFalse: IExpressionSyntax) {
             super(data);
             condition.parent = this;
@@ -805,7 +727,6 @@ module TypeScript {
 
     export class BinaryExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
         public _isExpression: any;
-
         constructor(data: number, public left: IExpressionSyntax, public operatorToken: ISyntaxToken, public right: IExpressionSyntax) {
             super(data);
             left.parent = this;
@@ -816,10 +737,7 @@ module TypeScript {
     }
 
     export class PostfixUnaryExpressionSyntax extends SyntaxNode implements IPostfixExpressionSyntax {
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public operand: ILeftHandSideExpressionSyntax, public operatorToken: ISyntaxToken) {
             super(data);
             operand.parent = this;
@@ -829,13 +747,7 @@ module TypeScript {
     }
 
     export class MemberAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
-        public _isMemberExpression: any;
-        public _isCallExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isMemberExpression: any; public _isCallExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public expression: ILeftHandSideExpressionSyntax, public dotToken: ISyntaxToken, public name: ISyntaxToken) {
             super(data);
             expression.parent = this;
@@ -846,12 +758,7 @@ module TypeScript {
     }
 
     export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax {
-        public _isCallExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isCallExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public expression: ILeftHandSideExpressionSyntax, public argumentList: ArgumentListSyntax) {
             super(data);
             expression.parent = this;
@@ -861,13 +768,7 @@ module TypeScript {
     }
 
     export class ArrayLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public openBracketToken: ISyntaxToken, public expressions: IExpressionSyntax[], public closeBracketToken: ISyntaxToken) {
             super(data);
             openBracketToken.parent = this;
@@ -878,13 +779,7 @@ module TypeScript {
     }
 
     export class ObjectLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public openBraceToken: ISyntaxToken, public propertyAssignments: IPropertyAssignmentSyntax[], public closeBraceToken: ISyntaxToken) {
             super(data);
             openBraceToken.parent = this;
@@ -895,12 +790,7 @@ module TypeScript {
     }
 
     export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public newKeyword: ISyntaxToken, public expression: IMemberExpressionSyntax, public argumentList: ArgumentListSyntax) {
             super(data);
             newKeyword.parent = this;
@@ -911,13 +801,7 @@ module TypeScript {
     }
 
     export class ParenthesizedExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public openParenToken: ISyntaxToken, public expression: IExpressionSyntax, public closeParenToken: ISyntaxToken) {
             super(data);
             openParenToken.parent = this;
@@ -928,9 +812,7 @@ module TypeScript {
     }
 
     export class ParenthesizedArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public callSignature: CallSignatureSyntax, public equalsGreaterThanToken: ISyntaxToken, public block: BlockSyntax, public expression: IExpressionSyntax) {
             super(data);
             callSignature.parent = this;
@@ -942,9 +824,7 @@ module TypeScript {
     }
 
     export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public identifier: ISyntaxToken, public equalsGreaterThanToken: ISyntaxToken, public block: BlockSyntax, public expression: IExpressionSyntax) {
             super(data);
             identifier.parent = this;
@@ -956,9 +836,7 @@ module TypeScript {
     }
 
     export class CastExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public lessThanToken: ISyntaxToken, public type: ITypeSyntax, public greaterThanToken: ISyntaxToken, public expression: IUnaryExpressionSyntax) {
             super(data);
             lessThanToken.parent = this;
@@ -970,13 +848,7 @@ module TypeScript {
     }
 
     export class ElementAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
-        public _isMemberExpression: any;
-        public _isCallExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isMemberExpression: any; public _isCallExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public expression: ILeftHandSideExpressionSyntax, public openBracketToken: ISyntaxToken, public argumentExpression: IExpressionSyntax, public closeBracketToken: ISyntaxToken) {
             super(data);
             expression.parent = this;
@@ -988,13 +860,7 @@ module TypeScript {
     }
 
     export class FunctionExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
-
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
         constructor(data: number, public functionKeyword: ISyntaxToken, public identifier: ISyntaxToken, public callSignature: CallSignatureSyntax, public block: BlockSyntax) {
             super(data);
             functionKeyword.parent = this;
@@ -1007,7 +873,6 @@ module TypeScript {
 
     export class OmittedExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
         public _isExpression: any;
-
         constructor(data: number) {
             super(data);
         }
@@ -1094,7 +959,6 @@ module TypeScript {
 
     export class CaseSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
         public _isSwitchClause: any;
-
         constructor(data: number, public caseKeyword: ISyntaxToken, public expression: IExpressionSyntax, public colonToken: ISyntaxToken, public statements: IStatementSyntax[]) {
             super(data);
             caseKeyword.parent = this;
@@ -1107,7 +971,6 @@ module TypeScript {
 
     export class DefaultSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
         public _isSwitchClause: any;
-
         constructor(data: number, public defaultKeyword: ISyntaxToken, public colonToken: ISyntaxToken, public statements: IStatementSyntax[]) {
             super(data);
             defaultKeyword.parent = this;
@@ -1168,7 +1031,6 @@ module TypeScript {
 
     export class SimplePropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
         public _isPropertyAssignment: any;
-
         constructor(data: number, public propertyName: ISyntaxToken, public colonToken: ISyntaxToken, public expression: IExpressionSyntax) {
             super(data);
             propertyName.parent = this;
@@ -1180,7 +1042,6 @@ module TypeScript {
 
     export class FunctionPropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
         public _isPropertyAssignment: any;
-
         constructor(data: number, public propertyName: ISyntaxToken, public callSignature: CallSignatureSyntax, public block: BlockSyntax) {
             super(data);
             propertyName.parent = this;
@@ -1223,7 +1084,6 @@ module TypeScript {
 
     export class ExternalModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
         public _isModuleReference: any;
-
         constructor(data: number, public requireKeyword: ISyntaxToken, public openParenToken: ISyntaxToken, public stringLiteral: ISyntaxToken, public closeParenToken: ISyntaxToken) {
             super(data);
             requireKeyword.parent = this;
@@ -1236,7 +1096,6 @@ module TypeScript {
 
     export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
         public _isModuleReference: any;
-
         constructor(data: number, public moduleName: INameSyntax) {
             super(data);
             moduleName.parent = this;

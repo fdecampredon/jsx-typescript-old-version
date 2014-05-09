@@ -1502,6 +1502,7 @@ function generateFactoryMethod(definition: ITypeDefinition): string {
 function generateIsProperties(definition: ITypeDefinition): string {
     var properties = "";
 
+    var types: string[] = [];
     if (definition.interfaces) {
         var ifaces = definition.interfaces.slice(0);
         var i: number;
@@ -1524,11 +1525,17 @@ function generateIsProperties(definition: ITypeDefinition): string {
                 type = type.substr(1);
             }
 
-            properties += "        public _is" + type + ": any;\r\n";
+            types.push(type);
         }
     }
 
-    if (properties.length > 0) {
+    if (types.length > 0) {
+        properties += "       ";
+
+        for (var i = 0; i < types.length; i++) {
+            properties += " public _is" + types[i] + ": any;";
+        }
+
         properties += "\r\n";
     }
 
