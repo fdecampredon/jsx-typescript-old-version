@@ -7037,10 +7037,9 @@ var TypeScript;
         __extends(SourceUnitSyntax, _super);
         function SourceUnitSyntax(data, moduleElements, endOfFileToken) {
             _super.call(this, data);
-            this.moduleElements = moduleElements;
-            this.endOfFileToken = endOfFileToken;
             this.syntaxTree = null;
             this.parent = null;
+            this.moduleElements = moduleElements, this.endOfFileToken = endOfFileToken;
             !TypeScript.isShared(moduleElements) && (moduleElements.parent = this), endOfFileToken.parent = this;
         }
         SourceUnitSyntax.prototype.kind = function () {
@@ -7054,9 +7053,7 @@ var TypeScript;
         __extends(QualifiedNameSyntax, _super);
         function QualifiedNameSyntax(data, left, dotToken, right) {
             _super.call(this, data);
-            this.left = left;
-            this.dotToken = dotToken;
-            this.right = right;
+            this.left = left, this.dotToken = dotToken, this.right = right;
             left.parent = this, dotToken.parent = this, right.parent = this;
         }
         QualifiedNameSyntax.prototype.kind = function () {
@@ -7070,9 +7067,7 @@ var TypeScript;
         __extends(ObjectTypeSyntax, _super);
         function ObjectTypeSyntax(data, openBraceToken, typeMembers, closeBraceToken) {
             _super.call(this, data);
-            this.openBraceToken = openBraceToken;
-            this.typeMembers = typeMembers;
-            this.closeBraceToken = closeBraceToken;
+            this.openBraceToken = openBraceToken, this.typeMembers = typeMembers, this.closeBraceToken = closeBraceToken;
             openBraceToken.parent = this, !TypeScript.isShared(typeMembers) && (typeMembers.parent = this), closeBraceToken.parent = this;
         }
         ObjectTypeSyntax.prototype.kind = function () {
@@ -7086,10 +7081,7 @@ var TypeScript;
         __extends(FunctionTypeSyntax, _super);
         function FunctionTypeSyntax(data, typeParameterList, parameterList, equalsGreaterThanToken, type) {
             _super.call(this, data);
-            this.typeParameterList = typeParameterList;
-            this.parameterList = parameterList;
-            this.equalsGreaterThanToken = equalsGreaterThanToken;
-            this.type = type;
+            this.typeParameterList = typeParameterList, this.parameterList = parameterList, this.equalsGreaterThanToken = equalsGreaterThanToken, this.type = type;
             typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, equalsGreaterThanToken.parent = this, type.parent = this;
         }
         FunctionTypeSyntax.prototype.kind = function () {
@@ -7103,9 +7095,7 @@ var TypeScript;
         __extends(ArrayTypeSyntax, _super);
         function ArrayTypeSyntax(data, type, openBracketToken, closeBracketToken) {
             _super.call(this, data);
-            this.type = type;
-            this.openBracketToken = openBracketToken;
-            this.closeBracketToken = closeBracketToken;
+            this.type = type, this.openBracketToken = openBracketToken, this.closeBracketToken = closeBracketToken;
             type.parent = this, openBracketToken.parent = this, closeBracketToken.parent = this;
         }
         ArrayTypeSyntax.prototype.kind = function () {
@@ -7119,11 +7109,7 @@ var TypeScript;
         __extends(ConstructorTypeSyntax, _super);
         function ConstructorTypeSyntax(data, newKeyword, typeParameterList, parameterList, equalsGreaterThanToken, type) {
             _super.call(this, data);
-            this.newKeyword = newKeyword;
-            this.typeParameterList = typeParameterList;
-            this.parameterList = parameterList;
-            this.equalsGreaterThanToken = equalsGreaterThanToken;
-            this.type = type;
+            this.newKeyword = newKeyword, this.typeParameterList = typeParameterList, this.parameterList = parameterList, this.equalsGreaterThanToken = equalsGreaterThanToken, this.type = type;
             newKeyword.parent = this, typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, equalsGreaterThanToken.parent = this, type.parent = this;
         }
         ConstructorTypeSyntax.prototype.kind = function () {
@@ -7137,8 +7123,7 @@ var TypeScript;
         __extends(GenericTypeSyntax, _super);
         function GenericTypeSyntax(data, name, typeArgumentList) {
             _super.call(this, data);
-            this.name = name;
-            this.typeArgumentList = typeArgumentList;
+            this.name = name, this.typeArgumentList = typeArgumentList;
             name.parent = this, typeArgumentList.parent = this;
         }
         GenericTypeSyntax.prototype.kind = function () {
@@ -7152,8 +7137,7 @@ var TypeScript;
         __extends(TypeQuerySyntax, _super);
         function TypeQuerySyntax(data, typeOfKeyword, name) {
             _super.call(this, data);
-            this.typeOfKeyword = typeOfKeyword;
-            this.name = name;
+            this.typeOfKeyword = typeOfKeyword, this.name = name;
             typeOfKeyword.parent = this, name.parent = this;
         }
         TypeQuerySyntax.prototype.kind = function () {
@@ -7167,12 +7151,7 @@ var TypeScript;
         __extends(InterfaceDeclarationSyntax, _super);
         function InterfaceDeclarationSyntax(data, modifiers, interfaceKeyword, identifier, typeParameterList, heritageClauses, body) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.interfaceKeyword = interfaceKeyword;
-            this.identifier = identifier;
-            this.typeParameterList = typeParameterList;
-            this.heritageClauses = heritageClauses;
-            this.body = body;
+            this.modifiers = modifiers, this.interfaceKeyword = interfaceKeyword, this.identifier = identifier, this.typeParameterList = typeParameterList, this.heritageClauses = heritageClauses, this.body = body;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), interfaceKeyword.parent = this, identifier.parent = this, typeParameterList && (typeParameterList.parent = this), !TypeScript.isShared(heritageClauses) && (heritageClauses.parent = this), body.parent = this;
         }
         InterfaceDeclarationSyntax.prototype.kind = function () {
@@ -7186,12 +7165,7 @@ var TypeScript;
         __extends(FunctionDeclarationSyntax, _super);
         function FunctionDeclarationSyntax(data, modifiers, functionKeyword, identifier, callSignature, block, semicolonToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.functionKeyword = functionKeyword;
-            this.identifier = identifier;
-            this.callSignature = callSignature;
-            this.block = block;
-            this.semicolonToken = semicolonToken;
+            this.modifiers = modifiers, this.functionKeyword = functionKeyword, this.identifier = identifier, this.callSignature = callSignature, this.block = block, this.semicolonToken = semicolonToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), functionKeyword.parent = this, identifier.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         FunctionDeclarationSyntax.prototype.kind = function () {
@@ -7205,13 +7179,7 @@ var TypeScript;
         __extends(ModuleDeclarationSyntax, _super);
         function ModuleDeclarationSyntax(data, modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.moduleKeyword = moduleKeyword;
-            this.name = name;
-            this.stringLiteral = stringLiteral;
-            this.openBraceToken = openBraceToken;
-            this.moduleElements = moduleElements;
-            this.closeBraceToken = closeBraceToken;
+            this.modifiers = modifiers, this.moduleKeyword = moduleKeyword, this.name = name, this.stringLiteral = stringLiteral, this.openBraceToken = openBraceToken, this.moduleElements = moduleElements, this.closeBraceToken = closeBraceToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), moduleKeyword.parent = this, name && (name.parent = this), stringLiteral && (stringLiteral.parent = this), openBraceToken.parent = this, !TypeScript.isShared(moduleElements) && (moduleElements.parent = this), closeBraceToken.parent = this;
         }
         ModuleDeclarationSyntax.prototype.kind = function () {
@@ -7225,14 +7193,7 @@ var TypeScript;
         __extends(ClassDeclarationSyntax, _super);
         function ClassDeclarationSyntax(data, modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.classKeyword = classKeyword;
-            this.identifier = identifier;
-            this.typeParameterList = typeParameterList;
-            this.heritageClauses = heritageClauses;
-            this.openBraceToken = openBraceToken;
-            this.classElements = classElements;
-            this.closeBraceToken = closeBraceToken;
+            this.modifiers = modifiers, this.classKeyword = classKeyword, this.identifier = identifier, this.typeParameterList = typeParameterList, this.heritageClauses = heritageClauses, this.openBraceToken = openBraceToken, this.classElements = classElements, this.closeBraceToken = closeBraceToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), classKeyword.parent = this, identifier.parent = this, typeParameterList && (typeParameterList.parent = this), !TypeScript.isShared(heritageClauses) && (heritageClauses.parent = this), openBraceToken.parent = this, !TypeScript.isShared(classElements) && (classElements.parent = this), closeBraceToken.parent = this;
         }
         ClassDeclarationSyntax.prototype.kind = function () {
@@ -7246,12 +7207,7 @@ var TypeScript;
         __extends(EnumDeclarationSyntax, _super);
         function EnumDeclarationSyntax(data, modifiers, enumKeyword, identifier, openBraceToken, enumElements, closeBraceToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.enumKeyword = enumKeyword;
-            this.identifier = identifier;
-            this.openBraceToken = openBraceToken;
-            this.enumElements = enumElements;
-            this.closeBraceToken = closeBraceToken;
+            this.modifiers = modifiers, this.enumKeyword = enumKeyword, this.identifier = identifier, this.openBraceToken = openBraceToken, this.enumElements = enumElements, this.closeBraceToken = closeBraceToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), enumKeyword.parent = this, identifier.parent = this, openBraceToken.parent = this, !TypeScript.isShared(enumElements) && (enumElements.parent = this), closeBraceToken.parent = this;
         }
         EnumDeclarationSyntax.prototype.kind = function () {
@@ -7265,12 +7221,7 @@ var TypeScript;
         __extends(ImportDeclarationSyntax, _super);
         function ImportDeclarationSyntax(data, modifiers, importKeyword, identifier, equalsToken, moduleReference, semicolonToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.importKeyword = importKeyword;
-            this.identifier = identifier;
-            this.equalsToken = equalsToken;
-            this.moduleReference = moduleReference;
-            this.semicolonToken = semicolonToken;
+            this.modifiers = modifiers, this.importKeyword = importKeyword, this.identifier = identifier, this.equalsToken = equalsToken, this.moduleReference = moduleReference, this.semicolonToken = semicolonToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), importKeyword.parent = this, identifier.parent = this, equalsToken.parent = this, moduleReference.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         ImportDeclarationSyntax.prototype.kind = function () {
@@ -7284,10 +7235,7 @@ var TypeScript;
         __extends(ExportAssignmentSyntax, _super);
         function ExportAssignmentSyntax(data, exportKeyword, equalsToken, identifier, semicolonToken) {
             _super.call(this, data);
-            this.exportKeyword = exportKeyword;
-            this.equalsToken = equalsToken;
-            this.identifier = identifier;
-            this.semicolonToken = semicolonToken;
+            this.exportKeyword = exportKeyword, this.equalsToken = equalsToken, this.identifier = identifier, this.semicolonToken = semicolonToken;
             exportKeyword.parent = this, equalsToken.parent = this, identifier.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         ExportAssignmentSyntax.prototype.kind = function () {
@@ -7301,11 +7249,7 @@ var TypeScript;
         __extends(MemberFunctionDeclarationSyntax, _super);
         function MemberFunctionDeclarationSyntax(data, modifiers, propertyName, callSignature, block, semicolonToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.propertyName = propertyName;
-            this.callSignature = callSignature;
-            this.block = block;
-            this.semicolonToken = semicolonToken;
+            this.modifiers = modifiers, this.propertyName = propertyName, this.callSignature = callSignature, this.block = block, this.semicolonToken = semicolonToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), propertyName.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         MemberFunctionDeclarationSyntax.prototype.kind = function () {
@@ -7319,9 +7263,7 @@ var TypeScript;
         __extends(MemberVariableDeclarationSyntax, _super);
         function MemberVariableDeclarationSyntax(data, modifiers, variableDeclarator, semicolonToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.variableDeclarator = variableDeclarator;
-            this.semicolonToken = semicolonToken;
+            this.modifiers = modifiers, this.variableDeclarator = variableDeclarator, this.semicolonToken = semicolonToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), variableDeclarator.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         MemberVariableDeclarationSyntax.prototype.kind = function () {
@@ -7335,11 +7277,7 @@ var TypeScript;
         __extends(ConstructorDeclarationSyntax, _super);
         function ConstructorDeclarationSyntax(data, modifiers, constructorKeyword, callSignature, block, semicolonToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.constructorKeyword = constructorKeyword;
-            this.callSignature = callSignature;
-            this.block = block;
-            this.semicolonToken = semicolonToken;
+            this.modifiers = modifiers, this.constructorKeyword = constructorKeyword, this.callSignature = callSignature, this.block = block, this.semicolonToken = semicolonToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), constructorKeyword.parent = this, callSignature.parent = this, block && (block.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         ConstructorDeclarationSyntax.prototype.kind = function () {
@@ -7353,9 +7291,7 @@ var TypeScript;
         __extends(IndexMemberDeclarationSyntax, _super);
         function IndexMemberDeclarationSyntax(data, modifiers, indexSignature, semicolonToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.indexSignature = indexSignature;
-            this.semicolonToken = semicolonToken;
+            this.modifiers = modifiers, this.indexSignature = indexSignature, this.semicolonToken = semicolonToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), indexSignature.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         IndexMemberDeclarationSyntax.prototype.kind = function () {
@@ -7369,12 +7305,7 @@ var TypeScript;
         __extends(GetAccessorSyntax, _super);
         function GetAccessorSyntax(data, modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.getKeyword = getKeyword;
-            this.propertyName = propertyName;
-            this.parameterList = parameterList;
-            this.typeAnnotation = typeAnnotation;
-            this.block = block;
+            this.modifiers = modifiers, this.getKeyword = getKeyword, this.propertyName = propertyName, this.parameterList = parameterList, this.typeAnnotation = typeAnnotation, this.block = block;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), getKeyword.parent = this, propertyName.parent = this, parameterList.parent = this, typeAnnotation && (typeAnnotation.parent = this), block.parent = this;
         }
         GetAccessorSyntax.prototype.kind = function () {
@@ -7388,11 +7319,7 @@ var TypeScript;
         __extends(SetAccessorSyntax, _super);
         function SetAccessorSyntax(data, modifiers, setKeyword, propertyName, parameterList, block) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.setKeyword = setKeyword;
-            this.propertyName = propertyName;
-            this.parameterList = parameterList;
-            this.block = block;
+            this.modifiers = modifiers, this.setKeyword = setKeyword, this.propertyName = propertyName, this.parameterList = parameterList, this.block = block;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), setKeyword.parent = this, propertyName.parent = this, parameterList.parent = this, block.parent = this;
         }
         SetAccessorSyntax.prototype.kind = function () {
@@ -7406,9 +7333,7 @@ var TypeScript;
         __extends(PropertySignatureSyntax, _super);
         function PropertySignatureSyntax(data, propertyName, questionToken, typeAnnotation) {
             _super.call(this, data);
-            this.propertyName = propertyName;
-            this.questionToken = questionToken;
-            this.typeAnnotation = typeAnnotation;
+            this.propertyName = propertyName, this.questionToken = questionToken, this.typeAnnotation = typeAnnotation;
             propertyName.parent = this, questionToken && (questionToken.parent = this), typeAnnotation && (typeAnnotation.parent = this);
         }
         PropertySignatureSyntax.prototype.kind = function () {
@@ -7422,9 +7347,7 @@ var TypeScript;
         __extends(CallSignatureSyntax, _super);
         function CallSignatureSyntax(data, typeParameterList, parameterList, typeAnnotation) {
             _super.call(this, data);
-            this.typeParameterList = typeParameterList;
-            this.parameterList = parameterList;
-            this.typeAnnotation = typeAnnotation;
+            this.typeParameterList = typeParameterList, this.parameterList = parameterList, this.typeAnnotation = typeAnnotation;
             typeParameterList && (typeParameterList.parent = this), parameterList.parent = this, typeAnnotation && (typeAnnotation.parent = this);
         }
         CallSignatureSyntax.prototype.kind = function () {
@@ -7438,8 +7361,7 @@ var TypeScript;
         __extends(ConstructSignatureSyntax, _super);
         function ConstructSignatureSyntax(data, newKeyword, callSignature) {
             _super.call(this, data);
-            this.newKeyword = newKeyword;
-            this.callSignature = callSignature;
+            this.newKeyword = newKeyword, this.callSignature = callSignature;
             newKeyword.parent = this, callSignature.parent = this;
         }
         ConstructSignatureSyntax.prototype.kind = function () {
@@ -7453,10 +7375,7 @@ var TypeScript;
         __extends(IndexSignatureSyntax, _super);
         function IndexSignatureSyntax(data, openBracketToken, parameter, closeBracketToken, typeAnnotation) {
             _super.call(this, data);
-            this.openBracketToken = openBracketToken;
-            this.parameter = parameter;
-            this.closeBracketToken = closeBracketToken;
-            this.typeAnnotation = typeAnnotation;
+            this.openBracketToken = openBracketToken, this.parameter = parameter, this.closeBracketToken = closeBracketToken, this.typeAnnotation = typeAnnotation;
             openBracketToken.parent = this, parameter.parent = this, closeBracketToken.parent = this, typeAnnotation && (typeAnnotation.parent = this);
         }
         IndexSignatureSyntax.prototype.kind = function () {
@@ -7470,9 +7389,7 @@ var TypeScript;
         __extends(MethodSignatureSyntax, _super);
         function MethodSignatureSyntax(data, propertyName, questionToken, callSignature) {
             _super.call(this, data);
-            this.propertyName = propertyName;
-            this.questionToken = questionToken;
-            this.callSignature = callSignature;
+            this.propertyName = propertyName, this.questionToken = questionToken, this.callSignature = callSignature;
             propertyName.parent = this, questionToken && (questionToken.parent = this), callSignature.parent = this;
         }
         MethodSignatureSyntax.prototype.kind = function () {
@@ -7486,9 +7403,7 @@ var TypeScript;
         __extends(BlockSyntax, _super);
         function BlockSyntax(data, openBraceToken, statements, closeBraceToken) {
             _super.call(this, data);
-            this.openBraceToken = openBraceToken;
-            this.statements = statements;
-            this.closeBraceToken = closeBraceToken;
+            this.openBraceToken = openBraceToken, this.statements = statements, this.closeBraceToken = closeBraceToken;
             openBraceToken.parent = this, !TypeScript.isShared(statements) && (statements.parent = this), closeBraceToken.parent = this;
         }
         BlockSyntax.prototype.kind = function () {
@@ -7502,12 +7417,7 @@ var TypeScript;
         __extends(IfStatementSyntax, _super);
         function IfStatementSyntax(data, ifKeyword, openParenToken, condition, closeParenToken, statement, elseClause) {
             _super.call(this, data);
-            this.ifKeyword = ifKeyword;
-            this.openParenToken = openParenToken;
-            this.condition = condition;
-            this.closeParenToken = closeParenToken;
-            this.statement = statement;
-            this.elseClause = elseClause;
+            this.ifKeyword = ifKeyword, this.openParenToken = openParenToken, this.condition = condition, this.closeParenToken = closeParenToken, this.statement = statement, this.elseClause = elseClause;
             ifKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this, elseClause && (elseClause.parent = this);
         }
         IfStatementSyntax.prototype.kind = function () {
@@ -7521,9 +7431,7 @@ var TypeScript;
         __extends(VariableStatementSyntax, _super);
         function VariableStatementSyntax(data, modifiers, variableDeclaration, semicolonToken) {
             _super.call(this, data);
-            this.modifiers = modifiers;
-            this.variableDeclaration = variableDeclaration;
-            this.semicolonToken = semicolonToken;
+            this.modifiers = modifiers, this.variableDeclaration = variableDeclaration, this.semicolonToken = semicolonToken;
             !TypeScript.isShared(modifiers) && (modifiers.parent = this), variableDeclaration.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         VariableStatementSyntax.prototype.kind = function () {
@@ -7537,8 +7445,7 @@ var TypeScript;
         __extends(ExpressionStatementSyntax, _super);
         function ExpressionStatementSyntax(data, expression, semicolonToken) {
             _super.call(this, data);
-            this.expression = expression;
-            this.semicolonToken = semicolonToken;
+            this.expression = expression, this.semicolonToken = semicolonToken;
             expression.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         ExpressionStatementSyntax.prototype.kind = function () {
@@ -7552,9 +7459,7 @@ var TypeScript;
         __extends(ReturnStatementSyntax, _super);
         function ReturnStatementSyntax(data, returnKeyword, expression, semicolonToken) {
             _super.call(this, data);
-            this.returnKeyword = returnKeyword;
-            this.expression = expression;
-            this.semicolonToken = semicolonToken;
+            this.returnKeyword = returnKeyword, this.expression = expression, this.semicolonToken = semicolonToken;
             returnKeyword.parent = this, expression && (expression.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         ReturnStatementSyntax.prototype.kind = function () {
@@ -7568,13 +7473,7 @@ var TypeScript;
         __extends(SwitchStatementSyntax, _super);
         function SwitchStatementSyntax(data, switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken) {
             _super.call(this, data);
-            this.switchKeyword = switchKeyword;
-            this.openParenToken = openParenToken;
-            this.expression = expression;
-            this.closeParenToken = closeParenToken;
-            this.openBraceToken = openBraceToken;
-            this.switchClauses = switchClauses;
-            this.closeBraceToken = closeBraceToken;
+            this.switchKeyword = switchKeyword, this.openParenToken = openParenToken, this.expression = expression, this.closeParenToken = closeParenToken, this.openBraceToken = openBraceToken, this.switchClauses = switchClauses, this.closeBraceToken = closeBraceToken;
             switchKeyword.parent = this, openParenToken.parent = this, expression.parent = this, closeParenToken.parent = this, openBraceToken.parent = this, !TypeScript.isShared(switchClauses) && (switchClauses.parent = this), closeBraceToken.parent = this;
         }
         SwitchStatementSyntax.prototype.kind = function () {
@@ -7588,9 +7487,7 @@ var TypeScript;
         __extends(BreakStatementSyntax, _super);
         function BreakStatementSyntax(data, breakKeyword, identifier, semicolonToken) {
             _super.call(this, data);
-            this.breakKeyword = breakKeyword;
-            this.identifier = identifier;
-            this.semicolonToken = semicolonToken;
+            this.breakKeyword = breakKeyword, this.identifier = identifier, this.semicolonToken = semicolonToken;
             breakKeyword.parent = this, identifier && (identifier.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         BreakStatementSyntax.prototype.kind = function () {
@@ -7604,9 +7501,7 @@ var TypeScript;
         __extends(ContinueStatementSyntax, _super);
         function ContinueStatementSyntax(data, continueKeyword, identifier, semicolonToken) {
             _super.call(this, data);
-            this.continueKeyword = continueKeyword;
-            this.identifier = identifier;
-            this.semicolonToken = semicolonToken;
+            this.continueKeyword = continueKeyword, this.identifier = identifier, this.semicolonToken = semicolonToken;
             continueKeyword.parent = this, identifier && (identifier.parent = this), semicolonToken && (semicolonToken.parent = this);
         }
         ContinueStatementSyntax.prototype.kind = function () {
@@ -7620,16 +7515,7 @@ var TypeScript;
         __extends(ForStatementSyntax, _super);
         function ForStatementSyntax(data, forKeyword, openParenToken, variableDeclaration, initializer, firstSemicolonToken, condition, secondSemicolonToken, incrementor, closeParenToken, statement) {
             _super.call(this, data);
-            this.forKeyword = forKeyword;
-            this.openParenToken = openParenToken;
-            this.variableDeclaration = variableDeclaration;
-            this.initializer = initializer;
-            this.firstSemicolonToken = firstSemicolonToken;
-            this.condition = condition;
-            this.secondSemicolonToken = secondSemicolonToken;
-            this.incrementor = incrementor;
-            this.closeParenToken = closeParenToken;
-            this.statement = statement;
+            this.forKeyword = forKeyword, this.openParenToken = openParenToken, this.variableDeclaration = variableDeclaration, this.initializer = initializer, this.firstSemicolonToken = firstSemicolonToken, this.condition = condition, this.secondSemicolonToken = secondSemicolonToken, this.incrementor = incrementor, this.closeParenToken = closeParenToken, this.statement = statement;
             forKeyword.parent = this, openParenToken.parent = this, variableDeclaration && (variableDeclaration.parent = this), initializer && (initializer.parent = this), firstSemicolonToken.parent = this, condition && (condition.parent = this), secondSemicolonToken.parent = this, incrementor && (incrementor.parent = this), closeParenToken.parent = this, statement.parent = this;
         }
         ForStatementSyntax.prototype.kind = function () {
@@ -7643,14 +7529,7 @@ var TypeScript;
         __extends(ForInStatementSyntax, _super);
         function ForInStatementSyntax(data, forKeyword, openParenToken, variableDeclaration, left, inKeyword, expression, closeParenToken, statement) {
             _super.call(this, data);
-            this.forKeyword = forKeyword;
-            this.openParenToken = openParenToken;
-            this.variableDeclaration = variableDeclaration;
-            this.left = left;
-            this.inKeyword = inKeyword;
-            this.expression = expression;
-            this.closeParenToken = closeParenToken;
-            this.statement = statement;
+            this.forKeyword = forKeyword, this.openParenToken = openParenToken, this.variableDeclaration = variableDeclaration, this.left = left, this.inKeyword = inKeyword, this.expression = expression, this.closeParenToken = closeParenToken, this.statement = statement;
             forKeyword.parent = this, openParenToken.parent = this, variableDeclaration && (variableDeclaration.parent = this), left && (left.parent = this), inKeyword.parent = this, expression.parent = this, closeParenToken.parent = this, statement.parent = this;
         }
         ForInStatementSyntax.prototype.kind = function () {
@@ -7678,9 +7557,7 @@ var TypeScript;
         __extends(ThrowStatementSyntax, _super);
         function ThrowStatementSyntax(data, throwKeyword, expression, semicolonToken) {
             _super.call(this, data);
-            this.throwKeyword = throwKeyword;
-            this.expression = expression;
-            this.semicolonToken = semicolonToken;
+            this.throwKeyword = throwKeyword, this.expression = expression, this.semicolonToken = semicolonToken;
             throwKeyword.parent = this, expression.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         ThrowStatementSyntax.prototype.kind = function () {
@@ -7694,11 +7571,7 @@ var TypeScript;
         __extends(WhileStatementSyntax, _super);
         function WhileStatementSyntax(data, whileKeyword, openParenToken, condition, closeParenToken, statement) {
             _super.call(this, data);
-            this.whileKeyword = whileKeyword;
-            this.openParenToken = openParenToken;
-            this.condition = condition;
-            this.closeParenToken = closeParenToken;
-            this.statement = statement;
+            this.whileKeyword = whileKeyword, this.openParenToken = openParenToken, this.condition = condition, this.closeParenToken = closeParenToken, this.statement = statement;
             whileKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this;
         }
         WhileStatementSyntax.prototype.kind = function () {
@@ -7712,10 +7585,7 @@ var TypeScript;
         __extends(TryStatementSyntax, _super);
         function TryStatementSyntax(data, tryKeyword, block, catchClause, finallyClause) {
             _super.call(this, data);
-            this.tryKeyword = tryKeyword;
-            this.block = block;
-            this.catchClause = catchClause;
-            this.finallyClause = finallyClause;
+            this.tryKeyword = tryKeyword, this.block = block, this.catchClause = catchClause, this.finallyClause = finallyClause;
             tryKeyword.parent = this, block.parent = this, catchClause && (catchClause.parent = this), finallyClause && (finallyClause.parent = this);
         }
         TryStatementSyntax.prototype.kind = function () {
@@ -7729,9 +7599,7 @@ var TypeScript;
         __extends(LabeledStatementSyntax, _super);
         function LabeledStatementSyntax(data, identifier, colonToken, statement) {
             _super.call(this, data);
-            this.identifier = identifier;
-            this.colonToken = colonToken;
-            this.statement = statement;
+            this.identifier = identifier, this.colonToken = colonToken, this.statement = statement;
             identifier.parent = this, colonToken.parent = this, statement.parent = this;
         }
         LabeledStatementSyntax.prototype.kind = function () {
@@ -7745,13 +7613,7 @@ var TypeScript;
         __extends(DoStatementSyntax, _super);
         function DoStatementSyntax(data, doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken) {
             _super.call(this, data);
-            this.doKeyword = doKeyword;
-            this.statement = statement;
-            this.whileKeyword = whileKeyword;
-            this.openParenToken = openParenToken;
-            this.condition = condition;
-            this.closeParenToken = closeParenToken;
-            this.semicolonToken = semicolonToken;
+            this.doKeyword = doKeyword, this.statement = statement, this.whileKeyword = whileKeyword, this.openParenToken = openParenToken, this.condition = condition, this.closeParenToken = closeParenToken, this.semicolonToken = semicolonToken;
             doKeyword.parent = this, statement.parent = this, whileKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         DoStatementSyntax.prototype.kind = function () {
@@ -7765,8 +7627,7 @@ var TypeScript;
         __extends(DebuggerStatementSyntax, _super);
         function DebuggerStatementSyntax(data, debuggerKeyword, semicolonToken) {
             _super.call(this, data);
-            this.debuggerKeyword = debuggerKeyword;
-            this.semicolonToken = semicolonToken;
+            this.debuggerKeyword = debuggerKeyword, this.semicolonToken = semicolonToken;
             debuggerKeyword.parent = this, semicolonToken && (semicolonToken.parent = this);
         }
         DebuggerStatementSyntax.prototype.kind = function () {
@@ -7780,11 +7641,7 @@ var TypeScript;
         __extends(WithStatementSyntax, _super);
         function WithStatementSyntax(data, withKeyword, openParenToken, condition, closeParenToken, statement) {
             _super.call(this, data);
-            this.withKeyword = withKeyword;
-            this.openParenToken = openParenToken;
-            this.condition = condition;
-            this.closeParenToken = closeParenToken;
-            this.statement = statement;
+            this.withKeyword = withKeyword, this.openParenToken = openParenToken, this.condition = condition, this.closeParenToken = closeParenToken, this.statement = statement;
             withKeyword.parent = this, openParenToken.parent = this, condition.parent = this, closeParenToken.parent = this, statement.parent = this;
         }
         WithStatementSyntax.prototype.kind = function () {
@@ -7798,8 +7655,7 @@ var TypeScript;
         __extends(PrefixUnaryExpressionSyntax, _super);
         function PrefixUnaryExpressionSyntax(data, operatorToken, operand) {
             _super.call(this, data);
-            this.operatorToken = operatorToken;
-            this.operand = operand;
+            this.operatorToken = operatorToken, this.operand = operand;
             operatorToken.parent = this, operand.parent = this;
         }
         PrefixUnaryExpressionSyntax.prototype.kind = function () {
@@ -7813,8 +7669,7 @@ var TypeScript;
         __extends(DeleteExpressionSyntax, _super);
         function DeleteExpressionSyntax(data, deleteKeyword, expression) {
             _super.call(this, data);
-            this.deleteKeyword = deleteKeyword;
-            this.expression = expression;
+            this.deleteKeyword = deleteKeyword, this.expression = expression;
             deleteKeyword.parent = this, expression.parent = this;
         }
         DeleteExpressionSyntax.prototype.kind = function () {
@@ -7828,8 +7683,7 @@ var TypeScript;
         __extends(TypeOfExpressionSyntax, _super);
         function TypeOfExpressionSyntax(data, typeOfKeyword, expression) {
             _super.call(this, data);
-            this.typeOfKeyword = typeOfKeyword;
-            this.expression = expression;
+            this.typeOfKeyword = typeOfKeyword, this.expression = expression;
             typeOfKeyword.parent = this, expression.parent = this;
         }
         TypeOfExpressionSyntax.prototype.kind = function () {
@@ -7843,8 +7697,7 @@ var TypeScript;
         __extends(VoidExpressionSyntax, _super);
         function VoidExpressionSyntax(data, voidKeyword, expression) {
             _super.call(this, data);
-            this.voidKeyword = voidKeyword;
-            this.expression = expression;
+            this.voidKeyword = voidKeyword, this.expression = expression;
             voidKeyword.parent = this, expression.parent = this;
         }
         VoidExpressionSyntax.prototype.kind = function () {
@@ -7858,11 +7711,7 @@ var TypeScript;
         __extends(ConditionalExpressionSyntax, _super);
         function ConditionalExpressionSyntax(data, condition, questionToken, whenTrue, colonToken, whenFalse) {
             _super.call(this, data);
-            this.condition = condition;
-            this.questionToken = questionToken;
-            this.whenTrue = whenTrue;
-            this.colonToken = colonToken;
-            this.whenFalse = whenFalse;
+            this.condition = condition, this.questionToken = questionToken, this.whenTrue = whenTrue, this.colonToken = colonToken, this.whenFalse = whenFalse;
             condition.parent = this, questionToken.parent = this, whenTrue.parent = this, colonToken.parent = this, whenFalse.parent = this;
         }
         ConditionalExpressionSyntax.prototype.kind = function () {
@@ -7876,9 +7725,7 @@ var TypeScript;
         __extends(BinaryExpressionSyntax, _super);
         function BinaryExpressionSyntax(data, left, operatorToken, right) {
             _super.call(this, data);
-            this.left = left;
-            this.operatorToken = operatorToken;
-            this.right = right;
+            this.left = left, this.operatorToken = operatorToken, this.right = right;
             left.parent = this, operatorToken.parent = this, right.parent = this;
         }
         BinaryExpressionSyntax.prototype.kind = function () {
@@ -7892,8 +7739,7 @@ var TypeScript;
         __extends(PostfixUnaryExpressionSyntax, _super);
         function PostfixUnaryExpressionSyntax(data, operand, operatorToken) {
             _super.call(this, data);
-            this.operand = operand;
-            this.operatorToken = operatorToken;
+            this.operand = operand, this.operatorToken = operatorToken;
             operand.parent = this, operatorToken.parent = this;
         }
         PostfixUnaryExpressionSyntax.prototype.kind = function () {
@@ -7907,9 +7753,7 @@ var TypeScript;
         __extends(MemberAccessExpressionSyntax, _super);
         function MemberAccessExpressionSyntax(data, expression, dotToken, name) {
             _super.call(this, data);
-            this.expression = expression;
-            this.dotToken = dotToken;
-            this.name = name;
+            this.expression = expression, this.dotToken = dotToken, this.name = name;
             expression.parent = this, dotToken.parent = this, name.parent = this;
         }
         MemberAccessExpressionSyntax.prototype.kind = function () {
@@ -7923,8 +7767,7 @@ var TypeScript;
         __extends(InvocationExpressionSyntax, _super);
         function InvocationExpressionSyntax(data, expression, argumentList) {
             _super.call(this, data);
-            this.expression = expression;
-            this.argumentList = argumentList;
+            this.expression = expression, this.argumentList = argumentList;
             expression.parent = this, argumentList.parent = this;
         }
         InvocationExpressionSyntax.prototype.kind = function () {
@@ -7938,9 +7781,7 @@ var TypeScript;
         __extends(ArrayLiteralExpressionSyntax, _super);
         function ArrayLiteralExpressionSyntax(data, openBracketToken, expressions, closeBracketToken) {
             _super.call(this, data);
-            this.openBracketToken = openBracketToken;
-            this.expressions = expressions;
-            this.closeBracketToken = closeBracketToken;
+            this.openBracketToken = openBracketToken, this.expressions = expressions, this.closeBracketToken = closeBracketToken;
             openBracketToken.parent = this, !TypeScript.isShared(expressions) && (expressions.parent = this), closeBracketToken.parent = this;
         }
         ArrayLiteralExpressionSyntax.prototype.kind = function () {
@@ -7954,9 +7795,7 @@ var TypeScript;
         __extends(ObjectLiteralExpressionSyntax, _super);
         function ObjectLiteralExpressionSyntax(data, openBraceToken, propertyAssignments, closeBraceToken) {
             _super.call(this, data);
-            this.openBraceToken = openBraceToken;
-            this.propertyAssignments = propertyAssignments;
-            this.closeBraceToken = closeBraceToken;
+            this.openBraceToken = openBraceToken, this.propertyAssignments = propertyAssignments, this.closeBraceToken = closeBraceToken;
             openBraceToken.parent = this, !TypeScript.isShared(propertyAssignments) && (propertyAssignments.parent = this), closeBraceToken.parent = this;
         }
         ObjectLiteralExpressionSyntax.prototype.kind = function () {
@@ -7970,9 +7809,7 @@ var TypeScript;
         __extends(ObjectCreationExpressionSyntax, _super);
         function ObjectCreationExpressionSyntax(data, newKeyword, expression, argumentList) {
             _super.call(this, data);
-            this.newKeyword = newKeyword;
-            this.expression = expression;
-            this.argumentList = argumentList;
+            this.newKeyword = newKeyword, this.expression = expression, this.argumentList = argumentList;
             newKeyword.parent = this, expression.parent = this, argumentList && (argumentList.parent = this);
         }
         ObjectCreationExpressionSyntax.prototype.kind = function () {
@@ -7986,9 +7823,7 @@ var TypeScript;
         __extends(ParenthesizedExpressionSyntax, _super);
         function ParenthesizedExpressionSyntax(data, openParenToken, expression, closeParenToken) {
             _super.call(this, data);
-            this.openParenToken = openParenToken;
-            this.expression = expression;
-            this.closeParenToken = closeParenToken;
+            this.openParenToken = openParenToken, this.expression = expression, this.closeParenToken = closeParenToken;
             openParenToken.parent = this, expression.parent = this, closeParenToken.parent = this;
         }
         ParenthesizedExpressionSyntax.prototype.kind = function () {
@@ -8002,10 +7837,7 @@ var TypeScript;
         __extends(ParenthesizedArrowFunctionExpressionSyntax, _super);
         function ParenthesizedArrowFunctionExpressionSyntax(data, callSignature, equalsGreaterThanToken, block, expression) {
             _super.call(this, data);
-            this.callSignature = callSignature;
-            this.equalsGreaterThanToken = equalsGreaterThanToken;
-            this.block = block;
-            this.expression = expression;
+            this.callSignature = callSignature, this.equalsGreaterThanToken = equalsGreaterThanToken, this.block = block, this.expression = expression;
             callSignature.parent = this, equalsGreaterThanToken.parent = this, block && (block.parent = this), expression && (expression.parent = this);
         }
         ParenthesizedArrowFunctionExpressionSyntax.prototype.kind = function () {
@@ -8019,10 +7851,7 @@ var TypeScript;
         __extends(SimpleArrowFunctionExpressionSyntax, _super);
         function SimpleArrowFunctionExpressionSyntax(data, identifier, equalsGreaterThanToken, block, expression) {
             _super.call(this, data);
-            this.identifier = identifier;
-            this.equalsGreaterThanToken = equalsGreaterThanToken;
-            this.block = block;
-            this.expression = expression;
+            this.identifier = identifier, this.equalsGreaterThanToken = equalsGreaterThanToken, this.block = block, this.expression = expression;
             identifier.parent = this, equalsGreaterThanToken.parent = this, block && (block.parent = this), expression && (expression.parent = this);
         }
         SimpleArrowFunctionExpressionSyntax.prototype.kind = function () {
@@ -8036,10 +7865,7 @@ var TypeScript;
         __extends(CastExpressionSyntax, _super);
         function CastExpressionSyntax(data, lessThanToken, type, greaterThanToken, expression) {
             _super.call(this, data);
-            this.lessThanToken = lessThanToken;
-            this.type = type;
-            this.greaterThanToken = greaterThanToken;
-            this.expression = expression;
+            this.lessThanToken = lessThanToken, this.type = type, this.greaterThanToken = greaterThanToken, this.expression = expression;
             lessThanToken.parent = this, type.parent = this, greaterThanToken.parent = this, expression.parent = this;
         }
         CastExpressionSyntax.prototype.kind = function () {
@@ -8053,10 +7879,7 @@ var TypeScript;
         __extends(ElementAccessExpressionSyntax, _super);
         function ElementAccessExpressionSyntax(data, expression, openBracketToken, argumentExpression, closeBracketToken) {
             _super.call(this, data);
-            this.expression = expression;
-            this.openBracketToken = openBracketToken;
-            this.argumentExpression = argumentExpression;
-            this.closeBracketToken = closeBracketToken;
+            this.expression = expression, this.openBracketToken = openBracketToken, this.argumentExpression = argumentExpression, this.closeBracketToken = closeBracketToken;
             expression.parent = this, openBracketToken.parent = this, argumentExpression.parent = this, closeBracketToken.parent = this;
         }
         ElementAccessExpressionSyntax.prototype.kind = function () {
@@ -8070,10 +7893,7 @@ var TypeScript;
         __extends(FunctionExpressionSyntax, _super);
         function FunctionExpressionSyntax(data, functionKeyword, identifier, callSignature, block) {
             _super.call(this, data);
-            this.functionKeyword = functionKeyword;
-            this.identifier = identifier;
-            this.callSignature = callSignature;
-            this.block = block;
+            this.functionKeyword = functionKeyword, this.identifier = identifier, this.callSignature = callSignature, this.block = block;
             functionKeyword.parent = this, identifier && (identifier.parent = this), callSignature.parent = this, block.parent = this;
         }
         FunctionExpressionSyntax.prototype.kind = function () {
@@ -8087,6 +7907,7 @@ var TypeScript;
         __extends(OmittedExpressionSyntax, _super);
         function OmittedExpressionSyntax(data) {
             _super.call(this, data);
+            ;
         }
         OmittedExpressionSyntax.prototype.kind = function () {
             return 223 /* OmittedExpression */;
@@ -8099,8 +7920,7 @@ var TypeScript;
         __extends(VariableDeclarationSyntax, _super);
         function VariableDeclarationSyntax(data, varKeyword, variableDeclarators) {
             _super.call(this, data);
-            this.varKeyword = varKeyword;
-            this.variableDeclarators = variableDeclarators;
+            this.varKeyword = varKeyword, this.variableDeclarators = variableDeclarators;
             varKeyword.parent = this, !TypeScript.isShared(variableDeclarators) && (variableDeclarators.parent = this);
         }
         VariableDeclarationSyntax.prototype.kind = function () {
@@ -8114,9 +7934,7 @@ var TypeScript;
         __extends(VariableDeclaratorSyntax, _super);
         function VariableDeclaratorSyntax(data, propertyName, typeAnnotation, equalsValueClause) {
             _super.call(this, data);
-            this.propertyName = propertyName;
-            this.typeAnnotation = typeAnnotation;
-            this.equalsValueClause = equalsValueClause;
+            this.propertyName = propertyName, this.typeAnnotation = typeAnnotation, this.equalsValueClause = equalsValueClause;
             propertyName.parent = this, typeAnnotation && (typeAnnotation.parent = this), equalsValueClause && (equalsValueClause.parent = this);
         }
         VariableDeclaratorSyntax.prototype.kind = function () {
@@ -8128,13 +7946,10 @@ var TypeScript;
 
     var ArgumentListSyntax = (function (_super) {
         __extends(ArgumentListSyntax, _super);
-        function ArgumentListSyntax(data, typeArgumentList, openParenToken, arguments, closeParenToken) {
+        function ArgumentListSyntax(data, typeArgumentList, openParenToken, _arguments, closeParenToken) {
             _super.call(this, data);
-            this.typeArgumentList = typeArgumentList;
-            this.openParenToken = openParenToken;
-            this.arguments = arguments;
-            this.closeParenToken = closeParenToken;
-            typeArgumentList && (typeArgumentList.parent = this), openParenToken.parent = this, !TypeScript.isShared(arguments) && (arguments.parent = this), closeParenToken.parent = this;
+            this.typeArgumentList = typeArgumentList, this.openParenToken = openParenToken, this.arguments = _arguments, this.closeParenToken = closeParenToken;
+            typeArgumentList && (typeArgumentList.parent = this), openParenToken.parent = this, !TypeScript.isShared(_arguments) && (_arguments.parent = this), closeParenToken.parent = this;
         }
         ArgumentListSyntax.prototype.kind = function () {
             return 226 /* ArgumentList */;
@@ -8147,9 +7962,7 @@ var TypeScript;
         __extends(ParameterListSyntax, _super);
         function ParameterListSyntax(data, openParenToken, parameters, closeParenToken) {
             _super.call(this, data);
-            this.openParenToken = openParenToken;
-            this.parameters = parameters;
-            this.closeParenToken = closeParenToken;
+            this.openParenToken = openParenToken, this.parameters = parameters, this.closeParenToken = closeParenToken;
             openParenToken.parent = this, !TypeScript.isShared(parameters) && (parameters.parent = this), closeParenToken.parent = this;
         }
         ParameterListSyntax.prototype.kind = function () {
@@ -8163,9 +7976,7 @@ var TypeScript;
         __extends(TypeArgumentListSyntax, _super);
         function TypeArgumentListSyntax(data, lessThanToken, typeArguments, greaterThanToken) {
             _super.call(this, data);
-            this.lessThanToken = lessThanToken;
-            this.typeArguments = typeArguments;
-            this.greaterThanToken = greaterThanToken;
+            this.lessThanToken = lessThanToken, this.typeArguments = typeArguments, this.greaterThanToken = greaterThanToken;
             lessThanToken.parent = this, !TypeScript.isShared(typeArguments) && (typeArguments.parent = this), greaterThanToken.parent = this;
         }
         TypeArgumentListSyntax.prototype.kind = function () {
@@ -8179,9 +7990,7 @@ var TypeScript;
         __extends(TypeParameterListSyntax, _super);
         function TypeParameterListSyntax(data, lessThanToken, typeParameters, greaterThanToken) {
             _super.call(this, data);
-            this.lessThanToken = lessThanToken;
-            this.typeParameters = typeParameters;
-            this.greaterThanToken = greaterThanToken;
+            this.lessThanToken = lessThanToken, this.typeParameters = typeParameters, this.greaterThanToken = greaterThanToken;
             lessThanToken.parent = this, !TypeScript.isShared(typeParameters) && (typeParameters.parent = this), greaterThanToken.parent = this;
         }
         TypeParameterListSyntax.prototype.kind = function () {
@@ -8195,8 +8004,7 @@ var TypeScript;
         __extends(HeritageClauseSyntax, _super);
         function HeritageClauseSyntax(data, extendsOrImplementsKeyword, typeNames) {
             _super.call(this, data);
-            this.extendsOrImplementsKeyword = extendsOrImplementsKeyword;
-            this.typeNames = typeNames;
+            this.extendsOrImplementsKeyword = extendsOrImplementsKeyword, this.typeNames = typeNames;
             extendsOrImplementsKeyword.parent = this, !TypeScript.isShared(typeNames) && (typeNames.parent = this);
         }
         HeritageClauseSyntax.prototype.kind = function () {
@@ -8210,8 +8018,7 @@ var TypeScript;
         __extends(EqualsValueClauseSyntax, _super);
         function EqualsValueClauseSyntax(data, equalsToken, value) {
             _super.call(this, data);
-            this.equalsToken = equalsToken;
-            this.value = value;
+            this.equalsToken = equalsToken, this.value = value;
             equalsToken.parent = this, value.parent = this;
         }
         EqualsValueClauseSyntax.prototype.kind = function () {
@@ -8225,10 +8032,7 @@ var TypeScript;
         __extends(CaseSwitchClauseSyntax, _super);
         function CaseSwitchClauseSyntax(data, caseKeyword, expression, colonToken, statements) {
             _super.call(this, data);
-            this.caseKeyword = caseKeyword;
-            this.expression = expression;
-            this.colonToken = colonToken;
-            this.statements = statements;
+            this.caseKeyword = caseKeyword, this.expression = expression, this.colonToken = colonToken, this.statements = statements;
             caseKeyword.parent = this, expression.parent = this, colonToken.parent = this, !TypeScript.isShared(statements) && (statements.parent = this);
         }
         CaseSwitchClauseSyntax.prototype.kind = function () {
@@ -8242,9 +8046,7 @@ var TypeScript;
         __extends(DefaultSwitchClauseSyntax, _super);
         function DefaultSwitchClauseSyntax(data, defaultKeyword, colonToken, statements) {
             _super.call(this, data);
-            this.defaultKeyword = defaultKeyword;
-            this.colonToken = colonToken;
-            this.statements = statements;
+            this.defaultKeyword = defaultKeyword, this.colonToken = colonToken, this.statements = statements;
             defaultKeyword.parent = this, colonToken.parent = this, !TypeScript.isShared(statements) && (statements.parent = this);
         }
         DefaultSwitchClauseSyntax.prototype.kind = function () {
@@ -8258,8 +8060,7 @@ var TypeScript;
         __extends(ElseClauseSyntax, _super);
         function ElseClauseSyntax(data, elseKeyword, statement) {
             _super.call(this, data);
-            this.elseKeyword = elseKeyword;
-            this.statement = statement;
+            this.elseKeyword = elseKeyword, this.statement = statement;
             elseKeyword.parent = this, statement.parent = this;
         }
         ElseClauseSyntax.prototype.kind = function () {
@@ -8273,12 +8074,7 @@ var TypeScript;
         __extends(CatchClauseSyntax, _super);
         function CatchClauseSyntax(data, catchKeyword, openParenToken, identifier, typeAnnotation, closeParenToken, block) {
             _super.call(this, data);
-            this.catchKeyword = catchKeyword;
-            this.openParenToken = openParenToken;
-            this.identifier = identifier;
-            this.typeAnnotation = typeAnnotation;
-            this.closeParenToken = closeParenToken;
-            this.block = block;
+            this.catchKeyword = catchKeyword, this.openParenToken = openParenToken, this.identifier = identifier, this.typeAnnotation = typeAnnotation, this.closeParenToken = closeParenToken, this.block = block;
             catchKeyword.parent = this, openParenToken.parent = this, identifier.parent = this, typeAnnotation && (typeAnnotation.parent = this), closeParenToken.parent = this, block.parent = this;
         }
         CatchClauseSyntax.prototype.kind = function () {
@@ -8292,8 +8088,7 @@ var TypeScript;
         __extends(FinallyClauseSyntax, _super);
         function FinallyClauseSyntax(data, finallyKeyword, block) {
             _super.call(this, data);
-            this.finallyKeyword = finallyKeyword;
-            this.block = block;
+            this.finallyKeyword = finallyKeyword, this.block = block;
             finallyKeyword.parent = this, block.parent = this;
         }
         FinallyClauseSyntax.prototype.kind = function () {
@@ -8307,8 +8102,7 @@ var TypeScript;
         __extends(TypeParameterSyntax, _super);
         function TypeParameterSyntax(data, identifier, constraint) {
             _super.call(this, data);
-            this.identifier = identifier;
-            this.constraint = constraint;
+            this.identifier = identifier, this.constraint = constraint;
             identifier.parent = this, constraint && (constraint.parent = this);
         }
         TypeParameterSyntax.prototype.kind = function () {
@@ -8322,8 +8116,7 @@ var TypeScript;
         __extends(ConstraintSyntax, _super);
         function ConstraintSyntax(data, extendsKeyword, type) {
             _super.call(this, data);
-            this.extendsKeyword = extendsKeyword;
-            this.type = type;
+            this.extendsKeyword = extendsKeyword, this.type = type;
             extendsKeyword.parent = this, type.parent = this;
         }
         ConstraintSyntax.prototype.kind = function () {
@@ -8337,9 +8130,7 @@ var TypeScript;
         __extends(SimplePropertyAssignmentSyntax, _super);
         function SimplePropertyAssignmentSyntax(data, propertyName, colonToken, expression) {
             _super.call(this, data);
-            this.propertyName = propertyName;
-            this.colonToken = colonToken;
-            this.expression = expression;
+            this.propertyName = propertyName, this.colonToken = colonToken, this.expression = expression;
             propertyName.parent = this, colonToken.parent = this, expression.parent = this;
         }
         SimplePropertyAssignmentSyntax.prototype.kind = function () {
@@ -8353,9 +8144,7 @@ var TypeScript;
         __extends(FunctionPropertyAssignmentSyntax, _super);
         function FunctionPropertyAssignmentSyntax(data, propertyName, callSignature, block) {
             _super.call(this, data);
-            this.propertyName = propertyName;
-            this.callSignature = callSignature;
-            this.block = block;
+            this.propertyName = propertyName, this.callSignature = callSignature, this.block = block;
             propertyName.parent = this, callSignature.parent = this, block.parent = this;
         }
         FunctionPropertyAssignmentSyntax.prototype.kind = function () {
@@ -8369,12 +8158,7 @@ var TypeScript;
         __extends(ParameterSyntax, _super);
         function ParameterSyntax(data, dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause) {
             _super.call(this, data);
-            this.dotDotDotToken = dotDotDotToken;
-            this.modifiers = modifiers;
-            this.identifier = identifier;
-            this.questionToken = questionToken;
-            this.typeAnnotation = typeAnnotation;
-            this.equalsValueClause = equalsValueClause;
+            this.dotDotDotToken = dotDotDotToken, this.modifiers = modifiers, this.identifier = identifier, this.questionToken = questionToken, this.typeAnnotation = typeAnnotation, this.equalsValueClause = equalsValueClause;
             dotDotDotToken && (dotDotDotToken.parent = this), !TypeScript.isShared(modifiers) && (modifiers.parent = this), identifier.parent = this, questionToken && (questionToken.parent = this), typeAnnotation && (typeAnnotation.parent = this), equalsValueClause && (equalsValueClause.parent = this);
         }
         ParameterSyntax.prototype.kind = function () {
@@ -8388,8 +8172,7 @@ var TypeScript;
         __extends(EnumElementSyntax, _super);
         function EnumElementSyntax(data, propertyName, equalsValueClause) {
             _super.call(this, data);
-            this.propertyName = propertyName;
-            this.equalsValueClause = equalsValueClause;
+            this.propertyName = propertyName, this.equalsValueClause = equalsValueClause;
             propertyName.parent = this, equalsValueClause && (equalsValueClause.parent = this);
         }
         EnumElementSyntax.prototype.kind = function () {
@@ -8403,8 +8186,7 @@ var TypeScript;
         __extends(TypeAnnotationSyntax, _super);
         function TypeAnnotationSyntax(data, colonToken, type) {
             _super.call(this, data);
-            this.colonToken = colonToken;
-            this.type = type;
+            this.colonToken = colonToken, this.type = type;
             colonToken.parent = this, type.parent = this;
         }
         TypeAnnotationSyntax.prototype.kind = function () {
@@ -8418,10 +8200,7 @@ var TypeScript;
         __extends(ExternalModuleReferenceSyntax, _super);
         function ExternalModuleReferenceSyntax(data, requireKeyword, openParenToken, stringLiteral, closeParenToken) {
             _super.call(this, data);
-            this.requireKeyword = requireKeyword;
-            this.openParenToken = openParenToken;
-            this.stringLiteral = stringLiteral;
-            this.closeParenToken = closeParenToken;
+            this.requireKeyword = requireKeyword, this.openParenToken = openParenToken, this.stringLiteral = stringLiteral, this.closeParenToken = closeParenToken;
             requireKeyword.parent = this, openParenToken.parent = this, stringLiteral.parent = this, closeParenToken.parent = this;
         }
         ExternalModuleReferenceSyntax.prototype.kind = function () {
