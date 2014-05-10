@@ -5,7 +5,6 @@
 ///<reference path='formattingOptions.ts' />
 // ///<reference path='indentation.ts' />
 ///<reference path='languageVersion.ts' />
-///<reference path='parseOptions.ts' />
 
 // Scanner depends on SyntaxKind and SyntaxFacts
 ///<reference path='syntaxKind.ts' />

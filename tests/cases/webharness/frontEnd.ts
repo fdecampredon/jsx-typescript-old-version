@@ -43,7 +43,7 @@ class BatchCompiler {
 
     public parseCompilerSources(): TypeScript.SyntaxTree {
         var result = TypeScript.Parser.parse(compilerSourcesFileName, compilerSources, /*isDeclaration:*/ false,
-            TypeScript.getParseOptions(TypeScript.ImmutableCompilationSettings.defaultSettings()));
+            TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget());
 
         // result.sourceUnit().syntaxTree = null;
         TypeScript.ScannerToken.clear();
@@ -52,7 +52,7 @@ class BatchCompiler {
 
     public parseLibDTSSource(): TypeScript.SyntaxTree {
         return TypeScript.Parser.parse(libDTSFileName, libDTSSource, /*isDeclaration:*/ true,
-            TypeScript.getParseOptions(TypeScript.ImmutableCompilationSettings.defaultSettings()));
+            TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget());
     }
 
     public incrementalParseLibDTSSource(tree: TypeScript.SyntaxTree): TypeScript.SyntaxTree {

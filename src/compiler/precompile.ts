@@ -190,10 +190,6 @@ module TypeScript {
         return { referencedFiles: properties.referencedFiles, importedFiles: importedFiles, isLibFile: properties.noDefaultLib, diagnostics: properties.diagnostics };
     }
 
-    export function getParseOptions(settings: ImmutableCompilationSettings): ParseOptions {
-        return new ParseOptions(settings.codeGenTarget(), settings.allowAutomaticSemicolonInsertion());
-    }
-
     export function getReferencedFiles(fileName: string, sourceText: IScriptSnapshot): IFileReference[] {
         return preProcessFile(fileName, sourceText, false).referencedFiles;
     }

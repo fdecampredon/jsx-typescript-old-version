@@ -771,7 +771,7 @@ module TypeScript.Parser {
             }
 
             // Set up a scanner so that we can scan tokens out of the new text.
-            this._normalParserSource = new NormalParserSource(oldSyntaxTree.fileName(), oldSyntaxTree.parseOptions().languageVersion(), text);
+            this._normalParserSource = new NormalParserSource(oldSyntaxTree.fileName(), oldSyntaxTree.languageVersion(), text);
         }
 
         private static extendToAffectedRange(changeRange:TextChangeRange,
@@ -1262,7 +1262,7 @@ module TypeScript.Parser {
     }
 
     interface IParser {
-        parseSyntaxTree(fileName: string, source: IParserSource, parseOptions: ParseOptions, isDeclaration: boolean): SyntaxTree;
+        parseSyntaxTree(fileName: string, source: IParserSource, languageVersion: LanguageVersion, isDeclaration: boolean): SyntaxTree;
     }
 
     // Contains the actual logic to parse typescript/javascript.  This is the code that generally
@@ -1275,7 +1275,7 @@ module TypeScript.Parser {
         // Underlying source where we pull nodes and tokens from.
         var source: IParserSource;
 
-        var parseOptions: ParseOptions;
+        var languageVersion: LanguageVersion;
 
         // TODO: do we need to store/restore this when speculative parsing?  I don't think so.  The
         // parsing logic already handles storing/restoring this and should work properly even if we're
@@ -1302,11 +1302,11 @@ module TypeScript.Parser {
 
         var parseNodeData: number = 0;
 
-        function parseSyntaxTree(_fileName: string, _source: IParserSource, _parseOptions: ParseOptions, isDeclaration: boolean): SyntaxTree {
+        function parseSyntaxTree(_fileName: string, _source: IParserSource, _languageVersion: LanguageVersion, isDeclaration: boolean): SyntaxTree {
             // First, set up our state.
             fileName = _fileName;
             source = _source;
-            parseOptions = _parseOptions;
+            languageVersion = _languageVersion;
 
             // Now actually parse the tree.
             var result = parseSyntaxTreeWorker(isDeclaration);
@@ -1317,7 +1317,6 @@ module TypeScript.Parser {
             fileName = null;
             source = null;
             _source = null;
-            parseOptions = null;
 
             return result;
         }
@@ -1329,7 +1328,7 @@ module TypeScript.Parser {
             var allDiagnostics = source.tokenDiagnostics().concat(diagnostics);
             allDiagnostics.sort((a: Diagnostic, b: Diagnostic) => a.start() - b.start());
 
-            return new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, fileName, source.text.lineMap(), parseOptions);
+            return new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, fileName, source.text.lineMap(), languageVersion);
         }
 
         function getRewindPoint(): IParserRewindPoint {
@@ -5930,9 +5929,9 @@ module TypeScript.Parser {
     export function parse(fileName: string,
                           text: ISimpleText,
                           isDeclaration: boolean,
-                          options: ParseOptions): SyntaxTree {
-        var source = new NormalParserSource(fileName, options.languageVersion(), text);
-        var result = parser.parseSyntaxTree(fileName, source, options, isDeclaration);
+                          languageVersion: LanguageVersion): SyntaxTree {
+        var source = new NormalParserSource(fileName, languageVersion, text);
+        var result = parser.parseSyntaxTree(fileName, source, languageVersion, isDeclaration);
         source.release();
 
         return result;
@@ -5946,7 +5945,7 @@ module TypeScript.Parser {
         }
 
         var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText);
-        var result = parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.parseOptions(), oldSyntaxTree.isDeclaration());
+        var result = parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.languageVersion(), oldSyntaxTree.isDeclaration());
         source.release();
 
         return result;

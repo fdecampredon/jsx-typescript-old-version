@@ -8,20 +8,20 @@ module TypeScript {
         private _allDiagnostics: Diagnostic[] = null;
         private _fileName: string;
         private _lineMap: LineMap;
-        private _parseOptions: ParseOptions;
+        private _languageVersion: LanguageVersion;
 
         constructor(sourceUnit: SourceUnitSyntax,
                     isDeclaration: boolean,
                     diagnostics: Diagnostic[],
                     fileName: string,
                     lineMap: LineMap,
-                    parseOtions: ParseOptions) {
+                    languageVersion: LanguageVersion) {
             this._sourceUnit = sourceUnit;
             this._isDeclaration = isDeclaration;
             this._parserDiagnostics = diagnostics;
             this._fileName = fileName;
             this._lineMap = lineMap;
-            this._parseOptions = parseOtions;
+            this._languageVersion = languageVersion;
 
             sourceUnit.syntaxTree = this;
         }
@@ -62,8 +62,8 @@ module TypeScript {
             return this._lineMap;
         }
 
-        public parseOptions(): ParseOptions {
-            return this._parseOptions;
+        public languageVersion(): LanguageVersion {
+            return this._languageVersion;
         }
     }
 
@@ -743,7 +743,7 @@ module TypeScript {
         }
 
         private checkEcmaScriptVersionIsAtLeast(parent: ISyntaxElement, node: ISyntaxElement, languageVersion: LanguageVersion, diagnosticKey: string): boolean {
-            if (this.syntaxTree.parseOptions().languageVersion() < languageVersion) {
+            if (this.syntaxTree.languageVersion() < languageVersion) {
                 this.pushDiagnostic(node, diagnosticKey);
                 return true;
             }

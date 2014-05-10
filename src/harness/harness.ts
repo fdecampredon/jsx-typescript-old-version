@@ -1664,7 +1664,7 @@ module Harness {
             compilationSettings.codeGenTarget = TypeScript.LanguageVersion.EcmaScript5;
 
             var settings = TypeScript.ImmutableCompilationSettings.fromCompilationSettings(compilationSettings);
-            var parseOptions = TypeScript.getParseOptions(settings);
+            var parseOptions = settings.codeGenTarget();
             return TypeScript.Parser.parse(fileName, TypeScript.SimpleText.fromScriptSnapshot(sourceText), TypeScript.isDTSFile(fileName), parseOptions).sourceUnit();
         }
 
