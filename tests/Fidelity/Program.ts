@@ -77,7 +77,7 @@ function tokenToJSON(token: TypeScript.ISyntaxToken): any {
         result.hasLeadingNewLine = true;
     }
 
-    if (token.hasLeadingSkippedText()) {
+    if (token.leadingTrivia().hasSkippedToken()) {
         result.hasLeadingSkippedText = true;
     }
 
@@ -93,7 +93,7 @@ function tokenToJSON(token: TypeScript.ISyntaxToken): any {
         result.hasTrailingNewLine = true;
     }
 
-    if (token.hasTrailingSkippedText()) {
+    if (token.trailingTrivia().hasSkippedToken()) {
         result.hasTrailingSkippedText = true;
     }
 

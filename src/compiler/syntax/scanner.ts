@@ -260,8 +260,6 @@ module TypeScript {
             return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
         }
 
-        public hasLeadingSkippedText(): boolean { return false; }
-        public hasTrailingSkippedText(): boolean { return false; }
         public hasSkippedToken(): boolean { return false; }
 
         public clone(): ISyntaxToken {
