@@ -33,9 +33,6 @@ module TypeScript {
         leadingTriviaWidth(): number;
         trailingTriviaWidth(): number;
 
-        withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken;
-        withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken;
-
         // True if this was a keyword that the parser converted to an identifier.  i.e. if you have
         //      x.public
         //
@@ -280,6 +277,15 @@ module TypeScript.Syntax {
         return new RealizedToken(token.fullStart(), token.kind(), token.isKeywordConvertedToIdentifier(), token.leadingTrivia(), token.text(), token.trailingTrivia());
     }
 
+    export function withLeadingTrivia(token: ISyntaxToken, leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
+        return new RealizedToken(token.fullStart(), token.kind(), token.isKeywordConvertedToIdentifier(), leadingTrivia, token.text(), token.trailingTrivia());
+    }
+
+    export function withTrailingTrivia(token: ISyntaxToken, trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
+        return new RealizedToken(token.fullStart(), token.kind(), token.isKeywordConvertedToIdentifier(), token.leadingTrivia(), token.text(), trailingTrivia);
+    }
+
+
     export function emptyToken(kind: SyntaxKind): ISyntaxToken {
         return new EmptyToken(kind);
     }
@@ -415,15 +421,6 @@ module TypeScript.Syntax {
         public trailingTriviaWidth() { return 0; }
         public leadingTrivia(): ISyntaxTriviaList { return Syntax.emptyTriviaList; }
         public trailingTrivia(): ISyntaxTriviaList { return Syntax.emptyTriviaList; }
-        public realize(): ISyntaxToken { return realizeToken(this); }
-
-        public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
-            return this.realize().withLeadingTrivia(leadingTrivia);
-        }
-
-        public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
-            return this.realize().withTrailingTrivia(trailingTrivia);
-        }
     }
 
     class RealizedToken implements ISyntaxToken {

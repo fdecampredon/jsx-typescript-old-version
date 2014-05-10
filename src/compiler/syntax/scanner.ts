@@ -264,14 +264,6 @@ module TypeScript {
         public hasTrailingSkippedText(): boolean { return false; }
         public hasSkippedToken(): boolean { return false; }
 
-        public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
-            return Syntax.realizeToken(this).withLeadingTrivia(leadingTrivia);
-        }
-
-        public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
-            return Syntax.realizeToken(this).withTrailingTrivia(trailingTrivia);
-        }
-
         public clone(): ISyntaxToken {
             return new ScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind);
         }

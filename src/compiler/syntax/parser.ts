@@ -1774,7 +1774,7 @@ module TypeScript.Parser {
 
             addTriviaTo(token.leadingTrivia(), leadingTrivia);
 
-            var updatedToken = token.withLeadingTrivia(Syntax.triviaList(leadingTrivia));
+            var updatedToken = Syntax.withLeadingTrivia(token, Syntax.triviaList(leadingTrivia));
 
             // We've prepending this token with new leading trivia.  This means the full start of
             // the token is not where the scanner originally thought it was, but is instead at the
@@ -1802,7 +1802,7 @@ module TypeScript.Parser {
 
             // Don't need this array anymore.  Give it back so we can reuse it.
             returnArray(skippedTokens);
-            return token.withTrailingTrivia(Syntax.triviaList(trailingTrivia));
+            return Syntax.withTrailingTrivia(token, Syntax.triviaList(trailingTrivia));
         }
 
         function addSkippedTokenAfterToken(token: ISyntaxToken, skippedToken: ISyntaxToken): ISyntaxToken {
@@ -1811,7 +1811,7 @@ module TypeScript.Parser {
             var trailingTrivia = token.trailingTrivia().toArray();
             addSkippedTokenToTriviaArray(trailingTrivia, skippedToken);
 
-            return token.withTrailingTrivia(Syntax.triviaList(trailingTrivia));
+            return Syntax.withTrailingTrivia(token, Syntax.triviaList(trailingTrivia));
         }
 
         function addSkippedTokenToTriviaArray(array: ISyntaxTrivia[], skippedToken: ISyntaxToken): void {
@@ -1821,7 +1821,7 @@ module TypeScript.Parser {
             addTriviaTo(skippedToken.leadingTrivia(), array);
 
             // now, add the text of the token as skipped text to the trivia array.
-            var trimmedToken = skippedToken.withLeadingTrivia(Syntax.emptyTriviaList).withTrailingTrivia(Syntax.emptyTriviaList);
+            var trimmedToken = Syntax.withTrailingTrivia(Syntax.withLeadingTrivia(skippedToken, Syntax.emptyTriviaList), Syntax.emptyTriviaList);
 
             // Because we removed the leading trivia from the skipped token, the full start of the
             // trimmed token is the start of the skipped token.
