@@ -1044,8 +1044,7 @@ module TypeScript.Parser {
             //  a) it does not intersect the changed text.
             //  b) it does not contain skipped text.
             //  c) it is not zero width.
-            //  d) it is not a regex token.
-            //  e) it is not a parser generated token.
+            //  d) it is not a contextual parser token.
             //
             // NOTE: It is safe to get a token regardless of what our strict context was/is.  That's 
             // because the strict context doesn't change what tokens are scanned, only how the 
@@ -1061,7 +1060,7 @@ module TypeScript.Parser {
             if (token !== null) {
                 if (!this.intersectsWithChangeRangeSpanInOriginalText(position, token.fullWidth())) {
                     // Didn't intersect with the change range.
-                    if (!token.isIncrementallyUnusable() && !token.isKeywordConvertedToIdentifier()) {
+                    if (!token.isIncrementallyUnusable() && !isContextualToken(token)) {
 
                         // Didn't contain anything that would make it unusable.  Awesome.  This is
                         // a token we can reuse.

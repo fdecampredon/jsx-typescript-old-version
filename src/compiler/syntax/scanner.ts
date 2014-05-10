@@ -101,11 +101,11 @@ module TypeScript {
         isKeywordStartCharacter[keyword.charCodeAt(0)] = true;
     }
 
-    function isParserGeneratedToken(kind: SyntaxKind): boolean {
+    export function isContextualToken(token: ISyntaxToken): boolean {
         // These tokens are contextually created based on parsing decisions.  We can't reuse 
         // them in incremental scenarios as we may be in a context where the parser would not
         // create them.
-        switch (kind) {
+        switch (token.kind()) {
             // Created by the parser when it sees / or /= in a location where it needs an expression.
             case SyntaxKind.RegularExpressionLiteral:
 
@@ -118,7 +118,7 @@ module TypeScript {
                 return true;
 
             default:
-                return false;
+                return token.isKeywordConvertedToIdentifier();
         }
     }
 
@@ -159,9 +159,12 @@ module TypeScript {
         }
 
         public isIncrementallyUnusable(): boolean {
-            Debug.assert(this.fullWidth() !== 0 || this.kind() === SyntaxKind.EndOfFileToken,
-                "Scanner tokens should never be empty (unless they are the end of file token).");
-            return isParserGeneratedToken(this.kind());
+            // Almost no scanner tokens make their *containing node* incrementally unusable.  
+            // Note: several scanner tokens may themselves be unusable.  i.e. if the parser asks
+            // for a full node, then that ndoe can be returned even if it contains parser generated
+            // tokens (like regexs and merged operator tokens). However, if the parser asks for a
+            // for a token, then those contextual tokens will not be reusable.
+            return false;
         }
 
         public isKeywordConvertedToIdentifier(): boolean {
@@ -1426,7 +1429,7 @@ module TypeScript {
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
-            scanSyntaxKind(isParserGeneratedToken(token.kind()));
+            scanSyntaxKind(isContextualToken(token));
             var end = index;
 
             tokenInfo.leadingTriviaWidth = start - fullStart;

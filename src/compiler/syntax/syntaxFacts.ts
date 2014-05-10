@@ -434,25 +434,4 @@ module TypeScript.SyntaxFacts {
                 return SyntaxKind.None;
         }
     }
-
-    export function isAnyDivideToken(kind: SyntaxKind): boolean {
-        switch (kind) {
-            case SyntaxKind.SlashToken:
-            case SyntaxKind.SlashEqualsToken:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    export function isAnyDivideOrRegularExpressionToken(kind: SyntaxKind): boolean {
-        switch (kind) {
-            case SyntaxKind.SlashToken:
-            case SyntaxKind.SlashEqualsToken:
-            case SyntaxKind.RegularExpressionLiteral:
-                return true;
-            default:
-                return false;
-        }
-    }
 }
