@@ -4231,57 +4231,54 @@ var TypeScript;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
+    TypeScript.Debug.assert(119 /* LastToken */ <= 127);
+
     var ScannerConstants;
     (function (ScannerConstants) {
-        ScannerConstants[ScannerConstants["LeadingTriviaShift"] = 0] = "LeadingTriviaShift";
-        ScannerConstants[ScannerConstants["TrailingTriviaShift"] = 3] = "TrailingTriviaShift";
-        ScannerConstants[ScannerConstants["IsKeywordConvertedToIdentifierShift"] = 6] = "IsKeywordConvertedToIdentifierShift";
+        ScannerConstants[ScannerConstants["LargeTokenFullStartShift"] = 2] = "LargeTokenFullStartShift";
+        ScannerConstants[ScannerConstants["LargeTokenFullWidthShift"] = 7] = "LargeTokenFullWidthShift";
 
-        ScannerConstants[ScannerConstants["FullStartAdjust"] = 128] = "FullStartAdjust";
+        ScannerConstants[ScannerConstants["SmallTokenFullWidthShift"] = 7] = "SmallTokenFullWidthShift";
+        ScannerConstants[ScannerConstants["SmallTokenFullStartShift"] = 12] = "SmallTokenFullStartShift";
 
-        ScannerConstants[ScannerConstants["IsKeywordConvertedToIdentifierMask"] = 0x01] = "IsKeywordConvertedToIdentifierMask";
-        ScannerConstants[ScannerConstants["TriviaBitMask"] = 0x07] = "TriviaBitMask";
-        ScannerConstants[ScannerConstants["CommentTriviaBitMask"] = 0x01] = "CommentTriviaBitMask";
-        ScannerConstants[ScannerConstants["NewLineTriviaBitMask"] = 0x02] = "NewLineTriviaBitMask";
-        ScannerConstants[ScannerConstants["WhitespaceTriviaBitMask"] = 0x04] = "WhitespaceTriviaBitMask";
-        ScannerConstants[ScannerConstants["FullStartBitMask"] = 0x7FFFFFFF] = "FullStartBitMask";
+        ScannerConstants[ScannerConstants["KindMask"] = 0x7F] = "KindMask";
+
+        ScannerConstants[ScannerConstants["LargeTokenLeadingTriviaBitMask"] = 0x01] = "LargeTokenLeadingTriviaBitMask";
+        ScannerConstants[ScannerConstants["LargeTokenTrailingTriviaBitMask"] = 0x02] = "LargeTokenTrailingTriviaBitMask";
+
+        ScannerConstants[ScannerConstants["SmallTokenFullWidthMask"] = 0x1F] = "SmallTokenFullWidthMask";
     })(ScannerConstants || (ScannerConstants = {}));
 
-    TypeScript.Debug.assert(unpackFullStart(packFullStartAndInfo(1 << 30, true, 0, 0)) === (1 << 30));
-    TypeScript.Debug.assert(unpackFullStart(packFullStartAndInfo(3 << 29, false, 7, 0)) === (3 << 29));
-    TypeScript.Debug.assert(unpackFullStart(packFullStartAndInfo(10 << 27, true, 0, 7)) === (10 << 27));
+    TypeScript.Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(1 << 28, 1, 1)) === (1 << 28));
+    TypeScript.Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(3 << 27, 0, 1)) === (3 << 27));
+    TypeScript.Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(10 << 25, 1, 0)) === (10 << 25));
 
-    function packFullStartAndInfo(fullStart, isKeywordConvertedToIdentifier, leadingTriviaInfo, trailingTriviaInfo) {
-        var shiftedFullStart = fullStart * 128 /* FullStartAdjust */;
-        var packedInfo = ((isKeywordConvertedToIdentifier ? 1 : 0) << 6 /* IsKeywordConvertedToIdentifierShift */) | (leadingTriviaInfo << 0 /* LeadingTriviaShift */) | (trailingTriviaInfo << 3 /* TrailingTriviaShift */);
-
-        return shiftedFullStart + packedInfo;
+    function largeTokenPackFullStartAndInfo(fullStart, hasLeadingTriviaInfo, hasTrailingTriviaInfo) {
+        return (fullStart << 2 /* LargeTokenFullStartShift */) | hasLeadingTriviaInfo | hasTrailingTriviaInfo;
     }
 
-    function packFullWidthAndKind(fullWidth, kind) {
-        return (fullWidth << 7) | kind;
+    function largeTokenPackFullWidthAndKind(fullWidth, kind) {
+        return (fullWidth << 7 /* LargeTokenFullWidthShift */) | kind;
     }
 
-    function unpackFullWidth(fullWidth) {
-        return fullWidth >> 7;
+    function largeTokenUnpackFullWidth(packedFullWidthAndKind) {
+        return packedFullWidthAndKind >> 7 /* LargeTokenFullWidthShift */;
     }
 
-    function unpackFullStart(packedFullStartAndInfo) {
-        var shiftedValue = packedFullStartAndInfo / 128 /* FullStartAdjust */;
-        return shiftedValue & 2147483647 /* FullStartBitMask */;
+    function largeTokenUnpackKind(packedFullWidthAndKind) {
+        return packedFullWidthAndKind & 127 /* KindMask */;
     }
 
-    function unpackIsKeywordConvertedToIdentifier(packedFullStartAndInfo) {
-        var val = (packedFullStartAndInfo >> 6 /* IsKeywordConvertedToIdentifierShift */) & 1 /* IsKeywordConvertedToIdentifierMask */;
-        return val !== 0;
+    function largeTokenUnpackFullStart(packedFullStartAndInfo) {
+        return packedFullStartAndInfo >> 2 /* LargeTokenFullStartShift */;
     }
 
-    function unpackLeadingTriviaInfo(packedFullStartAndInfo) {
-        return (packedFullStartAndInfo >> 0 /* LeadingTriviaShift */) & 7 /* TriviaBitMask */;
+    function largeTokenUnpackHasLeadingTriviaInfo(packed) {
+        return packed & 1 /* LargeTokenLeadingTriviaBitMask */;
     }
 
-    function unpackTrailingTriviaInfo(packedFullStartAndInfo) {
-        return (packedFullStartAndInfo >> 3 /* TrailingTriviaShift */) & 7 /* TriviaBitMask */;
+    function largeTokenUnpackHasTrailingTriviaInfo(packed) {
+        return packed & 2 /* LargeTokenTrailingTriviaBitMask */;
     }
 
     var isKeywordStartCharacter = TypeScript.ArrayUtilities.createArray(127 /* maxAsciiCharacter */, false);
@@ -4319,148 +4316,133 @@ var TypeScript;
     }
     TypeScript.isContextualToken = isContextualToken;
 
-    var ScannerToken = (function () {
-        function ScannerToken(_text, _packedFullStartAndInfo, _packedFullWidthAndKind) {
+    var lastTokenInfo = { leadingTriviaWidth: -1, width: -1 };
+    var lastTokenInfoTokenID = -1;
+
+    var triviaScanner = createScannerInternal(1 /* EcmaScript5 */, TypeScript.SimpleText.fromString(""), function () {
+    });
+
+    function fillSizeInfo(token) {
+        if (lastTokenInfoTokenID !== TypeScript.syntaxID(token)) {
+            triviaScanner.fillTokenInfo(token, lastTokenInfo);
+            lastTokenInfoTokenID = TypeScript.syntaxID(token);
+        }
+    }
+
+    function fullText(token) {
+        return token._text.substr(token.fullStart(), token.fullWidth());
+    }
+
+    function text(token) {
+        fillSizeInfo(token);
+        return token._text.substr(token.fullStart() + lastTokenInfo.leadingTriviaWidth, lastTokenInfo.width);
+    }
+
+    function leadingTrivia(token) {
+        if (!token.hasLeadingTrivia()) {
+            return TypeScript.Syntax.emptyTriviaList;
+        }
+
+        return triviaScanner.scanTrivia(token, false);
+    }
+
+    function trailingTrivia(token) {
+        if (!token.hasTrailingTrivia()) {
+            return TypeScript.Syntax.emptyTriviaList;
+        }
+
+        return triviaScanner.scanTrivia(token, true);
+    }
+
+    function leadingTriviaWidth(token) {
+        if (!token.hasLeadingTrivia()) {
+            return 0;
+        }
+
+        fillSizeInfo(token);
+        return lastTokenInfo.leadingTriviaWidth;
+    }
+
+    function trailingTriviaWidth(token) {
+        if (!token.hasTrailingTrivia()) {
+            return 0;
+        }
+
+        fillSizeInfo(token);
+        return token.fullWidth() - lastTokenInfo.leadingTriviaWidth - lastTokenInfo.width;
+    }
+
+    function tokenIsIncrementallyUnusable(token) {
+        return false;
+    }
+
+    var LargeScannerToken = (function () {
+        function LargeScannerToken(_text, _packedFullStartAndInfo, _packedFullWidthAndKind) {
             this._text = _text;
             this._packedFullStartAndInfo = _packedFullStartAndInfo;
             this._packedFullWidthAndKind = _packedFullWidthAndKind;
-            this.parent = null;
         }
-        ScannerToken.clear = function () {
-            ScannerToken.lastTokenInfoToken = null;
-        };
-
-        ScannerToken.prototype.setTextAndFullStart = function (text, fullStart) {
+        LargeScannerToken.prototype.setTextAndFullStart = function (text, fullStart) {
             this._text = text;
 
-            this._packedFullStartAndInfo = packFullStartAndInfo(fullStart, this.isKeywordConvertedToIdentifier(), unpackLeadingTriviaInfo(this._packedFullStartAndInfo), unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
+            this._packedFullStartAndInfo = largeTokenPackFullStartAndInfo(fullStart, largeTokenUnpackHasLeadingTriviaInfo(this._packedFullStartAndInfo), largeTokenUnpackHasTrailingTriviaInfo(this._packedFullStartAndInfo));
         };
 
-        ScannerToken.prototype.kind = function () {
-            return this._packedFullWidthAndKind & 0x7F;
+        LargeScannerToken.prototype.isIncrementallyUnusable = function () {
+            return tokenIsIncrementallyUnusable(this);
         };
-
-        ScannerToken.prototype.isIncrementallyUnusable = function () {
+        LargeScannerToken.prototype.isKeywordConvertedToIdentifier = function () {
             return false;
         };
-
-        ScannerToken.prototype.isKeywordConvertedToIdentifier = function () {
-            return unpackIsKeywordConvertedToIdentifier(this._packedFullStartAndInfo);
-        };
-
-        ScannerToken.prototype.convertKeywordToIdentifier = function () {
-            var data = packFullStartAndInfo(unpackFullStart(this._packedFullStartAndInfo), true, unpackLeadingTriviaInfo(this._packedFullStartAndInfo), unpackTrailingTriviaInfo(this._packedFullStartAndInfo));
-            return new ScannerToken(this._text, data, packFullWidthAndKind(this.fullWidth(), 11 /* IdentifierName */));
-        };
-
-        ScannerToken.prototype.fullWidth = function () {
-            return unpackFullWidth(this._packedFullWidthAndKind);
-        };
-        ScannerToken.prototype.fullStart = function () {
-            return unpackFullStart(this._packedFullStartAndInfo);
-        };
-
-        ScannerToken.prototype.fillSizeInfo = function () {
-            if (ScannerToken.lastTokenInfoToken !== this) {
-                ScannerToken.triviaScanner.fillTokenInfo(this, ScannerToken.lastTokenInfo);
-                ScannerToken.lastTokenInfoToken = this;
-            }
-        };
-
-        ScannerToken.prototype.fullText = function () {
-            return this._text.substr(this.fullStart(), this.fullWidth());
-        };
-
-        ScannerToken.prototype.text = function () {
-            this.fillSizeInfo();
-            return this._text.substr(this.fullStart() + ScannerToken.lastTokenInfo.leadingTriviaWidth, ScannerToken.lastTokenInfo.width);
-        };
-
-        ScannerToken.prototype.leadingTrivia = function () {
-            if (!this.hasLeadingTrivia()) {
-                return TypeScript.Syntax.emptyTriviaList;
-            }
-
-            return ScannerToken.triviaScanner.scanTrivia(this, false);
-        };
-
-        ScannerToken.prototype.trailingTrivia = function () {
-            if (!this.hasTrailingTrivia()) {
-                return TypeScript.Syntax.emptyTriviaList;
-            }
-
-            return ScannerToken.triviaScanner.scanTrivia(this, true);
-        };
-
-        ScannerToken.prototype.leadingTriviaWidth = function () {
-            if (!this.hasLeadingTrivia()) {
-                return 0;
-            }
-
-            this.fillSizeInfo();
-            return ScannerToken.lastTokenInfo.leadingTriviaWidth;
-        };
-
-        ScannerToken.prototype.trailingTriviaWidth = function () {
-            if (!this.hasTrailingTrivia()) {
-                return 0;
-            }
-
-            this.fillSizeInfo();
-            return this.fullWidth() - ScannerToken.lastTokenInfo.leadingTriviaWidth - ScannerToken.lastTokenInfo.width;
-        };
-
-        ScannerToken.prototype.hasLeadingTrivia = function () {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
-            return info !== 0;
-        };
-
-        ScannerToken.prototype.hasLeadingComment = function () {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
-            return (info & 1 /* CommentTriviaBitMask */) !== 0;
-        };
-
-        ScannerToken.prototype.hasLeadingNewLine = function () {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
-            return (info & 2 /* NewLineTriviaBitMask */) !== 0;
-        };
-
-        ScannerToken.prototype.hasTrailingTrivia = function () {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
-            return info !== 0;
-        };
-
-        ScannerToken.prototype.hasTrailingComment = function () {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
-            return (info & 1 /* CommentTriviaBitMask */) !== 0;
-        };
-
-        ScannerToken.prototype.hasTrailingNewLine = function () {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
-            return (info & 2 /* NewLineTriviaBitMask */) !== 0;
-        };
-
-        ScannerToken.prototype.hasSkippedToken = function () {
+        LargeScannerToken.prototype.hasSkippedToken = function () {
             return false;
         };
-
-        ScannerToken.prototype.clone = function () {
-            return new ScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind);
+        LargeScannerToken.prototype.fullText = function () {
+            return fullText(this);
         };
-        ScannerToken.lastTokenInfo = { leadingTriviaWidth: -1, width: -1 };
-        ScannerToken.lastTokenInfoToken = null;
-        ScannerToken.triviaScanner = createScannerInternal(1 /* EcmaScript5 */, TypeScript.SimpleText.fromString(""), function () {
-        });
-        return ScannerToken;
+        LargeScannerToken.prototype.text = function () {
+            return text(this);
+        };
+        LargeScannerToken.prototype.leadingTrivia = function () {
+            return leadingTrivia(this);
+        };
+        LargeScannerToken.prototype.trailingTrivia = function () {
+            return trailingTrivia(this);
+        };
+        LargeScannerToken.prototype.leadingTriviaWidth = function () {
+            return leadingTriviaWidth(this);
+        };
+        LargeScannerToken.prototype.trailingTriviaWidth = function () {
+            return trailingTriviaWidth(this);
+        };
+
+        LargeScannerToken.prototype.kind = function () {
+            return largeTokenUnpackKind(this._packedFullWidthAndKind);
+        };
+        LargeScannerToken.prototype.fullWidth = function () {
+            return largeTokenUnpackFullWidth(this._packedFullWidthAndKind);
+        };
+        LargeScannerToken.prototype.fullStart = function () {
+            return largeTokenUnpackFullStart(this._packedFullStartAndInfo);
+        };
+        LargeScannerToken.prototype.hasLeadingTrivia = function () {
+            return largeTokenUnpackHasLeadingTriviaInfo(this._packedFullStartAndInfo) !== 0;
+        };
+        LargeScannerToken.prototype.hasTrailingTrivia = function () {
+            return largeTokenUnpackHasTrailingTriviaInfo(this._packedFullStartAndInfo) !== 0;
+        };
+        LargeScannerToken.prototype.clone = function () {
+            return new LargeScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind);
+        };
+        return LargeScannerToken;
     })();
-    TypeScript.ScannerToken = ScannerToken;
+    TypeScript.LargeScannerToken = LargeScannerToken;
 
     function createScanner(languageVersion, text, reportDiagnostic) {
         var scanner = createScannerInternal(languageVersion, text, reportDiagnostic);
         return {
             setIndex: scanner.setIndex,
-            scan: scanner.scan,
-            release: scanner.release
+            scan: scanner.scan
         };
     }
     TypeScript.createScanner = createScanner;
@@ -4470,11 +4452,6 @@ var TypeScript;
         var index;
         var start;
         var end;
-
-        function release() {
-            text = null;
-            reportDiagnostic = null;
-        }
 
         function setIndex(_index) {
             index = _index;
@@ -4497,13 +4474,14 @@ var TypeScript;
         function scan(allowContextualToken) {
             var fullStart = index;
 
-            var leadingTriviaInfo = scanTriviaInfo(false);
+            var hasLeadingTrivia = scanTriviaInfo(false);
             var kind = scanSyntaxKind(allowContextualToken);
-            var trailingTriviaInfo = scanTriviaInfo(true);
+            var hasTrailingTrivia = scanTriviaInfo(true);
 
-            var packedFullStartAndTriviaInfo = (fullStart * 128 /* FullStartAdjust */) + ((leadingTriviaInfo << 0 /* LeadingTriviaShift */) | (trailingTriviaInfo << 3 /* TrailingTriviaShift */));
-            var packedFullWidthAndKind = ((index - fullStart) << 7) | kind;
-            return new ScannerToken(text, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
+            var packedFullStartAndTriviaInfo = (fullStart << 2 /* LargeTokenFullStartShift */) | (hasLeadingTrivia ? 1 /* LargeTokenLeadingTriviaBitMask */ : 0) | (hasTrailingTrivia ? 2 /* LargeTokenTrailingTriviaBitMask */ : 0);
+
+            var packedFullWidthAndKind = ((index - fullStart) << 7 /* LargeTokenFullWidthShift */) | kind;
+            return new LargeScannerToken(text, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
         }
 
         function scanTrivia(parent, isTrailing) {
@@ -4582,9 +4560,7 @@ var TypeScript;
         }
 
         function scanTriviaInfo(isTrailing) {
-            var commentInfo = 0;
-            var whitespaceInfo = 0;
-            var newLineInfo = 0;
+            var result = false;
 
             while (true) {
                 var ch = str.charCodeAt(index);
@@ -4611,20 +4587,20 @@ var TypeScript;
                     case 11 /* verticalTab */:
                     case 12 /* formFeed */:
                     case 65279 /* byteOrderMark */:
-                        whitespaceInfo = 4 /* WhitespaceTriviaBitMask */;
+                        result = true;
                         index++;
                         continue;
 
                     case 47 /* slash */:
                         var ch2 = str.charCodeAt(index + 1);
                         if (ch2 === 47 /* slash */) {
-                            commentInfo = 1 /* CommentTriviaBitMask */;
+                            result = true;
                             skipSingleLineCommentTrivia();
                             continue;
                         }
 
                         if (ch2 === 42 /* asterisk */) {
-                            commentInfo = 1 /* CommentTriviaBitMask */;
+                            result = true;
                             skipMultiLineCommentTrivia();
                             continue;
                         }
@@ -4635,7 +4611,7 @@ var TypeScript;
                     case 10 /* lineFeed */:
                     case 8233 /* paragraphSeparator */:
                     case 8232 /* lineSeparator */:
-                        newLineInfo = 2 /* NewLineTriviaBitMask */;
+                        result = true;
                         skipLineTerminatorSequence(ch);
 
                         if (!isTrailing) {
@@ -4645,7 +4621,7 @@ var TypeScript;
                         break;
                 }
 
-                return commentInfo + newLineInfo + whitespaceInfo;
+                return result;
             }
         }
 
@@ -5429,9 +5405,10 @@ var TypeScript;
         }
 
         function fillTokenInfo(token, tokenInfo) {
-            reset(token._text, token.fullStart(), TypeScript.fullEnd(token));
+            var fullStart = token.fullStart();
+            var fullEnd = fullStart + token.fullWidth();
+            reset(token._text, fullStart, fullEnd);
 
-            var fullStart = index;
             var leadingTriviaInfo = scanTriviaInfo(false);
 
             var start = index;
@@ -5448,8 +5425,7 @@ var TypeScript;
             setIndex: setIndex,
             scan: scan,
             fillTokenInfo: fillTokenInfo,
-            scanTrivia: scanTrivia,
-            release: release
+            scanTrivia: scanTrivia
         };
     }
 
@@ -6237,7 +6213,7 @@ var TypeScript;
         function firstTokenInLineContainingPosition(syntaxTree, position) {
             var current = TypeScript.findToken(syntaxTree.sourceUnit(), position);
             while (true) {
-                if (isFirstTokenInLine(current)) {
+                if (isFirstTokenInLine(current, syntaxTree.lineMap())) {
                     break;
                 }
 
@@ -6248,9 +6224,13 @@ var TypeScript;
         }
         Syntax.firstTokenInLineContainingPosition = firstTokenInLineContainingPosition;
 
-        function isFirstTokenInLine(token) {
+        function isFirstTokenInLine(token, lineMap) {
             var _previousToken = TypeScript.previousToken(token);
-            return _previousToken === null || _previousToken.hasTrailingNewLine();
+            if (_previousToken === null) {
+                return true;
+            }
+
+            return lineMap.getLineNumberFromPosition(TypeScript.end(_previousToken)) !== lineMap.getLineNumberFromPosition(TypeScript.start(token));
         }
     })(TypeScript.Syntax || (TypeScript.Syntax = {}));
     var Syntax = TypeScript.Syntax;
@@ -6709,6 +6689,19 @@ var TypeScript;
         return fullStart(element) + fullWidth(element);
     }
     TypeScript.fullEnd = fullEnd;
+
+    function existsNewLineBetweenTokens(token1, token2, lineMap) {
+        if (token1 === token2) {
+            return false;
+        }
+
+        if (token1 === null || token2 === null) {
+            return true;
+        }
+
+        return lineMap.getLineNumberFromPosition(end(token1)) !== lineMap.getLineNumberFromPosition(start(token2));
+    }
+    TypeScript.existsNewLineBetweenTokens = existsNewLineBetweenTokens;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
@@ -6833,7 +6826,9 @@ var TypeScript;
 (function (TypeScript) {
     var SyntaxNode = (function () {
         function SyntaxNode(data) {
-            this.data = data;
+            if (data) {
+                this.data = data;
+            }
         }
         SyntaxNode.prototype.kind = function () {
             return this.__kind;
@@ -7808,6 +7803,11 @@ var TypeScript;
         }
         Syntax.realizeToken = realizeToken;
 
+        function convertKeywordToIdentifier(token) {
+            return new ConvertedKeywordToken(token);
+        }
+        Syntax.convertKeywordToIdentifier = convertKeywordToIdentifier;
+
         function withLeadingTrivia(token, leadingTrivia) {
             return new RealizedToken(token.fullStart(), token.kind(), token.isKeywordConvertedToIdentifier(), leadingTrivia, token.text(), token.trailingTrivia());
         }
@@ -7826,7 +7826,6 @@ var TypeScript;
         var EmptyToken = (function () {
             function EmptyToken(_kind) {
                 this._kind = _kind;
-                this.parent = null;
             }
             EmptyToken.prototype.setTextAndFullStart = function (text, fullStart) {
             };
@@ -7839,20 +7838,12 @@ var TypeScript;
                 return new EmptyToken(this.kind());
             };
 
-            EmptyToken.prototype.findTokenInternal = function (parent, position, fullStart) {
-                return this;
-            };
-
             EmptyToken.prototype.isIncrementallyUnusable = function () {
                 return true;
             };
 
             EmptyToken.prototype.isKeywordConvertedToIdentifier = function () {
                 return false;
-            };
-
-            EmptyToken.prototype.convertKeywordToIdentifier = function () {
-                throw TypeScript.Errors.invalidOperation();
             };
 
             EmptyToken.prototype.fullWidth = function () {
@@ -7907,22 +7898,10 @@ var TypeScript;
             EmptyToken.prototype.hasLeadingTrivia = function () {
                 return false;
             };
-            EmptyToken.prototype.hasLeadingComment = function () {
-                return false;
-            };
-            EmptyToken.prototype.hasLeadingNewLine = function () {
-                return false;
-            };
             EmptyToken.prototype.leadingTriviaWidth = function () {
                 return 0;
             };
             EmptyToken.prototype.hasTrailingTrivia = function () {
-                return false;
-            };
-            EmptyToken.prototype.hasTrailingComment = function () {
-                return false;
-            };
-            EmptyToken.prototype.hasTrailingNewLine = function () {
                 return false;
             };
             EmptyToken.prototype.hasSkippedToken = function () {
@@ -7943,7 +7922,6 @@ var TypeScript;
 
         var RealizedToken = (function () {
             function RealizedToken(fullStart, kind, isKeywordConvertedToIdentifier, leadingTrivia, text, trailingTrivia) {
-                this.parent = null;
                 this._fullStart = fullStart;
                 this._kind = kind;
                 this._isKeywordConvertedToIdentifier = isKeywordConvertedToIdentifier;
@@ -7980,10 +7958,6 @@ var TypeScript;
                 return this._isKeywordConvertedToIdentifier;
             };
 
-            RealizedToken.prototype.convertKeywordToIdentifier = function () {
-                return new RealizedToken(this._fullStart, 11 /* IdentifierName */, true, this._leadingTrivia, this._text, this._trailingTrivia);
-            };
-
             RealizedToken.prototype.childCount = function () {
                 return 0;
             };
@@ -8009,24 +7983,12 @@ var TypeScript;
             RealizedToken.prototype.hasLeadingTrivia = function () {
                 return this._leadingTrivia.count() > 0;
             };
-            RealizedToken.prototype.hasLeadingComment = function () {
-                return this._leadingTrivia.hasComment();
-            };
-            RealizedToken.prototype.hasLeadingNewLine = function () {
-                return this._leadingTrivia.hasNewLine();
-            };
-            RealizedToken.prototype.leadingTriviaWidth = function () {
-                return this._leadingTrivia.fullWidth();
-            };
-
             RealizedToken.prototype.hasTrailingTrivia = function () {
                 return this._trailingTrivia.count() > 0;
             };
-            RealizedToken.prototype.hasTrailingComment = function () {
-                return this._trailingTrivia.hasComment();
-            };
-            RealizedToken.prototype.hasTrailingNewLine = function () {
-                return this._trailingTrivia.hasNewLine();
+
+            RealizedToken.prototype.leadingTriviaWidth = function () {
+                return this._leadingTrivia.fullWidth();
             };
             RealizedToken.prototype.trailingTriviaWidth = function () {
                 return this._trailingTrivia.fullWidth();
@@ -8043,10 +8005,6 @@ var TypeScript;
                 return this._trailingTrivia;
             };
 
-            RealizedToken.prototype.findTokenInternal = function (parent, position, fullStart) {
-                return this;
-            };
-
             RealizedToken.prototype.withLeadingTrivia = function (leadingTrivia) {
                 return new RealizedToken(this._fullStart, this.kind(), this._isKeywordConvertedToIdentifier, leadingTrivia, this._text, this._trailingTrivia);
             };
@@ -8055,6 +8013,80 @@ var TypeScript;
                 return new RealizedToken(this._fullStart, this.kind(), this._isKeywordConvertedToIdentifier, this._leadingTrivia, this._text, trailingTrivia);
             };
             return RealizedToken;
+        })();
+
+        var ConvertedKeywordToken = (function () {
+            function ConvertedKeywordToken(underlyingToken) {
+                this.underlyingToken = underlyingToken;
+            }
+            ConvertedKeywordToken.prototype.kind = function () {
+                return 11 /* IdentifierName */;
+            };
+
+            ConvertedKeywordToken.prototype.setTextAndFullStart = function (text, fullStart) {
+                this.underlyingToken.setTextAndFullStart(text, fullStart);
+            };
+
+            ConvertedKeywordToken.prototype.fullStart = function () {
+                return this.underlyingToken.fullStart();
+            };
+
+            ConvertedKeywordToken.prototype.fullWidth = function () {
+                return this.underlyingToken.fullWidth();
+            };
+
+            ConvertedKeywordToken.prototype.text = function () {
+                return this.underlyingToken.text();
+            };
+
+            ConvertedKeywordToken.prototype.fullText = function () {
+                return this.underlyingToken.fullText();
+            };
+
+            ConvertedKeywordToken.prototype.hasLeadingTrivia = function () {
+                return this.underlyingToken.hasLeadingTrivia();
+            };
+
+            ConvertedKeywordToken.prototype.hasTrailingTrivia = function () {
+                return this.underlyingToken.hasTrailingTrivia();
+            };
+
+            ConvertedKeywordToken.prototype.hasSkippedToken = function () {
+                return this.underlyingToken.hasSkippedToken();
+            };
+
+            ConvertedKeywordToken.prototype.leadingTrivia = function () {
+                var result = this.underlyingToken.leadingTrivia();
+                result.parent = this;
+                return result;
+            };
+
+            ConvertedKeywordToken.prototype.trailingTrivia = function () {
+                var result = this.underlyingToken.trailingTrivia();
+                result.parent = this;
+                return result;
+            };
+
+            ConvertedKeywordToken.prototype.leadingTriviaWidth = function () {
+                return this.underlyingToken.leadingTriviaWidth();
+            };
+
+            ConvertedKeywordToken.prototype.trailingTriviaWidth = function () {
+                return this.underlyingToken.trailingTriviaWidth();
+            };
+
+            ConvertedKeywordToken.prototype.isKeywordConvertedToIdentifier = function () {
+                return true;
+            };
+
+            ConvertedKeywordToken.prototype.isIncrementallyUnusable = function () {
+                return this.underlyingToken.isIncrementallyUnusable();
+            };
+
+            ConvertedKeywordToken.prototype.clone = function () {
+                return new ConvertedKeywordToken(this.underlyingToken);
+            };
+            return ConvertedKeywordToken;
         })();
 
         function token(kind, info, fullStart) {
@@ -8083,7 +8115,6 @@ var TypeScript;
         var AbstractTrivia = (function () {
             function AbstractTrivia(_kind) {
                 this._kind = _kind;
-                this.parent = null;
             }
             AbstractTrivia.prototype.kind = function () {
                 return this._kind;
@@ -8298,7 +8329,6 @@ var TypeScript;
     (function (Syntax) {
         var EmptyTriviaList = (function () {
             function EmptyTriviaList() {
-                this.parent = null;
             }
             EmptyTriviaList.prototype.kind = function () {
                 return 3 /* TriviaList */;
@@ -8359,7 +8389,6 @@ var TypeScript;
 
         var SingletonSyntaxTriviaList = (function () {
             function SingletonSyntaxTriviaList(item) {
-                this.parent = null;
                 this.item = item.clone();
                 this.item.parent = this;
             }
@@ -8420,7 +8449,6 @@ var TypeScript;
         var NormalSyntaxTriviaList = (function () {
             function NormalSyntaxTriviaList(trivia) {
                 var _this = this;
-                this.parent = null;
                 this.trivia = trivia.map(function (t) {
                     var cloned = t.clone();
                     cloned.parent = _this;
@@ -8531,6 +8559,18 @@ var TypeScript;
     var SyntaxUtilities = (function () {
         function SyntaxUtilities() {
         }
+        SyntaxUtilities.isLastTokenOnLine = function (token, lineMap) {
+            var _nextToken = TypeScript.nextToken(token);
+            if (_nextToken === null) {
+                return true;
+            }
+
+            var tokenLine = lineMap.getLineNumberFromPosition(TypeScript.end(token));
+            var nextTokenLine = lineMap.getLineNumberFromPosition(TypeScript.start(_nextToken));
+
+            return tokenLine !== nextTokenLine;
+        };
+
         SyntaxUtilities.isLeftHandSizeExpression = function (element) {
             if (element) {
                 switch (element.kind()) {
@@ -10303,7 +10343,6 @@ var TypeScript;
             }
             NormalParserSource.prototype.release = function () {
                 this.slidingWindow = null;
-                this.scanner.release();
                 this.scanner = null;
                 this._tokenDiagnostics = [];
                 this.rewindPointPool = [];
@@ -10778,6 +10817,7 @@ var TypeScript;
                 diagnostics = [];
                 parseNodeData = 0 /* None */;
                 fileName = null;
+                source.release();
                 source = null;
                 _source = null;
 
@@ -10902,7 +10942,7 @@ var TypeScript;
 
                 if (TypeScript.SyntaxFacts.isAnyKeyword(token.kind())) {
                     consumeToken(token);
-                    return token.convertKeywordToIdentifier();
+                    return TypeScript.Syntax.convertKeywordToIdentifier(token);
                 }
 
                 return createMissingToken(11 /* IdentifierName */, token);
@@ -10921,7 +10961,7 @@ var TypeScript;
                         return token;
                     }
 
-                    return token.convertKeywordToIdentifier();
+                    return TypeScript.Syntax.convertKeywordToIdentifier(token);
                 }
 
                 return createMissingToken(11 /* IdentifierName */, token);
@@ -11420,11 +11460,14 @@ var TypeScript;
             function eatRightSideOfName() {
                 var _currentToken = currentToken();
 
-                if (TypeScript.SyntaxFacts.isAnyKeyword(_currentToken.kind()) && previousTokenHasTrailingNewLine(_currentToken) && !_currentToken.hasTrailingNewLine() && TypeScript.SyntaxFacts.isIdentifierNameOrAnyKeyword(peekToken(1))) {
-                    return createMissingToken(11 /* IdentifierName */, _currentToken);
-                } else {
-                    return eatIdentifierNameToken();
+                if (TypeScript.SyntaxFacts.isAnyKeyword(_currentToken.kind()) && previousTokenHasTrailingNewLine(_currentToken)) {
+                    var token1 = peekToken(1);
+                    if (!TypeScript.existsNewLineBetweenTokens(_currentToken, token1, source.text.lineMap()) && TypeScript.SyntaxFacts.isIdentifierNameOrAnyKeyword(token1)) {
+                        return createMissingToken(11 /* IdentifierName */, _currentToken);
+                    }
                 }
+
+                return eatIdentifierNameToken();
             }
 
             function tryParseName() {
@@ -11982,8 +12025,10 @@ var TypeScript;
             function isPropertySignature(inErrorRecovery) {
                 var _currentToken = currentToken();
 
-                if (isModifier(_currentToken) && !_currentToken.hasTrailingNewLine() && isPropertyName(peekToken(1), inErrorRecovery)) {
-                    return false;
+                if (isModifier(_currentToken)) {
+                    if (!TypeScript.existsNewLineBetweenTokens(_currentToken, peekToken(1), source.text.lineMap()) && isPropertyName(peekToken(1), inErrorRecovery)) {
+                        return false;
+                    }
                 }
 
                 return isPropertyName(_currentToken, inErrorRecovery);
@@ -14191,10 +14236,7 @@ var TypeScript;
 
         function parse(fileName, text, isDeclaration, languageVersion) {
             var source = new NormalParserSource(fileName, languageVersion, text);
-            var result = parser.parseSyntaxTree(fileName, source, languageVersion, isDeclaration);
-            source.release();
-
-            return result;
+            return parser.parseSyntaxTree(fileName, source, languageVersion, isDeclaration);
         }
         Parser.parse = parse;
 
@@ -14204,10 +14246,7 @@ var TypeScript;
             }
 
             var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText);
-            var result = parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.languageVersion(), oldSyntaxTree.isDeclaration());
-            source.release();
-
-            return result;
+            return parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.languageVersion(), oldSyntaxTree.isDeclaration());
         }
         Parser.incrementalParse = incrementalParse;
     })(TypeScript.Parser || (TypeScript.Parser = {}));
@@ -16442,11 +16481,11 @@ var TypeScript;
         }
         ASTHelpers.preComments = preComments;
 
-        function postComments(element) {
+        function postComments(element, lineMap) {
             if (element) {
                 switch (element.kind()) {
                     case 149 /* ExpressionStatement */:
-                        return convertNodeTrailingComments(element, true);
+                        return convertNodeTrailingComments(element, lineMap, true);
                     case 148 /* VariableStatement */:
                     case 131 /* ClassDeclaration */:
                     case 133 /* ImportDeclaration */:
@@ -16470,7 +16509,7 @@ var TypeScript;
                     case 145 /* MethodSignature */:
                     case 241 /* FunctionPropertyAssignment */:
                     case 242 /* Parameter */:
-                        return convertNodeTrailingComments(element);
+                        return convertNodeTrailingComments(element, lineMap);
                 }
             }
 
@@ -16478,14 +16517,14 @@ var TypeScript;
         }
         ASTHelpers.postComments = postComments;
 
-        function convertNodeTrailingComments(node, allowWithNewLine) {
+        function convertNodeTrailingComments(node, lineMap, allowWithNewLine) {
             if (typeof allowWithNewLine === "undefined") { allowWithNewLine = false; }
             var _lastToken = TypeScript.lastToken(node);
-            if (_lastToken === null || !_lastToken.hasTrailingComment()) {
+            if (_lastToken === null || !_lastToken.hasTrailingTrivia()) {
                 return null;
             }
 
-            if (!allowWithNewLine && _lastToken.hasTrailingNewLine()) {
+            if (!allowWithNewLine && TypeScript.SyntaxUtilities.isLastTokenOnLine(_lastToken, lineMap)) {
                 return null;
             }
 
@@ -16505,7 +16544,7 @@ var TypeScript;
                 return null;
             }
 
-            return token.hasLeadingComment() ? convertComments(token.leadingTrivia(), token.fullStart()) : null;
+            return token.hasLeadingTrivia() ? convertComments(token.leadingTrivia(), token.fullStart()) : null;
         }
         ASTHelpers.convertTokenLeadingComments = convertTokenLeadingComments;
 
@@ -16514,18 +16553,19 @@ var TypeScript;
                 return null;
             }
 
-            return token.hasTrailingComment() ? convertComments(token.trailingTrivia(), TypeScript.fullEnd(token) - token.trailingTriviaWidth()) : null;
+            return token.hasTrailingTrivia() ? convertComments(token.trailingTrivia(), TypeScript.fullEnd(token) - token.trailingTriviaWidth()) : null;
         }
         ASTHelpers.convertTokenTrailingComments = convertTokenTrailingComments;
 
         function convertComments(triviaList, commentStartPosition) {
-            var result = [];
+            var result = null;
 
             for (var i = 0, n = triviaList.count(); i < n; i++) {
                 var trivia = triviaList.syntaxTriviaAt(i);
 
                 if (trivia.isComment()) {
                     var hasTrailingNewLine = ((i + 1) < n) && triviaList.syntaxTriviaAt(i + 1).isNewLine();
+                    result = result || [];
                     result.push(convertComment(trivia, commentStartPosition, hasTrailingNewLine));
                 }
 
@@ -18239,7 +18279,7 @@ var TypeScript;
 
                 this.emitCommentsArray(preComments, false);
             } else {
-                this.emitCommentsArray(TypeScript.ASTHelpers.postComments(ast), true);
+                this.emitCommentsArray(TypeScript.ASTHelpers.postComments(ast, this.document.lineMap()), true);
             }
         };
 
@@ -20270,10 +20310,14 @@ var TypeScript;
             }
         };
 
+        Emitter.prototype.hasTrailingComment = function (token) {
+            return token.hasTrailingTrivia() && token.trailingTrivia().hasComment();
+        };
+
         Emitter.prototype.emitParenthesizedExpression = function (parenthesizedExpression) {
             var omitParentheses = false;
 
-            if (parenthesizedExpression.expression.kind() === 220 /* CastExpression */ && !parenthesizedExpression.openParenToken.hasTrailingComment()) {
+            if (parenthesizedExpression.expression.kind() === 220 /* CastExpression */ && !this.hasTrailingComment(parenthesizedExpression.openParenToken)) {
                 var castedExpression = parenthesizedExpression.expression.expression;
 
                 while (castedExpression.kind() == 220 /* CastExpression */) {
@@ -48315,6 +48359,7 @@ var TypeScript;
                     this._indentationNodeContextPool = new Formatting.IndentationNodeContextPool();
 
                     this._textSpan = textSpan;
+                    this._lineMap = sourceUnit.syntaxTree.lineMap();
                     this._snapshot = snapshot;
                     this._parent = this._indentationNodeContextPool.getNode(null, sourceUnit, 0, 0, 0);
 
@@ -48370,7 +48415,7 @@ var TypeScript;
                         this.visitTokenInSpan(token);
 
                         var trivia = token.trailingTrivia();
-                        this._lastTriviaWasNewLine = token.hasTrailingNewLine() && trivia.syntaxTriviaAt(trivia.count() - 1).kind() == 5 /* NewLineTrivia */;
+                        this._lastTriviaWasNewLine = trivia.hasNewLine() && trivia.syntaxTriviaAt(trivia.count() - 1).kind() == 5 /* NewLineTrivia */;
                     }
 
                     this._position += token.fullWidth();
@@ -48480,7 +48525,7 @@ var TypeScript;
                             break;
 
                         case 147 /* IfStatement */:
-                            if (parent.kind() === 235 /* ElseClause */ && !parentNode.elseKeyword.hasTrailingNewLine() && !node.ifKeyword.hasLeadingNewLine()) {
+                            if (parent.kind() === 235 /* ElseClause */ && !TypeScript.SyntaxUtilities.isLastTokenOnLine(parentNode.elseKeyword, this._lineMap)) {
                                 indentationAmount = parentIndentationAmount;
                             } else {
                                 indentationAmount = (parentIndentationAmount + parentIndentationAmountDelta);
