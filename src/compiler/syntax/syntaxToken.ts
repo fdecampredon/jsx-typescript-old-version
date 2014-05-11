@@ -16,12 +16,7 @@ module TypeScript {
         fullText(): string;
 
         hasLeadingTrivia(): boolean;
-        //hasLeadingComment(): boolean;
-        //hasLeadingNewLine(): boolean;
-
         hasTrailingTrivia(): boolean;
-        //hasTrailingComment(): boolean;
-        //hasTrailingNewLine(): boolean;
 
         hasSkippedToken(): boolean;
 
@@ -283,7 +278,6 @@ module TypeScript.Syntax {
         return new RealizedToken(token.fullStart(), token.kind(), token.isKeywordConvertedToIdentifier(), token.leadingTrivia(), token.text(), trailingTrivia);
     }
 
-
     export function emptyToken(kind: SyntaxKind): ISyntaxToken {
         return new EmptyToken(kind);
     }
@@ -406,12 +400,8 @@ module TypeScript.Syntax {
         public fullText(): string { return ""; }
 
         public hasLeadingTrivia() { return false; }
-        public hasLeadingComment() { return false; }
-        public hasLeadingNewLine() { return false; }
         public leadingTriviaWidth() { return 0; }
         public hasTrailingTrivia() { return false; }
-        public hasTrailingComment() { return false; }
-        public hasTrailingNewLine() { return false; }
         public hasSkippedToken() { return false; }
 
         public trailingTriviaWidth() { return 0; }
@@ -498,13 +488,9 @@ module TypeScript.Syntax {
         public fullText(): string { return this._leadingTrivia.fullText() + this.text() + this._trailingTrivia.fullText(); }
 
         public hasLeadingTrivia(): boolean { return this._leadingTrivia.count() > 0; }
-        public hasLeadingComment(): boolean { return this._leadingTrivia.hasComment(); }
-        public hasLeadingNewLine(): boolean { return this._leadingTrivia.hasNewLine(); }
-        public leadingTriviaWidth(): number { return this._leadingTrivia.fullWidth(); }
-
         public hasTrailingTrivia(): boolean { return this._trailingTrivia.count() > 0; }
-        public hasTrailingComment(): boolean { return this._trailingTrivia.hasComment(); }
-        public hasTrailingNewLine(): boolean { return this._trailingTrivia.hasNewLine(); }
+
+        public leadingTriviaWidth(): number { return this._leadingTrivia.fullWidth(); }
         public trailingTriviaWidth(): number { return this._trailingTrivia.fullWidth(); }
 
         public hasSkippedToken(): boolean { return this._leadingTrivia.hasSkippedToken() || this._trailingTrivia.hasSkippedToken(); }

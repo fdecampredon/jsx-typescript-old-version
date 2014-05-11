@@ -272,29 +272,9 @@ module TypeScript {
             return info !== 0;
         }
 
-        public hasLeadingComment(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
-            return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
-        }
-
-        public hasLeadingNewLine(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedFullStartAndInfo);
-            return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
-        }
-
         public hasTrailingTrivia(): boolean {
             var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
             return info !== 0;
-        }
-
-        public hasTrailingComment(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
-            return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
-        }
-
-        public hasTrailingNewLine(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedFullStartAndInfo);
-            return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
         }
 
         public hasSkippedToken(): boolean { return false; }
