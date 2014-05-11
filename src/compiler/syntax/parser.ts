@@ -489,6 +489,8 @@ module TypeScript.Parser {
         // Retrieves the diagnostics generated while the source was producing nodes or tokens. 
         // Should generally only be called after the document has been completely parsed.
         tokenDiagnostics(): Diagnostic[];
+
+        release(): void;
     }
 
     // Parser source used in batch scenarios.  Directly calls into an underlying text scanner and
@@ -1315,6 +1317,7 @@ module TypeScript.Parser {
             diagnostics = [];
             parseNodeData = SyntaxConstants.None;
             fileName = null;
+            source.release();
             source = null;
             _source = null;
 
@@ -5931,10 +5934,7 @@ module TypeScript.Parser {
                           isDeclaration: boolean,
                           languageVersion: LanguageVersion): SyntaxTree {
         var source = new NormalParserSource(fileName, languageVersion, text);
-        var result = parser.parseSyntaxTree(fileName, source, languageVersion, isDeclaration);
-        source.release();
-
-        return result;
+        return parser.parseSyntaxTree(fileName, source, languageVersion, isDeclaration);
     }
 
     export function incrementalParse(oldSyntaxTree: SyntaxTree,
@@ -5945,9 +5945,6 @@ module TypeScript.Parser {
         }
 
         var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText);
-        var result = parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.languageVersion(), oldSyntaxTree.isDeclaration());
-        source.release();
-
-        return result;
+        return parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.languageVersion(), oldSyntaxTree.isDeclaration());
     }
 }

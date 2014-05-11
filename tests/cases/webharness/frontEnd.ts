@@ -42,12 +42,8 @@ class BatchCompiler {
     }
 
     public parseCompilerSources(): TypeScript.SyntaxTree {
-        var result = TypeScript.Parser.parse(compilerSourcesFileName, compilerSources, /*isDeclaration:*/ false,
+        return TypeScript.Parser.parse(compilerSourcesFileName, compilerSources, /*isDeclaration:*/ false,
             TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget());
-
-        // result.sourceUnit().syntaxTree = null;
-        TypeScript.ScannerToken.clear();
-        return result;
     }
 
     public parseLibDTSSource(): TypeScript.SyntaxTree {
