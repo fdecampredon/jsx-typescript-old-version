@@ -127,6 +127,16 @@ module TypeScript {
 
     var triviaScanner = createScannerInternal(LanguageVersion.EcmaScript5, SimpleText.fromString(""), () => { });
 
+    interface IScannerToken extends ISyntaxToken { 
+        _text: ISimpleText;
+    }
+
+    function fillSizeInfo(token: IScannerToken): void {
+        if (lastTokenInfoTokenID !== syntaxID(token)) {
+            triviaScanner.fillTokenInfo(token, lastTokenInfo);
+            lastTokenInfoTokenID = syntaxID(token);
+        }
+    }
 
     export class LargeScannerToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
@@ -181,19 +191,12 @@ module TypeScript {
         public fullWidth(): number { return largeTokenUnpackFullWidth(this._packedFullWidthAndKind); }
         public fullStart(): number { return largeTokenUnpackFullStart(this._packedFullStartAndInfo); }
 
-        private fillSizeInfo(): void {
-            if (lastTokenInfoTokenID !== syntaxID(this)) {
-                triviaScanner.fillTokenInfo(this, this._text, lastTokenInfo);
-                lastTokenInfoTokenID = syntaxID(this);
-            }
-        }
-
         public fullText(): string {
             return this._text.substr(this.fullStart(), this.fullWidth());
         }
 
         public text(): string {
-            this.fillSizeInfo();
+            fillSizeInfo(this);
             return this._text.substr(this.fullStart() + lastTokenInfo.leadingTriviaWidth, lastTokenInfo.width);
         }
 
@@ -218,7 +221,7 @@ module TypeScript {
                 return 0;
             }
 
-            this.fillSizeInfo();
+            fillSizeInfo(this);
             return lastTokenInfo.leadingTriviaWidth;
         }
 
@@ -227,7 +230,7 @@ module TypeScript {
                 return 0;
             }
 
-            this.fillSizeInfo();
+            fillSizeInfo(this);
             return this.fullWidth() - lastTokenInfo.leadingTriviaWidth - lastTokenInfo.width;
         }
 
@@ -278,8 +281,8 @@ module TypeScript {
     }
 
     interface ScannerInternal extends Scanner {
-        fillTokenInfo(token: ISyntaxToken, text: ISimpleText, tokenInfo: TokenInfo): void;
-        scanTrivia(token: LargeScannerToken, isTrailing: boolean): ISyntaxTriviaList;
+        fillTokenInfo(token: IScannerToken, tokenInfo: TokenInfo): void;
+        scanTrivia(token: IScannerToken, isTrailing: boolean): ISyntaxTriviaList;
     }
 
     export interface Scanner {
@@ -334,7 +337,7 @@ module TypeScript {
             return new LargeScannerToken(text, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
         }
 
-        function scanTrivia(parent: LargeScannerToken, isTrailing: boolean): ISyntaxTriviaList {
+        function scanTrivia(parent: IScannerToken, isTrailing: boolean): ISyntaxTriviaList {
             if (isTrailing) {
                 reset(parent._text, TypeScript.end(parent), fullEnd(parent));
             }
@@ -1413,10 +1416,10 @@ module TypeScript {
             return intChar;
         }
 
-        function fillTokenInfo(token: ISyntaxToken, text: ISimpleText, tokenInfo: TokenInfo): void {
+        function fillTokenInfo(token: IScannerToken, tokenInfo: TokenInfo): void {
             var fullStart = token.fullStart();
             var fullEnd = fullStart + token.fullWidth();
-            reset(text, fullStart, fullEnd);
+            reset(token._text, fullStart, fullEnd);
 
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);
 
