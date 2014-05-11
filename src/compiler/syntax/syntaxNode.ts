@@ -2,9 +2,9 @@
 
 module TypeScript {
     export class SyntaxNode implements ISyntaxNodeOrToken {
-        public parent: ISyntaxElement;
         private __kind: SyntaxKind;
         public data: number;
+        public parent: ISyntaxElement;
 
         constructor(data: number) {
             if (data) {

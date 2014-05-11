@@ -2,7 +2,7 @@
 
 module TypeScript {
     export interface ISyntaxTriviaList {
-        parent: ISyntaxToken;
+        parent?: ISyntaxToken;
 
         isShared(): boolean;
 
@@ -28,8 +28,6 @@ module TypeScript {
 
 module TypeScript.Syntax {
     class EmptyTriviaList implements ISyntaxTriviaList {
-        public parent: ISyntaxToken = null;
-
         public kind() {
             return SyntaxKind.TriviaList;
         }
@@ -86,7 +84,6 @@ module TypeScript.Syntax {
     }
 
     class SingletonSyntaxTriviaList implements ISyntaxTriviaList {
-        public parent: ISyntaxToken = null;
         private item: ISyntaxTrivia;
 
         constructor(item: ISyntaxTrivia) {
@@ -148,7 +145,6 @@ module TypeScript.Syntax {
     }
 
     class NormalSyntaxTriviaList implements ISyntaxTriviaList {
-        public parent: ISyntaxToken = null;
         private trivia: ISyntaxTrivia[];
 
         constructor(trivia: ISyntaxTrivia[]) {

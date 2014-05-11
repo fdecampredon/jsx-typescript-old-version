@@ -204,8 +204,6 @@ module TypeScript {
     }
 
     export class LargeScannerToken implements ISyntaxToken {
-        public parent: ISyntaxElement = null;
-
         public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; 
 
         constructor(public _text: ISimpleText, private _packedFullStartAndInfo: number, private _packedFullWidthAndKind: number) {

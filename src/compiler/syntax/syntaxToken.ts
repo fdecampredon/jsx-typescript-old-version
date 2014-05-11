@@ -286,8 +286,6 @@ module TypeScript.Syntax {
     }
 
     class EmptyToken implements ISyntaxToken {
-        public parent: ISyntaxElement = null;
-
         public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
 
         constructor(private _kind: SyntaxKind) {
@@ -398,7 +396,6 @@ module TypeScript.Syntax {
     }
 
     class RealizedToken implements ISyntaxToken {
-        public parent: ISyntaxElement = null;
         private _fullStart: number;
         private _kind: SyntaxKind;
         private _isKeywordConvertedToIdentifier: boolean;
