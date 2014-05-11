@@ -122,12 +122,13 @@ module TypeScript {
         }
     }
 
+    var lastTokenInfo = { leadingTriviaWidth: -1, width: -1 };
+    var lastTokenInfoTokenID: number = -1;
+
+    var triviaScanner = createScannerInternal(LanguageVersion.EcmaScript5, SimpleText.fromString(""), () => { });
+
+
     export class ScannerToken implements ISyntaxToken {
-        private static lastTokenInfo = { leadingTriviaWidth: -1, width: -1 };
-        private static lastTokenInfoTokenID: number = -1;
-
-        private static triviaScanner = createScannerInternal(LanguageVersion.EcmaScript5, SimpleText.fromString(""), () => { });
-
         public parent: ISyntaxElement = null;
 
         public _isPrimaryExpression: any;
@@ -181,9 +182,9 @@ module TypeScript {
         public fullStart(): number { return unpackFullStart(this._packedFullStartAndInfo); }
 
         private fillSizeInfo(): void {
-            if (ScannerToken.lastTokenInfoTokenID !== syntaxID(this)) {
-                ScannerToken.triviaScanner.fillTokenInfo(this, this._text, ScannerToken.lastTokenInfo);
-                ScannerToken.lastTokenInfoTokenID = syntaxID(this);
+            if (lastTokenInfoTokenID !== syntaxID(this)) {
+                triviaScanner.fillTokenInfo(this, this._text, lastTokenInfo);
+                lastTokenInfoTokenID = syntaxID(this);
             }
         }
 
@@ -193,7 +194,7 @@ module TypeScript {
 
         public text(): string {
             this.fillSizeInfo();
-            return this._text.substr(this.fullStart() + ScannerToken.lastTokenInfo.leadingTriviaWidth, ScannerToken.lastTokenInfo.width);
+            return this._text.substr(this.fullStart() + lastTokenInfo.leadingTriviaWidth, lastTokenInfo.width);
         }
 
         public leadingTrivia(): ISyntaxTriviaList {
@@ -201,7 +202,7 @@ module TypeScript {
                 return Syntax.emptyTriviaList;
             }
 
-            return ScannerToken.triviaScanner.scanTrivia(this, /*isTrailing:*/ false);
+            return triviaScanner.scanTrivia(this, /*isTrailing:*/ false);
         }
 
         public trailingTrivia(): ISyntaxTriviaList {
@@ -209,7 +210,7 @@ module TypeScript {
                 return Syntax.emptyTriviaList;
             }
 
-            return ScannerToken.triviaScanner.scanTrivia(this, /*isTrailing:*/ true);
+            return triviaScanner.scanTrivia(this, /*isTrailing:*/ true);
         }
 
         public leadingTriviaWidth(): number {
@@ -218,7 +219,7 @@ module TypeScript {
             }
 
             this.fillSizeInfo();
-            return ScannerToken.lastTokenInfo.leadingTriviaWidth;
+            return lastTokenInfo.leadingTriviaWidth;
         }
 
         public trailingTriviaWidth(): number {
@@ -227,7 +228,7 @@ module TypeScript {
             }
 
             this.fillSizeInfo();
-            return this.fullWidth() - ScannerToken.lastTokenInfo.leadingTriviaWidth - ScannerToken.lastTokenInfo.width;
+            return this.fullWidth() - lastTokenInfo.leadingTriviaWidth - lastTokenInfo.width;
         }
 
         public hasLeadingTrivia(): boolean {

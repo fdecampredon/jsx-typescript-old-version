@@ -523,7 +523,6 @@ module TypeScript.Parser {
 
         public release() {
             this.slidingWindow = null;
-            this.scanner.release();
             this.scanner = null;
             this._tokenDiagnostics = [];
             this.rewindPointPool = [];
