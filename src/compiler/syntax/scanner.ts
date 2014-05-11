@@ -4,28 +4,6 @@ module TypeScript {
     // Make sure we can encode a token's kind in 7 bits.
     Debug.assert(SyntaxKind.LastToken <= 127);
 
-    // To save space in a token we back bits heavily.  For smaller, we use a single number, and 
-    // pack the data like so in a 64 bit float like so.
-    //
-    //   _packedData:
-    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx <-- leading trivia info
-    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00xx x000 <-- trailing trivia info
-    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0x00 0000 <-- trailing trivia info
-    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00xx xxxx x000 0000 <-- kind
-    // 0000 0000 0000 0000 0000 0000 0000 000x xxxx xxxx xxxx xxxx xx00 0000 0000 0000 <-- full start
-    // 0000 0000 0000 xxxx xxxx xxxx xxxx xxx0 0000 0000 0000 0000 0000 0000 0000 0000 <-- full width
-    // ^              ^                                                              ^
-    // |              |                                                              |
-    // Bit 64         Bit 52                                                         Bit 1
-    //
-    // We allow 19 bits for the full start and full width. This allows us to deal with tokens that
-    // are at position 0x7FFFF (524,287) or lower.
-    //
-    // Because files can easily be larger than 512k, we also have a token implementation that uses
-    // two fields to handle that case.  This token can handle files up to 2GB in size (which is 
-    // far larger than anything we could reasonably run into). We pack the data in that case like so:
-    //
-    //
     //   _packedFullStartAndInfo:
     //
     // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx    <-- leading trivia info
@@ -49,8 +27,6 @@ module TypeScript {
         TrailingTriviaShift                 = 3,
         IsKeywordConvertedToIdentifierShift = 6,
 
-        SmallTokenKindShift                 = 7,
-
         // We use 31 bits to store the full start of a token.  However, because the bits go past 
         // the 32 bit mark in the number, we can't use shifts to retrive or store the value.  
         // This is because javascript says that a bitwise operator immediate truncates values to
@@ -61,23 +37,12 @@ module TypeScript {
         // Here dividing/multiplying by 128 is the same as shifting over 7 bits.
         LargeTokenFullStartAdjust           = 128,
 
-        // Here dividing/multiplying by 16384 is the same as shifting over 14 bits.
-        SmallTokenFullStartAdjust           = 16384,
-
-        // Here dividing/multiplying by 8589934592 is the same as shifting over 33 bits.
-        SmallTokenFullWidthAdjust           = 8589934592,
-
-        // If the full width or start is larger than this value, then we need to use a large token.
-        SmallTokenMaxFullWidthOrStart       = 0x7FFFF,
-
         IsKeywordConvertedToIdentifierMask  = 0x01, // 00000001
         TriviaBitMask                       = 0x07, // 00000111
         CommentTriviaBitMask                = 0x01, // 00000001
         NewLineTriviaBitMask                = 0x02, // 00000010
         WhitespaceTriviaBitMask             = 0x04, // 00000100
         KindMask                            = 0x7F, // 01111111
-        SmallTokenFullStartMask             = 0x7FFFF,    // 19 ones.
-        SmallTokenFullWidthMask             = 0x7FFFF,    // 19 ones.
         LargeTokenFullStartBitMask          = 0x7FFFFFFF, // 31 ones.
     }
 
@@ -85,36 +50,6 @@ module TypeScript {
     Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(1 << 30, true, 0, 0)) === (1 << 30));
     Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(3 << 29, false, 7, 0)) === (3 << 29));
     Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(10 << 27, true, 0, 7)) === (10 << 27));
-
-    Debug.assert(smallTokenUnpackFullStart(smallTokenPackInfo(0x7FFFF, 0, 0x7F, true, 0, 0)) === 0x7FFFF);
-    Debug.assert(smallTokenUnpackFullStart(smallTokenPackInfo(0x7F7FF, 0, 0x7F, true, 7, 0)) === 0x7F7FF);
-    Debug.assert(smallTokenUnpackFullStart(smallTokenPackInfo(0x7FF07, 0, 0x7F, false, 7, 7)) === 0x7FF07);
-    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x7FFFF, 0, 0x7F, true, 7, 0)) === 0);
-    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x7FFFF, 0, 0x7F, false, 7, 7)) === 0);
-    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x70000, 0x7FFFF, 0x7F, false, 7, 7)) === 0x7FFFF);
-    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x70000, 0x71FF1, 0x07, true, 0, 7)) === 0x71FF1);
-    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x70000, 0x70001, 0x10, false, 1, 1)) === 0x70001);
-
-    function smallTokenPackInfo(fullStart: number, fullWidth: number, kind: SyntaxKind, isKeywordConvertedToIdentifier: boolean, leadingTriviaInfo: number, trailingTriviaInfo: number) {
-        var val1 = (fullStart * ScannerConstants.SmallTokenFullStartAdjust) + (fullWidth * ScannerConstants.SmallTokenFullWidthAdjust);
-        var val2 = ((isKeywordConvertedToIdentifier ? 1 : 0) << ScannerConstants.IsKeywordConvertedToIdentifierShift) |
-            (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) |
-            (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
-
-        return val1 + val2;
-    }
-
-    function smallTokenUnpackFullStart(packedInfo: number) {
-        return (packedInfo / ScannerConstants.SmallTokenFullStartAdjust) & ScannerConstants.SmallTokenFullStartMask;
-    }
-
-    function smallTokenUnpackFullWidth(packedInfo: number) {
-        return (packedInfo / ScannerConstants.SmallTokenFullWidthAdjust) & ScannerConstants.SmallTokenFullWidthMask;
-    }
-
-    function smallTokenUnpackKind(packedInfo: number) {
-        return (packedInfo >> ScannerConstants.SmallTokenKindShift) & ScannerConstants.KindMask;
-    }
 
     function largeTokenPackFullStartAndInfo(fullStart: number, isKeywordConvertedToIdentifier: boolean, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
         var shiftedFullStart = fullStart * ScannerConstants.LargeTokenFullStartAdjust;
@@ -258,115 +193,6 @@ module TypeScript {
 
         fillSizeInfo(token);
         return token.fullWidth() - lastTokenInfo.leadingTriviaWidth - lastTokenInfo.width;
-    }
-
-    export class SmallScannerToken implements ISyntaxToken {
-        public parent: ISyntaxElement = null;
-
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
-
-        constructor(public _text: ISimpleText, private _packedData: number) {
-        }
-
-        public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
-            this._text = text;
-
-            this._packedData = smallTokenPackInfo(fullStart, this.fullWidth(), this.kind(),
-                this.isKeywordConvertedToIdentifier(), 
-                unpackLeadingTriviaInfo(this._packedData),
-                unpackTrailingTriviaInfo(this._packedData));
-        }
-
-        public kind(): SyntaxKind {
-            return smallTokenUnpackKind(this._packedData);
-        }
-
-        public isIncrementallyUnusable(): boolean {
-            // No scanner tokens make their *containing node* incrementally unusable.  
-            // Note: several scanner tokens may themselves be unusable.  i.e. if the parser asks
-            // for a full node, then that ndoe can be returned even if it contains parser generated
-            // tokens (like regexs and merged operator tokens). However, if the parser asks for a
-            // for a token, then those contextual tokens will not be reusable.
-            return false;
-        }
-
-        public isKeywordConvertedToIdentifier(): boolean {
-            return unpackIsKeywordConvertedToIdentifier(this._packedData);
-        }
-
-        public convertKeywordToIdentifier(): ISyntaxToken {
-            var data = smallTokenPackInfo(
-                smallTokenUnpackFullStart(this._packedData),
-                smallTokenUnpackFullWidth(this._packedData),
-                SyntaxKind.IdentifierName,
-                /*isKeywordConvertedToIdentifier:*/ true,
-                unpackLeadingTriviaInfo(this._packedData),
-                unpackTrailingTriviaInfo(this._packedData));
-            return new SmallScannerToken(this._text, data);
-        }
-
-        public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
-        public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
-
-        public fullText(): string {
-            return fullText(this);
-        }
-
-        public text(): string {
-            return text(this);
-        }
-
-        public leadingTrivia(): ISyntaxTriviaList {
-            return leadingTrivia(this);
-        }
-
-        public trailingTrivia(): ISyntaxTriviaList {
-            return trailingTrivia(this);
-        }
-
-        public leadingTriviaWidth(): number {
-            return leadingTriviaWidth(this);
-        }
-
-        public trailingTriviaWidth(): number {
-            return trailingTriviaWidth(this);
-        }
-
-        public hasLeadingTrivia(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedData);
-            return info !== 0;
-        }
-
-        public hasLeadingComment(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedData);
-            return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
-        }
-
-        public hasLeadingNewLine(): boolean {
-            var info = unpackLeadingTriviaInfo(this._packedData);
-            return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
-        }
-
-        public hasTrailingTrivia(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedData);
-            return info !== 0;
-        }
-
-        public hasTrailingComment(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedData);
-            return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
-        }
-
-        public hasTrailingNewLine(): boolean {
-            var info = unpackTrailingTriviaInfo(this._packedData);
-            return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
-        }
-
-        public hasSkippedToken(): boolean { return false; }
-
-        public clone(): ISyntaxToken {
-            return new SmallScannerToken(this._text, this._packedData);
-        }
     }
 
     export class LargeScannerToken implements ISyntaxToken {
