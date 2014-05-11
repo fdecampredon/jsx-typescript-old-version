@@ -4,22 +4,52 @@ module TypeScript {
     // Make sure we can encode a token's kind in 7 bits.
     Debug.assert(SyntaxKind.LastToken <= 127);
 
-    // To save space in a token we use 60 bits to encode the following.
+    // To save space in a token we back bits heavily.  For smaller, we use a single number, and 
+    // pack the data like so in a 64 bit float like so.
+    //
+    //   _packedData:
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx <-- leading trivia info
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00xx x000 <-- trailing trivia info
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0x00 0000 <-- trailing trivia info
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00xx xxxx x000 0000 <-- kind
+    // 0000 0000 0000 0000 0000 0000 0000 000x xxxx xxxx xxxx xxxx xx00 0000 0000 0000 <-- full start
+    // 0000 0000 0000 xxxx xxxx xxxx xxxx xxx0 0000 0000 0000 0000 0000 0000 0000 0000 <-- full width
+    // ^              ^                                                              ^
+    // |              |                                                              |
+    // Bit 64         Bit 52                                                         Bit 1
+    //
+    // We allow 19 bits for the full start and full width. This allows us to deal with tokens that
+    // are at position 0x7FFFF (524,287) or lower.
+    //
+    // Because files can easily be larger than 512k, we also have a token implementation that uses
+    // two fields to handle that case.  This token can handle files up to 2GB in size (which is 
+    // far larger than anything we could reasonably run into). We pack the data in that case like so:
+    //
     //
     //   _packedFullStartAndInfo:
-    //                                                 
-    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx    <-- Leading trivia info.
-    // 0000 0000 0000 0000 0000 0000 0000 0000 00xx x000    <-- Trailing trivia info.
-    // 0000 0000 0000 0000 0000 0000 0000 0000 0x00 0000    <-- Is keyword converted to identifier.
-    // 00xx xxxx xxxx xxxx xxxx xxxx xxxx xxxx x000 0000    <-- Full start.
-    // ^                                               ^
-    // |                                               |
-    // Bit 39                                          Bit 0
-
+    //
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx    <-- leading trivia info
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 00xx x000    <-- trailing trivia info
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0x00 0000    <-- is keyword converted to identifier
+    // 0000 0000 0000 0000 0000 0000 00xx xxxx xxxx xxxx xxxx xxxx xxxx xxxx x000 0000    <-- full start
+    // ^                               ^                                             ^
+    // |                               |                                             |
+    // Bit 64                          Bit 38                                        Bit 1
+    //
+    //   _packedFullWidthAndKind:
+    //
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx xxxx    <-- kind
+    // 0000 0000 0000 0000 0000 0000 00xx xxxx xxxx xxxx xxxx xxxx xxxx xxxx x000 0000    <-- full width
+    // ^                               ^                                             ^
+    // |                               |                                             |
+    // Bit 64                          Bit 38                                        Bit 1
+  
     enum ScannerConstants {
         LeadingTriviaShift                  = 0,
         TrailingTriviaShift                 = 3,
         IsKeywordConvertedToIdentifierShift = 6,
+
+        SmallTokenKindShift                 = 7,
 
         // We use 31 bits to store the full start of a token.  However, because the bits go past 
         // the 32 bit mark in the number, we can't use shifts to retrive or store the value.  
@@ -29,7 +59,16 @@ module TypeScript {
         // then extract the bits we want at that point with a mask.
         //
         // Here dividing/multiplying by 128 is the same as shifting over 7 bits.
-        LargeTokenFullStartAdjust                      = 128,
+        LargeTokenFullStartAdjust           = 128,
+
+        // Here dividing/multiplying by 16384 is the same as shifting over 14 bits.
+        SmallTokenFullStartAdjust           = 16384,
+
+        // Here dividing/multiplying by 8589934592 is the same as shifting over 33 bits.
+        SmallTokenFullWidthAdjust           = 8589934592,
+
+        // If the full width or start is larger than this value, then we need to use a large token.
+        SmallTokenMaxFullWidthOrStart       = 0x7FFFF,
 
         IsKeywordConvertedToIdentifierMask  = 0x01, // 00000001
         TriviaBitMask                       = 0x07, // 00000111
@@ -37,7 +76,9 @@ module TypeScript {
         NewLineTriviaBitMask                = 0x02, // 00000010
         WhitespaceTriviaBitMask             = 0x04, // 00000100
         KindMask                            = 0x7F, // 01111111
-        LargeTokenFullStartBitMask          = 0x7FFFFFFF
+        SmallTokenFullStartMask             = 0x7FFFF,    // 19 ones.
+        SmallTokenFullWidthMask             = 0x7FFFF,    // 19 ones.
+        LargeTokenFullStartBitMask          = 0x7FFFFFFF, // 31 ones.
     }
 
     // Make sure our math works for packing/unpacking large fullStarts.
