@@ -1,6 +1,9 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    // Make sure we can encode a token's kind in 7 bits.
+    Debug.assert(SyntaxKind.LastToken <= 127);
+
     // To save space in a token we use 60 bits to encode the following.
     //
     //   _packedFullStartAndInfo:
@@ -33,6 +36,7 @@ module TypeScript {
         CommentTriviaBitMask                = 0x01, // 00000001
         NewLineTriviaBitMask                = 0x02, // 00000010
         WhitespaceTriviaBitMask             = 0x04, // 00000100
+        KindMask                            = 0x7F, // 01111111
         LargeTokenFullStartBitMask          = 0x7FFFFFFF
     }
 
@@ -59,6 +63,10 @@ module TypeScript {
 
     function largeTokenUnpackFullWidth(packedFullWidthAndKind: number) {
         return packedFullWidthAndKind >> 7;
+    }
+
+    function largeTokenUnpackKind(packedFullWidthAndKind: number) {
+        return packedFullWidthAndKind & ScannerConstants.KindMask;
     }
 
     function largeTokenUnpackFullStart(packedFullStartAndInfo: number): number {
@@ -163,7 +171,7 @@ module TypeScript {
         }
 
         public kind(): SyntaxKind {
-            return this._packedFullWidthAndKind & 0x7F;
+            return largeTokenUnpackKind(this._packedFullWidthAndKind);
         }
 
         public isIncrementallyUnusable(): boolean {
