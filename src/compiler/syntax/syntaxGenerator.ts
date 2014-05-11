@@ -2274,21 +2274,26 @@ function generateNodes(): string {
 
     result += "module TypeScript {\r\n";
 
-    result += "    export var nodeMetadata: string[][] = ArrayUtilities.createArray<string[]>(SyntaxKind.LastNode + 1, []);\r\n\r\n";
+    result += "    export var nodeMetadata: string[][] = [";
 
-    for (var i = <number>TypeScript.SyntaxKind.FirstNode; i <= TypeScript.SyntaxKind.LastNode; i++) {
+    for (var i = 0; i <= TypeScript.SyntaxKind.LastNode; i++) {
+        if (i < TypeScript.SyntaxKind.FirstNode) {
+            result += "[],";
+            continue;
+        }
+
         var kindName = syntaxKindName(i);
 
         var definition = getDefinitionForKind(i);
 
         var metadata = "[";
         var children = definition.children.filter(m => m.type !== "SyntaxKind").map(m => '"' + m.name + '"');
-        metadata += children.join(", ");
-        metadata += "];\r\n";
+        metadata += children.join(",");
+        metadata += "],";
 
-        result += "    nodeMetadata[SyntaxKind." + kindName + "] = " + metadata;
+        result += metadata;
     }
-    result += "\r\n";
+    result += "];\r\n";
 
     /*
     result += "    function children(nodes: ISyntaxNodeOrToken[], cb: (node: ISyntaxElement) => void) {\r\n";
@@ -2399,7 +2404,7 @@ function generateNodes(): string {
         var definition = definitions[i];
 
         if (i > 0) {
-            result += "\r\n\r\n";
+            result += "\r\n";
         }
 
         result += generateNode(definition);

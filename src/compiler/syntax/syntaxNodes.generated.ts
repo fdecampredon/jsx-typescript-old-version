@@ -1,136 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export var nodeMetadata: string[][] = ArrayUtilities.createArray<string[]>(SyntaxKind.LastNode + 1, []);
-
-    nodeMetadata[SyntaxKind.SourceUnit] = ["moduleElements", "endOfFileToken"];
-    nodeMetadata[SyntaxKind.QualifiedName] = ["left", "dotToken", "right"];
-    nodeMetadata[SyntaxKind.ObjectType] = ["openBraceToken", "typeMembers", "closeBraceToken"];
-    nodeMetadata[SyntaxKind.FunctionType] = ["typeParameterList", "parameterList", "equalsGreaterThanToken", "type"];
-    nodeMetadata[SyntaxKind.ArrayType] = ["type", "openBracketToken", "closeBracketToken"];
-    nodeMetadata[SyntaxKind.ConstructorType] = ["newKeyword", "typeParameterList", "parameterList", "equalsGreaterThanToken", "type"];
-    nodeMetadata[SyntaxKind.GenericType] = ["name", "typeArgumentList"];
-    nodeMetadata[SyntaxKind.TypeQuery] = ["typeOfKeyword", "name"];
-    nodeMetadata[SyntaxKind.InterfaceDeclaration] = ["modifiers", "interfaceKeyword", "identifier", "typeParameterList", "heritageClauses", "body"];
-    nodeMetadata[SyntaxKind.FunctionDeclaration] = ["modifiers", "functionKeyword", "identifier", "callSignature", "block", "semicolonToken"];
-    nodeMetadata[SyntaxKind.ModuleDeclaration] = ["modifiers", "moduleKeyword", "name", "stringLiteral", "openBraceToken", "moduleElements", "closeBraceToken"];
-    nodeMetadata[SyntaxKind.ClassDeclaration] = ["modifiers", "classKeyword", "identifier", "typeParameterList", "heritageClauses", "openBraceToken", "classElements", "closeBraceToken"];
-    nodeMetadata[SyntaxKind.EnumDeclaration] = ["modifiers", "enumKeyword", "identifier", "openBraceToken", "enumElements", "closeBraceToken"];
-    nodeMetadata[SyntaxKind.ImportDeclaration] = ["modifiers", "importKeyword", "identifier", "equalsToken", "moduleReference", "semicolonToken"];
-    nodeMetadata[SyntaxKind.ExportAssignment] = ["exportKeyword", "equalsToken", "identifier", "semicolonToken"];
-    nodeMetadata[SyntaxKind.MemberFunctionDeclaration] = ["modifiers", "propertyName", "callSignature", "block", "semicolonToken"];
-    nodeMetadata[SyntaxKind.MemberVariableDeclaration] = ["modifiers", "variableDeclarator", "semicolonToken"];
-    nodeMetadata[SyntaxKind.ConstructorDeclaration] = ["modifiers", "constructorKeyword", "callSignature", "block", "semicolonToken"];
-    nodeMetadata[SyntaxKind.IndexMemberDeclaration] = ["modifiers", "indexSignature", "semicolonToken"];
-    nodeMetadata[SyntaxKind.GetAccessor] = ["modifiers", "getKeyword", "propertyName", "parameterList", "typeAnnotation", "block"];
-    nodeMetadata[SyntaxKind.SetAccessor] = ["modifiers", "setKeyword", "propertyName", "parameterList", "block"];
-    nodeMetadata[SyntaxKind.PropertySignature] = ["propertyName", "questionToken", "typeAnnotation"];
-    nodeMetadata[SyntaxKind.CallSignature] = ["typeParameterList", "parameterList", "typeAnnotation"];
-    nodeMetadata[SyntaxKind.ConstructSignature] = ["newKeyword", "callSignature"];
-    nodeMetadata[SyntaxKind.IndexSignature] = ["openBracketToken", "parameter", "closeBracketToken", "typeAnnotation"];
-    nodeMetadata[SyntaxKind.MethodSignature] = ["propertyName", "questionToken", "callSignature"];
-    nodeMetadata[SyntaxKind.Block] = ["openBraceToken", "statements", "closeBraceToken"];
-    nodeMetadata[SyntaxKind.IfStatement] = ["ifKeyword", "openParenToken", "condition", "closeParenToken", "statement", "elseClause"];
-    nodeMetadata[SyntaxKind.VariableStatement] = ["modifiers", "variableDeclaration", "semicolonToken"];
-    nodeMetadata[SyntaxKind.ExpressionStatement] = ["expression", "semicolonToken"];
-    nodeMetadata[SyntaxKind.ReturnStatement] = ["returnKeyword", "expression", "semicolonToken"];
-    nodeMetadata[SyntaxKind.SwitchStatement] = ["switchKeyword", "openParenToken", "expression", "closeParenToken", "openBraceToken", "switchClauses", "closeBraceToken"];
-    nodeMetadata[SyntaxKind.BreakStatement] = ["breakKeyword", "identifier", "semicolonToken"];
-    nodeMetadata[SyntaxKind.ContinueStatement] = ["continueKeyword", "identifier", "semicolonToken"];
-    nodeMetadata[SyntaxKind.ForStatement] = ["forKeyword", "openParenToken", "variableDeclaration", "initializer", "firstSemicolonToken", "condition", "secondSemicolonToken", "incrementor", "closeParenToken", "statement"];
-    nodeMetadata[SyntaxKind.ForInStatement] = ["forKeyword", "openParenToken", "variableDeclaration", "left", "inKeyword", "expression", "closeParenToken", "statement"];
-    nodeMetadata[SyntaxKind.EmptyStatement] = ["semicolonToken"];
-    nodeMetadata[SyntaxKind.ThrowStatement] = ["throwKeyword", "expression", "semicolonToken"];
-    nodeMetadata[SyntaxKind.WhileStatement] = ["whileKeyword", "openParenToken", "condition", "closeParenToken", "statement"];
-    nodeMetadata[SyntaxKind.TryStatement] = ["tryKeyword", "block", "catchClause", "finallyClause"];
-    nodeMetadata[SyntaxKind.LabeledStatement] = ["identifier", "colonToken", "statement"];
-    nodeMetadata[SyntaxKind.DoStatement] = ["doKeyword", "statement", "whileKeyword", "openParenToken", "condition", "closeParenToken", "semicolonToken"];
-    nodeMetadata[SyntaxKind.DebuggerStatement] = ["debuggerKeyword", "semicolonToken"];
-    nodeMetadata[SyntaxKind.WithStatement] = ["withKeyword", "openParenToken", "condition", "closeParenToken", "statement"];
-    nodeMetadata[SyntaxKind.PlusExpression] = ["operatorToken", "operand"];
-    nodeMetadata[SyntaxKind.NegateExpression] = ["operatorToken", "operand"];
-    nodeMetadata[SyntaxKind.BitwiseNotExpression] = ["operatorToken", "operand"];
-    nodeMetadata[SyntaxKind.LogicalNotExpression] = ["operatorToken", "operand"];
-    nodeMetadata[SyntaxKind.PreIncrementExpression] = ["operatorToken", "operand"];
-    nodeMetadata[SyntaxKind.PreDecrementExpression] = ["operatorToken", "operand"];
-    nodeMetadata[SyntaxKind.DeleteExpression] = ["deleteKeyword", "expression"];
-    nodeMetadata[SyntaxKind.TypeOfExpression] = ["typeOfKeyword", "expression"];
-    nodeMetadata[SyntaxKind.VoidExpression] = ["voidKeyword", "expression"];
-    nodeMetadata[SyntaxKind.CommaExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.AssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.AddAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.SubtractAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.MultiplyAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.DivideAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.ModuloAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.AndAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.ExclusiveOrAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.OrAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.LeftShiftAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.SignedRightShiftAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.UnsignedRightShiftAssignmentExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.ConditionalExpression] = ["condition", "questionToken", "whenTrue", "colonToken", "whenFalse"];
-    nodeMetadata[SyntaxKind.LogicalOrExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.LogicalAndExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.BitwiseOrExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.BitwiseExclusiveOrExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.BitwiseAndExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.EqualsWithTypeConversionExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.NotEqualsWithTypeConversionExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.EqualsExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.NotEqualsExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.LessThanExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.GreaterThanExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.LessThanOrEqualExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.GreaterThanOrEqualExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.InstanceOfExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.InExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.LeftShiftExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.SignedRightShiftExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.UnsignedRightShiftExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.MultiplyExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.DivideExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.ModuloExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.AddExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.SubtractExpression] = ["left", "operatorToken", "right"];
-    nodeMetadata[SyntaxKind.PostIncrementExpression] = ["operand", "operatorToken"];
-    nodeMetadata[SyntaxKind.PostDecrementExpression] = ["operand", "operatorToken"];
-    nodeMetadata[SyntaxKind.MemberAccessExpression] = ["expression", "dotToken", "name"];
-    nodeMetadata[SyntaxKind.InvocationExpression] = ["expression", "argumentList"];
-    nodeMetadata[SyntaxKind.ArrayLiteralExpression] = ["openBracketToken", "expressions", "closeBracketToken"];
-    nodeMetadata[SyntaxKind.ObjectLiteralExpression] = ["openBraceToken", "propertyAssignments", "closeBraceToken"];
-    nodeMetadata[SyntaxKind.ObjectCreationExpression] = ["newKeyword", "expression", "argumentList"];
-    nodeMetadata[SyntaxKind.ParenthesizedExpression] = ["openParenToken", "expression", "closeParenToken"];
-    nodeMetadata[SyntaxKind.ParenthesizedArrowFunctionExpression] = ["callSignature", "equalsGreaterThanToken", "block", "expression"];
-    nodeMetadata[SyntaxKind.SimpleArrowFunctionExpression] = ["identifier", "equalsGreaterThanToken", "block", "expression"];
-    nodeMetadata[SyntaxKind.CastExpression] = ["lessThanToken", "type", "greaterThanToken", "expression"];
-    nodeMetadata[SyntaxKind.ElementAccessExpression] = ["expression", "openBracketToken", "argumentExpression", "closeBracketToken"];
-    nodeMetadata[SyntaxKind.FunctionExpression] = ["functionKeyword", "identifier", "callSignature", "block"];
-    nodeMetadata[SyntaxKind.OmittedExpression] = [];
-    nodeMetadata[SyntaxKind.VariableDeclaration] = ["varKeyword", "variableDeclarators"];
-    nodeMetadata[SyntaxKind.VariableDeclarator] = ["propertyName", "typeAnnotation", "equalsValueClause"];
-    nodeMetadata[SyntaxKind.ArgumentList] = ["typeArgumentList", "openParenToken", "arguments", "closeParenToken"];
-    nodeMetadata[SyntaxKind.ParameterList] = ["openParenToken", "parameters", "closeParenToken"];
-    nodeMetadata[SyntaxKind.TypeArgumentList] = ["lessThanToken", "typeArguments", "greaterThanToken"];
-    nodeMetadata[SyntaxKind.TypeParameterList] = ["lessThanToken", "typeParameters", "greaterThanToken"];
-    nodeMetadata[SyntaxKind.ExtendsHeritageClause] = ["extendsOrImplementsKeyword", "typeNames"];
-    nodeMetadata[SyntaxKind.ImplementsHeritageClause] = ["extendsOrImplementsKeyword", "typeNames"];
-    nodeMetadata[SyntaxKind.EqualsValueClause] = ["equalsToken", "value"];
-    nodeMetadata[SyntaxKind.CaseSwitchClause] = ["caseKeyword", "expression", "colonToken", "statements"];
-    nodeMetadata[SyntaxKind.DefaultSwitchClause] = ["defaultKeyword", "colonToken", "statements"];
-    nodeMetadata[SyntaxKind.ElseClause] = ["elseKeyword", "statement"];
-    nodeMetadata[SyntaxKind.CatchClause] = ["catchKeyword", "openParenToken", "identifier", "typeAnnotation", "closeParenToken", "block"];
-    nodeMetadata[SyntaxKind.FinallyClause] = ["finallyKeyword", "block"];
-    nodeMetadata[SyntaxKind.TypeParameter] = ["identifier", "constraint"];
-    nodeMetadata[SyntaxKind.Constraint] = ["extendsKeyword", "type"];
-    nodeMetadata[SyntaxKind.SimplePropertyAssignment] = ["propertyName", "colonToken", "expression"];
-    nodeMetadata[SyntaxKind.FunctionPropertyAssignment] = ["propertyName", "callSignature", "block"];
-    nodeMetadata[SyntaxKind.Parameter] = ["dotDotDotToken", "modifiers", "identifier", "questionToken", "typeAnnotation", "equalsValueClause"];
-    nodeMetadata[SyntaxKind.EnumElement] = ["propertyName", "equalsValueClause"];
-    nodeMetadata[SyntaxKind.TypeAnnotation] = ["colonToken", "type"];
-    nodeMetadata[SyntaxKind.ExternalModuleReference] = ["requireKeyword", "openParenToken", "stringLiteral", "closeParenToken"];
-    nodeMetadata[SyntaxKind.ModuleNameModuleReference] = ["moduleName"];
-
+    export var nodeMetadata: string[][] = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],["moduleElements","endOfFileToken"],["left","dotToken","right"],["openBraceToken","typeMembers","closeBraceToken"],["typeParameterList","parameterList","equalsGreaterThanToken","type"],["type","openBracketToken","closeBracketToken"],["newKeyword","typeParameterList","parameterList","equalsGreaterThanToken","type"],["name","typeArgumentList"],["typeOfKeyword","name"],["modifiers","interfaceKeyword","identifier","typeParameterList","heritageClauses","body"],["modifiers","functionKeyword","identifier","callSignature","block","semicolonToken"],["modifiers","moduleKeyword","name","stringLiteral","openBraceToken","moduleElements","closeBraceToken"],["modifiers","classKeyword","identifier","typeParameterList","heritageClauses","openBraceToken","classElements","closeBraceToken"],["modifiers","enumKeyword","identifier","openBraceToken","enumElements","closeBraceToken"],["modifiers","importKeyword","identifier","equalsToken","moduleReference","semicolonToken"],["exportKeyword","equalsToken","identifier","semicolonToken"],["modifiers","propertyName","callSignature","block","semicolonToken"],["modifiers","variableDeclarator","semicolonToken"],["modifiers","constructorKeyword","callSignature","block","semicolonToken"],["modifiers","indexSignature","semicolonToken"],["modifiers","getKeyword","propertyName","parameterList","typeAnnotation","block"],["modifiers","setKeyword","propertyName","parameterList","block"],["propertyName","questionToken","typeAnnotation"],["typeParameterList","parameterList","typeAnnotation"],["newKeyword","callSignature"],["openBracketToken","parameter","closeBracketToken","typeAnnotation"],["propertyName","questionToken","callSignature"],["openBraceToken","statements","closeBraceToken"],["ifKeyword","openParenToken","condition","closeParenToken","statement","elseClause"],["modifiers","variableDeclaration","semicolonToken"],["expression","semicolonToken"],["returnKeyword","expression","semicolonToken"],["switchKeyword","openParenToken","expression","closeParenToken","openBraceToken","switchClauses","closeBraceToken"],["breakKeyword","identifier","semicolonToken"],["continueKeyword","identifier","semicolonToken"],["forKeyword","openParenToken","variableDeclaration","initializer","firstSemicolonToken","condition","secondSemicolonToken","incrementor","closeParenToken","statement"],["forKeyword","openParenToken","variableDeclaration","left","inKeyword","expression","closeParenToken","statement"],["semicolonToken"],["throwKeyword","expression","semicolonToken"],["whileKeyword","openParenToken","condition","closeParenToken","statement"],["tryKeyword","block","catchClause","finallyClause"],["identifier","colonToken","statement"],["doKeyword","statement","whileKeyword","openParenToken","condition","closeParenToken","semicolonToken"],["debuggerKeyword","semicolonToken"],["withKeyword","openParenToken","condition","closeParenToken","statement"],["operatorToken","operand"],["operatorToken","operand"],["operatorToken","operand"],["operatorToken","operand"],["operatorToken","operand"],["operatorToken","operand"],["deleteKeyword","expression"],["typeOfKeyword","expression"],["voidKeyword","expression"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["condition","questionToken","whenTrue","colonToken","whenFalse"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["left","operatorToken","right"],["operand","operatorToken"],["operand","operatorToken"],["expression","dotToken","name"],["expression","argumentList"],["openBracketToken","expressions","closeBracketToken"],["openBraceToken","propertyAssignments","closeBraceToken"],["newKeyword","expression","argumentList"],["openParenToken","expression","closeParenToken"],["callSignature","equalsGreaterThanToken","block","expression"],["identifier","equalsGreaterThanToken","block","expression"],["lessThanToken","type","greaterThanToken","expression"],["expression","openBracketToken","argumentExpression","closeBracketToken"],["functionKeyword","identifier","callSignature","block"],[],["varKeyword","variableDeclarators"],["propertyName","typeAnnotation","equalsValueClause"],["typeArgumentList","openParenToken","arguments","closeParenToken"],["openParenToken","parameters","closeParenToken"],["lessThanToken","typeArguments","greaterThanToken"],["lessThanToken","typeParameters","greaterThanToken"],["extendsOrImplementsKeyword","typeNames"],["extendsOrImplementsKeyword","typeNames"],["equalsToken","value"],["caseKeyword","expression","colonToken","statements"],["defaultKeyword","colonToken","statements"],["elseKeyword","statement"],["catchKeyword","openParenToken","identifier","typeAnnotation","closeParenToken","block"],["finallyKeyword","block"],["identifier","constraint"],["extendsKeyword","type"],["propertyName","colonToken","expression"],["propertyName","callSignature","block"],["dotDotDotToken","modifiers","identifier","questionToken","typeAnnotation","equalsValueClause"],["propertyName","equalsValueClause"],["colonToken","type"],["requireKeyword","openParenToken","stringLiteral","closeParenToken"],["moduleName"],];
     export class SourceUnitSyntax extends SyntaxNode {
         public syntaxTree: SyntaxTree = null;
         public moduleElements: IModuleElementSyntax[];
@@ -144,7 +15,6 @@ module TypeScript {
             endOfFileToken.parent = this;
         }
     }
-
     export class QualifiedNameSyntax extends SyntaxNode implements INameSyntax {
         public left: INameSyntax;
         public dotToken: ISyntaxToken;
@@ -160,7 +30,6 @@ module TypeScript {
             right.parent = this;
         }
     }
-
     export class ObjectTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public openBraceToken: ISyntaxToken;
         public typeMembers: ITypeMemberSyntax[];
@@ -176,7 +45,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
     }
-
     export class FunctionTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public typeParameterList: TypeParameterListSyntax;
         public parameterList: ParameterListSyntax;
@@ -195,7 +63,6 @@ module TypeScript {
             type.parent = this;
         }
     }
-
     export class ArrayTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public type: ITypeSyntax;
         public openBracketToken: ISyntaxToken;
@@ -211,7 +78,6 @@ module TypeScript {
             closeBracketToken.parent = this;
         }
     }
-
     export class ConstructorTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public newKeyword: ISyntaxToken;
         public typeParameterList: TypeParameterListSyntax;
@@ -233,7 +99,6 @@ module TypeScript {
             type.parent = this;
         }
     }
-
     export class GenericTypeSyntax extends SyntaxNode implements ITypeSyntax {
         public name: INameSyntax;
         public typeArgumentList: TypeArgumentListSyntax;
@@ -246,7 +111,6 @@ module TypeScript {
             typeArgumentList.parent = this;
         }
     }
-
     export class TypeQuerySyntax extends SyntaxNode implements ITypeSyntax {
         public typeOfKeyword: ISyntaxToken;
         public name: INameSyntax;
@@ -259,7 +123,6 @@ module TypeScript {
             name.parent = this;
         }
     }
-
     export class InterfaceDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public modifiers: ISyntaxToken[];
         public interfaceKeyword: ISyntaxToken;
@@ -284,7 +147,6 @@ module TypeScript {
             body.parent = this;
         }
     }
-
     export class FunctionDeclarationSyntax extends SyntaxNode implements IStatementSyntax {
         public modifiers: ISyntaxToken[];
         public functionKeyword: ISyntaxToken;
@@ -309,7 +171,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class ModuleDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public modifiers: ISyntaxToken[];
         public moduleKeyword: ISyntaxToken;
@@ -337,7 +198,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
     }
-
     export class ClassDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public modifiers: ISyntaxToken[];
         public classKeyword: ISyntaxToken;
@@ -368,7 +228,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
     }
-
     export class EnumDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public modifiers: ISyntaxToken[];
         public enumKeyword: ISyntaxToken;
@@ -393,7 +252,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
     }
-
     export class ImportDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
         public modifiers: ISyntaxToken[];
         public importKeyword: ISyntaxToken;
@@ -418,7 +276,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class ExportAssignmentSyntax extends SyntaxNode implements IModuleElementSyntax {
         public exportKeyword: ISyntaxToken;
         public equalsToken: ISyntaxToken;
@@ -437,7 +294,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class MemberFunctionDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
         public modifiers: ISyntaxToken[];
         public propertyName: ISyntaxToken;
@@ -459,7 +315,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class MemberVariableDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
         public modifiers: ISyntaxToken[];
         public variableDeclarator: VariableDeclaratorSyntax;
@@ -475,7 +330,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class ConstructorDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
         public modifiers: ISyntaxToken[];
         public constructorKeyword: ISyntaxToken;
@@ -497,7 +351,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class IndexMemberDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
         public modifiers: ISyntaxToken[];
         public indexSignature: IndexSignatureSyntax;
@@ -513,7 +366,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class GetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
         public modifiers: ISyntaxToken[];
         public getKeyword: ISyntaxToken;
@@ -538,7 +390,6 @@ module TypeScript {
             block.parent = this;
         }
     }
-
     export class SetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
         public modifiers: ISyntaxToken[];
         public setKeyword: ISyntaxToken;
@@ -560,7 +411,6 @@ module TypeScript {
             block.parent = this;
         }
     }
-
     export class PropertySignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public propertyName: ISyntaxToken;
         public questionToken: ISyntaxToken;
@@ -576,7 +426,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
     }
-
     export class CallSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public typeParameterList: TypeParameterListSyntax;
         public parameterList: ParameterListSyntax;
@@ -592,7 +441,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
     }
-
     export class ConstructSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public newKeyword: ISyntaxToken;
         public callSignature: CallSignatureSyntax;
@@ -605,7 +453,6 @@ module TypeScript {
             callSignature.parent = this;
         }
     }
-
     export class IndexSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public openBracketToken: ISyntaxToken;
         public parameter: ParameterSyntax;
@@ -624,7 +471,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
     }
-
     export class MethodSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
         public propertyName: ISyntaxToken;
         public questionToken: ISyntaxToken;
@@ -640,7 +486,6 @@ module TypeScript {
             callSignature.parent = this;
         }
     }
-
     export class BlockSyntax extends SyntaxNode implements IStatementSyntax {
         public openBraceToken: ISyntaxToken;
         public statements: IStatementSyntax[];
@@ -656,7 +501,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
     }
-
     export class IfStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public ifKeyword: ISyntaxToken;
         public openParenToken: ISyntaxToken;
@@ -681,7 +525,6 @@ module TypeScript {
             elseClause && (elseClause.parent = this);
         }
     }
-
     export class VariableStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public modifiers: ISyntaxToken[];
         public variableDeclaration: VariableDeclarationSyntax;
@@ -697,7 +540,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class ExpressionStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public expression: IExpressionSyntax;
         public semicolonToken: ISyntaxToken;
@@ -710,7 +552,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class ReturnStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public returnKeyword: ISyntaxToken;
         public expression: IExpressionSyntax;
@@ -726,7 +567,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class SwitchStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public switchKeyword: ISyntaxToken;
         public openParenToken: ISyntaxToken;
@@ -754,7 +594,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
     }
-
     export class BreakStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public breakKeyword: ISyntaxToken;
         public identifier: ISyntaxToken;
@@ -770,7 +609,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class ContinueStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public continueKeyword: ISyntaxToken;
         public identifier: ISyntaxToken;
@@ -786,7 +624,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class ForStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public forKeyword: ISyntaxToken;
         public openParenToken: ISyntaxToken;
@@ -823,7 +660,6 @@ module TypeScript {
             statement.parent = this;
         }
     }
-
     export class ForInStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public forKeyword: ISyntaxToken;
         public openParenToken: ISyntaxToken;
@@ -854,7 +690,6 @@ module TypeScript {
             statement.parent = this;
         }
     }
-
     export class EmptyStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public semicolonToken: ISyntaxToken;
         public _isStatement: any; public _isModuleElement: any;
@@ -864,7 +699,6 @@ module TypeScript {
             semicolonToken.parent = this;
         }
     }
-
     export class ThrowStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public throwKeyword: ISyntaxToken;
         public expression: IExpressionSyntax;
@@ -880,7 +714,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class WhileStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public whileKeyword: ISyntaxToken;
         public openParenToken: ISyntaxToken;
@@ -902,7 +735,6 @@ module TypeScript {
             statement.parent = this;
         }
     }
-
     export class TryStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public tryKeyword: ISyntaxToken;
         public block: BlockSyntax;
@@ -921,7 +753,6 @@ module TypeScript {
             finallyClause && (finallyClause.parent = this);
         }
     }
-
     export class LabeledStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public identifier: ISyntaxToken;
         public colonToken: ISyntaxToken;
@@ -937,7 +768,6 @@ module TypeScript {
             statement.parent = this;
         }
     }
-
     export class DoStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public doKeyword: ISyntaxToken;
         public statement: IStatementSyntax;
@@ -965,7 +795,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class DebuggerStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public debuggerKeyword: ISyntaxToken;
         public semicolonToken: ISyntaxToken;
@@ -978,7 +807,6 @@ module TypeScript {
             semicolonToken && (semicolonToken.parent = this);
         }
     }
-
     export class WithStatementSyntax extends SyntaxNode implements IStatementSyntax {
         public withKeyword: ISyntaxToken;
         public openParenToken: ISyntaxToken;
@@ -1000,7 +828,6 @@ module TypeScript {
             statement.parent = this;
         }
     }
-
     export class PrefixUnaryExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public operatorToken: ISyntaxToken;
         public operand: IUnaryExpressionSyntax;
@@ -1014,7 +841,6 @@ module TypeScript {
         }
         public kind(): SyntaxKind { return SyntaxFacts.getPrefixUnaryExpressionFromOperatorToken(this.operatorToken.kind()); }
     }
-
     export class DeleteExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public deleteKeyword: ISyntaxToken;
         public expression: IUnaryExpressionSyntax;
@@ -1027,7 +853,6 @@ module TypeScript {
             expression.parent = this;
         }
     }
-
     export class TypeOfExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public typeOfKeyword: ISyntaxToken;
         public expression: IUnaryExpressionSyntax;
@@ -1040,7 +865,6 @@ module TypeScript {
             expression.parent = this;
         }
     }
-
     export class VoidExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public voidKeyword: ISyntaxToken;
         public expression: IUnaryExpressionSyntax;
@@ -1053,7 +877,6 @@ module TypeScript {
             expression.parent = this;
         }
     }
-
     export class ConditionalExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
         public condition: IExpressionSyntax;
         public questionToken: ISyntaxToken;
@@ -1075,7 +898,6 @@ module TypeScript {
             whenFalse.parent = this;
         }
     }
-
     export class BinaryExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
         public left: IExpressionSyntax;
         public operatorToken: ISyntaxToken;
@@ -1092,7 +914,6 @@ module TypeScript {
         }
         public kind(): SyntaxKind { return SyntaxFacts.getBinaryExpressionFromOperatorToken(this.operatorToken.kind()); }
     }
-
     export class PostfixUnaryExpressionSyntax extends SyntaxNode implements IPostfixExpressionSyntax {
         public operand: ILeftHandSideExpressionSyntax;
         public operatorToken: ISyntaxToken;
@@ -1106,7 +927,6 @@ module TypeScript {
         }
         public kind(): SyntaxKind { return SyntaxFacts.getPostfixUnaryExpressionFromOperatorToken(this.operatorToken.kind()); }
     }
-
     export class MemberAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
         public expression: ILeftHandSideExpressionSyntax;
         public dotToken: ISyntaxToken;
@@ -1122,7 +942,6 @@ module TypeScript {
             name.parent = this;
         }
     }
-
     export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax {
         public expression: ILeftHandSideExpressionSyntax;
         public argumentList: ArgumentListSyntax;
@@ -1135,7 +954,6 @@ module TypeScript {
             argumentList.parent = this;
         }
     }
-
     export class ArrayLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
         public openBracketToken: ISyntaxToken;
         public expressions: IExpressionSyntax[];
@@ -1151,7 +969,6 @@ module TypeScript {
             closeBracketToken.parent = this;
         }
     }
-
     export class ObjectLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
         public openBraceToken: ISyntaxToken;
         public propertyAssignments: IPropertyAssignmentSyntax[];
@@ -1167,7 +984,6 @@ module TypeScript {
             closeBraceToken.parent = this;
         }
     }
-
     export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
         public newKeyword: ISyntaxToken;
         public expression: IMemberExpressionSyntax;
@@ -1183,7 +999,6 @@ module TypeScript {
             argumentList && (argumentList.parent = this);
         }
     }
-
     export class ParenthesizedExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
         public openParenToken: ISyntaxToken;
         public expression: IExpressionSyntax;
@@ -1199,7 +1014,6 @@ module TypeScript {
             closeParenToken.parent = this;
         }
     }
-
     export class ParenthesizedArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public callSignature: CallSignatureSyntax;
         public equalsGreaterThanToken: ISyntaxToken;
@@ -1218,7 +1032,6 @@ module TypeScript {
             expression && (expression.parent = this);
         }
     }
-
     export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public identifier: ISyntaxToken;
         public equalsGreaterThanToken: ISyntaxToken;
@@ -1237,7 +1050,6 @@ module TypeScript {
             expression && (expression.parent = this);
         }
     }
-
     export class CastExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public lessThanToken: ISyntaxToken;
         public type: ITypeSyntax;
@@ -1256,7 +1068,6 @@ module TypeScript {
             expression.parent = this;
         }
     }
-
     export class ElementAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
         public expression: ILeftHandSideExpressionSyntax;
         public openBracketToken: ISyntaxToken;
@@ -1275,7 +1086,6 @@ module TypeScript {
             closeBracketToken.parent = this;
         }
     }
-
     export class FunctionExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
         public functionKeyword: ISyntaxToken;
         public identifier: ISyntaxToken;
@@ -1294,14 +1104,12 @@ module TypeScript {
             block.parent = this;
         }
     }
-
     export class OmittedExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
         public _isExpression: any;
         constructor(data: number) {
             super(data);
         }
     }
-
     export class VariableDeclarationSyntax extends SyntaxNode {
         public varKeyword: ISyntaxToken;
         public variableDeclarators: VariableDeclaratorSyntax[];
@@ -1313,7 +1121,6 @@ module TypeScript {
             !isShared(variableDeclarators) && (variableDeclarators.parent = this);
         }
     }
-
     export class VariableDeclaratorSyntax extends SyntaxNode {
         public propertyName: ISyntaxToken;
         public typeAnnotation: TypeAnnotationSyntax;
@@ -1328,7 +1135,6 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
     }
-
     export class ArgumentListSyntax extends SyntaxNode {
         public typeArgumentList: TypeArgumentListSyntax;
         public openParenToken: ISyntaxToken;
@@ -1346,7 +1152,6 @@ module TypeScript {
             closeParenToken.parent = this;
         }
     }
-
     export class ParameterListSyntax extends SyntaxNode {
         public openParenToken: ISyntaxToken;
         public parameters: ParameterSyntax[];
@@ -1361,7 +1166,6 @@ module TypeScript {
             closeParenToken.parent = this;
         }
     }
-
     export class TypeArgumentListSyntax extends SyntaxNode {
         public lessThanToken: ISyntaxToken;
         public typeArguments: ITypeSyntax[];
@@ -1376,7 +1180,6 @@ module TypeScript {
             greaterThanToken.parent = this;
         }
     }
-
     export class TypeParameterListSyntax extends SyntaxNode {
         public lessThanToken: ISyntaxToken;
         public typeParameters: TypeParameterSyntax[];
@@ -1391,7 +1194,6 @@ module TypeScript {
             greaterThanToken.parent = this;
         }
     }
-
     export class HeritageClauseSyntax extends SyntaxNode {
         public extendsOrImplementsKeyword: ISyntaxToken;
         public typeNames: INameSyntax[];
@@ -1404,7 +1206,6 @@ module TypeScript {
         }
         public kind(): SyntaxKind { return this.extendsOrImplementsKeyword.kind() === SyntaxKind.ExtendsKeyword ? SyntaxKind.ExtendsHeritageClause : SyntaxKind.ImplementsHeritageClause; }
     }
-
     export class EqualsValueClauseSyntax extends SyntaxNode {
         public equalsToken: ISyntaxToken;
         public value: IExpressionSyntax;
@@ -1416,7 +1217,6 @@ module TypeScript {
             value.parent = this;
         }
     }
-
     export class CaseSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
         public caseKeyword: ISyntaxToken;
         public expression: IExpressionSyntax;
@@ -1435,7 +1235,6 @@ module TypeScript {
             !isShared(statements) && (statements.parent = this);
         }
     }
-
     export class DefaultSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
         public defaultKeyword: ISyntaxToken;
         public colonToken: ISyntaxToken;
@@ -1451,7 +1250,6 @@ module TypeScript {
             !isShared(statements) && (statements.parent = this);
         }
     }
-
     export class ElseClauseSyntax extends SyntaxNode {
         public elseKeyword: ISyntaxToken;
         public statement: IStatementSyntax;
@@ -1463,7 +1261,6 @@ module TypeScript {
             statement.parent = this;
         }
     }
-
     export class CatchClauseSyntax extends SyntaxNode {
         public catchKeyword: ISyntaxToken;
         public openParenToken: ISyntaxToken;
@@ -1487,7 +1284,6 @@ module TypeScript {
             block.parent = this;
         }
     }
-
     export class FinallyClauseSyntax extends SyntaxNode {
         public finallyKeyword: ISyntaxToken;
         public block: BlockSyntax;
@@ -1499,7 +1295,6 @@ module TypeScript {
             block.parent = this;
         }
     }
-
     export class TypeParameterSyntax extends SyntaxNode {
         public identifier: ISyntaxToken;
         public constraint: ConstraintSyntax;
@@ -1511,7 +1306,6 @@ module TypeScript {
             constraint && (constraint.parent = this);
         }
     }
-
     export class ConstraintSyntax extends SyntaxNode {
         public extendsKeyword: ISyntaxToken;
         public type: ITypeSyntax;
@@ -1523,7 +1317,6 @@ module TypeScript {
             type.parent = this;
         }
     }
-
     export class SimplePropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
         public propertyName: ISyntaxToken;
         public colonToken: ISyntaxToken;
@@ -1539,7 +1332,6 @@ module TypeScript {
             expression.parent = this;
         }
     }
-
     export class FunctionPropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
         public propertyName: ISyntaxToken;
         public callSignature: CallSignatureSyntax;
@@ -1555,7 +1347,6 @@ module TypeScript {
             block.parent = this;
         }
     }
-
     export class ParameterSyntax extends SyntaxNode {
         public dotDotDotToken: ISyntaxToken;
         public modifiers: ISyntaxToken[];
@@ -1579,7 +1370,6 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
     }
-
     export class EnumElementSyntax extends SyntaxNode {
         public propertyName: ISyntaxToken;
         public equalsValueClause: EqualsValueClauseSyntax;
@@ -1591,7 +1381,6 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
     }
-
     export class TypeAnnotationSyntax extends SyntaxNode {
         public colonToken: ISyntaxToken;
         public type: ITypeSyntax;
@@ -1603,7 +1392,6 @@ module TypeScript {
             type.parent = this;
         }
     }
-
     export class ExternalModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
         public requireKeyword: ISyntaxToken;
         public openParenToken: ISyntaxToken;
@@ -1622,7 +1410,6 @@ module TypeScript {
             closeParenToken.parent = this;
         }
     }
-
     export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
         public moduleName: INameSyntax;
         public _isModuleReference: any;
