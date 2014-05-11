@@ -19,11 +19,12 @@ class DiagnosticsLogger implements TypeScript.ILogger {
 var libDTSFileName = "lib.d.ts";
 var libDTSSource = TypeScript.SimpleText.fromString(libString);
 
-var compilerSourcesFileName = "compiler.ts";
-var compilerSources = TypeScript.SimpleText.fromString(compilerString);
-
 class BatchCompiler {
     public compiler: TypeScript.TypeScriptCompiler;
+
+    private getFileName(i: number): string {
+        return "file" + i + ".ts";
+    }
 
     public compile() {
         var settings = new TypeScript.CompilationSettings();
@@ -34,16 +35,30 @@ class BatchCompiler {
             TypeScript.ImmutableCompilationSettings.fromCompilationSettings(settings));
 
         this.compiler.addFile(libDTSFileName, TypeScript.ScriptSnapshot.fromString(libString), TypeScript.ByteOrderMark.None, 0, false, []);
-        this.compiler.addFile(compilerSourcesFileName, TypeScript.ScriptSnapshot.fromString(compilerString), TypeScript.ByteOrderMark.None, 0, false, []);
+
+        for (var i = 0; i < compilerFiles.length; i++) {
+            this.compiler.addFile(this.getFileName(i), TypeScript.ScriptSnapshot.fromString(compilerFiles[i]), TypeScript.ByteOrderMark.None, 0, false, []);
+        }
 
         this.compiler.getSyntacticDiagnostics("lib.d.ts");
-        this.compiler.getSyntacticDiagnostics("compiler.ts");
-        this.compiler.getSemanticDiagnostics("compiler.ts");
+
+        for (var i = 0; i < compilerFiles.length; i++) {
+            var fileName = "file" + i + ".ts";
+            this.compiler.getSyntacticDiagnostics(fileName);
+            this.compiler.getSemanticDiagnostics(fileName);
+        }
     }
 
-    public parseCompilerSources(): TypeScript.SyntaxTree {
-        return TypeScript.Parser.parse(compilerSourcesFileName, compilerSources, /*isDeclaration:*/ false,
-            TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget());
+    public parseCompilerSources(): TypeScript.SyntaxTree[] {
+        var result: TypeScript.SyntaxTree[] = [];
+
+        for (var i = 0; i < compilerFiles.length; i++) {
+            var contents = TypeScript.SimpleText.fromString(compilerFiles[i]);
+            var tree = TypeScript.Parser.parse(this.getFileName(i), contents, /*isDeclaration:*/ false, TypeScript.LanguageVersion.EcmaScript5);
+            result.push(tree);
+        }
+
+        return result;
     }
 
     public parseLibDTSSource(): TypeScript.SyntaxTree {

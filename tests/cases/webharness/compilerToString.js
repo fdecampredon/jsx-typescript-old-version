@@ -1,11 +1,15 @@
 var _fs = require('fs');
+var _sys = require('sys');
 
-var wholeCompilerString = _fs.readFileSync("wholecompiler.ts");
+var fileList = String(_fs.readFileSync("fileList.txt"));
+var files = fileList.split("\r\n");
+
+// var wholeCompilerString = _fs.readFileSync("wholecompiler.ts");
 var wholeLibString = _fs.readFileSync("../../../bin/lib.d.ts");
 
-function quoteString(str, name) {
+function quoteString(str) {
     str = String(str);
-    var outputText = "var " + name + " = " + "\"";
+    var outputText = '"';
     var last = "";
 
     for (var i = 0; i < str.length; i++) {
@@ -48,11 +52,28 @@ function quoteString(str, name) {
         last = char;
     }
 
-    return outputText + "\";";
+    return outputText + '"';
 }
 
-var quotedCompilerString = quoteString(wholeCompilerString, "compilerString");
-var quotedLibString = quoteString(wholeLibString, "libString");
+var quotedCompilerString = "var compilerFiles = [";
+
+for (var i = 0; i < files.length; i++) {
+    var fileName = files[i];
+    if (!fileName || fileName.length === 0) {
+        continue;
+    }
+
+    if (i) {
+        quotedCompilerString += ",";
+    }
+
+    quotedCompilerString += "\r\n" + quoteString(_fs.readFileSync(fileName));
+}
+
+
+quotedCompilerString += "\r\n];";
+
+//quoteString(wholeCompilerString, "compilerString");
 
 _fs.writeFileSync("quotedCompiler.ts", quotedCompilerString);
-_fs.writeFileSync("quotedLib.ts", quotedLibString);
+_fs.writeFileSync("quotedLib.ts", "var libString = " + quoteString(wholeLibString) + ";");
