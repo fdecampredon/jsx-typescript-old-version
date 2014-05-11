@@ -1481,7 +1481,7 @@ module TypeScript.Parser {
             // keyword.
             if (SyntaxFacts.isAnyKeyword(token.kind())) {
                 consumeToken(token);
-                return token.convertKeywordToIdentifier();
+                return TypeScript.Syntax.convertKeywordToIdentifier(token);
             }
 
             return createMissingToken(SyntaxKind.IdentifierName, token);
@@ -1502,7 +1502,7 @@ module TypeScript.Parser {
                     return token;
                 }
 
-                return token.convertKeywordToIdentifier();
+                return TypeScript.Syntax.convertKeywordToIdentifier(token);
             }
 
             return createMissingToken(SyntaxKind.IdentifierName, token);
