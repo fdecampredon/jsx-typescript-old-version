@@ -217,15 +217,162 @@ module TypeScript {
         }
     }
 
+    function fullText(token: IScannerToken): string {
+        return token._text.substr(token.fullStart(), token.fullWidth());
+    }
+
+    function text(token: IScannerToken): string {
+        fillSizeInfo(token);
+        return token._text.substr(token.fullStart() + lastTokenInfo.leadingTriviaWidth, lastTokenInfo.width);
+    }
+
+    function leadingTrivia(token: IScannerToken): ISyntaxTriviaList {
+        if (!token.hasLeadingTrivia()) {
+            return Syntax.emptyTriviaList;
+        }
+
+        return triviaScanner.scanTrivia(token, /*isTrailing:*/ false);
+    }
+
+    function trailingTrivia(token: IScannerToken): ISyntaxTriviaList {
+        if (!token.hasTrailingTrivia()) {
+            return Syntax.emptyTriviaList;
+        }
+
+        return triviaScanner.scanTrivia(token, /*isTrailing:*/ true);
+    }
+
+    function leadingTriviaWidth(token: IScannerToken): number {
+        if (!token.hasLeadingTrivia()) {
+            return 0;
+        }
+
+        fillSizeInfo(token);
+        return lastTokenInfo.leadingTriviaWidth;
+    }
+
+    function trailingTriviaWidth(token: IScannerToken): number {
+        if (!token.hasTrailingTrivia()) {
+            return 0;
+        }
+
+        fillSizeInfo(token);
+        return token.fullWidth() - lastTokenInfo.leadingTriviaWidth - lastTokenInfo.width;
+    }
+
+    export class SmallScannerToken implements ISyntaxToken {
+        public parent: ISyntaxElement = null;
+
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+
+        constructor(public _text: ISimpleText, private _packedData: number) {
+        }
+
+        public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
+            this._text = text;
+
+            this._packedData = smallTokenPackInfo(fullStart, this.fullWidth(), this.kind(),
+                this.isKeywordConvertedToIdentifier(), 
+                unpackLeadingTriviaInfo(this._packedData),
+                unpackTrailingTriviaInfo(this._packedData));
+        }
+
+        public kind(): SyntaxKind {
+            return smallTokenUnpackKind(this._packedData);
+        }
+
+        public isIncrementallyUnusable(): boolean {
+            // No scanner tokens make their *containing node* incrementally unusable.  
+            // Note: several scanner tokens may themselves be unusable.  i.e. if the parser asks
+            // for a full node, then that ndoe can be returned even if it contains parser generated
+            // tokens (like regexs and merged operator tokens). However, if the parser asks for a
+            // for a token, then those contextual tokens will not be reusable.
+            return false;
+        }
+
+        public isKeywordConvertedToIdentifier(): boolean {
+            return unpackIsKeywordConvertedToIdentifier(this._packedData);
+        }
+
+        public convertKeywordToIdentifier(): ISyntaxToken {
+            var data = smallTokenPackInfo(
+                smallTokenUnpackFullStart(this._packedData),
+                smallTokenUnpackFullWidth(this._packedData),
+                SyntaxKind.IdentifierName,
+                /*isKeywordConvertedToIdentifier:*/ true,
+                unpackLeadingTriviaInfo(this._packedData),
+                unpackTrailingTriviaInfo(this._packedData));
+            return new SmallScannerToken(this._text, data);
+        }
+
+        public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
+        public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
+
+        public fullText(): string {
+            return fullText(this);
+        }
+
+        public text(): string {
+            return text(this);
+        }
+
+        public leadingTrivia(): ISyntaxTriviaList {
+            return leadingTrivia(this);
+        }
+
+        public trailingTrivia(): ISyntaxTriviaList {
+            return trailingTrivia(this);
+        }
+
+        public leadingTriviaWidth(): number {
+            return leadingTriviaWidth(this);
+        }
+
+        public trailingTriviaWidth(): number {
+            return trailingTriviaWidth(this);
+        }
+
+        public hasLeadingTrivia(): boolean {
+            var info = unpackLeadingTriviaInfo(this._packedData);
+            return info !== 0;
+        }
+
+        public hasLeadingComment(): boolean {
+            var info = unpackLeadingTriviaInfo(this._packedData);
+            return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
+        }
+
+        public hasLeadingNewLine(): boolean {
+            var info = unpackLeadingTriviaInfo(this._packedData);
+            return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
+        }
+
+        public hasTrailingTrivia(): boolean {
+            var info = unpackTrailingTriviaInfo(this._packedData);
+            return info !== 0;
+        }
+
+        public hasTrailingComment(): boolean {
+            var info = unpackTrailingTriviaInfo(this._packedData);
+            return (info & ScannerConstants.CommentTriviaBitMask) !== 0;
+        }
+
+        public hasTrailingNewLine(): boolean {
+            var info = unpackTrailingTriviaInfo(this._packedData);
+            return (info & ScannerConstants.NewLineTriviaBitMask) !== 0;
+        }
+
+        public hasSkippedToken(): boolean { return false; }
+
+        public clone(): ISyntaxToken {
+            return new SmallScannerToken(this._text, this._packedData);
+        }
+    }
+
     export class LargeScannerToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
 
-        public _isPrimaryExpression: any;
-        public _isMemberExpression: any;
-        public _isLeftHandSideExpression: any;
-        public _isPostfixExpression: any;
-        public _isUnaryExpression: any;
-        public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; 
 
         constructor(public _text: ISimpleText,
                     private _packedFullStartAndInfo: number,
@@ -246,7 +393,7 @@ module TypeScript {
         }
 
         public isIncrementallyUnusable(): boolean {
-            // Almost no scanner tokens make their *containing node* incrementally unusable.  
+            // No scanner tokens make their *containing node* incrementally unusable.  
             // Note: several scanner tokens may themselves be unusable.  i.e. if the parser asks
             // for a full node, then that ndoe can be returned even if it contains parser generated
             // tokens (like regexs and merged operator tokens). However, if the parser asks for a
@@ -271,46 +418,27 @@ module TypeScript {
         public fullStart(): number { return largeTokenUnpackFullStart(this._packedFullStartAndInfo); }
 
         public fullText(): string {
-            return this._text.substr(this.fullStart(), this.fullWidth());
+            return fullText(this);
         }
 
         public text(): string {
-            fillSizeInfo(this);
-            return this._text.substr(this.fullStart() + lastTokenInfo.leadingTriviaWidth, lastTokenInfo.width);
+            return text(this);
         }
 
         public leadingTrivia(): ISyntaxTriviaList {
-            if (!this.hasLeadingTrivia()) {
-                return Syntax.emptyTriviaList;
-            }
-
-            return triviaScanner.scanTrivia(this, /*isTrailing:*/ false);
+            return leadingTrivia(this);
         }
 
         public trailingTrivia(): ISyntaxTriviaList {
-            if (!this.hasTrailingTrivia()) {
-                return Syntax.emptyTriviaList;
-            }
-
-            return triviaScanner.scanTrivia(this, /*isTrailing:*/ true);
+            return trailingTrivia(this);
         }
 
         public leadingTriviaWidth(): number {
-            if (!this.hasLeadingTrivia()) {
-                return 0;
-            }
-
-            fillSizeInfo(this);
-            return lastTokenInfo.leadingTriviaWidth;
+            return leadingTriviaWidth(this);
         }
 
         public trailingTriviaWidth(): number {
-            if (!this.hasTrailingTrivia()) {
-                return 0;
-            }
-
-            fillSizeInfo(this);
-            return this.fullWidth() - lastTokenInfo.leadingTriviaWidth - lastTokenInfo.width;
+            return trailingTriviaWidth(this);
         }
 
         public hasLeadingTrivia(): boolean {
