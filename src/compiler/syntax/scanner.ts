@@ -86,6 +86,36 @@ module TypeScript {
     Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(3 << 29, false, 7, 0)) === (3 << 29));
     Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(10 << 27, true, 0, 7)) === (10 << 27));
 
+    Debug.assert(smallTokenUnpackFullStart(smallTokenPackInfo(0x7FFFF, 0, 0x7F, true, 0, 0)) === 0x7FFFF);
+    Debug.assert(smallTokenUnpackFullStart(smallTokenPackInfo(0x7F7FF, 0, 0x7F, true, 7, 0)) === 0x7F7FF);
+    Debug.assert(smallTokenUnpackFullStart(smallTokenPackInfo(0x7FF07, 0, 0x7F, false, 7, 7)) === 0x7FF07);
+    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x7FFFF, 0, 0x7F, true, 7, 0)) === 0);
+    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x7FFFF, 0, 0x7F, false, 7, 7)) === 0);
+    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x70000, 0x7FFFF, 0x7F, false, 7, 7)) === 0x7FFFF);
+    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x70000, 0x71FF1, 0x07, true, 0, 7)) === 0x71FF1);
+    Debug.assert(smallTokenUnpackFullWidth(smallTokenPackInfo(0x70000, 0x70001, 0x10, false, 1, 1)) === 0x70001);
+
+    function smallTokenPackInfo(fullStart: number, fullWidth: number, kind: SyntaxKind, isKeywordConvertedToIdentifier: boolean, leadingTriviaInfo: number, trailingTriviaInfo: number) {
+        var val1 = (fullStart * ScannerConstants.SmallTokenFullStartAdjust) + (fullWidth * ScannerConstants.SmallTokenFullWidthAdjust);
+        var val2 = ((isKeywordConvertedToIdentifier ? 1 : 0) << ScannerConstants.IsKeywordConvertedToIdentifierShift) |
+            (leadingTriviaInfo << ScannerConstants.LeadingTriviaShift) |
+            (trailingTriviaInfo << ScannerConstants.TrailingTriviaShift);
+
+        return val1 + val2;
+    }
+
+    function smallTokenUnpackFullStart(packedInfo: number) {
+        return (packedInfo / ScannerConstants.SmallTokenFullStartAdjust) & ScannerConstants.SmallTokenFullStartMask;
+    }
+
+    function smallTokenUnpackFullWidth(packedInfo: number) {
+        return (packedInfo / ScannerConstants.SmallTokenFullWidthAdjust) & ScannerConstants.SmallTokenFullWidthMask;
+    }
+
+    function smallTokenUnpackKind(packedInfo: number) {
+        return (packedInfo >> ScannerConstants.SmallTokenKindShift) & ScannerConstants.KindMask;
+    }
+
     function largeTokenPackFullStartAndInfo(fullStart: number, isKeywordConvertedToIdentifier: boolean, leadingTriviaInfo: number, trailingTriviaInfo: number): number {
         var shiftedFullStart = fullStart * ScannerConstants.LargeTokenFullStartAdjust;
         var packedInfo = 
