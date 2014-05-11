@@ -400,7 +400,7 @@ module TypeScript.Syntax {
     export function firstTokenInLineContainingPosition(syntaxTree: SyntaxTree, position: number): ISyntaxToken {
         var current = findToken(syntaxTree.sourceUnit(), position);
         while (true) {
-            if (isFirstTokenInLine(current)) {
+            if (isFirstTokenInLine(current, syntaxTree.lineMap())) {
                 break;
             }
 
@@ -410,8 +410,12 @@ module TypeScript.Syntax {
         return current;
     }
 
-    function isFirstTokenInLine(token: ISyntaxToken): boolean {
+    function isFirstTokenInLine(token: ISyntaxToken, lineMap: LineMap): boolean {
         var _previousToken = previousToken(token);
-        return _previousToken === null || _previousToken.hasTrailingNewLine();
+        if (_previousToken === null) {
+            return true;
+        }
+        
+        return lineMap.getLineNumberFromPosition(end(_previousToken)) !== lineMap.getLineNumberFromPosition(start(token));
     }
 }

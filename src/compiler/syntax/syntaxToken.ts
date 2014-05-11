@@ -16,12 +16,12 @@ module TypeScript {
         fullText(): string;
 
         hasLeadingTrivia(): boolean;
-        hasLeadingComment(): boolean;
-        hasLeadingNewLine(): boolean;
+        //hasLeadingComment(): boolean;
+        //hasLeadingNewLine(): boolean;
 
         hasTrailingTrivia(): boolean;
-        hasTrailingComment(): boolean;
-        hasTrailingNewLine(): boolean;
+        //hasTrailingComment(): boolean;
+        //hasTrailingNewLine(): boolean;
 
         hasSkippedToken(): boolean;
 

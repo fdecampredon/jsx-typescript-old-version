@@ -544,7 +544,7 @@ module TypeScript {
                 this.emitCommentsArray(preComments, /*trailing:*/ false);
             }
             else {
-                this.emitCommentsArray(ASTHelpers.postComments(ast), /*trailing:*/ true);
+                this.emitCommentsArray(ASTHelpers.postComments(ast, this.document.lineMap()), /*trailing:*/ true);
             }
         }
 
@@ -2766,10 +2766,14 @@ module TypeScript {
             }
         }
 
+        private hasTrailingComment(token: ISyntaxToken) {
+            return token.hasTrailingTrivia() && token.trailingTrivia().hasComment();
+        }
+
         public emitParenthesizedExpression(parenthesizedExpression: ParenthesizedExpressionSyntax): void {
             var omitParentheses = false;
 
-            if (parenthesizedExpression.expression.kind() === SyntaxKind.CastExpression && !parenthesizedExpression.openParenToken.hasTrailingComment()) {
+            if (parenthesizedExpression.expression.kind() === SyntaxKind.CastExpression && !this.hasTrailingComment(parenthesizedExpression.openParenToken)) {
                 var castedExpression = (<CastExpressionSyntax>parenthesizedExpression.expression).expression;
 
                 // Make sure we consider all nested cast expressions, e.g.:

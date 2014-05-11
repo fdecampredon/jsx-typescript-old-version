@@ -461,6 +461,18 @@ module TypeScript {
         return fullStart(element) + fullWidth(element);
     }
 
+    export function existsNewLineBetweenTokens(token1: ISyntaxToken, token2: ISyntaxToken, lineMap: LineMap) {
+        if (token1 === token2) {
+            return false;
+        }
+
+        if (token1 === null || token2 === null) {
+            return true;
+        }
+
+        return lineMap.getLineNumberFromPosition(end(token1)) !== lineMap.getLineNumberFromPosition(start(token2));
+    }
+
     export interface ISyntaxElement {
         kind(): SyntaxKind;
         parent?: ISyntaxElement;

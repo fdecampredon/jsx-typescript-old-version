@@ -79,6 +79,16 @@ function compile() {
     batch.compile();
 }
 
+class OneField {
+    constructor(public any1: any, public any2: any, public field1: number) {
+    }
+}
+
+class TwoField {
+    constructor(public any1: any, public any2: any, public field1: number, public field2: number) {
+    }
+}
+
 // for (var i = 0; i < 2; i++) {
 //    var tree = batch.newParse();
 //    TypeScript.SyntaxTreeToAstVisitor.visit(tree.sourceUnit(), "", 0);

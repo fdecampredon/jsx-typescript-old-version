@@ -2127,15 +2127,17 @@ module TypeScript.Parser {
             // In the first case though, ASI will not take effect because there is not a
             // line terminator after the dot.
             if (SyntaxFacts.isAnyKeyword(_currentToken.kind()) &&
-                previousTokenHasTrailingNewLine(_currentToken) &&
-                !_currentToken.hasTrailingNewLine() &&
-                SyntaxFacts.isIdentifierNameOrAnyKeyword(peekToken(1))) {
+                previousTokenHasTrailingNewLine(_currentToken)) {
 
-                return createMissingToken(SyntaxKind.IdentifierName, _currentToken);
+                var token1 = peekToken(1);
+                if (!existsNewLineBetweenTokens(_currentToken, token1, source.text.lineMap()) &&
+                    SyntaxFacts.isIdentifierNameOrAnyKeyword(token1)) {
+
+                    return createMissingToken(SyntaxKind.IdentifierName, _currentToken);
+                }
             }
-            else {
-                return eatIdentifierNameToken();
-            }
+
+            return eatIdentifierNameToken();
         }
 
         function tryParseName(): INameSyntax {
@@ -2879,11 +2881,12 @@ module TypeScript.Parser {
             //      foo
             //
             // Then we *should* parse it as a property name, as ASI takes effect here.
-            if (isModifier(_currentToken) &&
-                !_currentToken.hasTrailingNewLine() &&
-                isPropertyName(peekToken(1), inErrorRecovery))
-            {
-                return false;
+            if (isModifier(_currentToken)) {
+                if (!existsNewLineBetweenTokens(_currentToken, peekToken(1), source.text.lineMap()) &&
+                    isPropertyName(peekToken(1), inErrorRecovery)) {
+
+                    return false;
+                }
             }
 
             // Note: property names also start function signatures.  So it's important that we call this

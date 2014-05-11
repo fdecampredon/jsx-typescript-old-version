@@ -447,11 +447,11 @@ module TypeScript.ASTHelpers {
         return null;
     }
 
-    export function postComments(element: ISyntaxElement): Comment[] {
+    export function postComments(element: ISyntaxElement, lineMap: LineMap): Comment[] {
         if (element) {
             switch (element.kind()) {
                 case SyntaxKind.ExpressionStatement:
-                    return convertNodeTrailingComments(element, /*allowWithNewLine:*/ true);
+                    return convertNodeTrailingComments(element, lineMap, /*allowWithNewLine:*/ true);
                 case SyntaxKind.VariableStatement:
                 case SyntaxKind.ClassDeclaration:
                 case SyntaxKind.ImportDeclaration:
@@ -475,21 +475,21 @@ module TypeScript.ASTHelpers {
                 case SyntaxKind.MethodSignature:
                 case SyntaxKind.FunctionPropertyAssignment:
                 case SyntaxKind.Parameter:
-                    return convertNodeTrailingComments(element);
+                    return convertNodeTrailingComments(element, lineMap);
             }
         }
 
         return null;
     }
 
-    function convertNodeTrailingComments(node: ISyntaxElement, allowWithNewLine = false): Comment[]{
+    function convertNodeTrailingComments(node: ISyntaxElement, lineMap: LineMap, allowWithNewLine = false): Comment[]{
         // Bail out quickly before doing any expensive math computation.
         var _lastToken = lastToken(node);
-        if (_lastToken === null || !_lastToken.hasTrailingComment()) {
+        if (_lastToken === null || !_lastToken.hasTrailingTrivia()) {
             return null;
         }
 
-        if (!allowWithNewLine && _lastToken.hasTrailingNewLine()) {
+        if (!allowWithNewLine && SyntaxUtilities.isLastTokenOnLine(_lastToken, lineMap)) {
             return null;
         }
 
@@ -509,7 +509,7 @@ module TypeScript.ASTHelpers {
             return null;
         }
 
-        return token.hasLeadingComment()
+        return token.hasLeadingTrivia()
             ? convertComments(token.leadingTrivia(), token.fullStart())
             : null;
     }
@@ -519,19 +519,20 @@ module TypeScript.ASTHelpers {
             return null;
         }
 
-        return token.hasTrailingComment()
+        return token.hasTrailingTrivia()
             ? convertComments(token.trailingTrivia(), fullEnd(token) - token.trailingTriviaWidth())
             : null;
     }
 
     function convertComments(triviaList: ISyntaxTriviaList, commentStartPosition: number): Comment[]{
-        var result: Comment[] = [];
+        var result: Comment[] = null;
 
         for (var i = 0, n = triviaList.count(); i < n; i++) {
             var trivia = triviaList.syntaxTriviaAt(i);
 
             if (trivia.isComment()) {
                 var hasTrailingNewLine = ((i + 1) < n) && triviaList.syntaxTriviaAt(i + 1).isNewLine();
+                result = result || [];
                 result.push(convertComment(trivia, commentStartPosition, hasTrailingNewLine));
             }
 

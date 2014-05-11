@@ -1,14 +1,19 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    //export function visitSyntaxElement(visitor: ISyntaxVisitor, element: ISyntaxElement): any {
-    //    if (element === null) { return null; }
-    //    switch (element.kind) {
-
-    //    }
-    //}
-
     export class SyntaxUtilities {
+        public static isLastTokenOnLine(token: ISyntaxToken, lineMap: LineMap): boolean {
+            var _nextToken = nextToken(token);
+            if (_nextToken === null) {
+                return true;
+            }
+
+            var tokenLine = lineMap.getLineNumberFromPosition(end(token));
+            var nextTokenLine = lineMap.getLineNumberFromPosition(start(_nextToken));
+
+            return tokenLine !== nextTokenLine;
+        }
+
         public static isLeftHandSizeExpression(element: ISyntaxElement) {
             if (element) {
                 switch (element.kind()) {

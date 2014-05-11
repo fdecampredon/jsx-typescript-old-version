@@ -8,6 +8,7 @@
 /////*4*/    : T) { }
 ////}
 /////*5*/var x       =
+debugger;
 format.document();
 goTo.marker('1');
 verify.currentLineContentIs('foo(): Bar { }');

@@ -67,44 +67,47 @@ function tokenToJSON(token: TypeScript.ISyntaxToken): any {
 
     if (token.hasLeadingTrivia()) {
         result.hasLeadingTrivia = true;
-    }
 
-    if (token.hasLeadingComment()) {
-        result.hasLeadingComment = true;
-    }
+        var leadingTrivia = token.leadingTrivia();
 
-    if (token.hasLeadingNewLine()) {
-        result.hasLeadingNewLine = true;
-    }
+        if (leadingTrivia.hasComment()) {
+            result.hasLeadingComment = true;
+        }
 
-    if (token.leadingTrivia().hasSkippedToken()) {
-        result.hasLeadingSkippedText = true;
+        if (leadingTrivia.hasNewLine()) {
+            result.hasLeadingNewLine = true;
+        }
+
+        if (leadingTrivia.hasSkippedToken()) {
+            result.hasLeadingSkippedText = true;
+        }
+
     }
 
     if (token.hasTrailingTrivia()) {
         result.hasTrailingTrivia = true;
+
+        var trailingTrivia = token.trailingTrivia();
+
+        if (trailingTrivia.hasComment()) {
+            result.hasTrailingComment = true;
+        }
+
+        if (trailingTrivia.hasNewLine()) {
+            result.hasTrailingNewLine = true;
+        }
+
+        if (trailingTrivia.hasSkippedToken()) {
+            result.hasTrailingSkippedText = true;
+        }
     }
 
-    if (token.hasTrailingComment()) {
-        result.hasTrailingComment = true;
+    if (leadingTrivia) {
+        result.leadingTrivia = triviaListToJSON(leadingTrivia);
     }
 
-    if (token.hasTrailingNewLine()) {
-        result.hasTrailingNewLine = true;
-    }
-
-    if (token.trailingTrivia().hasSkippedToken()) {
-        result.hasTrailingSkippedText = true;
-    }
-
-    var trivia = token.leadingTrivia();
-    if (trivia.count() > 0) {
-        result.leadingTrivia = triviaListToJSON(trivia);
-    }
-
-    trivia = token.trailingTrivia();
-    if (trivia.count() > 0) {
-        result.trailingTrivia = triviaListToJSON(trivia);
+    if (trailingTrivia) {
+        result.trailingTrivia = triviaListToJSON(trailingTrivia);
     }
 
     return result;

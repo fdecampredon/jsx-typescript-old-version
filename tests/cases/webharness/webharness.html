@@ -53,7 +53,81 @@
 
                 var end = new Date().getTime();
                 appendTime("Time: ", end - start);
+
+                //for (var i = 0; i < currentCompilerSourcesTree.length; i++) {
+                //    collectTokenStatistics(currentCompilerSourcesTree[i].sourceUnit());
+                //}
             });
+        }
+
+        // 1, 2, 4, 8, 16
+        //var powersOfTwo = [1];
+        //var fullStartHistogram = [];
+        //var fullWidthHistogram = [];
+        //var isKeywordConvertedToIdentifier = 0;
+        //var leadingTrivia = 0;
+        //var trailingTrivia = 0;
+        //var leadingAndTrailingTrivia = 0;
+        //var noTrivia = 0;
+        //var j = 1;
+        //for (var i = 0; i < 30; i++) {
+        //    powersOfTwo[i] = j;
+        //    j = j * 2;
+
+        //    fullStartHistogram.push(0);
+        //    fullWidthHistogram.push(0);
+        //}
+
+        //var withOneField = [];
+        //var withTwoField = [];
+
+        //var common = {}
+        //for (var i = 0; i < 300000; i++) {
+        //    withOneField.push(new OneField(common, {}, i));
+        //    withTwoField.push(new TwoField(common, {}, i, i));
+        //}
+
+        function collectTokenStatistics(element) {
+            if (!element) {
+                return;
+            }
+
+            if (TypeScript.isToken(element)) {
+                var fullStart = TypeScript.fullStart(element);
+                var fullWidth = TypeScript.fullWidth(element);
+
+                for (var i = 0; i < powersOfTwo.length; i++) {
+                    if (fullStart < powersOfTwo[i]) {
+                        fullStartHistogram[i]++;
+                    }
+
+                    if (fullWidth < powersOfTwo[i]) {
+                        fullWidthHistogram[i]++;
+                    }
+                }
+
+                if (element.isKeywordConvertedToIdentifier()) {
+                    isKeywordConvertedToIdentifier++;
+                }
+
+                if (element.hasLeadingTrivia() && element.hasTrailingTrivia()) {
+                    leadingAndTrailingTrivia++;
+                }
+                else if (element.hasLeadingTrivia()) {
+                    leadingTrivia++;
+                }
+                else if (element.hasTrailingTrivia()) {
+                    trailingTrivia++;
+                }
+                else {
+                    noTrivia++;
+                }
+            }
+
+            for (var i = 0, n = TypeScript.childCount(element) ; i < n; i++) {
+                var child = TypeScript.childAt(element, i);
+                collectTokenStatistics(child);
+            }
         }
 
         function parseLibDTS() {
