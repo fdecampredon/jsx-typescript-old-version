@@ -143,7 +143,6 @@ module TypeScript {
             !isShared(moduleElements) && (moduleElements.parent = this),
             endOfFileToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.SourceUnit; }
     }
 
     export class QualifiedNameSyntax extends SyntaxNode implements INameSyntax {
@@ -160,7 +159,6 @@ module TypeScript {
             dotToken.parent = this,
             right.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.QualifiedName; }
     }
 
     export class ObjectTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -177,7 +175,6 @@ module TypeScript {
             !isShared(typeMembers) && (typeMembers.parent = this),
             closeBraceToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ObjectType; }
     }
 
     export class FunctionTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -197,7 +194,6 @@ module TypeScript {
             equalsGreaterThanToken.parent = this,
             type.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.FunctionType; }
     }
 
     export class ArrayTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -214,7 +210,6 @@ module TypeScript {
             openBracketToken.parent = this,
             closeBracketToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ArrayType; }
     }
 
     export class ConstructorTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -237,7 +232,6 @@ module TypeScript {
             equalsGreaterThanToken.parent = this,
             type.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ConstructorType; }
     }
 
     export class GenericTypeSyntax extends SyntaxNode implements ITypeSyntax {
@@ -251,7 +245,6 @@ module TypeScript {
             name.parent = this,
             typeArgumentList.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.GenericType; }
     }
 
     export class TypeQuerySyntax extends SyntaxNode implements ITypeSyntax {
@@ -265,7 +258,6 @@ module TypeScript {
             typeOfKeyword.parent = this,
             name.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.TypeQuery; }
     }
 
     export class InterfaceDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -291,7 +283,6 @@ module TypeScript {
             !isShared(heritageClauses) && (heritageClauses.parent = this),
             body.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.InterfaceDeclaration; }
     }
 
     export class FunctionDeclarationSyntax extends SyntaxNode implements IStatementSyntax {
@@ -317,7 +308,6 @@ module TypeScript {
             block && (block.parent = this),
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.FunctionDeclaration; }
     }
 
     export class ModuleDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -346,7 +336,6 @@ module TypeScript {
             !isShared(moduleElements) && (moduleElements.parent = this),
             closeBraceToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ModuleDeclaration; }
     }
 
     export class ClassDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -378,7 +367,6 @@ module TypeScript {
             !isShared(classElements) && (classElements.parent = this),
             closeBraceToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ClassDeclaration; }
     }
 
     export class EnumDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -404,7 +392,6 @@ module TypeScript {
             !isShared(enumElements) && (enumElements.parent = this),
             closeBraceToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.EnumDeclaration; }
     }
 
     export class ImportDeclarationSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -430,7 +417,6 @@ module TypeScript {
             moduleReference.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ImportDeclaration; }
     }
 
     export class ExportAssignmentSyntax extends SyntaxNode implements IModuleElementSyntax {
@@ -450,7 +436,6 @@ module TypeScript {
             identifier.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ExportAssignment; }
     }
 
     export class MemberFunctionDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
@@ -473,7 +458,6 @@ module TypeScript {
             block && (block.parent = this),
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.MemberFunctionDeclaration; }
     }
 
     export class MemberVariableDeclarationSyntax extends SyntaxNode implements IMemberDeclarationSyntax {
@@ -490,7 +474,6 @@ module TypeScript {
             variableDeclarator.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.MemberVariableDeclaration; }
     }
 
     export class ConstructorDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
@@ -513,7 +496,6 @@ module TypeScript {
             block && (block.parent = this),
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ConstructorDeclaration; }
     }
 
     export class IndexMemberDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
@@ -530,7 +512,6 @@ module TypeScript {
             indexSignature.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.IndexMemberDeclaration; }
     }
 
     export class GetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
@@ -556,7 +537,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this),
             block.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.GetAccessor; }
     }
 
     export class SetAccessorSyntax extends SyntaxNode implements IMemberDeclarationSyntax, IPropertyAssignmentSyntax {
@@ -579,7 +559,6 @@ module TypeScript {
             parameterList.parent = this,
             block.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.SetAccessor; }
     }
 
     export class PropertySignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -596,7 +575,6 @@ module TypeScript {
             questionToken && (questionToken.parent = this),
             typeAnnotation && (typeAnnotation.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.PropertySignature; }
     }
 
     export class CallSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -613,7 +591,6 @@ module TypeScript {
             parameterList.parent = this,
             typeAnnotation && (typeAnnotation.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.CallSignature; }
     }
 
     export class ConstructSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -627,7 +604,6 @@ module TypeScript {
             newKeyword.parent = this,
             callSignature.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ConstructSignature; }
     }
 
     export class IndexSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -647,7 +623,6 @@ module TypeScript {
             closeBracketToken.parent = this,
             typeAnnotation && (typeAnnotation.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.IndexSignature; }
     }
 
     export class MethodSignatureSyntax extends SyntaxNode implements ITypeMemberSyntax {
@@ -664,7 +639,6 @@ module TypeScript {
             questionToken && (questionToken.parent = this),
             callSignature.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.MethodSignature; }
     }
 
     export class BlockSyntax extends SyntaxNode implements IStatementSyntax {
@@ -681,7 +655,6 @@ module TypeScript {
             !isShared(statements) && (statements.parent = this),
             closeBraceToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.Block; }
     }
 
     export class IfStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -707,7 +680,6 @@ module TypeScript {
             statement.parent = this,
             elseClause && (elseClause.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.IfStatement; }
     }
 
     export class VariableStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -724,7 +696,6 @@ module TypeScript {
             variableDeclaration.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.VariableStatement; }
     }
 
     export class ExpressionStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -738,7 +709,6 @@ module TypeScript {
             expression.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ExpressionStatement; }
     }
 
     export class ReturnStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -755,7 +725,6 @@ module TypeScript {
             expression && (expression.parent = this),
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ReturnStatement; }
     }
 
     export class SwitchStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -784,7 +753,6 @@ module TypeScript {
             !isShared(switchClauses) && (switchClauses.parent = this),
             closeBraceToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.SwitchStatement; }
     }
 
     export class BreakStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -801,7 +769,6 @@ module TypeScript {
             identifier && (identifier.parent = this),
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.BreakStatement; }
     }
 
     export class ContinueStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -818,7 +785,6 @@ module TypeScript {
             identifier && (identifier.parent = this),
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ContinueStatement; }
     }
 
     export class ForStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -856,7 +822,6 @@ module TypeScript {
             closeParenToken.parent = this,
             statement.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ForStatement; }
     }
 
     export class ForInStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -888,7 +853,6 @@ module TypeScript {
             closeParenToken.parent = this,
             statement.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ForInStatement; }
     }
 
     export class EmptyStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -899,7 +863,6 @@ module TypeScript {
             this.semicolonToken = semicolonToken,
             semicolonToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.EmptyStatement; }
     }
 
     export class ThrowStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -916,7 +879,6 @@ module TypeScript {
             expression.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ThrowStatement; }
     }
 
     export class WhileStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -939,7 +901,6 @@ module TypeScript {
             closeParenToken.parent = this,
             statement.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.WhileStatement; }
     }
 
     export class TryStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -959,7 +920,6 @@ module TypeScript {
             catchClause && (catchClause.parent = this),
             finallyClause && (finallyClause.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.TryStatement; }
     }
 
     export class LabeledStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -976,7 +936,6 @@ module TypeScript {
             colonToken.parent = this,
             statement.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.LabeledStatement; }
     }
 
     export class DoStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -1005,7 +964,6 @@ module TypeScript {
             closeParenToken.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.DoStatement; }
     }
 
     export class DebuggerStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -1019,7 +977,6 @@ module TypeScript {
             debuggerKeyword.parent = this,
             semicolonToken && (semicolonToken.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.DebuggerStatement; }
     }
 
     export class WithStatementSyntax extends SyntaxNode implements IStatementSyntax {
@@ -1042,7 +999,6 @@ module TypeScript {
             closeParenToken.parent = this,
             statement.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.WithStatement; }
     }
 
     export class PrefixUnaryExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -1070,7 +1026,6 @@ module TypeScript {
             deleteKeyword.parent = this,
             expression.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.DeleteExpression; }
     }
 
     export class TypeOfExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -1084,7 +1039,6 @@ module TypeScript {
             typeOfKeyword.parent = this,
             expression.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.TypeOfExpression; }
     }
 
     export class VoidExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -1098,7 +1052,6 @@ module TypeScript {
             voidKeyword.parent = this,
             expression.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.VoidExpression; }
     }
 
     export class ConditionalExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
@@ -1121,7 +1074,6 @@ module TypeScript {
             colonToken.parent = this,
             whenFalse.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ConditionalExpression; }
     }
 
     export class BinaryExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
@@ -1169,7 +1121,6 @@ module TypeScript {
             dotToken.parent = this,
             name.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.MemberAccessExpression; }
     }
 
     export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax {
@@ -1183,7 +1134,6 @@ module TypeScript {
             expression.parent = this,
             argumentList.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.InvocationExpression; }
     }
 
     export class ArrayLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
@@ -1200,7 +1150,6 @@ module TypeScript {
             !isShared(expressions) && (expressions.parent = this),
             closeBracketToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ArrayLiteralExpression; }
     }
 
     export class ObjectLiteralExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
@@ -1217,7 +1166,6 @@ module TypeScript {
             !isShared(propertyAssignments) && (propertyAssignments.parent = this),
             closeBraceToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ObjectLiteralExpression; }
     }
 
     export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
@@ -1234,7 +1182,6 @@ module TypeScript {
             expression.parent = this,
             argumentList && (argumentList.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ObjectCreationExpression; }
     }
 
     export class ParenthesizedExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
@@ -1251,7 +1198,6 @@ module TypeScript {
             expression.parent = this,
             closeParenToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ParenthesizedExpression; }
     }
 
     export class ParenthesizedArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -1271,7 +1217,6 @@ module TypeScript {
             block && (block.parent = this),
             expression && (expression.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.ParenthesizedArrowFunctionExpression; }
     }
 
     export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -1291,7 +1236,6 @@ module TypeScript {
             block && (block.parent = this),
             expression && (expression.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.SimpleArrowFunctionExpression; }
     }
 
     export class CastExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
@@ -1311,7 +1255,6 @@ module TypeScript {
             greaterThanToken.parent = this,
             expression.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.CastExpression; }
     }
 
     export class ElementAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
@@ -1331,7 +1274,6 @@ module TypeScript {
             argumentExpression.parent = this,
             closeBracketToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ElementAccessExpression; }
     }
 
     export class FunctionExpressionSyntax extends SyntaxNode implements IPrimaryExpressionSyntax {
@@ -1351,7 +1293,6 @@ module TypeScript {
             callSignature.parent = this,
             block.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.FunctionExpression; }
     }
 
     export class OmittedExpressionSyntax extends SyntaxNode implements IExpressionSyntax {
@@ -1359,7 +1300,6 @@ module TypeScript {
         constructor(data: number) {
             super(data);
         }
-        public kind(): SyntaxKind { return SyntaxKind.OmittedExpression; }
     }
 
     export class VariableDeclarationSyntax extends SyntaxNode {
@@ -1372,7 +1312,6 @@ module TypeScript {
             varKeyword.parent = this,
             !isShared(variableDeclarators) && (variableDeclarators.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.VariableDeclaration; }
     }
 
     export class VariableDeclaratorSyntax extends SyntaxNode {
@@ -1388,7 +1327,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this),
             equalsValueClause && (equalsValueClause.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.VariableDeclarator; }
     }
 
     export class ArgumentListSyntax extends SyntaxNode {
@@ -1407,7 +1345,6 @@ module TypeScript {
             !isShared(_arguments) && (_arguments.parent = this),
             closeParenToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ArgumentList; }
     }
 
     export class ParameterListSyntax extends SyntaxNode {
@@ -1423,7 +1360,6 @@ module TypeScript {
             !isShared(parameters) && (parameters.parent = this),
             closeParenToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ParameterList; }
     }
 
     export class TypeArgumentListSyntax extends SyntaxNode {
@@ -1439,7 +1375,6 @@ module TypeScript {
             !isShared(typeArguments) && (typeArguments.parent = this),
             greaterThanToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.TypeArgumentList; }
     }
 
     export class TypeParameterListSyntax extends SyntaxNode {
@@ -1455,7 +1390,6 @@ module TypeScript {
             !isShared(typeParameters) && (typeParameters.parent = this),
             greaterThanToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.TypeParameterList; }
     }
 
     export class HeritageClauseSyntax extends SyntaxNode {
@@ -1481,7 +1415,6 @@ module TypeScript {
             equalsToken.parent = this,
             value.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.EqualsValueClause; }
     }
 
     export class CaseSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
@@ -1501,7 +1434,6 @@ module TypeScript {
             colonToken.parent = this,
             !isShared(statements) && (statements.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.CaseSwitchClause; }
     }
 
     export class DefaultSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
@@ -1518,7 +1450,6 @@ module TypeScript {
             colonToken.parent = this,
             !isShared(statements) && (statements.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.DefaultSwitchClause; }
     }
 
     export class ElseClauseSyntax extends SyntaxNode {
@@ -1531,7 +1462,6 @@ module TypeScript {
             elseKeyword.parent = this,
             statement.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ElseClause; }
     }
 
     export class CatchClauseSyntax extends SyntaxNode {
@@ -1556,7 +1486,6 @@ module TypeScript {
             closeParenToken.parent = this,
             block.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.CatchClause; }
     }
 
     export class FinallyClauseSyntax extends SyntaxNode {
@@ -1569,7 +1498,6 @@ module TypeScript {
             finallyKeyword.parent = this,
             block.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.FinallyClause; }
     }
 
     export class TypeParameterSyntax extends SyntaxNode {
@@ -1582,7 +1510,6 @@ module TypeScript {
             identifier.parent = this,
             constraint && (constraint.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.TypeParameter; }
     }
 
     export class ConstraintSyntax extends SyntaxNode {
@@ -1595,7 +1522,6 @@ module TypeScript {
             extendsKeyword.parent = this,
             type.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.Constraint; }
     }
 
     export class SimplePropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
@@ -1612,7 +1538,6 @@ module TypeScript {
             colonToken.parent = this,
             expression.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.SimplePropertyAssignment; }
     }
 
     export class FunctionPropertyAssignmentSyntax extends SyntaxNode implements IPropertyAssignmentSyntax {
@@ -1629,7 +1554,6 @@ module TypeScript {
             callSignature.parent = this,
             block.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.FunctionPropertyAssignment; }
     }
 
     export class ParameterSyntax extends SyntaxNode {
@@ -1654,7 +1578,6 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this),
             equalsValueClause && (equalsValueClause.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.Parameter; }
     }
 
     export class EnumElementSyntax extends SyntaxNode {
@@ -1667,7 +1590,6 @@ module TypeScript {
             propertyName.parent = this,
             equalsValueClause && (equalsValueClause.parent = this);
         }
-        public kind(): SyntaxKind { return SyntaxKind.EnumElement; }
     }
 
     export class TypeAnnotationSyntax extends SyntaxNode {
@@ -1680,7 +1602,6 @@ module TypeScript {
             colonToken.parent = this,
             type.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.TypeAnnotation; }
     }
 
     export class ExternalModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
@@ -1700,7 +1621,6 @@ module TypeScript {
             stringLiteral.parent = this,
             closeParenToken.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ExternalModuleReference; }
     }
 
     export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
@@ -1711,6 +1631,7 @@ module TypeScript {
             this.moduleName = moduleName,
             moduleName.parent = this;
         }
-        public kind(): SyntaxKind { return SyntaxKind.ModuleNameModuleReference; }
     }
+
+    (<any>SourceUnitSyntax).prototype.__kind = SyntaxKind.SourceUnit, (<any>QualifiedNameSyntax).prototype.__kind = SyntaxKind.QualifiedName, (<any>ObjectTypeSyntax).prototype.__kind = SyntaxKind.ObjectType, (<any>FunctionTypeSyntax).prototype.__kind = SyntaxKind.FunctionType, (<any>ArrayTypeSyntax).prototype.__kind = SyntaxKind.ArrayType, (<any>ConstructorTypeSyntax).prototype.__kind = SyntaxKind.ConstructorType, (<any>GenericTypeSyntax).prototype.__kind = SyntaxKind.GenericType, (<any>TypeQuerySyntax).prototype.__kind = SyntaxKind.TypeQuery, (<any>InterfaceDeclarationSyntax).prototype.__kind = SyntaxKind.InterfaceDeclaration, (<any>FunctionDeclarationSyntax).prototype.__kind = SyntaxKind.FunctionDeclaration, (<any>ModuleDeclarationSyntax).prototype.__kind = SyntaxKind.ModuleDeclaration, (<any>ClassDeclarationSyntax).prototype.__kind = SyntaxKind.ClassDeclaration, (<any>EnumDeclarationSyntax).prototype.__kind = SyntaxKind.EnumDeclaration, (<any>ImportDeclarationSyntax).prototype.__kind = SyntaxKind.ImportDeclaration, (<any>ExportAssignmentSyntax).prototype.__kind = SyntaxKind.ExportAssignment, (<any>MemberFunctionDeclarationSyntax).prototype.__kind = SyntaxKind.MemberFunctionDeclaration, (<any>MemberVariableDeclarationSyntax).prototype.__kind = SyntaxKind.MemberVariableDeclaration, (<any>ConstructorDeclarationSyntax).prototype.__kind = SyntaxKind.ConstructorDeclaration, (<any>IndexMemberDeclarationSyntax).prototype.__kind = SyntaxKind.IndexMemberDeclaration, (<any>GetAccessorSyntax).prototype.__kind = SyntaxKind.GetAccessor, (<any>SetAccessorSyntax).prototype.__kind = SyntaxKind.SetAccessor, (<any>PropertySignatureSyntax).prototype.__kind = SyntaxKind.PropertySignature, (<any>CallSignatureSyntax).prototype.__kind = SyntaxKind.CallSignature, (<any>ConstructSignatureSyntax).prototype.__kind = SyntaxKind.ConstructSignature, (<any>IndexSignatureSyntax).prototype.__kind = SyntaxKind.IndexSignature, (<any>MethodSignatureSyntax).prototype.__kind = SyntaxKind.MethodSignature, (<any>BlockSyntax).prototype.__kind = SyntaxKind.Block, (<any>IfStatementSyntax).prototype.__kind = SyntaxKind.IfStatement, (<any>VariableStatementSyntax).prototype.__kind = SyntaxKind.VariableStatement, (<any>ExpressionStatementSyntax).prototype.__kind = SyntaxKind.ExpressionStatement, (<any>ReturnStatementSyntax).prototype.__kind = SyntaxKind.ReturnStatement, (<any>SwitchStatementSyntax).prototype.__kind = SyntaxKind.SwitchStatement, (<any>BreakStatementSyntax).prototype.__kind = SyntaxKind.BreakStatement, (<any>ContinueStatementSyntax).prototype.__kind = SyntaxKind.ContinueStatement, (<any>ForStatementSyntax).prototype.__kind = SyntaxKind.ForStatement, (<any>ForInStatementSyntax).prototype.__kind = SyntaxKind.ForInStatement, (<any>EmptyStatementSyntax).prototype.__kind = SyntaxKind.EmptyStatement, (<any>ThrowStatementSyntax).prototype.__kind = SyntaxKind.ThrowStatement, (<any>WhileStatementSyntax).prototype.__kind = SyntaxKind.WhileStatement, (<any>TryStatementSyntax).prototype.__kind = SyntaxKind.TryStatement, (<any>LabeledStatementSyntax).prototype.__kind = SyntaxKind.LabeledStatement, (<any>DoStatementSyntax).prototype.__kind = SyntaxKind.DoStatement, (<any>DebuggerStatementSyntax).prototype.__kind = SyntaxKind.DebuggerStatement, (<any>WithStatementSyntax).prototype.__kind = SyntaxKind.WithStatement, (<any>DeleteExpressionSyntax).prototype.__kind = SyntaxKind.DeleteExpression, (<any>TypeOfExpressionSyntax).prototype.__kind = SyntaxKind.TypeOfExpression, (<any>VoidExpressionSyntax).prototype.__kind = SyntaxKind.VoidExpression, (<any>ConditionalExpressionSyntax).prototype.__kind = SyntaxKind.ConditionalExpression, (<any>MemberAccessExpressionSyntax).prototype.__kind = SyntaxKind.MemberAccessExpression, (<any>InvocationExpressionSyntax).prototype.__kind = SyntaxKind.InvocationExpression, (<any>ArrayLiteralExpressionSyntax).prototype.__kind = SyntaxKind.ArrayLiteralExpression, (<any>ObjectLiteralExpressionSyntax).prototype.__kind = SyntaxKind.ObjectLiteralExpression, (<any>ObjectCreationExpressionSyntax).prototype.__kind = SyntaxKind.ObjectCreationExpression, (<any>ParenthesizedExpressionSyntax).prototype.__kind = SyntaxKind.ParenthesizedExpression, (<any>ParenthesizedArrowFunctionExpressionSyntax).prototype.__kind = SyntaxKind.ParenthesizedArrowFunctionExpression, (<any>SimpleArrowFunctionExpressionSyntax).prototype.__kind = SyntaxKind.SimpleArrowFunctionExpression, (<any>CastExpressionSyntax).prototype.__kind = SyntaxKind.CastExpression, (<any>ElementAccessExpressionSyntax).prototype.__kind = SyntaxKind.ElementAccessExpression, (<any>FunctionExpressionSyntax).prototype.__kind = SyntaxKind.FunctionExpression, (<any>OmittedExpressionSyntax).prototype.__kind = SyntaxKind.OmittedExpression, (<any>VariableDeclarationSyntax).prototype.__kind = SyntaxKind.VariableDeclaration, (<any>VariableDeclaratorSyntax).prototype.__kind = SyntaxKind.VariableDeclarator, (<any>ArgumentListSyntax).prototype.__kind = SyntaxKind.ArgumentList, (<any>ParameterListSyntax).prototype.__kind = SyntaxKind.ParameterList, (<any>TypeArgumentListSyntax).prototype.__kind = SyntaxKind.TypeArgumentList, (<any>TypeParameterListSyntax).prototype.__kind = SyntaxKind.TypeParameterList, (<any>EqualsValueClauseSyntax).prototype.__kind = SyntaxKind.EqualsValueClause, (<any>CaseSwitchClauseSyntax).prototype.__kind = SyntaxKind.CaseSwitchClause, (<any>DefaultSwitchClauseSyntax).prototype.__kind = SyntaxKind.DefaultSwitchClause, (<any>ElseClauseSyntax).prototype.__kind = SyntaxKind.ElseClause, (<any>CatchClauseSyntax).prototype.__kind = SyntaxKind.CatchClause, (<any>FinallyClauseSyntax).prototype.__kind = SyntaxKind.FinallyClause, (<any>TypeParameterSyntax).prototype.__kind = SyntaxKind.TypeParameter, (<any>ConstraintSyntax).prototype.__kind = SyntaxKind.Constraint, (<any>SimplePropertyAssignmentSyntax).prototype.__kind = SyntaxKind.SimplePropertyAssignment, (<any>FunctionPropertyAssignmentSyntax).prototype.__kind = SyntaxKind.FunctionPropertyAssignment, (<any>ParameterSyntax).prototype.__kind = SyntaxKind.Parameter, (<any>EnumElementSyntax).prototype.__kind = SyntaxKind.EnumElement, (<any>TypeAnnotationSyntax).prototype.__kind = SyntaxKind.TypeAnnotation, (<any>ExternalModuleReferenceSyntax).prototype.__kind = SyntaxKind.ExternalModuleReference, (<any>ModuleNameModuleReferenceSyntax).prototype.__kind = SyntaxKind.ModuleNameModuleReference;
 }

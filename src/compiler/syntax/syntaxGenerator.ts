@@ -2001,7 +2001,7 @@ function generateNode(definition: ITypeDefinition): string {
         result += "        public kind(): SyntaxKind { return this.extendsOrImplementsKeyword.kind() === SyntaxKind.ExtendsKeyword ? SyntaxKind.ExtendsHeritageClause : SyntaxKind.ImplementsHeritageClause; }\r\n";
     }
     else {
-        result += "        public kind(): SyntaxKind { return SyntaxKind." + getNameWithoutSuffix(definition) + "; }\r\n";
+        // result += "        public kind(): SyntaxKind { return SyntaxKind." + getNameWithoutSuffix(definition) + "; }\r\n";
     }
 
     result += "    }";
@@ -2405,7 +2405,23 @@ function generateNodes(): string {
         result += generateNode(definition);
     }
 
-    result += "\r\n}";
+    result += "\r\n\r\n    ";
+
+    for (var i = 0; i < definitions.length; i++) {
+        var definition = definitions[i];
+
+        if (definition.syntaxKinds) {
+            continue;
+        }
+
+        if (i) {
+            result += ", "
+        }
+
+        result += "(<any>" + definition.name + ").prototype.__kind = SyntaxKind." + getNameWithoutSuffix(definition)
+    }
+
+    result += ";\r\n}";
 
     return result;
 }

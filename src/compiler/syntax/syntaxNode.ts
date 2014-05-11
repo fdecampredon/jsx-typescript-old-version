@@ -3,12 +3,13 @@
 module TypeScript {
     export class SyntaxNode implements ISyntaxNodeOrToken {
         public parent: ISyntaxElement;
+        private __kind: SyntaxKind;
 
         constructor(public data: number) {
         }
 
         public kind(): SyntaxKind {
-            throw Errors.abstract();
+            return this.__kind;
         }
     }
 }
