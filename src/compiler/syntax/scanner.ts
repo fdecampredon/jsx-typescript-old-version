@@ -761,91 +761,43 @@ module TypeScript {
             }
 
             var character = str.charCodeAt(index);
+            index++;
 
             switch (character) {
-                case CharacterCodes.doubleQuote:
-                case CharacterCodes.singleQuote:
-                    return scanStringLiteral();
+                case CharacterCodes.exclamation /*33*/: return scanExclamationToken();
+                case CharacterCodes.doubleQuote/*34*/: return scanStringLiteral(character);
+                case CharacterCodes.percent /*37*/: return scanPercentToken();
+                case CharacterCodes.ampersand /*38*/: return scanAmpersandToken();
+                case CharacterCodes.singleQuote/*39*/: return scanStringLiteral(character);
+                case CharacterCodes.openParen/*40*/: return SyntaxKind.OpenParenToken;
+                case CharacterCodes.closeParen/*41*/: return SyntaxKind.CloseParenToken;
+                case CharacterCodes.asterisk/*42*/: return scanAsteriskToken();
+                case CharacterCodes.plus/*43*/: return scanPlusToken();
+                case CharacterCodes.comma/*44*/: return SyntaxKind.CommaToken;
+                case CharacterCodes.minus/*45*/: return scanMinusToken();
+                case CharacterCodes.dot/*46*/: return scanDotToken();
+                case CharacterCodes.slash/*47*/: return scanSlashToken(allowContextualToken);
 
-                // These are the set of variable width punctuation tokens.
-                case CharacterCodes.slash:
-                    return scanSlashToken(allowContextualToken);
-
-                case CharacterCodes.dot:
-                    return scanDotToken();
-
-                case CharacterCodes.minus:
-                    return scanMinusToken();
-
-                case CharacterCodes.exclamation:
-                    return scanExclamationToken();
-
-                case CharacterCodes.equals:
-                    return scanEqualsToken();
-
-                case CharacterCodes.bar:
-                    return scanBarToken();
-
-                case CharacterCodes.asterisk:
-                    return scanAsteriskToken();
-
-                case CharacterCodes.plus:
-                    return scanPlusToken();
-
-                case CharacterCodes.percent:
-                    return scanPercentToken();
-
-                case CharacterCodes.ampersand:
-                    return scanAmpersandToken();
-
-                case CharacterCodes.caret:
-                    return scanCaretToken();
-
-                case CharacterCodes.lessThan:
-                    return scanLessThanToken();
-
-                // These are the set of fixed, single character length punctuation tokens.
-                // The token kind does not depend on what follows.
-                case CharacterCodes.greaterThan:
-                    return scanGreaterThanToken(allowContextualToken);
-
-                case CharacterCodes.comma:
-                    return advanceAndSetTokenKind(SyntaxKind.CommaToken);
-
-                case CharacterCodes.colon:
-                    return advanceAndSetTokenKind(SyntaxKind.ColonToken);
-
-                case CharacterCodes.semicolon:
-                    return advanceAndSetTokenKind(SyntaxKind.SemicolonToken);
-
-                case CharacterCodes.tilde:
-                    return advanceAndSetTokenKind(SyntaxKind.TildeToken);
-
-                case CharacterCodes.openParen:
-                    return advanceAndSetTokenKind(SyntaxKind.OpenParenToken);
-
-                case CharacterCodes.closeParen:
-                    return advanceAndSetTokenKind(SyntaxKind.CloseParenToken);
-
-                case CharacterCodes.openBrace:
-                    return advanceAndSetTokenKind(SyntaxKind.OpenBraceToken);
-
-                case CharacterCodes.closeBrace:
-                    return advanceAndSetTokenKind(SyntaxKind.CloseBraceToken);
-
-                case CharacterCodes.openBracket:
-                    return advanceAndSetTokenKind(SyntaxKind.OpenBracketToken);
-
-                case CharacterCodes.closeBracket:
-                    return advanceAndSetTokenKind(SyntaxKind.CloseBracketToken);
-
-                case CharacterCodes.question:
-                    return advanceAndSetTokenKind(SyntaxKind.QuestionToken);
-
-                case CharacterCodes._0: case CharacterCodes._1: case CharacterCodes._2: case CharacterCodes._3:
+                case CharacterCodes._0/*48*/: case CharacterCodes._1: case CharacterCodes._2: case CharacterCodes._3:
                 case CharacterCodes._4: case CharacterCodes._5: case CharacterCodes._6: case CharacterCodes._7:
-                case CharacterCodes._8: case CharacterCodes._9:
-                    return scanNumericLiteral();
+                case CharacterCodes._8: case CharacterCodes._9/*57*/:
+                    return scanNumericLiteral(character);
+
+                case CharacterCodes.colon/*58*/: return SyntaxKind.ColonToken;
+                case CharacterCodes.semicolon/*59*/: return SyntaxKind.SemicolonToken;
+                case CharacterCodes.lessThan/*60*/: return scanLessThanToken();
+                case CharacterCodes.equals/*61*/: return scanEqualsToken();
+                case CharacterCodes.greaterThan/*62*/: return scanGreaterThanToken(allowContextualToken);
+                case CharacterCodes.question/*63*/: return SyntaxKind.QuestionToken;
+
+                case CharacterCodes.openBracket/*91*/: return SyntaxKind.OpenBracketToken;
+                case CharacterCodes.closeBracket/*93*/: return SyntaxKind.CloseBracketToken;
+                case CharacterCodes.caret/*94*/: return scanCaretToken();
+
+                case CharacterCodes.openBrace/*123*/: return SyntaxKind.OpenBraceToken;
+                case CharacterCodes.bar/*124*/: return scanBarToken();
+                case CharacterCodes.closeBrace/*125*/: return SyntaxKind.CloseBraceToken;
+                case CharacterCodes.tilde/*126*/: return SyntaxKind.TildeToken;
             }
 
             // We run into so many identifiers (and keywords) when scanning, that we want the code to
@@ -858,11 +810,20 @@ module TypeScript {
                 }
             }
 
+            // Move the index back one and try the slow path.
+            index--;
             if (isIdentifierStart(peekCharOrUnicodeEscape())) {
                 return slowScanIdentifierOrKeyword();
             }
 
-            return scanDefaultCharacter(character);
+            // Was nothing that we could understand.  Report the issue and keep moving on.
+            var text = String.fromCharCode(character);
+            var messageText = getErrorMessageText(text);
+            reportDiagnostic(index, 1, DiagnosticCode.Unexpected_character_0, [messageText]);
+
+            index++;
+
+            return SyntaxKind.ErrorToken;
         }
 
         function isIdentifierStart(interpretedChar: number): boolean {
@@ -883,7 +844,7 @@ module TypeScript {
 
         function tryFastScanIdentifierOrKeyword(firstCharacter: number): SyntaxKind {
             var startIndex = index;
-            var character: number = 0;
+            var character = firstCharacter;
 
             // Note that we go up to the windowCount-1 so that we can read the character at the end
             // of the window and check if it's *not* an identifier part character.
@@ -909,9 +870,9 @@ module TypeScript {
 
                 // Also check if it a keyword if it started with a lowercase letter.
                 var kind: SyntaxKind;
-                var identifierLength = index - startIndex;
+                var identifierLength = index - startIndex + 1;
                 if (isKeywordStartCharacter[firstCharacter]) {
-                    kind = ScannerUtilities.identifierKind(str, startIndex, identifierLength);
+                    kind = ScannerUtilities.identifierKind(str, startIndex - 1, identifierLength);
                 }
                 else {
                     kind = SyntaxKind.IdentifierName;
@@ -951,11 +912,11 @@ module TypeScript {
             return SyntaxKind.IdentifierName;
         }
 
-        function scanNumericLiteral(): SyntaxKind {
-            if (isHexNumericLiteral()) {
+        function scanNumericLiteral(ch: number): SyntaxKind {
+            if (isHexNumericLiteral(ch)) {
                 scanHexNumericLiteral();
             }
-            else if (isOctalNumericLiteral()) {
+            else if (isOctalNumericLiteral(ch)) {
                 scanOctalNumericLiteral();
             }
             else {
@@ -965,13 +926,13 @@ module TypeScript {
             return SyntaxKind.NumericLiteral;
         }
 
-        function isOctalNumericLiteral(): boolean {
-            return str.charCodeAt(index) === CharacterCodes._0 &&
-                CharacterInfo.isOctalDigit(str.charCodeAt(index + 1));
+        function isOctalNumericLiteral(ch: number): boolean {
+            return ch === CharacterCodes._0 &&
+                CharacterInfo.isOctalDigit(str.charCodeAt(index));
         }
 
         function scanOctalNumericLiteral(): void {
-            var position = index
+            var start = index - 1;
 
             while (CharacterInfo.isOctalDigit(str.charCodeAt(index))) {
                 index++;
@@ -979,7 +940,7 @@ module TypeScript {
 
             if (languageVersion >= LanguageVersion.EcmaScript5) {
                 reportDiagnostic(
-                    position, index - position, DiagnosticCode.Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher, null);
+                    start, index - start, DiagnosticCode.Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher, null);
             }
         }
 
@@ -996,6 +957,10 @@ module TypeScript {
                 index++;
             }
 
+            scanDecimalNumericLiteralAfterDot();
+        }
+
+        function scanDecimalNumericLiteralAfterDot() {
             scanDecimalDigits();
 
             // If we see an 'e' or 'E' we should only consume it if its of the form:
@@ -1027,35 +992,27 @@ module TypeScript {
         }
 
         function scanHexNumericLiteral(): void {
-            // Move past the 0x.
-            index += 2;
+            // Move past the x.
+            index++;
 
             while (CharacterInfo.isHexDigit(str.charCodeAt(index))) {
                 index++;
             }
         }
 
-        function isHexNumericLiteral(): boolean {
-            if (str.charCodeAt(index) === CharacterCodes._0) {
-                var ch = str.charCodeAt(index + 1);
+        function isHexNumericLiteral(ch: number): boolean {
+            if (ch === CharacterCodes._0) {
+                var ch = str.charCodeAt(index);
 
                 if (ch === CharacterCodes.x || ch === CharacterCodes.X) {
-                    ch = str.charCodeAt(index + 2);
-
-                    return CharacterInfo.isHexDigit(ch);
+                    return CharacterInfo.isHexDigit(str.charCodeAt(index + 1));
                 }
             }
 
             return false;
         }
 
-        function advanceAndSetTokenKind(kind: SyntaxKind): SyntaxKind {
-            index++;
-            return kind;
-        }
-
         function scanLessThanToken(): SyntaxKind {
-            index++;
             var ch0 = str.charCodeAt(index);
             if (ch0 === CharacterCodes.equals) {
                 index++;
@@ -1077,7 +1034,6 @@ module TypeScript {
         }
 
         function scanGreaterThanToken(allowContextualToken: boolean): SyntaxKind {
-            index++;
             if (allowContextualToken) {
                 var ch0 = str.charCodeAt(index);
                 if (ch0 === CharacterCodes.greaterThan) {
@@ -1117,7 +1073,6 @@ module TypeScript {
         }
 
         function scanBarToken(): SyntaxKind {
-            index++;
             var ch = str.charCodeAt(index);
             if (ch === CharacterCodes.equals) {
                 index++;
@@ -1133,7 +1088,6 @@ module TypeScript {
         }
 
         function scanCaretToken(): SyntaxKind {
-            index++;
             if (str.charCodeAt(index) === CharacterCodes.equals) {
                 index++;
                 return SyntaxKind.CaretEqualsToken;
@@ -1144,7 +1098,6 @@ module TypeScript {
         }
 
         function scanAmpersandToken(): SyntaxKind {
-            index++;
             var character = str.charCodeAt(index);
             if (character === CharacterCodes.equals) {
                 index++;
@@ -1160,7 +1113,6 @@ module TypeScript {
         }
 
         function scanPercentToken(): SyntaxKind {
-            index++;
             if (str.charCodeAt(index) === CharacterCodes.equals) {
                 index++;
                 return SyntaxKind.PercentEqualsToken;
@@ -1171,7 +1123,6 @@ module TypeScript {
         }
 
         function scanMinusToken(): SyntaxKind {
-            index++;
             var character = str.charCodeAt(index);
 
             if (character === CharacterCodes.equals) {
@@ -1188,7 +1139,6 @@ module TypeScript {
         }
 
         function scanPlusToken(): SyntaxKind {
-            index++;
             var character = str.charCodeAt(index);
             if (character === CharacterCodes.equals) {
                 index++;
@@ -1204,7 +1154,6 @@ module TypeScript {
         }
 
         function scanAsteriskToken(): SyntaxKind {
-            index++;
             if (str.charCodeAt(index) === CharacterCodes.equals) {
                 index++;
                 return SyntaxKind.AsteriskEqualsToken;
@@ -1215,7 +1164,6 @@ module TypeScript {
         }
 
         function scanEqualsToken(): SyntaxKind {
-            index++;
             var character = str.charCodeAt(index);
             if (character === CharacterCodes.equals) {
                 index++;
@@ -1238,22 +1186,14 @@ module TypeScript {
             }
         }
 
-        function isDotPrefixedNumericLiteral(): boolean {
-            if (str.charCodeAt(index) === CharacterCodes.dot) {
-                var ch = str.charCodeAt(index + 1);
-                return CharacterInfo.isDecimalDigit(ch);
-            }
-
-            return false;
-        }
-
         function scanDotToken(): SyntaxKind {
-            if (isDotPrefixedNumericLiteral()) {
-                return scanNumericLiteral();
+            var nextChar = str.charCodeAt(index);
+            if (CharacterInfo.isDecimalDigit(nextChar)) {
+                scanDecimalNumericLiteralAfterDot();
+                return SyntaxKind.NumericLiteral;
             }
 
-            index++;
-            if (str.charCodeAt(index) === CharacterCodes.dot &&
+            if (nextChar === CharacterCodes.dot &&
                 str.charCodeAt(index + 1) === CharacterCodes.dot) {
 
                 index += 2;
@@ -1276,7 +1216,6 @@ module TypeScript {
                 }
             }
 
-            index++;
             if (str.charCodeAt(index) === CharacterCodes.equals) {
                 index++;
                 return SyntaxKind.SlashEqualsToken;
@@ -1288,8 +1227,6 @@ module TypeScript {
 
         function tryScanRegularExpressionToken(): SyntaxKind {
             var startIndex = index;
-
-            index++;
 
             var inEscape = false;
             var inCharacterClass = false;
@@ -1356,7 +1293,6 @@ module TypeScript {
         }
 
         function scanExclamationToken(): SyntaxKind {
-            index++;
             if (str.charCodeAt(index) === CharacterCodes.equals) {
                 index++;
 
@@ -1372,17 +1308,6 @@ module TypeScript {
             else {
                 return SyntaxKind.ExclamationToken;
             }
-        }
-
-        function scanDefaultCharacter(character: number): SyntaxKind {
-            var position = index;
-            index++;
-
-            var text = String.fromCharCode(character);
-            var messageText = getErrorMessageText(text);
-            reportDiagnostic(position, 1, DiagnosticCode.Unexpected_character_0, [messageText]);
-
-            return SyntaxKind.ErrorToken;
         }
 
         // Convert text into a printable form usable for an error message.  This will both quote the 
@@ -1450,12 +1375,8 @@ module TypeScript {
             }
         }
 
-        function scanStringLiteral(): SyntaxKind {
-            var quoteCharacter = str.charCodeAt(index);
-
+        function scanStringLiteral(quoteCharacter: number): SyntaxKind {
             // Debug.assert(quoteCharacter === CharacterCodes.singleQuote || quoteCharacter === CharacterCodes.doubleQuote);
-
-            index++;
 
             while (true) {
                 var ch = str.charCodeAt(index);
