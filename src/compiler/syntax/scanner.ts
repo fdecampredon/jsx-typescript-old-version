@@ -185,7 +185,7 @@ module TypeScript {
 
         private fillSizeInfo(): void {
             if (ScannerToken.lastTokenInfoToken !== this) {
-                ScannerToken.triviaScanner.fillTokenInfo(this, ScannerToken.lastTokenInfo);
+                ScannerToken.triviaScanner.fillTokenInfo(this, this._text, ScannerToken.lastTokenInfo);
                 ScannerToken.lastTokenInfoToken = this;
             }
         }
@@ -280,7 +280,7 @@ module TypeScript {
     }
 
     interface ScannerInternal extends Scanner {
-        fillTokenInfo(token: ScannerToken, tokenInfo: TokenInfo): void;
+        fillTokenInfo(token: ISyntaxToken, text: ISimpleText, tokenInfo: TokenInfo): void;
         scanTrivia(token: ScannerToken, isTrailing: boolean): ISyntaxTriviaList;
     }
 
@@ -1422,10 +1422,11 @@ module TypeScript {
             return intChar;
         }
 
-        function fillTokenInfo(token: ScannerToken, tokenInfo: TokenInfo): void {
-            reset(token._text, token.fullStart(), fullEnd(token));
+        function fillTokenInfo(token: ISyntaxToken, text: ISimpleText, tokenInfo: TokenInfo): void {
+            var fullStart = token.fullStart();
+            var fullEnd = fullStart + token.fullWidth();
+            reset(text, fullStart, fullEnd);
 
-            var fullStart = index;
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
