@@ -4,6 +4,24 @@ module TypeScript {
     // Make sure we can encode a token's kind in 7 bits.
     Debug.assert(SyntaxKind.LastToken <= 127);
 
+    // For small tokens, we encode the data in one 31bit int like so:
+    //
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx xxxx    <-- kind
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 xxxx x000 0000    <-- full width
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0xxx xxxx xxxx xxxx xxxx 0000 0000 0000    <-- full start
+    // ^                                        ^                                    ^
+    // |                                        |                                    |
+    // Bit 64                                   Bit 31                               Bit 1
+    //
+    // This allows for 5bits for teh width.  i.e. tokens up to 31 chars in width.  And 19 bits for
+    // the full start.  This allows for tokens starting up to and including position 524,287.
+    //
+    // In practice, for codebases we have measured, these values are sufficient to cover ~95% of 
+    // all tokens.  If a token won't fit within those limits, we make a large token for it.
+    //
+    //
+    // For large tokens, we encode data with two 31 bit ints like so:
+    //
     //   _packedFullStartAndInfo:
     //
     // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 000x    <-- has leading trivia
@@ -15,7 +33,7 @@ module TypeScript {
     //
     // This gives us 29 bits for the start of the token.  At 512MB That's more than enough for
     // any codebase.
-
+    //
     //   _packedFullWidthAndKind:
     //
     // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx xxxx    <-- kind
@@ -24,14 +42,21 @@ module TypeScript {
     // |                                        |                                    |
     // Bit 64                                   Bit 31                               Bit 1
     //
-    // This gives us 24bit for trivia (or 16MB of trivia).
+    // This gives us 24bit for trivia (or 16MB of trivia which should be enough for any codebase).
+
     enum ScannerConstants {
         LargeTokenFullStartShift           = 2,
         LargeTokenFullWidthShift           = 7,
 
-        LeadingTriviaBitMask                = 0x01, // 00000001
-        TrailingTriviaBitMask               = 0x02, // 00000010
-        KindMask                            = 0x7F, // 01111111
+        SmallTokenFullWidthShift           = 7,
+        SmallTokenFullStartShift           = 12,
+
+        KindMask                           = 0x7F, // 01111111
+
+        LargeTokenLeadingTriviaBitMask     = 0x01, // 00000001
+        LargeTokenTrailingTriviaBitMask    = 0x02, // 00000010
+
+        SmallTokenFullWidthMask            = 0x1F, // 00011111
     }
 
     // Make sure our math works for packing/unpacking large fullStarts.
@@ -59,12 +84,12 @@ module TypeScript {
         return packedFullStartAndInfo >> ScannerConstants.LargeTokenFullStartShift;
     }
 
-    function unpackHasLeadingTriviaInfo(packed: number): number {
-        return packed & ScannerConstants.LeadingTriviaBitMask;
+    function largeTokenUnpackHasLeadingTriviaInfo(packed: number): number {
+        return packed & ScannerConstants.LargeTokenLeadingTriviaBitMask;
     }
 
-    function unpackHasTrailingTriviaInfo(packed: number): number {
-        return packed & ScannerConstants.TrailingTriviaBitMask;
+    function largeTokenUnpackHasTrailingTriviaInfo(packed: number): number {
+        return packed & ScannerConstants.LargeTokenTrailingTriviaBitMask;
     }
 
     var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
@@ -169,81 +194,47 @@ module TypeScript {
         return token.fullWidth() - lastTokenInfo.leadingTriviaWidth - lastTokenInfo.width;
     }
 
+    function tokenIsIncrementallyUnusable(token: IScannerToken): boolean {
+        // No scanner tokens make their *containing node* incrementally unusable.  
+        // Note: several scanner tokens may themselves be unusable.  i.e. if the parser asks
+        // for a full node, then that ndoe can be returned even if it contains parser generated
+        // tokens (like regexs and merged operator tokens). However, if the parser asks for a
+        // for a token, then those contextual tokens will not be reusable.
+        return false;
+    }
+
     export class LargeScannerToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
 
         public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; 
 
-        constructor(public _text: ISimpleText,
-                    private _packedFullStartAndInfo: number,
-                    private _packedFullWidthAndKind: number) {
+        constructor(public _text: ISimpleText, private _packedFullStartAndInfo: number, private _packedFullWidthAndKind: number) {
         }
 
         public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
             this._text = text;
 
             this._packedFullStartAndInfo = largeTokenPackFullStartAndInfo(fullStart,
-                unpackHasLeadingTriviaInfo(this._packedFullStartAndInfo),
-                unpackHasTrailingTriviaInfo(this._packedFullStartAndInfo));
+                largeTokenUnpackHasLeadingTriviaInfo(this._packedFullStartAndInfo),
+                largeTokenUnpackHasTrailingTriviaInfo(this._packedFullStartAndInfo));
         }
 
-        public kind(): SyntaxKind {
-            return largeTokenUnpackKind(this._packedFullWidthAndKind);
-        }
+        public isIncrementallyUnusable(): boolean           { return tokenIsIncrementallyUnusable(this); }
+        public isKeywordConvertedToIdentifier(): boolean    { return false; }
+        public hasSkippedToken(): boolean                   { return false; }
+        public fullText(): string                           { return fullText(this); }
+        public text(): string                               { return text(this); }
+        public leadingTrivia(): ISyntaxTriviaList           { return leadingTrivia(this); }
+        public trailingTrivia(): ISyntaxTriviaList          { return trailingTrivia(this); }
+        public leadingTriviaWidth(): number                 { return leadingTriviaWidth(this); }
+        public trailingTriviaWidth(): number                { return trailingTriviaWidth(this); }
 
-        public isIncrementallyUnusable(): boolean {
-            // No scanner tokens make their *containing node* incrementally unusable.  
-            // Note: several scanner tokens may themselves be unusable.  i.e. if the parser asks
-            // for a full node, then that ndoe can be returned even if it contains parser generated
-            // tokens (like regexs and merged operator tokens). However, if the parser asks for a
-            // for a token, then those contextual tokens will not be reusable.
-            return false;
-        }
-
-        public isKeywordConvertedToIdentifier(): boolean {
-            return false;
-        }
-
+        public kind(): SyntaxKind { return largeTokenUnpackKind(this._packedFullWidthAndKind); }
         public fullWidth(): number { return largeTokenUnpackFullWidth(this._packedFullWidthAndKind); }
         public fullStart(): number { return largeTokenUnpackFullStart(this._packedFullStartAndInfo); }
-
-        public fullText(): string {
-            return fullText(this);
-        }
-
-        public text(): string {
-            return text(this);
-        }
-
-        public leadingTrivia(): ISyntaxTriviaList {
-            return leadingTrivia(this);
-        }
-
-        public trailingTrivia(): ISyntaxTriviaList {
-            return trailingTrivia(this);
-        }
-
-        public leadingTriviaWidth(): number {
-            return leadingTriviaWidth(this);
-        }
-
-        public trailingTriviaWidth(): number {
-            return trailingTriviaWidth(this);
-        }
-
-        public hasLeadingTrivia(): boolean {
-            return unpackHasLeadingTriviaInfo(this._packedFullStartAndInfo) !== 0;
-        }
-
-        public hasTrailingTrivia(): boolean {
-            return unpackHasTrailingTriviaInfo(this._packedFullStartAndInfo) !== 0;
-        }
-
-        public hasSkippedToken(): boolean { return false; }
-
-        public clone(): ISyntaxToken {
-            return new LargeScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind);
-        }
+        public hasLeadingTrivia(): boolean { return largeTokenUnpackHasLeadingTriviaInfo(this._packedFullStartAndInfo) !== 0; }
+        public hasTrailingTrivia(): boolean { return largeTokenUnpackHasTrailingTriviaInfo(this._packedFullStartAndInfo) !== 0; }
+        public clone(): ISyntaxToken { return new LargeScannerToken(this._text, this._packedFullStartAndInfo, this._packedFullWidthAndKind); }
     }
 
     export interface DiagnosticCallback {
@@ -306,8 +297,8 @@ module TypeScript {
 
             // inline the packing logic for perf.
             var packedFullStartAndTriviaInfo = (fullStart << ScannerConstants.LargeTokenFullStartShift) |
-                (hasLeadingTrivia ? ScannerConstants.LeadingTriviaBitMask : 0) |
-                (hasTrailingTrivia ? ScannerConstants.TrailingTriviaBitMask : 0);
+                (hasLeadingTrivia ? ScannerConstants.LargeTokenLeadingTriviaBitMask : 0) |
+                (hasTrailingTrivia ? ScannerConstants.LargeTokenTrailingTriviaBitMask : 0);
   
             var packedFullWidthAndKind = ((index - fullStart) << ScannerConstants.LargeTokenFullWidthShift) | kind;
             return new LargeScannerToken(text, packedFullStartAndTriviaInfo, packedFullWidthAndKind);
