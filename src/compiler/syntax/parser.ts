@@ -1456,7 +1456,7 @@ module TypeScript.Parser {
                     // mode.
                     return !isInStrictMode;
                 }
-                
+
                 // If it's typescript keyword, then it's actually a javascript identifier.
                 return tokenKind <= SyntaxKind.LastTypeScriptKeyword;
             }
@@ -1675,7 +1675,7 @@ module TypeScript.Parser {
 
             throw Errors.invalidOperation();
         }
-        
+
         function addSkippedTokenAfterNodeOrToken(nodeOrToken: ISyntaxNodeOrToken, skippedToken: ISyntaxToken): ISyntaxNodeOrToken {
             if (isToken(nodeOrToken)) {
                 return addSkippedTokenAfterToken(<ISyntaxToken>nodeOrToken, skippedToken);
@@ -1818,7 +1818,7 @@ module TypeScript.Parser {
 
         function addSkippedTokenToTriviaArray(array: ISyntaxTrivia[], skippedToken: ISyntaxToken): void {
             // Debug.assert(skippedToken.text().length > 0);
-            
+
             // first, add the leading trivia of the skipped token to the array
             addTriviaTo(skippedToken.leadingTrivia(), array);
 
@@ -1895,12 +1895,7 @@ module TypeScript.Parser {
             var nextToken = peekToken(1);
             var _modifierCount = modifierCount();
             var tokenAfterModifiers = peekToken(_modifierCount);
-            return isImportDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                   isExportAssignment() ||
-                   isModuleDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                   isInterfaceDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                   isClassDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                   isEnumDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
+            return isInterfaceEnumClassModuleImportOrExport() ||
                    isStatement(inErrorRecovery);
         }
         
@@ -2944,7 +2939,7 @@ module TypeScript.Parser {
             return new HeritageClauseSyntax(parseNodeData, extendsOrImplementsKeyword, typeNames);
         }
 
-        function isInterfaceEnumClassOrModule(): boolean {
+        function isInterfaceEnumClassModuleImportOrExport(): boolean {
             var _currentToken = currentToken();
             var nextToken = peekToken(1);
             var _modifierCount = modifierCount();
@@ -2952,7 +2947,9 @@ module TypeScript.Parser {
             if (isInterfaceDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
                 isClassDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
                 isEnumDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                isModuleDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers)) {
+                isModuleDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) || 
+                isImportDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
+                isExportAssignment()) {
 
                 return true;
             }
@@ -3006,7 +3003,7 @@ module TypeScript.Parser {
             // do not want to consume.  This can happen when the user does not terminate their 
             // existing block properly.  We don't want to accidently consume these as expression 
             // below.
-            if (isInterfaceEnumClassOrModule()) {
+            if (isInterfaceEnumClassModuleImportOrExport()) {
                 return false;
             }
 
@@ -3068,7 +3065,7 @@ module TypeScript.Parser {
             // do not want to consume.  This can happen when the user does not terminate their 
             // existing block properly.  We don't want to accidently consume these as expression 
             // below.
-            if (isInterfaceEnumClassOrModule()) {
+            if (isInterfaceEnumClassModuleImportOrExport()) {
                 return null;
             }
 
