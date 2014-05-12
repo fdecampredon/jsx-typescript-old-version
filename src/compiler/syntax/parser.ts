@@ -1891,8 +1891,9 @@ module TypeScript.Parser {
                 return true;
             }
 
-            return isInterfaceEnumClassModuleImportOrExport() ||
-                   isStatement(inErrorRecovery);
+            var _modifierCount = modifierCount();
+            return isInterfaceEnumClassModuleImportOrExport(_modifierCount) ||
+                   isStatement(_modifierCount, inErrorRecovery);
         }
 
         function tryParseModuleElement(inErrorRecovery: boolean): IModuleElementSyntax {
@@ -1964,7 +1965,7 @@ module TypeScript.Parser {
                     break;
             }
 
-            return tryParseStatement(inErrorRecovery);
+            return tryParseStatement(_modifierCount, inErrorRecovery);
         }
 
         function parseImportDeclaration(): ImportDeclarationSyntax {
@@ -2312,18 +2313,15 @@ module TypeScript.Parser {
             return new ClassDeclarationSyntax(parseNodeData, modifiers, classKeyword, identifier, typeParameterList, heritageClauses, openBraceToken, classElements, closeBraceToken);
         }
 
-        function isAccessor(inErrorRecovery: boolean): boolean {
-            var index = modifierCount();
-
-            var tokenN = peekToken(index);
+        function isAccessor(modifierCount: number, inErrorRecovery: boolean): boolean {
+            var tokenN = peekToken(modifierCount);
             var tokenKind = tokenN.kind();
             if (tokenKind !== SyntaxKind.GetKeyword &&
                 tokenKind !== SyntaxKind.SetKeyword) {
                 return false;
             }
 
-            index++;
-            return isPropertyName(peekToken(index), inErrorRecovery);
+            return isPropertyName(peekToken(modifierCount + 1), inErrorRecovery);
         }
 
         function parseAccessor(checkForStrictMode: boolean): ISyntaxNode {
@@ -2369,11 +2367,12 @@ module TypeScript.Parser {
 
             // Note: the order of these calls is important.  Specifically, isMemberVariableDeclaration
             // checks for a subset of the conditions of the previous two calls.
-            return isConstructorDeclaration() ||
+            var _modifierCount = modifierCount();
+            return isConstructorDeclaration(_modifierCount) ||
                    isMemberFunctionDeclaration(inErrorRecovery) ||
-                   isAccessor(inErrorRecovery) ||
+                   isAccessor(_modifierCount, inErrorRecovery) ||
                    isMemberVariableDeclaration(inErrorRecovery) ||
-                   isIndexMemberDeclaration();
+                   isIndexMemberDeclaration(_modifierCount);
         }
 
         function tryParseClassElement(inErrorRecovery: boolean): IClassElementSyntax {
@@ -2384,19 +2383,20 @@ module TypeScript.Parser {
                 return <IClassElementSyntax>node;
             }
 
-            if (isConstructorDeclaration()) {
+            var _modifierCount = modifierCount();
+            if (isConstructorDeclaration(_modifierCount)) {
                 return parseConstructorDeclaration();
             }
             else if (isMemberFunctionDeclaration(inErrorRecovery)) {
                 return parseMemberFunctionDeclaration();
             }
-            else if (isAccessor(inErrorRecovery)) {
+            else if (isAccessor(_modifierCount, inErrorRecovery)) {
                 return parseAccessor(/*checkForStrictMode:*/ false);
             }
             else if (isMemberVariableDeclaration(inErrorRecovery)) {
                 return parseMemberVariableDeclaration();
             }
-            else if (isIndexMemberDeclaration()) {
+            else if (isIndexMemberDeclaration(_modifierCount)) {
                 return parseIndexMemberDeclaration();
             }
             else {
@@ -2404,14 +2404,13 @@ module TypeScript.Parser {
             }
         }
 
-        function isConstructorDeclaration(): boolean {
+        function isConstructorDeclaration(modifierCount: number): boolean {
             // Note: we deviate slightly from the spec here.  If we see 'constructor' then we 
             // assume this is a constructor.  That means, if a user writes "public constructor;"
             // it won't be viewed as a member.  As a workaround, they can simply write:
             //      public 'constructor';
 
-            var index = modifierCount();
-            return peekToken(index).kind() === SyntaxKind.ConstructorKeyword;
+            return peekToken(modifierCount).kind() === SyntaxKind.ConstructorKeyword;
         }
 
         function parseConstructorDeclaration(): ConstructorDeclarationSyntax {
@@ -2593,9 +2592,8 @@ module TypeScript.Parser {
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
 
-        function isIndexMemberDeclaration(): boolean {
-            var index = modifierCount();
-            return isIndexSignature(index);
+        function isIndexMemberDeclaration(modifierCount: number): boolean {
+            return isIndexSignature(modifierCount);
         }
 
         function parseIndexMemberDeclaration(): IndexMemberDeclarationSyntax {
@@ -2633,9 +2631,8 @@ module TypeScript.Parser {
             return false;
         }
 
-        function isFunctionDeclaration(): boolean {
-            var index = modifierCount();
-            return peekToken(index).kind() === SyntaxKind.FunctionKeyword;
+        function isFunctionDeclaration(modifierCount: number): boolean {
+            return peekToken(modifierCount).kind() === SyntaxKind.FunctionKeyword;
         }
 
         function parseFunctionDeclaration(): FunctionDeclarationSyntax {
@@ -2894,13 +2891,12 @@ module TypeScript.Parser {
             return new HeritageClauseSyntax(parseNodeData, extendsOrImplementsKeyword, typeNames);
         }
 
-        function isInterfaceEnumClassModuleImportOrExport(): boolean {
+        function isInterfaceEnumClassModuleImportOrExport(modifierCount: number): boolean {
             var _currentToken = currentToken();
-            var _modifierCount = modifierCount();
 
-            if (_modifierCount) {
+            if (modifierCount) {
                 // Any of these keywords following a modifier is definitely a TS construct.
-                switch (peekToken(_modifierCount).kind()) {
+                switch (peekToken(modifierCount).kind()) {
                     case SyntaxKind.ImportKeyword: 
                     case SyntaxKind.ModuleKeyword: 
                     case SyntaxKind.InterfaceKeyword: 
@@ -2943,7 +2939,7 @@ module TypeScript.Parser {
             return false;
         }
 
-        function isStatement(inErrorRecovery: boolean): boolean {
+        function isStatement(modifierCount: number, inErrorRecovery: boolean): boolean {
             if (SyntaxUtilities.isStatement(currentNode())) {
                 return true;
             }
@@ -2984,28 +2980,28 @@ module TypeScript.Parser {
                 case SyntaxKind.DebuggerKeyword:
                     return true;
             }
-            
+
             // Check for common things that might appear where we expect a statement, but which we 
             // do not want to consume.  This can happen when the user does not terminate their 
             // existing block properly.  We don't want to accidently consume these as expression 
             // below.
-            if (isInterfaceEnumClassModuleImportOrExport()) {
+            if (isInterfaceEnumClassModuleImportOrExport(modifierCount)) {
                 return false;
             }
 
             // More complicated cases.
             return isLabeledStatement(_currentToken) ||
-                isVariableStatement() ||
-                isFunctionDeclaration() ||
+                isVariableStatement(modifierCount) ||
+                isFunctionDeclaration(modifierCount) ||
                 isEmptyStatement(_currentToken, inErrorRecovery) ||
                 isExpressionStatement(_currentToken);
         }
 
         function parseStatement(inErrorRecovery: boolean): IStatementSyntax {
-            return tryParseStatement(inErrorRecovery) || parseExpressionStatement();
+            return tryParseStatement(modifierCount(), inErrorRecovery) || parseExpressionStatement();
         }
 
-        function tryParseStatement(inErrorRecovery: boolean): IStatementSyntax {
+        function tryParseStatement(modifierCount: number, inErrorRecovery: boolean): IStatementSyntax {
             var node = currentNode();
             if (SyntaxUtilities.isStatement(node)) {
                 consumeNode(node);
@@ -3051,17 +3047,17 @@ module TypeScript.Parser {
             // do not want to consume.  This can happen when the user does not terminate their 
             // existing block properly.  We don't want to accidently consume these as expression 
             // below.
-            if (isInterfaceEnumClassModuleImportOrExport()) {
+            if (isInterfaceEnumClassModuleImportOrExport(modifierCount)) {
                 return null;
             }
 
-            if (isVariableStatement()) {
+            if (isVariableStatement(modifierCount)) {
                 return parseVariableStatement();
             }
             else if (isLabeledStatement(_currentToken)) {
                 return parseLabeledStatement();
             }
-            else if (isFunctionDeclaration()) {
+            else if (isFunctionDeclaration(modifierCount)) {
                 return parseFunctionDeclaration();
             }
             else if (isEmptyStatement(_currentToken, inErrorRecovery)) {
@@ -3603,9 +3599,8 @@ module TypeScript.Parser {
                 parseStatement(/*inErrorRecovery:*/ false));
         }
 
-        function isVariableStatement(): boolean {
-            var index = modifierCount();
-            return peekToken(index).kind() === SyntaxKind.VarKeyword;
+        function isVariableStatement(modifierCount: number): boolean {
+            return peekToken(modifierCount).kind() === SyntaxKind.VarKeyword;
         }
 
         function parseVariableStatement(): VariableStatementSyntax {
@@ -4508,9 +4503,10 @@ module TypeScript.Parser {
                 // (i.e. they're missing the open brace).  See if that's the case so we can try to 
                 // recover better.  If we don't do this, then the next close curly we see may end
                 // up preemptively closing the containing construct.
-                if (isStatement(/*inErrorRecovery:*/ false) &&
+                var _modifierCount = modifierCount();
+                if (isStatement(_modifierCount, /*inErrorRecovery:*/ false) &&
                     !isExpressionStatement(currentToken()) &&
-                    !isFunctionDeclaration()) {
+                    !isFunctionDeclaration(_modifierCount)) {
                     // We've seen a statement (and it isn't an expressionStatement like 'foo()'), 
                     // so treat this like a block with a missing open brace.
                     return parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ true, /*checkForStrictMode:*/ false);
@@ -4730,7 +4726,7 @@ module TypeScript.Parser {
         function tryParsePropertyAssignment(inErrorRecovery: boolean): IPropertyAssignmentSyntax {
             // Debug.assert(isPropertyAssignment(/*inErrorRecovery:*/ false));
 
-            if (isAccessor(inErrorRecovery)) {
+            if (isAccessor(modifierCount(), inErrorRecovery)) {
                 return parseAccessor(/*checkForStrictMode:*/ true);
             }
             else if (isFunctionPropertyAssignment(inErrorRecovery)) {
@@ -4745,7 +4741,7 @@ module TypeScript.Parser {
         }
 
         function isPropertyAssignment(inErrorRecovery: boolean): boolean {
-            return isAccessor(inErrorRecovery) ||
+            return isAccessor(modifierCount(), inErrorRecovery) ||
                    isFunctionPropertyAssignment(inErrorRecovery) ||
                    isSimplePropertyAssignment(inErrorRecovery);
         }
@@ -5754,10 +5750,10 @@ module TypeScript.Parser {
                     return isSwitchClause();
 
                 case ListParsingState.SwitchClause_Statements:
-                    return isStatement(inErrorRecovery);
+                    return isStatement(modifierCount(), inErrorRecovery);
 
                 case ListParsingState.Block_Statements:
-                    return isStatement(inErrorRecovery);
+                    return isStatement(modifierCount(), inErrorRecovery);
 
                 case ListParsingState.TryBlock_Statements:
                 case ListParsingState.CatchBlock_Statements:
@@ -5837,10 +5833,10 @@ module TypeScript.Parser {
                     return tryParseSwitchClause();
 
                 case ListParsingState.SwitchClause_Statements:
-                    return tryParseStatement(inErrorRecovery);
+                    return tryParseStatement(modifierCount(), inErrorRecovery);
 
                 case ListParsingState.Block_Statements:
-                    return tryParseStatement(inErrorRecovery);
+                    return tryParseStatement(modifierCount(), inErrorRecovery);
 
                 case ListParsingState.EnumDeclaration_EnumElements:
                     return tryParseEnumElement(inErrorRecovery);
