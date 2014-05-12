@@ -3821,7 +3821,6 @@ module TypeScript.Parser {
                     consumeToken(token0);
 
                     var rightOperand = tryParseAssignmentExpressionOrHigher(/*force:*/ true, allowIn);
-                    var binaryExpressionKind = SyntaxFacts.getBinaryExpressionFromOperatorToken(token0Kind);
 
                     return new BinaryExpressionSyntax(parseNodeData, leftOperand, token0, rightOperand);
                 }
@@ -5251,20 +5250,23 @@ module TypeScript.Parser {
         }
 
         function tryParseExpectedListItem(currentListType: ListParsingState,
-                                         inErrorRecovery: boolean,
-                                         items: ISyntaxElement[],
-                                         processItems: (items: any[]) => void): void {
+                                          inErrorRecovery: boolean,
+                                          items: ISyntaxElement[],
+                                          processItems: (items: any[]) => void): boolean {
             var item = tryParseExpectedListItemWorker(currentListType, inErrorRecovery);
 
-            if (item !== null) {
-                // Debug.assert(item !== null);
-
-                items.push(item);
-
-                if (processItems !== null) {
-                    processItems(items);
-                }
+            if (item === null) {
+                return false;
             }
+            // Debug.assert(item !== null);
+
+            items.push(item);
+
+            if (processItems !== null) {
+                processItems(items);
+            }
+
+            return true;
         }
 
         function listIsTerminated(currentListType: ListParsingState): boolean {
@@ -5281,11 +5283,9 @@ module TypeScript.Parser {
             while (true) {
                 // Try to parse an item of the list.  If we fail then decide if we need to abort or 
                 // continue parsing.
-                var oldItemsCount = items.length;
-                tryParseExpectedListItem(currentListType, /*inErrorRecovery:*/ false, items, processItems);
+                var succeeded = tryParseExpectedListItem(currentListType, /*inErrorRecovery:*/ false, items, processItems);
 
-                var newItemsCount = items.length;
-                if (newItemsCount === oldItemsCount) {
+                if (!succeeded) {
                     // We weren't able to parse out a list element.
 
                     // That may have been because the list is complete.  In that case, break out 
@@ -5331,26 +5331,23 @@ module TypeScript.Parser {
             var allowAutomaticSemicolonInsertion = _separatorKind === SyntaxKind.SemicolonToken;
 
             var inErrorRecovery = false;
-            var listWasTerminated = false;
             while (true) {
                 // Try to parse an item of the list.  If we fail then decide if we need to abort or 
                 // continue parsing.
-                var oldItemsCount = nodes.length;
+
                 // Debug.assert(oldItemsCount % 2 === 0);
-                tryParseExpectedListItem(currentListType, inErrorRecovery, nodes, null);
-                
-                var newItemsCount = nodes.length;
-                if (newItemsCount === oldItemsCount) {
+                var succeeded = tryParseExpectedListItem(currentListType, inErrorRecovery, nodes, null);
+
+                if (!succeeded) {
                     // We weren't able to parse out a list element.
                     // Debug.assert(items === null || items.length % 2 === 0);
                     
                     // That may have been because the list is complete.  In that case, break out 
                     // and return the items we were able parse.
                     if (listIsTerminated(currentListType)) {
-                        listWasTerminated = true;
                         break;
                     }
-                    
+
                     // List wasn't complete and we didn't get an item.  Figure out if we should bail out
                     // or skip a token and continue.
                     var abort = abortParsingListOrMoveToNextToken(currentListType, nodes, separators, skippedTokens);
@@ -5387,7 +5384,6 @@ module TypeScript.Parser {
                 // First, we may actually be at the end of the list.  If we are, then we're done
                 // parsing list elements.  
                 if (listIsTerminated(currentListType)) {
-                    listWasTerminated = true;
                     break;
                 }
 
