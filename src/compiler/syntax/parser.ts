@@ -1891,14 +1891,10 @@ module TypeScript.Parser {
                 return true;
             }
 
-            var _currentToken = currentToken();
-            var nextToken = peekToken(1);
-            var _modifierCount = modifierCount();
-            var tokenAfterModifiers = peekToken(_modifierCount);
             return isInterfaceEnumClassModuleImportOrExport() ||
                    isStatement(inErrorRecovery);
         }
-        
+
         function tryParseModuleElement(inErrorRecovery: boolean): IModuleElementSyntax {
             var node = currentNode();
             if (SyntaxUtilities.isModuleElement(node)) {
@@ -1907,45 +1903,68 @@ module TypeScript.Parser {
             }
 
             var _currentToken = currentToken();
-            var nextToken = peekToken(1);
             var _modifierCount = modifierCount();
-            var tokenAfterModifiers = peekToken(_modifierCount);
 
-            if (isImportDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers)) {
-                return parseImportDeclaration();
-            }
-            else if (isExportAssignment()) {
-                return parseExportAssignment();
-            }
-            else if (isModuleDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers)) {
-                return parseModuleDeclaration();
-            }
-            else if (isInterfaceDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers)) {
-                return parseInterfaceDeclaration();
-            }
-            else if (isClassDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers)) {
-                return parseClassDeclaration();
-            }
-            else if (isEnumDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers)) {
-                return parseEnumDeclaration();
-            }
-            else {
-                return tryParseStatement(inErrorRecovery);
-            }
-        }
-
-        function isImportDeclaration(currentToken: ISyntaxToken, nextToken: ISyntaxToken, modifierCount: number, tokenAfterModifiers: ISyntaxToken): boolean {
-            // If we have at least one modifier, and we see 'import', then consider this an import
-            // declaration.
-            if (modifierCount > 0 &&
-                tokenAfterModifiers.kind() === SyntaxKind.ImportKeyword) {
-                return true;
+            if (_modifierCount) {
+                // if we have modifiers, then these are definitely TS constructs and we can 
+                // immediately start parsing them.
+                switch (peekToken(_modifierCount).kind()) {
+                    case SyntaxKind.ImportKeyword: return parseImportDeclaration();
+                    case SyntaxKind.ModuleKeyword: return parseModuleDeclaration();
+                    case SyntaxKind.InterfaceKeyword: return parseInterfaceDeclaration();
+                    case SyntaxKind.ClassKeyword: return parseClassDeclaration();
+                    case SyntaxKind.EnumKeyword: return parseEnumDeclaration();
+                }
             }
 
-            // 'import' is not a javascript keyword.  So we need to use a bit of lookahead here to ensure
-            // that we're actually looking at a import construct and not some javascript expression.
-            return currentToken.kind() === SyntaxKind.ImportKeyword &&
-                isIdentifier(nextToken);
+            // No modifiers.  If we see 'class, enum, import and export' we could technically 
+            // aggressively consume them as they can't start another construct.  However, it's 
+            // not uncommon in error recovery to run into a situation where we see those keywords,
+            // but the code was using it as the name of an object property.  To avoid overzealously
+            // consuming these, we only parse them out if we can see enough context to 'prove' that
+            // they really do start the module element
+            var nextToken = peekToken(1);
+            switch (_currentToken.kind()) {
+                case SyntaxKind.ModuleKeyword:
+                    if (isIdentifier(nextToken) || nextToken.kind() === SyntaxKind.StringLiteral) {
+                        return parseModuleDeclaration();
+                    }
+                    break;
+
+                case SyntaxKind.ImportKeyword:
+                    if (isIdentifier(nextToken)) {
+                        return parseImportDeclaration();
+                    }
+                    break;
+
+                case SyntaxKind.ClassKeyword:
+                    if (isIdentifier(nextToken)) {
+                        return parseClassDeclaration();
+                    }
+                    break;
+
+                case SyntaxKind.EnumKeyword:
+                    if (isIdentifier(nextToken)) {
+                        return parseEnumDeclaration();
+                    }
+                    break;
+
+                case SyntaxKind.InterfaceKeyword:
+                    if (isIdentifier(nextToken)) {
+                        return parseInterfaceDeclaration();
+                    }
+                    break;
+
+                case SyntaxKind.ExportKeyword:
+                    // 'export' could be a modifier on a statement (like export var ...).  So we 
+                    // only want to parse out an export assignment here if we actually see the equals.
+                    if (nextToken.kind() === SyntaxKind.EqualsToken) {
+                        return parseExportAssignment();
+                    }
+                    break;
+            }
+
+            return tryParseStatement(inErrorRecovery);
         }
 
         function parseImportDeclaration(): ImportDeclarationSyntax {
@@ -1956,11 +1975,6 @@ module TypeScript.Parser {
                 eatToken(SyntaxKind.EqualsToken),
                 parseModuleReference(),
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
-        }
-
-        function isExportAssignment(): boolean {
-            return currentToken().kind() === SyntaxKind.ExportKeyword &&
-                peekToken(1).kind() === SyntaxKind.EqualsToken;
         }
 
         function parseExportAssignment(): ExportAssignmentSyntax {
@@ -2160,20 +2174,6 @@ module TypeScript.Parser {
             return current;
         }
 
-        function isEnumDeclaration(currentToken: ISyntaxToken, nextToken: ISyntaxToken, modifierCount: number, tokenAfterModifiers: ISyntaxToken): boolean {
-            // If we have at least one modifier, and we see 'enum', then consider this an enum
-            // declaration.
-            if (modifierCount > 0 &&
-                tokenAfterModifiers.kind() === SyntaxKind.EnumKeyword) {
-                return true;
-            }
-
-            // 'enum' is not a javascript keyword.  So we need to use a bit of lookahead here to ensure
-            // that we're actually looking at a enum construct and not some javascript expression.
-            return currentToken.kind() === SyntaxKind.EnumKeyword &&
-                   isIdentifier(nextToken);
-        }
-
         function parseEnumDeclaration(): EnumDeclarationSyntax {
             // Debug.assert(isEnumDeclaration());
 
@@ -2266,20 +2266,6 @@ module TypeScript.Parser {
             returnZeroLengthArray(tokens);
 
             return result;
-        }
-
-        function isClassDeclaration(currentToken: ISyntaxToken, nextToken: ISyntaxToken, modifierCount: number, tokenAfterModifiers: ISyntaxToken): boolean {
-            // If we have at least one modifier, and we see 'class', then consider this a class
-            // declaration.
-            if (modifierCount > 0 &&
-                tokenAfterModifiers.kind() === SyntaxKind.ClassKeyword) {
-                return true;
-            }
-
-            // 'class' is not a javascript keyword.  So we need to use a bit of lookahead here to ensure
-            // that we're actually looking at a class construct and not some javascript expression.
-            return currentToken.kind() === SyntaxKind.ClassKeyword &&
-                   isIdentifier(nextToken);
         }
 
         function parseHeritageClauses(): HeritageClauseSyntax[] {
@@ -2678,23 +2664,6 @@ module TypeScript.Parser {
             return new FunctionDeclarationSyntax(parseNodeData, modifiers, functionKeyword, identifier, callSignature, block, semicolonToken);
         }
 
-        function isModuleDeclaration(currentToken: ISyntaxToken, nextToken: ISyntaxToken, modifierCount: number, tokenAfterModifiers: ISyntaxToken): boolean {
-            // If we have at least one modifier, and we see 'module', then consider this a module
-            // declaration.
-            if (modifierCount > 0 &&
-                tokenAfterModifiers.kind() === SyntaxKind.ModuleKeyword) {
-                return true;
-            }
-
-            // 'module' is not a javascript keyword.  So we need to use a bit of lookahead here to ensure
-            // that we're actually looking at a module construct and not some javascript expression.
-            if (currentToken.kind() === SyntaxKind.ModuleKeyword) {
-                return isIdentifier(nextToken) || nextToken.kind() === SyntaxKind.StringLiteral;
-            }
-
-            return false;
-        }
-
         function parseModuleDeclaration(): ModuleDeclarationSyntax {
             // Debug.assert(isModuleDeclaration());
 
@@ -2723,20 +2692,6 @@ module TypeScript.Parser {
             var closeBraceToken = eatToken(SyntaxKind.CloseBraceToken);
 
             return new ModuleDeclarationSyntax(parseNodeData, modifiers, moduleKeyword, moduleName, stringLiteral, openBraceToken, moduleElements, closeBraceToken);
-        }
-
-        function isInterfaceDeclaration(currentToken: ISyntaxToken, nextToken: ISyntaxToken, modifierCount: number, tokenAfterModifiers: ISyntaxToken): boolean {
-            // If we have at least one modifier, and we see 'interface', then consider this an interface
-            // declaration.
-            if (modifierCount > 0 &&
-                tokenAfterModifiers.kind() === SyntaxKind.InterfaceKeyword) {
-                return true;
-            }
-
-            // 'interface' is not a javascript keyword.  So we need to use a bit of lookahead here to ensure
-            // that we're actually looking at a interface construct and not some javascript expression.
-            return currentToken.kind() === SyntaxKind.InterfaceKeyword &&
-                   isIdentifier(nextToken);
         }
 
         function parseInterfaceDeclaration(): InterfaceDeclarationSyntax {
@@ -2941,17 +2896,48 @@ module TypeScript.Parser {
 
         function isInterfaceEnumClassModuleImportOrExport(): boolean {
             var _currentToken = currentToken();
-            var nextToken = peekToken(1);
             var _modifierCount = modifierCount();
-            var tokenAfterModifiers = peekToken(_modifierCount);
-            if (isInterfaceDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                isClassDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                isEnumDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                isModuleDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) || 
-                isImportDeclaration(_currentToken, nextToken, _modifierCount, tokenAfterModifiers) ||
-                isExportAssignment()) {
 
-                return true;
+            if (_modifierCount) {
+                // Any of these keywords following a modifier is definitely a TS construct.
+                switch (peekToken(_modifierCount).kind()) {
+                    case SyntaxKind.ImportKeyword: 
+                    case SyntaxKind.ModuleKeyword: 
+                    case SyntaxKind.InterfaceKeyword: 
+                    case SyntaxKind.ClassKeyword: 
+                    case SyntaxKind.EnumKeyword: 
+                        return true;
+                }
+            }
+
+            // no modifiers.  While certain of these keywords are javascript keywords as well, it
+            // is possible to run into them in some circumstances in error recovery where we don't
+            // want to consider them the start of the module element construct.  For example, they
+            // might be hte name in an object literal.  Because of that, we check the next token to
+            // make sure it really is the start of a module element.
+            var nextToken = peekToken(1);
+
+            switch (_currentToken.kind()) {
+                case SyntaxKind.ModuleKeyword:
+                    if (isIdentifier(nextToken) || nextToken.kind() === SyntaxKind.StringLiteral) {
+                        return true;
+                    }
+                    break;
+
+                case SyntaxKind.ImportKeyword:
+                case SyntaxKind.ClassKeyword:
+                case SyntaxKind.EnumKeyword:
+                case SyntaxKind.InterfaceKeyword:
+                    if (isIdentifier(nextToken)) {
+                        return true;
+                    }
+                    break;
+
+                case SyntaxKind.ExportKeyword:
+                    if (nextToken.kind() === SyntaxKind.EqualsToken) {
+                        return true;
+                    }
+                    break;
             }
 
             return false;
@@ -3082,7 +3068,6 @@ module TypeScript.Parser {
                 return parseEmptyStatement();
             }
             else if (isExpressionStatement(_currentToken)) {
-                // Fall back to parsing this as expression statement.
                 return parseExpressionStatement();
             }
             else {
