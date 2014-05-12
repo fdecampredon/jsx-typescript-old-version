@@ -1623,53 +1623,51 @@ module TypeScript.Parser {
                     return new Diagnostic(fileName, source.text.lineMap(), start(token), width(token), DiagnosticCode.Identifier_expected, null);
                 }
             }
-
-            // throw Errors.notYetImplemented();
         }
 
-        function getBinaryExpressionPrecedence(expressionKind: SyntaxKind): BinaryExpressionPrecedence {
-            switch (expressionKind) {
-                case SyntaxKind.LogicalOrExpression:
+        function getBinaryExpressionPrecedence(tokenKind: SyntaxKind): BinaryExpressionPrecedence {
+            switch (tokenKind) {
+                case SyntaxKind.BarBarToken:
                     return BinaryExpressionPrecedence.LogicalOrExpressionPrecedence;
 
-                case SyntaxKind.LogicalAndExpression:
+                case SyntaxKind.AmpersandAmpersandToken:
                     return BinaryExpressionPrecedence.LogicalAndExpressionPrecedence;
 
-                case SyntaxKind.BitwiseOrExpression:
+                case SyntaxKind.BarToken:
                     return BinaryExpressionPrecedence.BitwiseOrExpressionPrecedence;
 
-                case SyntaxKind.BitwiseExclusiveOrExpression:
+                case SyntaxKind.CaretToken:
                     return BinaryExpressionPrecedence.BitwiseExclusiveOrExpressionPrecedence;
 
-                case SyntaxKind.BitwiseAndExpression:
+                case SyntaxKind.AmpersandToken:
                     return BinaryExpressionPrecedence.BitwiseAndExpressionPrecedence;
 
-                case SyntaxKind.EqualsWithTypeConversionExpression:
-                case SyntaxKind.NotEqualsWithTypeConversionExpression:
-                case SyntaxKind.EqualsExpression:
-                case SyntaxKind.NotEqualsExpression:
+                case SyntaxKind.EqualsEqualsToken:
+                case SyntaxKind.ExclamationEqualsToken:
+                case SyntaxKind.EqualsEqualsEqualsToken:
+                case SyntaxKind.ExclamationEqualsEqualsToken:
                     return BinaryExpressionPrecedence.EqualityExpressionPrecedence;
 
-                case SyntaxKind.LessThanExpression:
-                case SyntaxKind.GreaterThanExpression:
-                case SyntaxKind.LessThanOrEqualExpression:
-                case SyntaxKind.GreaterThanOrEqualExpression:
-                case SyntaxKind.InstanceOfExpression:
-                case SyntaxKind.InExpression:
+                case SyntaxKind.LessThanToken:
+                case SyntaxKind.GreaterThanToken:
+                case SyntaxKind.LessThanEqualsToken:
+                case SyntaxKind.GreaterThanEqualsToken:
+                case SyntaxKind.InstanceOfKeyword:
+                case SyntaxKind.InKeyword:
                     return BinaryExpressionPrecedence.RelationalExpressionPrecedence;
 
-                case SyntaxKind.LeftShiftExpression:
-                case SyntaxKind.SignedRightShiftExpression:
-                case SyntaxKind.UnsignedRightShiftExpression:
+                case SyntaxKind.LessThanLessThanToken:
+                case SyntaxKind.GreaterThanGreaterThanToken:
+                case SyntaxKind.GreaterThanGreaterThanGreaterThanToken:
                     return BinaryExpressionPrecedence.ShiftExpressionPrecdence;
 
-                case SyntaxKind.AddExpression:
-                case SyntaxKind.SubtractExpression:
+                case SyntaxKind.PlusToken:
+                case SyntaxKind.MinusToken:
                     return BinaryExpressionPrecedence.AdditiveExpressionPrecedence;
 
-                case SyntaxKind.MultiplyExpression:
-                case SyntaxKind.DivideExpression:
-                case SyntaxKind.ModuloExpression:
+                case SyntaxKind.AsteriskToken:
+                case SyntaxKind.SlashToken:
+                case SyntaxKind.PercentToken:
                     return BinaryExpressionPrecedence.MultiplicativeExpressionPrecedence;
             }
 
@@ -3947,8 +3945,7 @@ module TypeScript.Parser {
                     break;
                 }
 
-                var binaryExpressionKind = SyntaxFacts.getBinaryExpressionFromOperatorToken(tokenKind);
-                var newPrecedence = getBinaryExpressionPrecedence(binaryExpressionKind);
+                var newPrecedence = getBinaryExpressionPrecedence(tokenKind);
 
                 // All binary operators must have precedence > 0
                 // Debug.assert(newPrecedence > 0);
