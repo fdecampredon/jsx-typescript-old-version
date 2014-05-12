@@ -4,6 +4,19 @@ module TypeScript {
     // Make sure we can encode a token's kind in 7 bits.
     Debug.assert(SyntaxKind.LastToken <= 127);
 
+    // Fixed width tokens (keywords and punctuation) that have no trivia generally make up 30% of
+    // all the tokens in a program.  We heavily optimize for that case with a token instance that
+    // just needs a parent pointer and a single 30bit int like so:
+    //
+    // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx xxxx    <-- kind
+    // 0000 0000 0000 0000 0000 0000 0000 0000 00xx xxxx xxxx xxxx xxxx xxxx x000 0000    <-- full start
+    // ^                                         ^                                   ^
+    // |                                         |                                   |
+    // Bit 64                                    Bit 30                              Bit 1
+    //
+    // This gives us 23 bits for the start of the token.  We don't need to store the width as it
+    // can be inferred from the 'kind' for a fixed width token.
+    // 
     // For small tokens, we encode the data in one 30bit int like so:
     //
     // 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0xxx xxxx    <-- kind
@@ -48,16 +61,20 @@ module TypeScript {
         LargeTokenFullStartShift           = 2,
         LargeTokenFullWidthShift           = 7,
 
+        FixedWidthTokenFullStartShift      = 7,
+
         SmallTokenFullWidthShift           = 7,
         SmallTokenFullStartShift           = 12,
 
         KindMask                           = 0x7F, // 01111111
+        IsVariableWidthMask                = 0x80, // 10000000
 
         LargeTokenLeadingTriviaBitMask     = 0x01, // 00000001
         LargeTokenTrailingTriviaBitMask    = 0x02, // 00000010
 
         SmallTokenFullWidthMask            = 0x1F, // 00011111
 
+        FixedWidthTokenMaxFullStart        = 0x7FFFFF, // 23 ones.
         SmallTokenMaxFullStart             = 0x3FFFF,  // 18 ones.
         SmallTokenMaxFullWidth             = 0x1F,     // 5 ones
     }
@@ -66,6 +83,18 @@ module TypeScript {
     Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(1 << 28, 1, 1)) === (1 << 28));
     Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(3 << 27, 0, 1)) === (3 << 27));
     Debug.assert(largeTokenUnpackFullStart(largeTokenPackFullStartAndInfo(10 << 25, 1, 0)) === (10 << 25));
+
+    function fixedWidthTokenPackData(fullStart: number, kind: SyntaxKind) {
+        return (fullStart << ScannerConstants.FixedWidthTokenFullStartShift) | kind;
+    }
+
+    function fixedWidthTokenUnpackKind(packedData: number) {
+        return packedData & ScannerConstants.KindMask;
+    }
+
+    function fixedWidthTokenUnpackFullStart(packedData: number) {
+        return packedData >> ScannerConstants.FixedWidthTokenFullStartShift;
+    }
 
     function smallTokenPackData(fullStart: number, fullWidth: number, kind: SyntaxKind) {
         return (fullStart << ScannerConstants.SmallTokenFullStartShift) |
@@ -222,6 +251,34 @@ module TypeScript {
         // tokens (like regexs and merged operator tokens). However, if the parser asks for a
         // for a token, then those contextual tokens will not be reusable.
         return false;
+    }
+
+    export class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+
+        constructor(private _packedData: number) {
+        }
+
+        public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
+            this._packedData = fixedWidthTokenPackData(fullStart, this.kind());
+        }
+
+        public isIncrementallyUnusable(): boolean { return false; }
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
+        public hasSkippedToken(): boolean { return false; }
+        public fullText(): string { return SyntaxFacts.getText(this.kind()); }
+        public text(): string { return this.fullText(); }
+        public leadingTrivia(): ISyntaxTriviaList { return Syntax.emptyTriviaList; }
+        public trailingTrivia(): ISyntaxTriviaList { return Syntax.emptyTriviaList; }
+        public leadingTriviaWidth(): number { return 0; }
+        public trailingTriviaWidth(): number { return 0; }
+
+        public kind(): SyntaxKind { return fixedWidthTokenUnpackKind(this._packedData); }
+        public fullWidth(): number { return this.fullText().length; }
+        public fullStart(): number { return fixedWidthTokenUnpackFullStart(this._packedData); }
+        public hasLeadingTrivia(): boolean { return false; }
+        public hasTrailingTrivia(): boolean { return false; }
+        public clone(): ISyntaxToken { return new FixedWidthTokenWithNoTrivia(this._packedData); }
     }
 
     export class SmallScannerTokenWithNoTrivia implements ISyntaxToken {
@@ -432,14 +489,25 @@ module TypeScript {
             var hasLeadingTrivia = scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
-            var kind = scanSyntaxKind(allowContextualToken);
+            var kindAndIsVariableWidth = scanSyntaxKind(allowContextualToken);
+
+            var kind = kindAndIsVariableWidth & ScannerConstants.KindMask;
 
             var end = index;
             var hasTrailingTrivia = scanTriviaInfo(/*isTrailing: */true);
 
             var fullWidth = index - fullStart;
 
-            if (fullStart <= ScannerConstants.SmallTokenMaxFullStart && fullWidth <= ScannerConstants.SmallTokenMaxFullWidth) {
+            // If we have no trivia, and we are a fixed width token kind, and our size isn't too 
+            // large, and we're a real fixed width token (and not something like "\u0076ar").
+            if (!hasLeadingTrivia && !hasTrailingTrivia &&
+                kind >= SyntaxKind.FirstFixedWidth && kind <= SyntaxKind.LastFixedWidth &&
+                fullStart <= ScannerConstants.FixedWidthTokenMaxFullStart &&
+                (kindAndIsVariableWidth & ScannerConstants.IsVariableWidthMask) === 0) {
+
+                return new FixedWidthTokenWithNoTrivia((fullStart << ScannerConstants.FixedWidthTokenFullStartShift) | kind);
+            }
+            else if (fullStart <= ScannerConstants.SmallTokenMaxFullStart && fullWidth <= ScannerConstants.SmallTokenMaxFullWidth) {
                 var packedData = (fullStart << ScannerConstants.SmallTokenFullStartShift) |
                     (fullWidth << ScannerConstants.SmallTokenFullWidthShift) |
                     kind;
@@ -906,7 +974,9 @@ module TypeScript {
 
             var keywordKind = SyntaxFacts.getTokenKind(valueText);
             if (keywordKind >= SyntaxKind.FirstKeyword && keywordKind <= SyntaxKind.LastKeyword) {
-                return keywordKind;
+                // We have a keyword, but it is also variable width.  We can't put represent this
+                // width a fixed width token.
+                return keywordKind | ScannerConstants.IsVariableWidthMask;
             }
 
             return SyntaxKind.IdentifierName;
