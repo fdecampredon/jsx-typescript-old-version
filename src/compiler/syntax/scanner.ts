@@ -512,20 +512,11 @@ module TypeScript {
                     (fullWidth << ScannerConstants.SmallTokenFullWidthShift) |
                     kind;
 
-                if (hasLeadingTrivia) {
-                    if (hasTrailingTrivia) {
-                        return new SmallScannerTokenWithLeadingAndTrailingTrivia(text, packedData);
-                    }
-                    else {
-                        return new SmallScannerTokenWithLeadingTrivia(text, packedData);
-                    }
-                }
-                else if (hasTrailingTrivia) {
-                    return new SmallScannerTokenWithTrailingTrivia(text, packedData);
-                }
-                else {
-                    return new SmallScannerTokenWithNoTrivia(text, packedData);
-                }
+                var constructor: new(text: ISimpleText, data: number) => ISyntaxToken = hasLeadingTrivia
+                    ? hasTrailingTrivia ? SmallScannerTokenWithLeadingAndTrailingTrivia : SmallScannerTokenWithLeadingTrivia
+                    : hasTrailingTrivia ? SmallScannerTokenWithTrailingTrivia : SmallScannerTokenWithNoTrivia;
+
+                return new constructor(text, packedData);
             }
             else {
                 // inline the packing logic for perf.
