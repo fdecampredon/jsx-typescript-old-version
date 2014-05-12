@@ -1417,8 +1417,10 @@ module TypeScript.Parser {
 
         // Eats the token if it is there.  Otherwise does nothing.  Will not report errors.
         function tryEatToken(kind: SyntaxKind): ISyntaxToken {
-            if (currentToken().kind() === kind) {
-                return eatToken(kind);
+            var _currentToken = currentToken();
+            if (_currentToken.kind() === kind) {
+                consumeToken(_currentToken);
+                return _currentToken;
             }
 
             return null;
@@ -1566,7 +1568,8 @@ module TypeScript.Parser {
 
             // If we see a semicolon, then we can definitely eat it.
             if (token.kind() === SyntaxKind.SemicolonToken) {
-                return eatToken(SyntaxKind.SemicolonToken);
+                consumeToken(token);
+                return token;
             }
 
             // Check if an automatic semicolon could go here.  If so, then there's no problem and
@@ -3029,14 +3032,14 @@ module TypeScript.Parser {
                 case SyntaxKind.IfKeyword: return parseIfStatement();
                 case SyntaxKind.OpenBraceToken: return parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ false);
                 case SyntaxKind.ReturnKeyword: return parseReturnStatement();
-                case SyntaxKind.SwitchKeyword: return parseSwitchStatement();
+                case SyntaxKind.SwitchKeyword: return parseSwitchStatement(_currentToken);
                 case SyntaxKind.ThrowKeyword: return parseThrowStatement();
                 case SyntaxKind.BreakKeyword: return parseBreakStatement();
                 case SyntaxKind.ContinueKeyword: return parseContinueStatement();
-                case SyntaxKind.ForKeyword: return parseForOrForInStatement();
-                case SyntaxKind.WhileKeyword: return parseWhileStatement();
-                case SyntaxKind.WithKeyword: return parseWithStatement();
-                case SyntaxKind.DoKeyword: return parseDoStatement();
+                case SyntaxKind.ForKeyword: return parseForOrForInStatement(_currentToken);
+                case SyntaxKind.WhileKeyword: return parseWhileStatement(_currentToken);
+                case SyntaxKind.WithKeyword: return parseWithStatement(_currentToken);
+                case SyntaxKind.DoKeyword: return parseDoStatement(_currentToken);
                 case SyntaxKind.TryKeyword: return parseTryStatement();
                 case SyntaxKind.DebuggerKeyword: return parseDebuggerStatement();
             }
@@ -3059,7 +3062,7 @@ module TypeScript.Parser {
                 return parseFunctionDeclaration();
             }
             else if (isEmptyStatement(_currentToken, inErrorRecovery)) {
-                return parseEmptyStatement();
+                return parseEmptyStatement(_currentToken);
             }
             else if (isExpressionStatement(_currentToken)) {
                 return parseExpressionStatement();
@@ -3075,9 +3078,10 @@ module TypeScript.Parser {
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
 
-        function parseDoStatement(): DoStatementSyntax {
+        function parseDoStatement(doKeyword: ISyntaxToken): DoStatementSyntax {
+            consumeToken(doKeyword);
             return new DoStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.DoKeyword),
+                doKeyword,
                 parseStatement(/*inErrorRecovery:*/ false),
                 eatKeyword(SyntaxKind.WhileKeyword),
                 eatToken(SyntaxKind.OpenParenToken),
@@ -3142,7 +3146,7 @@ module TypeScript.Parser {
 
         function parseCatchClause(): CatchClauseSyntax {
             return new CatchClauseSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.CatchKeyword),
+                eatToken(SyntaxKind.CatchKeyword),
                 eatToken(SyntaxKind.OpenParenToken),
                 eatIdentifierToken(),
                 parseOptionalTypeAnnotation(/*allowStringLiteral:*/ false),
@@ -3160,18 +3164,20 @@ module TypeScript.Parser {
                 parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ false));
         }
 
-        function parseWithStatement(): WithStatementSyntax {
+        function parseWithStatement(withKeyword: ISyntaxToken): WithStatementSyntax {
+            consumeToken(withKeyword);
             return new WithStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.WithKeyword),
+                withKeyword,
                 eatToken(SyntaxKind.OpenParenToken),
                 parseExpression(/*allowIn:*/ true),
                 eatToken(SyntaxKind.CloseParenToken),
                 parseStatement(/*inErrorRecovery:*/ false));
         }
 
-        function parseWhileStatement(): WhileStatementSyntax {
+        function parseWhileStatement(whileKeyword: ISyntaxToken): WhileStatementSyntax {
+            consumeToken(whileKeyword);
             return new WhileStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.WhileKeyword),
+                whileKeyword,
                 eatToken(SyntaxKind.OpenParenToken),
                 parseExpression(/*allowIn:*/ true),
                 eatToken(SyntaxKind.CloseParenToken),
@@ -3192,14 +3198,15 @@ module TypeScript.Parser {
             return currentToken.kind() === SyntaxKind.SemicolonToken;
         }
 
-        function parseEmptyStatement(): EmptyStatementSyntax {
-            return new EmptyStatementSyntax(parseNodeData, eatToken(SyntaxKind.SemicolonToken));
+        function parseEmptyStatement(semicolonToken: ISyntaxToken): EmptyStatementSyntax {
+            consumeToken(semicolonToken);
+            return new EmptyStatementSyntax(parseNodeData, semicolonToken);
         }
 
-        function parseForOrForInStatement(): IStatementSyntax {
+        function parseForOrForInStatement(forKeyword: ISyntaxToken): IStatementSyntax {
             // Debug.assert(isForOrForInStatement());
 
-            var forKeyword = eatKeyword(SyntaxKind.ForKeyword);
+            consumeToken(forKeyword);
             var openParenToken = eatToken(SyntaxKind.OpenParenToken);
 
             var _currentToken = currentToken();
@@ -3347,10 +3354,10 @@ module TypeScript.Parser {
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
 
-        function parseSwitchStatement() {
+        function parseSwitchStatement(switchKeyword: ISyntaxToken) {
             // Debug.assert(isSwitchStatement());
 
-            var switchKeyword = eatKeyword(SyntaxKind.SwitchKeyword);
+            consumeToken(switchKeyword);
             var openParenToken = eatToken(SyntaxKind.OpenParenToken);
             var expression = parseExpression(/*allowIn:*/ true);
             var closeParenToken = eatToken(SyntaxKind.CloseParenToken);
@@ -3369,20 +3376,13 @@ module TypeScript.Parser {
             return new SwitchStatementSyntax(parseNodeData, switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, switchClauses, closeBraceToken);
         }
 
-        function isCaseSwitchClause(): boolean {
-            return currentToken().kind() === SyntaxKind.CaseKeyword;
-        }
-
-        function isDefaultSwitchClause(): boolean {
-            return currentToken().kind() === SyntaxKind.DefaultKeyword;
-        }
-
         function isSwitchClause(): boolean {
             if (SyntaxUtilities.isSwitchClause(currentNode())) {
                 return true;
             }
 
-            return isCaseSwitchClause() || isDefaultSwitchClause();
+            var currentTokenKind = currentToken().kind();
+            return currentTokenKind === SyntaxKind.CaseKeyword || currentTokenKind === SyntaxKind.DefaultKeyword;
         }
 
         function tryParseSwitchClause(): ISwitchClauseSyntax {
@@ -3393,21 +3393,23 @@ module TypeScript.Parser {
                 return <ISwitchClauseSyntax><ISyntaxNode>node;
             }
 
-            if (isCaseSwitchClause()) {
-                return parseCaseSwitchClause();
+            var _currentToken = currentToken();
+            var kind = _currentToken.kind();
+            if (kind === SyntaxKind.CaseKeyword) {
+                return parseCaseSwitchClause(_currentToken);
             }
-            else if (isDefaultSwitchClause()) {
-                return parseDefaultSwitchClause();
+            else if (kind === SyntaxKind.DefaultKeyword) {
+                return parseDefaultSwitchClause(_currentToken);
             }
             else {
                 return null;
             }
         }
 
-        function parseCaseSwitchClause(): CaseSwitchClauseSyntax {
+        function parseCaseSwitchClause(caseKeyword: ISyntaxToken): CaseSwitchClauseSyntax {
             // Debug.assert(isCaseSwitchClause());
 
-            var caseKeyword = eatKeyword(SyntaxKind.CaseKeyword);
+            consumeToken(caseKeyword);
             var expression = parseExpression(/*allowIn:*/ true);
             var colonToken = eatToken(SyntaxKind.ColonToken);
             var statements = Syntax.emptyList<IStatementSyntax>();
@@ -3423,10 +3425,10 @@ module TypeScript.Parser {
             return new CaseSwitchClauseSyntax(parseNodeData, caseKeyword, expression, colonToken, statements);
         }
 
-        function parseDefaultSwitchClause(): DefaultSwitchClauseSyntax {
+        function parseDefaultSwitchClause(defaultKeyword: ISyntaxToken): DefaultSwitchClauseSyntax {
             // Debug.assert(isDefaultSwitchClause());
 
-            var defaultKeyword = eatKeyword(SyntaxKind.DefaultKeyword);
+            consumeToken(defaultKeyword);
             var colonToken = eatToken(SyntaxKind.ColonToken);
             var statements = Syntax.emptyList<IStatementSyntax>();
 
@@ -3903,17 +3905,17 @@ module TypeScript.Parser {
         function parseConditionalExpressionRest(allowIn: boolean, leftOperand: IExpressionSyntax): IExpressionSyntax {
             // Note: we are passed in an expression which was produced from parseBinaryExpressionOrHigher.
 
-            var token0 = currentToken();
-            var token0Kind = token0.kind();
+            var _currentToken = currentToken();
 
             // Now check for conditional expression.
-            if (token0Kind !== SyntaxKind.QuestionToken) {
+            if (_currentToken.kind() !== SyntaxKind.QuestionToken) {
                 return leftOperand;
             }
 
+            consumeToken(_currentToken);
             return new ConditionalExpressionSyntax(parseNodeData,
                 leftOperand,
-                eatToken(SyntaxKind.QuestionToken),
+                _currentToken,
 
                 // Note: we explicitly do *not* pass 'allowIn' here.  An 'in' expression is always
                 // allowed in the 'true' part of a conditional expression.
@@ -4044,7 +4046,8 @@ module TypeScript.Parser {
             expression: ILeftHandSideExpressionSyntax, allowArguments: boolean, inObjectCreation: boolean): ILeftHandSideExpressionSyntax {
 
             while (true) {
-                var currentTokenKind = currentToken().kind();
+                var _currentToken = currentToken();
+                var currentTokenKind = _currentToken.kind();
 
                 switch (currentTokenKind) {
                     case SyntaxKind.OpenParenToken:
@@ -4077,7 +4080,8 @@ module TypeScript.Parser {
                         continue;
 
                     case SyntaxKind.DotToken:
-                        expression = new MemberAccessExpressionSyntax(parseNodeData, expression, eatToken(SyntaxKind.DotToken), eatIdentifierNameToken());
+                        consumeToken(_currentToken);
+                        expression = new MemberAccessExpressionSyntax(parseNodeData, expression, _currentToken, eatIdentifierNameToken());
                         continue;
                 }
 
@@ -4118,8 +4122,9 @@ module TypeScript.Parser {
             // CallExpression productions.
 
             var expression: ILeftHandSideExpressionSyntax = null;
-            if (currentToken().kind() === SyntaxKind.SuperKeyword) {
-                expression = parseSuperExpression();
+            var _currentToken = currentToken();
+            if (_currentToken.kind() === SyntaxKind.SuperKeyword) {
+                expression = parseSuperExpression(_currentToken);
             }
             else {
                 expression = tryParseMemberExpressionOrHigher(force, /*inObjectCreation:*/ false);
@@ -4133,8 +4138,9 @@ module TypeScript.Parser {
             return parseCallExpressionRest(expression, /*inObjectCreation:*/ false);
         }
 
-        function parseSuperExpression(): ILeftHandSideExpressionSyntax {
-            var expression: ILeftHandSideExpressionSyntax = eatKeyword(SyntaxKind.SuperKeyword);
+        function parseSuperExpression(superToken: ISyntaxToken): ILeftHandSideExpressionSyntax {
+            consumeToken(superToken);
+            var expression: ILeftHandSideExpressionSyntax = superToken;
 
             // If we have seen "super" it must be followed by '(' or '.'.
             // If it wasn't then just try to parse out a '.' and report an error.
@@ -4309,10 +4315,10 @@ module TypeScript.Parser {
                     return parseFunctionExpression();
 
                 case SyntaxKind.OpenBracketToken:
-                    return parseArrayLiteralExpression();
+                    return parseArrayLiteralExpression(_currentToken);
 
                 case SyntaxKind.OpenBraceToken:
-                    return parseObjectLiteralExpression();
+                    return parseObjectLiteralExpression(_currentToken);
 
                 case SyntaxKind.OpenParenToken:
                     return parseParenthesizedExpression();
@@ -4704,10 +4710,10 @@ module TypeScript.Parser {
             return false;
         }
 
-        function parseObjectLiteralExpression(): ObjectLiteralExpressionSyntax {
+        function parseObjectLiteralExpression(openBraceToken: ISyntaxToken): ObjectLiteralExpressionSyntax {
             // Debug.assert(currentToken().kind() === SyntaxKind.OpenBraceToken);
 
-            var openBraceToken = eatToken(SyntaxKind.OpenBraceToken);
+            consumeToken(openBraceToken);
             // Debug.assert(openBraceToken.fullWidth() > 0);
 
             var result = parseSeparatedSyntaxList<IPropertyAssignmentSyntax>(ListParsingState.ObjectLiteralExpression_PropertyAssignments);
@@ -4805,10 +4811,9 @@ module TypeScript.Parser {
             }
         }
 
-        function parseArrayLiteralExpression(): ArrayLiteralExpressionSyntax {
+        function parseArrayLiteralExpression(openBracketToken: ISyntaxToken): ArrayLiteralExpressionSyntax {
             // Debug.assert(currentToken().kind() === SyntaxKind.OpenBracketToken);
-
-            var openBracketToken = eatToken(SyntaxKind.OpenBracketToken);
+            consumeToken(openBracketToken);
             // Debug.assert(openBracketToken.fullWidth() > 0);
 
             var result = parseSeparatedSyntaxList<IExpressionSyntax>(ListParsingState.ArrayLiteralExpression_AssignmentExpressions);
@@ -4981,8 +4986,9 @@ module TypeScript.Parser {
             return type;
         }
 
-        function parseTypeQuery(): TypeQuerySyntax {
-            return new TypeQuerySyntax(parseNodeData, eatToken(SyntaxKind.TypeOfKeyword), parseName());
+        function parseTypeQuery(typeOfKeyword: ISyntaxToken): TypeQuerySyntax {
+            consumeToken(typeOfKeyword);
+            return new TypeQuerySyntax(parseNodeData, typeOfKeyword, parseName());
         }
 
         function tryParseNonArrayType(): ITypeSyntax {
@@ -5017,7 +5023,7 @@ module TypeScript.Parser {
                     return parseConstructorType();
 
                 case SyntaxKind.TypeOfKeyword:
-                    return parseTypeQuery();
+                    return parseTypeQuery(_currentToken);
             }
 
             return tryParseNameOrGenericType();
