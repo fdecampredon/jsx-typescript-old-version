@@ -2758,7 +2758,7 @@ module TypeScript {
         }
 
         public emitSuperExpression(expression: ISyntaxToken): void {
-            if (PullTypeResolver.isInStaticMemberContext(this.getEnclosingDecl())) {
+            if (PullHelpers.isInStaticMemberContext(expression, this.semanticInfoChain)) {
                 this.writeToOutputWithSourceMapRecord("_super", expression);
             }
             else {

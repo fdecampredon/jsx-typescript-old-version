@@ -273,13 +273,17 @@ module TypeScript.ASTHelpers {
         return null;
     }
 
-    export function getEnclosingMemberVariableDeclaration(ast: ISyntaxElement): MemberVariableDeclarationSyntax {
+    export function getEnclosingMemberDeclaration(ast: ISyntaxElement): ISyntaxElement {
         var current = ast;
 
         while (current) {
             switch (current.kind()) {
                 case SyntaxKind.MemberVariableDeclaration:
-                    return <MemberVariableDeclarationSyntax>current;
+                case SyntaxKind.MethodSignature:
+                case SyntaxKind.MemberFunctionDeclaration:
+                case SyntaxKind.GetAccessor:
+                case SyntaxKind.SetAccessor:
+                    return current;
                 case SyntaxKind.ClassDeclaration:
                 case SyntaxKind.InterfaceDeclaration:
                 case SyntaxKind.ModuleDeclaration:

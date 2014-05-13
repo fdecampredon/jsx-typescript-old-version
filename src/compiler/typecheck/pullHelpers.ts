@@ -108,6 +108,18 @@ module TypeScript {
             return false;
         }
 
+        export function isInStaticMemberContext(ast: ISyntaxToken, semanticInfoChain: SemanticInfoChain): boolean {
+            var memberDeclAST = ASTHelpers.getEnclosingMemberDeclaration(ast);
+
+            if (!memberDeclAST) {
+                return false;
+            }
+
+            var decl = semanticInfoChain.getDeclForAST(memberDeclAST)
+
+            return decl && hasFlag(decl.flags, PullElementFlags.Static);
+        }
+
         export function isNameNumeric(name: string) {
             // Coerce the name to a number, and then use isFinite to make sure it is not Infinity or NaN
             return isFinite(+name);

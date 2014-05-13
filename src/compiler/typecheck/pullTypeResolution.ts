@@ -6425,8 +6425,8 @@ module TypeScript {
             // but are not permitted to reference parameters or local variables of the constructor.
             // This effectively means that entities from outer scopes by the same name as a constructor parameter or local variable are inaccessible 
             // in initializer expressions for instance member variables.
-            var memberVariableDeclarationAST = ASTHelpers.getEnclosingMemberVariableDeclaration(nameAST);
-            if (memberVariableDeclarationAST) {
+            var memberVariableDeclarationAST = ASTHelpers.getEnclosingMemberDeclaration(nameAST);
+            if (memberVariableDeclarationAST && memberVariableDeclarationAST.kind() === SyntaxKind.MemberVariableDeclaration) {
 
                 var memberVariableDecl = this.semanticInfoChain.getDeclForAST(memberVariableDeclarationAST);
                 if (!hasFlag(memberVariableDecl.flags, PullElementFlags.Static)) {
@@ -6823,7 +6823,7 @@ module TypeScript {
             }
 
             if (typeNameSymbol.isTypeParameter()) {
-                if (PullTypeResolver.isInStaticMemberContext(enclosingDecl)) {
+                if (PullHelpers.isInStaticMemberContext(nameAST, this.semanticInfoChain)) {
                     var parentDecl = typeNameSymbol.getDeclarations()[0].getParentDecl();
 
                     if (parentDecl.kind === PullElementKind.Class) {
@@ -6838,24 +6838,6 @@ module TypeScript {
             }
 
             return typeNameSymbol;
-        }
-
-        public static isInStaticMemberContext(decl: PullDecl): boolean {
-            while (decl) {                
-                // check if decl correspond to static member of some sort
-                if (hasFlag(decl.kind, PullElementKind.SomeFunction | PullElementKind.Property) && hasFlag(decl.flags, PullElementFlags.Static)) {
-                    return true;
-                }
-
-                // no container can exist in static context - exit early
-                if (hasFlag(decl.kind, PullElementKind.SomeContainer)) {
-                    return false;
-                }
-
-                decl = decl.getParentDecl();
-            }
-
-            return false;
         }
 
         private isLeftSideOfQualifiedName(ast: ISyntaxElement): boolean {
