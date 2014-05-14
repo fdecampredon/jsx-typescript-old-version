@@ -4449,8 +4449,20 @@ module TypeScript.Parser {
         
         function parseXJSElement(): XJSElementSyntax {
             var openingElement = parseXJSOpeningElement();
-                
-            return null;
+            var children: IExpressionSyntax[];
+            var closingElement: XJSClosingElementSyntax;
+            if (!openingElement.slashToken) {//self closing
+                var _currentTokenKind = currentToken().kind();
+                while(_currentTokenKind !== SyntaxKind.EndOfFileToken) {
+                    if (_currentTokenKind === SyntaxKind.LessThanToken && peekToken(1).kind() === SyntaxKind.SlashToken) {
+                        break;
+                    }
+                    children.push(parseXJSChild())
+                }
+                closingElement = parseXJSClosingElement();
+                //todo error if closing and opening element names does not match
+            }
+            return new XJSElementSyntax(parseNodeData, openingElement, children, closingElement);
         }
         
         function parseXJSOpeningElement(): XJSOpeningElementSyntax {
@@ -4483,9 +4495,10 @@ module TypeScript.Parser {
                 consumeToken(_currentToken);
                 _currentToken = currentToken();
                 if (_currentToken.kind() === SyntaxKind.OpenBraceToken) {
-                    value = parseXJSExpressionContainer()
+                    value = parseXJSExpressionContainer();
+                    //TODO error if empty
                 } else {
-                    value = eatToken(SyntaxKind.StringLiteral);
+                    value = eatToken(SyntaxKind.XJSText);
                 }
             }
             return new XJSAttributeSyntax(parseNodeData, name, equalsToken, value);
@@ -4499,6 +4512,26 @@ module TypeScript.Parser {
             }
             var closeBraceToken = eatToken(SyntaxKind.CloseBraceToken);
             return new XJSExpressionContainerSyntax(parseNodeData, openBraceToken, expression, closeBraceToken)
+        }
+        
+        function parseXJSChild(): IExpressionSyntax {
+            var _currentTokenKind = currentToken().kind();
+            switch (_currentTokenKind) {
+                case SyntaxKind.OpenBraceToken:
+                    return parseXJSExpressionContainer();
+                case SyntaxKind.XJSText:
+                    return parseXJSExpressionContainer();
+                default:
+                    return parseXJSElement();
+            }
+        }
+        
+        function parseXJSClosingElement(): XJSClosingElementSyntax {
+            return new XJSClosingElementSyntax(parseNodeData, 
+                eatToken(SyntaxKind.LessThanToken),
+                eatToken(SyntaxKind.SlashToken),
+                parseName(),
+                eatToken(SyntaxKind.GreaterThanToken));
         }
 
         function tryParseParenthesizedArrowFunctionExpression(): ParenthesizedArrowFunctionExpressionSyntax {
