@@ -439,6 +439,9 @@ module TypeScript.Parser {
         // source is on a / or /= token, then it can be reinterpretted as a regex token.  If the
         // source is on a > token, it may be reinterpretted to: >>  >>>  >=  >>=  >>>=
         currentContextualToken(): ISyntaxToken;
+        
+        // Token that might appear when inside an XJS element
+        currentXJSToken(): ISyntaxToken;
 
         // Peek any number of tokens ahead from the current location in source.  peekToken(0) is
         // equivalent to 'currentToken', peekToken(1) is the next token, peekToken(2) the token
@@ -598,10 +601,10 @@ module TypeScript.Parser {
             this.rewindPointPoolCount++;
         }
 
-        public fetchNextItem(allowContextualToken: boolean): ISyntaxToken {
+        public fetchNextItem(allowContextualToken: boolean, inJSXElement: boolean): ISyntaxToken {
             // Assert disabled because it is actually expensive enugh to affect perf.
             // Debug.assert(spaceAvailable > 0);
-            var token = this.scanner.scan(allowContextualToken);
+            var token = this.scanner.scan(allowContextualToken, inJSXElement);
 
             var lastDiagnostic = this.lastDiagnostic;
             if (lastDiagnostic === null) {
@@ -615,6 +618,7 @@ module TypeScript.Parser {
             this.lastDiagnostic = null;
             return Syntax.realizeToken(token);
         }
+        
 
         public peekToken(n: number): ISyntaxToken {
             return this.slidingWindow.peekItemN(n);
@@ -687,6 +691,10 @@ module TypeScript.Parser {
             // Debug.assert(SyntaxFacts.isAnyDivideOrRegularExpressionToken(token.kind()));
 
             return token;
+        }
+        
+        public currentXJSToken(): ISyntaxToken {
+            return this.slidingWindow.currentItem(false, true)
         }
     }
 
@@ -950,6 +958,11 @@ module TypeScript.Parser {
         public currentContextualToken(): ISyntaxToken {
             // Just delegate to the underlying source to handle this.
             return this._normalParserSource.currentContextualToken();
+        }
+        
+        public currentXJSToken(): ISyntaxToken {
+            // Just delegate to the underlying source to handle this.
+            return this._normalParserSource.currentXJSToken();
         }
 
         private syncCursorToNewTextIfBehind() {
@@ -1294,6 +1307,10 @@ module TypeScript.Parser {
         
         // is the current parsed file is an XJS file
         var isXJSFile: boolean = false;
+        
+        // parser state true if we are inside an XJS tag an expect a 
+        // XJSText
+        var expectJSXText: boolean = false;
 
         // Current state of the parser.  If we need to rewind we will store and reset these values as
         // appropriate.
@@ -1380,8 +1397,12 @@ module TypeScript.Parser {
             return node;
         }
 
-        function currentToken(): ISyntaxToken {
+        function currentToken(expectXJSElement = false): ISyntaxToken {
             return source.currentToken();
+        }
+        
+        function currentXJSToken(): ISyntaxToken {
+            return source.currentXJSToken();
         }
 
         function currentContextualToken(): ISyntaxToken {
@@ -4452,7 +4473,7 @@ module TypeScript.Parser {
             var children: IExpressionSyntax[];
             var closingElement: XJSClosingElementSyntax;
             if (!openingElement.slashToken) {//self closing
-                var _currentTokenKind = currentToken().kind();
+                var _currentTokenKind = currentXJSToken().kind();
                 while(_currentTokenKind !== SyntaxKind.EndOfFileToken) {
                     if (_currentTokenKind === SyntaxKind.LessThanToken && peekToken(1).kind() === SyntaxKind.SlashToken) {
                         break;
@@ -4498,7 +4519,7 @@ module TypeScript.Parser {
                     value = parseXJSExpressionContainer();
                     //TODO error if empty
                 } else {
-                    value = eatToken(SyntaxKind.XJSText);
+                    value = eatToken(SyntaxKind.StringLiteral);
                 }
             }
             return new XJSAttributeSyntax(parseNodeData, name, equalsToken, value);
@@ -4515,7 +4536,7 @@ module TypeScript.Parser {
         }
         
         function parseXJSChild(): IExpressionSyntax {
-            var _currentTokenKind = currentToken().kind();
+            var _currentTokenKind = currentXJSToken().kind();
             switch (_currentTokenKind) {
                 case SyntaxKind.OpenBraceToken:
                     return parseXJSExpressionContainer();

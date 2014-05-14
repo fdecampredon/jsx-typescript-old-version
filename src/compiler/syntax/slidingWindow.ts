@@ -5,7 +5,7 @@ module TypeScript {
         // Asks the source to copy items starting at sourceIndex into the window at 'destinationIndex'
         // with up to 'spaceAvailable' items.  The actual number of items fetched should be given as 
         // the return value.
-        fetchNextItem(argument: any): any;
+        fetchNextItem(...args: any[]): any;
     }
 
     export class SlidingWindow {
@@ -47,7 +47,7 @@ module TypeScript {
             return this.windowAbsoluteStartIndex + this.windowCount;
         }
 
-        private addMoreItemsToWindow(argument: any): boolean {
+        private addMoreItemsToWindow(args: any): boolean {
             var sourceLength = this.sourceLength;
             if (sourceLength >= 0 && this.absoluteIndex() >= sourceLength) {
                 return false;
@@ -58,7 +58,7 @@ module TypeScript {
                 this.tryShiftOrGrowWindow();
             }
 
-            var item = this.source.fetchNextItem(argument);
+            var item = this.source.fetchNextItem.apply(this.source, args);
 
             this.window[this.windowCount] = item;
 
@@ -158,9 +158,9 @@ module TypeScript {
             this.currentRelativeItemIndex = relativeIndex;
         }
 
-        public currentItem(argument: any): any {
+        public currentItem(...args: any[]): any {
             if (this.currentRelativeItemIndex >= this.windowCount) {
-                if (!this.addMoreItemsToWindow(argument)) {
+                if (!this.addMoreItemsToWindow(args)) {
                     return this.defaultValue;
                 }
             }
