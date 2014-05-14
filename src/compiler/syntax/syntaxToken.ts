@@ -145,13 +145,15 @@ module TypeScript {
     }
 
     function massageDisallowedIdentifiers(text: string): string {
-        // A bit of an unfortunate hack we need to run on some downlevel browsers. 
-        // The problem is that we use a token's valueText as a key in many of our collections.  
-        // Unfortunately, if that key turns out to be __proto__, then that breaks in some browsers
-        // due to that being a reserved way to get to the object's prototyped.  To workaround this
-        // we ensure that the valueText of any token is not __proto__ but is instead #__proto__.
-        if (text === "__proto__") {
-            return "#__proto__";
+        // We routinely store the 'valueText' for a token as keys in dictionaries.  However, as those
+        // dictionaries are usually just a javascript object, we run into issues when teh keys collide
+        // with certain predefined keys they depend on (like __proto__).  To workaround this
+        // we ensure that the valueText of any token is not __proto__ but is instead ___proto__.
+        //
+        // We also prepend a _ to any identifier starting with two __ .  That allows us to carve 
+        // out the entire namespace of identifiers starting with __ for ourselves.
+        if (text.charCodeAt(0) === CharacterCodes._ && text.charCodeAt(1) === CharacterCodes._) {
+            return "_" + text;
         }
 
         return text;
