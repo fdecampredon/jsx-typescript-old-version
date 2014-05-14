@@ -971,6 +971,46 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'debuggerKeyword', isToken: true },
             <any>{ name: 'semicolonToken', isToken: true, isOptional: true }]
+    },
+    <any>{
+        name: 'XJSElementSyntax',
+        baseType: 'ISyntaxNode',
+        interfaces: ['IUnaryExpressionSyntax'],
+        children: [
+            <any>{ name: 'openingElement', type: 'XJSOpeningElementSyntax'},
+            <any>{ name: 'children', isList: true, isOptional: true},
+            <any>{ name: 'closingElement', isOptional: true, type: 'XJSClosingElementSyntax'}]
+    },
+    <any>{
+        name: 'XJSOpeningElementSyntax',
+        baseType: 'ISyntaxNode',
+        interfaces: ['IUnaryExpressionSyntax'],
+        children: [
+            <any>{ name: 'lessThanToken', isToken: true },
+            <any>{ name: 'name', type: 'MemberAccessExpressionSyntax' },
+            <any>{ name: 'attributes', isSeparatedList: true, isOptional: true, elementType: 'XJSAttributeSyntax' },
+            <any>{ name: 'slashToken', isToken: true, isOptional: true },
+            <any>{ name: 'greaterThanToken', isToken: true }]
+    },
+    <any>{
+        name: 'XJSClosingElementSyntax',
+        baseType: 'ISyntaxNode',
+        interfaces: ['IUnaryExpressionSyntax'],
+        children: [
+            <any>{ name: 'lessThanToken', isToken: true },
+            <any>{ name: 'slashToken', isToken: true },
+            <any>{ name: 'name', type: 'MemberAccessExpressionSyntax' },
+            <any>{ name: 'greaterThanToken', isToken: true }]
+    },
+    <any>{
+        name: 'XJSAttributeSyntax',
+        baseType: 'ISyntaxNode',
+        interfaces: ['IUnaryExpressionSyntax'],
+        children: [
+            <any>{ name: 'lessThanToken', isToken: true },
+            <any>{ name: 'slashToken', isToken: true },
+            <any>{ name: 'name', type: 'MemberAccessExpressionSyntax' },
+            <any>{ name: 'greaterThanToken', isToken: true }]
     }];
 
 function firstKind(definition: ITypeDefinition): TypeScript.SyntaxKind {
