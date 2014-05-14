@@ -169,6 +169,8 @@ module TypeScript {
         // them in incremental scenarios as we may be in a context where the parser would not
         // create them.
         switch (token.kind()) {
+            // Created by the parser when it text inside of an XJS child
+            case SyntaxKind.XJSText:
             // Created by the parser when it sees / or /= in a location where it needs an expression.
             case SyntaxKind.RegularExpressionLiteral:
 
@@ -449,7 +451,7 @@ module TypeScript {
 
     export interface Scanner {
         setIndex(index: number): void;
-        scan(allowContextualToken: boolean): ISyntaxToken;
+        scan(allowContextualToken: boolean, isXJSTextExpected?: boolean): ISyntaxToken;
     }
 
     export function createScanner(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): Scanner {
@@ -484,12 +486,12 @@ module TypeScript {
             index = _start;
         }
 
-        function scan(allowContextualToken: boolean): ISyntaxToken {
+        function scan(allowContextualToken: boolean, isXJSTextExpected: boolean = false): ISyntaxToken {
             var fullStart = index;
             var hasLeadingTrivia = scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
-            var kindAndIsVariableWidth = scanSyntaxKind(allowContextualToken);
+            var kindAndIsVariableWidth = scanSyntaxKind(allowContextualToken, isXJSTextExpected);
 
             var kind = kindAndIsVariableWidth & ScannerConstants.KindMask;
 
@@ -814,13 +816,21 @@ module TypeScript {
             }
         }
 
-        function scanSyntaxKind(allowContextualToken: boolean): SyntaxKind {
+        function scanSyntaxKind(allowContextualToken: boolean, isXJSTextExpected: boolean): SyntaxKind {
             if (index >= end) {
                 return SyntaxKind.EndOfFileToken;
             }
 
             var character = str.charCodeAt(index);
             index++;
+            
+            if (isXJSTextExpected) {
+                switch (character) {
+                    case CharacterCodes.lessThan: return SyntaxKind.LessThanToken;
+                    case CharacterCodes.openBrace: return SyntaxKind.OpenBraceToken;
+                    default: return scanXJSText();
+                }
+            }
 
             switch (character) {
                 case CharacterCodes.exclamation /*33*/: return scanExclamationToken();
@@ -1528,6 +1538,25 @@ module TypeScript {
 
             return intChar;
         }
+        
+        function scanXJSText(): SyntaxKind {
+            while (true) {
+                var ch = str.charCodeAt(index);
+                if (ch === CharacterCodes.openBrace || ch === CharacterCodes.lessThan) {
+                    break;
+                }
+                else if (isNaN(ch)) {
+                    //TODO error message
+                    reportDiagnostic(MathPrototype.min(index, end), 1, DiagnosticCode.Missing_close_quote_character, null);
+                    break;
+                }
+                else {
+                    index++;
+                }
+            }
+
+            return SyntaxKind.XJSText;
+        }
 
         function fillTokenInfo(token: IScannerToken, tokenInfo: TokenInfo): void {
             var fullStart = token.fullStart();
@@ -1537,7 +1566,7 @@ module TypeScript {
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
-            scanSyntaxKind(isContextualToken(token));
+            scanSyntaxKind(isContextualToken(token), false);
             var end = index;
 
             tokenInfo.leadingTriviaWidth = start - fullStart;
