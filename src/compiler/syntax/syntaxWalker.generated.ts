@@ -602,13 +602,13 @@ module TypeScript {
         public visitXJSClosingElement(node: XJSClosingElementSyntax): void {
             this.visitToken(node.lessThanToken);
             this.visitToken(node.slashToken);
-            this.visitNode(node.name);
+            this.visitNodeOrToken(node.name);
             this.visitToken(node.greaterThanToken);
         }
 
         public visitXJSOpeningElement(node: XJSOpeningElementSyntax): void {
             this.visitToken(node.lessThanToken);
-            this.visitNode(node.name);
+            this.visitNodeOrToken(node.name);
             this.visitSeparatedList(node.attributes);
             this.visitOptionalToken(node.slashToken);
             this.visitToken(node.greaterThanToken);

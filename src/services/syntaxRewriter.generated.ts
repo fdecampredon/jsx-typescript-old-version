@@ -690,14 +690,14 @@ module TypeScript {
             return node.update(
                 this.visitToken(node.lessThanToken),
                 this.visitToken(node.slashToken),
-                <MemberAccessExpressionSyntax>this.visitNode(node.name),
+                <INameExpression>this.visitNodeOrToken(node.name),
                 this.visitToken(node.greaterThanToken));
         }
 
         public visitXJSOpeningElement(node: XJSOpeningElementSyntax): any {
             return node.update(
                 this.visitToken(node.lessThanToken),
-                <MemberAccessExpressionSyntax>this.visitNode(node.name),
+                <INameExpression>this.visitNodeOrToken(node.name),
                 this.visitSeparatedList(node.attributes),
                 node.slashToken === null ? null : this.visitToken(node.slashToken),
                 this.visitToken(node.greaterThanToken));

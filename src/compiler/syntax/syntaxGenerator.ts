@@ -988,7 +988,7 @@ var definitions:ITypeDefinition[] = [
         interfaces: ['IUnaryExpressionSyntax'],
         children: [
             <any>{ name: 'lessThanToken', isToken: true },
-            <any>{ name: 'name', type: 'MemberAccessExpressionSyntax' },
+            <any>{ name: 'name', type: 'INameExpression' },
             <any>{ name: 'attributes', isSeparatedList: true, elementType: 'XJSAttributeSyntax' },
             <any>{ name: 'slashToken', isToken: true, isOptional: true },
             <any>{ name: 'greaterThanToken', isToken: true }]
@@ -1000,7 +1000,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'lessThanToken', isToken: true },
             <any>{ name: 'slashToken', isToken: true },
-            <any>{ name: 'name', type: 'MemberAccessExpressionSyntax' },
+            <any>{ name: 'name', type: 'INameExpression' },
             <any>{ name: 'greaterThanToken', isToken: true }]
     },
     <any>{
