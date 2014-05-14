@@ -837,6 +837,7 @@ var definitions:ITypeDefinition[] = [
         interfaces: ['IUnaryExpressionSyntax'],
         children: [
             <any>{ name: 'lessThanToken', isToken: true },
+            <any>{ name: 'asteriskToken', isToken: true, isOptional: true },
             <any>{ name: 'type', type: 'ITypeSyntax' },
             <any>{ name: 'greaterThanToken', isToken: true },
             <any>{ name: 'expression', type: 'IUnaryExpressionSyntax' }
@@ -978,7 +979,7 @@ var definitions:ITypeDefinition[] = [
         interfaces: ['IUnaryExpressionSyntax'],
         children: [
             <any>{ name: 'openingElement', type: 'XJSOpeningElementSyntax'},
-            <any>{ name: 'children', isList: true, isOptional: true},
+            <any>{ name: 'children', isList: true, isOptional: true, elementType: 'IExpressionSyntax'},
             <any>{ name: 'closingElement', isOptional: true, type: 'XJSClosingElementSyntax'}]
     },
     <any>{
@@ -988,7 +989,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'lessThanToken', isToken: true },
             <any>{ name: 'name', type: 'MemberAccessExpressionSyntax' },
-            <any>{ name: 'attributes', isSeparatedList: true, isOptional: true, elementType: 'XJSAttributeSyntax' },
+            <any>{ name: 'attributes', isSeparatedList: true, elementType: 'XJSAttributeSyntax' },
             <any>{ name: 'slashToken', isToken: true, isOptional: true },
             <any>{ name: 'greaterThanToken', isToken: true }]
     },
@@ -1007,10 +1008,18 @@ var definitions:ITypeDefinition[] = [
         baseType: 'ISyntaxNode',
         interfaces: ['IUnaryExpressionSyntax'],
         children: [
-            <any>{ name: 'lessThanToken', isToken: true },
-            <any>{ name: 'slashToken', isToken: true },
-            <any>{ name: 'name', type: 'MemberAccessExpressionSyntax' },
-            <any>{ name: 'greaterThanToken', isToken: true }]
+            <any>{ name: 'name', isToken: true, tokenKinds: ['IdentifierName'] },
+            <any>{ name: 'equalsToken', isToken: true, isOptional: true},
+            <any>{ name: 'value', type: 'IExpressionSyntax', isOptional: true}]
+    },
+    <any>{
+        name: 'XJSExpressionContainerSyntax',
+        baseType: 'ISyntaxNode',
+        interfaces: ['IUnaryExpressionSyntax'],
+        children: [
+            <any>{ name: 'openBraceToken', isToken: true },
+            <any>{ name: 'expression', type: 'IExpressionSyntax', isOptional: true },
+            <any>{ name: 'closeBraceToken', isToken: true }]
     }];
 
 function firstKind(definition: ITypeDefinition): TypeScript.SyntaxKind {
@@ -3157,10 +3166,10 @@ var scannerUtilities = generateScannerUtilities();
 var visitor = generateVisitor();
 var servicesUtilities = generateServicesUtilities();
 
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxInterfaces.generated.ts", syntaxInterfaces, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxNodes.generated.ts", syntaxNodes, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\services\\syntaxRewriter.generated.ts", rewriter, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxWalker.generated.ts", walker, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\scannerUtilities.generated.ts", scannerUtilities, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxVisitor.generated.ts", visitor, false);
-TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\services\\syntaxUtilities.generated.ts", servicesUtilities, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/syntaxInterfaces.generated.ts", syntaxInterfaces, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/syntaxNodes.generated.ts", syntaxNodes, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/services/syntaxRewriter.generated.ts", rewriter, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/syntaxWalker.generated.ts", walker, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/scannerUtilities.generated.ts", scannerUtilities, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/syntaxVisitor.generated.ts", visitor, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/services/syntaxUtilities.generated.ts", servicesUtilities, false);

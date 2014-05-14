@@ -92,6 +92,9 @@ module TypeScript {
         NumberKeyword,
         SetKeyword,
         StringKeyword,
+        
+        //XJSIdentifier, //esprima-fb have a special xjs identifier that contains namespace, don't use it for now
+        XJSText, //TODO this is a token see how we can include it in the scanner
 
         // Punctuators
         OpenBraceToken,
@@ -299,16 +302,12 @@ module TypeScript {
         
         
         //XJS
-        //XJSIdentifier, //esprima-fb have a special xjs identifier that contains namespace, don't use it for now
-        XJSMemberExpression,
-        XJSEmptyExpression,
         XJSExpressionContainer,
         XJSElement,
         XJSClosingElement,
         XJSOpeningElement,
         XJSAttribute,
-        XJSText, //TODO this is a token see how we can include it in the scanner
-
+        
         // Misc.
         Parameter,
         EnumElement,

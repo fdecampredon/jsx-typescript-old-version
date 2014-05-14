@@ -424,6 +424,30 @@ module TypeScript {
         block: Block;
     }
 
+    interface XJSExpressionContainer extends UnaryExpression {
+        expression?: Expression;
+    }
+
+    interface XJSElement extends UnaryExpression {
+        openingElement: XJSOpeningElement;
+        children: SyntaxList<Expression>;
+        closingElement?: XJSClosingElement;
+    }
+
+    interface XJSClosingElement extends UnaryExpression {
+        name: MemberAccessExpression;
+    }
+
+    interface XJSOpeningElement extends UnaryExpression {
+        name: MemberAccessExpression;
+        attributes: SyntaxList<XJSAttribute>;
+    }
+
+    interface XJSAttribute extends UnaryExpression {
+        name: SyntaxToken;
+        value?: Expression;
+    }
+
     interface Parameter extends Node {
         identifier: SyntaxToken;
         typeAnnotation?: TypeAnnotation;

@@ -1291,6 +1291,9 @@ module TypeScript.Parser {
         // parsing logic already handles storing/restoring this and should work properly even if we're
         // speculative parsing.
         var isInStrictMode: boolean = false;
+        
+        // is the current parsed file is an XJS file
+        var isXJSFile: boolean = false;
 
         // Current state of the parser.  If we need to rewind we will store and reset these values as
         // appropriate.
@@ -3878,6 +3881,12 @@ module TypeScript.Parser {
                 return parseDeleteExpression();
             }
             else if (currentTokenKind === SyntaxKind.LessThanToken) {
+                //in JSXFile we allow on
+                if (isXJSFile) {
+                    if (peekToken(1).kind() !== SyntaxKind.AsteriskToken) {
+                        return parseXJSElement();
+                    }
+                }
                 return parseCastExpression();
             }
             else {
@@ -4416,8 +4425,16 @@ module TypeScript.Parser {
         }
 
         function parseCastExpression(): CastExpressionSyntax {
+            var lessThanToken = eatToken(SyntaxKind.LessThanToken);
+            var asteriskToken: ISyntaxToken;
+            var _currentToken = currentToken();
+            if (_currentToken.kind() === SyntaxKind.AsteriskToken) {
+                asteriskToken = _currentToken
+                consumeToken(asteriskToken);
+            }
             return new CastExpressionSyntax(parseNodeData,
-                eatToken(SyntaxKind.LessThanToken),
+                lessThanToken,
+                asteriskToken,
                 parseType(),
                 eatToken(SyntaxKind.GreaterThanToken),
                 tryParseUnaryExpressionOrHigher(/*force:*/ true));
@@ -4428,6 +4445,10 @@ module TypeScript.Parser {
                 eatToken(SyntaxKind.OpenParenToken),
                 parseExpression(/*allowIn:*/ true),
                 eatToken(SyntaxKind.CloseParenToken));
+        }
+        
+        function parseXJSElement(): XJSElementSyntax {
+            return null;
         }
 
         function tryParseParenthesizedArrowFunctionExpression(): ParenthesizedArrowFunctionExpressionSyntax {

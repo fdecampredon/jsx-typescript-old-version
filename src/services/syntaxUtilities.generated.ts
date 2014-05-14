@@ -158,6 +158,16 @@ module TypeScript {
                 return isSimplePropertyAssignmentTypeScriptSpecific(<SimplePropertyAssignmentSyntax>element);
             case SyntaxKind.FunctionPropertyAssignment:
                 return isFunctionPropertyAssignmentTypeScriptSpecific(<FunctionPropertyAssignmentSyntax>element);
+            case SyntaxKind.XJSExpressionContainer:
+                return isXJSExpressionContainerTypeScriptSpecific(<XJSExpressionContainerSyntax>element);
+            case SyntaxKind.XJSElement:
+                return isXJSElementTypeScriptSpecific(<XJSElementSyntax>element);
+            case SyntaxKind.XJSClosingElement:
+                return isXJSClosingElementTypeScriptSpecific(<XJSClosingElementSyntax>element);
+            case SyntaxKind.XJSOpeningElement:
+                return isXJSOpeningElementTypeScriptSpecific(<XJSOpeningElementSyntax>element);
+            case SyntaxKind.XJSAttribute:
+                return isXJSAttributeTypeScriptSpecific(<XJSAttributeSyntax>element);
             case SyntaxKind.Parameter:
                 return isParameterTypeScriptSpecific(<ParameterSyntax>element);
             case SyntaxKind.EnumElement:
@@ -382,6 +392,29 @@ module TypeScript {
     function isFunctionPropertyAssignmentTypeScriptSpecific(node: FunctionPropertyAssignmentSyntax): boolean {
         return isTypeScriptSpecific(node.callSignature) ||
                isTypeScriptSpecific(node.block);
+    }
+
+    function isXJSExpressionContainerTypeScriptSpecific(node: XJSExpressionContainerSyntax): boolean {
+        return isTypeScriptSpecific(node.expression);
+    }
+
+    function isXJSElementTypeScriptSpecific(node: XJSElementSyntax): boolean {
+        return isTypeScriptSpecific(node.openingElement) ||
+               isTypeScriptSpecific(node.children) ||
+               isTypeScriptSpecific(node.closingElement);
+    }
+
+    function isXJSClosingElementTypeScriptSpecific(node: XJSClosingElementSyntax): boolean {
+        return isTypeScriptSpecific(node.name);
+    }
+
+    function isXJSOpeningElementTypeScriptSpecific(node: XJSOpeningElementSyntax): boolean {
+        return isTypeScriptSpecific(node.name) ||
+               isTypeScriptSpecific(node.attributes);
+    }
+
+    function isXJSAttributeTypeScriptSpecific(node: XJSAttributeSyntax): boolean {
+        return isTypeScriptSpecific(node.value);
     }
 
     function isParameterTypeScriptSpecific(node: ParameterSyntax): boolean {

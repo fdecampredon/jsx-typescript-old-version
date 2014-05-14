@@ -464,6 +464,7 @@ module TypeScript {
 
         public visitCastExpression(node: CastExpressionSyntax): void {
             this.visitToken(node.lessThanToken);
+            this.visitOptionalToken(node.asteriskToken);
             this.visitNodeOrToken(node.type);
             this.visitToken(node.greaterThanToken);
             this.visitNodeOrToken(node.expression);
@@ -584,6 +585,39 @@ module TypeScript {
             this.visitToken(node.propertyName);
             this.visitNode(node.callSignature);
             this.visitNode(node.block);
+        }
+
+        public visitXJSExpressionContainer(node: XJSExpressionContainerSyntax): void {
+            this.visitToken(node.openBraceToken);
+            this.visitOptionalNodeOrToken(node.expression);
+            this.visitToken(node.closeBraceToken);
+        }
+
+        public visitXJSElement(node: XJSElementSyntax): void {
+            this.visitNode(node.openingElement);
+            this.visitList(node.children);
+            this.visitOptionalNode(node.closingElement);
+        }
+
+        public visitXJSClosingElement(node: XJSClosingElementSyntax): void {
+            this.visitToken(node.lessThanToken);
+            this.visitToken(node.slashToken);
+            this.visitNode(node.name);
+            this.visitToken(node.greaterThanToken);
+        }
+
+        public visitXJSOpeningElement(node: XJSOpeningElementSyntax): void {
+            this.visitToken(node.lessThanToken);
+            this.visitNode(node.name);
+            this.visitSeparatedList(node.attributes);
+            this.visitOptionalToken(node.slashToken);
+            this.visitToken(node.greaterThanToken);
+        }
+
+        public visitXJSAttribute(node: XJSAttributeSyntax): void {
+            this.visitToken(node.name);
+            this.visitOptionalToken(node.equalsToken);
+            this.visitOptionalNodeOrToken(node.value);
         }
 
         public visitParameter(node: ParameterSyntax): void {

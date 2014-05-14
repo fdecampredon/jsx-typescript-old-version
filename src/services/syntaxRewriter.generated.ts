@@ -529,6 +529,7 @@ module TypeScript {
         public visitCastExpression(node: CastExpressionSyntax): any {
             return node.update(
                 this.visitToken(node.lessThanToken),
+                node.asteriskToken === null ? null : this.visitToken(node.asteriskToken),
                 <ITypeSyntax>this.visitNodeOrToken(node.type),
                 this.visitToken(node.greaterThanToken),
                 <IUnaryExpressionSyntax>this.visitNodeOrToken(node.expression));
@@ -669,6 +670,44 @@ module TypeScript {
                 this.visitToken(node.propertyName),
                 <CallSignatureSyntax>this.visitNode(node.callSignature),
                 <BlockSyntax>this.visitNode(node.block));
+        }
+
+        public visitXJSExpressionContainer(node: XJSExpressionContainerSyntax): any {
+            return node.update(
+                this.visitToken(node.openBraceToken),
+                node.expression === null ? null : <IExpressionSyntax>this.visitNodeOrToken(node.expression),
+                this.visitToken(node.closeBraceToken));
+        }
+
+        public visitXJSElement(node: XJSElementSyntax): any {
+            return node.update(
+                <XJSOpeningElementSyntax>this.visitNode(node.openingElement),
+                node.children === null ? null : this.visitList(node.children),
+                node.closingElement === null ? null : <XJSClosingElementSyntax>this.visitNode(node.closingElement));
+        }
+
+        public visitXJSClosingElement(node: XJSClosingElementSyntax): any {
+            return node.update(
+                this.visitToken(node.lessThanToken),
+                this.visitToken(node.slashToken),
+                <MemberAccessExpressionSyntax>this.visitNode(node.name),
+                this.visitToken(node.greaterThanToken));
+        }
+
+        public visitXJSOpeningElement(node: XJSOpeningElementSyntax): any {
+            return node.update(
+                this.visitToken(node.lessThanToken),
+                <MemberAccessExpressionSyntax>this.visitNode(node.name),
+                this.visitSeparatedList(node.attributes),
+                node.slashToken === null ? null : this.visitToken(node.slashToken),
+                this.visitToken(node.greaterThanToken));
+        }
+
+        public visitXJSAttribute(node: XJSAttributeSyntax): any {
+            return node.update(
+                this.visitToken(node.name),
+                node.equalsToken === null ? null : this.visitToken(node.equalsToken),
+                node.value === null ? null : <IExpressionSyntax>this.visitNodeOrToken(node.value));
         }
 
         public visitParameter(node: ParameterSyntax): any {

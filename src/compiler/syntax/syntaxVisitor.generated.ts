@@ -165,6 +165,16 @@ module TypeScript {
                 return visitor.visitSimplePropertyAssignment(<SimplePropertyAssignmentSyntax>element);
             case SyntaxKind.FunctionPropertyAssignment:
                 return visitor.visitFunctionPropertyAssignment(<FunctionPropertyAssignmentSyntax>element);
+            case SyntaxKind.XJSExpressionContainer:
+                return visitor.visitXJSExpressionContainer(<XJSExpressionContainerSyntax>element);
+            case SyntaxKind.XJSElement:
+                return visitor.visitXJSElement(<XJSElementSyntax>element);
+            case SyntaxKind.XJSClosingElement:
+                return visitor.visitXJSClosingElement(<XJSClosingElementSyntax>element);
+            case SyntaxKind.XJSOpeningElement:
+                return visitor.visitXJSOpeningElement(<XJSOpeningElementSyntax>element);
+            case SyntaxKind.XJSAttribute:
+                return visitor.visitXJSAttribute(<XJSAttributeSyntax>element);
             case SyntaxKind.Parameter:
                 return visitor.visitParameter(<ParameterSyntax>element);
             case SyntaxKind.EnumElement:
@@ -262,6 +272,11 @@ module TypeScript {
         visitConstraint(node: ConstraintSyntax): any;
         visitSimplePropertyAssignment(node: SimplePropertyAssignmentSyntax): any;
         visitFunctionPropertyAssignment(node: FunctionPropertyAssignmentSyntax): any;
+        visitXJSExpressionContainer(node: XJSExpressionContainerSyntax): any;
+        visitXJSElement(node: XJSElementSyntax): any;
+        visitXJSClosingElement(node: XJSClosingElementSyntax): any;
+        visitXJSOpeningElement(node: XJSOpeningElementSyntax): any;
+        visitXJSAttribute(node: XJSAttributeSyntax): any;
         visitParameter(node: ParameterSyntax): any;
         visitEnumElement(node: EnumElementSyntax): any;
         visitTypeAnnotation(node: TypeAnnotationSyntax): any;
@@ -595,6 +610,26 @@ module TypeScript {
         }
 
         public visitFunctionPropertyAssignment(node: FunctionPropertyAssignmentSyntax): any {
+            return this.defaultVisit(node);
+        }
+
+        public visitXJSExpressionContainer(node: XJSExpressionContainerSyntax): any {
+            return this.defaultVisit(node);
+        }
+
+        public visitXJSElement(node: XJSElementSyntax): any {
+            return this.defaultVisit(node);
+        }
+
+        public visitXJSClosingElement(node: XJSClosingElementSyntax): any {
+            return this.defaultVisit(node);
+        }
+
+        public visitXJSOpeningElement(node: XJSOpeningElementSyntax): any {
+            return this.defaultVisit(node);
+        }
+
+        public visitXJSAttribute(node: XJSAttributeSyntax): any {
             return this.defaultVisit(node);
         }
 
