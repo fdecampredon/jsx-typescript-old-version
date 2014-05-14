@@ -53,6 +53,7 @@ var Shapes;
             return Math.sqrt(this.x * this.x + this.y * this.y);
         };
 
+        // Static member
         Point.origin = new Point(0, 0);
         return Point;
     })();
