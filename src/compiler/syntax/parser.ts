@@ -4995,11 +4995,14 @@ module TypeScript.Parser {
             var _currentToken = currentToken();
             switch (_currentToken.kind()) {
                 // Pedefined types:
+                case SyntaxKind.VoidKeyword:
+                    consumeToken(_currentToken);
+                    return _currentToken;
+
                 case SyntaxKind.AnyKeyword:
                 case SyntaxKind.NumberKeyword:
                 case SyntaxKind.BooleanKeyword:
                 case SyntaxKind.StringKeyword:
-                case SyntaxKind.VoidKeyword:
                     // if any of these are followed by '.', then this is actually a module name,
                     // and these keywords will be reinterpreted as an identifier.
                     if (peekToken(1).kind() === SyntaxKind.DotToken) {
