@@ -12,16 +12,13 @@
     module C {
         export var x = 1;
                    ~
-!!! cloduleWithDuplicateMember1.ts(10,16): error TS2000: Duplicate identifier 'x'. Additional locations:
-!!! 	cloduleWithDuplicateMember1.ts(3,5)
+!!! cloduleWithDuplicateMember1.ts(10,16): error TS2000: Duplicate identifier 'x'.
     }
     module C {
         export function foo() { }
                         ~~~
-!!! cloduleWithDuplicateMember1.ts(13,21): error TS2000: Duplicate identifier 'foo'. Additional locations:
-!!! 	cloduleWithDuplicateMember1.ts(6,5)
+!!! cloduleWithDuplicateMember1.ts(13,21): error TS2000: Duplicate identifier 'foo'.
         export function x() { }
                         ~
-!!! cloduleWithDuplicateMember1.ts(14,21): error TS2000: Duplicate identifier 'x'. Additional locations:
-!!! 	cloduleWithDuplicateMember1.ts(3,5)
+!!! cloduleWithDuplicateMember1.ts(14,21): error TS2000: Duplicate identifier 'x'.
     }

@@ -11,8 +11,7 @@
              ~~~
 !!! callOverloads1.ts(9,10): error TS1041: Function implementation expected.
              ~~~
-!!! callOverloads1.ts(9,10): error TS2000: Duplicate identifier 'Foo'. Additional locations:
-!!! 	callOverloads1.ts(1,1)
+!!! callOverloads1.ts(9,10): error TS2000: Duplicate identifier 'Foo'.
     function F1(s:string);
     function F1(a:any) { return a;}
     

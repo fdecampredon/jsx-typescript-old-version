@@ -8,8 +8,7 @@
     module Point {
         export var Origin = ""; //expected duplicate identifier error
                    ~~~~~~
-!!! ClassAndModuleThatMergeWithStaticVariableAndExportedVarThatShareAName.ts(8,16): error TS2000: Duplicate identifier 'Origin'. Additional locations:
-!!! 	ClassAndModuleThatMergeWithStaticVariableAndExportedVarThatShareAName.ts(4,5)
+!!! ClassAndModuleThatMergeWithStaticVariableAndExportedVarThatShareAName.ts(8,16): error TS2000: Duplicate identifier 'Origin'.
     }
     
     
@@ -23,7 +22,6 @@
         export module Point {
             export var Origin = ""; //expected duplicate identifier error
                        ~~~~~~
-!!! ClassAndModuleThatMergeWithStaticVariableAndExportedVarThatShareAName.ts(20,20): error TS2000: Duplicate identifier 'Origin'. Additional locations:
-!!! 	ClassAndModuleThatMergeWithStaticVariableAndExportedVarThatShareAName.ts(16,9)
+!!! ClassAndModuleThatMergeWithStaticVariableAndExportedVarThatShareAName.ts(20,20): error TS2000: Duplicate identifier 'Origin'.
         }
     }

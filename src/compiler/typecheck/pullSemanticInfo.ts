@@ -650,17 +650,17 @@ module TypeScript {
             return this._topLevelDecls;
         }
 
-        public addDiagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null, additionalLocations: Location[] = null): void {
-            this.addDiagnostic(this.diagnosticFromAST(ast, diagnosticKey, _arguments, additionalLocations));
+        public addDiagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null): void {
+            this.addDiagnostic(this.diagnosticFromAST(ast, diagnosticKey, _arguments));
         }
 
-        public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
+        public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null): Diagnostic {
             var syntaxTree = TypeScript.syntaxTree(ast);
-            return new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), start(ast), width(ast), diagnosticKey, _arguments, additionalLocations);
+            return new Diagnostic(syntaxTree.fileName(), syntaxTree.lineMap(), start(ast), width(ast), diagnosticKey, _arguments);
         }
 
-        public diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
-            return this.diagnosticFromAST(decl.ast(), diagnosticKey, _arguments, additionalLocations);
+        public diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null): Diagnostic {
+            return this.diagnosticFromAST(decl.ast(), diagnosticKey, _arguments);
         }
 
         public locationFromAST(ast: ISyntaxElement): Location {
@@ -668,13 +668,12 @@ module TypeScript {
             return new Location(syntaxTree.fileName(), syntaxTree.lineMap(), start(ast), width(ast));
         }
 
-        public duplicateIdentifierDiagnosticFromAST(ast: ISyntaxElement, identifier: string, additionalLocationAST: ISyntaxElement): Diagnostic {
-            return this.diagnosticFromAST(ast, DiagnosticCode.Duplicate_identifier_0, [identifier],
-                additionalLocationAST ? [this.locationFromAST(additionalLocationAST)] : null);
+        public duplicateIdentifierDiagnosticFromAST(ast: ISyntaxElement, identifier: string): Diagnostic {
+            return this.diagnosticFromAST(ast, DiagnosticCode.Duplicate_identifier_0, [identifier]);
         }
 
-        public addDuplicateIdentifierDiagnosticFromAST(ast: ISyntaxElement, identifier: string, additionalLocationAST: ISyntaxElement): void {
-            this.addDiagnostic(this.duplicateIdentifierDiagnosticFromAST(ast, identifier, additionalLocationAST));
+        public addDuplicateIdentifierDiagnosticFromAST(ast: ISyntaxElement, identifier: string): void {
+            this.addDiagnostic(this.duplicateIdentifierDiagnosticFromAST(ast, identifier));
         }
     }
 }

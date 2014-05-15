@@ -15,8 +15,7 @@
         // error: duplicate identifier expected
         export function fn<T>(x: T, y: T): T {
                         ~~
-!!! ClassAndModuleThatMergeWithModulesExportedGenericFunctionAndGenericClassStaticFunctionOfTheSameName.ts(10,21): error TS2000: Duplicate identifier 'fn'. Additional locations:
-!!! 	ClassAndModuleThatMergeWithModulesExportedGenericFunctionAndGenericClassStaticFunctionOfTheSameName.ts(5,5)
+!!! ClassAndModuleThatMergeWithModulesExportedGenericFunctionAndGenericClassStaticFunctionOfTheSameName.ts(10,21): error TS2000: Duplicate identifier 'fn'.
             return x;
         }
     }

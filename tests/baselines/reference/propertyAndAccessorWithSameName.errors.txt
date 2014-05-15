@@ -3,8 +3,7 @@
         x: number;
         get x() { // error
             ~
-!!! propertyAndAccessorWithSameName.ts(3,9): error TS2000: Duplicate identifier 'x'. Additional locations:
-!!! 	propertyAndAccessorWithSameName.ts(2,5)
+!!! propertyAndAccessorWithSameName.ts(3,9): error TS2000: Duplicate identifier 'x'.
             return 1;
         }
     }
@@ -13,16 +12,14 @@
         x: number;
         set x(v) { } // error
             ~
-!!! propertyAndAccessorWithSameName.ts(10,9): error TS2000: Duplicate identifier 'x'. Additional locations:
-!!! 	propertyAndAccessorWithSameName.ts(9,5)
+!!! propertyAndAccessorWithSameName.ts(10,9): error TS2000: Duplicate identifier 'x'.
     }
     
     class E {
         private x: number;
         get x() { // error
             ~
-!!! propertyAndAccessorWithSameName.ts(15,9): error TS2000: Duplicate identifier 'x'. Additional locations:
-!!! 	propertyAndAccessorWithSameName.ts(14,5)
+!!! propertyAndAccessorWithSameName.ts(15,9): error TS2000: Duplicate identifier 'x'.
             return 1;
         }
         set x(v) { }

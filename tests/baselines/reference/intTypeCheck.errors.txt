@@ -37,8 +37,7 @@
         [p1: string];
         [p2: string, p3: number];
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(37,5): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	intTypeCheck.ts(36,5)
+!!! intTypeCheck.ts(37,5): error TS2232: Duplicate string index signature.
     }
     interface i5 extends i1 { }
     interface i6 extends i2 { }
@@ -75,8 +74,7 @@
         [p1: string];
         [p2: string, p3: number];
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(72,5): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	intTypeCheck.ts(71,5)
+!!! intTypeCheck.ts(72,5): error TS2232: Duplicate string index signature.
     
         //Property Signatures
         p;

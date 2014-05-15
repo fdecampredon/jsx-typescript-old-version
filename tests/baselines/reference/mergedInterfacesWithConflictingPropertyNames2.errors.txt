@@ -6,8 +6,7 @@
     interface A {
         x: string; // error
         ~
-!!! mergedInterfacesWithConflictingPropertyNames2.ts(6,5): error TS2000: Duplicate identifier 'x'. Additional locations:
-!!! 	mergedInterfacesWithConflictingPropertyNames2.ts(2,5)
+!!! mergedInterfacesWithConflictingPropertyNames2.ts(6,5): error TS2000: Duplicate identifier 'x'.
     }
     
     module M {
@@ -18,8 +17,7 @@
         interface A<T> {
             x: T;  // error
             ~
-!!! mergedInterfacesWithConflictingPropertyNames2.ts(15,9): error TS2000: Duplicate identifier 'x'. Additional locations:
-!!! 	mergedInterfacesWithConflictingPropertyNames2.ts(11,9)
+!!! mergedInterfacesWithConflictingPropertyNames2.ts(15,9): error TS2000: Duplicate identifier 'x'.
         }
     }
     
@@ -45,7 +43,6 @@
         export interface A<T> {
             x: T;  // error
             ~
-!!! mergedInterfacesWithConflictingPropertyNames2.ts(39,9): error TS2000: Duplicate identifier 'x'. Additional locations:
-!!! 	mergedInterfacesWithConflictingPropertyNames2.ts(33,9)
+!!! mergedInterfacesWithConflictingPropertyNames2.ts(39,9): error TS2000: Duplicate identifier 'x'.
         }
     }

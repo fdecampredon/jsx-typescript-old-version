@@ -1802,8 +1802,7 @@ module TypeScript {
                     if (currentParameterType === this.semanticInfoChain.stringTypeSymbol) {
                         if (firstStringIndexer) {
                             this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
-                                DiagnosticCode.Duplicate_string_index_signature, null,
-                                [this.semanticInfoChain.locationFromAST(firstStringIndexer.getDeclarations()[0].ast())]);
+                                DiagnosticCode.Duplicate_string_index_signature, null);
                             return;
                         }
                         else {
@@ -1813,8 +1812,7 @@ module TypeScript {
                     else if (currentParameterType === this.semanticInfoChain.numberTypeSymbol) {
                         if (firstNumberIndexer) {
                             this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
-                                DiagnosticCode.Duplicate_number_index_signature, null,
-                                [this.semanticInfoChain.locationFromAST(firstNumberIndexer.getDeclarations()[0].ast())]);
+                                DiagnosticCode.Duplicate_number_index_signature, null);
                             return;
                         }
                         else {
@@ -5547,7 +5545,7 @@ module TypeScript {
             var matchingLabel = ArrayUtilities.firstOrDefault(breakableLabels, s => tokenValueText(s.identifier) === labelIdentifier);
             if (matchingLabel) {
                 context.postDiagnostic(this.semanticInfoChain.duplicateIdentifierDiagnosticFromAST(
-                    ast.identifier, labelIdentifier, matchingLabel));
+                    ast.identifier, labelIdentifier));
             }
 
             this.resolveAST(ast.statement, /*isContextuallyTyped*/ false, context);
@@ -7821,8 +7819,7 @@ module TypeScript {
                     // Make sure this was not defined before
                     var existingMember = objectLiteralTypeSymbol.findMember(memberSymbol.name, /*lookInParent*/ true);
                     if (existingMember) {
-                        pullTypeContext.postDiagnostic(this.semanticInfoChain.duplicateIdentifierDiagnosticFromAST(propertyAssignment, assignmentText.actualText,
-                            existingMember.getDeclarations()[0].ast()));
+                        pullTypeContext.postDiagnostic(this.semanticInfoChain.duplicateIdentifierDiagnosticFromAST(propertyAssignment, assignmentText.actualText));
                     }
 
                     objectLiteralTypeSymbol.addMember(memberSymbol);

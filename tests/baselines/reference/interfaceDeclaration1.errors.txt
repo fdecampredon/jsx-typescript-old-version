@@ -3,16 +3,14 @@
         item:number;
         item:number;
         ~~~~
-!!! interfaceDeclaration1.ts(3,5): error TS2000: Duplicate identifier 'item'. Additional locations:
-!!! 	interfaceDeclaration1.ts(2,5)
+!!! interfaceDeclaration1.ts(3,5): error TS2000: Duplicate identifier 'item'.
     }
     
     interface I2 {
         item:any;
         item:number;
         ~~~~
-!!! interfaceDeclaration1.ts(8,5): error TS2000: Duplicate identifier 'item'. Additional locations:
-!!! 	interfaceDeclaration1.ts(7,5)
+!!! interfaceDeclaration1.ts(8,5): error TS2000: Duplicate identifier 'item'.
     }
     
     interface I3 {
