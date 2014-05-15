@@ -417,7 +417,7 @@ module TypeScript {
                 for (var i = 0, n = fileNames.length; i < n; i++) {
                     var document = this.getDocument(fileNames[i]);
 
-                    if (document.isExternalModule()) {
+                    if (document.syntaxTree().isExternalModule()) {
                         // Dynamic module never contributes to the single file
                         continue;
                     }

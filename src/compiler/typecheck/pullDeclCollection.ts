@@ -93,7 +93,7 @@ module TypeScript {
     function preCollectScriptDecls(sourceUnit: SourceUnitSyntax, context: DeclCollectionContext): void {
         var fileName = syntaxTree(sourceUnit).fileName();
 
-        var isExternalModule = context.document.isExternalModule();
+        var isExternalModule = context.document.syntaxTree().isExternalModule();
 
         var decl: PullDecl = new RootPullDecl(context.document, /*name:*/ fileName, fileName, PullElementKind.Script, PullElementFlags.None, isExternalModule);
         context.setDeclForAST(sourceUnit, decl);

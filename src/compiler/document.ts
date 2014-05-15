@@ -2,15 +2,10 @@
 
 module TypeScript {
     export class Document implements IASTForDeclMap {
-        private _diagnostics: Diagnostic[] = null;
         private _bloomFilter: BloomFilter = null;
-        private _lineMap: LineMap = null;
 
         private _declASTMap: ISyntaxElement[] = [];
         private _astDeclMap: PullDecl[] = [];
-        private _amdDependencies: string[] = undefined;
-
-        private _externalModuleIndicatorSpan: TextSpan = undefined;
 
         constructor(private compilationSettings: ImmutableCompilationSettings,
                     public fileName: string,
@@ -31,92 +26,11 @@ module TypeScript {
             this._topLevelDecl = null;
 
             this._syntaxTree = null;
-            this._diagnostics = null;
             this._bloomFilter = null;
         }
 
         public isDeclareFile(): boolean {
             return isDTSFile(this.fileName);
-        }
-
-        private cacheSyntaxTreeInfo(syntaxTree: SyntaxTree): void {
-            // If we're not keeping around the syntax tree, store the diagnostics and line
-            // map so they don't have to be recomputed.
-            var start = new Date().getTime();
-            this._diagnostics = syntaxTree.diagnostics();
-            TypeScript.syntaxDiagnosticsTime += new Date().getTime() - start;
-
-            this._lineMap = syntaxTree.lineMap();
-
-            var sourceUnit = syntaxTree.sourceUnit();
-            var leadingTrivia = firstToken(sourceUnit).leadingTrivia();
-
-            this._externalModuleIndicatorSpan = this.getImplicitImportSpan(leadingTrivia) || this.getTopLevelImportOrExportSpan(sourceUnit);
-
-            var amdDependencies: string[] = [];
-            for (var i = 0, n = leadingTrivia.count(); i < n; i++) {
-                var trivia = leadingTrivia.syntaxTriviaAt(i);
-                if (trivia.isComment()) {
-                    var amdDependency = this.getAmdDependency(trivia.fullText());
-                    if (amdDependency) {
-                        amdDependencies.push(amdDependency);
-                    }
-                }
-            }
-
-            this._amdDependencies = amdDependencies;
-        }
-
-        private getAmdDependency(comment: string): string {
-            var amdDependencyRegEx = /^\/\/\/\s*<amd-dependency\s+path=('|")(.+?)\1/gim;
-            var match = amdDependencyRegEx.exec(comment);
-            return match ? match[2] : null;
-        }
-
-        private getImplicitImportSpan(sourceUnitLeadingTrivia: ISyntaxTriviaList): TextSpan {
-            for (var i = 0, n = sourceUnitLeadingTrivia.count(); i < n; i++) {
-                var trivia = sourceUnitLeadingTrivia.syntaxTriviaAt(i);
-
-                if (trivia.isComment()) {
-                    var span = this.getImplicitImportSpanWorker(trivia);
-                    if (span) {
-                        return span;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        private getImplicitImportSpanWorker(trivia: ISyntaxTrivia): TextSpan {
-            var implicitImportRegEx = /^(\/\/\/\s*<implicit-import\s*)*\/>/gim;
-            var match = implicitImportRegEx.exec(trivia.fullText());
-
-            if (match) {
-                return new TextSpan(trivia.fullStart(), trivia.fullWidth());
-            }
-
-            return null;
-        }
-
-        private getTopLevelImportOrExportSpan(node: SourceUnitSyntax): TextSpan {
-            for (var i = 0, n = node.moduleElements.length; i < n; i++) {
-                var moduleElement = node.moduleElements[i];
-
-                var _firstToken = firstToken(moduleElement);
-                if (_firstToken !== null && _firstToken.kind() === SyntaxKind.ExportKeyword) {
-                    return new TextSpan(start(_firstToken), width(_firstToken));
-                }
-
-                if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
-                    var importDecl = <ImportDeclarationSyntax>moduleElement;
-                    if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
-                        return new TextSpan(start(importDecl), width(importDecl));
-                    }
-                }
-            }
-
-            return null;;
         }
 
         public sourceUnit(): SourceUnitSyntax {
@@ -125,76 +39,26 @@ module TypeScript {
         }
 
         public diagnostics(): Diagnostic[] {
-            if (this._diagnostics === null) {
-                // force the diagnostics to get created.
-                this.syntaxTree();
-                Debug.assert(this._diagnostics);
-            }
-
-            return this._diagnostics;
+            return this.syntaxTree().diagnostics();
         }
 
         public lineMap(): LineMap {
-            if (this._lineMap === null) {
-                // force the line map to get created.
-                this.syntaxTree();
-                Debug.assert(this._lineMap);
-            }
-
-            return this._lineMap;
-        }
-
-        public isExternalModule(): boolean {
-            return this.externalModuleIndicatorSpan() !== null;
-        }
-
-        // TODO: remove this once we move entirely over to fidelity.  Right now we don't have 
-        // enough information in the AST to reconstruct this span data, so we cache and store it
-        // on the document.  When we move to fidelity, we can just have the type checker determine
-        // this in its own codepath.
-        public externalModuleIndicatorSpan(): TextSpan {
-            // October 11, 2013
-            // External modules are written as separate source files that contain at least one 
-            // external import declaration, export assignment, or top-level exported declaration.
-            if (this._externalModuleIndicatorSpan === undefined) {
-                // force the info about isExternalModule to get created.
-                this.syntaxTree();
-                Debug.assert(this._externalModuleIndicatorSpan !== undefined);
-            }
-
-            return this._externalModuleIndicatorSpan;
-        }
-
-        public amdDependencies(): string[] {
-            if (this._amdDependencies === undefined) {
-                // force the info about the amd dependencies to get created.
-                this.syntaxTree();
-                Debug.assert(this._amdDependencies !== undefined);
-            }
-
-            return this._amdDependencies;
+            return this.syntaxTree().lineMap();
         }
 
         public syntaxTree(): SyntaxTree {
-            var result = this._syntaxTree;
-            if (!result) {
+            if (!this._syntaxTree) {
                 var start = new Date().getTime();
 
-                result = Parser.parse(
-                    this.fileName,
-                    SimpleText.fromScriptSnapshot(this._scriptSnapshot),
-                    TypeScript.isDTSFile(this.fileName),
-                    this.compilationSettings.codeGenTarget());
+                this._syntaxTree = Parser.parse(
+                    this.fileName, SimpleText.fromScriptSnapshot(this._scriptSnapshot), this.isDeclareFile(), this.compilationSettings.codeGenTarget());
 
                 var time = new Date().getTime() - start;
 
                 TypeScript.syntaxTreeParseTime += time;
-
-                this._syntaxTree = result;
             }
 
-            this.cacheSyntaxTreeInfo(result);
-            return result;
+            return this._syntaxTree;
         }
 
         public bloomFilter(): BloomFilter {
@@ -232,7 +96,7 @@ module TypeScript {
             // If we haven't specified an output file in our settings, then we're definitely 
             // emitting to our own file.  Also, if we're an external module, then we're 
             // definitely emitting to our own file.
-            return !this.compilationSettings.outFileOption() || this.isExternalModule();
+            return !this.compilationSettings.outFileOption() || this.syntaxTree().isExternalModule();
         }
 
         public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): Document {

@@ -68,8 +68,8 @@ module TypeScript {
                 var fileNames = compiler.fileNames();
                 for (var i = 0, n = fileNames.length; i < n; i++) {
                     var document = compiler.getDocument(fileNames[i]);
-                    if (!document.isDeclareFile() && document.isExternalModule()) {
-                        var errorSpan = document.externalModuleIndicatorSpan();
+                    if (!document.isDeclareFile() && document.syntaxTree().isExternalModule()) {
+                        var errorSpan = ASTHelpers.externalModuleIndicatorSpan(document.syntaxTree().sourceUnit());
                         this._diagnostic = new Diagnostic(document.fileName, document.lineMap(), errorSpan.start(), errorSpan.length(),
                             DiagnosticCode.Cannot_compile_external_modules_unless_the_module_flag_is_provided);
 
@@ -148,7 +148,7 @@ module TypeScript {
                                 if (j === 0) {
                                     var isDynamicModuleCompilation = ArrayUtilities.any(fileNames, fileName => {
                                         document = compiler.getDocument(fileName);
-                                        return !document.isDeclareFile() && document.isExternalModule();
+                                        return !document.isDeclareFile() && document.syntaxTree().isExternalModule();
                                     });
 
                                     if (this._outputDirectory || // there is --outDir specified
@@ -288,7 +288,7 @@ module TypeScript {
 
             if (importDeclAST.moduleReference.kind() !== SyntaxKind.ExternalModuleReference) {
                 var canBeUsedExternally = isExported || importSymbol.typeUsedExternally() || importSymbol.isUsedInExportedAlias();
-                if (!canBeUsedExternally && !this.document.isExternalModule()) {
+                if (!canBeUsedExternally && !this.document.syntaxTree().isExternalModule()) {
                     // top level import in non-external module are visible across the whole global module
                     canBeUsedExternally = hasFlag(importDecl.getParentDecl().kind, PullElementKind.Script | PullElementKind.DynamicModule);
                 }
@@ -892,7 +892,7 @@ module TypeScript {
             }
 
             // emit any potential amd dependencies
-            var amdDependencies = this.document.amdDependencies();
+            var amdDependencies = this.document.syntaxTree().amdDependencies();
             for (var i = 0; i < amdDependencies.length; i++) {
                 dependencyList += ", \"" + amdDependencies[i] + "\"";
             }
@@ -2243,7 +2243,7 @@ module TypeScript {
             // Now emit __extends or a _this capture if necessary.
             this.emitPrologue(sourceUnit);
 
-            var isExternalModule = this.document.isExternalModule();
+            var isExternalModule = this.document.syntaxTree().isExternalModule();
             var isNonElidedExternalModule = isExternalModule && !ASTHelpers.scriptIsElided(sourceUnit);
             if (isNonElidedExternalModule) {
                 this.recordSourceMappingStart(sourceUnit);

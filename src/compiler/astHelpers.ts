@@ -812,4 +812,55 @@ module TypeScript.ASTHelpers {
 
         return result;
     }
+
+    export function externalModuleIndicatorSpan(sourceUnit: SourceUnitSyntax): TextSpan {
+        var leadingTrivia = firstToken(sourceUnit).leadingTrivia();
+        return implicitImportSpan(leadingTrivia) || topLevelImportOrExportSpan(sourceUnit);
+    }
+
+    function implicitImportSpan(sourceUnitLeadingTrivia: ISyntaxTriviaList): TextSpan {
+        for (var i = 0, n = sourceUnitLeadingTrivia.count(); i < n; i++) {
+            var trivia = sourceUnitLeadingTrivia.syntaxTriviaAt(i);
+
+            if (trivia.isComment()) {
+                var span = implicitImportSpanWorker(trivia);
+                if (span) {
+                    return span;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    function implicitImportSpanWorker(trivia: ISyntaxTrivia): TextSpan {
+        var implicitImportRegEx = /^(\/\/\/\s*<implicit-import\s*)*\/>/gim;
+        var match = implicitImportRegEx.exec(trivia.fullText());
+
+        if (match) {
+            return new TextSpan(trivia.fullStart(), trivia.fullWidth());
+        }
+
+        return null;
+    }
+
+     function topLevelImportOrExportSpan(node: SourceUnitSyntax): TextSpan {
+        for (var i = 0, n = node.moduleElements.length; i < n; i++) {
+            var moduleElement = node.moduleElements[i];
+
+            var _firstToken = firstToken(moduleElement);
+            if (_firstToken !== null && _firstToken.kind() === SyntaxKind.ExportKeyword) {
+                return new TextSpan(start(_firstToken), width(_firstToken));
+            }
+
+            if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
+                var importDecl = <ImportDeclarationSyntax>moduleElement;
+                if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
+                    return new TextSpan(start(importDecl), width(importDecl));
+                }
+            }
+        }
+
+        return null;;
+    }
 }

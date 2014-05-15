@@ -10,6 +10,10 @@ module TypeScript {
         private _lineMap: LineMap;
         private _languageVersion: LanguageVersion;
 
+        // Computed on demand.
+        private _amdDependencies: string[];
+        private _isExternalModule: boolean;
+
         constructor(sourceUnit: SourceUnitSyntax,
                     isDeclaration: boolean,
                     diagnostics: Diagnostic[],
@@ -64,6 +68,59 @@ module TypeScript {
 
         public languageVersion(): LanguageVersion {
             return this._languageVersion;
+        }
+
+        private cacheSyntaxTreeInfo(): void {
+            // If we're not keeping around the syntax tree, store the diagnostics and line
+            // map so they don't have to be recomputed.
+            var start = new Date().getTime();
+            TypeScript.syntaxDiagnosticsTime += new Date().getTime() - start;
+
+            var sourceUnit = this.sourceUnit();
+            var leadingTrivia = firstToken(sourceUnit).leadingTrivia();
+
+            this._isExternalModule = ASTHelpers.externalModuleIndicatorSpan(sourceUnit) !== null;
+
+            var amdDependencies: string[] = [];
+            for (var i = 0, n = leadingTrivia.count(); i < n; i++) {
+                var trivia = leadingTrivia.syntaxTriviaAt(i);
+                if (trivia.isComment()) {
+                    var amdDependency = this.getAmdDependency(trivia.fullText());
+                    if (amdDependency) {
+                        amdDependencies.push(amdDependency);
+                    }
+                }
+            }
+
+            this._amdDependencies = amdDependencies;
+        }
+
+        private getAmdDependency(comment: string): string {
+            var amdDependencyRegEx = /^\/\/\/\s*<amd-dependency\s+path=('|")(.+?)\1/gim;
+            var match = amdDependencyRegEx.exec(comment);
+            return match ? match[2] : null;
+        }
+
+        public isExternalModule(): boolean {
+            // October 11, 2013
+            // External modules are written as separate source files that contain at least one 
+            // external import declaration, export assignment, or top-level exported declaration.
+            if (this._isExternalModule === undefined) {
+                // force the info about isExternalModule to get created.
+                this.cacheSyntaxTreeInfo();
+                Debug.assert(this._isExternalModule !== undefined);
+            }
+
+            return this._isExternalModule;
+        }
+
+        public amdDependencies(): string[] {
+            if (this._amdDependencies === undefined) {
+                this.cacheSyntaxTreeInfo();
+                Debug.assert(this._amdDependencies !== undefined);
+            }
+
+            return this._amdDependencies;
         }
     }
 
