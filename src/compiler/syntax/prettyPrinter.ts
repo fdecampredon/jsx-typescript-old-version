@@ -490,6 +490,43 @@ module TypeScript.PrettyPrinter {
             this.ensureNewLine();
             this.appendToken(node.closeBraceToken);
         }
+        
+        public visitXJSExpressionContainer(node: XJSExpressionContainerSyntax): void {
+            this.appendToken(node.openBraceToken);
+            visitNodeOrToken(this, node.expression);
+            this.appendToken(node.closeBraceToken);
+        }
+        
+        public visitXJSElement(node: XJSElementSyntax): void {
+            visitNodeOrToken(this, node.openingElement);
+            this.ensureNewLine();
+            this.indentation++;
+            visitNodeOrToken(this, node.children);
+            this.indentation--;
+            this.ensureNewLine();
+            visitNodeOrToken(this, node.closingElement);
+        }
+        
+        public visitXJSClosingElement(node: XJSClosingElementSyntax): void {
+            this.appendToken(node.lessThanToken);
+            this.appendToken(node.slashToken);
+            visitNodeOrToken(this, node.name);
+            this.appendToken(node.greaterThanToken);
+        }
+        
+        public visitXJSOpeningElement(node: XJSOpeningElementSyntax): void {
+            this.appendToken(node.lessThanToken);
+            visitNodeOrToken(this, node.name);
+            visitNodeOrToken(this, node.attributes);
+            this.appendToken(node.slashToken);
+            this.appendToken(node.greaterThanToken);
+        }
+        
+        public visitXJSAttribute(node: XJSAttributeSyntax): void {
+            this.appendToken(node.name);
+            this.appendToken(node.equalsToken);
+            visitNodeOrToken(this, node.value);
+        }
 
         public visitParameter(node: ParameterSyntax): void {
             this.appendToken(node.dotDotDotToken);
