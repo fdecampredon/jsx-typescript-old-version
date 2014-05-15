@@ -199,8 +199,7 @@ module TypeScript {
             this.visitList(node.modifiers);
             this.visitToken(node.getKeyword);
             this.visitToken(node.propertyName);
-            this.visitNode(node.parameterList);
-            this.visitOptionalNode(node.typeAnnotation);
+            this.visitNode(node.callSignature);
             this.visitNode(node.block);
         }
 
@@ -208,7 +207,7 @@ module TypeScript {
             this.visitList(node.modifiers);
             this.visitToken(node.setKeyword);
             this.visitToken(node.propertyName);
-            this.visitNode(node.parameterList);
+            this.visitNode(node.callSignature);
             this.visitNode(node.block);
         }
 

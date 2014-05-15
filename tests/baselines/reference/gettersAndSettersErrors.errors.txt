@@ -1,4 +1,4 @@
-==== tests/cases/compiler/gettersAndSettersErrors.ts (8 errors) ====
+==== tests/cases/compiler/gettersAndSettersErrors.ts (5 errors) ====
     class C {
         public get Foo() { return "foo";} // ok
         public set Foo(foo:string) {} // ok
@@ -8,18 +8,12 @@
 !!! gettersAndSettersErrors.ts(5,12): error TS2000: Duplicate identifier 'Foo'. Additional locations:
 !!! 	gettersAndSettersErrors.ts(2,5)
         public get Goo(v:string):string {return null;} // error - getters must not have a parameter
+               ~~~
+!!! gettersAndSettersErrors.ts(6,12): error TS1054: 'get' accessor cannot have parameters.
         public set Goo(v:string):string {} // error - setters must not specify a return type
-                                ~
-!!! gettersAndSettersErrors.ts(7,29): error TS1005: '{' expected.
-                                 ~~~~~~
-!!! gettersAndSettersErrors.ts(7,30): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
-                                        ~
-!!! gettersAndSettersErrors.ts(7,37): error TS1005: ';' expected.
-                                 ~~~~~~
-!!! gettersAndSettersErrors.ts(7,30): error TS2095: Could not find symbol 'string'.
+                                ~~~~~~~
+!!! gettersAndSettersErrors.ts(7,29): error TS1094: Type annotation cannot appear on a 'set' accessor.
     }
-    ~
-!!! gettersAndSettersErrors.ts(8,1): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
     
     class E {
         private get Baz():number { return 0; }

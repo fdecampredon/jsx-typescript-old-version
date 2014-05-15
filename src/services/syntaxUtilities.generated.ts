@@ -177,8 +177,7 @@ module TypeScript {
 
     function isGetAccessorTypeScriptSpecific(node: GetAccessorSyntax): boolean {
         return node.modifiers.length > 0 ||
-               isTypeScriptSpecific(node.parameterList) ||
-               node.typeAnnotation !== null ||
+               isTypeScriptSpecific(node.callSignature) ||
                isTypeScriptSpecific(node.block);
     }
 

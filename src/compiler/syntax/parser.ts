@@ -2347,8 +2347,7 @@ module TypeScript.Parser {
                 modifiers,
                 eatKeyword(SyntaxKind.GetKeyword),
                 eatPropertyName(),
-                parseParameterList(),
-                parseOptionalTypeAnnotation(/*allowStringLiteral:*/ false),
+                parseCallSignature(/*requireCompleteTypeParameterList:*/ false),
                 parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, checkForStrictMode));
         }
 
@@ -2357,7 +2356,7 @@ module TypeScript.Parser {
                 modifiers,
                 eatKeyword(SyntaxKind.SetKeyword),
                 eatPropertyName(),
-                parseParameterList(),
+                parseCallSignature(/*requireCompleteTypeParameterList:*/ false),
                 parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, checkForStrictMode));
         }
 

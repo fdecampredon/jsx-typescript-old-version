@@ -24997,47 +24997,56 @@
                             "value": "Property",
                             "valueText": "Property"
                         },
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 6144,
                             "fullEnd": 6147,
                             "start": 6144,
                             "end": 6146,
                             "fullWidth": 3,
                             "width": 2,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
+                            "parameterList": {
+                                "kind": "ParameterList",
                                 "fullStart": 6144,
-                                "fullEnd": 6145,
-                                "start": 6144,
-                                "end": 6145,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 6145,
                                 "fullEnd": 6147,
-                                "start": 6145,
+                                "start": 6144,
                                 "end": 6146,
-                                "fullWidth": 2,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")",
-                                "hasTrailingTrivia": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "WhitespaceTrivia",
-                                        "fullStart": 6146,
-                                        "fullEnd": 6147,
-                                        "text": " "
-                                    }
-                                ]
+                                "fullWidth": 3,
+                                "width": 2,
+                                "openParenToken": {
+                                    "kind": "OpenParenToken",
+                                    "fullStart": 6144,
+                                    "fullEnd": 6145,
+                                    "start": 6144,
+                                    "end": 6145,
+                                    "fullWidth": 1,
+                                    "width": 1,
+                                    "text": "(",
+                                    "value": "(",
+                                    "valueText": "("
+                                },
+                                "parameters": [],
+                                "closeParenToken": {
+                                    "kind": "CloseParenToken",
+                                    "fullStart": 6145,
+                                    "fullEnd": 6147,
+                                    "start": 6145,
+                                    "end": 6146,
+                                    "fullWidth": 2,
+                                    "width": 1,
+                                    "text": ")",
+                                    "value": ")",
+                                    "valueText": ")",
+                                    "hasTrailingTrivia": true,
+                                    "trailingTrivia": [
+                                        {
+                                            "kind": "WhitespaceTrivia",
+                                            "fullStart": 6146,
+                                            "fullEnd": 6147,
+                                            "text": " "
+                                        }
+                                    ]
+                                }
                             }
                         },
                         "block": {

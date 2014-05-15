@@ -5,7 +5,7 @@
         {
             "start": 14,
             "length": 3,
-            "diagnosticCode": "'set' accessor must have one and only one parameter."
+            "diagnosticCode": "'set' accessor must have exactly one parameter."
         }
     ],
     "sourceUnit": {
@@ -142,47 +142,56 @@
                             "value": "Foo",
                             "valueText": "Foo"
                         },
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 21,
                             "fullEnd": 24,
                             "start": 21,
                             "end": 23,
                             "fullWidth": 3,
                             "width": 2,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
+                            "parameterList": {
+                                "kind": "ParameterList",
                                 "fullStart": 21,
-                                "fullEnd": 22,
-                                "start": 21,
-                                "end": 22,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 22,
                                 "fullEnd": 24,
-                                "start": 22,
+                                "start": 21,
                                 "end": 23,
-                                "fullWidth": 2,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")",
-                                "hasTrailingTrivia": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "WhitespaceTrivia",
-                                        "fullStart": 23,
-                                        "fullEnd": 24,
-                                        "text": " "
-                                    }
-                                ]
+                                "fullWidth": 3,
+                                "width": 2,
+                                "openParenToken": {
+                                    "kind": "OpenParenToken",
+                                    "fullStart": 21,
+                                    "fullEnd": 22,
+                                    "start": 21,
+                                    "end": 22,
+                                    "fullWidth": 1,
+                                    "width": 1,
+                                    "text": "(",
+                                    "value": "(",
+                                    "valueText": "("
+                                },
+                                "parameters": [],
+                                "closeParenToken": {
+                                    "kind": "CloseParenToken",
+                                    "fullStart": 22,
+                                    "fullEnd": 24,
+                                    "start": 22,
+                                    "end": 23,
+                                    "fullWidth": 2,
+                                    "width": 1,
+                                    "text": ")",
+                                    "value": ")",
+                                    "valueText": ")",
+                                    "hasTrailingTrivia": true,
+                                    "trailingTrivia": [
+                                        {
+                                            "kind": "WhitespaceTrivia",
+                                            "fullStart": 23,
+                                            "fullEnd": 24,
+                                            "text": " "
+                                        }
+                                    ]
+                                }
                             }
                         },
                         "block": {

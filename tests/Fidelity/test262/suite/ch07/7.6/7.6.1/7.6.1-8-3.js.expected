@@ -744,61 +744,70 @@
                                                             "valueText": "instanceof",
                                                             "isKeywordConvertedToIdentifier": true
                                                         },
-                                                        "parameterList": {
-                                                            "kind": "ParameterList",
+                                                        "callSignature": {
+                                                            "kind": "CallSignature",
                                                             "fullStart": 694,
                                                             "fullEnd": 701,
                                                             "start": 694,
                                                             "end": 701,
                                                             "fullWidth": 7,
                                                             "width": 7,
-                                                            "openParenToken": {
-                                                                "kind": "OpenParenToken",
+                                                            "parameterList": {
+                                                                "kind": "ParameterList",
                                                                 "fullStart": 694,
-                                                                "fullEnd": 695,
+                                                                "fullEnd": 701,
                                                                 "start": 694,
-                                                                "end": 695,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": "(",
-                                                                "value": "(",
-                                                                "valueText": "("
-                                                            },
-                                                            "parameters": [
-                                                                {
-                                                                    "kind": "Parameter",
-                                                                    "fullStart": 695,
-                                                                    "fullEnd": 700,
-                                                                    "start": 695,
-                                                                    "end": 700,
-                                                                    "fullWidth": 5,
-                                                                    "width": 5,
-                                                                    "modifiers": [],
-                                                                    "identifier": {
-                                                                        "kind": "IdentifierName",
+                                                                "end": 701,
+                                                                "fullWidth": 7,
+                                                                "width": 7,
+                                                                "openParenToken": {
+                                                                    "kind": "OpenParenToken",
+                                                                    "fullStart": 694,
+                                                                    "fullEnd": 695,
+                                                                    "start": 694,
+                                                                    "end": 695,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": "(",
+                                                                    "value": "(",
+                                                                    "valueText": "("
+                                                                },
+                                                                "parameters": [
+                                                                    {
+                                                                        "kind": "Parameter",
                                                                         "fullStart": 695,
                                                                         "fullEnd": 700,
                                                                         "start": 695,
                                                                         "end": 700,
                                                                         "fullWidth": 5,
                                                                         "width": 5,
-                                                                        "text": "value",
-                                                                        "value": "value",
-                                                                        "valueText": "value"
+                                                                        "modifiers": [],
+                                                                        "identifier": {
+                                                                            "kind": "IdentifierName",
+                                                                            "fullStart": 695,
+                                                                            "fullEnd": 700,
+                                                                            "start": 695,
+                                                                            "end": 700,
+                                                                            "fullWidth": 5,
+                                                                            "width": 5,
+                                                                            "text": "value",
+                                                                            "value": "value",
+                                                                            "valueText": "value"
+                                                                        }
                                                                     }
+                                                                ],
+                                                                "closeParenToken": {
+                                                                    "kind": "CloseParenToken",
+                                                                    "fullStart": 700,
+                                                                    "fullEnd": 701,
+                                                                    "start": 700,
+                                                                    "end": 701,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": ")",
+                                                                    "value": ")",
+                                                                    "valueText": ")"
                                                                 }
-                                                            ],
-                                                            "closeParenToken": {
-                                                                "kind": "CloseParenToken",
-                                                                "fullStart": 700,
-                                                                "fullEnd": 701,
-                                                                "start": 700,
-                                                                "end": 701,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": ")",
-                                                                "value": ")",
-                                                                "valueText": ")"
                                                             }
                                                         },
                                                         "block": {
@@ -1033,38 +1042,47 @@
                                                             "valueText": "instanceof",
                                                             "isKeywordConvertedToIdentifier": true
                                                         },
-                                                        "parameterList": {
-                                                            "kind": "ParameterList",
+                                                        "callSignature": {
+                                                            "kind": "CallSignature",
                                                             "fullStart": 778,
                                                             "fullEnd": 780,
                                                             "start": 778,
                                                             "end": 780,
                                                             "fullWidth": 2,
                                                             "width": 2,
-                                                            "openParenToken": {
-                                                                "kind": "OpenParenToken",
+                                                            "parameterList": {
+                                                                "kind": "ParameterList",
                                                                 "fullStart": 778,
-                                                                "fullEnd": 779,
-                                                                "start": 778,
-                                                                "end": 779,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": "(",
-                                                                "value": "(",
-                                                                "valueText": "("
-                                                            },
-                                                            "parameters": [],
-                                                            "closeParenToken": {
-                                                                "kind": "CloseParenToken",
-                                                                "fullStart": 779,
                                                                 "fullEnd": 780,
-                                                                "start": 779,
+                                                                "start": 778,
                                                                 "end": 780,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": ")",
-                                                                "value": ")",
-                                                                "valueText": ")"
+                                                                "fullWidth": 2,
+                                                                "width": 2,
+                                                                "openParenToken": {
+                                                                    "kind": "OpenParenToken",
+                                                                    "fullStart": 778,
+                                                                    "fullEnd": 779,
+                                                                    "start": 778,
+                                                                    "end": 779,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": "(",
+                                                                    "value": "(",
+                                                                    "valueText": "("
+                                                                },
+                                                                "parameters": [],
+                                                                "closeParenToken": {
+                                                                    "kind": "CloseParenToken",
+                                                                    "fullStart": 779,
+                                                                    "fullEnd": 780,
+                                                                    "start": 779,
+                                                                    "end": 780,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": ")",
+                                                                    "value": ")",
+                                                                    "valueText": ")"
+                                                                }
                                                             }
                                                         },
                                                         "block": {
@@ -1269,61 +1287,70 @@
                                                             "valueText": "typeof",
                                                             "isKeywordConvertedToIdentifier": true
                                                         },
-                                                        "parameterList": {
-                                                            "kind": "ParameterList",
+                                                        "callSignature": {
+                                                            "kind": "CallSignature",
                                                             "fullStart": 852,
                                                             "fullEnd": 859,
                                                             "start": 852,
                                                             "end": 859,
                                                             "fullWidth": 7,
                                                             "width": 7,
-                                                            "openParenToken": {
-                                                                "kind": "OpenParenToken",
+                                                            "parameterList": {
+                                                                "kind": "ParameterList",
                                                                 "fullStart": 852,
-                                                                "fullEnd": 853,
+                                                                "fullEnd": 859,
                                                                 "start": 852,
-                                                                "end": 853,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": "(",
-                                                                "value": "(",
-                                                                "valueText": "("
-                                                            },
-                                                            "parameters": [
-                                                                {
-                                                                    "kind": "Parameter",
-                                                                    "fullStart": 853,
-                                                                    "fullEnd": 858,
-                                                                    "start": 853,
-                                                                    "end": 858,
-                                                                    "fullWidth": 5,
-                                                                    "width": 5,
-                                                                    "modifiers": [],
-                                                                    "identifier": {
-                                                                        "kind": "IdentifierName",
+                                                                "end": 859,
+                                                                "fullWidth": 7,
+                                                                "width": 7,
+                                                                "openParenToken": {
+                                                                    "kind": "OpenParenToken",
+                                                                    "fullStart": 852,
+                                                                    "fullEnd": 853,
+                                                                    "start": 852,
+                                                                    "end": 853,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": "(",
+                                                                    "value": "(",
+                                                                    "valueText": "("
+                                                                },
+                                                                "parameters": [
+                                                                    {
+                                                                        "kind": "Parameter",
                                                                         "fullStart": 853,
                                                                         "fullEnd": 858,
                                                                         "start": 853,
                                                                         "end": 858,
                                                                         "fullWidth": 5,
                                                                         "width": 5,
-                                                                        "text": "value",
-                                                                        "value": "value",
-                                                                        "valueText": "value"
+                                                                        "modifiers": [],
+                                                                        "identifier": {
+                                                                            "kind": "IdentifierName",
+                                                                            "fullStart": 853,
+                                                                            "fullEnd": 858,
+                                                                            "start": 853,
+                                                                            "end": 858,
+                                                                            "fullWidth": 5,
+                                                                            "width": 5,
+                                                                            "text": "value",
+                                                                            "value": "value",
+                                                                            "valueText": "value"
+                                                                        }
                                                                     }
+                                                                ],
+                                                                "closeParenToken": {
+                                                                    "kind": "CloseParenToken",
+                                                                    "fullStart": 858,
+                                                                    "fullEnd": 859,
+                                                                    "start": 858,
+                                                                    "end": 859,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": ")",
+                                                                    "value": ")",
+                                                                    "valueText": ")"
                                                                 }
-                                                            ],
-                                                            "closeParenToken": {
-                                                                "kind": "CloseParenToken",
-                                                                "fullStart": 858,
-                                                                "fullEnd": 859,
-                                                                "start": 858,
-                                                                "end": 859,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": ")",
-                                                                "value": ")",
-                                                                "valueText": ")"
                                                             }
                                                         },
                                                         "block": {
@@ -1558,38 +1585,47 @@
                                                             "valueText": "typeof",
                                                             "isKeywordConvertedToIdentifier": true
                                                         },
-                                                        "parameterList": {
-                                                            "kind": "ParameterList",
+                                                        "callSignature": {
+                                                            "kind": "CallSignature",
                                                             "fullStart": 932,
                                                             "fullEnd": 934,
                                                             "start": 932,
                                                             "end": 934,
                                                             "fullWidth": 2,
                                                             "width": 2,
-                                                            "openParenToken": {
-                                                                "kind": "OpenParenToken",
+                                                            "parameterList": {
+                                                                "kind": "ParameterList",
                                                                 "fullStart": 932,
-                                                                "fullEnd": 933,
-                                                                "start": 932,
-                                                                "end": 933,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": "(",
-                                                                "value": "(",
-                                                                "valueText": "("
-                                                            },
-                                                            "parameters": [],
-                                                            "closeParenToken": {
-                                                                "kind": "CloseParenToken",
-                                                                "fullStart": 933,
                                                                 "fullEnd": 934,
-                                                                "start": 933,
+                                                                "start": 932,
                                                                 "end": 934,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": ")",
-                                                                "value": ")",
-                                                                "valueText": ")"
+                                                                "fullWidth": 2,
+                                                                "width": 2,
+                                                                "openParenToken": {
+                                                                    "kind": "OpenParenToken",
+                                                                    "fullStart": 932,
+                                                                    "fullEnd": 933,
+                                                                    "start": 932,
+                                                                    "end": 933,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": "(",
+                                                                    "value": "(",
+                                                                    "valueText": "("
+                                                                },
+                                                                "parameters": [],
+                                                                "closeParenToken": {
+                                                                    "kind": "CloseParenToken",
+                                                                    "fullStart": 933,
+                                                                    "fullEnd": 934,
+                                                                    "start": 933,
+                                                                    "end": 934,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": ")",
+                                                                    "value": ")",
+                                                                    "valueText": ")"
+                                                                }
                                                             }
                                                         },
                                                         "block": {
@@ -1794,61 +1830,70 @@
                                                             "valueText": "else",
                                                             "isKeywordConvertedToIdentifier": true
                                                         },
-                                                        "parameterList": {
-                                                            "kind": "ParameterList",
+                                                        "callSignature": {
+                                                            "kind": "CallSignature",
                                                             "fullStart": 1004,
                                                             "fullEnd": 1011,
                                                             "start": 1004,
                                                             "end": 1011,
                                                             "fullWidth": 7,
                                                             "width": 7,
-                                                            "openParenToken": {
-                                                                "kind": "OpenParenToken",
+                                                            "parameterList": {
+                                                                "kind": "ParameterList",
                                                                 "fullStart": 1004,
-                                                                "fullEnd": 1005,
+                                                                "fullEnd": 1011,
                                                                 "start": 1004,
-                                                                "end": 1005,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": "(",
-                                                                "value": "(",
-                                                                "valueText": "("
-                                                            },
-                                                            "parameters": [
-                                                                {
-                                                                    "kind": "Parameter",
-                                                                    "fullStart": 1005,
-                                                                    "fullEnd": 1010,
-                                                                    "start": 1005,
-                                                                    "end": 1010,
-                                                                    "fullWidth": 5,
-                                                                    "width": 5,
-                                                                    "modifiers": [],
-                                                                    "identifier": {
-                                                                        "kind": "IdentifierName",
+                                                                "end": 1011,
+                                                                "fullWidth": 7,
+                                                                "width": 7,
+                                                                "openParenToken": {
+                                                                    "kind": "OpenParenToken",
+                                                                    "fullStart": 1004,
+                                                                    "fullEnd": 1005,
+                                                                    "start": 1004,
+                                                                    "end": 1005,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": "(",
+                                                                    "value": "(",
+                                                                    "valueText": "("
+                                                                },
+                                                                "parameters": [
+                                                                    {
+                                                                        "kind": "Parameter",
                                                                         "fullStart": 1005,
                                                                         "fullEnd": 1010,
                                                                         "start": 1005,
                                                                         "end": 1010,
                                                                         "fullWidth": 5,
                                                                         "width": 5,
-                                                                        "text": "value",
-                                                                        "value": "value",
-                                                                        "valueText": "value"
+                                                                        "modifiers": [],
+                                                                        "identifier": {
+                                                                            "kind": "IdentifierName",
+                                                                            "fullStart": 1005,
+                                                                            "fullEnd": 1010,
+                                                                            "start": 1005,
+                                                                            "end": 1010,
+                                                                            "fullWidth": 5,
+                                                                            "width": 5,
+                                                                            "text": "value",
+                                                                            "value": "value",
+                                                                            "valueText": "value"
+                                                                        }
                                                                     }
+                                                                ],
+                                                                "closeParenToken": {
+                                                                    "kind": "CloseParenToken",
+                                                                    "fullStart": 1010,
+                                                                    "fullEnd": 1011,
+                                                                    "start": 1010,
+                                                                    "end": 1011,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": ")",
+                                                                    "value": ")",
+                                                                    "valueText": ")"
                                                                 }
-                                                            ],
-                                                            "closeParenToken": {
-                                                                "kind": "CloseParenToken",
-                                                                "fullStart": 1010,
-                                                                "fullEnd": 1011,
-                                                                "start": 1010,
-                                                                "end": 1011,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": ")",
-                                                                "value": ")",
-                                                                "valueText": ")"
                                                             }
                                                         },
                                                         "block": {
@@ -2083,38 +2128,47 @@
                                                             "valueText": "else",
                                                             "isKeywordConvertedToIdentifier": true
                                                         },
-                                                        "parameterList": {
-                                                            "kind": "ParameterList",
+                                                        "callSignature": {
+                                                            "kind": "CallSignature",
                                                             "fullStart": 1082,
                                                             "fullEnd": 1084,
                                                             "start": 1082,
                                                             "end": 1084,
                                                             "fullWidth": 2,
                                                             "width": 2,
-                                                            "openParenToken": {
-                                                                "kind": "OpenParenToken",
+                                                            "parameterList": {
+                                                                "kind": "ParameterList",
                                                                 "fullStart": 1082,
-                                                                "fullEnd": 1083,
-                                                                "start": 1082,
-                                                                "end": 1083,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": "(",
-                                                                "value": "(",
-                                                                "valueText": "("
-                                                            },
-                                                            "parameters": [],
-                                                            "closeParenToken": {
-                                                                "kind": "CloseParenToken",
-                                                                "fullStart": 1083,
                                                                 "fullEnd": 1084,
-                                                                "start": 1083,
+                                                                "start": 1082,
                                                                 "end": 1084,
-                                                                "fullWidth": 1,
-                                                                "width": 1,
-                                                                "text": ")",
-                                                                "value": ")",
-                                                                "valueText": ")"
+                                                                "fullWidth": 2,
+                                                                "width": 2,
+                                                                "openParenToken": {
+                                                                    "kind": "OpenParenToken",
+                                                                    "fullStart": 1082,
+                                                                    "fullEnd": 1083,
+                                                                    "start": 1082,
+                                                                    "end": 1083,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": "(",
+                                                                    "value": "(",
+                                                                    "valueText": "("
+                                                                },
+                                                                "parameters": [],
+                                                                "closeParenToken": {
+                                                                    "kind": "CloseParenToken",
+                                                                    "fullStart": 1083,
+                                                                    "fullEnd": 1084,
+                                                                    "start": 1083,
+                                                                    "end": 1084,
+                                                                    "fullWidth": 1,
+                                                                    "width": 1,
+                                                                    "text": ")",
+                                                                    "value": ")",
+                                                                    "valueText": ")"
+                                                                }
                                                             }
                                                         },
                                                         "block": {

@@ -144,14 +144,13 @@ module TypeScript {
 
     interface GetAccessor extends MemberDeclaration, PropertyAssignment {
         propertyName: SyntaxToken;
-        parameterList: ParameterList;
-        typeAnnotation?: TypeAnnotation;
+        callSignature: CallSignature;
         block: Block;
     }
 
     interface SetAccessor extends MemberDeclaration, PropertyAssignment {
         propertyName: SyntaxToken;
-        parameterList: ParameterList;
+        callSignature: CallSignature;
         block: Block;
     }
 

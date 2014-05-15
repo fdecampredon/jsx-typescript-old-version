@@ -135,70 +135,79 @@
                             "value": "a",
                             "valueText": "a"
                         },
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 20,
                             "fullEnd": 24,
                             "start": 20,
                             "end": 23,
                             "fullWidth": 4,
                             "width": 3,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
+                            "parameterList": {
+                                "kind": "ParameterList",
                                 "fullStart": 20,
-                                "fullEnd": 21,
+                                "fullEnd": 24,
                                 "start": 20,
-                                "end": 21,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [
-                                {
-                                    "kind": "Parameter",
-                                    "fullStart": 21,
-                                    "fullEnd": 22,
-                                    "start": 21,
-                                    "end": 22,
+                                "end": 23,
+                                "fullWidth": 4,
+                                "width": 3,
+                                "openParenToken": {
+                                    "kind": "OpenParenToken",
+                                    "fullStart": 20,
+                                    "fullEnd": 21,
+                                    "start": 20,
+                                    "end": 21,
                                     "fullWidth": 1,
                                     "width": 1,
-                                    "modifiers": [],
-                                    "identifier": {
-                                        "kind": "IdentifierName",
+                                    "text": "(",
+                                    "value": "(",
+                                    "valueText": "("
+                                },
+                                "parameters": [
+                                    {
+                                        "kind": "Parameter",
                                         "fullStart": 21,
                                         "fullEnd": 22,
                                         "start": 21,
                                         "end": 22,
                                         "fullWidth": 1,
                                         "width": 1,
-                                        "text": "i",
-                                        "value": "i",
-                                        "valueText": "i"
+                                        "modifiers": [],
+                                        "identifier": {
+                                            "kind": "IdentifierName",
+                                            "fullStart": 21,
+                                            "fullEnd": 22,
+                                            "start": 21,
+                                            "end": 22,
+                                            "fullWidth": 1,
+                                            "width": 1,
+                                            "text": "i",
+                                            "value": "i",
+                                            "valueText": "i"
+                                        }
                                     }
+                                ],
+                                "closeParenToken": {
+                                    "kind": "CloseParenToken",
+                                    "fullStart": 22,
+                                    "fullEnd": 24,
+                                    "start": 22,
+                                    "end": 23,
+                                    "fullWidth": 2,
+                                    "width": 1,
+                                    "text": ")",
+                                    "value": ")",
+                                    "valueText": ")",
+                                    "hasTrailingTrivia": true,
+                                    "trailingTrivia": [
+                                        {
+                                            "kind": "WhitespaceTrivia",
+                                            "fullStart": 23,
+                                            "fullEnd": 24,
+                                            "text": " "
+                                        }
+                                    ]
                                 }
-                            ],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 22,
-                                "fullEnd": 24,
-                                "start": 22,
-                                "end": 23,
-                                "fullWidth": 2,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")",
-                                "hasTrailingTrivia": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "WhitespaceTrivia",
-                                        "fullStart": 23,
-                                        "fullEnd": 24,
-                                        "text": " "
-                                    }
-                                ]
                             }
                         },
                         "block": {

@@ -224,8 +224,7 @@ module TypeScript {
                 this.visitList(node.modifiers),
                 this.visitToken(node.getKeyword),
                 this.visitToken(node.propertyName),
-                <ParameterListSyntax>this.visitNode(node.parameterList),
-                node.typeAnnotation === null ? null : <TypeAnnotationSyntax>this.visitNode(node.typeAnnotation),
+                <CallSignatureSyntax>this.visitNode(node.callSignature),
                 <BlockSyntax>this.visitNode(node.block));
         }
 
@@ -234,7 +233,7 @@ module TypeScript {
                 this.visitList(node.modifiers),
                 this.visitToken(node.setKeyword),
                 this.visitToken(node.propertyName),
-                <ParameterListSyntax>this.visitNode(node.parameterList),
+                <CallSignatureSyntax>this.visitNode(node.callSignature),
                 <BlockSyntax>this.visitNode(node.block));
         }
 

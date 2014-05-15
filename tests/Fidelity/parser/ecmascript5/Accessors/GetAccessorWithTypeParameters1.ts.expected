@@ -1,11 +1,11 @@
 {
     "isDeclaration": false,
-    "languageVersion": "EcmaScript3",
+    "languageVersion": "EcmaScript5",
     "diagnostics": [
         {
-            "start": 15,
+            "start": 20,
             "length": 3,
-            "diagnosticCode": "Accessors are only available when targeting ECMAScript 5 and higher."
+            "diagnosticCode": "Type parameters cannot appear on an accessor."
         }
     ],
     "sourceUnit": {
@@ -92,108 +92,141 @@
                 },
                 "classElements": [
                     {
-                        "kind": "SetAccessor",
+                        "kind": "GetAccessor",
                         "fullStart": 11,
                         "fullEnd": 31,
-                        "start": 15,
+                        "start": 13,
                         "end": 29,
                         "fullWidth": 20,
-                        "width": 14,
+                        "width": 16,
                         "modifiers": [],
-                        "setKeyword": {
-                            "kind": "SetKeyword",
+                        "getKeyword": {
+                            "kind": "GetKeyword",
                             "fullStart": 11,
-                            "fullEnd": 19,
-                            "start": 15,
-                            "end": 18,
-                            "fullWidth": 8,
+                            "fullEnd": 17,
+                            "start": 13,
+                            "end": 16,
+                            "fullWidth": 6,
                             "width": 3,
-                            "text": "set",
-                            "value": "set",
-                            "valueText": "set",
+                            "text": "get",
+                            "value": "get",
+                            "valueText": "get",
                             "hasLeadingTrivia": true,
                             "hasTrailingTrivia": true,
                             "leadingTrivia": [
                                 {
                                     "kind": "WhitespaceTrivia",
                                     "fullStart": 11,
-                                    "fullEnd": 15,
-                                    "text": "    "
+                                    "fullEnd": 13,
+                                    "text": "  "
                                 }
                             ],
                             "trailingTrivia": [
                                 {
                                     "kind": "WhitespaceTrivia",
-                                    "fullStart": 18,
-                                    "fullEnd": 19,
+                                    "fullStart": 16,
+                                    "fullEnd": 17,
                                     "text": " "
                                 }
                             ]
                         },
                         "propertyName": {
                             "kind": "IdentifierName",
-                            "fullStart": 19,
-                            "fullEnd": 22,
-                            "start": 19,
-                            "end": 22,
+                            "fullStart": 17,
+                            "fullEnd": 20,
+                            "start": 17,
+                            "end": 20,
                             "fullWidth": 3,
                             "width": 3,
-                            "text": "Foo",
-                            "value": "Foo",
-                            "valueText": "Foo"
+                            "text": "foo",
+                            "value": "foo",
+                            "valueText": "foo"
                         },
                         "callSignature": {
                             "kind": "CallSignature",
-                            "fullStart": 22,
+                            "fullStart": 20,
                             "fullEnd": 26,
-                            "start": 22,
+                            "start": 20,
                             "end": 25,
-                            "fullWidth": 4,
-                            "width": 3,
-                            "parameterList": {
-                                "kind": "ParameterList",
-                                "fullStart": 22,
-                                "fullEnd": 26,
-                                "start": 22,
-                                "end": 25,
-                                "fullWidth": 4,
+                            "fullWidth": 6,
+                            "width": 5,
+                            "typeParameterList": {
+                                "kind": "TypeParameterList",
+                                "fullStart": 20,
+                                "fullEnd": 23,
+                                "start": 20,
+                                "end": 23,
+                                "fullWidth": 3,
                                 "width": 3,
-                                "openParenToken": {
-                                    "kind": "OpenParenToken",
+                                "lessThanToken": {
+                                    "kind": "LessThanToken",
+                                    "fullStart": 20,
+                                    "fullEnd": 21,
+                                    "start": 20,
+                                    "end": 21,
+                                    "fullWidth": 1,
+                                    "width": 1,
+                                    "text": "<",
+                                    "value": "<",
+                                    "valueText": "<"
+                                },
+                                "typeParameters": [
+                                    {
+                                        "kind": "TypeParameter",
+                                        "fullStart": 21,
+                                        "fullEnd": 22,
+                                        "start": 21,
+                                        "end": 22,
+                                        "fullWidth": 1,
+                                        "width": 1,
+                                        "identifier": {
+                                            "kind": "IdentifierName",
+                                            "fullStart": 21,
+                                            "fullEnd": 22,
+                                            "start": 21,
+                                            "end": 22,
+                                            "fullWidth": 1,
+                                            "width": 1,
+                                            "text": "T",
+                                            "value": "T",
+                                            "valueText": "T"
+                                        }
+                                    }
+                                ],
+                                "greaterThanToken": {
+                                    "kind": "GreaterThanToken",
                                     "fullStart": 22,
                                     "fullEnd": 23,
                                     "start": 22,
                                     "end": 23,
                                     "fullWidth": 1,
                                     "width": 1,
+                                    "text": ">",
+                                    "value": ">",
+                                    "valueText": ">"
+                                }
+                            },
+                            "parameterList": {
+                                "kind": "ParameterList",
+                                "fullStart": 23,
+                                "fullEnd": 26,
+                                "start": 23,
+                                "end": 25,
+                                "fullWidth": 3,
+                                "width": 2,
+                                "openParenToken": {
+                                    "kind": "OpenParenToken",
+                                    "fullStart": 23,
+                                    "fullEnd": 24,
+                                    "start": 23,
+                                    "end": 24,
+                                    "fullWidth": 1,
+                                    "width": 1,
                                     "text": "(",
                                     "value": "(",
                                     "valueText": "("
                                 },
-                                "parameters": [
-                                    {
-                                        "kind": "Parameter",
-                                        "fullStart": 23,
-                                        "fullEnd": 24,
-                                        "start": 23,
-                                        "end": 24,
-                                        "fullWidth": 1,
-                                        "width": 1,
-                                        "modifiers": [],
-                                        "identifier": {
-                                            "kind": "IdentifierName",
-                                            "fullStart": 23,
-                                            "fullEnd": 24,
-                                            "start": 23,
-                                            "end": 24,
-                                            "fullWidth": 1,
-                                            "width": 1,
-                                            "text": "a",
-                                            "value": "a",
-                                            "valueText": "a"
-                                        }
-                                    }
-                                ],
+                                "parameters": [],
                                 "closeParenToken": {
                                     "kind": "CloseParenToken",
                                     "fullStart": 24,

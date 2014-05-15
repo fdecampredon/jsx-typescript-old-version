@@ -675,8 +675,7 @@ module TypeScript.PrettyPrinter {
             this.appendToken(node.getKeyword);
             this.ensureSpace();
             this.appendToken(node.propertyName);
-            visitNodeOrToken(this, node.parameterList);
-            this.appendNode(node.typeAnnotation);
+            visitNodeOrToken(this, node.callSignature);
             this.ensureSpace();
             visitNodeOrToken(this, node.block);
         }
@@ -687,7 +686,7 @@ module TypeScript.PrettyPrinter {
             this.appendToken(node.setKeyword);
             this.ensureSpace();
             this.appendToken(node.propertyName);
-            visitNodeOrToken(this, node.parameterList);
+            visitNodeOrToken(this, node.callSignature)
             this.ensureSpace();
             visitNodeOrToken(this, node.block);
         }

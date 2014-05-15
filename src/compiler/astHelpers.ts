@@ -628,9 +628,9 @@ module TypeScript.ASTHelpers {
                 case SyntaxKind.CallSignature:
                     return (<CallSignatureSyntax>ast).parameterList;
                 case SyntaxKind.GetAccessor:
-                    return (<GetAccessorSyntax>ast).parameterList;
+                    return getParameterList((<GetAccessorSyntax>ast).callSignature);
                 case SyntaxKind.SetAccessor:
-                    return (<SetAccessorSyntax>ast).parameterList;
+                    return getParameterList((<SetAccessorSyntax>ast).callSignature);
             }
         }
 
@@ -661,7 +661,7 @@ module TypeScript.ASTHelpers {
                 case SyntaxKind.PropertySignature:
                     return getType((<PropertySignatureSyntax>ast).typeAnnotation);
                 case SyntaxKind.GetAccessor:
-                    return getType((<GetAccessorSyntax>ast).typeAnnotation);
+                    return getType((<GetAccessorSyntax>ast).callSignature);
                 case SyntaxKind.Parameter:
                     return getType((<ParameterSyntax>ast).typeAnnotation);
                 case SyntaxKind.MemberVariableDeclaration:

@@ -199,7 +199,7 @@
         "category": "Error",
         "code": 1048
     },
-    "'set' accessor must have one and only one parameter.": {
+    "'set' accessor must have exactly one parameter.": {
         "category": "Error",
         "code": 1049
     },
@@ -354,6 +354,14 @@
     "Type annotation cannot appear on a constructor declaration.": {
         "category": "Error",
         "code": 1092
+    },
+    "Type parameters cannot appear on an accessor.": {
+        "category": "Error",
+        "code": 1093
+    },
+    "Type annotation cannot appear on a 'set' accessor.": {
+        "category": "Error",
+        "code": 1094
     },
     "Duplicate identifier '{0}'.": {
         "category": "Error",
