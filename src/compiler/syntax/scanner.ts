@@ -950,16 +950,12 @@ module TypeScript {
                 // character.  Or we hit the end of the file  This identifier is done.
 
                 // Also check if it a keyword if it started with a lowercase letter.
-                var kind: SyntaxKind;
-                var identifierLength = index - startIndex + 1;
                 if (isKeywordStartCharacter[firstCharacter]) {
-                    kind = ScannerUtilities.identifierKind(str, startIndex - 1, identifierLength);
+                    return ScannerUtilities.identifierKind(str, startIndex - 1, index - startIndex + 1);
                 }
                 else {
-                    kind = SyntaxKind.IdentifierName;
+                    return SyntaxKind.IdentifierName;
                 }
-
-                return kind;
             }
         }
 
