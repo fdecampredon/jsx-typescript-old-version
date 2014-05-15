@@ -142,7 +142,7 @@ module TypeScript {
         return packed & ScannerConstants.LargeTokenTrailingTriviaBitMask;
     }
 
-    var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
+    var isKeywordStartCharacter: number[] = ArrayUtilities.createArray<number>(CharacterCodes.maxAsciiCharacter, 0);
     var isIdentifierStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
     var isIdentifierPartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
 
@@ -161,7 +161,7 @@ module TypeScript {
 
     for (var keywordKind = SyntaxKind.FirstKeyword; keywordKind <= SyntaxKind.LastKeyword; keywordKind++) {
         var keyword = SyntaxFacts.getText(keywordKind);
-        isKeywordStartCharacter[keyword.charCodeAt(0)] = true;
+        isKeywordStartCharacter[keyword.charCodeAt(0)] = 1;
     }
 
     export function isContextualToken(token: ISyntaxToken): boolean {
@@ -949,7 +949,7 @@ module TypeScript {
                 // Saw an ascii character that wasn't a backslash and wasn't an identifier 
                 // character.  Or we hit the end of the file  This identifier is done.
 
-                // Also check if it a keyword if it started with a lowercase letter.
+                // Also check if it a keyword if it started with a keyword start char.
                 if (isKeywordStartCharacter[firstCharacter]) {
                     return ScannerUtilities.identifierKind(str, startIndex - 1, index - startIndex + 1);
                 }

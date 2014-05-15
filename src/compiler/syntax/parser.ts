@@ -4927,15 +4927,26 @@ module TypeScript.Parser {
             return currentToken().kind() === SyntaxKind.ColonToken ? parseTypeAnnotation(allowStringLiteral) : null;
         }
 
+        function parseTypeAnnotationType(allowStringLiteral: boolean): ITypeSyntax {
+            if (allowStringLiteral) {
+                var _currentToken = currentToken();
+                if (_currentToken.kind() === SyntaxKind.StringLiteral) {
+                    consumeToken(_currentToken);
+                    return _currentToken;
+                }
+            }
+
+            return parseType();
+        }
+
         function parseTypeAnnotation(allowStringLiteral: boolean): TypeAnnotationSyntax {
             // Debug.assert(isTypeAnnotation());
 
-            var colonToken = eatToken(SyntaxKind.ColonToken);
-            var type = allowStringLiteral && currentToken().kind() === SyntaxKind.StringLiteral
-                ? eatToken(SyntaxKind.StringLiteral)
-                : parseType();
+            var colonToken = currentToken();
+            consumeToken(colonToken);
 
-            return new TypeAnnotationSyntax(parseNodeData, colonToken, type);
+            return new TypeAnnotationSyntax(parseNodeData, colonToken, 
+                parseTypeAnnotationType(allowStringLiteral));
         }
 
         function isType(): boolean {
