@@ -420,6 +420,35 @@ module TypeScript {
     function walkVariableStatementChildren(preAst: VariableStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.variableDeclaration);
     }
+    
+    function walkXJSElementChildren(preAst: XJSElementSyntax, walker: AstWalker): void {
+        walker.walk(preAst.openingElement);
+        if (preAst.children) {
+            walker.walk(preAst.children);
+        } 
+        if (preAst.closingElement) {
+            walker.walk(preAst.closingElement);
+        }
+    }
+    
+    function walkXJSOpeningElementChildren(preAst: XJSOpeningElementSyntax, walker: AstWalker): void {
+        walker.walk(preAst.name);
+        walker.walk(preAst.attributes);
+    }
+    
+    function walkXJSClosingElementChildren(preAst: XJSClosingElementSyntax, walker: AstWalker): void {
+        walker.walk(preAst.name);
+    }
+  
+    function walkXJSAttributeChildren(preAst: XJSAttributeSyntax, walker: AstWalker): void {
+        walker.walk(preAst.name);
+        walker.walk(preAst.value);
+    }
+    
+    function walkXJSExpressionContainerChildren(preAst: XJSExpressionContainerSyntax, walker: AstWalker): void {
+        walker.walk(preAst.expression);
+    }
+    
 
     var childrenWalkers: IAstWalkChildren[] = new Array<IAstWalkChildren>(SyntaxKind.LastNode + 1);
 
@@ -576,6 +605,12 @@ module TypeScript {
     childrenWalkers[SyntaxKind.VoidKeyword] = null;
     childrenWalkers[SyntaxKind.WhileStatement] = walkWhileStatementChildren;
     childrenWalkers[SyntaxKind.WithStatement] = walkWithStatementChildren;
+    
+    childrenWalkers[SyntaxKind.XJSElement] = walkXJSElementChildren;
+    childrenWalkers[SyntaxKind.XJSOpeningElement] = walkXJSOpeningElementChildren;
+    childrenWalkers[SyntaxKind.XJSClosingElement] = walkXJSClosingElementChildren;
+    childrenWalkers[SyntaxKind.XJSExpressionContainer] = walkXJSExpressionContainerChildren;
+    childrenWalkers[SyntaxKind.XJSAttribute] = walkXJSAttributeChildren;
 
     // Verify the code is up to date with the enum
     for (var e in SyntaxKind) {
