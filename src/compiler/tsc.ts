@@ -340,7 +340,7 @@ module TypeScript {
                     }
                     else {
                         this.addDiagnostic(
-                            new Diagnostic(null, null, 0, 0, DiagnosticCode.ECMAScript_target_version_0_not_supported_Specify_a_valid_target_version_1_default_or_2, [type, "ES3", "ES5"]));
+                            new Diagnostic(null, null, 0, 0, DiagnosticCode.Argument_for_0_option_must_be_1_or_2, ["target", "ES3", "ES5"]));
                     }
                 }
             }, 't');
@@ -362,7 +362,7 @@ module TypeScript {
                     }
                     else {
                         this.addDiagnostic(
-                            new Diagnostic(null, null, 0, 0, DiagnosticCode.Module_code_generation_0_not_supported, [type]));
+                            new Diagnostic(null, null, 0, 0, DiagnosticCode.Argument_for_0_option_must_be_1_or_2, ["module", "commonjs", "amd"]));
                     }
                 }
             }, 'm');
