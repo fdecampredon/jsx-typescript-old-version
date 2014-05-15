@@ -1394,9 +1394,9 @@ module TypeScript {
 
             this.recordSourceMappingNameStart(accessor.propertyName.text());
             this.writeToOutput(accessor.propertyName.text());
-            this.emitParameterList(accessor.parameterList);
+            this.emitParameterList(accessor.callSignature.parameterList);
 
-            this.emitFunctionBodyStatements(null, accessor, ASTHelpers.parametersFromParameterList(accessor.parameterList), accessor.block, /*bodyExpression:*/ null);
+            this.emitFunctionBodyStatements(null, accessor, ASTHelpers.parametersFromParameterList(accessor.callSignature.parameterList), accessor.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(accessor);
 
@@ -1428,9 +1428,9 @@ module TypeScript {
             this.recordSourceMappingNameStart(accessor.propertyName.text());
             this.writeToOutput(accessor.propertyName.text());
 
-            this.emitParameterList(accessor.parameterList);
+            this.emitParameterList(accessor.callSignature.parameterList);
 
-            this.emitFunctionBodyStatements(null, accessor, ASTHelpers.parametersFromParameterList(accessor.parameterList), accessor.block, /*bodyExpression:*/ null);
+            this.emitFunctionBodyStatements(null, accessor, ASTHelpers.parametersFromParameterList(accessor.callSignature.parameterList), accessor.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(accessor);
 
@@ -2417,7 +2417,7 @@ module TypeScript {
                 this.recordSourceMappingStart(accessors.getter);
                 this.emitComments(accessors.getter, true);
                 this.writeToOutput("get: ");
-                this.emitAccessorBody(accessors.getter, accessors.getter.parameterList, accessors.getter.block);
+                this.emitAccessorBody(accessors.getter, accessors.getter.callSignature.parameterList, accessors.getter.block);
                 this.writeLineToOutput(",");
             }
 
@@ -2426,7 +2426,7 @@ module TypeScript {
                 this.recordSourceMappingStart(accessors.setter);
                 this.emitComments(accessors.setter, true);
                 this.writeToOutput("set: ");
-                this.emitAccessorBody(accessors.setter, accessors.setter.parameterList, accessors.setter.block);
+                this.emitAccessorBody(accessors.setter, accessors.setter.callSignature.parameterList, accessors.setter.block);
                 this.writeLineToOutput(",");
             }
 
@@ -2758,7 +2758,7 @@ module TypeScript {
         }
 
         public emitSuperExpression(expression: ISyntaxToken): void {
-            if (PullTypeResolver.isInStaticMemberContext(this.getEnclosingDecl())) {
+            if (PullHelpers.isInStaticMemberContext(expression, this.semanticInfoChain)) {
                 this.writeToOutputWithSourceMapRecord("_super", expression);
             }
             else {

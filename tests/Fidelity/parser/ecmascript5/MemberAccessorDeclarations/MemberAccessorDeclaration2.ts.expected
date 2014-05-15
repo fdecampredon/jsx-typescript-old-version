@@ -135,47 +135,56 @@
                             "value": "b",
                             "valueText": "b"
                         },
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 20,
                             "fullEnd": 23,
                             "start": 20,
                             "end": 22,
                             "fullWidth": 3,
                             "width": 2,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
+                            "parameterList": {
+                                "kind": "ParameterList",
                                 "fullStart": 20,
-                                "fullEnd": 21,
-                                "start": 20,
-                                "end": 21,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 21,
                                 "fullEnd": 23,
-                                "start": 21,
+                                "start": 20,
                                 "end": 22,
-                                "fullWidth": 2,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")",
-                                "hasTrailingTrivia": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "WhitespaceTrivia",
-                                        "fullStart": 22,
-                                        "fullEnd": 23,
-                                        "text": " "
-                                    }
-                                ]
+                                "fullWidth": 3,
+                                "width": 2,
+                                "openParenToken": {
+                                    "kind": "OpenParenToken",
+                                    "fullStart": 20,
+                                    "fullEnd": 21,
+                                    "start": 20,
+                                    "end": 21,
+                                    "fullWidth": 1,
+                                    "width": 1,
+                                    "text": "(",
+                                    "value": "(",
+                                    "valueText": "("
+                                },
+                                "parameters": [],
+                                "closeParenToken": {
+                                    "kind": "CloseParenToken",
+                                    "fullStart": 21,
+                                    "fullEnd": 23,
+                                    "start": 21,
+                                    "end": 22,
+                                    "fullWidth": 2,
+                                    "width": 1,
+                                    "text": ")",
+                                    "value": ")",
+                                    "valueText": ")",
+                                    "hasTrailingTrivia": true,
+                                    "trailingTrivia": [
+                                        {
+                                            "kind": "WhitespaceTrivia",
+                                            "fullStart": 22,
+                                            "fullEnd": 23,
+                                            "text": " "
+                                        }
+                                    ]
+                                }
                             }
                         },
                         "block": {

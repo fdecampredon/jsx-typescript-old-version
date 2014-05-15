@@ -516,7 +516,7 @@ module TypeScript {
                         isStaticOverload = SyntaxUtilities.containsToken(memberFunctionDeclaration.modifiers, SyntaxKind.StaticKeyword);
                         if (isStaticOverload !== isInStaticOverloadChain) {
                             var diagnostic = isInStaticOverloadChain ? DiagnosticCode.Function_overload_must_be_static : DiagnosticCode.Function_overload_must_not_be_static;
-                            this.pushDiagnostic(memberFunctionDeclaration.propertyName, diagnostic, null);
+                            this.pushDiagnostic(memberFunctionDeclaration.propertyName, diagnostic);
                             return true;
                         }
                     }
@@ -763,16 +763,35 @@ module TypeScript {
                 this.checkEcmaScriptVersionIsAtLeast(node, node.getKeyword, LanguageVersion.EcmaScript5, DiagnosticCode.Accessors_are_only_available_when_targeting_ECMAScript_5_and_higher) ||
                 this.checkForDisallowedModifiers(node, node.modifiers) ||
                 this.checkClassElementModifiers(node.modifiers) ||
-                this.checkGetAccessorParameter(node, node.getKeyword, node.parameterList)) {
+                this.checkForDisallowedAccessorTypeParameters(node.callSignature) ||
+                this.checkGetAccessorParameter(node, node.getKeyword, node.callSignature.parameterList)) {
                 return;
             }
 
             super.visitGetAccessor(node);
         }
 
+        private checkForDisallowedSetAccessorTypeAnnotation(accessor: SetAccessorSyntax): boolean {
+            if (accessor.callSignature.typeAnnotation) {
+                this.pushDiagnostic(accessor.callSignature.typeAnnotation, DiagnosticCode.Type_annotation_cannot_appear_on_a_set_accessor);
+                return true;
+            }
+
+            return false;
+        }
+
+        private checkForDisallowedAccessorTypeParameters(callSignature: CallSignatureSyntax): boolean {
+            if (callSignature.typeParameterList !== null) {
+                this.pushDiagnostic(callSignature.typeParameterList, DiagnosticCode.Type_parameters_cannot_appear_on_an_accessor);
+                return true;
+            }
+
+            return false;
+        }
+
         private checkForAccessorDeclarationInAmbientContext(accessor: ISyntaxNode): boolean {
             if (this.inAmbientDeclaration) {
-                this.pushDiagnostic(accessor, DiagnosticCode.Accessors_are_not_allowed_in_ambient_contexts, null);
+                this.pushDiagnostic(accessor, DiagnosticCode.Accessors_are_not_allowed_in_ambient_contexts);
                 return true;
             }
 
@@ -782,7 +801,7 @@ module TypeScript {
         private checkSetAccessorParameter(node: ISyntaxNode, setKeyword: ISyntaxToken, parameterList: ParameterListSyntax): boolean {
             if (childCount(parameterList.parameters) !== 1) {
                 this.pushDiagnostic(setKeyword,
-                    DiagnosticCode.set_accessor_must_have_one_and_only_one_parameter);
+                    DiagnosticCode.set_accessor_must_have_exactly_one_parameter);
                 return true;
             }
 
@@ -814,7 +833,9 @@ module TypeScript {
                 this.checkEcmaScriptVersionIsAtLeast(node, node.setKeyword, LanguageVersion.EcmaScript5, DiagnosticCode.Accessors_are_only_available_when_targeting_ECMAScript_5_and_higher) ||
                 this.checkForDisallowedModifiers(node, node.modifiers) ||
                 this.checkClassElementModifiers(node.modifiers) ||
-                this.checkSetAccessorParameter(node, node.setKeyword, node.parameterList)) {
+                this.checkForDisallowedAccessorTypeParameters(node.callSignature) ||
+                this.checkForDisallowedSetAccessorTypeAnnotation(node) ||
+                this.checkSetAccessorParameter(node, node.setKeyword, node.callSignature.parameterList)) {
                 return;
             }
 
@@ -846,7 +867,7 @@ module TypeScript {
                     var enumElement = <EnumElementSyntax>child;
 
                     if (!enumElement.equalsValueClause && previousValueWasComputed) {
-                        this.pushDiagnostic(enumElement, DiagnosticCode.Enum_member_must_have_initializer, null);
+                        this.pushDiagnostic(enumElement, DiagnosticCode.Enum_member_must_have_initializer);
                         return true;
                     }
 
@@ -934,8 +955,7 @@ module TypeScript {
                     var importDeclaration = <ImportDeclarationSyntax>child;
                     if (importDeclaration.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
                         if (node.stringLiteral === null) {
-                            this.pushDiagnostic(importDeclaration,
-                                DiagnosticCode.Import_declarations_in_an_internal_module_cannot_reference_an_external_module, null);
+                            this.pushDiagnostic(importDeclaration, DiagnosticCode.Import_declarations_in_an_internal_module_cannot_reference_an_external_module);
                         }
                     }
                 }

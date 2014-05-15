@@ -4363,7 +4363,7 @@ module TypeScript {
             enclosingDecl: PullDecl,
             context: PullTypeResolutionContext): PullTypeSymbol {
 
-            if (getterFunctionDeclarationAst && getterFunctionDeclarationAst.typeAnnotation) {
+            if (getterFunctionDeclarationAst && getterFunctionDeclarationAst.callSignature.typeAnnotation) {
                 return this.resolveTypeReference(ASTHelpers.getType(getterFunctionDeclarationAst), context);
             }
 
@@ -4376,10 +4376,10 @@ module TypeScript {
             context: PullTypeResolutionContext): PullTypeSymbol {
 
             if (setterFunctionDeclarationAst &&
-                setterFunctionDeclarationAst.parameterList &&
-                setterFunctionDeclarationAst.parameterList.parameters.length > 0) {
+                setterFunctionDeclarationAst.callSignature.parameterList &&
+                setterFunctionDeclarationAst.callSignature.parameterList.parameters.length > 0) {
 
-                var parameter = setterFunctionDeclarationAst.parameterList.parameters[0];
+                var parameter = setterFunctionDeclarationAst.callSignature.parameterList.parameters[0];
                 return this.resolveTypeReference(ASTHelpers.getType(parameter), context);
             }
 
@@ -4427,14 +4427,14 @@ module TypeScript {
                     getterSymbol =
                     this.resolveGetAccessorDeclaration(
                         getterFunctionDeclarationAst,
-                        getterFunctionDeclarationAst.parameterList,
+                        getterFunctionDeclarationAst.callSignature.parameterList,
                         ASTHelpers.getType(getterFunctionDeclarationAst),
                         getterFunctionDeclarationAst.block,
                         setterAnnotatedType, context);
                 }
 
                 if (hasSetter) {
-                    setterSymbol = this.resolveSetAccessorDeclaration(setterFunctionDeclarationAst, setterFunctionDeclarationAst.parameterList, context);
+                    setterSymbol = this.resolveSetAccessorDeclaration(setterFunctionDeclarationAst, setterFunctionDeclarationAst.callSignature.parameterList, context);
                 }
 
                 // enforce spec resolution rules
@@ -4599,7 +4599,7 @@ module TypeScript {
                 // There exists: 
                 //     return type annotaion for the getter &&
                 //     parameter type annotation for the setter
-                if (getterAST.typeAnnotation && PullTypeResolver.hasSetAccessorParameterTypeAnnotation(setterAST)) {
+                if (getterAST.callSignature.typeAnnotation && PullTypeResolver.hasSetAccessorParameterTypeAnnotation(setterAST)) {
                     var setterSig = setter.type.getCallSignatures()[0];
                     var setterParameters = setterSig.parameters;
 
@@ -4658,11 +4658,13 @@ module TypeScript {
 
             this.checkFunctionTypePrivacy(
                 funcDeclAST, hasModifier(funcDeclAST.modifiers, PullElementFlags.Static), /*typeParameters:*/null,
-                ASTHelpers.parametersFromParameterList(funcDeclAST.parameterList), ASTHelpers.getType(funcDeclAST), funcDeclAST.block, context);
+                ASTHelpers.parametersFromParameterList(funcDeclAST.callSignature.parameterList), ASTHelpers.getType(funcDeclAST), funcDeclAST.block, context);
         }
 
         static hasSetAccessorParameterTypeAnnotation(setAccessor: SetAccessorSyntax) {
-            return setAccessor.parameterList && setAccessor.parameterList.parameters.length > 0 && setAccessor.parameterList.parameters[0].typeAnnotation !== null;
+            return setAccessor.callSignature.parameterList &&
+                setAccessor.callSignature.parameterList.parameters.length > 0 &&
+                setAccessor.callSignature.parameterList.parameters[0].typeAnnotation !== null;
         }
 
         private resolveSetAccessorDeclaration(funcDeclAST: ISyntaxElement, parameterList: ParameterListSyntax, context: PullTypeResolutionContext): PullSymbol {
@@ -4718,9 +4720,9 @@ module TypeScript {
             var funcDecl = this.semanticInfoChain.getDeclForAST(funcDeclAST);
             var accessorSymbol = <PullAccessorSymbol> funcDecl.getSymbol(this.semanticInfoChain);
 
-            if (funcDeclAST.parameterList) {
-                for (var i = 0; i < funcDeclAST.parameterList.parameters.length; i++) {
-                    this.resolveParameter(funcDeclAST.parameterList.parameters[i], context);
+            if (funcDeclAST.callSignature.parameterList) {
+                for (var i = 0; i < funcDeclAST.callSignature.parameterList.parameters.length; i++) {
+                    this.resolveParameter(funcDeclAST.callSignature.parameterList.parameters[i], context);
                 }
             }
 
@@ -4764,7 +4766,7 @@ module TypeScript {
 
             this.checkFunctionTypePrivacy(
                 funcDeclAST, hasModifier(funcDeclAST.modifiers, PullElementFlags.Static), null,
-                ASTHelpers.parametersFromParameterList(funcDeclAST.parameterList), null, funcDeclAST.block, context);
+                ASTHelpers.parametersFromParameterList(funcDeclAST.callSignature.parameterList), null, funcDeclAST.block, context);
         }
 
         private resolveList(list: ISyntaxNodeOrToken[], context: PullTypeResolutionContext): PullSymbol {
@@ -6425,8 +6427,8 @@ module TypeScript {
             // but are not permitted to reference parameters or local variables of the constructor.
             // This effectively means that entities from outer scopes by the same name as a constructor parameter or local variable are inaccessible 
             // in initializer expressions for instance member variables.
-            var memberVariableDeclarationAST = ASTHelpers.getEnclosingMemberVariableDeclaration(nameAST);
-            if (memberVariableDeclarationAST) {
+            var memberVariableDeclarationAST = ASTHelpers.getEnclosingMemberDeclaration(nameAST);
+            if (memberVariableDeclarationAST && memberVariableDeclarationAST.kind() === SyntaxKind.MemberVariableDeclaration) {
 
                 var memberVariableDecl = this.semanticInfoChain.getDeclForAST(memberVariableDeclarationAST);
                 if (!hasFlag(memberVariableDecl.flags, PullElementFlags.Static)) {
@@ -6823,7 +6825,7 @@ module TypeScript {
             }
 
             if (typeNameSymbol.isTypeParameter()) {
-                if (PullTypeResolver.isInStaticMemberContext(enclosingDecl)) {
+                if (PullHelpers.isInStaticMemberContext(nameAST, this.semanticInfoChain)) {
                     var parentDecl = typeNameSymbol.getDeclarations()[0].getParentDecl();
 
                     if (parentDecl.kind === PullElementKind.Class) {
@@ -6838,24 +6840,6 @@ module TypeScript {
             }
 
             return typeNameSymbol;
-        }
-
-        public static isInStaticMemberContext(decl: PullDecl): boolean {
-            while (decl) {                
-                // check if decl correspond to static member of some sort
-                if (hasFlag(decl.kind, PullElementKind.SomeFunction | PullElementKind.Property) && hasFlag(decl.flags, PullElementFlags.Static)) {
-                    return true;
-                }
-
-                // no container can exist in static context - exit early
-                if (hasFlag(decl.kind, PullElementKind.SomeContainer)) {
-                    return false;
-                }
-
-                decl = decl.getParentDecl();
-            }
-
-            return false;
         }
 
         private isLeftSideOfQualifiedName(ast: ISyntaxElement): boolean {

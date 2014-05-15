@@ -273,13 +273,17 @@ module TypeScript.ASTHelpers {
         return null;
     }
 
-    export function getEnclosingMemberVariableDeclaration(ast: ISyntaxElement): MemberVariableDeclarationSyntax {
+    export function getEnclosingMemberDeclaration(ast: ISyntaxElement): ISyntaxElement {
         var current = ast;
 
         while (current) {
             switch (current.kind()) {
                 case SyntaxKind.MemberVariableDeclaration:
-                    return <MemberVariableDeclarationSyntax>current;
+                case SyntaxKind.MethodSignature:
+                case SyntaxKind.MemberFunctionDeclaration:
+                case SyntaxKind.GetAccessor:
+                case SyntaxKind.SetAccessor:
+                    return current;
                 case SyntaxKind.ClassDeclaration:
                 case SyntaxKind.InterfaceDeclaration:
                 case SyntaxKind.ModuleDeclaration:
@@ -624,9 +628,9 @@ module TypeScript.ASTHelpers {
                 case SyntaxKind.CallSignature:
                     return (<CallSignatureSyntax>ast).parameterList;
                 case SyntaxKind.GetAccessor:
-                    return (<GetAccessorSyntax>ast).parameterList;
+                    return getParameterList((<GetAccessorSyntax>ast).callSignature);
                 case SyntaxKind.SetAccessor:
-                    return (<SetAccessorSyntax>ast).parameterList;
+                    return getParameterList((<SetAccessorSyntax>ast).callSignature);
             }
         }
 
@@ -657,7 +661,7 @@ module TypeScript.ASTHelpers {
                 case SyntaxKind.PropertySignature:
                     return getType((<PropertySignatureSyntax>ast).typeAnnotation);
                 case SyntaxKind.GetAccessor:
-                    return getType((<GetAccessorSyntax>ast).typeAnnotation);
+                    return getType((<GetAccessorSyntax>ast).callSignature);
                 case SyntaxKind.Parameter:
                     return getType((<ParameterSyntax>ast).typeAnnotation);
                 case SyntaxKind.MemberVariableDeclaration:

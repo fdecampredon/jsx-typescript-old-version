@@ -620,74 +620,96 @@ module TypeScript {
         function scanTriviaInfo(isTrailing: boolean): boolean {
             // Keep this exactly in sync with scanTrivia
             var result = false;
+            var _end = end;
 
-            while (true) {
+            while (index < _end) {
                 var ch = str.charCodeAt(index);
 
                 switch (ch) {
-                    // Unicode 3.0 space characters
-                    case CharacterCodes.space:
-                    case CharacterCodes.nonBreakingSpace:
-                    case CharacterCodes.enQuad:
-                    case CharacterCodes.emQuad:
-                    case CharacterCodes.enSpace:
-                    case CharacterCodes.emSpace:
-                    case CharacterCodes.threePerEmSpace:
-                    case CharacterCodes.fourPerEmSpace:
-                    case CharacterCodes.sixPerEmSpace:
-                    case CharacterCodes.figureSpace:
-                    case CharacterCodes.punctuationSpace:
-                    case CharacterCodes.thinSpace:
-                    case CharacterCodes.hairSpace:
-                    case CharacterCodes.zeroWidthSpace:
-                    case CharacterCodes.narrowNoBreakSpace:
-                    case CharacterCodes.ideographicSpace:
-
                     case CharacterCodes.tab:
+                    case CharacterCodes.space:
                     case CharacterCodes.verticalTab:
                     case CharacterCodes.formFeed:
-                    case CharacterCodes.byteOrderMark:
-                        // Normal whitespace.  Consume and continue.
-                        result = true;
                         index++;
+                        result = true;
                         continue;
 
-                    case CharacterCodes.slash:
-                        // Potential comment.  Consume if so.  Otherwise, break out and return.
-                        var ch2 = str.charCodeAt(index + 1);
-                        if (ch2 === CharacterCodes.slash) {
-                            result = true;
-                            skipSingleLineCommentTrivia();
-                            continue;
-                        }
-
-                        if (ch2 === CharacterCodes.asterisk) {
-                            result = true;
-                            skipMultiLineCommentTrivia();
-                            continue;
-                        }
-
-                        // Not a comment.  Don't consume.
-                        break;
-
                     case CharacterCodes.carriageReturn:
+                        if ((index + 1) < end && str.charCodeAt(index + 1) === CharacterCodes.lineFeed) {
+                            index++;
+                        }
+                    // fall through.
                     case CharacterCodes.lineFeed:
-                    case CharacterCodes.paragraphSeparator:
-                    case CharacterCodes.lineSeparator:
-                        result = true;
-                        skipLineTerminatorSequence(ch);
+                        index++;
 
                         // If we're consuming leading trivia, then we will continue consuming more 
                         // trivia (including newlines) up to the first token we see.  If we're 
                         // consuming trailing trivia, then we break after the first newline we see.
-                        if (!isTrailing) {
+                        if (isTrailing) {
+                            return true;
+                        }
+
+                        result = true;
+                        continue;
+
+                    case CharacterCodes.slash:
+                        if ((index + 1) < _end) {
+                            var ch2 = str.charCodeAt(index + 1);
+                            if (ch2 === CharacterCodes.slash) {
+                                result = true;
+                                skipSingleLineCommentTrivia();
+                                continue;
+                            }
+
+                            if (ch2 === CharacterCodes.asterisk) {
+                                result = true;
+                                skipMultiLineCommentTrivia();
+                                continue;
+                            }
+                        }
+
+                        // Not a comment.  Don't consume.
+                        return result;
+
+                    default:
+                        if (ch > CharacterCodes.maxAsciiCharacter && slowScanTriviaInfo(ch)) {
+                            result = true;
                             continue;
                         }
 
-                        break;
+                        return result;
                 }
+            }
 
-                return result;
+            return result;
+        }
+
+        function slowScanTriviaInfo(ch: number): boolean {
+            switch (ch) {
+                case CharacterCodes.space:
+                case CharacterCodes.nonBreakingSpace:
+                case CharacterCodes.enQuad:
+                case CharacterCodes.emQuad:
+                case CharacterCodes.enSpace:
+                case CharacterCodes.emSpace:
+                case CharacterCodes.threePerEmSpace:
+                case CharacterCodes.fourPerEmSpace:
+                case CharacterCodes.sixPerEmSpace:
+                case CharacterCodes.figureSpace:
+                case CharacterCodes.punctuationSpace:
+                case CharacterCodes.thinSpace:
+                case CharacterCodes.hairSpace:
+                case CharacterCodes.zeroWidthSpace:
+                case CharacterCodes.narrowNoBreakSpace:
+                case CharacterCodes.ideographicSpace:
+                case CharacterCodes.byteOrderMark:
+                case CharacterCodes.paragraphSeparator:
+                case CharacterCodes.lineSeparator:
+                    index++;
+                    return true;
+
+                default:
+                    return false;
             }
         }
 
@@ -761,9 +783,8 @@ module TypeScript {
             index += 2;
 
             // The '2' is for the "//" we consumed.
-            while (true) {
-                var ch = str.charCodeAt(index);
-                if (isNaN(ch) || isNewLineCharacter(ch)) {
+            while (index < end) {
+                if (isNewLineCharacter(str.charCodeAt(index))) {
                     return;
                 }
 
@@ -783,12 +804,13 @@ module TypeScript {
             index += 2;
 
             while (true) {
-                if (index >= end) {
+                if (index === end) {
                     reportDiagnostic(end, 0, DiagnosticCode.AsteriskSlash_expected, null);
                     return;
                 }
 
-                if (str.charCodeAt(index) === CharacterCodes.asterisk &&
+                if ((index + 1) < end &&
+                    str.charCodeAt(index) === CharacterCodes.asterisk &&
                     str.charCodeAt(index + 1) === CharacterCodes.slash) {
 
                     index += 2;

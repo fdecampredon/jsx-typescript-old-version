@@ -1,0 +1,32 @@
+==== tests/cases/compiler/genericClassWithStaticsUsingTypeArguments.ts (7 errors) ====
+    // Should be error to use 'T' in all declarations within Foo.
+    class Foo<T> {
+        static a = (n: T) => { };
+                       ~
+!!! genericClassWithStaticsUsingTypeArguments.ts(3,20): error TS2099: Static members cannot reference class type parameters.
+    
+        static b: T;
+                  ~
+!!! genericClassWithStaticsUsingTypeArguments.ts(5,15): error TS2099: Static members cannot reference class type parameters.
+    
+        static c: T[] = [];
+                  ~
+!!! genericClassWithStaticsUsingTypeArguments.ts(7,15): error TS2099: Static members cannot reference class type parameters.
+    
+        static d = false || ((x: T) => x || undefined)(null)
+                                 ~
+!!! genericClassWithStaticsUsingTypeArguments.ts(9,30): error TS2099: Static members cannot reference class type parameters.
+    
+        static e = function (x: T) { return null; }
+                                ~
+!!! genericClassWithStaticsUsingTypeArguments.ts(11,29): error TS2099: Static members cannot reference class type parameters.
+    
+        static f(xs: T[]): T[] {
+                     ~
+!!! genericClassWithStaticsUsingTypeArguments.ts(13,18): error TS2099: Static members cannot reference class type parameters.
+                           ~
+!!! genericClassWithStaticsUsingTypeArguments.ts(13,24): error TS2099: Static members cannot reference class type parameters.
+            return xs.reverse();
+        }
+    }
+    

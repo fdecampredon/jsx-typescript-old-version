@@ -370,23 +370,20 @@ module TypeScript {
         public modifiers: ISyntaxToken[];
         public getKeyword: ISyntaxToken;
         public propertyName: ISyntaxToken;
-        public parameterList: ParameterListSyntax;
-        public typeAnnotation: TypeAnnotationSyntax;
+        public callSignature: CallSignatureSyntax;
         public block: BlockSyntax;
         public _isMemberDeclaration: any; public _isPropertyAssignment: any; public _isClassElement: any;
-        constructor(data: number, modifiers: ISyntaxToken[], getKeyword: ISyntaxToken, propertyName: ISyntaxToken, parameterList: ParameterListSyntax, typeAnnotation: TypeAnnotationSyntax, block: BlockSyntax) {
+        constructor(data: number, modifiers: ISyntaxToken[], getKeyword: ISyntaxToken, propertyName: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax) {
             super(data);
             this.modifiers = modifiers,
             this.getKeyword = getKeyword,
             this.propertyName = propertyName,
-            this.parameterList = parameterList,
-            this.typeAnnotation = typeAnnotation,
+            this.callSignature = callSignature,
             this.block = block,
             !isShared(modifiers) && (modifiers.parent = this),
             getKeyword.parent = this,
             propertyName.parent = this,
-            parameterList.parent = this,
-            typeAnnotation && (typeAnnotation.parent = this),
+            callSignature.parent = this,
             block.parent = this;
         }
     }
@@ -394,20 +391,20 @@ module TypeScript {
         public modifiers: ISyntaxToken[];
         public setKeyword: ISyntaxToken;
         public propertyName: ISyntaxToken;
-        public parameterList: ParameterListSyntax;
+        public callSignature: CallSignatureSyntax;
         public block: BlockSyntax;
         public _isMemberDeclaration: any; public _isPropertyAssignment: any; public _isClassElement: any;
-        constructor(data: number, modifiers: ISyntaxToken[], setKeyword: ISyntaxToken, propertyName: ISyntaxToken, parameterList: ParameterListSyntax, block: BlockSyntax) {
+        constructor(data: number, modifiers: ISyntaxToken[], setKeyword: ISyntaxToken, propertyName: ISyntaxToken, callSignature: CallSignatureSyntax, block: BlockSyntax) {
             super(data);
             this.modifiers = modifiers,
             this.setKeyword = setKeyword,
             this.propertyName = propertyName,
-            this.parameterList = parameterList,
+            this.callSignature = callSignature,
             this.block = block,
             !isShared(modifiers) && (modifiers.parent = this),
             setKeyword.parent = this,
             propertyName.parent = this,
-            parameterList.parent = this,
+            callSignature.parent = this,
             block.parent = this;
         }
     }

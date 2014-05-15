@@ -2031,7 +2031,7 @@ module TypeScript {
             signature.addDeclaration(getAccessorDeclaration);
             getAccessorDeclaration.setSignatureSymbol(signature, this.semanticInfoChain);
 
-            this.bindParameterSymbols(funcDeclAST, ASTHelpers.parametersFromParameterList(funcDeclAST.parameterList), getterTypeSymbol, signature);
+            this.bindParameterSymbols(funcDeclAST, ASTHelpers.parametersFromParameterList(funcDeclAST.callSignature.parameterList), getterTypeSymbol, signature);
 
             // add the implicit call member for this function type
             getterTypeSymbol.appendCallSignature(signature);
@@ -2130,7 +2130,7 @@ module TypeScript {
             setAccessorDeclaration.setSignatureSymbol(signature, this.semanticInfoChain);
 
             // PULLTODO: setter should not have a parameters
-            this.bindParameterSymbols(funcDeclAST, ASTHelpers.parametersFromParameterList(funcDeclAST.parameterList), setterTypeSymbol, signature);
+            this.bindParameterSymbols(funcDeclAST, ASTHelpers.parametersFromParameterList(funcDeclAST.callSignature.parameterList), setterTypeSymbol, signature);
 
             // add the implicit call member for this function type
             setterTypeSymbol.appendCallSignature(signature);
