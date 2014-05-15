@@ -292,43 +292,36 @@ module TypeScript {
         }
 
         private checkIndexSignatureParameter(node: IndexSignatureSyntax): boolean {
-            var parameter = node.parameter;
+            if (node.parameters.length !== 1) {
+                this.pushDiagnostic(node.openBracketToken, DiagnosticCode.Index_signature_must_have_exactly_one_parameter);
+                return true;
+            }
+
+            var parameter = node.parameters[0];
 
             if (parameter.dotDotDotToken) {
-                this.pushDiagnostic(
-                    parameter,
-                    DiagnosticCode.Index_signatures_cannot_have_rest_parameters);
+                this.pushDiagnostic(parameter, DiagnosticCode.Index_signatures_cannot_have_rest_parameters);
                 return true;
             }
             else if (parameter.modifiers.length > 0) {
-                this.pushDiagnostic(
-                    parameter,
-                    DiagnosticCode.Index_signature_parameter_cannot_have_accessibility_modifiers);
+                this.pushDiagnostic(parameter, DiagnosticCode.Index_signature_parameter_cannot_have_accessibility_modifiers);
                 return true;
             }
             else if (parameter.questionToken) {
-                this.pushDiagnostic(
-                    parameter,
-                    DiagnosticCode.Index_signature_parameter_cannot_have_a_question_mark);
+                this.pushDiagnostic(parameter, DiagnosticCode.Index_signature_parameter_cannot_have_a_question_mark);
                 return true;
             }
             else if (parameter.equalsValueClause) {
-                this.pushDiagnostic(
-                    parameter,
-                    DiagnosticCode.Index_signature_parameter_cannot_have_an_initializer);
+                this.pushDiagnostic(parameter, DiagnosticCode.Index_signature_parameter_cannot_have_an_initializer);
                 return true;
             }
             else if (!parameter.typeAnnotation) {
-                this.pushDiagnostic(
-                    parameter,
-                    DiagnosticCode.Index_signature_parameter_must_have_a_type_annotation);
+                this.pushDiagnostic(parameter, DiagnosticCode.Index_signature_parameter_must_have_a_type_annotation);
                 return true;
             }
             else if (parameter.typeAnnotation.type.kind() !== SyntaxKind.StringKeyword &&
                      parameter.typeAnnotation.type.kind() !== SyntaxKind.NumberKeyword) {
-                this.pushDiagnostic(
-                    parameter,
-                    DiagnosticCode.Index_signature_parameter_type_must_be_string_or_number);
+                this.pushDiagnostic(parameter, DiagnosticCode.Index_signature_parameter_type_must_be_string_or_number);
                 return true;
             }
 

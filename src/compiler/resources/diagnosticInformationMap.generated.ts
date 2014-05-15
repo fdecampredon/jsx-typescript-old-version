@@ -93,6 +93,7 @@ module TypeScript {
     "Type annotation cannot appear on a constructor declaration.": { "code": 1092, "category": DiagnosticCategory.Error },
     "Type parameters cannot appear on an accessor.": { "code": 1093, "category": DiagnosticCategory.Error },
     "Type annotation cannot appear on a 'set' accessor.": { "code": 1094, "category": DiagnosticCategory.Error },
+    "Index signature must have exactly one parameter.": { "code": 1095, "category": DiagnosticCategory.Error },
     "Duplicate identifier '{0}'.": { "code": 2000, "category": DiagnosticCategory.Error },
     "The name '{0}' does not exist in the current scope.": { "code": 2001, "category": DiagnosticCategory.Error },
     "The name '{0}' does not refer to a value.": { "code": 2002, "category": DiagnosticCategory.Error },

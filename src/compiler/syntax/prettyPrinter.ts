@@ -566,7 +566,7 @@ module TypeScript.PrettyPrinter {
 
         public visitIndexSignature(node: IndexSignatureSyntax): void {
             this.appendToken(node.openBracketToken);
-            this.appendNode(node.parameter);
+            this.appendSeparatorSpaceList(node.parameters)
             this.appendToken(node.closeBracketToken);
             this.appendNode(node.typeAnnotation);
         }

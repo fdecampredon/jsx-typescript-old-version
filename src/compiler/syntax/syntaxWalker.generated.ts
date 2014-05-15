@@ -230,7 +230,7 @@ module TypeScript {
 
         public visitIndexSignature(node: IndexSignatureSyntax): void {
             this.visitToken(node.openBracketToken);
-            this.visitNode(node.parameter);
+            this.visitSeparatedList(node.parameters);
             this.visitToken(node.closeBracketToken);
             this.visitOptionalNode(node.typeAnnotation);
         }

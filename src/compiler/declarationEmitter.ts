@@ -720,7 +720,7 @@ module TypeScript {
 
             this.emitIndent();
             this.declFile.Write("[");
-            this.emitParameters(/*isPrivate:*/ false, ASTHelpers.parametersFromParameter(funcDecl.parameter));
+            this.emitParameters(/*isPrivate:*/ false, ASTHelpers.parametersFromParameters(funcDecl.parameters));
             this.declFile.Write("]");
 
             var funcPullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
@@ -801,7 +801,7 @@ module TypeScript {
 
         private emitClassMembersFromConstructorDefinition(funcDecl: ConstructorDeclarationSyntax) {
             var argsLen = funcDecl.callSignature.parameterList.parameters.length;
-            if (lastParameterIsRest(funcDecl.callSignature.parameterList)) {
+            if (lastParameterIsRest(funcDecl.callSignature.parameterList.parameters)) {
                 argsLen--;
             }
 

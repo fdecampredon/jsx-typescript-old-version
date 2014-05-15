@@ -371,15 +371,19 @@ module TypeScript.ASTHelpers {
     }
 
     export function parametersFromParameterList(list: ParameterListSyntax): IParameters {
+        return parametersFromParameters(list.parameters);
+    }
+
+    export function parametersFromParameters(parameters: ParameterSyntax[]): IParameters {
         return {
-            length: list.parameters.length,
-            lastParameterIsRest: () => lastParameterIsRest(list),
-            ast: list.parameters,
-            astAt: (index: number) => list.parameters[index],
-            identifierAt: (index: number) => list.parameters[index].identifier,
-            typeAt: (index: number) => getType(list.parameters[index]),
-            initializerAt: (index: number) => list.parameters[index].equalsValueClause,
-            isOptionalAt: (index: number) => parameterIsOptional(list.parameters[index]),
+            length: parameters.length,
+            lastParameterIsRest: () => lastParameterIsRest(parameters),
+            ast: parameters,
+            astAt: (index: number) => parameters[index],
+            identifierAt: (index: number) => parameters[index].identifier,
+            typeAt: (index: number) => getType(parameters[index]),
+            initializerAt: (index: number) => parameters[index].equalsValueClause,
+            isOptionalAt: (index: number) => parameterIsOptional(parameters[index]),
         };
     }
 

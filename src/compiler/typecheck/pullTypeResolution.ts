@@ -1796,28 +1796,30 @@ module TypeScript {
             var firstNumberIndexer: PullSignatureSymbol = null;
             for (var i = 0; i < indexSignatures.length; i++) {
                 var currentIndexer = indexSignatures[i];
-                var currentParameterType = currentIndexer.parameters[0].type;
-                Debug.assert(currentParameterType);
-                if (currentParameterType === this.semanticInfoChain.stringTypeSymbol) {
-                    if (firstStringIndexer) {
-                        this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
-                            DiagnosticCode.Duplicate_string_index_signature, null,
-                            [this.semanticInfoChain.locationFromAST(firstStringIndexer.getDeclarations()[0].ast())]);
-                        return;
+                if (currentIndexer.parameters.length > 0) {
+                    var currentParameterType = currentIndexer.parameters[0].type;
+                    Debug.assert(currentParameterType);
+                    if (currentParameterType === this.semanticInfoChain.stringTypeSymbol) {
+                        if (firstStringIndexer) {
+                            this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
+                                DiagnosticCode.Duplicate_string_index_signature, null,
+                                [this.semanticInfoChain.locationFromAST(firstStringIndexer.getDeclarations()[0].ast())]);
+                            return;
+                        }
+                        else {
+                            firstStringIndexer = currentIndexer;
+                        }
                     }
-                    else {
-                        firstStringIndexer = currentIndexer;
-                    }
-                }
-                else if (currentParameterType === this.semanticInfoChain.numberTypeSymbol) {
-                    if (firstNumberIndexer) {
-                        this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
-                            DiagnosticCode.Duplicate_number_index_signature, null,
-                            [this.semanticInfoChain.locationFromAST(firstNumberIndexer.getDeclarations()[0].ast())]);
-                        return;
-                    }
-                    else {
-                        firstNumberIndexer = currentIndexer;
+                    else if (currentParameterType === this.semanticInfoChain.numberTypeSymbol) {
+                        if (firstNumberIndexer) {
+                            this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
+                                DiagnosticCode.Duplicate_number_index_signature, null,
+                                [this.semanticInfoChain.locationFromAST(firstNumberIndexer.getDeclarations()[0].ast())]);
+                            return;
+                        }
+                        else {
+                            firstNumberIndexer = currentIndexer;
+                        }
                     }
                 }
             }
@@ -2528,27 +2530,27 @@ module TypeScript {
                 var functionDeclaration = <FunctionDeclarationSyntax>enclosingAST;
                 return !hasFlag(someFunctionDecl.kind === PullElementKind.Method ? someFunctionDecl.getParentDecl().flags : someFunctionDecl.flags, PullElementFlags.Ambient)
                 && functionDeclaration.block
-                && lastParameterIsRest(functionDeclaration.callSignature.parameterList);
+                && lastParameterIsRest(functionDeclaration.callSignature.parameterList.parameters);
             }
             else if (nodeType === SyntaxKind.MemberFunctionDeclaration) {
                 var memberFunction = <MemberFunctionDeclarationSyntax>enclosingAST;
                 return !hasFlag(someFunctionDecl.kind === PullElementKind.Method ? someFunctionDecl.getParentDecl().flags : someFunctionDecl.flags, PullElementFlags.Ambient)
                 && memberFunction.block
-                && lastParameterIsRest(memberFunction.callSignature.parameterList);
+                && lastParameterIsRest(memberFunction.callSignature.parameterList.parameters);
             }
             else if (nodeType === SyntaxKind.ConstructorDeclaration) {
                 var constructorDeclaration = <ConstructorDeclarationSyntax>enclosingAST;
                  return !hasFlag(someFunctionDecl.getParentDecl().flags, PullElementFlags.Ambient)
                 && constructorDeclaration.block
-                && lastParameterIsRest(constructorDeclaration.callSignature.parameterList);
+                && lastParameterIsRest(constructorDeclaration.callSignature.parameterList.parameters);
             }
             else if (nodeType === SyntaxKind.ParenthesizedArrowFunctionExpression) {
                 var arrowFunctionExpression = <ParenthesizedArrowFunctionExpressionSyntax>enclosingAST;
-                return lastParameterIsRest(arrowFunctionExpression.callSignature.parameterList);
+                return lastParameterIsRest(arrowFunctionExpression.callSignature.parameterList.parameters);
             }
             else if (nodeType === SyntaxKind.FunctionExpression) {
                 var functionExpression = <FunctionExpressionSyntax>enclosingAST;
-                return lastParameterIsRest(functionExpression.callSignature.parameterList);
+                return lastParameterIsRest(functionExpression.callSignature.parameterList.parameters);
             }
 
             return false;
@@ -3847,7 +3849,7 @@ module TypeScript {
             var funcDecl = this.semanticInfoChain.getDeclForAST(funcDeclAST);
 
             // resolve parameter type annotations as necessary
-            this.resolveAST(funcDeclAST.parameter, /*isContextuallyTyped:*/ false, context);
+            this.resolveAST(funcDeclAST.parameters, /*isContextuallyTyped:*/ false, context);
 
             var enclosingDecl = this.getEnclosingDecl(funcDecl);
 
@@ -3855,7 +3857,7 @@ module TypeScript {
             this.validateVariableDeclarationGroups(funcDecl, context);
 
             this.checkFunctionTypePrivacy(
-                funcDeclAST, /*isStatic:*/ false, null, ASTHelpers.parametersFromParameter(funcDeclAST.parameter), ASTHelpers.getType(funcDeclAST), null, context);
+                funcDeclAST, /*isStatic:*/ false, null, ASTHelpers.parametersFromParameters(funcDeclAST.parameters), ASTHelpers.getType(funcDeclAST), null, context);
 
             var signature: PullSignatureSymbol = funcDecl.getSignatureSymbol(this.semanticInfoChain);
 
@@ -4162,12 +4164,12 @@ module TypeScript {
 
                 // resolve parameter type annotations as necessary
 
-                if (funcDeclAST.parameter) {
+                if (funcDeclAST.parameters.length === 1) {
                     var prevInTypeCheck = context.inTypeCheck;
 
                     // TODO: why are we setting inTypeCheck false here?
                     context.inTypeCheck = false;
-                    this.resolveParameter(funcDeclAST.parameter, context);
+                    this.resolveParameter(funcDeclAST.parameters[0], context);
                     context.inTypeCheck = prevInTypeCheck;
                 }
 

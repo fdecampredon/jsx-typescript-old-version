@@ -170,7 +170,7 @@ module TypeScript {
     }
 
     interface IndexSignature extends TypeMember {
-        parameter: Parameter;
+        parameters: SyntaxList<Parameter>;
         typeAnnotation?: TypeAnnotation;
     }
 

@@ -206,8 +206,7 @@ module TypeScript {
         }
     }
 
-    export function lastParameterIsRest(parameterList: ParameterListSyntax): boolean {
-        var parameters = parameterList.parameters;
+    export function lastParameterIsRest(parameters: ParameterSyntax[]): boolean {
         return parameters.length > 0 && (parameters[parameters.length - 1]).dotDotDotToken !== null;
     }
 

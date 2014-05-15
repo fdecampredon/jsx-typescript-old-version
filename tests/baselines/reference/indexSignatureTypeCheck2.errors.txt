@@ -1,4 +1,4 @@
-==== tests/cases/compiler/indexSignatureTypeCheck2.ts (8 errors) ====
+==== tests/cases/compiler/indexSignatureTypeCheck2.ts (5 errors) ====
     class IPropertySet {
         [index: string]: any
     }
@@ -9,24 +9,18 @@
     
     interface indexErrors {
         [p2?: string];
+         ~~~~~~~~~~~
+!!! indexSignatureTypeCheck2.ts(10,6): error TS1019: Index signature parameter cannot have a question mark.
         [...p3: any[]];
+         ~~~~~~~~~~~~
+!!! indexSignatureTypeCheck2.ts(11,6): error TS1017: Index signatures cannot have rest parameters.
         [p4: string, p5?: string];
-                   ~
-!!! indexSignatureTypeCheck2.ts(12,16): error TS1005: ']' expected.
-                                ~
-!!! indexSignatureTypeCheck2.ts(12,29): error TS1005: ';' expected.
-                                 ~
-!!! indexSignatureTypeCheck2.ts(12,30): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-        ~~~~~~~~~~~
+        ~
+!!! indexSignatureTypeCheck2.ts(12,5): error TS1095: Index signature must have exactly one parameter.
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! indexSignatureTypeCheck2.ts(12,5): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	indexSignatureTypeCheck2.ts(10,5)
         [p6: string, ...p7: any[]];
-                   ~
-!!! indexSignatureTypeCheck2.ts(13,16): error TS1005: ']' expected.
-                     ~~~
-!!! indexSignatureTypeCheck2.ts(13,18): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-                                 ~
-!!! indexSignatureTypeCheck2.ts(13,30): error TS1005: ';' expected.
-                                  ~
-!!! indexSignatureTypeCheck2.ts(13,31): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+        ~
+!!! indexSignatureTypeCheck2.ts(13,5): error TS1095: Index signature must have exactly one parameter.
     }

@@ -148,8 +148,9 @@ module TypeScript.Parser {
         ObjectLiteralExpression_PropertyAssignments = 15,
         ArrayLiteralExpression_AssignmentExpressions = 16,
         ParameterList_Parameters = 17,
-        TypeArgumentList_Types = 18,
-        TypeParameterList_TypeParameters = 19,
+        IndexSignature_Parameters = 18,
+        TypeArgumentList_Types = 19,
+        TypeParameterList_TypeParameters = 20,
 
         FirstListParsingState = SourceUnit_ModuleElements,
         LastListParsingState = TypeParameterList_TypeParameters,
@@ -2764,9 +2765,15 @@ module TypeScript.Parser {
         }
 
         function parseIndexSignature(): IndexSignatureSyntax {
+            var openBracketToken = eatToken(SyntaxKind.OpenBracketToken);
+            var result = parseSeparatedSyntaxList<ParameterSyntax>(ListParsingState.IndexSignature_Parameters);
+
+            var parameters = result.list;
+            openBracketToken = addSkippedTokensAfterToken(openBracketToken, result.skippedTokens);
+
             return new IndexSignatureSyntax(parseNodeData,
-                eatToken(SyntaxKind.OpenBracketToken),
-                parseParameter(),
+                openBracketToken,
+                parameters,
                 eatToken(SyntaxKind.CloseBracketToken),
                 parseOptionalTypeAnnotation(/*allowStringLiteral:*/ false));
         }
@@ -5467,6 +5474,7 @@ module TypeScript.Parser {
                 case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
                 case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
                 case ListParsingState.ParameterList_Parameters:
+                case ListParsingState.IndexSignature_Parameters:
                 case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
                 case ListParsingState.TypeArgumentList_Types:
                 case ListParsingState.TypeParameterList_TypeParameters:
@@ -5561,6 +5569,9 @@ module TypeScript.Parser {
                 case ListParsingState.ParameterList_Parameters:
                     return isExpectedParameterList_ParametersTerminator();
 
+                case ListParsingState.IndexSignature_Parameters:
+                    return isExpectedIndexSignature_ParametersTerminator();
+
                 case ListParsingState.TypeArgumentList_Types:
                     return isExpectedTypeArgumentList_TypesTerminator();
 
@@ -5648,6 +5659,22 @@ module TypeScript.Parser {
             // We may also see a => in an error case.  i.e.:
             // (f: number => { ... }
             if (tokenKind === SyntaxKind.EqualsGreaterThanToken) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function isExpectedIndexSignature_ParametersTerminator() {
+            var token = currentToken();
+            var tokenKind = token.kind();
+            if (tokenKind === SyntaxKind.CloseBracketToken) {
+                return true;
+            }
+
+            // We may also see a { in an error case.  i.e.:
+            // function (a, b, c  {
+            if (tokenKind === SyntaxKind.OpenBraceToken) {
                 return true;
             }
 
@@ -5802,6 +5829,9 @@ module TypeScript.Parser {
                 case ListParsingState.ParameterList_Parameters:
                     return isParameter();
 
+                case ListParsingState.IndexSignature_Parameters:
+                    return isParameter();
+
                 case ListParsingState.TypeArgumentList_Types:
                     return isType();
 
@@ -5881,6 +5911,9 @@ module TypeScript.Parser {
                 case ListParsingState.ParameterList_Parameters:
                     return tryParseParameter();
 
+                case ListParsingState.IndexSignature_Parameters:
+                    return tryParseParameter();
+
                 case ListParsingState.TypeArgumentList_Types:
                     return tryParseType();
 
@@ -5935,6 +5968,9 @@ module TypeScript.Parser {
                     return getLocalizedText(DiagnosticCode.property_or_accessor, null);
 
                 case ListParsingState.ParameterList_Parameters:
+                    return getLocalizedText(DiagnosticCode.parameter, null);
+
+                case ListParsingState.IndexSignature_Parameters:
                     return getLocalizedText(DiagnosticCode.parameter, null);
 
                 case ListParsingState.TypeArgumentList_Types:

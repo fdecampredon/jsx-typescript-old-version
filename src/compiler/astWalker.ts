@@ -204,7 +204,7 @@ module TypeScript {
     }
 
     function walkIndexSignatureChildren(preAst: IndexSignatureSyntax, walker: AstWalker): void {
-        walker.walk(preAst.parameter);
+        walker.walk(preAst.parameters);
         walker.walk(preAst.typeAnnotation);
     }
 

@@ -128,79 +128,81 @@
                                     }
                                 ]
                             },
-                            "parameter": {
-                                "kind": "Parameter",
-                                "fullStart": 18,
-                                "fullEnd": 23,
-                                "start": 18,
-                                "end": 23,
-                                "fullWidth": 5,
-                                "width": 5,
-                                "modifiers": [],
-                                "identifier": {
-                                    "kind": "IdentifierName",
+                            "parameters": [
+                                {
+                                    "kind": "Parameter",
                                     "fullStart": 18,
-                                    "fullEnd": 20,
-                                    "start": 18,
-                                    "end": 19,
-                                    "fullWidth": 2,
-                                    "width": 1,
-                                    "text": "a",
-                                    "value": "a",
-                                    "valueText": "a",
-                                    "hasTrailingTrivia": true,
-                                    "trailingTrivia": [
-                                        {
-                                            "kind": "WhitespaceTrivia",
-                                            "fullStart": 19,
-                                            "fullEnd": 20,
-                                            "text": " "
-                                        }
-                                    ]
-                                },
-                                "equalsValueClause": {
-                                    "kind": "EqualsValueClause",
-                                    "fullStart": 20,
                                     "fullEnd": 23,
-                                    "start": 20,
+                                    "start": 18,
                                     "end": 23,
-                                    "fullWidth": 3,
-                                    "width": 3,
-                                    "equalsToken": {
-                                        "kind": "EqualsToken",
-                                        "fullStart": 20,
-                                        "fullEnd": 22,
-                                        "start": 20,
-                                        "end": 21,
+                                    "fullWidth": 5,
+                                    "width": 5,
+                                    "modifiers": [],
+                                    "identifier": {
+                                        "kind": "IdentifierName",
+                                        "fullStart": 18,
+                                        "fullEnd": 20,
+                                        "start": 18,
+                                        "end": 19,
                                         "fullWidth": 2,
                                         "width": 1,
-                                        "text": "=",
-                                        "value": "=",
-                                        "valueText": "=",
+                                        "text": "a",
+                                        "value": "a",
+                                        "valueText": "a",
                                         "hasTrailingTrivia": true,
                                         "trailingTrivia": [
                                             {
                                                 "kind": "WhitespaceTrivia",
-                                                "fullStart": 21,
-                                                "fullEnd": 22,
+                                                "fullStart": 19,
+                                                "fullEnd": 20,
                                                 "text": " "
                                             }
                                         ]
                                     },
-                                    "value": {
-                                        "kind": "NumericLiteral",
-                                        "fullStart": 22,
+                                    "equalsValueClause": {
+                                        "kind": "EqualsValueClause",
+                                        "fullStart": 20,
                                         "fullEnd": 23,
-                                        "start": 22,
+                                        "start": 20,
                                         "end": 23,
-                                        "fullWidth": 1,
-                                        "width": 1,
-                                        "text": "0",
-                                        "value": 0,
-                                        "valueText": "0"
+                                        "fullWidth": 3,
+                                        "width": 3,
+                                        "equalsToken": {
+                                            "kind": "EqualsToken",
+                                            "fullStart": 20,
+                                            "fullEnd": 22,
+                                            "start": 20,
+                                            "end": 21,
+                                            "fullWidth": 2,
+                                            "width": 1,
+                                            "text": "=",
+                                            "value": "=",
+                                            "valueText": "=",
+                                            "hasTrailingTrivia": true,
+                                            "trailingTrivia": [
+                                                {
+                                                    "kind": "WhitespaceTrivia",
+                                                    "fullStart": 21,
+                                                    "fullEnd": 22,
+                                                    "text": " "
+                                                }
+                                            ]
+                                        },
+                                        "value": {
+                                            "kind": "NumericLiteral",
+                                            "fullStart": 22,
+                                            "fullEnd": 23,
+                                            "start": 22,
+                                            "end": 23,
+                                            "fullWidth": 1,
+                                            "width": 1,
+                                            "text": "0",
+                                            "value": 0,
+                                            "valueText": "0"
+                                        }
                                     }
                                 }
-                            },
+                            ],
                             "closeBracketToken": {
                                 "kind": "CloseBracketToken",
                                 "fullStart": 23,
