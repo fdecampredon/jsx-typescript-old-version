@@ -434,11 +434,11 @@ module TypeScript {
     }
 
     interface XJSClosingElement extends UnaryExpression {
-        name: NameExpression;
+        name: Name;
     }
 
     interface XJSOpeningElement extends UnaryExpression {
-        name: NameExpression;
+        name: Name;
         attributes: SyntaxList<XJSAttribute>;
     }
 

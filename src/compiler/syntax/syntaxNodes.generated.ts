@@ -1380,10 +1380,10 @@ module TypeScript {
     export class XJSClosingElementSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public lessThanToken: ISyntaxToken;
         public slashToken: ISyntaxToken;
-        public name: INameExpression;
+        public name: INameSyntax;
         public greaterThanToken: ISyntaxToken;
         public _isUnaryExpression: any; public _isExpression: any;
-        constructor(data: number, lessThanToken: ISyntaxToken, slashToken: ISyntaxToken, name: INameExpression, greaterThanToken: ISyntaxToken) {
+        constructor(data: number, lessThanToken: ISyntaxToken, slashToken: ISyntaxToken, name: INameSyntax, greaterThanToken: ISyntaxToken) {
             super(data);
             this.lessThanToken = lessThanToken,
             this.slashToken = slashToken,
@@ -1397,12 +1397,12 @@ module TypeScript {
     }
     export class XJSOpeningElementSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
         public lessThanToken: ISyntaxToken;
-        public name: INameExpression;
+        public name: INameSyntax;
         public attributes: XJSAttributeSyntax[];
         public slashToken: ISyntaxToken;
         public greaterThanToken: ISyntaxToken;
         public _isUnaryExpression: any; public _isExpression: any;
-        constructor(data: number, lessThanToken: ISyntaxToken, name: INameExpression, attributes: XJSAttributeSyntax[], slashToken: ISyntaxToken, greaterThanToken: ISyntaxToken) {
+        constructor(data: number, lessThanToken: ISyntaxToken, name: INameSyntax, attributes: XJSAttributeSyntax[], slashToken: ISyntaxToken, greaterThanToken: ISyntaxToken) {
             super(data);
             this.lessThanToken = lessThanToken,
             this.name = name,
