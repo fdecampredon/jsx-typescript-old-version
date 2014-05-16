@@ -1329,6 +1329,9 @@ module TypeScript.Parser {
             fileName = _fileName;
             source = _source;
             languageVersion = _languageVersion;
+            
+            var script = ScriptSnapshot.fromString(_source.text.substr(0, _source.text.length()));
+            isXJSFile = getISXjsFileInfo(fileName, script).isXJSFile;
 
             // Now actually parse the tree.
             var result = parseSyntaxTreeWorker(isDeclaration);
@@ -4480,9 +4483,10 @@ module TypeScript.Parser {
         
         function parseXJSElement(): XJSElementSyntax {
             var openingElement = parseXJSOpeningElement();
-            var children: IExpressionSyntax[] = null;
+            var children: IExpressionSyntax[] = Syntax.emptyList<IExpressionSyntax>();
             var closingElement: XJSClosingElementSyntax = null;
             if (!openingElement.slashToken) {//self closing
+                children = getArray();
                 var _currentTokenKind = currentXJSToken().kind();
                 while(_currentTokenKind !== SyntaxKind.EndOfFileToken) {
                     if (_currentTokenKind === SyntaxKind.LessThanToken && peekToken(1).kind() === SyntaxKind.SlashToken) {
@@ -4499,7 +4503,7 @@ module TypeScript.Parser {
         function parseXJSOpeningElement(): XJSOpeningElementSyntax {
             var lessThanToken = eatToken(SyntaxKind.LessThanToken);
             var name = parseName();
-            var attibutes = Syntax.emptyList<XJSAttributeSyntax>();
+            var attibutes = getArray();
             while (currentToken().kind() === SyntaxKind.IdentifierName) {
                 attibutes.push(parseXJSAttribute())
             }
