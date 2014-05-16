@@ -1521,7 +1521,7 @@ function generateIsProperties(definition: ITypeDefinition): string {
             var type = ifaces[i];
             type = getStringWithoutSuffix(type);
             if (isInterface(type)) {
-                type = type.substr(1);
+                type = "_" + type.substr(1, 1).toLowerCase() + type.substr(2) + "Brand";
             }
 
             types.push(type);
@@ -1532,7 +1532,7 @@ function generateIsProperties(definition: ITypeDefinition): string {
         properties += "       ";
 
         for (var i = 0; i < types.length; i++) {
-            properties += " public _is" + types[i] + ": any;";
+            properties += " public " + types[i] + ": any;";
         }
 
         properties += "\r\n";

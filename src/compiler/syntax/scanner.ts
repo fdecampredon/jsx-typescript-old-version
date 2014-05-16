@@ -253,8 +253,37 @@ module TypeScript {
         return false;
     }
 
+    export class IdentifierWithSingleTrailingSpace implements ISyntaxToken {
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
+
+        constructor(public _text: ISimpleText, private _fullStart: number, private _fullWidth: number) {
+        }
+
+        public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
+            this._text = text;
+            this._fullStart = fullStart;
+        }
+
+        public isIncrementallyUnusable(): boolean { return false; }
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
+        public hasSkippedToken(): boolean { return false; }
+        public fullText(): string { return this._text.substr(this.fullStart(), this.fullWidth()); }
+        public text(): string { return this._text.substr(this.fullStart(), this.fullWidth() - 1); }
+        public leadingTrivia(): ISyntaxTriviaList { return Syntax.emptyTriviaList; }
+        public trailingTrivia(): ISyntaxTriviaList { return triviaScanner.scanTrivia(this, /*isTrailing:*/ true); }
+        public leadingTriviaWidth(): number { return 0; }
+        public trailingTriviaWidth(): number { return 1; }
+
+        public kind(): SyntaxKind { return SyntaxKind.IdentifierName; }
+        public fullWidth(): number { return this._fullWidth; }
+        public fullStart(): number { return this._fullStart; }
+        public hasLeadingTrivia(): boolean { return false; }
+        public hasTrailingTrivia(): boolean { return true; }
+        public clone(): ISyntaxToken { return new IdentifierWithSingleTrailingSpace(this._text, this._fullStart, this._fullWidth); }
+    }
+
     export class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(private _packedData: number) {
         }
@@ -282,7 +311,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithNoTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -312,7 +341,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithLeadingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -342,7 +371,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithTrailingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -370,9 +399,9 @@ module TypeScript {
         public hasTrailingTrivia(): boolean { return true; }
         public clone(): ISyntaxToken { return new SmallScannerTokenWithTrailingTrivia(this._text, this._packedData); }
     }
-    
+
     export class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -402,7 +431,7 @@ module TypeScript {
     }
 
     export class LargeScannerToken implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedFullStartAndInfo: number, private _packedFullWidthAndKind: number) {
         }
