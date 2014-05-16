@@ -2,7 +2,7 @@
     declare module "OuterModule" {
         import m2 = require("./SubModule");
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! ambientExternalModuleWithRelativeExternalImportDeclaration.ts(2,5): error TS2071: Unable to resolve external module '"./SubModule"'.
+!!! ambientExternalModuleWithRelativeExternalImportDeclaration.ts(2,5): error TS2071: Cannot find external module '"./SubModule"'.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! ambientExternalModuleWithRelativeExternalImportDeclaration.ts(2,5): error TS2072: Module cannot be aliased to a non-module type.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

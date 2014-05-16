@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/importDeclRefereingExternalModuleWithNoResolve.ts (7 errors) ====
     import b = require("externalModule");
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! testsimportDeclRefereingExternalModuleWithNoResolve.ts(1,1): error TS2071: Unable to resolve external module '"externalModule"'.
+!!! testsimportDeclRefereingExternalModuleWithNoResolve.ts(1,1): error TS2071: Cannot find external module '"externalModule"'.
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! testsimportDeclRefereingExternalModuleWithNoResolve.ts(1,1): error TS2072: Module cannot be aliased to a non-module type.
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -11,7 +11,7 @@
 !!! testsimportDeclRefereingExternalModuleWithNoResolve.ts(2,16): error TS2195: Ambient external module declaration must be defined in global context.
         import im2 = require("externalModule");
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! testsimportDeclRefereingExternalModuleWithNoResolve.ts(3,5): error TS2071: Unable to resolve external module '"externalModule"'.
+!!! testsimportDeclRefereingExternalModuleWithNoResolve.ts(3,5): error TS2071: Cannot find external module '"externalModule"'.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! testsimportDeclRefereingExternalModuleWithNoResolve.ts(3,5): error TS2072: Module cannot be aliased to a non-module type.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

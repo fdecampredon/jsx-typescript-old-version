@@ -3,7 +3,7 @@
     
     import m1 = require("m2")
     ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! amdDependencyComment1.ts(3,1): error TS2071: Unable to resolve external module '"m2"'.
+!!! amdDependencyComment1.ts(3,1): error TS2071: Cannot find external module '"m2"'.
     ~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! amdDependencyComment1.ts(3,1): error TS2072: Module cannot be aliased to a non-module type.
     m1.f();

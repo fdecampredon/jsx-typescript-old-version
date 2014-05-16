@@ -164,7 +164,7 @@ module TypeScript {
     "'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.": { "code": 2068, "category": DiagnosticCategory.Error },
     "A parameter list must follow a generic type argument list. '(' expected.": { "code": 2069, "category": DiagnosticCategory.Error },
     "Multiple constructor implementations are not allowed.": { "code": 2070, "category": DiagnosticCategory.Error },
-    "Unable to resolve external module '{0}'.": { "code": 2071, "category": DiagnosticCategory.Error },
+    "Cannot find external module '{0}'.": { "code": 2071, "category": DiagnosticCategory.Error },
     "Module cannot be aliased to a non-module type.": { "code": 2072, "category": DiagnosticCategory.Error },
     "A class may only extend another class.": { "code": 2073, "category": DiagnosticCategory.Error },
     "A class may only implement another class or interface.": { "code": 2074, "category": DiagnosticCategory.Error },

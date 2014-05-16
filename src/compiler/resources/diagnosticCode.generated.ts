@@ -163,7 +163,7 @@ module TypeScript {
         new_T_cannot_be_used_to_create_an_array_Use_new_Array_T_instead: "'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.",
         A_parameter_list_must_follow_a_generic_type_argument_list_expected: "A parameter list must follow a generic type argument list. '(' expected.",
         Multiple_constructor_implementations_are_not_allowed: "Multiple constructor implementations are not allowed.",
-        Unable_to_resolve_external_module_0: "Unable to resolve external module '{0}'.",
+        Cannot_find_external_module_0: "Cannot find external module '{0}'.",
         Module_cannot_be_aliased_to_a_non_module_type: "Module cannot be aliased to a non-module type.",
         A_class_may_only_extend_another_class: "A class may only extend another class.",
         A_class_may_only_implement_another_class_or_interface: "A class may only implement another class or interface.",

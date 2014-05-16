@@ -2068,7 +2068,7 @@ module TypeScript {
 
                 if (!aliasedType) {
                     var path = (<ExternalModuleReferenceSyntax>importStatementAST.moduleReference).stringLiteral.text();
-                    this.semanticInfoChain.addDiagnosticFromAST(importStatementAST, DiagnosticCode.Unable_to_resolve_external_module_0, [path]);
+                    this.semanticInfoChain.addDiagnosticFromAST(importStatementAST, DiagnosticCode.Cannot_find_external_module_0, [path]);
                     aliasedType = this.getNewErrorTypeSymbol();
 
                 }
