@@ -9,7 +9,7 @@
         constructor(x: number) {
             super(0, loc);
                      ~~~
-!!! baseCheck.ts(9,18): error TS2095: Could not find symbol 'loc'.
+!!! baseCheck.ts(9,18): error TS2095: Cannot find name 'loc'.
         }
     
         m() {
@@ -39,15 +39,15 @@
     function f() {
         if (x<10) {
             ~
-!!! baseCheck.ts(22,9): error TS2095: Could not find symbol 'x'.
+!!! baseCheck.ts(22,9): error TS2095: Cannot find name 'x'.
           x=11;
           ~
-!!! baseCheck.ts(23,7): error TS2095: Could not find symbol 'x'.
+!!! baseCheck.ts(23,7): error TS2095: Cannot find name 'x'.
         }
         else {
             x=12;
             ~
-!!! baseCheck.ts(26,9): error TS2095: Could not find symbol 'x'.
+!!! baseCheck.ts(26,9): error TS2095: Cannot find name 'x'.
         }
     }
     

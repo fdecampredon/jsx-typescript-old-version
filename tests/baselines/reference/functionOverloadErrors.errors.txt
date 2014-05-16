@@ -46,7 +46,7 @@
     //Function overloads that differ only by type parameter constraints
     function fn10<T extends Window>();
                             ~~~~~~
-!!! functionOverloadErrors.ts(44,25): error TS2095: Could not find symbol 'Window'.
+!!! functionOverloadErrors.ts(44,25): error TS2095: Cannot find name 'Window'.
     function fn10<S extends Date>();
     function fn10() { }
     // (actually OK)
@@ -54,10 +54,10 @@
     //Function overloads that differ only by type parameter constraints where constraints are structually identical
     function fn11<T extends Window>();
                             ~~~~~~
-!!! functionOverloadErrors.ts(50,25): error TS2095: Could not find symbol 'Window'.
+!!! functionOverloadErrors.ts(50,25): error TS2095: Cannot find name 'Window'.
     function fn11<S extends typeof window>();
                                    ~~~~~~
-!!! functionOverloadErrors.ts(51,32): error TS2095: Could not find symbol 'window'.
+!!! functionOverloadErrors.ts(51,32): error TS2095: Cannot find name 'window'.
     function fn11() { }
     
     //Function overloads that differ only by type parameter constraints where constraints include infinitely recursive type reference

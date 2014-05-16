@@ -6,7 +6,7 @@
        static b() {
           v = 1; // ERR
           ~
-!!! scopeCheckInsideStaticMethod1.ts(6,7): error TS2095: Could not find symbol 'v'.
+!!! scopeCheckInsideStaticMethod1.ts(6,7): error TS2095: Cannot find name 'v'.
           C.s = 1;
           this.p = 1; // ERR
                ~

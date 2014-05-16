@@ -126,7 +126,7 @@
 !!! intTypeCheck.ts(104,5): error TS2012: Cannot convert 'boolean' to 'i1':
 !!! 	Type 'Boolean' is missing property 'p' from type 'i1'.
                         ~~
-!!! intTypeCheck.ts(104,21): error TS2095: Could not find symbol 'i1'.
+!!! intTypeCheck.ts(104,21): error TS2095: Cannot find name 'i1'.
     var obj10: i1 = new {};
                         ~~
 !!! intTypeCheck.ts(105,21): error TS2083: Invalid 'new' expression.
@@ -160,7 +160,7 @@
 !!! intTypeCheck.ts(118,5): error TS2012: Cannot convert 'boolean' to 'i2':
 !!! 	Type 'i2' requires a call signature, but type 'Boolean' lacks one.
                          ~~
-!!! intTypeCheck.ts(118,22): error TS2095: Could not find symbol 'i2'.
+!!! intTypeCheck.ts(118,22): error TS2095: Cannot find name 'i2'.
     var obj21: i2 = new {};
                         ~~
 !!! intTypeCheck.ts(119,21): error TS2083: Invalid 'new' expression.
@@ -195,7 +195,7 @@
 !!! intTypeCheck.ts(132,5): error TS2012: Cannot convert 'boolean' to 'i3':
 !!! 	Type 'i3' requires a construct signature, but type 'Boolean' lacks one.
                          ~~
-!!! intTypeCheck.ts(132,22): error TS2095: Could not find symbol 'i3'.
+!!! intTypeCheck.ts(132,22): error TS2095: Cannot find name 'i3'.
     var obj32: i3 = new {};
                         ~~
 !!! intTypeCheck.ts(133,21): error TS2083: Invalid 'new' expression.
@@ -229,7 +229,7 @@
 !!! intTypeCheck.ts(146,5): error TS2012: Cannot convert 'boolean' to 'i4':
 !!! 	Index signatures of types 'Boolean' and 'i4' are incompatible.
                          ~~
-!!! intTypeCheck.ts(146,22): error TS2095: Could not find symbol 'i4'.
+!!! intTypeCheck.ts(146,22): error TS2095: Cannot find name 'i4'.
     var obj43: i4 = new {};
                         ~~
 !!! intTypeCheck.ts(147,21): error TS2083: Invalid 'new' expression.
@@ -266,7 +266,7 @@
 !!! intTypeCheck.ts(160,5): error TS2012: Cannot convert 'boolean' to 'i5':
 !!! 	Type 'Boolean' is missing property 'p' from type 'i5'.
                          ~~
-!!! intTypeCheck.ts(160,22): error TS2095: Could not find symbol 'i5'.
+!!! intTypeCheck.ts(160,22): error TS2095: Cannot find name 'i5'.
     var obj54: i5 = new {};
                         ~~
 !!! intTypeCheck.ts(161,21): error TS2083: Invalid 'new' expression.
@@ -303,7 +303,7 @@
 !!! intTypeCheck.ts(174,5): error TS2012: Cannot convert 'boolean' to 'i6':
 !!! 	Type 'i6' requires a call signature, but type 'Boolean' lacks one.
                          ~~
-!!! intTypeCheck.ts(174,22): error TS2095: Could not find symbol 'i6'.
+!!! intTypeCheck.ts(174,22): error TS2095: Cannot find name 'i6'.
     var obj65: i6 = new {};
                         ~~
 !!! intTypeCheck.ts(175,21): error TS2083: Invalid 'new' expression.
@@ -339,7 +339,7 @@
 !!! intTypeCheck.ts(188,5): error TS2012: Cannot convert 'boolean' to 'i7':
 !!! 	Type 'i7' requires a construct signature, but type 'Boolean' lacks one.
                          ~~
-!!! intTypeCheck.ts(188,22): error TS2095: Could not find symbol 'i7'.
+!!! intTypeCheck.ts(188,22): error TS2095: Cannot find name 'i7'.
     var obj76: i7 = new {};
                         ~~
 !!! intTypeCheck.ts(189,21): error TS2083: Invalid 'new' expression.
@@ -373,7 +373,7 @@
 !!! intTypeCheck.ts(202,5): error TS2012: Cannot convert 'boolean' to 'i8':
 !!! 	Index signatures of types 'Boolean' and 'i8' are incompatible.
                          ~~
-!!! intTypeCheck.ts(202,22): error TS2095: Could not find symbol 'i8'.
+!!! intTypeCheck.ts(202,22): error TS2095: Cannot find name 'i8'.
     var obj87: i8 = new {};
                         ~~
 !!! intTypeCheck.ts(203,21): error TS2083: Invalid 'new' expression.

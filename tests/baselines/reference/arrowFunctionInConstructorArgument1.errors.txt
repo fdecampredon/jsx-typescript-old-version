@@ -4,5 +4,5 @@
     }
     var c = new C(() => { return asdf; } ) // should error
                                  ~~~~
-!!! arrowFunctionInConstructorArgument1.ts(4,30): error TS2095: Could not find symbol 'asdf'.
+!!! arrowFunctionInConstructorArgument1.ts(4,30): error TS2095: Cannot find name 'asdf'.
     

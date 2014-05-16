@@ -20,7 +20,7 @@
     g = x;
     I = x;
     ~
-!!! invalidUndefinedAssignments.ts(14,1): error TS2095: Could not find symbol 'I'.
+!!! invalidUndefinedAssignments.ts(14,1): error TS2095: Cannot find name 'I'.
     
     module M { export var x = 1; }
     M = x;

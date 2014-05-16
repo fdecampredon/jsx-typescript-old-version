@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/commentsOnObjectLiteral1.ts (1 errors) ====
     var Person = makeClass( 
                  ~~~~~~~~~
-!!! commentsOnObjectLiteral1.ts(1,14): error TS2095: Could not find symbol 'makeClass'.
+!!! commentsOnObjectLiteral1.ts(1,14): error TS2095: Cannot find name 'makeClass'.
        /** 
          @scope Person 
        */ 

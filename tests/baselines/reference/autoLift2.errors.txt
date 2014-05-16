@@ -9,14 +9,14 @@
                  ~~~
 !!! autoLift2.ts(5,14): error TS2094: The property 'foo' does not exist on value of type 'A'.
                       ~~~
-!!! autoLift2.ts(5,19): error TS2095: Could not find symbol 'any'.
+!!! autoLift2.ts(5,19): error TS2095: Cannot find name 'any'.
             this.bar: any;
                     ~
 !!! autoLift2.ts(6,17): error TS1005: ';' expected.
                  ~~~
 !!! autoLift2.ts(6,14): error TS2094: The property 'bar' does not exist on value of type 'A'.
                       ~~~
-!!! autoLift2.ts(6,19): error TS2095: Could not find symbol 'any'.
+!!! autoLift2.ts(6,19): error TS2095: Cannot find name 'any'.
         }
     
     

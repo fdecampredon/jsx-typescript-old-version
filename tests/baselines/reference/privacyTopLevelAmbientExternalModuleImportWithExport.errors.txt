@@ -28,16 +28,16 @@
 !!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(11,70): error TS2094: The property 'c_private' does not exist on value of type 'typeof im_public_mu_private'.
     var privateUse_im_public_mi_public = new im_public_mi_public.c_public();
                                              ~~~~~~~~~~~~~~~~~~~
-!!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(12,42): error TS2095: Could not find symbol 'im_public_mi_public'.
+!!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(12,42): error TS2095: Cannot find name 'im_public_mi_public'.
     export var publicUse_im_public_mi_public = new im_public_mi_public.c_public();
                                                    ~~~~~~~~~~~~~~~~~~~
-!!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(13,48): error TS2095: Could not find symbol 'im_public_mi_public'.
+!!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(13,48): error TS2095: Cannot find name 'im_public_mi_public'.
     var privateUse_im_public_mi_public = new im_public_mi_public.c_public();
                                              ~~~~~~~~~~~~~~~~~~~
-!!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(14,42): error TS2095: Could not find symbol 'im_public_mi_public'.
+!!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(14,42): error TS2095: Cannot find name 'im_public_mi_public'.
     export var publicUse_im_public_mi_public = new im_public_mi_public.c_public();
                                                    ~~~~~~~~~~~~~~~~~~~
-!!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(15,48): error TS2095: Could not find symbol 'im_public_mi_public'.
+!!! privacyTopLevelAmbientExternalModuleImportWithExport_core.ts(15,48): error TS2095: Cannot find name 'im_public_mi_public'.
     
 ==== tests/cases/compiler/privacyTopLevelAmbientExternalModuleImportWithExport_require.ts (0 errors) ====
     // Public elements

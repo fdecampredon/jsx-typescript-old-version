@@ -16,16 +16,16 @@
     // Usage of privacy error imports
     var privateUse_im_private_mi_private = new im_private_mi_private.c_private();
                                                ~~~~~~~~~~~~~~~~~~~~~
-!!! privacyTopLevelAmbientExternalModuleImportWithoutExport_core.ts(8,44): error TS2095: Could not find symbol 'im_private_mi_private'.
+!!! privacyTopLevelAmbientExternalModuleImportWithoutExport_core.ts(8,44): error TS2095: Cannot find name 'im_private_mi_private'.
     export var publicUse_im_private_mi_private = new im_private_mi_private.c_private();
                                                      ~~~~~~~~~~~~~~~~~~~~~
-!!! privacyTopLevelAmbientExternalModuleImportWithoutExport_core.ts(9,50): error TS2095: Could not find symbol 'im_private_mi_private'.
+!!! privacyTopLevelAmbientExternalModuleImportWithoutExport_core.ts(9,50): error TS2095: Cannot find name 'im_private_mi_private'.
     var privateUse_im_private_mu_private = new im_private_mu_private.c_private();
                                                ~~~~~~~~~~~~~~~~~~~~~
-!!! privacyTopLevelAmbientExternalModuleImportWithoutExport_core.ts(10,44): error TS2095: Could not find symbol 'im_private_mu_private'.
+!!! privacyTopLevelAmbientExternalModuleImportWithoutExport_core.ts(10,44): error TS2095: Cannot find name 'im_private_mu_private'.
     export var publicUse_im_private_mu_private = new im_private_mu_private.c_private();
                                                      ~~~~~~~~~~~~~~~~~~~~~
-!!! privacyTopLevelAmbientExternalModuleImportWithoutExport_core.ts(11,50): error TS2095: Could not find symbol 'im_private_mu_private'.
+!!! privacyTopLevelAmbientExternalModuleImportWithoutExport_core.ts(11,50): error TS2095: Cannot find name 'im_private_mu_private'.
     var privateUse_im_private_mi_public = new im_private_mi_public.c_public();
     export var publicUse_im_private_mi_public = new im_private_mi_public.c_public();
     var privateUse_im_private_mi_public = new im_private_mi_public.c_public();

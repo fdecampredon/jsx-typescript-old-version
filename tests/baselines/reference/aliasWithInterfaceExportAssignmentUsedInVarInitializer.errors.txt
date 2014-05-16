@@ -2,7 +2,7 @@
     import moduleA = require("aliasWithInterfaceExportAssignmentUsedInVarInitializer_0");
     var d = b.q3;
             ~
-!!! aliasWithInterfaceExportAssignmentUsedInVarInitializer_1.ts(2,9): error TS2095: Could not find symbol 'b'.
+!!! aliasWithInterfaceExportAssignmentUsedInVarInitializer_1.ts(2,9): error TS2095: Cannot find name 'b'.
 ==== tests/cases/compiler/aliasWithInterfaceExportAssignmentUsedInVarInitializer_0.ts (0 errors) ====
     interface c {
         q3: number;

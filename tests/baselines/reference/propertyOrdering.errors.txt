@@ -6,7 +6,7 @@
           }
           public _store = store; // no repro if this is first line in class body
                           ~~~~~
-!!! propertyOrdering.ts(6,23): error TS2095: Could not find symbol 'store'.
+!!! propertyOrdering.ts(6,23): error TS2095: Cannot find name 'store'.
     
     
           public bar() { return this.store; } // should be an error

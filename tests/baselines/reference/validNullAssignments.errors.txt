@@ -24,7 +24,7 @@
     g = null; // ok
     I = null; // error
     ~
-!!! validNullAssignments.ts(20,1): error TS2095: Could not find symbol 'I'.
+!!! validNullAssignments.ts(20,1): error TS2095: Cannot find name 'I'.
     
     module M { export var x = 1; }
     M = null; // error

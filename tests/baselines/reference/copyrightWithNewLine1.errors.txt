@@ -10,9 +10,9 @@
 !!! copyrightWithNewLine1.ts(5,1): error TS2072: Module cannot be aliased to a non-module type.
     var el = document.getElementById('content');
              ~~~~~~~~
-!!! copyrightWithNewLine1.ts(6,10): error TS2095: Could not find symbol 'document'.
+!!! copyrightWithNewLine1.ts(6,10): error TS2095: Cannot find name 'document'.
     var greeter = new model.Greeter(el);
                       ~~~~~
-!!! copyrightWithNewLine1.ts(7,19): error TS2095: Could not find symbol 'model'.
+!!! copyrightWithNewLine1.ts(7,19): error TS2095: Cannot find name 'model'.
     /** things */
     greeter.start();

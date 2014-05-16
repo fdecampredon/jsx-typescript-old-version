@@ -4,4 +4,4 @@
 !!! returnTypeParameter.ts(1,22): error TS2131: Function declared a non-void return type, but has no return expression.
     function f2<T>(a: T): T { return T; } // bug was that this satisfied the return statement requirement
                                      ~
-!!! returnTypeParameter.ts(2,34): error TS2095: Could not find symbol 'T'.
+!!! returnTypeParameter.ts(2,34): error TS2095: Cannot find name 'T'.

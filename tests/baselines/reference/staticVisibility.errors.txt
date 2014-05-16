@@ -10,19 +10,19 @@
     
             s = 1; // should be error
             ~
-!!! staticVisibility.ts(10,9): error TS2095: Could not find symbol 's'.
+!!! staticVisibility.ts(10,9): error TS2095: Cannot find name 's'.
             C1.s = 1; // should be ok
     
             b(); // should be error
             ~
-!!! staticVisibility.ts(13,9): error TS2095: Could not find symbol 'b'.
+!!! staticVisibility.ts(13,9): error TS2095: Cannot find name 'b'.
             C1.b(); // should be ok
         }
     
         static b() {
             v = 1; // should be error
             ~
-!!! staticVisibility.ts(18,9): error TS2095: Could not find symbol 'v'.
+!!! staticVisibility.ts(18,9): error TS2095: Cannot find name 'v'.
             this.p = 0; // should be error
                  ~
 !!! staticVisibility.ts(19,14): error TS2094: The property 'p' does not exist on value of type 'typeof C1'.
@@ -41,7 +41,7 @@
      
     static set Bar(bar:string) {barback = bar;} // not ok
                                 ~~~~~~~
-!!! staticVisibility.ts(33,29): error TS2095: Could not find symbol 'barback'.
+!!! staticVisibility.ts(33,29): error TS2095: Cannot find name 'barback'.
     
     }
     

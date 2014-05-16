@@ -7,5 +7,5 @@
     var f = new Foo<number>();
     var r = f.clone<Uhhhh>()
                     ~~~~~
-!!! unknownTypeArgOnCall.ts(7,17): error TS2095: Could not find symbol 'Uhhhh'.
+!!! unknownTypeArgOnCall.ts(7,17): error TS2095: Cannot find name 'Uhhhh'.
     

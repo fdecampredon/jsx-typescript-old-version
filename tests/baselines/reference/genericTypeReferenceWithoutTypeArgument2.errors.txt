@@ -82,7 +82,7 @@
     
     var j = <C>null;
              ~
-!!! genericTypeReferenceWithoutTypeArgument2.ts(36,10): error TS2095: Could not find symbol 'C'.
+!!! genericTypeReferenceWithoutTypeArgument2.ts(36,10): error TS2095: Cannot find name 'C'.
     var k = <M.E>null;
              ~~~
 !!! genericTypeReferenceWithoutTypeArgument2.ts(37,10): error TS2173: Generic type references must include all type arguments.

@@ -6,7 +6,7 @@
     function foo5<T extends RegExp>(test: T) { } // valid
     function foo6<T extends hm>(test: T) { }
                             ~~
-!!! typeParameterConstraints1.ts(6,25): error TS2095: Could not find symbol 'hm'.
+!!! typeParameterConstraints1.ts(6,25): error TS2095: Cannot find name 'hm'.
     function foo7<T extends Object>(test: T) { } // valid
     function foo8<T extends "">(test: T) { }
                             ~~
@@ -16,9 +16,9 @@
                                        ~
 !!! typeParameterConstraints1.ts(8,36): error TS1005: ';' expected.
                                 ~~~~
-!!! typeParameterConstraints1.ts(8,29): error TS2095: Could not find symbol 'test'.
+!!! typeParameterConstraints1.ts(8,29): error TS2095: Cannot find name 'test'.
                                       ~
-!!! typeParameterConstraints1.ts(8,35): error TS2095: Could not find symbol 'T'.
+!!! typeParameterConstraints1.ts(8,35): error TS2095: Cannot find name 'T'.
     function foo9<T extends 1 > (test: T) { }
                             ~
 !!! typeParameterConstraints1.ts(9,25): error TS1003: Identifier expected.
@@ -27,9 +27,9 @@
                                         ~
 !!! typeParameterConstraints1.ts(9,37): error TS1005: ';' expected.
                                  ~~~~
-!!! typeParameterConstraints1.ts(9,30): error TS2095: Could not find symbol 'test'.
+!!! typeParameterConstraints1.ts(9,30): error TS2095: Cannot find name 'test'.
                                        ~
-!!! typeParameterConstraints1.ts(9,36): error TS2095: Could not find symbol 'T'.
+!!! typeParameterConstraints1.ts(9,36): error TS2095: Cannot find name 'T'.
     function foo10<T extends (1)> (test: T) { }
                               ~
 !!! typeParameterConstraints1.ts(10,27): error TS1008: Unexpected token; 'parameter' expected.
@@ -40,7 +40,7 @@
                                             ~
 !!! typeParameterConstraints1.ts(10,41): error TS1005: '=>' expected.
                                          ~
-!!! typeParameterConstraints1.ts(10,38): error TS2095: Could not find symbol 'T'.
+!!! typeParameterConstraints1.ts(10,38): error TS2095: Cannot find name 'T'.
     function foo11<T extends null> (test: T) { }
                              ~~~~
 !!! typeParameterConstraints1.ts(11,26): error TS1006: Identifier expected; 'null' is a keyword.
@@ -49,10 +49,10 @@
                                            ~
 !!! typeParameterConstraints1.ts(11,40): error TS1005: ';' expected.
                                     ~~~~
-!!! typeParameterConstraints1.ts(11,33): error TS2095: Could not find symbol 'test'.
+!!! typeParameterConstraints1.ts(11,33): error TS2095: Cannot find name 'test'.
                                           ~
-!!! typeParameterConstraints1.ts(11,39): error TS2095: Could not find symbol 'T'.
+!!! typeParameterConstraints1.ts(11,39): error TS2095: Cannot find name 'T'.
     function foo12<T extends undefined>(test: T) { }
                              ~~~~~~~~~
-!!! typeParameterConstraints1.ts(12,26): error TS2095: Could not find symbol 'undefined'.
+!!! typeParameterConstraints1.ts(12,26): error TS2095: Cannot find name 'undefined'.
     function foo13<T extends void>(test: T) { }

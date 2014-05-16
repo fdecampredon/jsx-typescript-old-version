@@ -45,7 +45,7 @@
     
     var f6 = (t = T) => { };
                   ~
-!!! defaultArgsInFunctionExpressions.ts(28,15): error TS2095: Could not find symbol 'T'.
+!!! defaultArgsInFunctionExpressions.ts(28,15): error TS2095: Cannot find name 'T'.
     var f7 = (t = U) => { return t; };
     
     f7().x;

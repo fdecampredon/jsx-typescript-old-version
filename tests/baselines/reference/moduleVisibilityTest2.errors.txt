@@ -59,7 +59,7 @@
     module M {
         export var c = x;
                     ~
-!!! moduleVisibilityTest2.ts(57,17): error TS2095: Could not find symbol 'x'.
+!!! moduleVisibilityTest2.ts(57,17): error TS2095: Cannot find name 'x'.
         export var meb = M.E.B;
                         ~
 !!! moduleVisibilityTest2.ts(58,21): error TS2094: The property 'E' does not exist on value of type 'typeof M'.

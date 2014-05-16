@@ -4,9 +4,9 @@
     {
         if (!module.exports) module.exports = "";
              ~~~~~~
-!!! typecheckIfCondition.ts(4,10): error TS2095: Could not find symbol 'module'.
+!!! typecheckIfCondition.ts(4,10): error TS2095: Cannot find name 'module'.
                              ~~~~~~
-!!! typecheckIfCondition.ts(4,26): error TS2095: Could not find symbol 'module'.
+!!! typecheckIfCondition.ts(4,26): error TS2095: Cannot find name 'module'.
         var x = null; // don't want to baseline output
     }
     

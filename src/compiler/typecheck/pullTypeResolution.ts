@@ -1920,7 +1920,7 @@ module TypeScript {
             }
 
             if (!valueSymbol && !typeSymbol && !containerSymbol) {
-                this.semanticInfoChain.addDiagnosticFromAST(identifier, DiagnosticCode.Could_not_find_symbol_0_in_module_1, [rhsName, moduleSymbol.toString()]);
+                this.semanticInfoChain.addDiagnosticFromAST(identifier, DiagnosticCode.Module_0_has_no_exported_member_1, [moduleSymbol.toString(), rhsName]);
                 return null;
             }
 
@@ -2281,7 +2281,7 @@ module TypeScript {
 
             if (!valueSymbol && !typeSymbol && !containerSymbol) {
                 // Error
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(exportAssignmentAST, DiagnosticCode.Could_not_find_symbol_0, [id]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(exportAssignmentAST, DiagnosticCode.Cannot_find_name_0, [id]));
                 return this.semanticInfoChain.voidTypeSymbol;
             }
 
@@ -6524,7 +6524,7 @@ module TypeScript {
             }
 
             if (!nameSymbol) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Could_not_find_symbol_0, [nameAST.text()]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Cannot_find_name_0, [nameAST.text()]));
                 return this.getNewErrorTypeSymbol(id);
             }
             else if (this.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST, nameSymbol, context)) {
@@ -6810,7 +6810,7 @@ module TypeScript {
             }
 
             if (!typeNameSymbol) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Could_not_find_symbol_0, [nameAST.text()]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Cannot_find_name_0, [nameAST.text()]));
                 return this.getNewErrorTypeSymbol(id);
             }
 

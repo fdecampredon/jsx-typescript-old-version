@@ -3,14 +3,14 @@
            ~
 !!! anonymousModules.ts(1,8): error TS1005: ';' expected.
     ~~~~~~
-!!! anonymousModules.ts(1,1): error TS2095: Could not find symbol 'module'.
+!!! anonymousModules.ts(1,1): error TS2095: Cannot find name 'module'.
         export var foo = 1;
     
         module {
             ~
 !!! anonymousModules.ts(4,9): error TS1005: ';' expected.
      ~~~~~~
-!!! anonymousModules.ts(4,2): error TS2095: Could not find symbol 'module'.
+!!! anonymousModules.ts(4,2): error TS2095: Cannot find name 'module'.
             export var bar = 1;
         }
     
@@ -22,7 +22,7 @@
             ~
 !!! anonymousModules.ts(10,9): error TS1005: ';' expected.
      ~~~~~~
-!!! anonymousModules.ts(10,2): error TS2095: Could not find symbol 'module'.
+!!! anonymousModules.ts(10,2): error TS2095: Cannot find name 'module'.
             var x = bar;
         }
     }

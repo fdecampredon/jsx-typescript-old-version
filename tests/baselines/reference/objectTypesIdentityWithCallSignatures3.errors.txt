@@ -21,10 +21,10 @@
     
     function foo4(x: typeof b);
                             ~
-!!! objectTypesIdentityWithCallSignatures3.ts(21,25): error TS2095: Could not find symbol 'b'.
+!!! objectTypesIdentityWithCallSignatures3.ts(21,25): error TS2095: Cannot find name 'b'.
     function foo4(x: typeof b); // error
                             ~
-!!! objectTypesIdentityWithCallSignatures3.ts(22,25): error TS2095: Could not find symbol 'b'.
+!!! objectTypesIdentityWithCallSignatures3.ts(22,25): error TS2095: Cannot find name 'b'.
     function foo4(x: any) { }
     
     function foo13(x: I);

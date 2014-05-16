@@ -10,7 +10,7 @@
     
     var numberJ: typeof J; //Error, cannot reference type in typeof
                         ~
-!!! typeofSimple.ts(8,21): error TS2095: Could not find symbol 'J'.
+!!! typeofSimple.ts(8,21): error TS2095: Cannot find name 'J'.
     var numberI: I<typeof v2>;
     
     var fun: () => I<number>;

@@ -4,41 +4,41 @@
         a: number;
         b: typeof a; // Should yield error (a is not a value)
                   ~
-!!! typeofProperty.ts(4,15): error TS2095: Could not find symbol 'a'.
+!!! typeofProperty.ts(4,15): error TS2095: Cannot find name 'a'.
     }
     
     interface I2 {
         c: typeof d; // Should yield error (d is not a value)
                   ~
-!!! typeofProperty.ts(8,15): error TS2095: Could not find symbol 'd'.
+!!! typeofProperty.ts(8,15): error TS2095: Cannot find name 'd'.
         d: string;
     }
     
     interface I3 {
         e: typeof e; // Should yield error (e is not a value)
                   ~
-!!! typeofProperty.ts(13,15): error TS2095: Could not find symbol 'e'.
+!!! typeofProperty.ts(13,15): error TS2095: Cannot find name 'e'.
     }
     
     class C1 {
         a: number;
         b: typeof a; // Should yield error (a is not a value)
                   ~
-!!! typeofProperty.ts(18,15): error TS2095: Could not find symbol 'a'.
+!!! typeofProperty.ts(18,15): error TS2095: Cannot find name 'a'.
     }
     
     
     class C2 {
         c: typeof d; // Should yield error (d is not a value)
                   ~
-!!! typeofProperty.ts(23,15): error TS2095: Could not find symbol 'd'.
+!!! typeofProperty.ts(23,15): error TS2095: Cannot find name 'd'.
         d: string;
     }
     
     class C3 {
         e: typeof e; // Should yield error (e is not a value)
                   ~
-!!! typeofProperty.ts(28,15): error TS2095: Could not find symbol 'e'.
+!!! typeofProperty.ts(28,15): error TS2095: Cannot find name 'e'.
     }
     
     

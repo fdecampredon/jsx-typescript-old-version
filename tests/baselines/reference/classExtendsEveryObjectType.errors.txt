@@ -10,7 +10,7 @@
     var x: { foo: string; }
     class C3 extends x { } // error
                      ~
-!!! classExtendsEveryObjectType.ts(8,18): error TS2095: Could not find symbol 'x'.
+!!! classExtendsEveryObjectType.ts(8,18): error TS2095: Cannot find name 'x'.
     
     module M { export var x = 1; }
     class C4 extends M { } // error
@@ -22,7 +22,7 @@
     function foo() { }
     class C5 extends foo { } // error
                      ~~~
-!!! classExtendsEveryObjectType.ts(14,18): error TS2095: Could not find symbol 'foo'.
+!!! classExtendsEveryObjectType.ts(14,18): error TS2095: Cannot find name 'foo'.
     
     class C6 extends []{ } // error
                      ~

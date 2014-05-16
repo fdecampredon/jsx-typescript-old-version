@@ -7,7 +7,7 @@
         export var z;
         var test1=x;
                   ~
-!!! moduleProperty2.ts(7,15): error TS2095: Could not find symbol 'x'.
+!!! moduleProperty2.ts(7,15): error TS2095: Cannot find name 'x'.
         var test2=y; // y visible because same module
     }
     

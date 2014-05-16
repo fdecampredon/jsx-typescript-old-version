@@ -78,28 +78,28 @@
 !!! privacyImport.ts(59,5): error TS2072: Module cannot be aliased to a non-module type.
         export var m1_im3_private_v1_public = m1_im3_private.c1;
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(60,43): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(60,43): error TS2095: Cannot find name 'm1_im3_private'.
         export var m1_im3_private_v2_public = new m1_im3_private.c1();
                                                   ~~~~~~~~~~~~~~
-!!! privacyImport.ts(61,47): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(61,47): error TS2095: Cannot find name 'm1_im3_private'.
         export var m1_im3_private_v3_public = m1_im3_private.f1;
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(62,43): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(62,43): error TS2095: Cannot find name 'm1_im3_private'.
         export var m1_im3_private_v4_public = m1_im3_private.f1();
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(63,43): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(63,43): error TS2095: Cannot find name 'm1_im3_private'.
         var m1_im3_private_v1_private = m1_im3_private.c1;
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(64,37): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(64,37): error TS2095: Cannot find name 'm1_im3_private'.
         var m1_im3_private_v2_private = new m1_im3_private.c1();
                                             ~~~~~~~~~~~~~~
-!!! privacyImport.ts(65,41): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(65,41): error TS2095: Cannot find name 'm1_im3_private'.
         var m1_im3_private_v3_private = m1_im3_private.f1;
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(66,37): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(66,37): error TS2095: Cannot find name 'm1_im3_private'.
         var m1_im3_private_v4_private = m1_im3_private.f1();
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(67,37): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(67,37): error TS2095: Cannot find name 'm1_im3_private'.
     
         import m1_im4_private = require("m1_M4_private");
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,28 +110,28 @@
 !!! privacyImport.ts(69,5): error TS2072: Module cannot be aliased to a non-module type.
         export var m1_im4_private_v1_public = m1_im4_private.c1;
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(70,43): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(70,43): error TS2095: Cannot find name 'm1_im4_private'.
         export var m1_im4_private_v2_public = new m1_im4_private.c1();
                                                   ~~~~~~~~~~~~~~
-!!! privacyImport.ts(71,47): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(71,47): error TS2095: Cannot find name 'm1_im4_private'.
         export var m1_im4_private_v3_public = m1_im4_private.f1;
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(72,43): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(72,43): error TS2095: Cannot find name 'm1_im4_private'.
         export var m1_im4_private_v4_public = m1_im4_private.f1();
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(73,43): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(73,43): error TS2095: Cannot find name 'm1_im4_private'.
         var m1_im4_private_v1_private = m1_im4_private.c1;
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(74,37): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(74,37): error TS2095: Cannot find name 'm1_im4_private'.
         var m1_im4_private_v2_private = new m1_im4_private.c1();
                                             ~~~~~~~~~~~~~~
-!!! privacyImport.ts(75,41): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(75,41): error TS2095: Cannot find name 'm1_im4_private'.
         var m1_im4_private_v3_private = m1_im4_private.f1;
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(76,37): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(76,37): error TS2095: Cannot find name 'm1_im4_private'.
         var m1_im4_private_v4_private = m1_im4_private.f1();
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(77,37): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(77,37): error TS2095: Cannot find name 'm1_im4_private'.
     
         export import m1_im1_public = m1_M1_public;
         export import m1_im2_public = m1_M2_private;
@@ -226,28 +226,28 @@
 !!! privacyImport.ts(143,5): error TS2072: Module cannot be aliased to a non-module type.
         export var m1_im3_private_v1_public = m1_im3_private.c1;
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(144,43): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(144,43): error TS2095: Cannot find name 'm1_im3_private'.
         export var m1_im3_private_v2_public = new m1_im3_private.c1();
                                                   ~~~~~~~~~~~~~~
-!!! privacyImport.ts(145,47): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(145,47): error TS2095: Cannot find name 'm1_im3_private'.
         export var m1_im3_private_v3_public = m1_im3_private.f1;
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(146,43): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(146,43): error TS2095: Cannot find name 'm1_im3_private'.
         export var m1_im3_private_v4_public = m1_im3_private.f1();
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(147,43): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(147,43): error TS2095: Cannot find name 'm1_im3_private'.
         var m1_im3_private_v1_private = m1_im3_private.c1;
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(148,37): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(148,37): error TS2095: Cannot find name 'm1_im3_private'.
         var m1_im3_private_v2_private = new m1_im3_private.c1();
                                             ~~~~~~~~~~~~~~
-!!! privacyImport.ts(149,41): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(149,41): error TS2095: Cannot find name 'm1_im3_private'.
         var m1_im3_private_v3_private = m1_im3_private.f1;
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(150,37): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(150,37): error TS2095: Cannot find name 'm1_im3_private'.
         var m1_im3_private_v4_private = m1_im3_private.f1();
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(151,37): error TS2095: Could not find symbol 'm1_im3_private'.
+!!! privacyImport.ts(151,37): error TS2095: Cannot find name 'm1_im3_private'.
     
         import m1_im4_private = require("m2_M4_private");
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -258,28 +258,28 @@
 !!! privacyImport.ts(153,5): error TS2072: Module cannot be aliased to a non-module type.
         export var m1_im4_private_v1_public = m1_im4_private.c1;
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(154,43): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(154,43): error TS2095: Cannot find name 'm1_im4_private'.
         export var m1_im4_private_v2_public = new m1_im4_private.c1();
                                                   ~~~~~~~~~~~~~~
-!!! privacyImport.ts(155,47): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(155,47): error TS2095: Cannot find name 'm1_im4_private'.
         export var m1_im4_private_v3_public = m1_im4_private.f1;
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(156,43): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(156,43): error TS2095: Cannot find name 'm1_im4_private'.
         export var m1_im4_private_v4_public = m1_im4_private.f1();
                                               ~~~~~~~~~~~~~~
-!!! privacyImport.ts(157,43): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(157,43): error TS2095: Cannot find name 'm1_im4_private'.
         var m1_im4_private_v1_private = m1_im4_private.c1;
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(158,37): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(158,37): error TS2095: Cannot find name 'm1_im4_private'.
         var m1_im4_private_v2_private = new m1_im4_private.c1();
                                             ~~~~~~~~~~~~~~
-!!! privacyImport.ts(159,41): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(159,41): error TS2095: Cannot find name 'm1_im4_private'.
         var m1_im4_private_v3_private = m1_im4_private.f1;
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(160,37): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(160,37): error TS2095: Cannot find name 'm1_im4_private'.
         var m1_im4_private_v4_private = m1_im4_private.f1();
                                         ~~~~~~~~~~~~~~
-!!! privacyImport.ts(161,37): error TS2095: Could not find symbol 'm1_im4_private'.
+!!! privacyImport.ts(161,37): error TS2095: Cannot find name 'm1_im4_private'.
     
         // Parse error to export module
         export import m1_im1_public = m2_M1_public;
@@ -359,28 +359,28 @@
 !!! privacyImport.ts(218,1): error TS2072: Module cannot be aliased to a non-module type.
     export var glo_im2_private_v1_public = glo_im2_private.c1;
                                            ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(219,40): error TS2095: Could not find symbol 'glo_im2_private'.
+!!! privacyImport.ts(219,40): error TS2095: Cannot find name 'glo_im2_private'.
     export var glo_im2_private_v2_public = new glo_im2_private.c1();
                                                ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(220,44): error TS2095: Could not find symbol 'glo_im2_private'.
+!!! privacyImport.ts(220,44): error TS2095: Cannot find name 'glo_im2_private'.
     export var glo_im2_private_v3_public = glo_im2_private.f1;
                                            ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(221,40): error TS2095: Could not find symbol 'glo_im2_private'.
+!!! privacyImport.ts(221,40): error TS2095: Cannot find name 'glo_im2_private'.
     export var glo_im2_private_v4_public = glo_im2_private.f1();
                                            ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(222,40): error TS2095: Could not find symbol 'glo_im2_private'.
+!!! privacyImport.ts(222,40): error TS2095: Cannot find name 'glo_im2_private'.
     var glo_im2_private_v1_private = glo_im2_private.c1;
                                      ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(223,34): error TS2095: Could not find symbol 'glo_im2_private'.
+!!! privacyImport.ts(223,34): error TS2095: Cannot find name 'glo_im2_private'.
     var glo_im2_private_v2_private = new glo_im2_private.c1();
                                          ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(224,38): error TS2095: Could not find symbol 'glo_im2_private'.
+!!! privacyImport.ts(224,38): error TS2095: Cannot find name 'glo_im2_private'.
     var glo_im2_private_v3_private = glo_im2_private.f1;
                                      ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(225,34): error TS2095: Could not find symbol 'glo_im2_private'.
+!!! privacyImport.ts(225,34): error TS2095: Cannot find name 'glo_im2_private'.
     var glo_im2_private_v4_private = glo_im2_private.f1();
                                      ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(226,34): error TS2095: Could not find symbol 'glo_im2_private'.
+!!! privacyImport.ts(226,34): error TS2095: Cannot find name 'glo_im2_private'.
     
     import glo_im3_private = glo_M3_private;
     export var glo_im3_private_v1_public = glo_im3_private.c1;
@@ -399,28 +399,28 @@
 !!! privacyImport.ts(238,1): error TS2072: Module cannot be aliased to a non-module type.
     export var glo_im4_private_v1_public = glo_im4_private.c1;
                                            ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(239,40): error TS2095: Could not find symbol 'glo_im4_private'.
+!!! privacyImport.ts(239,40): error TS2095: Cannot find name 'glo_im4_private'.
     export var glo_im4_private_v2_public = new glo_im4_private.c1();
                                                ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(240,44): error TS2095: Could not find symbol 'glo_im4_private'.
+!!! privacyImport.ts(240,44): error TS2095: Cannot find name 'glo_im4_private'.
     export var glo_im4_private_v3_public = glo_im4_private.f1;
                                            ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(241,40): error TS2095: Could not find symbol 'glo_im4_private'.
+!!! privacyImport.ts(241,40): error TS2095: Cannot find name 'glo_im4_private'.
     export var glo_im4_private_v4_public = glo_im4_private.f1();
                                            ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(242,40): error TS2095: Could not find symbol 'glo_im4_private'.
+!!! privacyImport.ts(242,40): error TS2095: Cannot find name 'glo_im4_private'.
     var glo_im4_private_v1_private = glo_im4_private.c1;
                                      ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(243,34): error TS2095: Could not find symbol 'glo_im4_private'.
+!!! privacyImport.ts(243,34): error TS2095: Cannot find name 'glo_im4_private'.
     var glo_im4_private_v2_private = new glo_im4_private.c1();
                                          ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(244,38): error TS2095: Could not find symbol 'glo_im4_private'.
+!!! privacyImport.ts(244,38): error TS2095: Cannot find name 'glo_im4_private'.
     var glo_im4_private_v3_private = glo_im4_private.f1;
                                      ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(245,34): error TS2095: Could not find symbol 'glo_im4_private'.
+!!! privacyImport.ts(245,34): error TS2095: Cannot find name 'glo_im4_private'.
     var glo_im4_private_v4_private = glo_im4_private.f1();
                                      ~~~~~~~~~~~~~~~
-!!! privacyImport.ts(246,34): error TS2095: Could not find symbol 'glo_im4_private'.
+!!! privacyImport.ts(246,34): error TS2095: Cannot find name 'glo_im4_private'.
     
     // Parse error to export module
     export import glo_im1_public = glo_M1_public;

@@ -7,7 +7,7 @@
     
     var a: A;
            ~
-!!! assignmentCompatWithStringIndexer3.ts(7,8): error TS2095: Could not find symbol 'A'.
+!!! assignmentCompatWithStringIndexer3.ts(7,8): error TS2095: Cannot find name 'A'.
     var b1: { [x: string]: string; }
     a = b1; // error
     b1 = a; // error

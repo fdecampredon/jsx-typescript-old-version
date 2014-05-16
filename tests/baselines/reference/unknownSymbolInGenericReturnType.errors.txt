@@ -2,7 +2,7 @@
     class Linq {
         public static select<T, S>(values: T[], func: (v: T) => A): any[] {
                                                                 ~
-!!! unknownSymbolInGenericReturnType.ts(2,61): error TS2095: Could not find symbol 'A'.
+!!! unknownSymbolInGenericReturnType.ts(2,61): error TS2095: Cannot find name 'A'.
             var result = new Array(values.length);
      
             for (var i = 0; i < values.length; i++) {

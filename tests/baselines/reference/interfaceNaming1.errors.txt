@@ -3,11 +3,11 @@
               ~
 !!! interfaceNaming1.ts(1,11): error TS1005: ';' expected.
     ~~~~~~~~~
-!!! interfaceNaming1.ts(1,1): error TS2095: Could not find symbol 'interface'.
+!!! interfaceNaming1.ts(1,1): error TS2095: Cannot find name 'interface'.
     interface interface{ }
     interface & { }
     ~~~~~~~~~
-!!! interfaceNaming1.ts(3,1): error TS2095: Could not find symbol 'interface'.
+!!! interfaceNaming1.ts(3,1): error TS2095: Cannot find name 'interface'.
                 ~~~
 !!! interfaceNaming1.ts(3,13): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
     
