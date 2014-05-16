@@ -834,6 +834,10 @@ module TypeScript.Services.Breakpoints {
         }
 
         private breakpointSpanOfParameter(parameterNode: TypeScript.ISyntaxNode): SpanInfo {
+            if (parameterNode.parent.kind() === SyntaxKind.SimpleArrowFunctionExpression) {
+                return this.breakpointSpanOfNode(<ISyntaxNode>parameterNode.parent);
+            }
+
             if (TypeScript.SyntaxUtilities.isAmbientDeclarationSyntax(parameterNode)) {
                 return null;
             }

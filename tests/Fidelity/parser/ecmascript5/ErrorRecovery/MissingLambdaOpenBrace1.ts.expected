@@ -554,26 +554,36 @@
                                                     "fullWidth": 139,
                                                     "width": 139,
                                                     "isIncrementallyUnusable": true,
-                                                    "identifier": {
-                                                        "kind": "IdentifierName",
+                                                    "parameter": {
+                                                        "kind": "Parameter",
                                                         "fullStart": 91,
                                                         "fullEnd": 96,
                                                         "start": 91,
                                                         "end": 95,
                                                         "fullWidth": 5,
                                                         "width": 4,
-                                                        "text": "test",
-                                                        "value": "test",
-                                                        "valueText": "test",
-                                                        "hasTrailingTrivia": true,
-                                                        "trailingTrivia": [
-                                                            {
-                                                                "kind": "WhitespaceTrivia",
-                                                                "fullStart": 95,
-                                                                "fullEnd": 96,
-                                                                "text": " "
-                                                            }
-                                                        ]
+                                                        "modifiers": [],
+                                                        "identifier": {
+                                                            "kind": "IdentifierName",
+                                                            "fullStart": 91,
+                                                            "fullEnd": 96,
+                                                            "start": 91,
+                                                            "end": 95,
+                                                            "fullWidth": 5,
+                                                            "width": 4,
+                                                            "text": "test",
+                                                            "value": "test",
+                                                            "valueText": "test",
+                                                            "hasTrailingTrivia": true,
+                                                            "trailingTrivia": [
+                                                                {
+                                                                    "kind": "WhitespaceTrivia",
+                                                                    "fullStart": 95,
+                                                                    "fullEnd": 96,
+                                                                    "text": " "
+                                                                }
+                                                            ]
+                                                        }
                                                     },
                                                     "equalsGreaterThanToken": {
                                                         "kind": "EqualsGreaterThanToken",

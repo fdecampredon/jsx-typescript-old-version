@@ -260,7 +260,7 @@ module TypeScript {
         public visitIndexSignature(node: IndexSignatureSyntax): any {
             return node.update(
                 this.visitToken(node.openBracketToken),
-                <ParameterSyntax>this.visitNode(node.parameter),
+                this.visitSeparatedList(node.parameters),
                 this.visitToken(node.closeBracketToken),
                 node.typeAnnotation === null ? null : <TypeAnnotationSyntax>this.visitNode(node.typeAnnotation));
         }
@@ -519,7 +519,7 @@ module TypeScript {
 
         public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): any {
             return node.update(
-                this.visitToken(node.identifier),
+                <ParameterSyntax>this.visitNode(node.parameter),
                 this.visitToken(node.equalsGreaterThanToken),
                 node.block === null ? null : <BlockSyntax>this.visitNode(node.block),
                 node.expression === null ? null : <IExpressionSyntax>this.visitNodeOrToken(node.expression));

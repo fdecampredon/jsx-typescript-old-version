@@ -128,50 +128,52 @@
                                     }
                                 ]
                             },
-                            "parameter": {
-                                "kind": "Parameter",
-                                "fullStart": 18,
-                                "fullEnd": 26,
-                                "start": 18,
-                                "end": 26,
-                                "fullWidth": 8,
-                                "width": 8,
-                                "modifiers": [
-                                    {
-                                        "kind": "PublicKeyword",
-                                        "fullStart": 18,
-                                        "fullEnd": 25,
-                                        "start": 18,
-                                        "end": 24,
-                                        "fullWidth": 7,
-                                        "width": 6,
-                                        "text": "public",
-                                        "value": "public",
-                                        "valueText": "public",
-                                        "hasTrailingTrivia": true,
-                                        "trailingTrivia": [
-                                            {
-                                                "kind": "WhitespaceTrivia",
-                                                "fullStart": 24,
-                                                "fullEnd": 25,
-                                                "text": " "
-                                            }
-                                        ]
-                                    }
-                                ],
-                                "identifier": {
-                                    "kind": "IdentifierName",
-                                    "fullStart": 25,
+                            "parameters": [
+                                {
+                                    "kind": "Parameter",
+                                    "fullStart": 18,
                                     "fullEnd": 26,
-                                    "start": 25,
+                                    "start": 18,
                                     "end": 26,
-                                    "fullWidth": 1,
-                                    "width": 1,
-                                    "text": "a",
-                                    "value": "a",
-                                    "valueText": "a"
+                                    "fullWidth": 8,
+                                    "width": 8,
+                                    "modifiers": [
+                                        {
+                                            "kind": "PublicKeyword",
+                                            "fullStart": 18,
+                                            "fullEnd": 25,
+                                            "start": 18,
+                                            "end": 24,
+                                            "fullWidth": 7,
+                                            "width": 6,
+                                            "text": "public",
+                                            "value": "public",
+                                            "valueText": "public",
+                                            "hasTrailingTrivia": true,
+                                            "trailingTrivia": [
+                                                {
+                                                    "kind": "WhitespaceTrivia",
+                                                    "fullStart": 24,
+                                                    "fullEnd": 25,
+                                                    "text": " "
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "identifier": {
+                                        "kind": "IdentifierName",
+                                        "fullStart": 25,
+                                        "fullEnd": 26,
+                                        "start": 25,
+                                        "end": 26,
+                                        "fullWidth": 1,
+                                        "width": 1,
+                                        "text": "a",
+                                        "value": "a",
+                                        "valueText": "a"
+                                    }
                                 }
-                            },
+                            ],
                             "closeBracketToken": {
                                 "kind": "CloseBracketToken",
                                 "fullStart": 26,

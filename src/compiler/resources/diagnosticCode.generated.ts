@@ -92,6 +92,7 @@ module TypeScript {
         Type_annotation_cannot_appear_on_a_constructor_declaration: "Type annotation cannot appear on a constructor declaration.",
         Type_parameters_cannot_appear_on_an_accessor: "Type parameters cannot appear on an accessor.",
         Type_annotation_cannot_appear_on_a_set_accessor: "Type annotation cannot appear on a 'set' accessor.",
+        Index_signature_must_have_exactly_one_parameter: "Index signature must have exactly one parameter.",
         Duplicate_identifier_0: "Duplicate identifier '{0}'.",
         The_name_0_does_not_exist_in_the_current_scope: "The name '{0}' does not exist in the current scope.",
         The_name_0_does_not_refer_to_a_value: "The name '{0}' does not refer to a value.",

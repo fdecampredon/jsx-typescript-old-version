@@ -142,7 +142,7 @@ module TypeScript {
         return packed & ScannerConstants.LargeTokenTrailingTriviaBitMask;
     }
 
-    var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
+    var isKeywordStartCharacter: number[] = ArrayUtilities.createArray<number>(CharacterCodes.maxAsciiCharacter, 0);
     var isIdentifierStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
     var isIdentifierPartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
 
@@ -161,7 +161,7 @@ module TypeScript {
 
     for (var keywordKind = SyntaxKind.FirstKeyword; keywordKind <= SyntaxKind.LastKeyword; keywordKind++) {
         var keyword = SyntaxFacts.getText(keywordKind);
-        isKeywordStartCharacter[keyword.charCodeAt(0)] = true;
+        isKeywordStartCharacter[keyword.charCodeAt(0)] = 1;
     }
 
     export function isContextualToken(token: ISyntaxToken): boolean {
@@ -256,7 +256,7 @@ module TypeScript {
     }
 
     export class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(private _packedData: number) {
         }
@@ -284,7 +284,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithNoTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -314,7 +314,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithLeadingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -344,7 +344,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithTrailingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -373,8 +373,8 @@ module TypeScript {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithTrailingTrivia(this._text, this._packedData); }
     }
     
-     export class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+    export class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -404,7 +404,7 @@ module TypeScript {
     }
 
     export class LargeScannerToken implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; 
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedFullStartAndInfo: number, private _packedFullWidthAndKind: number) {
         }
@@ -959,17 +959,13 @@ module TypeScript {
                 // Saw an ascii character that wasn't a backslash and wasn't an identifier 
                 // character.  Or we hit the end of the file  This identifier is done.
 
-                // Also check if it a keyword if it started with a lowercase letter.
-                var kind: SyntaxKind;
-                var identifierLength = index - startIndex + 1;
+                // Also check if it a keyword if it started with a keyword start char.
                 if (isKeywordStartCharacter[firstCharacter]) {
-                    kind = ScannerUtilities.identifierKind(str, startIndex - 1, identifierLength);
+                    return ScannerUtilities.identifierKind(str, startIndex - 1, index - startIndex + 1);
                 }
                 else {
-                    kind = SyntaxKind.IdentifierName;
+                    return SyntaxKind.IdentifierName;
                 }
-
-                return kind;
             }
         }
 

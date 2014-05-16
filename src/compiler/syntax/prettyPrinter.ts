@@ -386,7 +386,7 @@ module TypeScript.PrettyPrinter {
         }
 
         public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): void {
-            this.appendToken(node.identifier);
+            this.appendNode(node.parameter);
             this.ensureSpace();
             this.appendToken(node.equalsGreaterThanToken);
             this.ensureSpace();
@@ -603,7 +603,7 @@ module TypeScript.PrettyPrinter {
 
         public visitIndexSignature(node: IndexSignatureSyntax): void {
             this.appendToken(node.openBracketToken);
-            this.appendNode(node.parameter);
+            this.appendSeparatorSpaceList(node.parameters)
             this.appendToken(node.closeBracketToken);
             this.appendNode(node.typeAnnotation);
         }

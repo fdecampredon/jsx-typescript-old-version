@@ -1,7 +1,11 @@
-==== tests/cases/compiler/indexTypeCheck.ts (7 errors) ====
+==== tests/cases/compiler/indexTypeCheck.ts (8 errors) ====
     interface Red {
         [n:number]; // ok
+     ~~~~~~~~~~
+!!! indexTypeCheck.ts(2,2): error TS1021: Index signature must have a type annotation.
         [s:string]; // ok
+     ~~~~~~~~~~
+!!! indexTypeCheck.ts(3,2): error TS1021: Index signature must have a type annotation.
     }
     
     interface Blue {
@@ -39,16 +43,14 @@
     
     interface Purple {
         [n:number, s:string]; // error
-              ~
-!!! indexTypeCheck.ts(32,11): error TS1005: ']' expected.
-                        ~
-!!! indexTypeCheck.ts(32,21): error TS1005: ';' expected.
-                         ~
-!!! indexTypeCheck.ts(32,22): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+     ~
+!!! indexTypeCheck.ts(32,2): error TS1095: Index signature must have exactly one parameter.
     }
     
     interface Magenta {
         [p:Purple]; // error
+      ~~~~~~~~
+!!! indexTypeCheck.ts(36,3): error TS1023: Index signature parameter type must be 'string' or 'number'.
     }
     
     var yellow: Yellow;

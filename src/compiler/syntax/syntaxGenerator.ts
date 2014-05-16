@@ -244,7 +244,7 @@ var definitions:ITypeDefinition[] = [
         baseType: 'ISyntaxNode',
         interfaces: ['IUnaryExpressionSyntax'],
         children: [
-            <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
+            <any>{ name: 'parameter', type: 'ParameterSyntax' },
             <any>{ name: 'equalsGreaterThanToken', isToken: true },
             <any>{ name: 'block', type: 'BlockSyntax', isOptional: true },
             <any>{ name: 'expression', type: 'IExpressionSyntax', isOptional: true }
@@ -500,7 +500,7 @@ var definitions:ITypeDefinition[] = [
         interfaces: ['ITypeMemberSyntax'],
         children: [
             <any>{ name: 'openBracketToken', isToken: true },
-            <any>{ name: 'parameter', type: 'ParameterSyntax' },
+            <any>{ name: 'parameters', isSeparatedList: true, elementType: 'ParameterSyntax' },
             <any>{ name: 'closeBracketToken', isToken: true },
             <any>{ name: 'typeAnnotation', type: 'TypeAnnotationSyntax', isOptional: true }
         ],

@@ -93,7 +93,7 @@ module TypeScript {
     function preCollectScriptDecls(sourceUnit: SourceUnitSyntax, context: DeclCollectionContext): void {
         var fileName = syntaxTree(sourceUnit).fileName();
 
-        var isExternalModule = context.document.isExternalModule();
+        var isExternalModule = context.document.syntaxTree().isExternalModule();
 
         var decl: PullDecl = new RootPullDecl(context.document, /*name:*/ fileName, fileName, PullElementKind.Script, PullElementFlags.None, isExternalModule);
         context.setDeclForAST(sourceUnit, decl);
@@ -623,25 +623,6 @@ module TypeScript {
         context.setASTForDecl(decl, functionExpressionDeclAST);
 
         context.pushParent(decl);
-
-        if (functionExpressionDeclAST.kind() === SyntaxKind.SimpleArrowFunctionExpression) {
-            var simpleArrow = <SimpleArrowFunctionExpressionSyntax>functionExpressionDeclAST;
-            var declFlags = PullElementFlags.Public;
-
-            var parent = context.getParent();
-
-            if (hasFlag(parent.flags, PullElementFlags.DeclaredInAWithBlock)) {
-                declFlags |= PullElementFlags.DeclaredInAWithBlock;
-            }
-
-            var decl: PullDecl = new NormalPullDecl(tokenValueText(simpleArrow.identifier), simpleArrow.identifier.text(), PullElementKind.Parameter, declFlags, parent);
-
-            context.setASTForDecl(decl, simpleArrow.identifier);
-            context.setDeclForAST(simpleArrow.identifier, decl);
-
-            // Record this decl in its parent in the declGroup with the corresponding name
-            parent.addVariableDeclToGroup(decl);
-        }
     }
 
     function createMemberFunctionDeclaration(funcDecl: MemberFunctionDeclarationSyntax, context: DeclCollectionContext): void {

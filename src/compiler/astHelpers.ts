@@ -15,19 +15,6 @@
 
 ///<reference path='references.ts' />
 
-module TypeScript {
-    export interface IParameters {
-        length: number;
-        lastParameterIsRest(): boolean;
-        ast: ISyntaxElement;
-        astAt(index: number): ISyntaxElement;
-        identifierAt(index: number): ISyntaxToken;
-        typeAt(index: number): ISyntaxElement;
-        initializerAt(index: number): EqualsValueClauseSyntax;
-        isOptionalAt(index: number): boolean;
-    }
-}
-
 module TypeScript.ASTHelpers {
     export function scriptIsElided(sourceUnit: SourceUnitSyntax): boolean {
         return isDTSFile(sourceUnit.syntaxTree.fileName()) || moduleMembersAreElided(sourceUnit.moduleElements);
@@ -340,49 +327,6 @@ module TypeScript.ASTHelpers {
         return ast.parent && ast.parent.kind() === SyntaxKind.ModuleDeclaration;
     }
 
-    export function parametersFromIdentifier(id: ISyntaxToken): IParameters {
-        return {
-            length: 1,
-            lastParameterIsRest: () => false,
-            ast: id,
-            astAt: (index: number) => id,
-            identifierAt: (index: number) => id,
-            typeAt: (index: number): ISyntaxElement => null,
-            initializerAt: (index: number): EqualsValueClauseSyntax => null,
-            isOptionalAt: (index: number) => false,
-        };
-    }
-
-    export function parametersFromParameter(parameter: ParameterSyntax): IParameters {
-        return {
-            length: 1,
-            lastParameterIsRest: () => parameter.dotDotDotToken !== null,
-            ast: parameter,
-            astAt: (index: number) => parameter,
-            identifierAt: (index: number) => parameter.identifier,
-            typeAt: (index: number) => getType(parameter),
-            initializerAt: (index: number) => parameter.equalsValueClause,
-            isOptionalAt: (index: number) => parameterIsOptional(parameter),
-        };
-    }
-
-    function parameterIsOptional(parameter: ParameterSyntax): boolean {
-        return parameter.questionToken !== null || parameter.equalsValueClause !== null;
-    }
-
-    export function parametersFromParameterList(list: ParameterListSyntax): IParameters {
-        return {
-            length: list.parameters.length,
-            lastParameterIsRest: () => lastParameterIsRest(list),
-            ast: list.parameters,
-            astAt: (index: number) => list.parameters[index],
-            identifierAt: (index: number) => list.parameters[index].identifier,
-            typeAt: (index: number) => getType(list.parameters[index]),
-            initializerAt: (index: number) => list.parameters[index].equalsValueClause,
-            isOptionalAt: (index: number) => parameterIsOptional(list.parameters[index]),
-        };
-    }
-
     export function isDeclarationAST(ast: ISyntaxElement): boolean {
         switch (ast.kind()) {
             case SyntaxKind.VariableDeclarator:
@@ -637,7 +581,7 @@ module TypeScript.ASTHelpers {
         return null;
     }
 
-    export function getType(ast: ISyntaxElement): ISyntaxNodeOrToken {
+    export function getType(ast: ISyntaxElement): ITypeSyntax {
         if (ast) {
             switch (ast.kind()) {
                 case SyntaxKind.FunctionDeclaration:
@@ -807,5 +751,56 @@ module TypeScript.ASTHelpers {
         }
 
         return result;
+    }
+
+    export function externalModuleIndicatorSpan(sourceUnit: SourceUnitSyntax): TextSpan {
+        var leadingTrivia = firstToken(sourceUnit).leadingTrivia();
+        return implicitImportSpan(leadingTrivia) || topLevelImportOrExportSpan(sourceUnit);
+    }
+
+    function implicitImportSpan(sourceUnitLeadingTrivia: ISyntaxTriviaList): TextSpan {
+        for (var i = 0, n = sourceUnitLeadingTrivia.count(); i < n; i++) {
+            var trivia = sourceUnitLeadingTrivia.syntaxTriviaAt(i);
+
+            if (trivia.isComment()) {
+                var span = implicitImportSpanWorker(trivia);
+                if (span) {
+                    return span;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    function implicitImportSpanWorker(trivia: ISyntaxTrivia): TextSpan {
+        var implicitImportRegEx = /^(\/\/\/\s*<implicit-import\s*)*\/>/gim;
+        var match = implicitImportRegEx.exec(trivia.fullText());
+
+        if (match) {
+            return new TextSpan(trivia.fullStart(), trivia.fullWidth());
+        }
+
+        return null;
+    }
+
+     function topLevelImportOrExportSpan(node: SourceUnitSyntax): TextSpan {
+        for (var i = 0, n = node.moduleElements.length; i < n; i++) {
+            var moduleElement = node.moduleElements[i];
+
+            var _firstToken = firstToken(moduleElement);
+            if (_firstToken !== null && _firstToken.kind() === SyntaxKind.ExportKeyword) {
+                return new TextSpan(start(_firstToken), width(_firstToken));
+            }
+
+            if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
+                var importDecl = <ImportDeclarationSyntax>moduleElement;
+                if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
+                    return new TextSpan(start(importDecl), width(importDecl));
+                }
+            }
+        }
+
+        return null;;
     }
 }

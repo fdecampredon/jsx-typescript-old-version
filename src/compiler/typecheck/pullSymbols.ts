@@ -655,11 +655,11 @@ module TypeScript {
             return MemberName.create(nameStr);
         }
 
-        static getTypeParameterString(typars: PullTypeSymbol[], scopeSymbol?: PullSymbol, useContraintInName?: boolean) {
-            return PullSymbol.getTypeParameterStringEx(typars, scopeSymbol, /*getTypeParamMarkerInfo:*/ undefined, useContraintInName).toString();
+        static getTypeParameterString(typars: PullTypeSymbol[], scopeSymbol?: PullSymbol, useConstraintInName?: boolean) {
+            return PullSymbol.getTypeParameterStringEx(typars, scopeSymbol, /*getTypeParamMarkerInfo:*/ undefined, useConstraintInName).toString();
         }
 
-        static getTypeParameterStringEx(typeParameters: PullTypeSymbol[], scopeSymbol?: PullSymbol, getTypeParamMarkerInfo?: boolean, useContraintInName?: boolean) {
+        static getTypeParameterStringEx(typeParameters: PullTypeSymbol[], scopeSymbol?: PullSymbol, getTypeParamMarkerInfo?: boolean, useConstraintInName?: boolean) {
             var builder = new MemberNameArray();
             builder.prefix = "";
 
@@ -675,7 +675,7 @@ module TypeScript {
                         builder.add(new MemberName());
                     }
 
-                    builder.add(typeParameters[i].getScopedNameEx(scopeSymbol, /*skipTypeParametersInName*/ false, useContraintInName));
+                    builder.add(typeParameters[i].getScopedNameEx(scopeSymbol, /*skipTypeParametersInName*/ false, useConstraintInName));
 
                     if (getTypeParamMarkerInfo) {
                         builder.add(new MemberName());

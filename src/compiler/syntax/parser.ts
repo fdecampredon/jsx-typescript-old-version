@@ -130,26 +130,27 @@ module TypeScript.Parser {
     // consume the token and add it to our list of 'skipped tokens'.  We will then repeat the 
     // above algorithm until we resynchronize at some point.
     enum ListParsingState {
-        SourceUnit_ModuleElements = 1 << 0,
-        ClassDeclaration_ClassElements = 1 << 1,
-        ModuleDeclaration_ModuleElements = 1 << 2,
-        SwitchStatement_SwitchClauses = 1 << 3,
-        SwitchClause_Statements = 1 << 4,
-        Block_Statements = 1 << 5,
-        TryBlock_Statements = 1 << 6,
-        CatchBlock_Statements = 1 << 7,
-        EnumDeclaration_EnumElements = 1 << 8,
-        ObjectType_TypeMembers = 1 << 9,
-        ClassOrInterfaceDeclaration_HeritageClauses = 1 << 10,
-        HeritageClause_TypeNameList = 1 << 11,
-        VariableDeclaration_VariableDeclarators_AllowIn = 1 << 12,
-        VariableDeclaration_VariableDeclarators_DisallowIn = 1 << 13,
-        ArgumentList_AssignmentExpressions = 1 << 14,
-        ObjectLiteralExpression_PropertyAssignments = 1 << 15,
-        ArrayLiteralExpression_AssignmentExpressions = 1 << 16,
-        ParameterList_Parameters = 1 << 17,
-        TypeArgumentList_Types = 1 << 18,
-        TypeParameterList_TypeParameters = 1 << 19,
+        SourceUnit_ModuleElements = 0,
+        ClassDeclaration_ClassElements = 1,
+        ModuleDeclaration_ModuleElements = 2,
+        SwitchStatement_SwitchClauses = 3,
+        SwitchClause_Statements = 4,
+        Block_Statements = 5,
+        TryBlock_Statements = 6,
+        CatchBlock_Statements = 7,
+        EnumDeclaration_EnumElements = 8,
+        ObjectType_TypeMembers = 9,
+        ClassOrInterfaceDeclaration_HeritageClauses = 10,
+        HeritageClause_TypeNameList = 11,
+        VariableDeclaration_VariableDeclarators_AllowIn = 12,
+        VariableDeclaration_VariableDeclarators_DisallowIn = 13,
+        ArgumentList_AssignmentExpressions = 14,
+        ObjectLiteralExpression_PropertyAssignments = 15,
+        ArrayLiteralExpression_AssignmentExpressions = 16,
+        ParameterList_Parameters = 17,
+        IndexSignature_Parameters = 18,
+        TypeArgumentList_Types = 19,
+        TypeParameterList_TypeParameters = 20,
 
         FirstListParsingState = SourceUnit_ModuleElements,
         LastListParsingState = TypeParameterList_TypeParameters,
@@ -1294,7 +1295,7 @@ module TypeScript.Parser {
         // TODO: do we need to store/restore this when speculative parsing?  I don't think so.  The
         // parsing logic already handles storing/restoring this and should work properly even if we're
         // speculative parsing.
-        var listParsingState: ListParsingState = 0;
+        var listParsingState: number = 0;
 
         // Whether or not we are in strict parsing mode.  All that changes in strict parsing mode is
         // that some tokens that would be considered identifiers may be considered keywords.  When 
@@ -1990,7 +1991,7 @@ module TypeScript.Parser {
                     break;
             }
 
-            return tryParseStatement(_modifierCount, inErrorRecovery);
+            return tryParseStatementWorker(_modifierCount, inErrorRecovery);
         }
 
         function parseImportDeclaration(): ImportDeclarationSyntax {
@@ -2788,9 +2789,15 @@ module TypeScript.Parser {
         }
 
         function parseIndexSignature(): IndexSignatureSyntax {
+            var openBracketToken = eatToken(SyntaxKind.OpenBracketToken);
+            var result = parseSeparatedSyntaxList<ParameterSyntax>(ListParsingState.IndexSignature_Parameters);
+
+            var parameters = result.list;
+            openBracketToken = addSkippedTokensAfterToken(openBracketToken, result.skippedTokens);
+
             return new IndexSignatureSyntax(parseNodeData,
-                eatToken(SyntaxKind.OpenBracketToken),
-                parseParameter(),
+                openBracketToken,
+                parameters,
                 eatToken(SyntaxKind.CloseBracketToken),
                 parseOptionalTypeAnnotation(/*allowStringLiteral:*/ false));
         }
@@ -3022,16 +3029,20 @@ module TypeScript.Parser {
         }
 
         function parseStatement(inErrorRecovery: boolean): IStatementSyntax {
-            return tryParseStatement(modifierCount(), inErrorRecovery) || parseExpressionStatement();
+            return tryParseStatement(inErrorRecovery) || parseExpressionStatement();
         }
 
-        function tryParseStatement(modifierCount: number, inErrorRecovery: boolean): IStatementSyntax {
+        function tryParseStatement(inErrorRecovery: boolean): IStatementSyntax {
             var node = currentNode();
             if (SyntaxUtilities.isStatement(node)) {
                 consumeNode(node);
                 return <IStatementSyntax><ISyntaxNode>node;
             }
 
+            return tryParseStatementWorker(modifierCount(), inErrorRecovery);
+        }
+
+        function tryParseStatementWorker(modifierCount: number, inErrorRecovery: boolean): IStatementSyntax {
             var _currentToken = currentToken();
             var currentTokenKind = _currentToken.kind();
 
@@ -3135,7 +3146,7 @@ module TypeScript.Parser {
             var tryKeyword = eatKeyword(SyntaxKind.TryKeyword);
 
             var savedListParsingState = listParsingState;
-            listParsingState |= ListParsingState.TryBlock_Statements;
+            listParsingState |= (1 << ListParsingState.TryBlock_Statements);
             var block = parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ false);
             listParsingState = savedListParsingState;
 
@@ -3160,7 +3171,7 @@ module TypeScript.Parser {
 
         function parseCatchClauseBlock(): BlockSyntax {
             var savedListParsingState = listParsingState;
-            listParsingState |= ListParsingState.CatchBlock_Statements;
+            listParsingState |= (1 << ListParsingState.CatchBlock_Statements);
             var block = parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ false);
             listParsingState = savedListParsingState;
 
@@ -4659,7 +4670,7 @@ module TypeScript.Parser {
         function parseSimpleArrowFunctionExpression(): SimpleArrowFunctionExpressionSyntax {
             // Debug.assert(isSimpleArrowFunctionExpression());
 
-            var identifier = eatIdentifierToken();
+            var parameter = eatSimpleParameter();
             var equalsGreaterThanToken = eatToken(SyntaxKind.EqualsGreaterThanToken);
 
             var block = tryParseArrowFunctionBlock();
@@ -4668,7 +4679,7 @@ module TypeScript.Parser {
                 expression = tryParseAssignmentExpressionOrHigher(/*force:*/ true, /*allowIn:*/ true);
             }
 
-            return new SimpleArrowFunctionExpressionSyntax(parseNodeData, identifier, equalsGreaterThanToken, block, expression);
+            return new SimpleArrowFunctionExpressionSyntax(parseNodeData, parameter, equalsGreaterThanToken, block, expression);
         }
 
         function isBlock(): boolean {
@@ -5048,15 +5059,26 @@ module TypeScript.Parser {
             return currentToken().kind() === SyntaxKind.ColonToken ? parseTypeAnnotation(allowStringLiteral) : null;
         }
 
+        function parseTypeAnnotationType(allowStringLiteral: boolean): ITypeSyntax {
+            if (allowStringLiteral) {
+                var _currentToken = currentToken();
+                if (_currentToken.kind() === SyntaxKind.StringLiteral) {
+                    consumeToken(_currentToken);
+                    return _currentToken;
+                }
+            }
+
+            return parseType();
+        }
+
         function parseTypeAnnotation(allowStringLiteral: boolean): TypeAnnotationSyntax {
             // Debug.assert(isTypeAnnotation());
 
-            var colonToken = eatToken(SyntaxKind.ColonToken);
-            var type = allowStringLiteral && currentToken().kind() === SyntaxKind.StringLiteral
-                ? eatToken(SyntaxKind.StringLiteral)
-                : parseType();
+            var colonToken = currentToken();
+            consumeToken(colonToken);
 
-            return new TypeAnnotationSyntax(parseNodeData, colonToken, type);
+            return new TypeAnnotationSyntax(parseNodeData, colonToken, 
+                parseTypeAnnotationType(allowStringLiteral));
         }
 
         function isType(): boolean {
@@ -5234,15 +5256,14 @@ module TypeScript.Parser {
             return false;
         }
 
-        function parseParameter(): ParameterSyntax {
-            var result = tryParseParameter();
-            if (result !== null) {
-                return result;
-            }
-
+        function eatSimpleParameter() {
             return new ParameterSyntax(parseNodeData,
-                /*dotDotDotToken:*/ null, /*modifiers:*/ Syntax.emptyList<ISyntaxToken>(), /*identifier:*/ eatIdentifierToken(),
+                /*dotDotDotToken:*/ null, /*modifiers:*/ Syntax.emptyList<ISyntaxToken>(), eatIdentifierToken(),
                 /*questionToken:*/ null, /*typeAnnotation:*/ null, /*equalsValueClause:*/ null);
+        }
+
+        function parseParameter(): ParameterSyntax {
+            return tryParseParameter() || eatSimpleParameter();
         }
 
         function tryParseParameter(): ParameterSyntax {
@@ -5292,7 +5313,7 @@ module TypeScript.Parser {
                 currentListType: ListParsingState,
                 processItems: (items: any[]) => void = null): { skippedTokens: ISyntaxToken[]; list: T[]; } {
             var savedListParsingState = listParsingState;
-            listParsingState |= currentListType;
+            listParsingState |= (1 << currentListType);
 
             var result = parseSyntaxListWorker<T>(currentListType, processItems);
 
@@ -5303,7 +5324,7 @@ module TypeScript.Parser {
 
         function parseSeparatedSyntaxList<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: T[]; } {
             var savedListParsingState = listParsingState;
-            listParsingState |= currentListType;
+            listParsingState |= (1 << currentListType);
 
             var result = parseSeparatedSyntaxListWorker<T>(currentListType);
 
@@ -5326,11 +5347,9 @@ module TypeScript.Parser {
             // item in one of our parent lists.  If so, we won't want to consume the token.  We've 
             // already reported the error, so just return to our caller so that a higher up 
             // production can consume it.
-            for (var state = ListParsingState.LastListParsingState;
-                 state >= ListParsingState.FirstListParsingState;
-                 state >>= 1) {
+            for (var state = ListParsingState.LastListParsingState; state >= ListParsingState.FirstListParsingState; state--) {
 
-                if ((listParsingState & state) !== 0) {
+                if ((listParsingState & (1 << state)) !== 0) {
                     if (isExpectedListTerminator(state) || isExpectedListItem(state, /*inErrorRecovery:*/ true)) {
                         // Abort parsing this list.
                         return true;
@@ -5579,6 +5598,7 @@ module TypeScript.Parser {
                 case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
                 case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
                 case ListParsingState.ParameterList_Parameters:
+                case ListParsingState.IndexSignature_Parameters:
                 case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
                 case ListParsingState.TypeArgumentList_Types:
                 case ListParsingState.TypeParameterList_TypeParameters:
@@ -5622,9 +5642,6 @@ module TypeScript.Parser {
                 case ListParsingState.SourceUnit_ModuleElements:
                     return isExpectedSourceUnit_ModuleElementsTerminator();
 
-                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
-                    return isExpectedClassOrInterfaceDeclaration_HeritageClausesTerminator();
-
                 case ListParsingState.ClassDeclaration_ClassElements:
                     return isExpectedClassDeclaration_ClassElementsTerminator();
 
@@ -5652,8 +5669,8 @@ module TypeScript.Parser {
                 case ListParsingState.ObjectType_TypeMembers:
                     return isExpectedObjectType_TypeMembersTerminator();
 
-                case ListParsingState.ArgumentList_AssignmentExpressions:
-                    return isExpectedArgumentList_AssignmentExpressionsTerminator();
+                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
+                    return isExpectedClassOrInterfaceDeclaration_HeritageClausesTerminator();
 
                 case ListParsingState.HeritageClause_TypeNameList:
                     return isExpectedHeritageClause_TypeNameListTerminator();
@@ -5664,20 +5681,26 @@ module TypeScript.Parser {
                 case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
                     return isExpectedVariableDeclaration_VariableDeclarators_DisallowInTerminator();
 
+                case ListParsingState.ArgumentList_AssignmentExpressions:
+                    return isExpectedArgumentList_AssignmentExpressionsTerminator();
+
                 case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
                     return isExpectedObjectLiteralExpression_PropertyAssignmentsTerminator();
 
+                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
+                    return isExpectedLiteralExpression_AssignmentExpressionsTerminator();
+
                 case ListParsingState.ParameterList_Parameters:
                     return isExpectedParameterList_ParametersTerminator();
+
+                case ListParsingState.IndexSignature_Parameters:
+                    return isExpectedIndexSignature_ParametersTerminator();
 
                 case ListParsingState.TypeArgumentList_Types:
                     return isExpectedTypeArgumentList_TypesTerminator();
 
                 case ListParsingState.TypeParameterList_TypeParameters:
                     return isExpectedTypeParameterList_TypeParametersTerminator();
-
-                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
-                    return isExpectedLiteralExpression_AssignmentExpressionsTerminator();
 
                 default:
                     throw Errors.invalidOperation();
@@ -5760,6 +5783,22 @@ module TypeScript.Parser {
             // We may also see a => in an error case.  i.e.:
             // (f: number => { ... }
             if (tokenKind === SyntaxKind.EqualsGreaterThanToken) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function isExpectedIndexSignature_ParametersTerminator() {
+            var token = currentToken();
+            var tokenKind = token.kind();
+            if (tokenKind === SyntaxKind.CloseBracketToken) {
+                return true;
+            }
+
+            // We may also see a { in an error case.  i.e.:
+            // function (a, b, c  {
+            if (tokenKind === SyntaxKind.OpenBraceToken) {
                 return true;
             }
 
@@ -5863,9 +5902,6 @@ module TypeScript.Parser {
                 case ListParsingState.SourceUnit_ModuleElements:
                     return isModuleElement(inErrorRecovery);
 
-                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
-                    return isHeritageClause();
-
                 case ListParsingState.ClassDeclaration_ClassElements:
                     return isClassElement(inErrorRecovery);
 
@@ -5891,24 +5927,33 @@ module TypeScript.Parser {
 
                 case ListParsingState.EnumDeclaration_EnumElements:
                     return isEnumElement(inErrorRecovery);
+
+                case ListParsingState.ObjectType_TypeMembers:
+                    return isTypeMember(inErrorRecovery);
+
+                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
+                    return isHeritageClause();
+
+                case ListParsingState.HeritageClause_TypeNameList:
+                    return isHeritageClauseTypeName();
                 
                 case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:
                 case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
                     return isVariableDeclarator();
 
-                case ListParsingState.ObjectType_TypeMembers:
-                    return isTypeMember(inErrorRecovery);
-
                 case ListParsingState.ArgumentList_AssignmentExpressions:
                     return isExpectedArgumentList_AssignmentExpression();
-
-                case ListParsingState.HeritageClause_TypeNameList:
-                    return isHeritageClauseTypeName();
 
                 case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
                     return isPropertyAssignment(inErrorRecovery);
 
+                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
+                    return isAssignmentOrOmittedExpression();
+
                 case ListParsingState.ParameterList_Parameters:
+                    return isParameter();
+
+                case ListParsingState.IndexSignature_Parameters:
                     return isParameter();
 
                 case ListParsingState.TypeArgumentList_Types:
@@ -5916,9 +5961,6 @@ module TypeScript.Parser {
 
                 case ListParsingState.TypeParameterList_TypeParameters:
                     return isTypeParameter();
-
-                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
-                    return isAssignmentOrOmittedExpression();
 
                 default:
                     throw Errors.invalidOperation();
@@ -5946,9 +5988,6 @@ module TypeScript.Parser {
                 case ListParsingState.SourceUnit_ModuleElements:
                     return tryParseModuleElement(inErrorRecovery);
 
-                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
-                    return tryParseHeritageClause();
-
                 case ListParsingState.ClassDeclaration_ClassElements:
                     return tryParseClassElement(inErrorRecovery);
 
@@ -5959,10 +5998,12 @@ module TypeScript.Parser {
                     return tryParseSwitchClause();
 
                 case ListParsingState.SwitchClause_Statements:
-                    return tryParseStatement(modifierCount(), inErrorRecovery);
+                    return tryParseStatement(inErrorRecovery);
 
                 case ListParsingState.Block_Statements:
-                    return tryParseStatement(modifierCount(), inErrorRecovery);
+                case ListParsingState.TryBlock_Statements:
+                case ListParsingState.CatchBlock_Statements:
+                    return tryParseStatement(inErrorRecovery);
 
                 case ListParsingState.EnumDeclaration_EnumElements:
                     return tryParseEnumElement(inErrorRecovery);
@@ -5970,8 +6011,8 @@ module TypeScript.Parser {
                 case ListParsingState.ObjectType_TypeMembers:
                     return tryParseTypeMember(inErrorRecovery);
 
-                case ListParsingState.ArgumentList_AssignmentExpressions:
-                    return tryParseArgumentListExpression();
+                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
+                    return tryParseHeritageClause();
 
                 case ListParsingState.HeritageClause_TypeNameList:
                     return tryParseHeritageClauseTypeName();
@@ -5982,6 +6023,9 @@ module TypeScript.Parser {
                 case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
                     return tryParseVariableDeclarator(/*allowIn:*/ false, /*allowIdentifierName:*/ false);
 
+                case ListParsingState.ArgumentList_AssignmentExpressions:
+                    return tryParseArgumentListExpression();
+
                 case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
                     return tryParsePropertyAssignment(inErrorRecovery);
 
@@ -5989,6 +6033,9 @@ module TypeScript.Parser {
                     return tryParseAssignmentOrOmittedExpression();
 
                 case ListParsingState.ParameterList_Parameters:
+                    return tryParseParameter();
+
+                case ListParsingState.IndexSignature_Parameters:
                     return tryParseParameter();
 
                 case ListParsingState.TypeArgumentList_Types:
@@ -6045,6 +6092,9 @@ module TypeScript.Parser {
                     return getLocalizedText(DiagnosticCode.property_or_accessor, null);
 
                 case ListParsingState.ParameterList_Parameters:
+                    return getLocalizedText(DiagnosticCode.parameter, null);
+
+                case ListParsingState.IndexSignature_Parameters:
                     return getLocalizedText(DiagnosticCode.parameter, null);
 
                 case ListParsingState.TypeArgumentList_Types:

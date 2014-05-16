@@ -182,7 +182,7 @@ module TypeScript {
     }
 
     function walkSimpleArrowFunctionExpressionChildren(preAst: SimpleArrowFunctionExpressionSyntax, walker: AstWalker): void {
-        walker.walk(preAst.identifier);
+        walker.walk(preAst.parameter);
         walker.walk(preAst.block);
         walker.walk(preAst.expression);
     }
@@ -204,7 +204,7 @@ module TypeScript {
     }
 
     function walkIndexSignatureChildren(preAst: IndexSignatureSyntax, walker: AstWalker): void {
-        walker.walk(preAst.parameter);
+        walker.walk(preAst.parameters);
         walker.walk(preAst.typeAnnotation);
     }
 

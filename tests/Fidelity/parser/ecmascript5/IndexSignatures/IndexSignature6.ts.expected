@@ -128,61 +128,63 @@
                                     }
                                 ]
                             },
-                            "parameter": {
-                                "kind": "Parameter",
-                                "fullStart": 18,
-                                "fullEnd": 27,
-                                "start": 18,
-                                "end": 27,
-                                "fullWidth": 9,
-                                "width": 9,
-                                "modifiers": [],
-                                "identifier": {
-                                    "kind": "IdentifierName",
+                            "parameters": [
+                                {
+                                    "kind": "Parameter",
                                     "fullStart": 18,
-                                    "fullEnd": 19,
-                                    "start": 18,
-                                    "end": 19,
-                                    "fullWidth": 1,
-                                    "width": 1,
-                                    "text": "a",
-                                    "value": "a",
-                                    "valueText": "a"
-                                },
-                                "typeAnnotation": {
-                                    "kind": "TypeAnnotation",
-                                    "fullStart": 19,
                                     "fullEnd": 27,
-                                    "start": 19,
+                                    "start": 18,
                                     "end": 27,
-                                    "fullWidth": 8,
-                                    "width": 8,
-                                    "colonToken": {
-                                        "kind": "ColonToken",
-                                        "fullStart": 19,
-                                        "fullEnd": 20,
-                                        "start": 19,
-                                        "end": 20,
+                                    "fullWidth": 9,
+                                    "width": 9,
+                                    "modifiers": [],
+                                    "identifier": {
+                                        "kind": "IdentifierName",
+                                        "fullStart": 18,
+                                        "fullEnd": 19,
+                                        "start": 18,
+                                        "end": 19,
                                         "fullWidth": 1,
                                         "width": 1,
-                                        "text": ":",
-                                        "value": ":",
-                                        "valueText": ":"
+                                        "text": "a",
+                                        "value": "a",
+                                        "valueText": "a"
                                     },
-                                    "type": {
-                                        "kind": "BooleanKeyword",
-                                        "fullStart": 20,
+                                    "typeAnnotation": {
+                                        "kind": "TypeAnnotation",
+                                        "fullStart": 19,
                                         "fullEnd": 27,
-                                        "start": 20,
+                                        "start": 19,
                                         "end": 27,
-                                        "fullWidth": 7,
-                                        "width": 7,
-                                        "text": "boolean",
-                                        "value": "boolean",
-                                        "valueText": "boolean"
+                                        "fullWidth": 8,
+                                        "width": 8,
+                                        "colonToken": {
+                                            "kind": "ColonToken",
+                                            "fullStart": 19,
+                                            "fullEnd": 20,
+                                            "start": 19,
+                                            "end": 20,
+                                            "fullWidth": 1,
+                                            "width": 1,
+                                            "text": ":",
+                                            "value": ":",
+                                            "valueText": ":"
+                                        },
+                                        "type": {
+                                            "kind": "BooleanKeyword",
+                                            "fullStart": 20,
+                                            "fullEnd": 27,
+                                            "start": 20,
+                                            "end": 27,
+                                            "fullWidth": 7,
+                                            "width": 7,
+                                            "text": "boolean",
+                                            "value": "boolean",
+                                            "valueText": "boolean"
+                                        }
                                     }
                                 }
-                            },
+                            ],
                             "closeBracketToken": {
                                 "kind": "CloseBracketToken",
                                 "fullStart": 27,

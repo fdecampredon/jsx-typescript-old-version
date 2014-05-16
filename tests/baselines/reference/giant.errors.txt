@@ -1,4 +1,4 @@
-==== tests/cases/compiler/giant.ts (192 errors) ====
+==== tests/cases/compiler/giant.ts (160 errors) ====
     
     /*
         Prefixes
@@ -100,13 +100,7 @@
         [p];
         [p1: string];
         [p2: string, p3: number];
-                   ~
-!!! giant.ts(63,16): error TS1005: ']' expected.
-                               ~
-!!! giant.ts(63,28): error TS1005: ';' expected.
-                                ~
-!!! giant.ts(63,29): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-        ~~~~~~~~~~~
+        ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(63,5): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	giant.ts(62,5)
     
@@ -117,9 +111,6 @@
         
         //Function Signature
         p3();
-        ~~~~
-!!! giant.ts(71,5): error TS2000: Duplicate identifier 'p3'. Additional locations:
-!!! 	giant.ts(63,18)
         p4? ();
         p5? (): void;
         p6(pa1): void;
@@ -216,13 +207,7 @@
             [p];
             [p1: string];
             [p2: string, p3: number];
-                       ~
-!!! giant.ts(127,20): error TS1005: ']' expected.
-                                   ~
-!!! giant.ts(127,32): error TS1005: ';' expected.
-                                    ~
-!!! giant.ts(127,33): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-            ~~~~~~~~~~~
+            ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(127,9): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	giant.ts(126,9)
     
@@ -233,9 +218,6 @@
         
             //Function Signature
             p3();
-            ~~~~
-!!! giant.ts(135,9): error TS2000: Duplicate identifier 'p3'. Additional locations:
-!!! 	giant.ts(127,22)
             p4? ();
             p5? (): void;
             p6(pa1): void;
@@ -347,13 +329,7 @@
             [p];
             [p1: string];
             [p2: string, p3: number];
-                       ~
-!!! giant.ts(206,20): error TS1005: ']' expected.
-                                   ~
-!!! giant.ts(206,32): error TS1005: ';' expected.
-                                    ~
-!!! giant.ts(206,33): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-            ~~~~~~~~~~~
+            ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(206,9): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	giant.ts(205,9)
     
@@ -364,9 +340,6 @@
         
             //Function Signature
             p3();
-            ~~~~
-!!! giant.ts(214,9): error TS2000: Duplicate identifier 'p3'. Additional locations:
-!!! 	giant.ts(206,22)
             p4? ();
             p5? (): void;
             p6(pa1): void;
@@ -552,13 +525,7 @@
         [p];
         [p1: string];
         [p2: string, p3: number];
-                   ~
-!!! giant.ts(321,16): error TS1005: ']' expected.
-                               ~
-!!! giant.ts(321,28): error TS1005: ';' expected.
-                                ~
-!!! giant.ts(321,29): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-        ~~~~~~~~~~~
+        ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(321,5): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	giant.ts(320,5)
     
@@ -569,9 +536,6 @@
         
         //Function Signature
         p3();
-        ~~~~
-!!! giant.ts(329,5): error TS2000: Duplicate identifier 'p3'. Additional locations:
-!!! 	giant.ts(321,18)
         p4? ();
         p5? (): void;
         p6(pa1): void;
@@ -668,13 +632,7 @@
             [p];
             [p1: string];
             [p2: string, p3: number];
-                       ~
-!!! giant.ts(385,20): error TS1005: ']' expected.
-                                   ~
-!!! giant.ts(385,32): error TS1005: ';' expected.
-                                    ~
-!!! giant.ts(385,33): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-            ~~~~~~~~~~~
+            ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(385,9): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	giant.ts(384,9)
     
@@ -685,9 +643,6 @@
         
             //Function Signature
             p3();
-            ~~~~
-!!! giant.ts(393,9): error TS2000: Duplicate identifier 'p3'. Additional locations:
-!!! 	giant.ts(385,22)
             p4? ();
             p5? (): void;
             p6(pa1): void;
@@ -799,13 +754,7 @@
             [p];
             [p1: string];
             [p2: string, p3: number];
-                       ~
-!!! giant.ts(464,20): error TS1005: ']' expected.
-                                   ~
-!!! giant.ts(464,32): error TS1005: ';' expected.
-                                    ~
-!!! giant.ts(464,33): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-            ~~~~~~~~~~~
+            ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(464,9): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	giant.ts(463,9)
     
@@ -816,9 +765,6 @@
         
             //Function Signature
             p3();
-            ~~~~
-!!! giant.ts(472,9): error TS2000: Duplicate identifier 'p3'. Additional locations:
-!!! 	giant.ts(464,22)
             p4? ();
             p5? (): void;
             p6(pa1): void;
@@ -1014,13 +960,7 @@
             [p];
             [p1: string];
             [p2: string, p3: number];
-                       ~
-!!! giant.ts(589,20): error TS1005: ']' expected.
-                                   ~
-!!! giant.ts(589,32): error TS1005: ';' expected.
-                                    ~
-!!! giant.ts(589,33): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-            ~~~~~~~~~~~
+            ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(589,9): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	giant.ts(588,9)
     
@@ -1031,9 +971,6 @@
         
             //Function Signature
             p3();
-            ~~~~
-!!! giant.ts(597,9): error TS2000: Duplicate identifier 'p3'. Additional locations:
-!!! 	giant.ts(589,22)
             p4? ();
             p5? (): void;
             p6(pa1): void;
@@ -1094,13 +1031,7 @@
             [p];
             [p1: string];
             [p2: string, p3: number];
-                       ~
-!!! giant.ts(655,20): error TS1005: ']' expected.
-                                   ~
-!!! giant.ts(655,32): error TS1005: ';' expected.
-                                    ~
-!!! giant.ts(655,33): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-            ~~~~~~~~~~~
+            ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(655,9): error TS2232: Duplicate string index signature. Additional locations:
 !!! 	giant.ts(654,9)
     
@@ -1111,9 +1042,6 @@
         
             //Function Signature
             p3();
-            ~~~~
-!!! giant.ts(663,9): error TS2000: Duplicate identifier 'p3'. Additional locations:
-!!! 	giant.ts(655,22)
             p4? ();
             p5? (): void;
             p6(pa1): void;

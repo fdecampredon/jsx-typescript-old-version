@@ -170,7 +170,7 @@ module TypeScript {
     }
 
     interface IndexSignature extends TypeMember {
-        parameter: Parameter;
+        parameters: SyntaxList<Parameter>;
         typeAnnotation?: TypeAnnotation;
     }
 
@@ -324,7 +324,7 @@ module TypeScript {
     }
 
     interface SimpleArrowFunctionExpression extends UnaryExpression {
-        identifier: SyntaxToken;
+        parameter: Parameter;
         block?: Block;
         expression?: Expression;
     }
