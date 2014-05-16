@@ -158,8 +158,8 @@ module TypeScript.Services {
             // For the purposes of features that use this syntax tree, we can just use the default
             // compilation settings.  The features only use the syntax (and not the diagnostics),
             // and the syntax isn't affected by the compilation settings.
-            var syntaxTree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName),
-                TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget());
+            var syntaxTree = TypeScript.Parser.parse(fileName, text,
+                TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget(), TypeScript.isDTSFile(fileName));
 
             return syntaxTree;
         }

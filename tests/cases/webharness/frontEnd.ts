@@ -54,7 +54,7 @@ class BatchCompiler {
 
         for (var i = 0; i < compilerFiles.length; i++) {
             var contents = TypeScript.SimpleText.fromString(compilerFiles[i]);
-            var tree = TypeScript.Parser.parse(this.getFileName(i), contents, /*isDeclaration:*/ false, TypeScript.LanguageVersion.EcmaScript5);
+            var tree = TypeScript.Parser.parse(this.getFileName(i), contents, TypeScript.LanguageVersion.EcmaScript5, /*isDeclaration:*/ false);
             result.push(tree);
         }
 
@@ -62,8 +62,8 @@ class BatchCompiler {
     }
 
     public parseLibDTSSource(): TypeScript.SyntaxTree {
-        return TypeScript.Parser.parse(libDTSFileName, libDTSSource, /*isDeclaration:*/ true,
-            TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget());
+        return TypeScript.Parser.parse(libDTSFileName, libDTSSource,
+            TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget(), /*isDeclaration:*/ true);
     }
 
     public incrementalParseLibDTSSource(tree: TypeScript.SyntaxTree): TypeScript.SyntaxTree {

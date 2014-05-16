@@ -2,6 +2,9 @@
 
 module TypeScript.Parser {
     // Information the parser needs to effectively rewind.
+    export interface IRewindPoint {
+    }
+
     interface IParserRewindPoint {
         // Information used by normal parser source.
         absolutePosition: number;
@@ -35,6 +38,10 @@ module TypeScript.Parser {
         // these variables and check if they have the same value when we're rewinding/releasing.
         isInStrictMode: boolean;
         listParsingState: ListParsingState;
+    }
+
+    interface IIncrementalParserRewindPoind {
+
     }
 
     // The precedence of expressions in typescript.  While we're parsing an expression, we will 
@@ -423,9 +430,16 @@ module TypeScript.Parser {
     //     it can call into the source and ask if a regex token could be returned instead.  The 
     //     sources are smart enough to do that and not be affected by any additional work they may
     //     have done when they originally scanned that token.
-    interface IParserSource {
+    export interface IParserSource {
         // The text we are parsing.
         text: ISimpleText;
+
+        // the name of the file we're parsing.
+        fileName: string;
+
+        // The version of the language we're using while parsing.  Does not affect the final tree,
+        // but can affect the diagnostics produced while parsing.
+        languageVersion: LanguageVersion;
 
         // The current syntax node the source is pointing at.  Only available in incremental settings.
         // The source can point at a node if that node doesn't intersect any of the text changes in
@@ -473,7 +487,7 @@ module TypeScript.Parser {
         // Do *NOT* forget to release a rewind point.  Always put them in a finally block to ensure
         // that they are released.  If they are not released, things will still work, you will just
         // consume far more memory than necessary.
-        getRewindPoint(): IParserRewindPoint;
+        getRewindPoint(): IRewindPoint;
 
         // Rewinds the source to the position and state it was at when this rewind point was created.
         // This does not need to be called if the parser decides it does not need to rewind.  For 
@@ -481,11 +495,11 @@ module TypeScript.Parser {
         // ambiguous like "(a = b, c = ...".  If it succeeds parsing that as a lambda, then it will
         // just return that result.  However, if it fails *then* it will rewind and try it again as
         // a parenthesized expression.  
-        rewind(rewindPoint: IParserRewindPoint): void;
+        rewind(rewindPoint: IRewindPoint): void;
 
         // Called when the parser is done speculative parsing and no longer needs the rewind point.
         // Must be called for every rewind point retrived.
-        releaseRewindPoint(rewindPoint: IParserRewindPoint): void;
+        releaseRewindPoint(rewindPoint: IRewindPoint): void;
 
         // Retrieves the diagnostics generated while the source was producing nodes or tokens. 
         // Should generally only be called after the document has been completely parsed.
@@ -531,8 +545,8 @@ module TypeScript.Parser {
             this.reportDiagnostic = null;
         }
 
-        constructor(private fileName: string,
-                    languageVersion: LanguageVersion,
+        constructor(public fileName: string,
+                    public languageVersion: LanguageVersion,
                     public text: ISimpleText) {
             this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 1024, null), null);
             this.scanner = createScanner(languageVersion, text, this.reportDiagnostic);
@@ -704,6 +718,9 @@ module TypeScript.Parser {
     // prevent this level of reuse include substantially destructive operations like introducing
     // "/*" without a "*/" nearby to terminate the comment.
     class IncrementalParserSource implements IParserSource {
+        public fileName: string;
+        public languageVersion: LanguageVersion;
+
         // The underlying parser source that we will use to scan tokens from any new text, or any 
         // tokens from the old tree that we decide we can't use for any reason.  We will also 
         // continue scanning tokens from this source until we've decided that we're resynchronized
@@ -748,6 +765,9 @@ module TypeScript.Parser {
         }
 
         constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, public text: ISimpleText) {
+            this.fileName = oldSyntaxTree.fileName();
+            this.languageVersion = oldSyntaxTree.languageVersion();
+
             var newText = text;
 
             var oldSourceUnit = oldSyntaxTree.sourceUnit();
@@ -1264,7 +1284,7 @@ module TypeScript.Parser {
     }
 
     interface IParser {
-        parseSyntaxTree(fileName: string, source: IParserSource, languageVersion: LanguageVersion, isDeclaration: boolean): SyntaxTree;
+        parseSyntaxTree(source: IParserSource, isDeclaration: boolean): SyntaxTree;
     }
 
     // Contains the actual logic to parse typescript/javascript.  This is the code that generally
@@ -1304,11 +1324,11 @@ module TypeScript.Parser {
 
         var parseNodeData: number = 0;
 
-        function parseSyntaxTree(_fileName: string, _source: IParserSource, _languageVersion: LanguageVersion, isDeclaration: boolean): SyntaxTree {
+        function parseSyntaxTree(_source: IParserSource, isDeclaration: boolean): SyntaxTree {
             // First, set up our state.
-            fileName = _fileName;
+            fileName = _source.fileName;
             source = _source;
-            languageVersion = _languageVersion;
+            languageVersion = source.languageVersion;
 
             // Now actually parse the tree.
             var result = parseSyntaxTreeWorker(isDeclaration);
@@ -1335,7 +1355,7 @@ module TypeScript.Parser {
         }
 
         function getRewindPoint(): IParserRewindPoint {
-            var rewindPoint = source.getRewindPoint();
+            var rewindPoint = <IParserRewindPoint>source.getRewindPoint();
 
             rewindPoint.diagnosticsCount = diagnostics.length;
 
@@ -5998,10 +6018,14 @@ module TypeScript.Parser {
 
     export function parse(fileName: string,
                           text: ISimpleText,
-                          isDeclaration: boolean,
-                          languageVersion: LanguageVersion): SyntaxTree {
+                          languageVersion: LanguageVersion,
+                          isDeclaration: boolean): SyntaxTree {
         var source = new NormalParserSource(fileName, languageVersion, text);
-        return parser.parseSyntaxTree(fileName, source, languageVersion, isDeclaration);
+        return parseSource(source, isDeclaration);
+    }
+
+    export function parseSource(source: IParserSource, isDeclaration: boolean): SyntaxTree {
+        return parser.parseSyntaxTree(source, isDeclaration);
     }
 
     export function incrementalParse(oldSyntaxTree: SyntaxTree,
@@ -6011,7 +6035,6 @@ module TypeScript.Parser {
             return oldSyntaxTree;
         }
 
-        var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText);
-        return parser.parseSyntaxTree(oldSyntaxTree.fileName(), source, oldSyntaxTree.languageVersion(), oldSyntaxTree.isDeclaration());
+        return parseSource(new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText), oldSyntaxTree.isDeclaration());
     }
 }

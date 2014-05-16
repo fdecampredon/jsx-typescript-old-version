@@ -41,6 +41,7 @@
 
 // Parser depends on PositionTrackingWalker
 ///<reference path='parser.ts' />
+///<reference path='incrementalParser.ts' />
 
 // SyntaxTree depends on PositionTrackingWalker
 ///<reference path='syntaxTree.ts' />

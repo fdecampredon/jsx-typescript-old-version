@@ -1665,7 +1665,7 @@ module Harness {
 
             var settings = TypeScript.ImmutableCompilationSettings.fromCompilationSettings(compilationSettings);
             var parseOptions = settings.codeGenTarget();
-            return TypeScript.Parser.parse(fileName, TypeScript.SimpleText.fromScriptSnapshot(sourceText), TypeScript.isDTSFile(fileName), parseOptions).sourceUnit();
+            return TypeScript.Parser.parse(fileName, TypeScript.SimpleText.fromScriptSnapshot(sourceText), parseOptions, TypeScript.isDTSFile(fileName)).sourceUnit();
         }
 
         /** Parse a file on disk given its fileName */

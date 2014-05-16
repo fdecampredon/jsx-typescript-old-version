@@ -51,7 +51,7 @@ module TypeScript {
                 var start = new Date().getTime();
 
                 this._syntaxTree = Parser.parse(
-                    this.fileName, SimpleText.fromScriptSnapshot(this._scriptSnapshot), this.isDeclareFile(), this.compilationSettings.codeGenTarget());
+                    this.fileName, SimpleText.fromScriptSnapshot(this._scriptSnapshot), this.compilationSettings.codeGenTarget(), this.isDeclareFile());
 
                 var time = new Date().getTime() - start;
 
@@ -128,7 +128,7 @@ module TypeScript {
             // If we don't have a text change, or we don't have an old syntax tree, then do a full
             // parse.  Otherwise, do an incremental parse.
             var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null
-                ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), this.compilationSettings.codeGenTarget())
+                ? TypeScript.Parser.parse(this.fileName, text, this.compilationSettings.codeGenTarget(), TypeScript.isDTSFile(this.fileName))
                 : TypeScript.Parser.incrementalParse(oldSyntaxTree, textChangeRange, text);
 
             return new Document(this.compilationSettings, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree, /*topLevelDecl:*/ null);
