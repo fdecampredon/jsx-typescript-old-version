@@ -4457,7 +4457,7 @@ module TypeScript.Parser {
 
         function parseCastExpression(): CastExpressionSyntax {
             var lessThanToken = eatToken(SyntaxKind.LessThanToken);
-            var asteriskToken: ISyntaxToken;
+            var asteriskToken: ISyntaxToken = null;
             var _currentToken = currentToken();
             if (_currentToken.kind() === SyntaxKind.AsteriskToken) {
                 asteriskToken = _currentToken
@@ -4480,8 +4480,8 @@ module TypeScript.Parser {
         
         function parseXJSElement(): XJSElementSyntax {
             var openingElement = parseXJSOpeningElement();
-            var children: IExpressionSyntax[];
-            var closingElement: XJSClosingElementSyntax;
+            var children: IExpressionSyntax[] = null;
+            var closingElement: XJSClosingElementSyntax = null;
             if (!openingElement.slashToken) {//self closing
                 var _currentTokenKind = currentXJSToken().kind();
                 while(_currentTokenKind !== SyntaxKind.EndOfFileToken) {
@@ -4503,7 +4503,7 @@ module TypeScript.Parser {
             while (currentToken().kind() === SyntaxKind.IdentifierName) {
                 attibutes.push(parseXJSAttribute())
             }
-            var slashToken: ISyntaxToken;
+            var slashToken: ISyntaxToken = null;
             var _currentToken = currentToken();
             if (_currentToken.kind() === SyntaxKind.SlashToken) {
                 slashToken = _currentToken;
@@ -4518,8 +4518,8 @@ module TypeScript.Parser {
         
         function parseXJSAttribute(): XJSAttributeSyntax {
             var name = eatToken(SyntaxKind.IdentifierName);
-            var equalsToken: ISyntaxToken;
-            var value: IExpressionSyntax;
+            var equalsToken: ISyntaxToken = null;
+            var value: IExpressionSyntax = null;
             var _currentToken = currentToken();
             if (_currentToken.kind() === SyntaxKind.EqualsToken) {
                 equalsToken = _currentToken;
@@ -4537,8 +4537,8 @@ module TypeScript.Parser {
         
         function parseXJSExpressionContainer(): XJSExpressionContainerSyntax {
             var openBraceToken = eatToken(SyntaxKind.OpenBraceToken);
-            var expression: IExpressionSyntax
-            if (currentToken().kind() === SyntaxKind.OpenBraceToken) {
+            var expression: IExpressionSyntax = null
+            if (currentToken().kind() !== SyntaxKind.CloseBraceToken) {
                 expression = parseExpression(true);
             }
             var closeBraceToken = eatToken(SyntaxKind.CloseBraceToken);
@@ -4546,12 +4546,13 @@ module TypeScript.Parser {
         }
         
         function parseXJSChild(): IExpressionSyntax {
-            var _currentTokenKind = currentXJSToken().kind();
+            var _currentToken = currentXJSToken()
+            var _currentTokenKind = _currentToken.kind();
             switch (_currentTokenKind) {
                 case SyntaxKind.OpenBraceToken:
                     return parseXJSExpressionContainer();
                 case SyntaxKind.XJSText:
-                    return parseXJSExpressionContainer();
+                    return _currentToken;
                 default:
                     return parseXJSElement();
             }
