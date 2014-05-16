@@ -3525,6 +3525,47 @@ module TypeScript {
         public emitGenericType(type: GenericTypeSyntax): void {
             this.emit(type.name);
         }
+        
+        public emitXJSElement(xjsElement: XJSElementSyntax): void {
+            this.recordSourceMappingStart(xjsElement);
+            
+            var openingElement = xjsElement.openingElement;
+            this.emitJavascript(openingElement.name, true);
+            this.writeToOutput("(");
+            var hasAttributes = !!openingElement.attributes.length;
+            if (hasAttributes) {
+                this.writeToOutput("{");
+                this.emitCommaSeparatedList(openingElement, openingElement.attributes ," ", /*preserveNewLines:*/ true);
+                this.writeToOutput("}");
+            } else {
+                this.writeToOutput("null");
+            }
+            
+            if (!openingElement.slashToken && xjsElement.children.length) {
+                this.writeToOutput(",");
+                this.emitCommaSeparatedList(xjsElement, xjsElement.children, " ", true);
+            }
+            this.writeToOutput(');');
+            this.recordSourceMappingEnd(xjsElement);
+        }
+        
+        public emitXJSText(xjsText: ISyntaxToken): void {
+            this.writeToOutput('"');
+            this.writeToken(xjsText);
+            this.writeToOutput('"');
+        }
+        
+        public emitXJSExpressionContainer(xjsExpression: XJSExpressionContainerSyntax): void {
+            this.recordSourceMappingStart(xjsExpression);
+            this.emitJavascript(xjsExpression.expression, false);
+            this.recordSourceMappingEnd(xjsExpression);
+        }
+        
+        public emitXJSAttribute(xjsAttr: XJSAttributeSyntax): void {
+            this.writeToken(xjsAttr.name);
+            this.writeToOutput(':');
+            this.emitJavascript(xjsAttr.value, false);
+        }
 
         private shouldEmit(ast: ISyntaxElement): boolean {
             if (!ast) {
@@ -3599,6 +3640,9 @@ module TypeScript {
                     return this.emitFunctionExpression(<FunctionExpressionSyntax>ast);
                 case SyntaxKind.VariableStatement:
                     return this.emitVariableStatement(<VariableStatementSyntax>ast);
+                    
+                case SyntaxKind.XJSText:
+                    return this.emitXJSText(<ISyntaxToken>ast);
             }
 
             this.emitComments(ast, true);
@@ -3755,6 +3799,13 @@ module TypeScript {
                     return this.emitVoidExpression(<VoidExpressionSyntax>ast);
                 case SyntaxKind.DebuggerStatement:
                     return this.emitDebuggerStatement(<DebuggerStatementSyntax>ast);
+                    
+                case SyntaxKind.XJSElement:
+                    return this.emitXJSElement(<XJSElementSyntax>ast);
+                case SyntaxKind.XJSAttribute:
+                    return this.emitXJSAttribute(<XJSAttributeSyntax>ast);
+                case SyntaxKind.XJSExpressionContainer:
+                    return this.emitXJSExpressionContainer(<XJSExpressionContainerSyntax>ast);
             }
         }
     }
