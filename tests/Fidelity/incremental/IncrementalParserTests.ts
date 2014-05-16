@@ -1,6 +1,7 @@
 ///<reference path='..\..\..\src\compiler\syntax\references.ts' />
 ///<reference path='..\..\..\src\compiler\core\environment.ts' />
 ///<reference path='..\..\..\src\compiler\references.ts' />
+///<reference path='..\..\..\src\services\references.ts' />
 ///<reference path='..\Program.ts' />
 
 module TypeScript {

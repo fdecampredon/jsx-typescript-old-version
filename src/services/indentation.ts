@@ -1,3 +1,5 @@
+///<reference path='references.ts' />
+
 module TypeScript.Indentation {
     export function columnForEndOfTokenAtPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {
         var token = findToken(syntaxTree.sourceUnit(), position);

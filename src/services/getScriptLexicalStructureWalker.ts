@@ -1,4 +1,5 @@
-/// <reference path="typescriptServices.ts" />
+///<reference path='references.ts' />
+
 module TypeScript.Services {
     interface LexicalScope {
         items: TypeScript.IIndexable<NavigateToItem>;

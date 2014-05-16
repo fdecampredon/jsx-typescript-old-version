@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-///<reference path='typescriptServices.ts' />
+///<reference path='references.ts' />
 ///<reference path='diagnosticServices.ts' />
 
 module TypeScript.Services {

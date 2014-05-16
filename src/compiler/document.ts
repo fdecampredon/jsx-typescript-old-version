@@ -1,11 +1,21 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    export interface IncrementalParse { 
+        (oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, newText: ISimpleText): SyntaxTree
+    }
+
+
     export class Document implements IASTForDeclMap {
         private _bloomFilter: BloomFilter = null;
 
         private _declASTMap: ISyntaxElement[] = [];
         private _astDeclMap: PullDecl[] = [];
+
+        // By default, our Document class doesn't support incremental update of its contents.
+        // However, we enable other layers (like teh services layer) to inject the capability
+        // into us by setting this function.
+        public static incrementalParse: IncrementalParse = null;
 
         constructor(private compilationSettings: ImmutableCompilationSettings,
                     public fileName: string,
@@ -127,9 +137,9 @@ module TypeScript {
 
             // If we don't have a text change, or we don't have an old syntax tree, then do a full
             // parse.  Otherwise, do an incremental parse.
-            var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null
+            var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null || Document.incrementalParse === null
                 ? TypeScript.Parser.parse(this.fileName, text, this.compilationSettings.codeGenTarget(), TypeScript.isDTSFile(this.fileName))
-                : TypeScript.IncrementalParser.parse(oldSyntaxTree, textChangeRange, text);
+                : Document.incrementalParse(oldSyntaxTree, textChangeRange, text);
 
             return new Document(this.compilationSettings, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree, /*topLevelDecl:*/ null);
         }

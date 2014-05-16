@@ -126,6 +126,7 @@ var tscSources = [
 });
 
 var servicesSources = [
+	"references.ts",
 	"braceMatcher.ts",
 	"breakpoints.ts",
 	"classifier.ts",
@@ -135,6 +136,7 @@ var servicesSources = [
 	"coreServices.ts",
 	"getScriptLexicalStructureWalker.ts",
 	"diagnosticServices.ts",
+	"document.ts",
 	"es5compat.ts",
 	"findReferenceHelpers.ts",
 	"indenter.ts",
