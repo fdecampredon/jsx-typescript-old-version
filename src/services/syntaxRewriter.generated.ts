@@ -519,7 +519,7 @@ module TypeScript {
 
         public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): any {
             return node.update(
-                this.visitToken(node.identifier),
+                <ParameterSyntax>this.visitNode(node.parameter),
                 this.visitToken(node.equalsGreaterThanToken),
                 node.block === null ? null : <BlockSyntax>this.visitNode(node.block),
                 node.expression === null ? null : <IExpressionSyntax>this.visitNodeOrToken(node.expression));

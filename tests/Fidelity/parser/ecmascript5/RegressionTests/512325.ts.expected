@@ -323,15 +323,26 @@
                     "fullWidth": 8,
                     "width": 8,
                     "isIncrementallyUnusable": true,
-                    "identifier": {
-                        "kind": "IdentifierName",
-                        "fullStart": 21,
-                        "fullEnd": 21,
-                        "start": 21,
-                        "end": 21,
+                    "parameter": {
+                        "kind": "Parameter",
+                        "fullStart": -1,
+                        "fullEnd": -1,
+                        "start": -1,
+                        "end": -1,
                         "fullWidth": 0,
                         "width": 0,
-                        "text": ""
+                        "isIncrementallyUnusable": true,
+                        "modifiers": [],
+                        "identifier": {
+                            "kind": "IdentifierName",
+                            "fullStart": 21,
+                            "fullEnd": 21,
+                            "start": 21,
+                            "end": 21,
+                            "fullWidth": 0,
+                            "width": 0,
+                            "text": ""
+                        }
                     },
                     "equalsGreaterThanToken": {
                         "kind": "EqualsGreaterThanToken",

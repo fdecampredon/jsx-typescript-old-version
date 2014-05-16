@@ -4545,7 +4545,7 @@ module TypeScript.Parser {
         function parseSimpleArrowFunctionExpression(): SimpleArrowFunctionExpressionSyntax {
             // Debug.assert(isSimpleArrowFunctionExpression());
 
-            var identifier = eatIdentifierToken();
+            var parameter = eatSimpleParameter();
             var equalsGreaterThanToken = eatToken(SyntaxKind.EqualsGreaterThanToken);
 
             var block = tryParseArrowFunctionBlock();
@@ -4554,7 +4554,7 @@ module TypeScript.Parser {
                 expression = tryParseAssignmentExpressionOrHigher(/*force:*/ true, /*allowIn:*/ true);
             }
 
-            return new SimpleArrowFunctionExpressionSyntax(parseNodeData, identifier, equalsGreaterThanToken, block, expression);
+            return new SimpleArrowFunctionExpressionSyntax(parseNodeData, parameter, equalsGreaterThanToken, block, expression);
         }
 
         function isBlock(): boolean {
@@ -5131,15 +5131,14 @@ module TypeScript.Parser {
             return false;
         }
 
-        function parseParameter(): ParameterSyntax {
-            var result = tryParseParameter();
-            if (result !== null) {
-                return result;
-            }
-
+        function eatSimpleParameter() {
             return new ParameterSyntax(parseNodeData,
-                /*dotDotDotToken:*/ null, /*modifiers:*/ Syntax.emptyList<ISyntaxToken>(), /*identifier:*/ eatIdentifierToken(),
+                /*dotDotDotToken:*/ null, /*modifiers:*/ Syntax.emptyList<ISyntaxToken>(), eatIdentifierToken(),
                 /*questionToken:*/ null, /*typeAnnotation:*/ null, /*equalsValueClause:*/ null);
+        }
+
+        function parseParameter(): ParameterSyntax {
+            return tryParseParameter() || eatSimpleParameter();
         }
 
         function tryParseParameter(): ParameterSyntax {

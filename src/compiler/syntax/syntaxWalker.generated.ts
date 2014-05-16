@@ -455,7 +455,7 @@ module TypeScript {
         }
 
         public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): void {
-            this.visitToken(node.identifier);
+            this.visitNode(node.parameter);
             this.visitToken(node.equalsGreaterThanToken);
             this.visitOptionalNode(node.block);
             this.visitOptionalNodeOrToken(node.expression);

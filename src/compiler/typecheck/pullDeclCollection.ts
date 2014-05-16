@@ -624,24 +624,24 @@ module TypeScript {
 
         context.pushParent(decl);
 
-        if (functionExpressionDeclAST.kind() === SyntaxKind.SimpleArrowFunctionExpression) {
-            var simpleArrow = <SimpleArrowFunctionExpressionSyntax>functionExpressionDeclAST;
-            var declFlags = PullElementFlags.Public;
+        //if (functionExpressionDeclAST.kind() === SyntaxKind.SimpleArrowFunctionExpression) {
+        //    var simpleArrow = <SimpleArrowFunctionExpressionSyntax>functionExpressionDeclAST;
+        //    var declFlags = PullElementFlags.Public;
 
-            var parent = context.getParent();
+        //    var parent = context.getParent();
 
-            if (hasFlag(parent.flags, PullElementFlags.DeclaredInAWithBlock)) {
-                declFlags |= PullElementFlags.DeclaredInAWithBlock;
-            }
+        //    if (hasFlag(parent.flags, PullElementFlags.DeclaredInAWithBlock)) {
+        //        declFlags |= PullElementFlags.DeclaredInAWithBlock;
+        //    }
 
-            var decl: PullDecl = new NormalPullDecl(tokenValueText(simpleArrow.identifier), simpleArrow.identifier.text(), PullElementKind.Parameter, declFlags, parent);
+        //    var decl: PullDecl = new NormalPullDecl(tokenValueText(simpleArrow.parameter.identifier), simpleArrow.parameter.identifier.text(), PullElementKind.Parameter, declFlags, parent);
 
-            context.setASTForDecl(decl, simpleArrow.identifier);
-            context.setDeclForAST(simpleArrow.identifier, decl);
+        //    context.setASTForDecl(decl, simpleArrow.identifier);
+        //    context.setDeclForAST(simpleArrow.identifier, decl);
 
-            // Record this decl in its parent in the declGroup with the corresponding name
-            parent.addVariableDeclToGroup(decl);
-        }
+        //    // Record this decl in its parent in the declGroup with the corresponding name
+        //    parent.addVariableDeclToGroup(decl);
+        //}
     }
 
     function createMemberFunctionDeclaration(funcDecl: MemberFunctionDeclarationSyntax, context: DeclCollectionContext): void {

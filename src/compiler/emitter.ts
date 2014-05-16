@@ -1304,7 +1304,7 @@ module TypeScript {
                 this.emitParameterList(parenthesizedArrowFunction.callSignature.parameterList);
             }
             else {
-                parameters = ASTHelpers.parametersFromIdentifier((<SimpleArrowFunctionExpressionSyntax>arrowFunction).identifier)
+                parameters = ASTHelpers.parametersFromParameter((<SimpleArrowFunctionExpressionSyntax>arrowFunction).parameter)
                 this.writeToOutput("(");
                 this.emitFunctionParameters(parameters);
                 this.writeToOutput(")");

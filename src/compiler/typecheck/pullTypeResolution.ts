@@ -330,9 +330,9 @@ module TypeScript {
         // This is a modification of getMemberSymbol to fall back to Object or Function as necessary
         // November 18th, 2013, Section 3.8.1:
         // The augmented form of an object type T adds to T those members of the global interface type
-        // 'Object' that aren’t hidden by members in T. Furthermore, if T has one or more call or
+        // 'Object' that aren?t hidden by members in T. Furthermore, if T has one or more call or
         // construct signatures, the augmented form of T adds to T the members of the global interface
-        // type 'Function' that aren’t hidden by members in T. 
+        // type 'Function' that aren?t hidden by members in T. 
         // Note: The most convenient way to do this is to have a method on PullTypeSymbol that
         // gives the apparent type. However, this would require synthesizing a new type because
         // almost every type in the system should inherit the properties from Object. It would essentially
@@ -980,7 +980,7 @@ module TypeScript {
                 }
 
                 // A simple arrow parameter.  i.e.:   a => ...
-                if (ast.parent && ast.parent.kind() === SyntaxKind.SimpleArrowFunctionExpression && (<SimpleArrowFunctionExpressionSyntax>ast.parent).identifier === ast) {
+                if (ast.parent && ast.parent.kind() === SyntaxKind.SimpleArrowFunctionExpression && (<SimpleArrowFunctionExpressionSyntax>ast.parent).parameter === ast) {
                     return symbol;
                 }
 
@@ -1141,7 +1141,7 @@ module TypeScript {
             }
 
             // SPEC: NOV 18
-            // It isn’t possible for one enum declaration to continue the automatic numbering sequence of another, 
+            // It isn?t possible for one enum declaration to continue the automatic numbering sequence of another, 
             // and when an enum type has multiple declarations, only one declaration is permitted to omit a value for the first member.            
             var seenEnumDeclWithNoFirstMember = false;
             for (var i = 0; i < declarations.length; ++i) {
@@ -3985,7 +3985,7 @@ module TypeScript {
 
         private resolveSimpleArrowFunctionExpression(funcDecl: SimpleArrowFunctionExpressionSyntax, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
             return this.resolveAnyFunctionExpression(
-                funcDecl, null, ASTHelpers.parametersFromIdentifier(funcDecl.identifier), null, funcDecl.block, funcDecl.expression,
+                funcDecl, null, ASTHelpers.parametersFromParameter(funcDecl.parameter), null, funcDecl.block, funcDecl.expression,
                 isContextuallyTyped, context);
         }
 
@@ -4450,15 +4450,15 @@ module TypeScript {
                     var getterSuppliedTypeSymbol: PullTypeSymbol = getterSig.returnType;
 
                     // SPEC: October 1, 2013 section 4.5 -
-                    // • If only one accessor includes a type annotation, the other behaves as if it had the same type annotation.
+                    // ? If only one accessor includes a type annotation, the other behaves as if it had the same type annotation.
                     // -- In this case setter has annotation and getter does not.
                     if (setterHasTypeAnnotation && !getterHasTypeAnnotation) {
                         getterSuppliedTypeSymbol = setterSuppliedTypeSymbol;
                         getterSig.returnType = setterSuppliedTypeSymbol;
                     }
                     // SPEC: October 1, 2013 section 4.5 -
-                    // • If only one accessor includes a type annotation, the other behaves as if it had the same type annotation.
-                    // • If neither accessor includes a type annotation, the inferred return type of the get accessor becomes the parameter type of the set accessor.
+                    // ? If only one accessor includes a type annotation, the other behaves as if it had the same type annotation.
+                    // ? If neither accessor includes a type annotation, the inferred return type of the get accessor becomes the parameter type of the set accessor.
                     // -- In this case getter has annotation and setter does not - or neither do, so use getter.
                     else if ((getterHasTypeAnnotation && !setterHasTypeAnnotation) ||
                         (!getterHasTypeAnnotation && !setterHasTypeAnnotation)) {
@@ -4471,7 +4471,7 @@ module TypeScript {
                     }
 
                     // SPEC: October 1, 2013 section 4.5 -
-                    // • If both accessors include type annotations, the specified types must be identical.
+                    // ? If both accessors include type annotations, the specified types must be identical.
                     if (!this.typesAreIdentical(setterSuppliedTypeSymbol, getterSuppliedTypeSymbol, context)) {
                         accessorSymbol.type = this.getNewErrorTypeSymbol();
                     }
@@ -4569,9 +4569,9 @@ module TypeScript {
                 //     - if it's not a definition sigature, take the best common type of all return expressions
                 else {
                     // SPEC: October 1, 2013 section 4.5 -
-                    // • If only one accessor includes a type annotation, the other behaves as if it had the same type annotation.
+                    // ? If only one accessor includes a type annotation, the other behaves as if it had the same type annotation.
                     // -- Use setterAnnotatedType if available
-                    // • If neither accessor includes a type annotation, the inferred return type of the get accessor becomes the parameter type of the set accessor.
+                    // ? If neither accessor includes a type annotation, the inferred return type of the get accessor becomes the parameter type of the set accessor.
                     if (!setterAnnotatedType) {
                         this.resolveFunctionBodyReturnTypes(funcDeclAST, block, /*bodyExpression:*/ null, signature, false, funcDecl, context);
                     }
@@ -4703,7 +4703,7 @@ module TypeScript {
                 }
 
                 // SPEC: October 1, 2013 section 4.5 -
-                // • A set accessor declaration is processed in the same manner as an ordinary function declaration
+                // ? A set accessor declaration is processed in the same manner as an ordinary function declaration
                 //      with a single parameter and a Void return type. 
                 signature.returnType = this.semanticInfoChain.voidTypeSymbol;
 
@@ -4858,7 +4858,7 @@ module TypeScript {
 
             // September 17, 2013:
             // The ++ and-- operators ... produce a result of the Number primitive type.
-            // The +, –, and ~ operators ... produce a result of the Number primitive type.
+            // The +, ?, and ~ operators ... produce a result of the Number primitive type.
             return this.semanticInfoChain.numberTypeSymbol;
         }
 
@@ -4869,7 +4869,7 @@ module TypeScript {
 
             // September 17, 2013:
             // The ++ and-- operators ... produce a result of the Number primitive type.
-            // The +, –, and ~ operators ... produce a result of the Number primitive type.
+            // The +, ?, and ~ operators ... produce a result of the Number primitive type.
             return this.semanticInfoChain.numberTypeSymbol;
         }
 
@@ -4883,7 +4883,7 @@ module TypeScript {
             var nodeType = unaryExpression.kind();
             var expression = this.resolveAST(unaryExpression.operand, /*isContextuallyTyped:*/ false, context);
 
-            // September 17, 2013: The +, –, and ~ operators
+            // September 17, 2013: The +, ?, and ~ operators
             // These operators permit their operand to be of any type and produce a result of the 
             // Number primitive type.
             if (nodeType === SyntaxKind.PlusExpression || nodeType == SyntaxKind.NegateExpression || nodeType == SyntaxKind.BitwiseNotExpression) {
@@ -4961,7 +4961,7 @@ module TypeScript {
             }
 
             // September 17, 2013:
-            // 4.15.1	The *, /, %, –, <<, >>, >>>, &, ^, and | operators
+            // 4.15.1	The *, /, %, ?, <<, >>, >>>, &, ^, and | operators
             // These operators require their operands to be of type Any, the Number primitive type,
             // or an enum type
             var lhsIsFit = this.isAnyOrNumberOrEnum(lhsType);
@@ -5046,7 +5046,7 @@ module TypeScript {
             // Section 4.15.4:
             // September 17, 2013: The instanceof operator requires the left operand to be of type 
             // Any, an object type, or a type parameter type, and the right operand to be of type 
-            // Any or a subtype of the ‘Function’ interface type. 
+            // Any or a subtype of the ?Function? interface type. 
             // We are using assignability instead of subtype here, which will be reflected in the
             // new spec.
             var lhsType = this.resolveAST(binaryExpression.left, false, context).type;
@@ -5159,7 +5159,7 @@ module TypeScript {
             }
             else {
                 // November 18, 2013
-                // In a ‘for-in’ statement of the form
+                // In a ?for-in? statement of the form
                 // for (Var in Expr) Statement
                 // Var must be an expression classified as a reference of type Any or the String primitive type
 
@@ -5172,7 +5172,7 @@ module TypeScript {
             }
 
             // November 18, 2013
-            // In a ‘for-in’ statement of the form
+            // In a ?for-in? statement of the form
             // for (Var in Expr) Statement [or of the form]
             // for (var VarDecl in Expr) Statement
             // ... Expr must be an expression of type Any, an object type, or a type parameter type.
@@ -7053,7 +7053,7 @@ module TypeScript {
             //  - An EntityName consisting of more than one identifier is resolved as 
             //     a ModuleName followed by an identifier that names one or more exported entities in the given module.
             //     The resulting local alias has all the meanings and classifications of the referenced entity or entities. 
-            //     (As many as three distinct meanings are possible for an entity name — namespace, type, and member.)
+            //     (As many as three distinct meanings are possible for an entity name ? namespace, type, and member.)
             if (!childTypeSymbol && !isNameOfModule && this.isLastNameOfQualifiedModuleNameModuleReference(dottedNameAST.right))
             {
                 childTypeSymbol = <PullTypeSymbol>this.getNamedPropertySymbol(rhsName, PullElementKind.SomeValue, lhsType);
@@ -7108,7 +7108,7 @@ module TypeScript {
 
             // September 21, 2013: If e is a FunctionExpression or ArrowFunctionExpression with no type parameters and no parameter
             // or return type annotations, and T is a function type with exactly one non - generic call signature, then any
-            // inferences made for type parameters referenced by the parameters of T’s call signature are fixed(section 4.12.2)
+            // inferences made for type parameters referenced by the parameters of T?s call signature are fixed(section 4.12.2)
             // and e is processed with the contextual type T, as described in section 4.9.3.
 
             // No type parameters
@@ -7297,7 +7297,7 @@ module TypeScript {
 
         private typeCheckSimpleArrowFunctionExpression(arrowFunction: SimpleArrowFunctionExpressionSyntax, isContextuallyTyped: boolean, context: PullTypeResolutionContext): void {
             return this.typeCheckAnyFunctionExpression(
-                arrowFunction, /*typeParameters:*/ null, ASTHelpers.parametersFromIdentifier(arrowFunction.identifier),
+                arrowFunction, /*typeParameters:*/ null, ASTHelpers.parametersFromParameter(arrowFunction.parameter),
                 /*returnTypeAnnotation:*/ null, arrowFunction.block, arrowFunction.expression, isContextuallyTyped, context);
         }
 
@@ -10782,15 +10782,15 @@ module TypeScript {
                 if (targetStringSig) {
                     // Spec section 3.8.3	Subtypes and Supertypes
                     // S is a subtype of a type T, and T is a supertype of S, if one of the following is true, 
-                    // where S’ denotes the apparent type(section 3.8.1) of S:
+                    // where S? denotes the apparent type(section 3.8.1) of S:
                     //      - M is a string index signature of type U and 
-                    //        S’ contains a string index signature of a type that is assignable to U.
+                    //        S? contains a string index signature of a type that is assignable to U.
 
                     // Spec section 3.8.4	Assignment Compatibility
                     // S is assignable to a type T, and T is assignable from S, if one of the following is true, 
-                    // where S’ denotes the apparent type(section 3.8.1) of S:
+                    // where S? denotes the apparent type(section 3.8.1) of S:
                     //      - M is a string index signature of type U and 
-                    //        S’ contains a string index signature of a type that is assignable to U.
+                    //        S? contains a string index signature of a type that is assignable to U.
                     if (sourceStringSig) {
                         context.walkIndexSignatureReturnTypes(enclosingTypeIndexSigs, /*useStringIndexSignature1*/ true, /*useStringIndexSignature2*/ true);
                         comparable = this.sourceIsRelatableToTargetInEnclosingTypes(sourceStringSig.returnType,
@@ -10806,15 +10806,15 @@ module TypeScript {
                 if (comparable && targetNumberSig) {
                     // Spec section 3.8.3	Subtypes and Supertypes
                     // S is a subtype of a type T, and T is a supertype of S, if one of the following is true, 
-                    // where S’ denotes the apparent type(section 3.8.1) of S:
+                    // where S? denotes the apparent type(section 3.8.1) of S:
                     //      - M is a numeric index signature of type U and 
-                    //        S’ contains a string or numeric index signature of a type that is a subtype of U.
+                    //        S? contains a string or numeric index signature of a type that is a subtype of U.
 
                     // Spec section 3.8.4	Assignment Compatibility
                     // S is assignable to a type T, and T is assignable from S, if one of the following is true, 
-                    // where S’ denotes the apparent type(section 3.8.1) of S:
+                    // where S? denotes the apparent type(section 3.8.1) of S:
                     //      - M is a numeric index signature of type U and
-                    //        S’ contains a string or numeric index signature of a type that is assignable to U.
+                    //        S? contains a string or numeric index signature of a type that is assignable to U.
                     if (sourceNumberSig) {
                         context.walkIndexSignatureReturnTypes(enclosingTypeIndexSigs, /*useStringIndexSignature1*/ false, /*useStringIndexSignature2*/ false);
                         comparable = this.sourceIsRelatableToTargetInEnclosingTypes(sourceNumberSig.returnType,
@@ -11171,7 +11171,7 @@ module TypeScript {
             else if (arg.kind() === SyntaxKind.SimpleArrowFunctionExpression) {
                 var simpleArrowFunction = <SimpleArrowFunctionExpressionSyntax>arg;
                 return this.overloadIsApplicableForAnyFunctionExpressionArgument(paramType,
-                    arg, null, ASTHelpers.parametersFromIdentifier(simpleArrowFunction.identifier), null, simpleArrowFunction.block, simpleArrowFunction.expression,
+                    arg, null, ASTHelpers.parametersFromParameter(simpleArrowFunction.parameter), null, simpleArrowFunction.block, simpleArrowFunction.expression,
                     argIndex, context, comparisonInfo);
             }
             else if (arg.kind() === SyntaxKind.ParenthesizedArrowFunctionExpression) {
@@ -12565,8 +12565,8 @@ module TypeScript {
 
             /*
             The first statement in the body of a constructor must be a super call if both of the following are true:
-                •   The containing class is a derived class.
-                •   The constructor declares parameter properties or the containing class declares instance member variables with initializers.
+                ?   The containing class is a derived class.
+                ?   The constructor declares parameter properties or the containing class declares instance member variables with initializers.
             In such a required super call, it is a compile-time error for argument expressions to reference this.
             */
             if (constructorDecl) {

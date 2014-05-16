@@ -1499,7 +1499,7 @@ module TypeScript {
             var ast = this.semanticInfoChain.getASTForDecl(functionExpressionDeclaration);
 
             var parameters = ast.kind() === SyntaxKind.SimpleArrowFunctionExpression
-                ? ASTHelpers.parametersFromIdentifier((<SimpleArrowFunctionExpressionSyntax>ast).identifier)
+                ? ASTHelpers.parametersFromParameter((<SimpleArrowFunctionExpressionSyntax>ast).parameter)
                 : ASTHelpers.parametersFromParameterList(ASTHelpers.getParameterList(ast));
             var funcExpAST = ast;
 

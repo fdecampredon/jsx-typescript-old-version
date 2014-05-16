@@ -324,7 +324,7 @@ module TypeScript {
     }
 
     interface SimpleArrowFunctionExpression extends UnaryExpression {
-        identifier: SyntaxToken;
+        parameter: Parameter;
         block?: Block;
         expression?: Expression;
     }

@@ -244,7 +244,7 @@ var definitions:ITypeDefinition[] = [
         baseType: 'ISyntaxNode',
         interfaces: ['IUnaryExpressionSyntax'],
         children: [
-            <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
+            <any>{ name: 'parameter', type: 'ParameterSyntax' },
             <any>{ name: 'equalsGreaterThanToken', isToken: true },
             <any>{ name: 'block', type: 'BlockSyntax', isOptional: true },
             <any>{ name: 'expression', type: 'IExpressionSyntax', isOptional: true }

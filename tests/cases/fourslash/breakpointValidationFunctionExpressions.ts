@@ -10,5 +10,5 @@
 ////greet("Hello");
 ////var incrGreetings = () => greetings++;
 ////var greetNewMsg = msg => greet(msg);
-
+debugger;
 verify.baselineCurrentFileBreakpointLocations();

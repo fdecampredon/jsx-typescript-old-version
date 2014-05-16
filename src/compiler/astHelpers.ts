@@ -340,19 +340,6 @@ module TypeScript.ASTHelpers {
         return ast.parent && ast.parent.kind() === SyntaxKind.ModuleDeclaration;
     }
 
-    export function parametersFromIdentifier(id: ISyntaxToken): IParameters {
-        return {
-            length: 1,
-            lastParameterIsRest: () => false,
-            ast: id,
-            astAt: (index: number) => id,
-            identifierAt: (index: number) => id,
-            typeAt: (index: number): ISyntaxElement => null,
-            initializerAt: (index: number): EqualsValueClauseSyntax => null,
-            isOptionalAt: (index: number) => false,
-        };
-    }
-
     export function parametersFromParameter(parameter: ParameterSyntax): IParameters {
         return {
             length: 1,

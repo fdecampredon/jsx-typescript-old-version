@@ -386,7 +386,7 @@ module TypeScript.PrettyPrinter {
         }
 
         public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): void {
-            this.appendToken(node.identifier);
+            this.appendNode(node.parameter);
             this.ensureSpace();
             this.appendToken(node.equalsGreaterThanToken);
             this.ensureSpace();
