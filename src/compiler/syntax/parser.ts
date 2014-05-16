@@ -1,163 +1,6 @@
 ///<reference path='references.ts' />
 
 module TypeScript.Parser {
-    // Information the parser needs to effectively rewind.
-    export interface IRewindPoint {
-    }
-
-    interface IParserRewindPoint {
-        // Information used by normal parser source.
-        absolutePosition: number;
-        slidingWindowIndex: number;
-
-        // Information used by the parser itself.
-
-        // As we speculatively parse, we may build up diagnostics.  When we rewind we want to 
-        // 'forget' that information.In order to do that we store the count of diagnostics and 
-        // when we start speculating, and we reset to that count when we're done.  That way the
-        // speculative parse does not affect any further results.
-        diagnosticsCount: number;
-
-        // For debug purposes only, we also track the following information. They help us assert 
-        // that we're not doing anything unexpected.
-
-        // Rewind points should work like a stack.  The first rewind point given out should be the
-        // last one released.  By keeping track of the count of points out when this was created, 
-        // we can ensure that invariant was preserved.
-        pinCount: number;
-
-        // isInStrictMode and listParsingState should not have to be tracked by a rewind point.
-        // Because they are naturally mutated and restored based on the normal stack movement of 
-        // the parser, they should automatically return to whatever value they had to begin with
-        // if the parser decides to rewind or not.  However, to ensure that this is true, we track
-        // these variables and check if they have the same value when we're rewinding/releasing.
-        isInStrictMode: boolean;
-        listParsingState: ListParsingState;
-    }
-
-    interface IIncrementalParserRewindPoind {
-
-    }
-
-    // The precedence of expressions in typescript.  While we're parsing an expression, we will 
-    // continue to consume and form new trees if the precedence is *strictly* greater than our current
-    // precedence.  For example, if we have: a + b * c, we will first parse 'a' with precedence 1 (Lowest). 
-    // We will then see the + with precedence 10.  10 is greater than 1 so we will decide to create
-    // a binary expression with the result of parsing the sub expression "b * c".  We'll then parse
-    // the term 'b' (passing in precedence 10).  We will then see the * with precedence 11.  11 is
-    // greater than 10, so we will create a binary expression from "b" and "c", return that, and 
-    // join it with "a" producing:
-    //
-    //      +
-    //     / \
-    //    a   *
-    //       / \
-    //      b   c
-    //
-    // If we instead had: "a * b + c", we would first parser 'a' with precedence 1 (lowest).  We would then see 
-    // the * with precedence 11.  11 is greater than 1 so we will decide to create a binary expression
-    // with the result of parsing the sub expression "b + c".  We'll then parse the term 'b' (passing in
-    // precedence 11).  We will then see the + with precedence 10.  10 is less than 11, so we won't 
-    // continue parsing subexpressions and will just return the expression 'b'.  The caller will join 
-    // that into "a * b" (and will be back at precedence 1). It will then see the + with precedence 10.
-    // 10 is greater than 1 so it will parse the sub expression and make a binary expression out of it
-    // producing:
-    //
-    //        +
-    //       / \
-    //      *   c
-    //     / \
-    //    a   b
-    //
-    // Note: because all these binary expressions have left-to-right precedence, if we see a * b * c 
-    // then we parse it as:
-    //
-    //        *
-    //       / \
-    //      *   c
-    //     / \
-    //    a   b
-    //
-    // The code to do this uses the above logic.  It will see an operator with the same precedence,
-    // and so it won't consume it.
-    enum BinaryExpressionPrecedence {
-        Lowest = 1,
-
-        // Intuitively, logical || have the lowest precedence.  "a || b && c" is "a || (b && c)", not
-        // "(a || b) && c"
-        LogicalOrExpressionPrecedence = 2,
-        LogicalAndExpressionPrecedence = 3,
-        BitwiseOrExpressionPrecedence = 4,
-        BitwiseExclusiveOrExpressionPrecedence = 5,
-        BitwiseAndExpressionPrecedence = 6,
-        EqualityExpressionPrecedence = 7,
-        RelationalExpressionPrecedence = 8,
-        ShiftExpressionPrecdence = 9,
-        AdditiveExpressionPrecedence = 10,
-
-        // Intuitively, multiplicative expressions have the highest precedence.  After all, if you have:
-        //   a + b * c
-        //
-        // Then you have "a + (b * c)" not "(a + b) * c"
-        MultiplicativeExpressionPrecedence = 11,
-    }
-
-    // The current state of the parser wrt to list parsing.  The way to read these is as:
-    // CurrentProduction_SubList.  i.e. "Block_Statements" means "we're parsing a Block, and we're 
-    // currently parsing list of statements within it".  This is used by the list parsing mechanism
-    // to parse the elements of the lists, and recover from errors we encounter when we run into 
-    // unexpected code.
-    // 
-    // For example, when we are in ArgumentList_Arguments, we will continue trying to consume code 
-    // as long as "isArgument" is true.  If we run into a token for which "isArgument" is not true 
-    // we will do the following:
-    //
-    // If the token is a StopToken for ArgumentList_Arguments (like ")" ) then we will stop parsing
-    // the list of arguments with no error.
-    //
-    // Otherwise, we *do* report an error for this unexpected token, and then enter error recovery 
-    // mode to decide how to try to recover from this unexpected token.
-    //
-    // Error recovery will walk up the list of states we're in seeing if the token is a stop token
-    // for that construct *or* could start another element within what construct.  For example, if
-    // the unexpected token was '}' then that would be a stop token for Block_Statements. 
-    // Alternatively, if the unexpected token was 'return', then that would be a start token for 
-    // the next statment in Block_Statements.
-    // 
-    // If either of those cases are true, We will then return *without* consuming  that token. 
-    // (Remember, we've already reported an error).  Now we're just letting the higher up parse 
-    // constructs eventually try to consume that token.
-    //
-    // If none of the higher up states consider this a stop or start token, then we will simply 
-    // consume the token and add it to our list of 'skipped tokens'.  We will then repeat the 
-    // above algorithm until we resynchronize at some point.
-    enum ListParsingState {
-        SourceUnit_ModuleElements = 0,
-        ClassDeclaration_ClassElements = 1,
-        ModuleDeclaration_ModuleElements = 2,
-        SwitchStatement_SwitchClauses = 3,
-        SwitchClause_Statements = 4,
-        Block_Statements = 5,
-        TryBlock_Statements = 6,
-        CatchBlock_Statements = 7,
-        EnumDeclaration_EnumElements = 8,
-        ObjectType_TypeMembers = 9,
-        ClassOrInterfaceDeclaration_HeritageClauses = 10,
-        HeritageClause_TypeNameList = 11,
-        VariableDeclaration_VariableDeclarators_AllowIn = 12,
-        VariableDeclaration_VariableDeclarators_DisallowIn = 13,
-        ArgumentList_AssignmentExpressions = 14,
-        ObjectLiteralExpression_PropertyAssignments = 15,
-        ArrayLiteralExpression_AssignmentExpressions = 16,
-        ParameterList_Parameters = 17,
-        IndexSignature_Parameters = 18,
-        TypeArgumentList_Types = 19,
-        TypeParameterList_TypeParameters = 20,
-
-        FirstListParsingState = SourceUnit_ModuleElements,
-        LastListParsingState = TypeParameterList_TypeParameters,
-    }
-
     // Interface that represents the source that the parser pulls tokens from.  Essentially, this 
     // is the interface that the parser needs an underlying scanner to provide.  This allows us to
     // separate out "what" the parser does with the tokens it retrieves versus "how" it obtains
@@ -269,6 +112,10 @@ module TypeScript.Parser {
         tokenDiagnostics(): Diagnostic[];
 
         release(): void;
+    }
+
+    // Information the parser needs to effectively rewind.
+    export interface IRewindPoint {
     }
 
     // Parser source used in batch scenarios.  Directly calls into an underlying text scanner and
@@ -5219,6 +5066,155 @@ module TypeScript.Parser {
         }
 
         return parseSyntaxTree;
+    }
+
+    interface IParserRewindPoint {
+        // Information used by normal parser source.
+        absolutePosition: number;
+        slidingWindowIndex: number;
+
+        // Information used by the parser itself.
+
+        // As we speculatively parse, we may build up diagnostics.  When we rewind we want to 
+        // 'forget' that information.In order to do that we store the count of diagnostics and 
+        // when we start speculating, and we reset to that count when we're done.  That way the
+        // speculative parse does not affect any further results.
+        diagnosticsCount: number;
+
+        // For debug purposes only, we also track the following information. They help us assert 
+        // that we're not doing anything unexpected.
+
+        // Rewind points should work like a stack.  The first rewind point given out should be the
+        // last one released.  By keeping track of the count of points out when this was created, 
+        // we can ensure that invariant was preserved.
+        pinCount: number;
+
+        // isInStrictMode and listParsingState should not have to be tracked by a rewind point.
+        // Because they are naturally mutated and restored based on the normal stack movement of 
+        // the parser, they should automatically return to whatever value they had to begin with
+        // if the parser decides to rewind or not.  However, to ensure that this is true, we track
+        // these variables and check if they have the same value when we're rewinding/releasing.
+        isInStrictMode: boolean;
+        listParsingState: ListParsingState;
+    }
+
+    // The precedence of expressions in typescript.  While we're parsing an expression, we will 
+    // continue to consume and form new trees if the precedence is *strictly* greater than our current
+    // precedence.  For example, if we have: a + b * c, we will first parse 'a' with precedence 1 (Lowest). 
+    // We will then see the + with precedence 10.  10 is greater than 1 so we will decide to create
+    // a binary expression with the result of parsing the sub expression "b * c".  We'll then parse
+    // the term 'b' (passing in precedence 10).  We will then see the * with precedence 11.  11 is
+    // greater than 10, so we will create a binary expression from "b" and "c", return that, and 
+    // join it with "a" producing:
+    //
+    //      +
+    //     / \
+    //    a   *
+    //       / \
+    //      b   c
+    //
+    // If we instead had: "a * b + c", we would first parser 'a' with precedence 1 (lowest).  We would then see 
+    // the * with precedence 11.  11 is greater than 1 so we will decide to create a binary expression
+    // with the result of parsing the sub expression "b + c".  We'll then parse the term 'b' (passing in
+    // precedence 11).  We will then see the + with precedence 10.  10 is less than 11, so we won't 
+    // continue parsing subexpressions and will just return the expression 'b'.  The caller will join 
+    // that into "a * b" (and will be back at precedence 1). It will then see the + with precedence 10.
+    // 10 is greater than 1 so it will parse the sub expression and make a binary expression out of it
+    // producing:
+    //
+    //        +
+    //       / \
+    //      *   c
+    //     / \
+    //    a   b
+    //
+    // Note: because all these binary expressions have left-to-right precedence, if we see a * b * c 
+    // then we parse it as:
+    //
+    //        *
+    //       / \
+    //      *   c
+    //     / \
+    //    a   b
+    //
+    // The code to do this uses the above logic.  It will see an operator with the same precedence,
+    // and so it won't consume it.
+    enum BinaryExpressionPrecedence {
+        Lowest = 1,
+
+        // Intuitively, logical || have the lowest precedence.  "a || b && c" is "a || (b && c)", not
+        // "(a || b) && c"
+        LogicalOrExpressionPrecedence = 2,
+        LogicalAndExpressionPrecedence = 3,
+        BitwiseOrExpressionPrecedence = 4,
+        BitwiseExclusiveOrExpressionPrecedence = 5,
+        BitwiseAndExpressionPrecedence = 6,
+        EqualityExpressionPrecedence = 7,
+        RelationalExpressionPrecedence = 8,
+        ShiftExpressionPrecdence = 9,
+        AdditiveExpressionPrecedence = 10,
+
+        // Intuitively, multiplicative expressions have the highest precedence.  After all, if you have:
+        //   a + b * c
+        //
+        // Then you have "a + (b * c)" not "(a + b) * c"
+        MultiplicativeExpressionPrecedence = 11,
+    }
+
+    // The current state of the parser wrt to list parsing.  The way to read these is as:
+    // CurrentProduction_SubList.  i.e. "Block_Statements" means "we're parsing a Block, and we're 
+    // currently parsing list of statements within it".  This is used by the list parsing mechanism
+    // to parse the elements of the lists, and recover from errors we encounter when we run into 
+    // unexpected code.
+    // 
+    // For example, when we are in ArgumentList_Arguments, we will continue trying to consume code 
+    // as long as "isArgument" is true.  If we run into a token for which "isArgument" is not true 
+    // we will do the following:
+    //
+    // If the token is a StopToken for ArgumentList_Arguments (like ")" ) then we will stop parsing
+    // the list of arguments with no error.
+    //
+    // Otherwise, we *do* report an error for this unexpected token, and then enter error recovery 
+    // mode to decide how to try to recover from this unexpected token.
+    //
+    // Error recovery will walk up the list of states we're in seeing if the token is a stop token
+    // for that construct *or* could start another element within what construct.  For example, if
+    // the unexpected token was '}' then that would be a stop token for Block_Statements. 
+    // Alternatively, if the unexpected token was 'return', then that would be a start token for 
+    // the next statment in Block_Statements.
+    // 
+    // If either of those cases are true, We will then return *without* consuming  that token. 
+    // (Remember, we've already reported an error).  Now we're just letting the higher up parse 
+    // constructs eventually try to consume that token.
+    //
+    // If none of the higher up states consider this a stop or start token, then we will simply 
+    // consume the token and add it to our list of 'skipped tokens'.  We will then repeat the 
+    // above algorithm until we resynchronize at some point.
+    enum ListParsingState {
+        SourceUnit_ModuleElements = 0,
+        ClassDeclaration_ClassElements = 1,
+        ModuleDeclaration_ModuleElements = 2,
+        SwitchStatement_SwitchClauses = 3,
+        SwitchClause_Statements = 4,
+        Block_Statements = 5,
+        TryBlock_Statements = 6,
+        CatchBlock_Statements = 7,
+        EnumDeclaration_EnumElements = 8,
+        ObjectType_TypeMembers = 9,
+        ClassOrInterfaceDeclaration_HeritageClauses = 10,
+        HeritageClause_TypeNameList = 11,
+        VariableDeclaration_VariableDeclarators_AllowIn = 12,
+        VariableDeclaration_VariableDeclarators_DisallowIn = 13,
+        ArgumentList_AssignmentExpressions = 14,
+        ObjectLiteralExpression_PropertyAssignments = 15,
+        ArrayLiteralExpression_AssignmentExpressions = 16,
+        ParameterList_Parameters = 17,
+        IndexSignature_Parameters = 18,
+        TypeArgumentList_Types = 19,
+        TypeParameterList_TypeParameters = 20,
+
+        FirstListParsingState = SourceUnit_ModuleElements,
+        LastListParsingState = TypeParameterList_TypeParameters,
     }
 
     // We keep the parser around as a singleton.  This is because calling createParser is actually
