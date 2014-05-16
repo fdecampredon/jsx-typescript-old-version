@@ -70,7 +70,7 @@ class BatchCompiler {
         var width = 1;
         var span = new TypeScript.TextSpan(TypeScript.IntegerUtilities.integerDivide(libString.length - width, 2), width);
         var range = new TypeScript.TextChangeRange(span, width);
-        return TypeScript.Parser.incrementalParse(tree, range, libDTSSource);
+        return TypeScript.IncrementalParser.parse(tree, range, libDTSSource);
     }
 }
 

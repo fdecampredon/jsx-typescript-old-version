@@ -174,11 +174,8 @@ module TypeScript.Services {
                 return this.createSyntaxTree(fileName, scriptSnapshot);
             }
 
-            var nextSyntaxTree =
-                Parser.incrementalParse(
-                    previousSyntaxTree,
-                    editRange,
-                    SimpleText.fromScriptSnapshot(scriptSnapshot));
+            var nextSyntaxTree = IncrementalParser.parse(
+                previousSyntaxTree, editRange, SimpleText.fromScriptSnapshot(scriptSnapshot));
 
             this.ensureInvariants(fileName, editRange, nextSyntaxTree, this._currentFileScriptSnapshot, scriptSnapshot);
 

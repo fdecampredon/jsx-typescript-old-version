@@ -129,7 +129,7 @@ module TypeScript {
             // parse.  Otherwise, do an incremental parse.
             var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null
                 ? TypeScript.Parser.parse(this.fileName, text, this.compilationSettings.codeGenTarget(), TypeScript.isDTSFile(this.fileName))
-                : TypeScript.Parser.incrementalParse(oldSyntaxTree, textChangeRange, text);
+                : TypeScript.IncrementalParser.parse(oldSyntaxTree, textChangeRange, text);
 
             return new Document(this.compilationSettings, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree, /*topLevelDecl:*/ null);
         }

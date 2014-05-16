@@ -367,7 +367,7 @@ class Program {
             var changeLength = i * 2;
 
             timer.start();
-            var tree2 = TypeScript.Parser.incrementalParse(tree, new TypeScript.TextChangeRange( new TypeScript.TextSpan((text.length() / 2) - i, changeLength), changeLength), text);
+            var tree2 = TypeScript.IncrementalParser.parse(tree, new TypeScript.TextChangeRange( new TypeScript.TextSpan((text.length() / 2) - i, changeLength), changeLength), text);
             timer.end();
             totalIncrementalTime += timer.time;
 
@@ -433,7 +433,7 @@ class Program {
             var changeRange = new TypeScript.TextChangeRange(changeSpan, updatedText.length);
 
             timer.start();
-            var tree2 = TypeScript.Parser.incrementalParse(tree, changeRange, text);
+            var tree2 = TypeScript.IncrementalParser.parse(tree, changeRange, text);
             timer.end();
             totalIncrementalTime += timer.time;
 
@@ -661,7 +661,7 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
 
         var tree1 = TypeScript.Parser.parse(fileName, text, languageVersion, TypeScript.isDTSFile(fileName));
-        var tree2 = TypeScript.Parser.incrementalParse(
+        var tree2 = TypeScript.IncrementalParser.parse(
             new TypeScript.SyntaxTree(emptySourceUnit(), TypeScript.isDTSFile(fileName), [], fileName, null, tree1.languageVersion()),
             new TypeScript.TextChangeRange(new TypeScript.TextSpan(0, 0), text.length()),
             text);

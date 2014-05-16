@@ -61,7 +61,7 @@ module TypeScript {
         var newTree = Parser.parse("", newText, LanguageVersion.EcmaScript5, false);
         TypeScript.visitNodeOrToken(new PositionValidatingWalker(), newTree.sourceUnit());
 
-        var incrementalNewTree = Parser.incrementalParse(oldTree, textChangeRange, newText);
+        var incrementalNewTree = IncrementalParser.parse(oldTree, textChangeRange, newText);
         TypeScript.visitNodeOrToken(new PositionValidatingWalker(), incrementalNewTree.sourceUnit());
 
         // We should get the same tree when doign a full or incremental parse.
