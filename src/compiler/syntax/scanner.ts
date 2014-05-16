@@ -254,7 +254,7 @@ module TypeScript {
     }
 
     export class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(private _packedData: number) {
         }
@@ -282,7 +282,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithNoTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -312,7 +312,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithLeadingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -342,7 +342,7 @@ module TypeScript {
     }
 
     export class SmallScannerTokenWithTrailingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -371,8 +371,8 @@ module TypeScript {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithTrailingTrivia(this._text, this._packedData); }
     }
     
-     export class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any;
+    export class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -402,7 +402,7 @@ module TypeScript {
     }
 
     export class LargeScannerToken implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; 
+        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
 
         constructor(public _text: ISimpleText, private _packedFullStartAndInfo: number, private _packedFullWidthAndKind: number) {
         }

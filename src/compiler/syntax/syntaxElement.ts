@@ -539,6 +539,7 @@ module TypeScript {
     }
 
     export interface ITypeSyntax extends ISyntaxNodeOrToken {
+        _isType: any;
     }
 
     export interface INameSyntax extends ITypeSyntax {

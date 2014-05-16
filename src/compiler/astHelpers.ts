@@ -15,19 +15,6 @@
 
 ///<reference path='references.ts' />
 
-module TypeScript {
-    export interface IParameters {
-        length: number;
-        lastParameterIsRest(): boolean;
-        ast: ISyntaxElement;
-        astAt(index: number): ISyntaxElement;
-        identifierAt(index: number): ISyntaxToken;
-        typeAt(index: number): ISyntaxElement;
-        initializerAt(index: number): EqualsValueClauseSyntax;
-        isOptionalAt(index: number): boolean;
-    }
-}
-
 module TypeScript.ASTHelpers {
     export function scriptIsElided(sourceUnit: SourceUnitSyntax): boolean {
         return isDTSFile(sourceUnit.syntaxTree.fileName()) || moduleMembersAreElided(sourceUnit.moduleElements);
@@ -340,40 +327,6 @@ module TypeScript.ASTHelpers {
         return ast.parent && ast.parent.kind() === SyntaxKind.ModuleDeclaration;
     }
 
-    export function parametersFromParameter(parameter: ParameterSyntax): IParameters {
-        return {
-            length: 1,
-            lastParameterIsRest: () => parameter.dotDotDotToken !== null,
-            ast: parameter,
-            astAt: (index: number) => parameter,
-            identifierAt: (index: number) => parameter.identifier,
-            typeAt: (index: number) => getType(parameter),
-            initializerAt: (index: number) => parameter.equalsValueClause,
-            isOptionalAt: (index: number) => parameterIsOptional(parameter),
-        };
-    }
-
-    function parameterIsOptional(parameter: ParameterSyntax): boolean {
-        return parameter.questionToken !== null || parameter.equalsValueClause !== null;
-    }
-
-    export function parametersFromParameterList(list: ParameterListSyntax): IParameters {
-        return parametersFromParameters(list.parameters);
-    }
-
-    export function parametersFromParameters(parameters: ParameterSyntax[]): IParameters {
-        return {
-            length: parameters.length,
-            lastParameterIsRest: () => lastParameterIsRest(parameters),
-            ast: parameters,
-            astAt: (index: number) => parameters[index],
-            identifierAt: (index: number) => parameters[index].identifier,
-            typeAt: (index: number) => getType(parameters[index]),
-            initializerAt: (index: number) => parameters[index].equalsValueClause,
-            isOptionalAt: (index: number) => parameterIsOptional(parameters[index]),
-        };
-    }
-
     export function isDeclarationAST(ast: ISyntaxElement): boolean {
         switch (ast.kind()) {
             case SyntaxKind.VariableDeclarator:
@@ -628,7 +581,7 @@ module TypeScript.ASTHelpers {
         return null;
     }
 
-    export function getType(ast: ISyntaxElement): ISyntaxNodeOrToken {
+    export function getType(ast: ISyntaxElement): ITypeSyntax {
         if (ast) {
             switch (ast.kind()) {
                 case SyntaxKind.FunctionDeclaration:

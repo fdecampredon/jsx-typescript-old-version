@@ -421,12 +421,16 @@ module TypeScript {
             }
         }
 
-        private emitArgDecl(argDecl: ISyntaxElement, id: ISyntaxToken, isOptional: boolean, isPrivate: boolean) {
+        private parameterIsOptional(parameter: ParameterSyntax) {
+            return parameter.questionToken !== null || parameter.equalsValueClause !== null;
+        }
+
+        private emitParameter(argDecl: ParameterSyntax, isPrivate: boolean) {
             this.indenter.increaseIndent();
 
             this.emitDeclarationComments(argDecl, false);
-            this.declFile.Write(id.text());
-            if (isOptional) {
+            this.declFile.Write(argDecl.identifier.text());
+            if (this.parameterIsOptional(argDecl)) {
                 this.declFile.Write("?");
             }
 
@@ -482,19 +486,19 @@ module TypeScript {
 
         private emitParameterList(isPrivate: boolean, parameterList: ParameterListSyntax): void {
             this.declFile.Write("(");
-            this.emitParameters(isPrivate, ASTHelpers.parametersFromParameterList(parameterList));
+            this.emitParameters(isPrivate, parameterList.parameters);
             this.declFile.Write(")");
         }
 
-        private emitParameters(isPrivate: boolean, parameterList: IParameters): void {
-            var hasLastParameterRestParameter = parameterList.lastParameterIsRest();
+        private emitParameters(isPrivate: boolean, parameterList: ParameterSyntax[]): void {
+            var hasLastParameterRestParameter = lastParameterIsRest(parameterList);
             var argsLen = parameterList.length;
             if (hasLastParameterRestParameter) {
                 argsLen--;
             }
 
             for (var i = 0; i < argsLen; i++) {
-                this.emitArgDecl(parameterList.astAt(i), parameterList.identifierAt(i), parameterList.isOptionalAt(i), isPrivate);
+                this.emitParameter(parameterList[i], isPrivate);
                 if (i < (argsLen - 1)) {
                     this.declFile.Write(", ");
                 }
@@ -509,7 +513,7 @@ module TypeScript {
                 }
 
                 var index = parameterList.length - 1;
-                this.emitArgDecl(parameterList.astAt(index), parameterList.identifierAt(index), parameterList.isOptionalAt(index), isPrivate);
+                this.emitParameter(parameterList[index], isPrivate);
             }
         }
 
@@ -720,7 +724,7 @@ module TypeScript {
 
             this.emitIndent();
             this.declFile.Write("[");
-            this.emitParameters(/*isPrivate:*/ false, ASTHelpers.parametersFromParameters(funcDecl.parameters));
+            this.emitParameters(/*isPrivate:*/ false, funcDecl.parameters);
             this.declFile.Write("]");
 
             var funcPullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);

@@ -682,41 +682,40 @@ module TypeScript {
         private emitParameterList(list: ParameterListSyntax): void {
             this.writeToken(list.openParenToken);
             this.emitCommentsArray(ASTHelpers.convertTokenTrailingComments(list.openParenToken), /*trailing:*/ true, /*noLeadingSpace:*/ true);
-            this.emitFunctionParameters(ASTHelpers.parametersFromParameterList(list));
+            this.emitFunctionParameters(list.parameters, list.parameters);
             this.writeToken(list.closeParenToken);
         }
 
-        private emitFunctionParameters(parameters: IParameters): void {
+        private emitFunctionParameters(ast: ISyntaxElement, parameters: ParameterSyntax[]): void {
             var argsLen = 0;
 
             if (parameters) {
-                var parameterListAST = parameters.ast.kind() === SyntaxKind.SeparatedList ? <ParameterSyntax[]>parameters.ast : null;
-                this.emitComments(parameters.ast, true);
+                this.emitComments(ast, true);
 
                 var tempContainer = this.setContainer(EmitContainer.Args);
                 argsLen = parameters.length;
                 var printLen = argsLen;
-                if (parameters.lastParameterIsRest()) {
+                if (lastParameterIsRest(parameters)) {
                     printLen--;
                 }
                 for (var i = 0; i < printLen; i++) {
-                    var arg = parameters.astAt(i);
+                    var arg = parameters[i];
                     this.emit(arg);
 
                     if (i < (printLen - 1)) {
                         this.writeToOutput(", ");
-                        if (parameterListAST) {
-                            this.emitCommentsArray(ASTHelpers.convertTokenTrailingComments(parameterListAST.separatorAt(i)), /*trailing:*/ true, /*noLeadingSpace:*/ true);
+                        if (parameters) {
+                            this.emitCommentsArray(ASTHelpers.convertTokenTrailingComments(parameters.separatorAt(i)), /*trailing:*/ true, /*noLeadingSpace:*/ true);
                         }
                     }
                 }
                 this.setContainer(tempContainer);
 
-                this.emitComments(parameters.ast, false);
+                this.emitComments(ast, false);
             }
         }
 
-        private emitFunctionBodyStatements(name: string, funcDecl: ISyntaxElement, parameterList: IParameters, block: BlockSyntax, bodyExpression: ISyntaxElement): void {
+        private emitFunctionBodyStatements(name: string, funcDecl: ISyntaxElement, parameters: ParameterSyntax[], block: BlockSyntax, bodyExpression: ISyntaxElement): void {
             this.writeLineToOutput(" {");
             if (name) {
                 this.recordSourceMappingNameStart(name);
@@ -738,9 +737,9 @@ module TypeScript {
                 this.writeCaptureThisStatement(funcDecl);
             }
 
-            if (parameterList) {
-                this.emitDefaultValueAssignments(parameterList);
-                this.emitRestParameterInitializer(parameterList);
+            if (parameters) {
+                this.emitDefaultValueAssignments(parameters);
+                this.emitRestParameterInitializer(parameters);
             }
 
             if (block) {
@@ -789,16 +788,16 @@ module TypeScript {
             }
         }
 
-        private emitDefaultValueAssignments(parameters: IParameters): void {
+        private emitDefaultValueAssignments(parameters: ParameterSyntax[]): void {
             var n = parameters.length;
-            if (parameters.lastParameterIsRest()) {
+            if (lastParameterIsRest(parameters)) {
                 n--;
             }
 
             for (var i = 0; i < n; i++) {
-                var arg = parameters.astAt(i);
-                var id = parameters.identifierAt(i);
-                var equalsValueClause = parameters.initializerAt(i);
+                var arg = parameters[i];
+                var id = arg.identifier;
+                var equalsValueClause = arg.equalsValueClause;
                 if (equalsValueClause) {
                     this.emitIndent();
                     this.recordSourceMappingStart(arg);
@@ -811,11 +810,11 @@ module TypeScript {
             }
         }
 
-        private emitRestParameterInitializer(parameters: IParameters): void {
-            if (parameters.lastParameterIsRest()) {
+        private emitRestParameterInitializer(parameters: ParameterSyntax[]): void {
+            if (lastParameterIsRest(parameters)) {
                 var n = parameters.length;
-                var lastArg = parameters.astAt(n - 1);
-                var id = parameters.identifierAt(n - 1);
+                var lastArg = parameters[n - 1];
+                var id = lastArg.identifier;
                 this.emitIndent();
                 this.recordSourceMappingStart(lastArg);
                 this.writeToOutput("var ");
@@ -1296,17 +1295,18 @@ module TypeScript {
             this.recordSourceMappingStart(arrowFunction);
             this.writeToOutput("function ");
 
-            var parameters: IParameters = null;
+            var parameters: ParameterSyntax[] = null;
             if (arrowFunction.kind() === SyntaxKind.ParenthesizedArrowFunctionExpression) {
                 var parenthesizedArrowFunction = <ParenthesizedArrowFunctionExpressionSyntax>arrowFunction;
 
-                parameters = ASTHelpers.parametersFromParameterList(parenthesizedArrowFunction.callSignature.parameterList);
+                parameters = parenthesizedArrowFunction.callSignature.parameterList.parameters;
                 this.emitParameterList(parenthesizedArrowFunction.callSignature.parameterList);
             }
             else {
-                parameters = ASTHelpers.parametersFromParameter((<SimpleArrowFunctionExpressionSyntax>arrowFunction).parameter)
+                var parameter = (<SimpleArrowFunctionExpressionSyntax>arrowFunction).parameter;
+                parameters = [parameter];
                 this.writeToOutput("(");
-                this.emitFunctionParameters(parameters);
+                this.emitFunctionParameters(parameter, parameters);
                 this.writeToOutput(")");
             }
 
@@ -1347,7 +1347,7 @@ module TypeScript {
             this.recordSourceMappingNameStart("constructor");
             this.indenter.increaseIndent();
 
-            var parameters = ASTHelpers.parametersFromParameterList(funcDecl.callSignature.parameterList);
+            var parameters = funcDecl.callSignature.parameterList.parameters;
             this.emitDefaultValueAssignments(parameters);
             this.emitRestParameterInitializer(parameters);
 
@@ -1395,7 +1395,7 @@ module TypeScript {
             this.writeToOutput(accessor.propertyName.text());
             this.emitParameterList(accessor.callSignature.parameterList);
 
-            this.emitFunctionBodyStatements(null, accessor, ASTHelpers.parametersFromParameterList(accessor.callSignature.parameterList), accessor.block, /*bodyExpression:*/ null);
+            this.emitFunctionBodyStatements(null, accessor, accessor.callSignature.parameterList.parameters, accessor.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(accessor);
 
@@ -1429,7 +1429,7 @@ module TypeScript {
 
             this.emitParameterList(accessor.callSignature.parameterList);
 
-            this.emitFunctionBodyStatements(null, accessor, ASTHelpers.parametersFromParameterList(accessor.callSignature.parameterList), accessor.block, /*bodyExpression:*/ null);
+            this.emitFunctionBodyStatements(null, accessor, accessor.callSignature.parameterList.parameters, accessor.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(accessor);
 
@@ -1464,7 +1464,7 @@ module TypeScript {
             }
 
             this.emitParameterList(funcDecl.callSignature.parameterList);
-            this.emitFunctionBodyStatements(funcName, funcDecl, ASTHelpers.parametersFromParameterList(funcDecl.callSignature.parameterList), funcDecl.block, /*bodyExpression:*/ null);
+            this.emitFunctionBodyStatements(funcName, funcDecl, funcDecl.callSignature.parameterList.parameters, funcDecl.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
 
@@ -1517,7 +1517,7 @@ module TypeScript {
 
             this.emitParameterList(funcDecl.callSignature.parameterList);
 
-            var parameters = ASTHelpers.parametersFromParameterList(funcDecl.callSignature.parameterList);
+            var parameters = funcDecl.callSignature.parameterList.parameters;
             this.emitFunctionBodyStatements(funcDecl.identifier.text(), funcDecl, parameters, funcDecl.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
@@ -2447,7 +2447,7 @@ module TypeScript {
             this.writeToOutput("function ");
             this.emitParameterList(parameterList);
 
-            var parameters = ASTHelpers.parametersFromParameterList(parameterList);
+            var parameters = parameterList.parameters;
             this.emitFunctionBodyStatements(null, funcDecl, parameters, block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
@@ -2654,7 +2654,7 @@ module TypeScript {
 
             this.emitParameterList(funcDecl.callSignature.parameterList);
 
-            var parameters = ASTHelpers.parametersFromParameterList(funcDecl.callSignature.parameterList);
+            var parameters = funcDecl.callSignature.parameterList.parameters;
             this.emitFunctionBodyStatements(funcDecl.propertyName.text(), funcDecl, parameters, funcDecl.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
@@ -3068,7 +3068,7 @@ module TypeScript {
             this.emitParameterList(funcProp.callSignature.parameterList);
 
             this.emitFunctionBodyStatements(funcProp.propertyName.text(), funcProp,
-                ASTHelpers.parametersFromParameterList(funcProp.callSignature.parameterList), funcProp.block, /*bodyExpression:*/ null);
+                funcProp.callSignature.parameterList.parameters, funcProp.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcProp);
 
