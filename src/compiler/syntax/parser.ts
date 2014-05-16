@@ -502,7 +502,7 @@ module TypeScript.Parser {
     // Contains the actual logic to parse typescript/javascript.  This is the code that generally
     // represents the logic necessary to handle all the language grammar constructs.  When the 
     // language changes, this should generally only be the place necessary to fix up.
-    function createParser(): IParser {
+    function createParseSyntaxTree(): (source: IParserSource, isDeclaration: boolean) => SyntaxTree {
         // Name of the file we're parsing.
         var fileName: string;
 
@@ -5218,15 +5218,13 @@ module TypeScript.Parser {
             }
         }
 
-        return {
-            parseSyntaxTree: parseSyntaxTree
-        };
+        return parseSyntaxTree;
     }
 
     // We keep the parser around as a singleton.  This is because calling createParser is actually
     // expensive in V8 currently.  We then clear it after a parse so that it doesn't  keep state 
     // alive unintentionally.
-    var parser = createParser();
+    var parseSyntaxTree = createParseSyntaxTree();
 
     export function parse(fileName: string, text: ISimpleText, languageVersion: LanguageVersion, isDeclaration: boolean): SyntaxTree {
         return parseSource(createParserSource(fileName, text, languageVersion), isDeclaration);
@@ -5237,6 +5235,6 @@ module TypeScript.Parser {
     }
 
     export function parseSource(source: IParserSource, isDeclaration: boolean): SyntaxTree {
-        return parser.parseSyntaxTree(source, isDeclaration);
+        return parseSyntaxTree(source, isDeclaration);
     }
 }
