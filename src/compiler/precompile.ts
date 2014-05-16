@@ -24,12 +24,16 @@ module TypeScript {
         importedFiles: IFileReference[];
         diagnostics: Diagnostic[];
         isLibFile: boolean;
+        isXJSFile: boolean;
+        jsxDefaultNamespace: string;
     }
 
     interface ITripleSlashDirectiveProperties {
         noDefaultLib: boolean;
         diagnostics: Diagnostic[];
         referencedFiles: IFileReference[];
+        isXJSFile: boolean;
+        jsxDefaultNamespace: string;
     }
 
     function isNoDefaultLibMatch(comment: string): RegExpExecArray {
@@ -38,6 +42,11 @@ module TypeScript {
     }
 
     export var tripleSlashReferenceRegExp = /^(\/\/\/\s*<reference\s+path=)('|")(.+?)\2\s*(static=('|")(.+?)\2\s*)*\/>/;
+    
+    function isXJSFileMatch(comment: string): RegExpExecArray {
+        var isXJSFileMatchRegex = /^(\/\/\/\s*<jsx\s+(default=('|")(.+?)\3\s*)?)\/>/gim;
+        return isXJSFileMatchRegex.exec(comment);
+    }
 
     function getFileReferenceFromReferencePath(fileName: string, lineMap: LineMap, position: number, comment: string, diagnostics: Diagnostic[]): IFileReference {
         // First, just see if they've written: /// <reference\s+
@@ -139,6 +148,8 @@ module TypeScript {
         var noDefaultLib = false;
         var diagnostics: Diagnostic[] = [];
         var referencedFiles: IFileReference[] = [];
+        var isJSX: boolean;
+        var jsxDefaultNamespace: string;
 
         for (var i = 0, n = leadingTrivia.count(); i < n; i++) {
             var trivia = leadingTrivia.syntaxTriviaAt(i);
@@ -162,12 +173,20 @@ module TypeScript {
                 if (isNoDefaultLib) {
                     noDefaultLib = isNoDefaultLib[3] === "true";
                 }
+                
+                if (!isJSX) {
+                    var match = isXJSFileMatch(triviaText);
+                    if (match) {
+                        isJSX = true;
+                        jsxDefaultNamespace = match[4];
+                    }
+                }
             }
 
             position += trivia.fullWidth();
         }
 
-        return { noDefaultLib: noDefaultLib, diagnostics: diagnostics, referencedFiles: referencedFiles };
+        return { noDefaultLib: noDefaultLib, diagnostics: diagnostics, referencedFiles: referencedFiles, isXJSFile: isJSX, jsxDefaultNamespace: jsxDefaultNamespace };
     }
 
     export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, readImportFiles = true): IPreProcessedFileInfo {
@@ -187,10 +206,18 @@ module TypeScript {
 
         var properties = processTripleSlashDirectives(fileName, text.lineMap(), firstToken);
 
-        return { referencedFiles: properties.referencedFiles, importedFiles: importedFiles, isLibFile: properties.noDefaultLib, diagnostics: properties.diagnostics };
+        return { referencedFiles: properties.referencedFiles, importedFiles: importedFiles, isLibFile: properties.noDefaultLib, diagnostics: properties.diagnostics, isXJSFile: properties.isXJSFile, jsxDefaultNamespace: properties.jsxDefaultNamespace };
     }
 
     export function getReferencedFiles(fileName: string, sourceText: IScriptSnapshot): IFileReference[] {
         return preProcessFile(fileName, sourceText, false).referencedFiles;
+    }
+    
+    export function getISXjsFileInfo(fileName: string, sourceText: IScriptSnapshot) {
+        var infos = preProcessFile(fileName, sourceText, false);
+        return {
+            isXJSFile: infos.isXJSFile,
+            defaultNamespace: infos.jsxDefaultNamespace
+        }
     }
 } // Tools
