@@ -1484,7 +1484,7 @@ module TypeScript.Scanner {
                     break;
                 }
                 else if (isNaN(ch) || isNewLineCharacter(ch)) {
-                    reportDiagnostic(MathPrototype.min(index, end), 1, DiagnosticCode.Missing_close_quote_character, null);
+                    reportDiagnostic(Math.min(index, end), 1, DiagnosticCode.Missing_close_quote_character, null);
                     break;
                 }
                 else {

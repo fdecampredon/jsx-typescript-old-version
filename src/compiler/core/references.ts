@@ -20,7 +20,6 @@
 ///<reference path='lineAndCharacter.ts' />
 ///<reference path='lineMap.ts' />
 ///<reference path='linePosition.ts' />
-///<reference path='mathPrototype.ts' />
 // ///<reference path='stringTable.ts' />
 ///<reference path='stringUtilities.ts' />
 ///<reference path='timer.ts' />

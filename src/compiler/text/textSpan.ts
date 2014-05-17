@@ -67,8 +67,8 @@ module TypeScript {
          * @param span The span to check.
          */
         public overlapsWith(span: TextSpan): boolean {
-            var overlapStart = MathPrototype.max(this._start, span._start);
-            var overlapEnd = MathPrototype.min(this.end(), span.end());
+            var overlapStart = Math.max(this._start, span._start);
+            var overlapEnd = Math.min(this.end(), span.end());
 
             return overlapStart < overlapEnd;
         }
@@ -78,8 +78,8 @@ module TypeScript {
          * @param span The span to check.
          */
         public overlap(span: TextSpan): TextSpan {
-            var overlapStart = MathPrototype.max(this._start, span._start);
-            var overlapEnd = MathPrototype.min(this.end(), span.end());
+            var overlapStart = Math.max(this._start, span._start);
+            var overlapEnd = Math.min(this.end(), span.end());
 
             if (overlapStart < overlapEnd) {
                 return TextSpan.fromBounds(overlapStart, overlapEnd);
@@ -118,8 +118,8 @@ module TypeScript {
          * @param span The span to check.
          */
         public intersection(span: TextSpan): TextSpan {
-            var intersectStart = MathPrototype.max(this._start, span._start);
-            var intersectEnd = MathPrototype.min(this.end(), span.end());
+            var intersectStart = Math.max(this._start, span._start);
+            var intersectEnd = Math.min(this.end(), span.end());
 
             if (intersectStart <= intersectEnd) {
                 return TextSpan.fromBounds(intersectStart, intersectEnd);

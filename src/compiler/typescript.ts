@@ -18,9 +18,6 @@
 if (Error) (<any>Error).stackTraceLimit = 1000;
 
 module TypeScript {
-
-    declare var IO: any;
-
     export var fileResolutionTime = 0;
     export var fileResolutionIOTime = 0;
     export var fileResolutionScanImportsTime = 0;

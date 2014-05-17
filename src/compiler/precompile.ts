@@ -62,9 +62,6 @@ module TypeScript {
                     var adjustedPath = normalizePath(path);
 
                     var isResident = fullReference.length >= 7 && fullReference[6] === "true";
-                    if (isResident) {
-                        CompilerDiagnostics.debugPrint(path + " is resident");
-                    }
                     return {
                         line: 0,
                         character: 0,

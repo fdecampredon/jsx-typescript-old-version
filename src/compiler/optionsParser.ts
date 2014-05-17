@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-///<reference path="io.ts" />
+///<reference path="references.ts" />
 
 module TypeScript {
     export interface IOptions {
@@ -55,7 +55,7 @@ module TypeScript {
 
         public options: IOptions[] = [];
 
-        constructor(public host: IIO, public version: string) {
+        constructor(public host: IEnvironment, public version: string) {
         }
 
         public printUsage() {
@@ -65,13 +65,13 @@ module TypeScript {
             var fileWord = getLocalizedText(DiagnosticCode.file1, null);
             var tscSyntax = "tsc [" + optionsWord + "] [" + fileWord + " ..]";
             var syntaxHelp = getLocalizedText(DiagnosticCode.Syntax_0, [tscSyntax]);
-            this.host.printLine(syntaxHelp);
-            this.host.printLine("");
-            this.host.printLine(getLocalizedText(DiagnosticCode.Examples, null) + " tsc hello.ts");
-            this.host.printLine("          tsc --out foo.js foo.ts");
-            this.host.printLine("          tsc @args.txt");
-            this.host.printLine("");
-            this.host.printLine(getLocalizedText(DiagnosticCode.Options, null));
+            this.host.standardOut.WriteLine(syntaxHelp);
+            this.host.standardOut.WriteLine("");
+            this.host.standardOut.WriteLine(getLocalizedText(DiagnosticCode.Examples, null) + " tsc hello.ts");
+            this.host.standardOut.WriteLine("          tsc --out foo.js foo.ts");
+            this.host.standardOut.WriteLine("          tsc @args.txt");
+            this.host.standardOut.WriteLine("");
+            this.host.standardOut.WriteLine(getLocalizedText(DiagnosticCode.Options, null));
 
             var output: string[][] = [];
             var maxLength = 0;
@@ -123,13 +123,13 @@ module TypeScript {
 
             // Print padded output
             for (i = 0; i < output.length; i++) {
-                this.host.printLine(output[i][0] + (new Array(maxLength - output[i][0].length + 3)).join(" ") + output[i][1]);
+                this.host.standardOut.WriteLine(output[i][0] + (new Array(maxLength - output[i][0].length + 3)).join(" ") + output[i][1]);
             }
         }
 
         public printVersion() {
             if (!this.printedVersion) {
-                this.host.printLine(getLocalizedText(DiagnosticCode.Version_0, [this.version]));
+                this.host.standardOut.WriteLine(getLocalizedText(DiagnosticCode.Version_0, [this.version]));
                 this.printedVersion = true;
             }
         }
@@ -241,15 +241,15 @@ module TypeScript {
                         var option = this.findOption(arg);
 
                         if (option === null) {
-                            this.host.printLine(getDiagnosticMessage(DiagnosticCode.Unknown_option_0, [arg]));
-                            this.host.printLine(getLocalizedText(DiagnosticCode.Use_the_0_flag_to_see_options, ["--help"]));
+                            this.host.standardOut.WriteLine(getDiagnosticMessage(DiagnosticCode.Unknown_option_0, [arg]));
+                            this.host.standardOut.WriteLine(getLocalizedText(DiagnosticCode.Use_the_0_flag_to_see_options, ["--help"]));
                         } else {
                             if (!option.flag) {
                                 value = consume();
                                 if (value === undefined) {
                                     // No value provided
-                                    this.host.printLine(getDiagnosticMessage(DiagnosticCode.Option_0_specified_without_1, [arg, getLocalizedText(option.type, null)]));
-                                    this.host.printLine(getLocalizedText(DiagnosticCode.Use_the_0_flag_to_see_options, ["--help"]));
+                                    this.host.standardOut.WriteLine(getDiagnosticMessage(DiagnosticCode.Option_0_specified_without_1, [arg, getLocalizedText(option.type, null)]));
+                                    this.host.standardOut.WriteLine(getLocalizedText(DiagnosticCode.Use_the_0_flag_to_see_options, ["--help"]));
                                     continue;
                                 }
                             }

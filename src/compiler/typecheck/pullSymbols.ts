@@ -1082,7 +1082,7 @@ module TypeScript {
         private consumeLeadingSpace(line: string, startIndex: number, maxSpacesToRemove?: number) {
             var endIndex = line.length;
             if (maxSpacesToRemove !== undefined) {
-                endIndex = MathPrototype.min(startIndex + maxSpacesToRemove, endIndex);
+                endIndex = Math.min(startIndex + maxSpacesToRemove, endIndex);
             }
 
             for (; startIndex < endIndex; startIndex++) {

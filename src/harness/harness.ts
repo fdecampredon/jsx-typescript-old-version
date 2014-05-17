@@ -34,8 +34,8 @@ function filePath(fullPath: string) {
     return path.join("/") + "/";
 }
 
-var typescriptServiceFileName = filePath(TypeScript.IO.getExecutingFilePath()) + "typescriptServices.js";
-var typescriptServiceFile = TypeScript.IO.readFile(typescriptServiceFileName, /*codepage:*/ null).contents;
+var typescriptServiceFileName = filePath(TypeScript.Environment.executingFilePath()) + "typescriptServices.js";
+var typescriptServiceFile = TypeScript.Environment.readFile(typescriptServiceFileName, /*codepage:*/ null).contents;
 if (typeof ActiveXObject === "function") {
     eval(typescriptServiceFile);
 } else if (typeof require === "function") {
@@ -223,7 +223,7 @@ module Harness {
             path = "tests/" + path;
         }
 
-        var content = TypeScript.IO.readFile(Harness.userSpecifiedroot + path, /*codepage:*/ null);
+        var content = TypeScript.Environment.readFile(Harness.userSpecifiedroot + path, /*codepage:*/ null);
         if (content === null) {
             throw new Error("failed to read file at: '" + Harness.userSpecifiedroot + path + "'");
         }
@@ -361,7 +361,7 @@ module Harness {
 
         static handleError(e: Error) {
             if (Runnable.errorHandlerStack.length === 0) {
-                TypeScript.IO.printLine('Global error: ' + e);
+                TypeScript.Environment.standardOut.WriteLine('Global error: ' + e);
             } else {
                 Runnable.errorHandlerStack[Runnable.errorHandlerStack.length - 1](e);
             }
@@ -765,8 +765,8 @@ module Harness {
             }
         }
 
-        export var libText = TypeScript.IO ? TypeScript.IO.readFile(libFolder + "lib.d.ts", /*codepage:*/ null).contents : '';
-        export var libTextMinimal = TypeScript.IO ? TypeScript.IO.readFile(libFolder + "lib.core.d.ts", /*codepage:*/ null).contents : '';
+        export var libText = TypeScript.Environment ? TypeScript.Environment.readFile(libFolder + "lib.d.ts", /*codepage:*/ null).contents : '';
+        export var libTextMinimal = TypeScript.Environment ? TypeScript.Environment.readFile(libFolder + "lib.core.d.ts", /*codepage:*/ null).contents : '';
 
         /** This is the harness's own version of the batch compiler that encapsulates state about resolution */
         export class HarnessCompiler implements TypeScript.IReferenceResolverHost {
@@ -1184,7 +1184,7 @@ module Harness {
                 }
 
                 // get the absolute path
-                normalizedPath = TypeScript.IO.resolvePath(normalizedPath);
+                normalizedPath = TypeScript.Environment.absolutePath(normalizedPath);
 
                 // Switch to forward slashes
                 normalizedPath = TypeScript.switchToForwardSlashes(normalizedPath);
@@ -1200,8 +1200,8 @@ module Harness {
                     // if the file didn't exist in the 'virtual' file system (ie fileNameToScriptSnapshot)
                     // see if it is a real file, and if so, make sure to register it with the virtual 
                     // file system for later lookup with other resolution calls
-                    if (TypeScript.IO.fileExists(path)) {
-                        var contents = TypeScript.IO.readFile(path, null).contents;
+                    if (TypeScript.Environment.fileExists(path)) {
+                        var contents = TypeScript.Environment.readFile(path, null).contents;
                         result = TypeScript.ScriptSnapshot.fromString(contents);
                         this.fileNameToScriptSnapshot.add(fixedPath, result);
                     }
@@ -1210,17 +1210,16 @@ module Harness {
             }
 
             directoryExists(path: string): boolean {
-                return TypeScript.IO.directoryExists(path);
+                return TypeScript.Environment.directoryExists(path);
             }
 
             getParentDirectory(path: string): string {
-                return TypeScript.IO.dirName(path);
+                return TypeScript.Environment.directoryName(path);
             }
 
             addError(diagnostic: TypeScript.Diagnostic) {
                 this.errorList.push(diagnostic);
             }
-
         }
 
         export function makeDefaultCompilerSettings(options?: { useMinimalDefaultLib: boolean; noImplicitAny: boolean; }) {
@@ -1585,7 +1584,7 @@ module Harness {
 
         public log(s: string): void {
             // For debugging...
-            //TypeScript.IO.printLine("TypeScriptLS:" + s);
+            //TypeScript.Environment.standardOut.WriteLine("TypeScriptLS:" + s);
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -1629,24 +1628,24 @@ module Harness {
         }
 
         public fileExists(s: string) {
-            return TypeScript.IO.fileExists(s);
+            return TypeScript.Environment.fileExists(s);
         }
 
         public directoryExists(s: string) {
-            return TypeScript.IO.directoryExists(s);
+            return TypeScript.Environment.directoryExists(s);
         }
 
         public resolveRelativePath(path: string, directory: string): string {
             if (TypeScript.isRooted(path) || !directory) {
-                return TypeScript.IO.resolvePath(path);
+                return TypeScript.Environment.absolutePath(path);
             }
             else {
-                return TypeScript.IO.resolvePath(TypeScript.IOUtils.combine(directory, path));
+                return TypeScript.Environment.absolutePath(TypeScript.IOUtils.combine(directory, path));
             }
         }
 
         public getParentDirectory(path: string): string {
-            return TypeScript.IO.dirName(path);
+            return TypeScript.Environment.directoryName(path);
         }
 
         /** Return a new instance of the language service shim, up-to-date wrt to typecheck.
@@ -1670,7 +1669,7 @@ module Harness {
 
         /** Parse a file on disk given its fileName */
         public parseFile(fileName: string) {
-            var sourceText = TypeScript.ScriptSnapshot.fromString(TypeScript.IO.readFile(fileName, /*codepage:*/ null).contents)
+            var sourceText = TypeScript.ScriptSnapshot.fromString(TypeScript.Environment.readFile(fileName, /*codepage:*/ null).contents)
             return this.parseSourceText(fileName, sourceText);
         }
 
@@ -1886,12 +1885,12 @@ module Harness {
 
         function generateActual(actualFilename: string, generateContent: () => string): string {
             // Create folders if needed
-            TypeScript.IO.createDirectory(TypeScript.IO.dirName(TypeScript.IO.dirName(actualFilename)));
-            TypeScript.IO.createDirectory(TypeScript.IO.dirName(actualFilename));
+            TypeScript.Environment.createDirectory(TypeScript.Environment.directoryName(TypeScript.Environment.directoryName(actualFilename)));
+            TypeScript.Environment.createDirectory(TypeScript.Environment.directoryName(actualFilename));
 
             // Delete the actual file in case it fails
-            if (TypeScript.IO.fileExists(actualFilename)) {
-                TypeScript.IO.deleteFile(actualFilename);
+            if (TypeScript.Environment.fileExists(actualFilename)) {
+                TypeScript.Environment.deleteFile(actualFilename);
             }
 
             var actual = generateContent();
@@ -1903,7 +1902,7 @@ module Harness {
             // Store the content in the 'local' folder so we
             // can accept it later (manually)
             if (actual !== null) {
-                TypeScript.IO.writeFile(actualFilename, actual, /*writeByteOrderMark:*/ false);
+                TypeScript.Environment.writeFile(actualFilename, actual, /*writeByteOrderMark:*/ false);
             }
 
             return actual;
@@ -1924,8 +1923,8 @@ module Harness {
             }
 
             var expected = '<no content>';
-            if (TypeScript.IO.fileExists(refFilename)) {
-                expected = TypeScript.IO.readFile(refFilename, /*codepage:*/ null).contents;
+            if (TypeScript.Environment.fileExists(refFilename)) {
+                expected = TypeScript.Environment.readFile(refFilename, /*codepage:*/ null).contents;
             }
 
             var lineEndingSensitive = opts && opts.LineEndingSensitive;

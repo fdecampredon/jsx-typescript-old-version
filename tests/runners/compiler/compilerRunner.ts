@@ -36,7 +36,7 @@ class CompilerBaselineRunner extends RunnerBase {
     public checkTestCodeOutput(fileName: string) {
         // strips the fileName from the path.
         var justName = fileName.replace(/^.*[\\\/]/, '');
-        var content = TypeScript.IO.readFile(fileName, /*codepage:*/ null).contents;
+        var content = TypeScript.Environment.readFile(fileName, /*codepage:*/ null).contents;
         var testCaseContent = Harness.TestCaseParser.makeUnitsFromTest(content, fileName);
 
         var units = testCaseContent.testUnitData;
@@ -279,10 +279,20 @@ class CompilerBaselineRunner extends RunnerBase {
                         var codeLines = file.content.split('\n');
                         var walker = new TypeWriterWalker(file.unitName, compiler);
                         walker.run();
-                        walker.results.forEach(result => {                            var formattedLine = result.identifierName + " : " + result.type;
+                        walker.results.forEach(result => {
+                            var formattedLine = result.identifierName + " : " + result.type;
                             if (!typeMap[file.unitName]) {
                                 typeMap[file.unitName] = {}
-                            }                                                        var typeInfo = [formattedLine];                            var existingTypeInfo = typeMap[file.unitName][result.line];                            if (existingTypeInfo) {                                typeInfo = existingTypeInfo.concat(typeInfo);                            }                            typeMap[file.unitName][result.line] = typeInfo;                        });                        typeLines.push('=== ' + file.unitName + ' ===\r\n');
+                            }                            
+                            var typeInfo = [formattedLine];
+                            var existingTypeInfo = typeMap[file.unitName][result.line];
+                            if (existingTypeInfo) {
+                                typeInfo = existingTypeInfo.concat(typeInfo);
+                            }
+                            typeMap[file.unitName][result.line] = typeInfo;
+                        });
+
+                        typeLines.push('=== ' + file.unitName + ' ===\r\n');
                         for (var i = 0; i < codeLines.length; i++) {
                             var currentCodeLine = codeLines[i];
                             var lastLine = typeLines[typeLines.length];

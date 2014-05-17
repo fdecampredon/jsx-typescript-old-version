@@ -2309,9 +2309,6 @@ module TypeScript {
                 case PullElementKind.WithBlock:
                     // since we don't bind eagerly, there's nothing to do here
                     break;
-
-                default:
-                    CompilerDiagnostics.assert(false, "Unrecognized type declaration");
             }
 
             // Rremove the decl from the list

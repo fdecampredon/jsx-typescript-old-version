@@ -195,9 +195,9 @@ module TypeScript {
                 var oldEnd2 = nextChange.span().end();
                 var newEnd2 = oldStart2 + nextChange.newLength();
 
-                oldStartN = MathPrototype.min(oldStart1, oldStart2);
-                oldEndN = MathPrototype.max(oldEnd1, oldEnd1 + (oldEnd2 - newEnd1));
-                newEndN = MathPrototype.max(newEnd2, newEnd2 + (newEnd1 - oldEnd2));
+                oldStartN = Math.min(oldStart1, oldStart2);
+                oldEndN = Math.max(oldEnd1, oldEnd1 + (oldEnd2 - newEnd1));
+                newEndN = Math.max(newEnd2, newEnd2 + (newEnd1 - oldEnd2));
             }
 
             return new TextChangeRange(TextSpan.fromBounds(oldStartN, oldEndN), /*newLength: */newEndN - oldStartN);
