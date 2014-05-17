@@ -2,7 +2,7 @@
     declare module Module {
         class C extends D {
               ~
-!!! recursiveBaseCheck.ts(2,11): error TS2100: Class 'Module.C' is recursively referenced as a base type of itself.
+!!! recursiveBaseCheck.ts(2,11): error TS2100: Type 'Module.C' recursively references itself as a base type.
         }
         export class B extends Module.C {
         }

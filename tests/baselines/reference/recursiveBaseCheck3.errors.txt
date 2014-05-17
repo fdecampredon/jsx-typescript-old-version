@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/recursiveBaseCheck3.ts (2 errors) ====
     class A<T> extends C<T> { }
           ~
-!!! recursiveBaseCheck3.ts(1,7): error TS2100: Class 'A<T>' is recursively referenced as a base type of itself.
+!!! recursiveBaseCheck3.ts(1,7): error TS2100: Type 'A<T>' recursively references itself as a base type.
     class C<T> extends A<T> { }
     
     (new C).blah;

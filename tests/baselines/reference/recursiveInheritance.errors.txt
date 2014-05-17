@@ -2,12 +2,12 @@
     
     interface I5 extends I5 { // error
               ~~
-!!! recursiveInheritance.ts(2,11): error TS2101: Interface 'I5' is recursively referenced as a base type of itself.
+!!! recursiveInheritance.ts(2,11): error TS2100: Type 'I5' recursively references itself as a base type.
         foo():void;
     } 
     
     interface i8 extends i9 { } // error
               ~~
-!!! recursiveInheritance.ts(6,11): error TS2101: Interface 'i8' is recursively referenced as a base type of itself.
+!!! recursiveInheritance.ts(6,11): error TS2100: Type 'i8' recursively references itself as a base type.
     interface i9 extends i8 { } // error
     

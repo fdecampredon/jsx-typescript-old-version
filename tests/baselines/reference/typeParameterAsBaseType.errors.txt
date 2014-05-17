@@ -11,9 +11,9 @@
     
     interface I<T> extends T { }
                            ~
-!!! typeParameterAsBaseType.ts(7,24): error TS2075: An interface may only extend another class or interface.
+!!! typeParameterAsBaseType.ts(7,24): error TS2075: An interface may only extend a class or another interface.
     interface I2<T, U> extends U { }
                                ~
-!!! typeParameterAsBaseType.ts(8,28): error TS2075: An interface may only extend another class or interface.
+!!! typeParameterAsBaseType.ts(8,28): error TS2075: An interface may only extend a class or another interface.
     
     

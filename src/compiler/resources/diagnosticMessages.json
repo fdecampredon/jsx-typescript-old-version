@@ -251,7 +251,7 @@
         "category": "Error",
         "code": 1064
     },
-    "Module cannot have multiple export assignments.": {
+    "A module cannot have multiple export assignments.": {
         "category": "Error",
         "code": 1065
     },
@@ -663,7 +663,7 @@
         "category": "Error",
         "code": 2074
     },
-    "An interface may only extend another class or interface.": {
+    "An interface may only extend a class or another interface.": {
         "category": "Error",
         "code": 2075
     },
@@ -751,13 +751,9 @@
         "category": "Error",
         "code": 2099
     },
-    "Class '{0}' is recursively referenced as a base type of itself.": {
+    "Type '{0}' recursively references itself as a base type.": {
         "category": "Error",
         "code": 2100
-    },
-    "Interface '{0}' is recursively referenced as a base type of itself.": {
-        "category": "Error",
-        "code": 2101
     },
     "'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.": {
         "category": "Error",

@@ -12973,7 +12973,7 @@ module TypeScript {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(baseDeclAST, DiagnosticCode.A_class_may_only_extend_another_class));
                         }
                         else {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(baseDeclAST, DiagnosticCode.An_interface_may_only_extend_another_class_or_interface));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(baseDeclAST, DiagnosticCode.An_interface_may_only_extend_a_class_or_another_interface));
                         }
                     }
                     else {
@@ -12998,7 +12998,7 @@ module TypeScript {
                 baseType.setHasBaseTypeConflict();
                 // Report error
                 context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name,
-                    typeDeclIsClass ? DiagnosticCode.Class_0_is_recursively_referenced_as_a_base_type_of_itself : DiagnosticCode.Interface_0_is_recursively_referenced_as_a_base_type_of_itself, [typeSymbol.getScopedName()]));
+                    DiagnosticCode.Type_0_recursively_references_itself_as_a_base_type, [typeSymbol.getScopedName()]));
                 return;
             }
 

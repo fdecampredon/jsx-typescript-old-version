@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/complicatedGenericRecursiveBaseClassReference.ts (3 errors) ====
     class S18<B, A, C> extends S18<A[], { S19: A; (): A }[], C[]>
           ~~~
-!!! complicatedGenericRecursiveBaseClassReference.ts(1,7): error TS2100: Class 'S18<B, A, C>' is recursively referenced as a base type of itself.
+!!! complicatedGenericRecursiveBaseClassReference.ts(1,7): error TS2100: Type 'S18<B, A, C>' recursively references itself as a base type.
     {
     }
     (new S18(123)).S18 = 0;

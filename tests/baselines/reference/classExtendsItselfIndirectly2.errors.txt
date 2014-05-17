@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/classExtendsItselfIndirectly2.ts (2 errors) ====
     class C extends N.E { foo: string; } // error
           ~
-!!! classExtendsItselfIndirectly2.ts(1,7): error TS2100: Class 'C' is recursively referenced as a base type of itself.
+!!! classExtendsItselfIndirectly2.ts(1,7): error TS2100: Type 'C' recursively references itself as a base type.
     
     module M {
         export class D extends C { bar: string; }
@@ -15,7 +15,7 @@
     module O {
         class C2<T> extends Q.E2<T> { foo: T; } // error
               ~~
-!!! classExtendsItselfIndirectly2.ts(13,11): error TS2100: Class 'O.C2<T>' is recursively referenced as a base type of itself.
+!!! classExtendsItselfIndirectly2.ts(13,11): error TS2100: Type 'O.C2<T>' recursively references itself as a base type.
     
         module P {
             export class D2<T> extends C2<T> { bar: T; }
