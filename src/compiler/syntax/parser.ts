@@ -318,19 +318,6 @@ module TypeScript.Parser {
             return null;
         }
 
-        function eatKeyword(kind: SyntaxKind): ISyntaxToken {
-            // Debug.assert(SyntaxFacts.isTokenKind(kind))
-
-            var token = currentToken();
-            if (token.kind() === kind) {
-                consumeToken(token);
-                return token;
-            }
-
-            //slow part of EatToken(SyntaxKind kind)
-            return createMissingToken(kind, token);
-        }
-
         // An identifier is basically any word, unless it is a reserved keyword.  so 'foo' is an 
         // identifier and 'return' is not.  Note: a word may or may not be an identifier depending 
         // on the state of the parser.  For example, 'yield' is an identifier *unless* the parser 
@@ -864,7 +851,7 @@ module TypeScript.Parser {
         function parseImportDeclaration(): ImportDeclarationSyntax {
             return new ImportDeclarationSyntax(parseNodeData,
                 parseModifiers(),
-                eatKeyword(SyntaxKind.ImportKeyword),
+                eatToken(SyntaxKind.ImportKeyword),
                 eatIdentifierToken(),
                 eatToken(SyntaxKind.EqualsToken),
                 parseModuleReference(),
@@ -873,7 +860,7 @@ module TypeScript.Parser {
 
         function parseExportAssignment(): ExportAssignmentSyntax {
             return new ExportAssignmentSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.ExportKeyword),
+                eatToken(SyntaxKind.ExportKeyword),
                 eatToken(SyntaxKind.EqualsToken),
                 eatIdentifierToken(),
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
@@ -899,7 +886,7 @@ module TypeScript.Parser {
 
         function parseExternalModuleReference(): ExternalModuleReferenceSyntax {
             return new ExternalModuleReferenceSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.RequireKeyword),
+                eatToken(SyntaxKind.RequireKeyword),
                 eatToken(SyntaxKind.OpenParenToken),
                 eatToken(SyntaxKind.StringLiteral),
                 eatToken(SyntaxKind.CloseParenToken));
@@ -1072,7 +1059,7 @@ module TypeScript.Parser {
             // Debug.assert(isEnumDeclaration());
 
             var modifiers = parseModifiers();
-            var enumKeyword = eatKeyword(SyntaxKind.EnumKeyword);
+            var enumKeyword = eatToken(SyntaxKind.EnumKeyword);
             var identifier = eatIdentifierToken();
 
             var openBraceToken = eatToken(SyntaxKind.OpenBraceToken);
@@ -1187,7 +1174,7 @@ module TypeScript.Parser {
 
             var modifiers = parseModifiers();
 
-            var classKeyword = eatKeyword(SyntaxKind.ClassKeyword);
+            var classKeyword = eatToken(SyntaxKind.ClassKeyword);
             var identifier = eatIdentifierToken();
             var typeParameterList = tryParseTypeParameterList(/*requireCompleteTypeParameterList:*/ false);
             var heritageClauses = parseHeritageClauses();
@@ -1237,7 +1224,7 @@ module TypeScript.Parser {
         function parseGetMemberAccessorDeclaration(modifiers: ISyntaxToken[], checkForStrictMode: boolean): GetAccessorSyntax {
             return new GetAccessorSyntax(parseNodeData,
                 modifiers,
-                eatKeyword(SyntaxKind.GetKeyword),
+                eatToken(SyntaxKind.GetKeyword),
                 eatPropertyName(),
                 parseCallSignature(/*requireCompleteTypeParameterList:*/ false),
                 parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, checkForStrictMode));
@@ -1246,7 +1233,7 @@ module TypeScript.Parser {
         function parseSetMemberAccessorDeclaration(modifiers: ISyntaxToken[], checkForStrictMode: boolean): SetAccessorSyntax {
             return new SetAccessorSyntax(parseNodeData,
                 modifiers,
-                eatKeyword(SyntaxKind.SetKeyword),
+                eatToken(SyntaxKind.SetKeyword),
                 eatPropertyName(),
                 parseCallSignature(/*requireCompleteTypeParameterList:*/ false),
                 parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, checkForStrictMode));
@@ -1309,7 +1296,7 @@ module TypeScript.Parser {
             // Debug.assert(isConstructorDeclaration());
 
             var modifiers = parseModifiers();
-            var constructorKeyword = eatKeyword(SyntaxKind.ConstructorKeyword);
+            var constructorKeyword = eatToken(SyntaxKind.ConstructorKeyword);
             var callSignature = parseCallSignature(/*requireCompleteTypeParameterList:*/ false);
 
             var semicolonToken: ISyntaxToken = null;
@@ -1531,7 +1518,7 @@ module TypeScript.Parser {
             // Debug.assert(isFunctionDeclaration());
 
             var modifiers = parseModifiers();
-            var functionKeyword = eatKeyword(SyntaxKind.FunctionKeyword);
+            var functionKeyword = eatToken(SyntaxKind.FunctionKeyword);
             var identifier = eatIdentifierToken();
             var callSignature = parseCallSignature(/*requireCompleteTypeParameterList:*/ false);
 
@@ -1557,7 +1544,7 @@ module TypeScript.Parser {
             // Debug.assert(isModuleDeclaration());
 
             var modifiers = parseModifiers();
-            var moduleKeyword = eatKeyword(SyntaxKind.ModuleKeyword);
+            var moduleKeyword = eatToken(SyntaxKind.ModuleKeyword);
 
             var moduleName: INameSyntax = null;
             var stringLiteral: ISyntaxToken = null;
@@ -1586,7 +1573,7 @@ module TypeScript.Parser {
         function parseInterfaceDeclaration(): InterfaceDeclarationSyntax {
             return new InterfaceDeclarationSyntax(parseNodeData,
                 parseModifiers(),
-                eatKeyword(SyntaxKind.InterfaceKeyword),
+                eatToken(SyntaxKind.InterfaceKeyword),
                 eatIdentifierToken(),
                 tryParseTypeParameterList(/*requireCompleteTypeParameterList:*/ false),
                 parseHeritageClauses(),
@@ -1651,7 +1638,7 @@ module TypeScript.Parser {
 
         function parseConstructSignature(): ConstructSignatureSyntax {
             return new ConstructSignatureSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.NewKeyword),
+                eatToken(SyntaxKind.NewKeyword),
                 parseCallSignature(/*requireCompleteTypeParameterList:*/ false));
         }
 
@@ -1975,7 +1962,7 @@ module TypeScript.Parser {
 
         function parseDebuggerStatement(): DebuggerStatementSyntax {
             return new DebuggerStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.DebuggerKeyword),
+                eatToken(SyntaxKind.DebuggerKeyword),
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
 
@@ -1984,7 +1971,7 @@ module TypeScript.Parser {
             return new DoStatementSyntax(parseNodeData,
                 doKeyword,
                 parseStatement(/*inErrorRecovery:*/ false),
-                eatKeyword(SyntaxKind.WhileKeyword),
+                eatToken(SyntaxKind.WhileKeyword),
                 eatToken(SyntaxKind.OpenParenToken),
                 parseExpression(/*allowIn:*/ true),
                 eatToken(SyntaxKind.CloseParenToken),
@@ -2010,7 +1997,7 @@ module TypeScript.Parser {
         function parseTryStatement(): TryStatementSyntax {
             // Debug.assert(isTryStatement());
 
-            var tryKeyword = eatKeyword(SyntaxKind.TryKeyword);
+            var tryKeyword = eatToken(SyntaxKind.TryKeyword);
 
             var savedListParsingState = listParsingState;
             listParsingState |= (1 << ListParsingState.TryBlock_Statements);
@@ -2061,7 +2048,7 @@ module TypeScript.Parser {
 
         function parseFinallyClause(): FinallyClauseSyntax {
             return new FinallyClauseSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.FinallyKeyword),
+                eatToken(SyntaxKind.FinallyKeyword),
                 parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ false));
         }
 
@@ -2153,7 +2140,7 @@ module TypeScript.Parser {
 
             return new ForInStatementSyntax(parseNodeData,
                 forKeyword, openParenToken, variableDeclaration, initializer,
-                eatKeyword(SyntaxKind.InKeyword),
+                eatToken(SyntaxKind.InKeyword),
                 parseExpression(/*allowIn:*/ true),
                 eatToken(SyntaxKind.CloseParenToken),
                 parseStatement(/*inErrorRecovery:*/ false));
@@ -2243,14 +2230,14 @@ module TypeScript.Parser {
 
         function parseBreakStatement(): BreakStatementSyntax {
             return new BreakStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.BreakKeyword),
+                eatToken(SyntaxKind.BreakKeyword),
                 tryEatBreakOrContinueLabel(),
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
 
         function parseContinueStatement(): ContinueStatementSyntax {
             return new ContinueStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.ContinueKeyword),
+                eatToken(SyntaxKind.ContinueKeyword),
                 tryEatBreakOrContinueLabel(),
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
@@ -2358,7 +2345,7 @@ module TypeScript.Parser {
 
         function parseThrowStatement(): ThrowStatementSyntax {
             return new ThrowStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.ThrowKeyword),
+                eatToken(SyntaxKind.ThrowKeyword),
                 parseThrowStatementExpression(),
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
@@ -2373,7 +2360,7 @@ module TypeScript.Parser {
 
         function parseReturnStatement(): ReturnStatementSyntax {
             return new ReturnStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.ReturnKeyword),
+                eatToken(SyntaxKind.ReturnKeyword),
                 tryParseReturnStatementExpression(),
                 eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
@@ -2482,7 +2469,7 @@ module TypeScript.Parser {
 
         function parseIfStatement(): IfStatementSyntax {
             return new IfStatementSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.IfKeyword),
+                eatToken(SyntaxKind.IfKeyword),
                 eatToken(SyntaxKind.OpenParenToken),
                 parseExpression(/*allowIn:*/ true),
                 eatToken(SyntaxKind.CloseParenToken),
@@ -2496,7 +2483,7 @@ module TypeScript.Parser {
 
         function parseElseClause(): ElseClauseSyntax {
             return new ElseClauseSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.ElseKeyword),
+                eatToken(SyntaxKind.ElseKeyword),
                 parseStatement(/*inErrorRecovery:*/ false));
         }
 
@@ -2514,7 +2501,7 @@ module TypeScript.Parser {
         function parseVariableDeclaration(allowIn: boolean): VariableDeclarationSyntax {
             // Debug.assert(currentToken().kind() === SyntaxKind.VarKeyword);
 
-            var varKeyword = eatKeyword(SyntaxKind.VarKeyword);
+            var varKeyword = eatToken(SyntaxKind.VarKeyword);
             // Debug.assert(varKeyword.fullWidth() > 0);
 
             var listParsingState = allowIn
@@ -3276,25 +3263,25 @@ module TypeScript.Parser {
 
         function parseTypeOfExpression(): TypeOfExpressionSyntax {
             return new TypeOfExpressionSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.TypeOfKeyword),
+                eatToken(SyntaxKind.TypeOfKeyword),
                 tryParseUnaryExpressionOrHigher(/*force:*/ true));
         }
 
         function parseDeleteExpression(): DeleteExpressionSyntax {
             return new DeleteExpressionSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.DeleteKeyword),
+                eatToken(SyntaxKind.DeleteKeyword),
                 tryParseUnaryExpressionOrHigher(/*force:*/ true));
         }
 
         function parseVoidExpression(): VoidExpressionSyntax {
             return new VoidExpressionSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.VoidKeyword),
+                eatToken(SyntaxKind.VoidKeyword),
                 tryParseUnaryExpressionOrHigher(/*force:*/ true));
         }
 
         function parseFunctionExpression(): FunctionExpressionSyntax {
             return new FunctionExpressionSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.FunctionKeyword),
+                eatToken(SyntaxKind.FunctionKeyword),
                 eatOptionalIdentifierToken(),
                 parseCallSignature(/*requireCompleteTypeParameterList:*/ false),
                 parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ true));
@@ -3311,7 +3298,7 @@ module TypeScript.Parser {
             // this decision.
 
             return new ObjectCreationExpressionSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.NewKeyword),
+                eatToken(SyntaxKind.NewKeyword),
                 tryParseMemberExpressionOrHigher(/*force:*/ true, /*inObjectCreation:*/ true),
                 tryParseArgumentList());
         }
@@ -3804,7 +3791,7 @@ module TypeScript.Parser {
                 return null;
             }
 
-            return new ConstraintSyntax(parseNodeData, eatKeyword(SyntaxKind.ExtendsKeyword), parseType());
+            return new ConstraintSyntax(parseNodeData, eatToken(SyntaxKind.ExtendsKeyword), parseType());
         }
 
         function parseParameterList(): ParameterListSyntax {
@@ -3969,7 +3956,7 @@ module TypeScript.Parser {
 
         function parseConstructorType(): ConstructorTypeSyntax {
             return new ConstructorTypeSyntax(parseNodeData,
-                eatKeyword(SyntaxKind.NewKeyword),
+                eatToken(SyntaxKind.NewKeyword),
                 tryParseTypeParameterList(/*requireCompleteTypeParameterList:*/ false),
                 parseParameterList(),
                 eatToken(SyntaxKind.EqualsGreaterThanToken),
