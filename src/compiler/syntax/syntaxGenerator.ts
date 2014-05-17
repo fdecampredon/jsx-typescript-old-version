@@ -2818,13 +2818,13 @@ function generateVisitor(): string {
             for (var j = 0; j < definition.syntaxKinds.length; j++) {
                 result += " case SyntaxKind." + definition.syntaxKinds[j] + ":"
             }
-            result += "\r\n";
+            result += "\r\n                ";
         }
         else {
-            result += "            case SyntaxKind." + getNameWithoutSuffix(definition) + ":\r\n";
+            result += "            case SyntaxKind." + getNameWithoutSuffix(definition) + ": ";
         }
 
-        result += "                return visitor.visit" + getNameWithoutSuffix(definition) + "(<" + definition.name + ">element);\r\n";
+        result += "return visitor.visit" + getNameWithoutSuffix(definition) + "(<" + definition.name + ">element);\r\n";
     }
 
     result += "        }\r\n\r\n";

@@ -110,10 +110,6 @@ module TypeScript.Scanner {
         return (fullStart << ScannerConstants.LargeTokenFullStartShift) | hasLeadingTriviaInfo | hasTrailingTriviaInfo;
     }
 
-    function largeTokenPackFullWidthAndKind(fullWidth: number, kind: number) {
-        return (fullWidth << ScannerConstants.LargeTokenFullWidthShift) | kind;
-    }
-
     function largeTokenUnpackFullWidth(packedFullWidthAndKind: number) {
         return packedFullWidthAndKind >> ScannerConstants.LargeTokenFullWidthShift;
     }
@@ -701,7 +697,6 @@ module TypeScript.Scanner {
 
         function slowScanTriviaInfo(ch: number): boolean {
             switch (ch) {
-                case CharacterCodes.space:
                 case CharacterCodes.nonBreakingSpace:
                 case CharacterCodes.enQuad:
                 case CharacterCodes.emQuad:

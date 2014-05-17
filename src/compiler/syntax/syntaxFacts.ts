@@ -141,18 +141,6 @@ module TypeScript.SyntaxFacts {
         return kind >= SyntaxKind.FirstKeyword && kind <= SyntaxKind.LastKeyword;
     }
 
-    export function isStandardKeyword(kind: SyntaxKind): boolean {
-        return kind >= SyntaxKind.FirstStandardKeyword && kind <= SyntaxKind.LastStandardKeyword;
-    }
-
-    export function isFutureReservedKeyword(kind: SyntaxKind): boolean {
-        return kind >= SyntaxKind.FirstFutureReservedKeyword && kind <= SyntaxKind.LastFutureReservedKeyword;
-    }
-
-    export function isFutureReservedStrictKeyword(kind: SyntaxKind): boolean {
-        return kind >= SyntaxKind.FirstFutureReservedStrictKeyword && kind <= SyntaxKind.LastFutureReservedStrictKeyword;
-    }
-
     export function isAnyPunctuation(kind: SyntaxKind): boolean {
         return kind >= SyntaxKind.FirstPunctuation && kind <= SyntaxKind.LastPunctuation;
     }

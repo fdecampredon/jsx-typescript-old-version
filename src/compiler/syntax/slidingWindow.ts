@@ -42,11 +42,6 @@ module TypeScript {
                     private sourceLength = -1) {
         }
 
-        // The last legal index of the window (exclusive).
-        private windowAbsoluteEndIndex(): number {
-            return this.windowAbsoluteStartIndex + this.windowCount;
-        }
-
         private addMoreItemsToWindow(argument: any): boolean {
             var sourceLength = this.sourceLength;
             if (sourceLength >= 0 && this.absoluteIndex() >= sourceLength) {
@@ -189,38 +184,6 @@ module TypeScript {
             // any items we added to the window from the current offset onwards unusable.  When we
             // try to get the next item, we'll be forced to refetch them from the underlying source.
             this.windowCount = this.currentRelativeItemIndex;
-        }
-
-        public setAbsoluteIndex(absoluteIndex: number): void {
-            if (this.absoluteIndex() === absoluteIndex) {
-                // Nothing to do if we're setting hte absolute index to where we current are.
-                return;
-            }
-
-            if (this._pinCount > 0) {
-                // If we have any active pins, then the caller better be setting the index somewhere
-                // inside our active window.
-                // Debug.assert(absoluteIndex >= this.windowAbsoluteStartIndex && absoluteIndex < this.windowAbsoluteEndIndex());
-            }
-
-            if (absoluteIndex >= this.windowAbsoluteStartIndex && absoluteIndex < this.windowAbsoluteEndIndex()) {
-                // The caller is setting the index to some place inside our current window.  This is 
-                // easy to handle (and should be the common case).
-                this.currentRelativeItemIndex = (absoluteIndex - this.windowAbsoluteStartIndex);
-            }
-            else {
-                // The caller is setting the index to a place not in the window.  Just throw away 
-                // everything we've got.
-
-                // First, set the window start to that index.
-                this.windowAbsoluteStartIndex = absoluteIndex;
-
-                // Now, set the count to 0.  So we'll be forced to fetch more items.
-                this.windowCount = 0;
-
-                // And set us back to the start of the window.
-                this.currentRelativeItemIndex = 0;
-            }
         }
 
         public pinCount(): number {

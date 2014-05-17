@@ -96,7 +96,6 @@ var compilerSources = [
 	"text/text.ts",
 	"text/textChangeRange.ts",
 	"text/textFactory.ts",
-	"text/textLine.ts",
 	"text/textSpan.ts",
 	"text/textUtilities.ts",
 	"typecheck/pullDeclCollection.ts",
