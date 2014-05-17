@@ -25,5 +25,5 @@
 !!! generics2.ts(20,9): error TS2090: Generic type 'G<T, U>' requires 2 type argument(s).
     var v7: G;                     // Error, no type arguments
             ~
-!!! generics2.ts(21,9): error TS2173: Generic type references must include all type arguments.
+!!! generics2.ts(21,9): error TS2090: Generic type 'G<T, U>' requires 2 type argument(s).
     

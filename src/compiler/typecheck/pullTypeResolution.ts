@@ -2844,7 +2844,7 @@ module TypeScript {
             }
 
             if (this.genericTypeIsUsedWithoutRequiredTypeArguments(typeDeclSymbol, term, context)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(term, DiagnosticCode.Generic_type_references_must_include_all_type_arguments));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(term, DiagnosticCode.Generic_type_0_requires_1_type_argument_s, [typeDeclSymbol.toString(), typeDeclSymbol.getTypeParameters().length]));
                 typeDeclSymbol = this.instantiateTypeToAny(typeDeclSymbol, context);
             }
 
@@ -6867,7 +6867,7 @@ module TypeScript {
 
             var typeParameters = genericTypeSymbol.getTypeParameters();
             if (typeParameters.length === 0) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_does_not_have_type_parameters, [genericTypeSymbol.toString()]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_is_not_generic, [genericTypeSymbol.toString()]));
                 return this.getNewErrorTypeSymbol();
             }
 

@@ -3,9 +3,9 @@
         export class MemberName <A,B,C>{
             static create<A,B,C>(arg1: any, arg2?: any, arg3?: any): MemberName {
                                                                      ~~~~~~~~~~
-!!! genericRecursiveImplicitConstructorErrors3.ts(3,66): error TS2131: Function declared a non-void return type, but has no return expression.
+!!! genericRecursiveImplicitConstructorErrors3.ts(3,66): error TS2090: Generic type 'TypeScript.MemberName<A, B, C>' requires 3 type argument(s).
                                                                      ~~~~~~~~~~
-!!! genericRecursiveImplicitConstructorErrors3.ts(3,66): error TS2173: Generic type references must include all type arguments.
+!!! genericRecursiveImplicitConstructorErrors3.ts(3,66): error TS2131: Function declared a non-void return type, but has no return expression.
             }
         }
     }
@@ -14,23 +14,23 @@
         export class PullSymbol <A,B,C>{
             public type: PullTypeSymbol = null;
                          ~~~~~~~~~~~~~~
-!!! genericRecursiveImplicitConstructorErrors3.ts(10,22): error TS2173: Generic type references must include all type arguments.
+!!! genericRecursiveImplicitConstructorErrors3.ts(10,22): error TS2090: Generic type 'TypeScript.PullTypeSymbol<A, B, C>' requires 3 type argument(s).
         }
         export class PullTypeSymbol <A,B,C>extends PullSymbol {
                                                    ~~~~~~~~~~
-!!! genericRecursiveImplicitConstructorErrors3.ts(12,48): error TS2173: Generic type references must include all type arguments.
+!!! genericRecursiveImplicitConstructorErrors3.ts(12,48): error TS2090: Generic type 'TypeScript.PullSymbol<A, B, C>' requires 3 type argument(s).
             private _elementType: PullTypeSymbol = null;
                                   ~~~~~~~~~~~~~~
-!!! genericRecursiveImplicitConstructorErrors3.ts(13,31): error TS2173: Generic type references must include all type arguments.
+!!! genericRecursiveImplicitConstructorErrors3.ts(13,31): error TS2090: Generic type 'TypeScript.PullTypeSymbol<A, B, C>' requires 3 type argument(s).
             public toString<A,B,C>(scopeSymbol?: PullSymbol, useConstraintInName?: boolean) {
                                                  ~~~~~~~~~~
-!!! genericRecursiveImplicitConstructorErrors3.ts(14,46): error TS2173: Generic type references must include all type arguments.
+!!! genericRecursiveImplicitConstructorErrors3.ts(14,46): error TS2090: Generic type 'TypeScript.PullSymbol<A, B, C>' requires 3 type argument(s).
                 var s = this.getScopedNameEx(scopeSymbol, useConstraintInName).toString();
                 return s;
             }
             public getScopedNameEx<A,B,C>(scopeSymbol?: PullSymbol, useConstraintInName?: boolean, getPrettyTypeName?: boolean, getTypeParamMarkerInfo?: boolean) {
                                                         ~~~~~~~~~~
-!!! genericRecursiveImplicitConstructorErrors3.ts(18,53): error TS2173: Generic type references must include all type arguments.
+!!! genericRecursiveImplicitConstructorErrors3.ts(18,53): error TS2090: Generic type 'TypeScript.PullSymbol<A, B, C>' requires 3 type argument(s).
                 if (this.isArray()) {
                          ~~~~~~~
 !!! genericRecursiveImplicitConstructorErrors3.ts(19,22): error TS2094: The property 'isArray' does not exist on value of type 'PullTypeSymbol<A, B, C>'.

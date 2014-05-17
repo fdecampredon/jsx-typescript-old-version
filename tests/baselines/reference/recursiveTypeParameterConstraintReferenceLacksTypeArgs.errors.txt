@@ -1,4 +1,4 @@
 ==== tests/cases/compiler/recursiveTypeParameterConstraintReferenceLacksTypeArgs.ts (1 errors) ====
     class A<T extends A> { }
                       ~
-!!! recursiveTypeParameterConstraintReferenceLacksTypeArgs.ts(1,19): error TS2173: Generic type references must include all type arguments.
+!!! recursiveTypeParameterConstraintReferenceLacksTypeArgs.ts(1,19): error TS2090: Generic type 'A<T>' requires 1 type argument(s).

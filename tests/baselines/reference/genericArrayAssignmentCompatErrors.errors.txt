@@ -6,7 +6,7 @@
     var myCars3 = new Array({});
     var myCars4: Array; // error
                  ~~~~~
-!!! genericArrayAssignmentCompatErrors.ts(4,14): error TS2173: Generic type references must include all type arguments.
+!!! genericArrayAssignmentCompatErrors.ts(4,14): error TS2090: Generic type 'Array<T>' requires 1 type argument(s).
     var myCars5: Array<any>[];
      
     myCars = myCars2;
