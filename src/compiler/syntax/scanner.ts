@@ -88,10 +88,6 @@ module TypeScript.Scanner {
         return (fullStart << ScannerConstants.FixedWidthTokenFullStartShift) | kind;
     }
 
-    function fixedWidthTokenUnpackKind(packedData: number) {
-        return packedData & ScannerConstants.KindMask;
-    }
-
     function fixedWidthTokenUnpackFullStart(packedData: number) {
         return packedData >> ScannerConstants.FixedWidthTokenFullStartShift;
     }
@@ -100,10 +96,6 @@ module TypeScript.Scanner {
         return (fullStart << ScannerConstants.SmallTokenFullStartShift) |
                (fullWidth << ScannerConstants.SmallTokenFullWidthShift) |
                kind;
-    }
-
-    function smallTokenUnpackKind(packedData: number): SyntaxKind {
-        return packedData & ScannerConstants.KindMask;
     }
 
     function smallTokenUnpackFullWidth(packedData: number): SyntaxKind {
@@ -124,10 +116,6 @@ module TypeScript.Scanner {
 
     function largeTokenUnpackFullWidth(packedFullWidthAndKind: number) {
         return packedFullWidthAndKind >> ScannerConstants.LargeTokenFullWidthShift;
-    }
-
-    function largeTokenUnpackKind(packedFullWidthAndKind: number) {
-        return packedFullWidthAndKind & ScannerConstants.KindMask;
     }
 
     function largeTokenUnpackFullStart(packedFullStartAndInfo: number): number {
@@ -302,7 +290,7 @@ module TypeScript.Scanner {
         public leadingTriviaWidth(): number { return 0; }
         public trailingTriviaWidth(): number { return 0; }
 
-        public kind(): SyntaxKind { return fixedWidthTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return this.fullText().length; }
         public fullStart(): number { return fixedWidthTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return false; }
@@ -332,7 +320,7 @@ module TypeScript.Scanner {
         public leadingTriviaWidth(): number { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return smallTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
         public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return false; }
@@ -362,7 +350,7 @@ module TypeScript.Scanner {
         public leadingTriviaWidth(): number { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return smallTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
         public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return true; }
@@ -392,7 +380,7 @@ module TypeScript.Scanner {
         public leadingTriviaWidth(): number { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return smallTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
         public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return false; }
@@ -422,7 +410,7 @@ module TypeScript.Scanner {
         public leadingTriviaWidth(): number { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return smallTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
         public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return true; }
@@ -454,7 +442,7 @@ module TypeScript.Scanner {
         public leadingTriviaWidth(): number                 { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number                { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return largeTokenUnpackKind(this._packedFullWidthAndKind); }
+        public kind(): SyntaxKind { return this._packedFullWidthAndKind & ScannerConstants.KindMask; }
         public fullWidth(): number { return largeTokenUnpackFullWidth(this._packedFullWidthAndKind); }
         public fullStart(): number { return largeTokenUnpackFullStart(this._packedFullStartAndInfo); }
         public hasLeadingTrivia(): boolean { return largeTokenUnpackHasLeadingTriviaInfo(this._packedFullStartAndInfo) !== 0; }
