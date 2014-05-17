@@ -742,7 +742,7 @@ class Program {
 
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
         var text = TypeScript.SimpleText.fromString(contents);
-        var scanner = TypeScript.createScanner(languageVersion, text, () => { });
+        var scanner = TypeScript.Scanner.createScanner(languageVersion, text, () => { });
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var textArray: string[] = [];
@@ -773,7 +773,7 @@ class Program {
         };
 
         var text = TypeScript.SimpleText.fromString(contents);
-        var scanner = TypeScript.createScanner(languageVersion, text, reportDiagnostic);
+        var scanner = TypeScript.Scanner.createScanner(languageVersion, text, reportDiagnostic);
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var jsonTokens: any[] = [];

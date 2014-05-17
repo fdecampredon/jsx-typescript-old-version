@@ -182,7 +182,7 @@ module TypeScript.Services {
                     displayName = TypeScript.stripStartAndEndQuotes(displayName);
                 }
 
-                if (TypeScript.isValidIdentifier(TypeScript.SimpleText.fromString(displayName), TypeScript.LanguageVersion.EcmaScript5)) {
+                if (TypeScript.Scanner.isValidIdentifier(TypeScript.SimpleText.fromString(displayName), TypeScript.LanguageVersion.EcmaScript5)) {
                     return displayName;
                 }
             }

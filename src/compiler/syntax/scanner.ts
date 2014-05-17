@@ -1,6 +1,6 @@
 ///<reference path='references.ts' />
 
-module TypeScript {
+module TypeScript.Scanner {
     // Make sure we can encode a token's kind in 7 bits.
     Debug.assert(SyntaxKind.LastToken <= 127);
 
@@ -471,17 +471,17 @@ module TypeScript {
         width: number;
     }
 
-    interface ScannerInternal extends Scanner {
+    interface IScannerInternal extends IScanner {
         fillTokenInfo(token: IScannerToken, tokenInfo: TokenInfo): void;
         scanTrivia(token: IScannerToken, isTrailing: boolean): ISyntaxTriviaList;
     }
 
-    export interface Scanner {
+    export interface IScanner {
         setIndex(index: number): void;
         scan(allowContextualToken: boolean): ISyntaxToken;
     }
 
-    export function createScanner(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): Scanner {
+    export function createScanner(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): IScanner {
         var scanner = createScannerInternal(languageVersion, text, reportDiagnostic);
         return {
             setIndex: scanner.setIndex,
@@ -489,7 +489,7 @@ module TypeScript {
         };
     }
 
-    function createScannerInternal(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): ScannerInternal {
+    function createScannerInternal(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): IScannerInternal {
         var str: string;
         var index: number;
         var start: number;
@@ -1608,5 +1608,224 @@ module TypeScript {
         var token = scanner.scan(/*allowContextualToken:*/ false);
 
         return !hadError && SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && width(token) === text.length();
+    }
+
+    // A parser source that gets its data from an underlying scanner.
+    export interface IScannerParserSource extends Parser.IParserSource {
+        // The position that the scanner is currently at.
+        absolutePosition(): number;
+
+        // Resets the source to this position. Any diagnostics produced after this point will be
+        // removed.
+        resetToPosition(absolutePosition: number): void;
+
+        isPinned(): boolean;
+    }
+
+    interface IScannerRewindPoint extends Parser.IRewindPoint {
+        // Information used by normal parser source.
+        absolutePosition: number;
+        slidingWindowIndex: number;
+    }
+
+    // Parser source used in batch scenarios.  Directly calls into an underlying text scanner and
+    // supports none of the functionality to reuse nodes.  Good for when you just want want to do
+    // a single parse of a file.
+    class ScannerParserSource implements IScannerParserSource {
+        // The sliding window that we store tokens in.
+        private slidingWindow: SlidingWindow;
+
+        // The scanner we're pulling tokens from.
+        private scanner: IScanner;
+
+        // The absolute position we're at in the text we're reading from.
+        private _absolutePosition: number = 0;
+
+        // The diagnostics we get while scanning.  Note: this never gets rewound when we do a normal
+        // rewind.  That's because rewinding doesn't affect the tokens created.  It only affects where
+        // in the token stream we're pointing at.  However, it will get modified if we we decide to
+        // reparse a / or /= as a regular expression.
+        private _tokenDiagnostics: Diagnostic[] = [];
+
+        // Pool of rewind points we give out if the parser needs one.
+        private rewindPointPool: IScannerRewindPoint[] = [];
+        private rewindPointPoolCount = 0;
+
+        private lastDiagnostic: Diagnostic = null;
+        private reportDiagnostic = (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => {
+            this.lastDiagnostic = new Diagnostic(this.fileName, this.text.lineMap(), position, fullWidth, diagnosticKey, args);
+        }
+
+        public release() {
+            this.slidingWindow = null;
+            this.scanner = null;
+            this._tokenDiagnostics = [];
+            this.rewindPointPool = [];
+            this.lastDiagnostic = null;
+            this.reportDiagnostic = null;
+        }
+
+        constructor(public fileName: string,
+            public languageVersion: LanguageVersion,
+            public text: ISimpleText) {
+            this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 1024, null), null);
+            this.scanner = createScanner(languageVersion, text, this.reportDiagnostic);
+        }
+
+        public currentNode(): ISyntaxNode {
+            // The normal parser source never returns nodes.  They're only returned by the 
+            // incremental parser source.
+            return null;
+        }
+
+        public consumeNode(node: ISyntaxNode): void {
+            // Should never get called.
+            throw Errors.invalidOperation();
+        }
+
+        public absolutePosition() {
+            return this._absolutePosition;
+        }
+
+        public tokenDiagnostics(): Diagnostic[] {
+            return this._tokenDiagnostics;
+        }
+
+        private getOrCreateRewindPoint(): IScannerRewindPoint {
+            if (this.rewindPointPoolCount === 0) {
+                return <IScannerRewindPoint>{};
+            }
+
+            this.rewindPointPoolCount--;
+            var result = this.rewindPointPool[this.rewindPointPoolCount];
+            this.rewindPointPool[this.rewindPointPoolCount] = null;
+            return result;
+        }
+
+        public getRewindPoint(): IScannerRewindPoint {
+            var slidingWindowIndex = this.slidingWindow.getAndPinAbsoluteIndex();
+
+            var rewindPoint = this.getOrCreateRewindPoint();
+
+            rewindPoint.slidingWindowIndex = slidingWindowIndex;
+            rewindPoint.absolutePosition = this._absolutePosition;
+
+            // rewindPoint.pinCount = this.slidingWindow.pinCount();
+
+            return rewindPoint;
+        }
+
+        public isPinned(): boolean {
+            return this.slidingWindow.pinCount() > 0;
+        }
+
+        public rewind(rewindPoint: IScannerRewindPoint): void {
+            this.slidingWindow.rewindToPinnedIndex(rewindPoint.slidingWindowIndex);
+
+            this._absolutePosition = rewindPoint.absolutePosition;
+        }
+
+        public releaseRewindPoint(rewindPoint: IScannerRewindPoint): void {
+            // Debug.assert(this.slidingWindow.pinCount() === rewindPoint.pinCount);
+            this.slidingWindow.releaseAndUnpinAbsoluteIndex((<any>rewindPoint).absoluteIndex);
+
+            this.rewindPointPool[this.rewindPointPoolCount] = rewindPoint;
+            this.rewindPointPoolCount++;
+        }
+
+        public fetchNextItem(allowContextualToken: boolean): ISyntaxToken {
+            // Assert disabled because it is actually expensive enugh to affect perf.
+            // Debug.assert(spaceAvailable > 0);
+            var token = this.scanner.scan(allowContextualToken);
+
+            var lastDiagnostic = this.lastDiagnostic;
+            if (lastDiagnostic === null) {
+                return token;
+            }
+
+            // If we produced any diagnostics while creating this token, then realize the token so 
+            // it won't be reused in incremental scenarios.
+
+            this._tokenDiagnostics.push(lastDiagnostic);
+            this.lastDiagnostic = null;
+            return Syntax.realizeToken(token);
+        }
+
+        public peekToken(n: number): ISyntaxToken {
+            return this.slidingWindow.peekItemN(n);
+        }
+
+        public consumeToken(token: ISyntaxToken): void {
+            // Debug.assert(this.currentToken() === token);
+            this._absolutePosition += token.fullWidth();
+
+            this.slidingWindow.moveToNextItem();
+        }
+
+        public currentToken(): ISyntaxToken {
+            return this.slidingWindow.currentItem(/*allowContextualToken:*/ false);
+        }
+
+        private removeDiagnosticsOnOrAfterPosition(position: number): void {
+            // walk backwards, removing any diagnostics that came after the the current token's
+            // full start position.
+            var tokenDiagnosticsLength = this._tokenDiagnostics.length;
+            while (tokenDiagnosticsLength > 0) {
+                var diagnostic = this._tokenDiagnostics[tokenDiagnosticsLength - 1];
+                if (diagnostic.start() >= position) {
+                    tokenDiagnosticsLength--;
+                }
+                else {
+                    break;
+                }
+            }
+
+            this._tokenDiagnostics.length = tokenDiagnosticsLength;
+        }
+
+        public resetToPosition(absolutePosition: number): void {
+            this._absolutePosition = absolutePosition;
+
+            // First, remove any diagnostics that came after this position.
+            this.removeDiagnosticsOnOrAfterPosition(absolutePosition);
+
+            // Now, tell our sliding window to throw away all tokens after this position as well.
+            this.slidingWindow.disgardAllItemsFromCurrentIndexOnwards();
+
+            // Now tell the scanner to reset its position to this position as well.  That way
+            // when we try to scan the next item, we'll be at the right location.
+            this.scanner.setIndex(absolutePosition);
+        }
+
+        public currentContextualToken(): ISyntaxToken {
+            // We better be on a / or > token right now.
+            // Debug.assert(SyntaxFacts.isAnyDivideToken(this.currentToken().kind()));
+
+            // First, we're going to rewind all our data to the point where this / or /= token started.
+            // That's because if it does turn out to be a regular expression, then any tokens or token 
+            // diagnostics we produced after the original / may no longer be valid.  This would actually
+            // be a  fairly expected case.  For example, if you had:  / ... gibberish ... /, we may have 
+            // produced several diagnostics in the process of scanning the tokens after the first / as
+            // they may not have been legal javascript okens.
+            //
+            // We also need to remove all the tokens we've gotten from the slash and onwards.  They may
+            // not have been what the scanner would have produced if it decides that this is actually
+            // a regular expresion.
+            this.resetToPosition(this._absolutePosition);
+
+            // Now actually fetch the token again from the scanner. This time let it know that it
+            // can scan it as a regex token if it wants to.
+            var token = this.slidingWindow.currentItem(/*allowContextualToken:*/ true);
+
+            // We have better gotten some sort of regex token.  Otherwise, something *very* wrong has
+            // occurred.
+            // Debug.assert(SyntaxFacts.isAnyDivideOrRegularExpressionToken(token.kind()));
+
+            return token;
+        }
+    }
+
+    export function createParserSource(fileName: string, text: ISimpleText, languageVersion: LanguageVersion): IScannerParserSource {
+        return new ScannerParserSource(fileName, languageVersion, text);
     }
 }

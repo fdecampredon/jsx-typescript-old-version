@@ -82,7 +82,7 @@ module TypeScript {
 
     var reportDiagnostic = () => { };
 
-    function processImports(lineMap: LineMap, scanner: Scanner, token: ISyntaxToken, importedFiles: IFileReference[]): void {
+    function processImports(lineMap: LineMap, scanner: Scanner.IScanner, token: ISyntaxToken, importedFiles: IFileReference[]): void {
         var lineChar = { line: -1, character: -1 };
 
         var start = new Date().getTime();
@@ -172,7 +172,7 @@ module TypeScript {
 
     export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, readImportFiles = true): IPreProcessedFileInfo {
         var text = SimpleText.fromScriptSnapshot(sourceText);
-        var scanner = createScanner(LanguageVersion.EcmaScript5, text, reportDiagnostic);
+        var scanner = Scanner.createScanner(LanguageVersion.EcmaScript5, text, reportDiagnostic);
 
         var firstToken = scanner.scan(/*allowRegularExpression:*/ false);
 

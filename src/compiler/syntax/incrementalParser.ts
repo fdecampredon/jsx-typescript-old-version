@@ -9,11 +9,6 @@ module TypeScript.IncrementalParser {
         changeRange: TextChangeRange;
     }
 
-    interface INormalParserSource extends Parser.IParserSource {
-        absolutePosition(): number;
-        resetToPosition(absolutePosition: number): void;
-    }
-
     // Parser source used in incremental scenarios. This parser source wraps an old tree, text 
     // change and new text, and uses all three to provide nodes and tokens to the parser.  In
     // general, nodes from the old tree are returned as long as they do not intersect with the text 
@@ -30,14 +25,14 @@ module TypeScript.IncrementalParser {
         public fileName: string;
         public languageVersion: LanguageVersion;
 
-        // The underlying parser source that we will use to scan tokens from any new text, or any 
-        // tokens from the old tree that we decide we can't use for any reason.  We will also 
-        // continue scanning tokens from this source until we've decided that we're resynchronized
-        // and can read in subsequent data from the old tree.
+        // The underlying source that we will use to scan tokens from any new text, or any tokens 
+        // from the old tree that we decide we can't use for any reason.  We will also continue 
+        // scanning tokens from this source until we've decided that we're resynchronized and can
+        // read in subsequent data from the old tree.
         //
         // This parser source also keeps track of the absolute position in the text that we're in,
         // and any token diagnostics produced.  That way we dont' have to track that ourselves.
-        private _normalParserSource: INormalParserSource;
+        private _scannerParserSource: Scanner.IScannerParserSource;
 
         // The range of text in the *original* text that was changed, and the new length of it after
         // the change.
@@ -68,8 +63,8 @@ module TypeScript.IncrementalParser {
         private _oldSourceUnitCursor: SyntaxCursor;
 
         public release() {
-            this._normalParserSource.release();
-            this._normalParserSource = null;
+            this._scannerParserSource.release();
+            this._scannerParserSource = null;
             this._oldSourceUnitCursor = null;
         }
 
@@ -102,7 +97,7 @@ module TypeScript.IncrementalParser {
             }
 
             // Set up a scanner so that we can scan tokens out of the new text.
-            this._normalParserSource = <INormalParserSource>Parser.createParserSource(oldSyntaxTree.fileName(), text, oldSyntaxTree.languageVersion());
+            this._scannerParserSource = Scanner.createParserSource(oldSyntaxTree.fileName(), text, oldSyntaxTree.languageVersion());
         }
 
         private static extendToAffectedRange(changeRange: TextChangeRange,
@@ -150,16 +145,16 @@ module TypeScript.IncrementalParser {
         }
 
         private absolutePosition() {
-            return this._normalParserSource.absolutePosition();
+            return this._scannerParserSource.absolutePosition();
         }
 
         public tokenDiagnostics(): Diagnostic[] {
-            return this._normalParserSource.tokenDiagnostics();
+            return this._scannerParserSource.tokenDiagnostics();
         }
 
         public getRewindPoint() {
             // Get a rewind point for our new text reader and for our old source unit cursor.
-            var rewindPoint = <IParserRewindPoint>this._normalParserSource.getRewindPoint();
+            var rewindPoint = <IParserRewindPoint>this._scannerParserSource.getRewindPoint();
 
             // Clone our cursor.  That way we can restore to that point if hte parser needs to rewind.
             var oldSourceUnitCursorClone = cloneSyntaxCursor(this._oldSourceUnitCursor);
@@ -176,10 +171,6 @@ module TypeScript.IncrementalParser {
             return rewindPoint;
         }
 
-        public isPinned(): boolean {
-            return this._normalParserSource.isPinned();
-        }
-
         public rewind(rewindPoint: IParserRewindPoint): void {
             // Restore our state to the values when the rewind point was created.
             this._changeRange = rewindPoint.changeRange;
@@ -194,7 +185,7 @@ module TypeScript.IncrementalParser {
             // to return it in 'releaseRewindPoint'.
             rewindPoint.oldSourceUnitCursor = null;
 
-            this._normalParserSource.rewind(rewindPoint);
+            this._scannerParserSource.rewind(rewindPoint);
         }
 
         public releaseRewindPoint(rewindPoint: IParserRewindPoint): void {
@@ -202,7 +193,7 @@ module TypeScript.IncrementalParser {
                 returnSyntaxCursor(rewindPoint.oldSourceUnitCursor);
             }
 
-            this._normalParserSource.releaseRewindPoint(rewindPoint);
+            this._scannerParserSource.releaseRewindPoint(rewindPoint);
         }
 
         private canReadFromOldSourceUnit() {
@@ -210,7 +201,7 @@ module TypeScript.IncrementalParser {
             // reading from the old source unit, we'll try to then set the position of the normal
             // parser source to an absolute position (in moveToNextToken).  Doing is unsupported
             // while the underlying source is pinned.
-            if (this._normalParserSource.isPinned()) {
+            if (this._scannerParserSource.isPinned()) {
                 return false;
             }
 
@@ -278,12 +269,12 @@ module TypeScript.IncrementalParser {
 
             // Either we couldn't read from the old source unit, or we weren't able to successfully
             // get a token from it.  In this case we need to read a token from the underlying text.
-            return this._normalParserSource.currentToken();
+            return this._scannerParserSource.currentToken();
         }
 
         public currentContextualToken(): ISyntaxToken {
             // Just delegate to the underlying source to handle this.
-            return this._normalParserSource.currentContextualToken();
+            return this._scannerParserSource.currentContextualToken();
         }
 
         private syncCursorToNewTextIfBehind() {
@@ -395,7 +386,7 @@ module TypeScript.IncrementalParser {
             if (token !== null) {
                 if (!this.intersectsWithChangeRangeSpanInOriginalText(position, token.fullWidth())) {
                     // Didn't intersect with the change range.
-                    if (!token.isIncrementallyUnusable() && !isContextualToken(token)) {
+                    if (!token.isIncrementallyUnusable() && !Scanner.isContextualToken(token)) {
 
                         // Didn't contain anything that would make it unusable.  Awesome.  This is
                         // a token we can reuse.
@@ -426,7 +417,7 @@ module TypeScript.IncrementalParser {
             }
 
             // Couldn't peek this far in the old tree.  Get the token from the new text.
-            return this._normalParserSource.peekToken(n);
+            return this._scannerParserSource.peekToken(n);
         }
 
         private tryPeekTokenFromOldSourceUnit(n: number): ISyntaxToken {
@@ -481,7 +472,7 @@ module TypeScript.IncrementalParser {
 
             // Update the underlying source with where it should now be currently pointin.
             var absolutePosition = this.absolutePosition() + fullWidth(node);
-            this._normalParserSource.resetToPosition(absolutePosition);
+            this._scannerParserSource.resetToPosition(absolutePosition);
 
             // Debug.assert(previousToken !== null);
             // Debug.assert(previousToken.width() > 0);
@@ -510,7 +501,7 @@ module TypeScript.IncrementalParser {
                 // don't need to do this when the token came from the new text as the source will
                 // automatically be placed in the right position.
                 var absolutePosition = this.absolutePosition() + currentToken.fullWidth();
-                this._normalParserSource.resetToPosition(absolutePosition);
+                this._scannerParserSource.resetToPosition(absolutePosition);
 
                 // Debug.assert(previousToken !== null);
                 // Debug.assert(previousToken.width() > 0);
@@ -528,7 +519,7 @@ module TypeScript.IncrementalParser {
                 this._changeDelta -= currentToken.fullWidth();
 
                 // Move our underlying source forward.
-                this._normalParserSource.consumeToken(currentToken);
+                this._scannerParserSource.consumeToken(currentToken);
 
                 // Because we read a token from the new text, we may have moved ourselves past the
                 // change range.  If we did, then we may also have to update our change delta to

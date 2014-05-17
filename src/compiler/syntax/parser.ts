@@ -93,8 +93,6 @@ module TypeScript.Parser {
         // consume far more memory than necessary.
         getRewindPoint(): IRewindPoint;
 
-        isPinned(): boolean;
-
         // Rewinds the source to the position and state it was at when this rewind point was created.
         // This does not need to be called if the parser decides it does not need to rewind.  For 
         // example, the parser may speculatively parse out a lambda expression when it sees something
@@ -116,203 +114,6 @@ module TypeScript.Parser {
 
     // Information the parser needs to effectively rewind.
     export interface IRewindPoint {
-    }
-
-    // Parser source used in batch scenarios.  Directly calls into an underlying text scanner and
-    // supports none of the functionality to reuse nodes.  Good for when you just want want to do
-    // a single parse of a file.
-    class NormalParserSource implements IParserSource {
-        // The sliding window that we store tokens in.
-        private slidingWindow: SlidingWindow;
-
-        // The scanner we're pulling tokens from.
-        private scanner: Scanner;
-
-        // The absolute position we're at in the text we're reading from.
-        private _absolutePosition: number = 0;
-
-        // The diagnostics we get while scanning.  Note: this never gets rewound when we do a normal
-        // rewind.  That's because rewinding doesn't affect the tokens created.  It only affects where
-        // in the token stream we're pointing at.  However, it will get modified if we we decide to
-        // reparse a / or /= as a regular expression.
-        private _tokenDiagnostics: Diagnostic[] = [];
-
-        // Pool of rewind points we give out if the parser needs one.
-        private rewindPointPool: IParserRewindPoint[] = [];
-        private rewindPointPoolCount = 0;
-
-        private lastDiagnostic: Diagnostic = null;
-        private reportDiagnostic = (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => {
-            this.lastDiagnostic = new Diagnostic(this.fileName, this.text.lineMap(), position, fullWidth, diagnosticKey, args);
-        }
-
-        public release() {
-            this.slidingWindow = null;
-            this.scanner = null;
-            this._tokenDiagnostics = [];
-            this.rewindPointPool = [];
-            this.lastDiagnostic = null;
-            this.reportDiagnostic = null;
-        }
-
-        constructor(public fileName: string,
-                    public languageVersion: LanguageVersion,
-                    public text: ISimpleText) {
-            this.slidingWindow = new SlidingWindow(this, ArrayUtilities.createArray(/*defaultWindowSize:*/ 1024, null), null);
-            this.scanner = createScanner(languageVersion, text, this.reportDiagnostic);
-        }
-
-        public currentNode(): ISyntaxNode {
-            // The normal parser source never returns nodes.  They're only returned by the 
-            // incremental parser source.
-            return null;
-        }
-
-        public consumeNode(node: ISyntaxNode): void {
-            // Should never get called.
-            throw Errors.invalidOperation();
-        }
-
-        public absolutePosition() {
-            return this._absolutePosition;
-        }
-
-        public tokenDiagnostics(): Diagnostic[] {
-            return this._tokenDiagnostics;
-        }
-
-        private getOrCreateRewindPoint(): IParserRewindPoint {
-            if (this.rewindPointPoolCount === 0) {
-                return <IParserRewindPoint>{};
-            }
-
-            this.rewindPointPoolCount--;
-            var result = this.rewindPointPool[this.rewindPointPoolCount];
-            this.rewindPointPool[this.rewindPointPoolCount] = null;
-            return result;
-        }
-
-        public getRewindPoint(): IParserRewindPoint {
-            var slidingWindowIndex = this.slidingWindow.getAndPinAbsoluteIndex();
-
-            var rewindPoint = this.getOrCreateRewindPoint();
-
-            rewindPoint.slidingWindowIndex = slidingWindowIndex;
-            rewindPoint.absolutePosition = this._absolutePosition;
-
-            rewindPoint.pinCount = this.slidingWindow.pinCount();
-
-            return rewindPoint;
-        }
-
-        public isPinned(): boolean {
-            return this.slidingWindow.pinCount() > 0;
-        }
-
-        public rewind(rewindPoint: IParserRewindPoint): void {
-            this.slidingWindow.rewindToPinnedIndex(rewindPoint.slidingWindowIndex);
-
-            this._absolutePosition = rewindPoint.absolutePosition;
-        }
-
-        public releaseRewindPoint(rewindPoint: IParserRewindPoint): void {
-            // Debug.assert(this.slidingWindow.pinCount() === rewindPoint.pinCount);
-            this.slidingWindow.releaseAndUnpinAbsoluteIndex((<any>rewindPoint).absoluteIndex);
-
-            this.rewindPointPool[this.rewindPointPoolCount] = rewindPoint;
-            this.rewindPointPoolCount++;
-        }
-
-        public fetchNextItem(allowContextualToken: boolean): ISyntaxToken {
-            // Assert disabled because it is actually expensive enugh to affect perf.
-            // Debug.assert(spaceAvailable > 0);
-            var token = this.scanner.scan(allowContextualToken);
-
-            var lastDiagnostic = this.lastDiagnostic;
-            if (lastDiagnostic === null) {
-                return token;
-            }
-
-            // If we produced any diagnostics while creating this token, then realize the token so 
-            // it won't be reused in incremental scenarios.
-
-            this._tokenDiagnostics.push(lastDiagnostic);
-            this.lastDiagnostic = null;
-            return Syntax.realizeToken(token);
-        }
-
-        public peekToken(n: number): ISyntaxToken {
-            return this.slidingWindow.peekItemN(n);
-        }
-
-        public consumeToken(token: ISyntaxToken): void {
-            // Debug.assert(this.currentToken() === token);
-            this._absolutePosition += token.fullWidth();
-
-            this.slidingWindow.moveToNextItem();
-        }
-
-        public currentToken(): ISyntaxToken {
-            return this.slidingWindow.currentItem(/*allowContextualToken:*/ false);
-        }
-
-        private removeDiagnosticsOnOrAfterPosition(position: number): void {
-            // walk backwards, removing any diagnostics that came after the the current token's
-            // full start position.
-            var tokenDiagnosticsLength = this._tokenDiagnostics.length;
-            while (tokenDiagnosticsLength > 0) {
-                var diagnostic = this._tokenDiagnostics[tokenDiagnosticsLength - 1];
-                if (diagnostic.start() >= position) {
-                    tokenDiagnosticsLength--;
-                }
-                else {
-                    break;
-                }
-            }
-
-            this._tokenDiagnostics.length = tokenDiagnosticsLength;
-        }
-
-        public resetToPosition(absolutePosition: number): void {
-            this._absolutePosition = absolutePosition;
-
-            // First, remove any diagnostics that came after this position.
-            this.removeDiagnosticsOnOrAfterPosition(absolutePosition);
-
-            // Now, tell our sliding window to throw away all tokens after this position as well.
-            this.slidingWindow.disgardAllItemsFromCurrentIndexOnwards();
-
-            // Now tell the scanner to reset its position to this position as well.  That way
-            // when we try to scan the next item, we'll be at the right location.
-            this.scanner.setIndex(absolutePosition);
-        }
-
-        public currentContextualToken(): ISyntaxToken {
-            // We better be on a / or > token right now.
-            // Debug.assert(SyntaxFacts.isAnyDivideToken(this.currentToken().kind()));
-
-            // First, we're going to rewind all our data to the point where this / or /= token started.
-            // That's because if it does turn out to be a regular expression, then any tokens or token 
-            // diagnostics we produced after the original / may no longer be valid.  This would actually
-            // be a  fairly expected case.  For example, if you had:  / ... gibberish ... /, we may have 
-            // produced several diagnostics in the process of scanning the tokens after the first / as
-            // they may not have been legal javascript okens.
-            //
-            // We also need to remove all the tokens we've gotten from the slash and onwards.  They may
-            // not have been what the scanner would have produced if it decides that this is actually
-            // a regular expresion.
-            this.resetToPosition(this._absolutePosition);
-
-            // Now actually fetch the token again from the scanner. This time let it know that it
-            // can scan it as a regex token if it wants to.
-            var token = this.slidingWindow.currentItem(/*allowContextualToken:*/ true);
-
-            // We have better gotten some sort of regex token.  Otherwise, something *very* wrong has
-            // occurred.
-            // Debug.assert(SyntaxFacts.isAnyDivideOrRegularExpressionToken(token.kind()));
-
-            return token;
-        }
     }
 
     var arrayPool: any[][] = [];
@@ -344,6 +145,22 @@ module TypeScript.Parser {
 
     interface IParser {
         parseSyntaxTree(source: IParserSource, isDeclaration: boolean): SyntaxTree;
+    }
+
+    interface IParserRewindPoint extends IRewindPoint {
+        // As we speculatively parse, we may build up diagnostics.  When we rewind we want to 
+        // 'forget' that information.In order to do that we store the count of diagnostics and 
+        // when we start speculating, and we reset to that count when we're done.  That way the
+        // speculative parse does not affect any further results.
+        diagnosticsCount: number;
+
+        // isInStrictMode and listParsingState should not have to be tracked by a rewind point.
+        // Because they are naturally mutated and restored based on the normal stack movement of 
+        // the parser, they should automatically return to whatever value they had to begin with
+        // if the parser decides to rewind or not.  However, to ensure that this is true, we track
+        // these variables and check if they have the same value when we're rewinding/releasing.
+        isInStrictMode: boolean;
+        listParsingState: ListParsingState;
     }
 
     // Contains the actual logic to parse typescript/javascript.  This is the code that generally
@@ -5068,36 +4885,6 @@ module TypeScript.Parser {
         return parseSyntaxTree;
     }
 
-    interface IParserRewindPoint {
-        // Information used by normal parser source.
-        absolutePosition: number;
-        slidingWindowIndex: number;
-
-        // Information used by the parser itself.
-
-        // As we speculatively parse, we may build up diagnostics.  When we rewind we want to 
-        // 'forget' that information.In order to do that we store the count of diagnostics and 
-        // when we start speculating, and we reset to that count when we're done.  That way the
-        // speculative parse does not affect any further results.
-        diagnosticsCount: number;
-
-        // For debug purposes only, we also track the following information. They help us assert 
-        // that we're not doing anything unexpected.
-
-        // Rewind points should work like a stack.  The first rewind point given out should be the
-        // last one released.  By keeping track of the count of points out when this was created, 
-        // we can ensure that invariant was preserved.
-        pinCount: number;
-
-        // isInStrictMode and listParsingState should not have to be tracked by a rewind point.
-        // Because they are naturally mutated and restored based on the normal stack movement of 
-        // the parser, they should automatically return to whatever value they had to begin with
-        // if the parser decides to rewind or not.  However, to ensure that this is true, we track
-        // these variables and check if they have the same value when we're rewinding/releasing.
-        isInStrictMode: boolean;
-        listParsingState: ListParsingState;
-    }
-
     // The precedence of expressions in typescript.  While we're parsing an expression, we will 
     // continue to consume and form new trees if the precedence is *strictly* greater than our current
     // precedence.  For example, if we have: a + b * c, we will first parse 'a' with precedence 1 (Lowest). 
@@ -5223,11 +5010,7 @@ module TypeScript.Parser {
     var parseSyntaxTree = createParseSyntaxTree();
 
     export function parse(fileName: string, text: ISimpleText, languageVersion: LanguageVersion, isDeclaration: boolean): SyntaxTree {
-        return parseSource(createParserSource(fileName, text, languageVersion), isDeclaration);
-    }
-
-    export function createParserSource(fileName: string, text: ISimpleText, languageVersion: LanguageVersion): IParserSource {
-        return new NormalParserSource(fileName, languageVersion, text);
+        return parseSource(Scanner.createParserSource(fileName, text, languageVersion), isDeclaration);
     }
 
     export function parseSource(source: IParserSource, isDeclaration: boolean): SyntaxTree {
