@@ -2,10 +2,6 @@
 
 module TypeScript {
     export class ArrayUtilities {
-        public static isArray(value: any): boolean {
-            return Object.prototype.toString.apply(value, []) === '[object Array]';
-        }
-
         public static sequenceEquals<T>(array1: T[], array2: T[], equals: (v1: T, v2: T) => boolean) {
             if (array1 === array2) {
                 return true;
@@ -73,34 +69,6 @@ module TypeScript {
             }
 
             return result;
-        }
-
-        public static min<T>(array: T[], func: (v: T) => number): number {
-            // Debug.assert(array.length > 0);
-            var min = func(array[0]);
-
-            for (var i = 1; i < array.length; i++) {
-                var next = func(array[i]);
-                if (next < min) {
-                    min = next;
-                }
-            }
-
-            return min;
-        }
-
-        public static max<T>(array: T[], func: (v: T) => number): number {
-            // Debug.assert(array.length > 0);
-            var max = func(array[0]);
-
-            for (var i = 1; i < array.length; i++) {
-                var next = func(array[i]);
-                if (next > max) {
-                    max = next;
-                }
-            }
-
-            return max;
         }
 
         public static last<T>(array: T[]): T {

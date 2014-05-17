@@ -55,7 +55,6 @@ var compilerSources = [
 	"core/lineAndCharacter.ts",
 	"core/lineMap.ts",
 	"core/linePosition.ts",
-	"core/mathPrototype.ts",
 	"core/references.ts",
 	"core/require.ts",
 	"core/stringUtilities.ts",

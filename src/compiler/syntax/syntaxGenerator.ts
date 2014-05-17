@@ -2729,6 +2729,34 @@ function generateKeywordCondition(keywords: { text: string; kind: TypeScript.Syn
     return result;
 }
 
+function min<T>(array: T[], func: (v: T) => number): number {
+    // Debug.assert(array.length > 0);
+    var min = func(array[0]);
+
+    for (var i = 1; i < array.length; i++) {
+        var next = func(array[i]);
+        if (next < min) {
+            min = next;
+        }
+    }
+
+    return min;
+}
+
+function max<T>(array: T[], func: (v: T) => number): number {
+    // Debug.assert(array.length > 0);
+    var max = func(array[0]);
+
+    for (var i = 1; i < array.length; i++) {
+        var next = func(array[i]);
+        if (next > max) {
+            max = next;
+        }
+    }
+
+    return max;
+}
+
 function generateScannerUtilities(): string {
     var result = "///<reference path='references.ts' />\r\n" +
         "\r\n" +
@@ -2746,8 +2774,8 @@ function generateScannerUtilities(): string {
 
     result += "        public static identifierKind(str: string, start: number, length: number): SyntaxKind {\r\n";
 
-    var minTokenLength = TypeScript.ArrayUtilities.min(keywords, k => k.text.length);
-    var maxTokenLength = TypeScript.ArrayUtilities.max(keywords, k => k.text.length);
+    var minTokenLength = min(keywords, k => k.text.length);
+    var maxTokenLength = max(keywords, k => k.text.length);
     result += "            switch (length) {\r\n";
 
 
