@@ -710,10 +710,7 @@ module TypeScript.Parser {
         }
 
         function parseSourceUnit(): SourceUnitSyntax {
-            // Note: technically we don't need to save and restore this here.  After all, this the top
-            // level parsing entrypoint.  So it will always start as false and be reset to false when the
-            // loop ends.  However, for sake of symmetry and consistancy we do this.
-            var savedIsInStrictMode = isInStrictMode;
+            var savedIsInStrictMode = isInStrictMode
 
             var result = parseSyntaxList<IModuleElementSyntax>(ListParsingState.SourceUnit_ModuleElements, updateStrictModeState);
             var moduleElements = result.list;
@@ -833,56 +830,32 @@ module TypeScript.Parser {
 
         function parseImportDeclaration(): ImportDeclarationSyntax {
             return new ImportDeclarationSyntax(parseNodeData,
-                parseModifiers(),
-                eatToken(SyntaxKind.ImportKeyword),
-                eatIdentifierToken(),
-                eatToken(SyntaxKind.EqualsToken),
-                parseModuleReference(),
-                eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
+                parseModifiers(), eatToken(SyntaxKind.ImportKeyword), eatIdentifierToken(), eatToken(SyntaxKind.EqualsToken), parseModuleReference(), eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
 
         function parseExportAssignment(): ExportAssignmentSyntax {
             return new ExportAssignmentSyntax(parseNodeData,
-                eatToken(SyntaxKind.ExportKeyword),
-                eatToken(SyntaxKind.EqualsToken),
-                eatIdentifierToken(),
-                eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
+                eatToken(SyntaxKind.ExportKeyword), eatToken(SyntaxKind.EqualsToken), eatIdentifierToken(), eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false));
         }
 
         function parseModuleReference(): IModuleReferenceSyntax {
-            if (isExternalModuleReference()) {
-                return parseExternalModuleReference();
-            }
-            else {
-                return parseModuleNameModuleReference();
-            }
+            return isExternalModuleReference() 
+                ? parseExternalModuleReference()
+                : parseModuleNameModuleReference();
         }
 
         function isExternalModuleReference(): boolean {
-            var token0 = currentToken();
-            if (token0.kind() === SyntaxKind.RequireKeyword) {
-                return peekToken(1).kind() === SyntaxKind.OpenParenToken;
-            }
-
-            return false;
+            return currentToken().kind() === SyntaxKind.RequireKeyword &&
+                   peekToken(1).kind() === SyntaxKind.OpenParenToken;
         }
 
         function parseExternalModuleReference(): ExternalModuleReferenceSyntax {
             return new ExternalModuleReferenceSyntax(parseNodeData,
-                eatToken(SyntaxKind.RequireKeyword),
-                eatToken(SyntaxKind.OpenParenToken),
-                eatToken(SyntaxKind.StringLiteral),
-                eatToken(SyntaxKind.CloseParenToken));
+                eatToken(SyntaxKind.RequireKeyword), eatToken(SyntaxKind.OpenParenToken), eatToken(SyntaxKind.StringLiteral), eatToken(SyntaxKind.CloseParenToken));
         }
 
         function parseModuleNameModuleReference(): ModuleNameModuleReferenceSyntax {
             return new ModuleNameModuleReferenceSyntax(parseNodeData, parseName());
-        }
-
-        // NOTE: This will allow all identifier names.  Even the ones that are keywords.
-        function parseIdentifierName(): INameSyntax {
-            var identifierName = eatIdentifierNameToken();
-            return identifierName;
         }
 
         function tryParseTypeArgumentList(inExpression: boolean): TypeArgumentListSyntax {
@@ -1000,7 +973,7 @@ module TypeScript.Parser {
             // Then we would consider it valid.  That's because ASI would take effect and
             // the code would be implicitly: "name.keyword; identifierNameOrKeyword".  
             // In the first case though, ASI will not take effect because there is not a
-            // line terminator after the dot.
+            // line terminator after the keyword.
             if (SyntaxFacts.isAnyKeyword(_currentToken.kind()) &&
                 previousTokenHasTrailingNewLine(_currentToken)) {
 
