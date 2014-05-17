@@ -2690,40 +2690,40 @@ function generateKeywordCondition(keywords: { text: string; kind: TypeScript.Syn
         var keyword = keywords[0];
         
         if (currentCharacter === length) {
-            return indent + "return SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + ";\r\n";
+            return " return SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + ";\r\n";
         }
 
         var keywordText = keywords[0].text;
-        result = indent + "return ("
+        result = " return ("
 
         for (var i = currentCharacter; i < length; i++) {
             if (i > currentCharacter) {
                 result += " && ";
             }
 
-            index = i === 0 ? "startIndex" : ("startIndex + " + i);
-            result += "array.charCodeAt(" + index + ") === CharacterCodes." + keywordText.substr(i, 1);
+            index = i === 0 ? "start" : ("start + " + i);
+            result += "str.charCodeAt(" + index + ") === CharacterCodes." + keywordText.substr(i, 1);
         }
 
         result += ") ? SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + " : SyntaxKind.IdentifierName;\r\n";
     }
     else {
-        index = currentCharacter === 0 ? "startIndex" : ("startIndex + " + currentCharacter);
-        result += indent + "switch(array.charCodeAt(" + index + ")) {\r\n"
+        result += " // " + TypeScript.ArrayUtilities.select(keywords, k => k.text).join(", ") + "\r\n"
+        // result += "\r\n";
+        index = currentCharacter === 0 ? "start" : ("start + " + currentCharacter);
+        result += indent + "switch(str.charCodeAt(" + index + ")) {\r\n"
 
         var groupedKeywords = TypeScript.ArrayUtilities.groupBy(keywords, k => k.text.substr(currentCharacter, 1));
 
         for (var c in groupedKeywords) {
             if (groupedKeywords.hasOwnProperty(c)) {
-                result += indent + "case CharacterCodes." + c + ":\r\n";
-                result += indent + "    // " + TypeScript.ArrayUtilities.select(groupedKeywords[c], (k: any) => k.text).join(", ") + "\r\n";
+                result += indent + "  case CharacterCodes." + c + ":";
                 result += generateKeywordCondition(groupedKeywords[c], currentCharacter + 1, indent + "    ");
             }
         }
 
-        result += indent + "default:\r\n";
-        result += indent + "    return SyntaxKind.IdentifierName;\r\n";
-        result += indent + "}\r\n\r\n";
+        result += indent + "  default: return SyntaxKind.IdentifierName;\r\n";
+        result += indent + "}\r\n";
     }
 
     return result;
@@ -2742,7 +2742,9 @@ function generateScannerUtilities(): string {
         keywords.push({ kind: i, text: TypeScript.SyntaxFacts.getText(i) });
     }
 
-    result += "        public static identifierKind(array: string, startIndex: number, length: number): SyntaxKind {\r\n";
+    keywords.sort((a, b) => a.text.localeCompare(b.text));
+
+    result += "        public static identifierKind(str: string, start: number, length: number): SyntaxKind {\r\n";
 
     var minTokenLength = TypeScript.ArrayUtilities.min(keywords, k => k.text.length);
     var maxTokenLength = TypeScript.ArrayUtilities.max(keywords, k => k.text.length);
@@ -2752,17 +2754,12 @@ function generateScannerUtilities(): string {
     for (i = minTokenLength; i <= maxTokenLength; i++) {
         var keywordsOfLengthI = TypeScript.ArrayUtilities.where(keywords, k => k.text.length === i);
         if (keywordsOfLengthI.length > 0) {
-            result += "            case " + i + ":\r\n";
-            result += "                // " + TypeScript.ArrayUtilities.select(keywordsOfLengthI, k => k.text).join(", ") + "\r\n";
-
+            result += "              case " + i + ":";
             result += generateKeywordCondition(keywordsOfLengthI, 0, "                ");
-
-            // result += "            return SyntaxKind.None;\r\n\r\n";
         }
     }
 
-    result += "            default:\r\n";
-    result += "                return SyntaxKind.IdentifierName;\r\n";
+    result += "              default: return SyntaxKind.IdentifierName;\r\n";
     result += "            }\r\n";
     result += "        }\r\n";
 

@@ -3571,8 +3571,9 @@ module TypeScript.Parser {
                 case SyntaxKind.OpenBraceToken: return parseObjectType();
                 case SyntaxKind.NewKeyword:     return parseConstructorType();
                 case SyntaxKind.TypeOfKeyword:  return parseTypeQuery(_currentToken);
-                default:                        return tryParseNameOrGenericType();
             }
+
+            return tryParseNameOrGenericType();
         }
 
         function tryParseNameOrGenericType(): ITypeSyntax {
