@@ -143,10 +143,6 @@ module TypeScript.Parser {
         arrayPoolCount++;
     }
 
-    interface IParser {
-        parseSyntaxTree(source: IParserSource, isDeclaration: boolean): SyntaxTree;
-    }
-
     interface IParserRewindPoint extends IRewindPoint {
         // As we speculatively parse, we may build up diagnostics.  When we rewind we want to 
         // 'forget' that information.In order to do that we store the count of diagnostics and 
@@ -219,7 +215,6 @@ module TypeScript.Parser {
 
             return result;
         }
-
 
         function parseSyntaxTreeWorker(isDeclaration: boolean): SyntaxTree {
             var sourceUnit = parseSourceUnit();

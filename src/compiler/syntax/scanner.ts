@@ -253,7 +253,7 @@ module TypeScript.Scanner {
         return false;
     }
 
-    export class IdentifierWithSingleTrailingSpace implements ISyntaxToken {
+    class IdentifierWithSingleTrailingSpace implements ISyntaxToken {
         public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _fullStart: number, private _fullWidth: number) {
@@ -282,7 +282,7 @@ module TypeScript.Scanner {
         public clone(): ISyntaxToken { return new IdentifierWithSingleTrailingSpace(this._text, this._fullStart, this._fullWidth); }
     }
 
-    export class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
+    class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
         public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(private _packedData: number) {
@@ -310,7 +310,7 @@ module TypeScript.Scanner {
         public clone(): ISyntaxToken { return new FixedWidthTokenWithNoTrivia(this._packedData); }
     }
 
-    export class SmallScannerTokenWithNoTrivia implements ISyntaxToken {
+    class SmallScannerTokenWithNoTrivia implements ISyntaxToken {
         public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
@@ -340,7 +340,7 @@ module TypeScript.Scanner {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithNoTrivia(this._text, this._packedData); }
     }
 
-    export class SmallScannerTokenWithLeadingTrivia implements ISyntaxToken {
+    class SmallScannerTokenWithLeadingTrivia implements ISyntaxToken {
         public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
@@ -370,7 +370,7 @@ module TypeScript.Scanner {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithLeadingTrivia(this._text, this._packedData); }
     }
 
-    export class SmallScannerTokenWithTrailingTrivia implements ISyntaxToken {
+    class SmallScannerTokenWithTrailingTrivia implements ISyntaxToken {
         public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
@@ -400,7 +400,7 @@ module TypeScript.Scanner {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithTrailingTrivia(this._text, this._packedData); }
     }
 
-    export class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
+    class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
         public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
@@ -430,7 +430,7 @@ module TypeScript.Scanner {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithLeadingAndTrailingTrivia(this._text, this._packedData); }
     }
 
-    export class LargeScannerToken implements ISyntaxToken {
+    class LargeScannerToken implements ISyntaxToken {
         public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedFullStartAndInfo: number, private _packedFullWidthAndKind: number) {
