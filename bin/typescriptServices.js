@@ -572,21 +572,6 @@ var TypeScript;
             return false;
         };
 
-        ArrayUtilities.groupBy = function (array, func) {
-            var result = {};
-
-            for (var i = 0, n = array.length; i < n; i++) {
-                var v = array[i];
-                var k = func(v);
-
-                var list = result[k] || [];
-                list.push(v);
-                result[k] = list;
-            }
-
-            return result;
-        };
-
         ArrayUtilities.distinct = function (array, equalsFn) {
             var result = [];
 
@@ -1816,18 +1801,6 @@ var TypeScript;
             return resultLow32;
         }
         IntegerUtilities.integerMultiplyLow32Bits = integerMultiplyLow32Bits;
-
-        function integerMultiplyHigh32Bits(n1, n2) {
-            var n1Low16 = n1 & 0x0000ffff;
-            var n1High16 = n1 >>> 16;
-
-            var n2Low16 = n2 & 0x0000ffff;
-            var n2High16 = n2 >>> 16;
-
-            var resultHigh32 = n1High16 * n2High16 + ((((n1Low16 * n2Low16) >>> 17) + n1Low16 * n2High16) >>> 15);
-            return resultHigh32;
-        }
-        IntegerUtilities.integerMultiplyHigh32Bits = integerMultiplyHigh32Bits;
 
         function isInteger(text) {
             return /^[0-9]+$/.test(text);
@@ -5644,53 +5617,6 @@ var TypeScript;
     (function (Syntax) {
         Syntax._nextSyntaxID = 1;
 
-        function getStandaloneExpression(positionedToken) {
-            var token = positionedToken;
-            if (positionedToken !== null && positionedToken.kind() === 11 /* IdentifierName */) {
-                var parentPositionedNode = containingNode(positionedToken);
-                var parentNode = containingNode(parentPositionedNode);
-
-                if (parentNode.kind() === 121 /* QualifiedName */ && parentNode.right === token) {
-                    return parentPositionedNode;
-                } else if (parentNode.kind() === 212 /* MemberAccessExpression */ && parentNode.name === token) {
-                    return parentPositionedNode;
-                }
-            }
-
-            return positionedToken;
-        }
-        Syntax.getStandaloneExpression = getStandaloneExpression;
-
-        function childOffset(parent, child) {
-            var offset = 0;
-            for (var i = 0, n = TypeScript.childCount(parent); i < n; i++) {
-                var current = TypeScript.childAt(parent, i);
-                if (current === child) {
-                    return offset;
-                }
-
-                if (current !== null) {
-                    offset += TypeScript.fullWidth(current);
-                }
-            }
-
-            throw TypeScript.Errors.invalidOperation();
-        }
-        Syntax.childOffset = childOffset;
-
-        function childOffsetAt(parent, index) {
-            var offset = 0;
-            for (var i = 0; i < index; i++) {
-                var current = TypeScript.childAt(parent, i);
-                if (current !== null) {
-                    offset += TypeScript.fullWidth(current);
-                }
-            }
-
-            return offset;
-        }
-        Syntax.childOffsetAt = childOffsetAt;
-
         function childIndex(parent, child) {
             for (var i = 0, n = TypeScript.childCount(parent); i < n; i++) {
                 var current = TypeScript.childAt(parent, i);
@@ -5702,32 +5628,6 @@ var TypeScript;
             throw TypeScript.Errors.invalidOperation();
         }
         Syntax.childIndex = childIndex;
-
-        function identifierName(text, info) {
-            if (typeof info === "undefined") { info = null; }
-            return Syntax.identifier(text);
-        }
-        Syntax.identifierName = identifierName;
-
-        function trueExpression() {
-            return Syntax.token(37 /* TrueKeyword */);
-        }
-        Syntax.trueExpression = trueExpression;
-
-        function falseExpression() {
-            return Syntax.token(24 /* FalseKeyword */);
-        }
-        Syntax.falseExpression = falseExpression;
-
-        function numericLiteralExpression(text) {
-            return Syntax.token(13 /* NumericLiteral */, { text: text });
-        }
-        Syntax.numericLiteralExpression = numericLiteralExpression;
-
-        function stringLiteralExpression(text) {
-            return Syntax.token(14 /* StringLiteral */, { text: text });
-        }
-        Syntax.stringLiteralExpression = stringLiteralExpression;
 
         function isSuperInvocationExpression(node) {
             return node.kind() === 213 /* InvocationExpression */ && node.expression.kind() === 50 /* SuperKeyword */;
@@ -7855,23 +7755,6 @@ var TypeScript;
             };
             return ConvertedKeywordToken;
         })();
-
-        function token(kind, info, fullStart) {
-            if (typeof info === "undefined") { info = null; }
-            if (typeof fullStart === "undefined") { fullStart = -1; }
-            var text = (info !== null && info.text !== undefined) ? info.text : TypeScript.SyntaxFacts.getText(kind);
-
-            return new RealizedToken(fullStart, kind, false, Syntax.triviaList(info === null ? null : info.leadingTrivia), text, Syntax.triviaList(info === null ? null : info.trailingTrivia));
-        }
-        Syntax.token = token;
-
-        function identifier(text, info) {
-            if (typeof info === "undefined") { info = null; }
-            info = info || {};
-            info.text = text;
-            return token(11 /* IdentifierName */, info);
-        }
-        Syntax.identifier = identifier;
     })(TypeScript.Syntax || (TypeScript.Syntax = {}));
     var Syntax = TypeScript.Syntax;
 })(TypeScript || (TypeScript = {}));
@@ -13220,14 +13103,12 @@ var TypeScript;
             return true;
         };
 
-        GrammarCheckerWalker.prototype.checkForAtLeastOneElement = function (parent, list, expected) {
+        GrammarCheckerWalker.prototype.checkForAtLeastOneElement = function (parent, list, afterToken, expected) {
             if (TypeScript.childCount(list) > 0) {
                 return false;
             }
 
-            var listFullStart = TypeScript.fullStart(parent) + TypeScript.Syntax.childOffset(parent, list);
-            var tokenAtStart = TypeScript.findToken(this.syntaxTree.sourceUnit(), listFullStart);
-
+            var tokenAtStart = TypeScript.findToken(this.syntaxTree.sourceUnit(), TypeScript.fullEnd(afterToken));
             this.pushDiagnostic(tokenAtStart, TypeScript.DiagnosticCode.Unexpected_token_0_expected, [expected]);
 
             return true;
@@ -13242,7 +13123,7 @@ var TypeScript;
         };
 
         GrammarCheckerWalker.prototype.visitHeritageClause = function (node) {
-            if (this.checkForTrailingSeparator(node, node.typeNames) || this.checkForAtLeastOneElement(node, node.typeNames, TypeScript.getLocalizedText(TypeScript.DiagnosticCode.type_name, null))) {
+            if (this.checkForTrailingSeparator(node, node.typeNames) || this.checkForAtLeastOneElement(node, node.typeNames, node.extendsOrImplementsKeyword, TypeScript.getLocalizedText(TypeScript.DiagnosticCode.type_name, null))) {
                 return;
             }
 
@@ -13258,7 +13139,7 @@ var TypeScript;
         };
 
         GrammarCheckerWalker.prototype.visitVariableDeclaration = function (node) {
-            if (this.checkForAtLeastOneElement(node, node.variableDeclarators, TypeScript.getLocalizedText(TypeScript.DiagnosticCode.identifier, null))) {
+            if (this.checkForAtLeastOneElement(node, node.variableDeclarators, node.varKeyword, TypeScript.getLocalizedText(TypeScript.DiagnosticCode.identifier, null))) {
                 return;
             }
 
@@ -13276,7 +13157,7 @@ var TypeScript;
         };
 
         GrammarCheckerWalker.prototype.visitTypeArgumentList = function (node) {
-            if (this.checkForTrailingSeparator(node, node.typeArguments) || this.checkForAtLeastOneElement(node, node.typeArguments, TypeScript.getLocalizedText(TypeScript.DiagnosticCode.identifier, null))) {
+            if (this.checkForTrailingSeparator(node, node.typeArguments) || this.checkForAtLeastOneElement(node, node.typeArguments, node.lessThanToken, TypeScript.getLocalizedText(TypeScript.DiagnosticCode.identifier, null))) {
                 return;
             }
 
@@ -13284,7 +13165,7 @@ var TypeScript;
         };
 
         GrammarCheckerWalker.prototype.visitTypeParameterList = function (node) {
-            if (this.checkForTrailingSeparator(node, node.typeParameters) || this.checkForAtLeastOneElement(node, node.typeParameters, TypeScript.getLocalizedText(TypeScript.DiagnosticCode.identifier, null))) {
+            if (this.checkForTrailingSeparator(node, node.typeParameters) || this.checkForAtLeastOneElement(node, node.typeParameters, node.lessThanToken, TypeScript.getLocalizedText(TypeScript.DiagnosticCode.identifier, null))) {
                 return;
             }
 
@@ -46254,15 +46135,9 @@ var TypeScript;
                 };
 
                 FormattingContext.prototype.BlockIsOnOneLine = function (node) {
-                    var start = node.fullStart();
                     var block = node.node();
-                    var openBracePosition = start + TypeScript.Syntax.childOffset(block, block.openBraceToken);
-                    var closeBracePosition = start + TypeScript.Syntax.childOffset(block, block.closeBraceToken);
 
-                    var startLine = this.snapshot.getLineNumberFromPosition(openBracePosition);
-                    var endLine = this.snapshot.getLineNumberFromPosition(closeBracePosition);
-
-                    return startLine == endLine;
+                    return this.snapshot.getLineNumberFromPosition(TypeScript.end(block.openBraceToken)) === this.snapshot.getLineNumberFromPosition(TypeScript.start(block.closeBraceToken));
                 };
                 return FormattingContext;
             })();
@@ -53264,7 +53139,6 @@ var TypeScript;
                 if (nameIndex === names.length) {
                     _super.prototype.visitModuleDeclaration.call(this, node);
                 } else {
-                    var modifiers = nameIndex === 0 ? node.modifiers : TypeScript.Syntax.list([TypeScript.Syntax.token(47 /* ExportKeyword */)]);
                     var name = names[nameIndex];
                     var kind = Services.ScriptElementKind.moduleElement;
 
