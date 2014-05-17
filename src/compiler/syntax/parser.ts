@@ -488,27 +488,16 @@ module TypeScript.Parser {
 
         function getBinaryExpressionPrecedence(tokenKind: SyntaxKind): BinaryExpressionPrecedence {
             switch (tokenKind) {
-                case SyntaxKind.BarBarToken:
-                    return BinaryExpressionPrecedence.LogicalOrExpressionPrecedence;
-
-                case SyntaxKind.AmpersandAmpersandToken:
-                    return BinaryExpressionPrecedence.LogicalAndExpressionPrecedence;
-
-                case SyntaxKind.BarToken:
-                    return BinaryExpressionPrecedence.BitwiseOrExpressionPrecedence;
-
-                case SyntaxKind.CaretToken:
-                    return BinaryExpressionPrecedence.BitwiseExclusiveOrExpressionPrecedence;
-
-                case SyntaxKind.AmpersandToken:
-                    return BinaryExpressionPrecedence.BitwiseAndExpressionPrecedence;
-
+                case SyntaxKind.BarBarToken:                return BinaryExpressionPrecedence.LogicalOrExpressionPrecedence;
+                case SyntaxKind.AmpersandAmpersandToken:    return BinaryExpressionPrecedence.LogicalAndExpressionPrecedence;
+                case SyntaxKind.BarToken:                   return BinaryExpressionPrecedence.BitwiseOrExpressionPrecedence;
+                case SyntaxKind.CaretToken:                 return BinaryExpressionPrecedence.BitwiseExclusiveOrExpressionPrecedence;
+                case SyntaxKind.AmpersandToken:             return BinaryExpressionPrecedence.BitwiseAndExpressionPrecedence;
                 case SyntaxKind.EqualsEqualsToken:
                 case SyntaxKind.ExclamationEqualsToken:
                 case SyntaxKind.EqualsEqualsEqualsToken:
                 case SyntaxKind.ExclamationEqualsEqualsToken:
                     return BinaryExpressionPrecedence.EqualityExpressionPrecedence;
-
                 case SyntaxKind.LessThanToken:
                 case SyntaxKind.GreaterThanToken:
                 case SyntaxKind.LessThanEqualsToken:
@@ -516,16 +505,13 @@ module TypeScript.Parser {
                 case SyntaxKind.InstanceOfKeyword:
                 case SyntaxKind.InKeyword:
                     return BinaryExpressionPrecedence.RelationalExpressionPrecedence;
-
                 case SyntaxKind.LessThanLessThanToken:
                 case SyntaxKind.GreaterThanGreaterThanToken:
                 case SyntaxKind.GreaterThanGreaterThanGreaterThanToken:
                     return BinaryExpressionPrecedence.ShiftExpressionPrecdence;
-
                 case SyntaxKind.PlusToken:
-                case SyntaxKind.MinusToken:
+                case SyntaxKind.MinusToken: 
                     return BinaryExpressionPrecedence.AdditiveExpressionPrecedence;
-
                 case SyntaxKind.AsteriskToken:
                 case SyntaxKind.SlashToken:
                 case SyntaxKind.PercentToken:
@@ -1051,7 +1037,6 @@ module TypeScript.Parser {
                 case SyntaxKind.ExportKeyword:
                 case SyntaxKind.DeclareKeyword:
                     return true;
-
                 default:
                     return false;
             }
@@ -2947,17 +2932,10 @@ module TypeScript.Parser {
                 case SyntaxKind.StringLiteral:
                     return consumeToken(_currentToken);
 
-                case SyntaxKind.FunctionKeyword:
-                    return parseFunctionExpression();
-
-                case SyntaxKind.OpenBracketToken:
-                    return parseArrayLiteralExpression(_currentToken);
-
-                case SyntaxKind.OpenBraceToken:
-                    return parseObjectLiteralExpression(_currentToken);
-
-                case SyntaxKind.OpenParenToken:
-                    return parseParenthesizedExpression();
+                case SyntaxKind.FunctionKeyword:  return parseFunctionExpression();
+                case SyntaxKind.OpenBracketToken: return parseArrayLiteralExpression(_currentToken);
+                case SyntaxKind.OpenBraceToken:   return parseObjectLiteralExpression(_currentToken);
+                case SyntaxKind.OpenParenToken:   return parseParenthesizedExpression();
 
                 case SyntaxKind.SlashToken:
                 case SyntaxKind.SlashEqualsToken:
@@ -3413,14 +3391,8 @@ module TypeScript.Parser {
                 }
             }
 
-            switch (token.kind()) {
-                case SyntaxKind.StringLiteral:
-                case SyntaxKind.NumericLiteral:
-                    return true;
-
-                default:
-                    return false;
-            }
+            var kind = token.kind();
+            return kind === SyntaxKind.StringLiteral || kind === SyntaxKind.NumericLiteral;
         }
 
         function parseArrayLiteralExpression(openBracketToken: ISyntaxToken): ArrayLiteralExpressionSyntax {
@@ -3555,9 +3527,9 @@ module TypeScript.Parser {
                 case SyntaxKind.LessThanToken:
                 case SyntaxKind.NewKeyword:
                     return true;
+                default:
+                    return isIdentifier(_currentToken);
             }
-
-            return isIdentifier(_currentToken);
         }
 
         function parseType(): ITypeSyntax {
@@ -3599,9 +3571,8 @@ module TypeScript.Parser {
                 case SyntaxKind.OpenBraceToken: return parseObjectType();
                 case SyntaxKind.NewKeyword:     return parseConstructorType();
                 case SyntaxKind.TypeOfKeyword:  return parseTypeQuery(_currentToken);
+                default:                        return tryParseNameOrGenericType();
             }
-
-            return tryParseNameOrGenericType();
         }
 
         function tryParseNameOrGenericType(): ITypeSyntax {
@@ -3725,8 +3696,7 @@ module TypeScript.Parser {
         }
 
         function parseSyntaxList<T extends ISyntaxNodeOrToken>(
-                currentListType: ListParsingState,
-                processItems: (items: any[]) => void = null): { skippedTokens: ISyntaxToken[]; list: T[]; } {
+                currentListType: ListParsingState, processItems: (items: any[]) => void = null): { skippedTokens: ISyntaxToken[]; list: T[]; } {
             var savedListParsingState = listParsingState;
             listParsingState |= (1 << currentListType);
 
@@ -3750,10 +3720,7 @@ module TypeScript.Parser {
 
         // Returns true if we should abort parsing.
         function abortParsingListOrMoveToNextToken<T extends ISyntaxNodeOrToken>(
-                currentListType: ListParsingState,
-                nodes: T[],
-                separators: ISyntaxToken[],
-                skippedTokens: ISyntaxToken[]): boolean {
+                currentListType: ListParsingState, nodes: T[], separators: ISyntaxToken[], skippedTokens: ISyntaxToken[]): boolean {
             // Ok.  We're at a token that is not a terminator for the list and wasn't the start of 
             // an item in the list. Definitely report an error for this token.
             reportUnexpectedTokenDiagnostic(currentListType);
@@ -3780,10 +3747,7 @@ module TypeScript.Parser {
         }
         
         function addSkippedTokenToList<T extends ISyntaxNodeOrToken>(
-                nodes: T[],
-                separators: ISyntaxToken[],
-                skippedTokens: ISyntaxToken[],
-                skippedToken: ISyntaxToken): void {
+                nodes: T[], separators: ISyntaxToken[], skippedTokens: ISyntaxToken[], skippedToken: ISyntaxToken): void {
             // Now, add this skipped token to the last item we successfully parsed in the list.  Or
             // add it to the list of skipped tokens if we haven't parsed anything.  Our caller will
             // have to deal with them.
@@ -3807,10 +3771,8 @@ module TypeScript.Parser {
             skippedTokens.push(skippedToken);
         }
 
-        function tryParseExpectedListItem(currentListType: ListParsingState,
-                                          inErrorRecovery: boolean,
-                                          items: ISyntaxElement[],
-                                          processItems: (items: any[]) => void): boolean {
+        function tryParseExpectedListItem(
+                currentListType: ListParsingState, inErrorRecovery: boolean, items: ISyntaxElement[], processItems: (items: any[]) => void): boolean {
             var item = tryParseExpectedListItemWorker(currentListType, inErrorRecovery);
 
             if (item === null) {
@@ -3832,9 +3794,7 @@ module TypeScript.Parser {
                    currentToken().kind() === SyntaxKind.EndOfFileToken;
         }
 
-        function parseSyntaxListWorker<T extends ISyntaxNodeOrToken>(
-                currentListType: ListParsingState,
-                processItems: (items: any[]) => void ): { skippedTokens: ISyntaxToken[]; list: T[]; } {
+        function parseSyntaxListWorker<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState, processItems: (items: any[]) => void ): { skippedTokens: ISyntaxToken[]; list: T[]; } {
             var items: T[] = getArray();
             var skippedTokens: ISyntaxToken[] = getArray();
 
@@ -4017,69 +3977,27 @@ module TypeScript.Parser {
 
         function isExpectedListTerminator(currentListType: ListParsingState): boolean {
             switch (currentListType) {
-                case ListParsingState.SourceUnit_ModuleElements:
-                    return isExpectedSourceUnit_ModuleElementsTerminator();
-
-                case ListParsingState.ClassDeclaration_ClassElements:
-                    return isExpectedClassDeclaration_ClassElementsTerminator();
-
-                case ListParsingState.ModuleDeclaration_ModuleElements:
-                    return isExpectedModuleDeclaration_ModuleElementsTerminator();
-
-                case ListParsingState.SwitchStatement_SwitchClauses:
-                    return isExpectedSwitchStatement_SwitchClausesTerminator();
-
-                case ListParsingState.SwitchClause_Statements:
-                    return isExpectedSwitchClause_StatementsTerminator();
-
-                case ListParsingState.Block_Statements:
-                    return isExpectedBlock_StatementsTerminator();
-
-                case ListParsingState.TryBlock_Statements:
-                    return isExpectedTryBlock_StatementsTerminator();
-
-                case ListParsingState.CatchBlock_Statements:
-                    return isExpectedCatchBlock_StatementsTerminator();
-
-                case ListParsingState.EnumDeclaration_EnumElements:
-                    return isExpectedEnumDeclaration_EnumElementsTerminator();
-
-                case ListParsingState.ObjectType_TypeMembers:
-                    return isExpectedObjectType_TypeMembersTerminator();
-
-                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
-                    return isExpectedClassOrInterfaceDeclaration_HeritageClausesTerminator();
-
-                case ListParsingState.HeritageClause_TypeNameList:
-                    return isExpectedHeritageClause_TypeNameListTerminator();
-
-                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:
-                    return isExpectedVariableDeclaration_VariableDeclarators_AllowInTerminator();
-
-                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
-                    return isExpectedVariableDeclaration_VariableDeclarators_DisallowInTerminator();
-
-                case ListParsingState.ArgumentList_AssignmentExpressions:
-                    return isExpectedArgumentList_AssignmentExpressionsTerminator();
-
-                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
-                    return isExpectedObjectLiteralExpression_PropertyAssignmentsTerminator();
-
-                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
-                    return isExpectedLiteralExpression_AssignmentExpressionsTerminator();
-
-                case ListParsingState.ParameterList_Parameters:
-                    return isExpectedParameterList_ParametersTerminator();
-
-                case ListParsingState.IndexSignature_Parameters:
-                    return isExpectedIndexSignature_ParametersTerminator();
-
-                case ListParsingState.TypeArgumentList_Types:
-                    return isExpectedTypeArgumentList_TypesTerminator();
-
-                case ListParsingState.TypeParameterList_TypeParameters:
-                    return isExpectedTypeParameterList_TypeParametersTerminator();
-
+                case ListParsingState.SourceUnit_ModuleElements:                            return isExpectedSourceUnit_ModuleElementsTerminator();
+                case ListParsingState.ClassDeclaration_ClassElements:                       return isExpectedClassDeclaration_ClassElementsTerminator();
+                case ListParsingState.ModuleDeclaration_ModuleElements:                     return isExpectedModuleDeclaration_ModuleElementsTerminator();
+                case ListParsingState.SwitchStatement_SwitchClauses:                        return isExpectedSwitchStatement_SwitchClausesTerminator();
+                case ListParsingState.SwitchClause_Statements:                              return isExpectedSwitchClause_StatementsTerminator();
+                case ListParsingState.Block_Statements:                                     return isExpectedBlock_StatementsTerminator();
+                case ListParsingState.TryBlock_Statements:                                  return isExpectedTryBlock_StatementsTerminator();
+                case ListParsingState.CatchBlock_Statements:                                return isExpectedCatchBlock_StatementsTerminator();
+                case ListParsingState.EnumDeclaration_EnumElements:                         return isExpectedEnumDeclaration_EnumElementsTerminator();
+                case ListParsingState.ObjectType_TypeMembers:                               return isExpectedObjectType_TypeMembersTerminator();
+                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:          return isExpectedClassOrInterfaceDeclaration_HeritageClausesTerminator();
+                case ListParsingState.HeritageClause_TypeNameList:                          return isExpectedHeritageClause_TypeNameListTerminator();
+                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:      return isExpectedVariableDeclaration_VariableDeclarators_AllowInTerminator();
+                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:   return isExpectedVariableDeclaration_VariableDeclarators_DisallowInTerminator();
+                case ListParsingState.ArgumentList_AssignmentExpressions:                   return isExpectedArgumentList_AssignmentExpressionsTerminator();
+                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:          return isExpectedObjectLiteralExpression_PropertyAssignmentsTerminator();
+                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:         return isExpectedLiteralExpression_AssignmentExpressionsTerminator();
+                case ListParsingState.ParameterList_Parameters:                             return isExpectedParameterList_ParametersTerminator();
+                case ListParsingState.IndexSignature_Parameters:                            return isExpectedIndexSignature_ParametersTerminator();
+                case ListParsingState.TypeArgumentList_Types:                               return isExpectedTypeArgumentList_TypesTerminator();
+                case ListParsingState.TypeParameterList_TypeParameters:                     return isExpectedTypeParameterList_TypeParametersTerminator();
                 default:
                     throw Errors.invalidOperation();
             }
@@ -4277,71 +4195,32 @@ module TypeScript.Parser {
 
         function isExpectedListItem(currentListType: ListParsingState, inErrorRecovery: boolean): any {
             switch (currentListType) {
-                case ListParsingState.SourceUnit_ModuleElements:
-                    return isModuleElement(inErrorRecovery);
-
-                case ListParsingState.ClassDeclaration_ClassElements:
-                    return isClassElement(inErrorRecovery);
-
-                case ListParsingState.ModuleDeclaration_ModuleElements:
-                    return isModuleElement(inErrorRecovery);
-
-                case ListParsingState.SwitchStatement_SwitchClauses:
-                    return isSwitchClause();
-
-                case ListParsingState.SwitchClause_Statements:
-                    return isStatement(modifierCount(), inErrorRecovery);
-
-                case ListParsingState.Block_Statements:
-                    return isStatement(modifierCount(), inErrorRecovery);
-
-                case ListParsingState.TryBlock_Statements:
-                case ListParsingState.CatchBlock_Statements:
-                    // These two are special.  They're just augmentations of "Block_Statements" 
-                    // used so we can abort out of the try block if we see a 'catch' or 'finally'
-                    // keyword.  There are no additional list items that they add, so we just
-                    // return 'false' here.
-                    return false;
-
-                case ListParsingState.EnumDeclaration_EnumElements:
-                    return isEnumElement(inErrorRecovery);
-
-                case ListParsingState.ObjectType_TypeMembers:
-                    return isTypeMember(inErrorRecovery);
-
-                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
-                    return isHeritageClause();
-
-                case ListParsingState.HeritageClause_TypeNameList:
-                    return isHeritageClauseTypeName();
-                
-                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:
-                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
-                    return isVariableDeclarator();
-
-                case ListParsingState.ArgumentList_AssignmentExpressions:
-                    return isExpectedArgumentList_AssignmentExpression();
-
-                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
-                    return isPropertyAssignment(inErrorRecovery);
-
-                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
-                    return isAssignmentOrOmittedExpression();
-
-                case ListParsingState.ParameterList_Parameters:
-                    return isParameter();
-
-                case ListParsingState.IndexSignature_Parameters:
-                    return isParameter();
-
-                case ListParsingState.TypeArgumentList_Types:
-                    return isType();
-
-                case ListParsingState.TypeParameterList_TypeParameters:
-                    return isTypeParameter();
-
-                default:
-                    throw Errors.invalidOperation();
+                case ListParsingState.SourceUnit_ModuleElements:                            return isModuleElement(inErrorRecovery);
+                case ListParsingState.ClassDeclaration_ClassElements:                       return isClassElement(inErrorRecovery);
+                case ListParsingState.ModuleDeclaration_ModuleElements:                     return isModuleElement(inErrorRecovery);
+                case ListParsingState.SwitchStatement_SwitchClauses:                        return isSwitchClause();
+                case ListParsingState.SwitchClause_Statements:                              return isStatement(modifierCount(), inErrorRecovery);
+                case ListParsingState.Block_Statements:                                     return isStatement(modifierCount(), inErrorRecovery);
+                // These two are special.  They're just augmentations of "Block_Statements" 
+                // used so we can abort out of the try block if we see a 'catch' or 'finally'
+                // keyword.  There are no additional list items that they add, so we just
+                // return 'false' here.
+                case ListParsingState.TryBlock_Statements:                                  return false;
+                case ListParsingState.CatchBlock_Statements:                                return false;
+                case ListParsingState.EnumDeclaration_EnumElements:                         return isEnumElement(inErrorRecovery);
+                case ListParsingState.ObjectType_TypeMembers:                               return isTypeMember(inErrorRecovery);
+                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:          return isHeritageClause();
+                case ListParsingState.HeritageClause_TypeNameList:                          return isHeritageClauseTypeName();
+                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:      return isVariableDeclarator();
+                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:   return isVariableDeclarator();
+                case ListParsingState.ArgumentList_AssignmentExpressions:                   return isExpectedArgumentList_AssignmentExpression();
+                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:          return isPropertyAssignment(inErrorRecovery);
+                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:         return isAssignmentOrOmittedExpression();
+                case ListParsingState.ParameterList_Parameters:                             return isParameter();
+                case ListParsingState.IndexSignature_Parameters:                            return isParameter();
+                case ListParsingState.TypeArgumentList_Types:                               return isType();
+                case ListParsingState.TypeParameterList_TypeParameters:                     return isTypeParameter();
+                default: throw Errors.invalidOperation();
             }
         }
 
@@ -4363,129 +4242,53 @@ module TypeScript.Parser {
 
         function tryParseExpectedListItemWorker(currentListType: ListParsingState, inErrorRecovery: boolean): ISyntaxNodeOrToken {
             switch (currentListType) {
-                case ListParsingState.SourceUnit_ModuleElements:
-                    return tryParseModuleElement(inErrorRecovery);
-
-                case ListParsingState.ClassDeclaration_ClassElements:
-                    return tryParseClassElement(inErrorRecovery);
-
-                case ListParsingState.ModuleDeclaration_ModuleElements:
-                    return tryParseModuleElement(inErrorRecovery);
-
-                case ListParsingState.SwitchStatement_SwitchClauses:
-                    return tryParseSwitchClause();
-
-                case ListParsingState.SwitchClause_Statements:
-                    return tryParseStatement(inErrorRecovery);
-
-                case ListParsingState.Block_Statements:
-                case ListParsingState.TryBlock_Statements:
-                case ListParsingState.CatchBlock_Statements:
-                    return tryParseStatement(inErrorRecovery);
-
-                case ListParsingState.EnumDeclaration_EnumElements:
-                    return tryParseEnumElement(inErrorRecovery);
-
-                case ListParsingState.ObjectType_TypeMembers:
-                    return tryParseTypeMember(inErrorRecovery);
-
-                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
-                    return tryParseHeritageClause();
-
-                case ListParsingState.HeritageClause_TypeNameList:
-                    return tryParseHeritageClauseTypeName();
-
-                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:
-                    return tryParseVariableDeclarator(/*allowIn:*/ true, /*allowIdentifierName:*/ false);
-
-                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
-                    return tryParseVariableDeclarator(/*allowIn:*/ false, /*allowIdentifierName:*/ false);
-
-                case ListParsingState.ArgumentList_AssignmentExpressions:
-                    return tryParseArgumentListExpression();
-
-                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
-                    return tryParsePropertyAssignment(inErrorRecovery);
-
-                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
-                    return tryParseAssignmentOrOmittedExpression();
-
-                case ListParsingState.ParameterList_Parameters:
-                    return tryParseParameter();
-
-                case ListParsingState.IndexSignature_Parameters:
-                    return tryParseParameter();
-
-                case ListParsingState.TypeArgumentList_Types:
-                    return tryParseType();
-
-                case ListParsingState.TypeParameterList_TypeParameters:
-                    return tryParseTypeParameter();
-
-                default:
-                    throw Errors.invalidOperation();
+                case ListParsingState.SourceUnit_ModuleElements:                            return tryParseModuleElement(inErrorRecovery);
+                case ListParsingState.ClassDeclaration_ClassElements:                       return tryParseClassElement(inErrorRecovery);
+                case ListParsingState.ModuleDeclaration_ModuleElements:                     return tryParseModuleElement(inErrorRecovery);
+                case ListParsingState.SwitchStatement_SwitchClauses:                        return tryParseSwitchClause();
+                case ListParsingState.SwitchClause_Statements:                              return tryParseStatement(inErrorRecovery);
+                case ListParsingState.Block_Statements:                                     return tryParseStatement(inErrorRecovery);
+                case ListParsingState.TryBlock_Statements:                                  return tryParseStatement(inErrorRecovery);
+                case ListParsingState.CatchBlock_Statements:                                return tryParseStatement(inErrorRecovery);
+                case ListParsingState.EnumDeclaration_EnumElements:                         return tryParseEnumElement(inErrorRecovery);
+                case ListParsingState.ObjectType_TypeMembers:                               return tryParseTypeMember(inErrorRecovery);
+                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:          return tryParseHeritageClause();
+                case ListParsingState.HeritageClause_TypeNameList:                          return tryParseHeritageClauseTypeName();
+                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:      return tryParseVariableDeclarator(/*allowIn:*/ true, /*allowIdentifierName:*/ false);
+                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:   return tryParseVariableDeclarator(/*allowIn:*/ false, /*allowIdentifierName:*/ false);
+                case ListParsingState.ArgumentList_AssignmentExpressions:                   return tryParseArgumentListExpression();
+                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:          return tryParsePropertyAssignment(inErrorRecovery);
+                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:         return tryParseAssignmentOrOmittedExpression();
+                case ListParsingState.ParameterList_Parameters:                             return tryParseParameter();
+                case ListParsingState.IndexSignature_Parameters:                            return tryParseParameter();
+                case ListParsingState.TypeArgumentList_Types:                               return tryParseType();
+                case ListParsingState.TypeParameterList_TypeParameters:                     return tryParseTypeParameter();
+                default: throw Errors.invalidOperation();
             }
         }
 
         function getExpectedListElementType(currentListType: ListParsingState): string {
             switch (currentListType) {
-                case ListParsingState.SourceUnit_ModuleElements:
-                    return getLocalizedText(DiagnosticCode.module_class_interface_enum_import_or_statement, null);
-
-                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
-                    return '{';
-
-                case ListParsingState.ClassDeclaration_ClassElements:
-                    return getLocalizedText(DiagnosticCode.constructor_function_accessor_or_variable, null);
-
-                case ListParsingState.ModuleDeclaration_ModuleElements:
-                    return getLocalizedText(DiagnosticCode.module_class_interface_enum_import_or_statement, null);
-
-                case ListParsingState.SwitchStatement_SwitchClauses:
-                    return getLocalizedText(DiagnosticCode.case_or_default_clause, null);
-
-                case ListParsingState.SwitchClause_Statements:
-                    return getLocalizedText(DiagnosticCode.statement, null);
-
-                case ListParsingState.Block_Statements:
-                    return getLocalizedText(DiagnosticCode.statement, null);
-
-                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:
-                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
-                    return getLocalizedText(DiagnosticCode.identifier, null);
-
-                case ListParsingState.EnumDeclaration_EnumElements:
-                    return getLocalizedText(DiagnosticCode.identifier, null);
-
-                case ListParsingState.ObjectType_TypeMembers:
-                    return getLocalizedText(DiagnosticCode.call_construct_index_property_or_function_signature, null);
-
-                case ListParsingState.ArgumentList_AssignmentExpressions:
-                    return getLocalizedText(DiagnosticCode.expression, null);
-
-                case ListParsingState.HeritageClause_TypeNameList:
-                    return getLocalizedText(DiagnosticCode.type_name, null);
-
-                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
-                    return getLocalizedText(DiagnosticCode.property_or_accessor, null);
-
-                case ListParsingState.ParameterList_Parameters:
-                    return getLocalizedText(DiagnosticCode.parameter, null);
-
-                case ListParsingState.IndexSignature_Parameters:
-                    return getLocalizedText(DiagnosticCode.parameter, null);
-
-                case ListParsingState.TypeArgumentList_Types:
-                    return getLocalizedText(DiagnosticCode.type, null);
-
-                case ListParsingState.TypeParameterList_TypeParameters:
-                    return getLocalizedText(DiagnosticCode.type_parameter, null);
-
-                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
-                    return getLocalizedText(DiagnosticCode.expression, null);
-
-                default:
-                    throw Errors.invalidOperation();
+                case ListParsingState.SourceUnit_ModuleElements:                            return getLocalizedText(DiagnosticCode.module_class_interface_enum_import_or_statement, null);
+                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:          return '{';
+                case ListParsingState.ClassDeclaration_ClassElements:                       return getLocalizedText(DiagnosticCode.constructor_function_accessor_or_variable, null);
+                case ListParsingState.ModuleDeclaration_ModuleElements:                     return getLocalizedText(DiagnosticCode.module_class_interface_enum_import_or_statement, null);
+                case ListParsingState.SwitchStatement_SwitchClauses:                        return getLocalizedText(DiagnosticCode.case_or_default_clause, null);
+                case ListParsingState.SwitchClause_Statements:                              return getLocalizedText(DiagnosticCode.statement, null);
+                case ListParsingState.Block_Statements:                                     return getLocalizedText(DiagnosticCode.statement, null);
+                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:      return getLocalizedText(DiagnosticCode.identifier, null);
+                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:   return getLocalizedText(DiagnosticCode.identifier, null);
+                case ListParsingState.EnumDeclaration_EnumElements:                         return getLocalizedText(DiagnosticCode.identifier, null);
+                case ListParsingState.ObjectType_TypeMembers:                               return getLocalizedText(DiagnosticCode.call_construct_index_property_or_function_signature, null);
+                case ListParsingState.ArgumentList_AssignmentExpressions:                   return getLocalizedText(DiagnosticCode.expression, null);
+                case ListParsingState.HeritageClause_TypeNameList:                          return getLocalizedText(DiagnosticCode.type_name, null);
+                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:          return getLocalizedText(DiagnosticCode.property_or_accessor, null);
+                case ListParsingState.ParameterList_Parameters:                             return getLocalizedText(DiagnosticCode.parameter, null);
+                case ListParsingState.IndexSignature_Parameters:                            return getLocalizedText(DiagnosticCode.parameter, null);
+                case ListParsingState.TypeArgumentList_Types:                               return getLocalizedText(DiagnosticCode.type, null);
+                case ListParsingState.TypeParameterList_TypeParameters:                     return getLocalizedText(DiagnosticCode.type_parameter, null);
+                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:         return getLocalizedText(DiagnosticCode.expression, null);
+                default:                                                                    throw Errors.invalidOperation();
             }
         }
 

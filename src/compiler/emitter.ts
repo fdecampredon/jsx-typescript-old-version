@@ -3327,13 +3327,18 @@ module TypeScript {
             this.emit(clause.expression);
             this.writeToken(clause.colonToken);
 
-            this.emitSwitchClauseBody(clause.statements);
+            this.emitSwitchClauseBody(clause.colonToken, clause.statements);
             this.recordSourceMappingEnd(clause);
         }
 
-        private emitSwitchClauseBody(body: IStatementSyntax[]): void {
+        private emitSwitchClauseBody(colonToken: ISyntaxToken, body: IStatementSyntax[]): void {
             if (body.length === 1 && childAt(body, 0).kind() === SyntaxKind.Block) {
                 // The case statement was written with curly braces, so emit it with the appropriate formatting
+                this.emit(childAt(body, 0));
+                this.writeLineToOutput("");
+            }
+            else if (body.length === 1 && this.isOnSameLine(end(colonToken), start(body[0]))) {
+                this.writeToOutput(" ");
                 this.emit(childAt(body, 0));
                 this.writeLineToOutput("");
             }
@@ -3351,7 +3356,7 @@ module TypeScript {
             this.writeToken(clause.defaultKeyword);
             this.writeToken(clause.colonToken);
 
-            this.emitSwitchClauseBody(clause.statements);
+            this.emitSwitchClauseBody(clause.colonToken, clause.statements);
             this.recordSourceMappingEnd(clause);
         }
 
