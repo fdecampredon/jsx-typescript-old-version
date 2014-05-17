@@ -183,12 +183,6 @@ module TypeScript.SyntaxFacts {
                 return SyntaxKind.PreIncrementExpression;
             case SyntaxKind.MinusMinusToken:
                 return SyntaxKind.PreDecrementExpression;
-            //case SyntaxKind.DeleteKeyword:
-            //    return SyntaxKind.DeleteExpression;
-            //case SyntaxKind.TypeOfKeyword:
-            //    return SyntaxKind.TypeOfExpression;
-            //case SyntaxKind.VoidKeyword:
-            //    return SyntaxKind.VoidExpression;
             default:
                 return SyntaxKind.None;
         }
