@@ -5521,234 +5521,140 @@ var TypeScript;
     var ScannerUtilities = (function () {
         function ScannerUtilities() {
         }
-        ScannerUtilities.identifierKind = function (array, startIndex, length) {
+        ScannerUtilities.identifierKind = function (str, start, length) {
             switch (length) {
                 case 2:
-                    switch (array.charCodeAt(startIndex)) {
-                        case 100 /* d */:
-                            return (array.charCodeAt(startIndex + 1) === 111 /* o */) ? 22 /* DoKeyword */ : 11 /* IdentifierName */;
+                    switch (str.charCodeAt(start)) {
+                        case 100 /* d */: return (str.charCodeAt(start + 1) === 111 /* o */) ? 22 /* DoKeyword */ : 11 /* IdentifierName */;
                         case 105 /* i */:
-                            switch (array.charCodeAt(startIndex + 1)) {
-                                case 102 /* f */:
-                                    return 28 /* IfKeyword */;
-                                case 110 /* n */:
-                                    return 29 /* InKeyword */;
-                                default:
-                                    return 11 /* IdentifierName */;
+                            switch (str.charCodeAt(start + 1)) {
+                                case 102 /* f */: return 28 /* IfKeyword */;
+                                case 110 /* n */: return 29 /* InKeyword */;
+                                default: return 11 /* IdentifierName */;
                             }
-
-                        default:
-                            return 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
                 case 3:
-                    switch (array.charCodeAt(startIndex)) {
-                        case 102 /* f */:
-                            return (array.charCodeAt(startIndex + 1) === 111 /* o */ && array.charCodeAt(startIndex + 2) === 114 /* r */) ? 26 /* ForKeyword */ : 11 /* IdentifierName */;
-                        case 110 /* n */:
-                            return (array.charCodeAt(startIndex + 1) === 101 /* e */ && array.charCodeAt(startIndex + 2) === 119 /* w */) ? 31 /* NewKeyword */ : 11 /* IdentifierName */;
-                        case 116 /* t */:
-                            return (array.charCodeAt(startIndex + 1) === 114 /* r */ && array.charCodeAt(startIndex + 2) === 121 /* y */) ? 38 /* TryKeyword */ : 11 /* IdentifierName */;
-                        case 118 /* v */:
-                            return (array.charCodeAt(startIndex + 1) === 97 /* a */ && array.charCodeAt(startIndex + 2) === 114 /* r */) ? 40 /* VarKeyword */ : 11 /* IdentifierName */;
-                        case 108 /* l */:
-                            return (array.charCodeAt(startIndex + 1) === 101 /* e */ && array.charCodeAt(startIndex + 2) === 116 /* t */) ? 53 /* LetKeyword */ : 11 /* IdentifierName */;
-                        case 97 /* a */:
-                            return (array.charCodeAt(startIndex + 1) === 110 /* n */ && array.charCodeAt(startIndex + 2) === 121 /* y */) ? 60 /* AnyKeyword */ : 11 /* IdentifierName */;
-                        case 103 /* g */:
-                            return (array.charCodeAt(startIndex + 1) === 101 /* e */ && array.charCodeAt(startIndex + 2) === 116 /* t */) ? 64 /* GetKeyword */ : 11 /* IdentifierName */;
-                        case 115 /* s */:
-                            return (array.charCodeAt(startIndex + 1) === 101 /* e */ && array.charCodeAt(startIndex + 2) === 116 /* t */) ? 68 /* SetKeyword */ : 11 /* IdentifierName */;
-                        default:
-                            return 11 /* IdentifierName */;
+                    switch (str.charCodeAt(start)) {
+                        case 97 /* a */: return (str.charCodeAt(start + 1) === 110 /* n */ && str.charCodeAt(start + 2) === 121 /* y */) ? 60 /* AnyKeyword */ : 11 /* IdentifierName */;
+                        case 102 /* f */: return (str.charCodeAt(start + 1) === 111 /* o */ && str.charCodeAt(start + 2) === 114 /* r */) ? 26 /* ForKeyword */ : 11 /* IdentifierName */;
+                        case 103 /* g */: return (str.charCodeAt(start + 1) === 101 /* e */ && str.charCodeAt(start + 2) === 116 /* t */) ? 64 /* GetKeyword */ : 11 /* IdentifierName */;
+                        case 108 /* l */: return (str.charCodeAt(start + 1) === 101 /* e */ && str.charCodeAt(start + 2) === 116 /* t */) ? 53 /* LetKeyword */ : 11 /* IdentifierName */;
+                        case 110 /* n */: return (str.charCodeAt(start + 1) === 101 /* e */ && str.charCodeAt(start + 2) === 119 /* w */) ? 31 /* NewKeyword */ : 11 /* IdentifierName */;
+                        case 115 /* s */: return (str.charCodeAt(start + 1) === 101 /* e */ && str.charCodeAt(start + 2) === 116 /* t */) ? 68 /* SetKeyword */ : 11 /* IdentifierName */;
+                        case 116 /* t */: return (str.charCodeAt(start + 1) === 114 /* r */ && str.charCodeAt(start + 2) === 121 /* y */) ? 38 /* TryKeyword */ : 11 /* IdentifierName */;
+                        case 118 /* v */: return (str.charCodeAt(start + 1) === 97 /* a */ && str.charCodeAt(start + 2) === 114 /* r */) ? 40 /* VarKeyword */ : 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
                 case 4:
-                    switch (array.charCodeAt(startIndex)) {
-                        case 99 /* c */:
-                            return (array.charCodeAt(startIndex + 1) === 97 /* a */ && array.charCodeAt(startIndex + 2) === 115 /* s */ && array.charCodeAt(startIndex + 3) === 101 /* e */) ? 16 /* CaseKeyword */ : 11 /* IdentifierName */;
+                    switch (str.charCodeAt(start)) {
+                        case 99 /* c */: return (str.charCodeAt(start + 1) === 97 /* a */ && str.charCodeAt(start + 2) === 115 /* s */ && str.charCodeAt(start + 3) === 101 /* e */) ? 16 /* CaseKeyword */ : 11 /* IdentifierName */;
                         case 101 /* e */:
-                            switch (array.charCodeAt(startIndex + 1)) {
-                                case 108 /* l */:
-                                    return (array.charCodeAt(startIndex + 2) === 115 /* s */ && array.charCodeAt(startIndex + 3) === 101 /* e */) ? 23 /* ElseKeyword */ : 11 /* IdentifierName */;
-                                case 110 /* n */:
-                                    return (array.charCodeAt(startIndex + 2) === 117 /* u */ && array.charCodeAt(startIndex + 3) === 109 /* m */) ? 46 /* EnumKeyword */ : 11 /* IdentifierName */;
-                                default:
-                                    return 11 /* IdentifierName */;
+                            switch (str.charCodeAt(start + 1)) {
+                                case 108 /* l */: return (str.charCodeAt(start + 2) === 115 /* s */ && str.charCodeAt(start + 3) === 101 /* e */) ? 23 /* ElseKeyword */ : 11 /* IdentifierName */;
+                                case 110 /* n */: return (str.charCodeAt(start + 2) === 117 /* u */ && str.charCodeAt(start + 3) === 109 /* m */) ? 46 /* EnumKeyword */ : 11 /* IdentifierName */;
+                                default: return 11 /* IdentifierName */;
                             }
-
-                        case 110 /* n */:
-                            return (array.charCodeAt(startIndex + 1) === 117 /* u */ && array.charCodeAt(startIndex + 2) === 108 /* l */ && array.charCodeAt(startIndex + 3) === 108 /* l */) ? 32 /* NullKeyword */ : 11 /* IdentifierName */;
+                        case 110 /* n */: return (str.charCodeAt(start + 1) === 117 /* u */ && str.charCodeAt(start + 2) === 108 /* l */ && str.charCodeAt(start + 3) === 108 /* l */) ? 32 /* NullKeyword */ : 11 /* IdentifierName */;
                         case 116 /* t */:
-                            switch (array.charCodeAt(startIndex + 1)) {
-                                case 104 /* h */:
-                                    return (array.charCodeAt(startIndex + 2) === 105 /* i */ && array.charCodeAt(startIndex + 3) === 115 /* s */) ? 35 /* ThisKeyword */ : 11 /* IdentifierName */;
-                                case 114 /* r */:
-                                    return (array.charCodeAt(startIndex + 2) === 117 /* u */ && array.charCodeAt(startIndex + 3) === 101 /* e */) ? 37 /* TrueKeyword */ : 11 /* IdentifierName */;
-                                default:
-                                    return 11 /* IdentifierName */;
+                            switch (str.charCodeAt(start + 1)) {
+                                case 104 /* h */: return (str.charCodeAt(start + 2) === 105 /* i */ && str.charCodeAt(start + 3) === 115 /* s */) ? 35 /* ThisKeyword */ : 11 /* IdentifierName */;
+                                case 114 /* r */: return (str.charCodeAt(start + 2) === 117 /* u */ && str.charCodeAt(start + 3) === 101 /* e */) ? 37 /* TrueKeyword */ : 11 /* IdentifierName */;
+                                default: return 11 /* IdentifierName */;
                             }
-
-                        case 118 /* v */:
-                            return (array.charCodeAt(startIndex + 1) === 111 /* o */ && array.charCodeAt(startIndex + 2) === 105 /* i */ && array.charCodeAt(startIndex + 3) === 100 /* d */) ? 41 /* VoidKeyword */ : 11 /* IdentifierName */;
-                        case 119 /* w */:
-                            return (array.charCodeAt(startIndex + 1) === 105 /* i */ && array.charCodeAt(startIndex + 2) === 116 /* t */ && array.charCodeAt(startIndex + 3) === 104 /* h */) ? 43 /* WithKeyword */ : 11 /* IdentifierName */;
-                        default:
-                            return 11 /* IdentifierName */;
+                        case 118 /* v */: return (str.charCodeAt(start + 1) === 111 /* o */ && str.charCodeAt(start + 2) === 105 /* i */ && str.charCodeAt(start + 3) === 100 /* d */) ? 41 /* VoidKeyword */ : 11 /* IdentifierName */;
+                        case 119 /* w */: return (str.charCodeAt(start + 1) === 105 /* i */ && str.charCodeAt(start + 2) === 116 /* t */ && str.charCodeAt(start + 3) === 104 /* h */) ? 43 /* WithKeyword */ : 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
                 case 5:
-                    switch (array.charCodeAt(startIndex)) {
-                        case 98 /* b */:
-                            return (array.charCodeAt(startIndex + 1) === 114 /* r */ && array.charCodeAt(startIndex + 2) === 101 /* e */ && array.charCodeAt(startIndex + 3) === 97 /* a */ && array.charCodeAt(startIndex + 4) === 107 /* k */) ? 15 /* BreakKeyword */ : 11 /* IdentifierName */;
+                    switch (str.charCodeAt(start)) {
+                        case 98 /* b */: return (str.charCodeAt(start + 1) === 114 /* r */ && str.charCodeAt(start + 2) === 101 /* e */ && str.charCodeAt(start + 3) === 97 /* a */ && str.charCodeAt(start + 4) === 107 /* k */) ? 15 /* BreakKeyword */ : 11 /* IdentifierName */;
                         case 99 /* c */:
-                            switch (array.charCodeAt(startIndex + 1)) {
-                                case 97 /* a */:
-                                    return (array.charCodeAt(startIndex + 2) === 116 /* t */ && array.charCodeAt(startIndex + 3) === 99 /* c */ && array.charCodeAt(startIndex + 4) === 104 /* h */) ? 17 /* CatchKeyword */ : 11 /* IdentifierName */;
-                                case 108 /* l */:
-                                    return (array.charCodeAt(startIndex + 2) === 97 /* a */ && array.charCodeAt(startIndex + 3) === 115 /* s */ && array.charCodeAt(startIndex + 4) === 115 /* s */) ? 44 /* ClassKeyword */ : 11 /* IdentifierName */;
-                                case 111 /* o */:
-                                    return (array.charCodeAt(startIndex + 2) === 110 /* n */ && array.charCodeAt(startIndex + 3) === 115 /* s */ && array.charCodeAt(startIndex + 4) === 116 /* t */) ? 45 /* ConstKeyword */ : 11 /* IdentifierName */;
-                                default:
-                                    return 11 /* IdentifierName */;
+                            switch (str.charCodeAt(start + 1)) {
+                                case 97 /* a */: return (str.charCodeAt(start + 2) === 116 /* t */ && str.charCodeAt(start + 3) === 99 /* c */ && str.charCodeAt(start + 4) === 104 /* h */) ? 17 /* CatchKeyword */ : 11 /* IdentifierName */;
+                                case 108 /* l */: return (str.charCodeAt(start + 2) === 97 /* a */ && str.charCodeAt(start + 3) === 115 /* s */ && str.charCodeAt(start + 4) === 115 /* s */) ? 44 /* ClassKeyword */ : 11 /* IdentifierName */;
+                                case 111 /* o */: return (str.charCodeAt(start + 2) === 110 /* n */ && str.charCodeAt(start + 3) === 115 /* s */ && str.charCodeAt(start + 4) === 116 /* t */) ? 45 /* ConstKeyword */ : 11 /* IdentifierName */;
+                                default: return 11 /* IdentifierName */;
                             }
-
-                        case 102 /* f */:
-                            return (array.charCodeAt(startIndex + 1) === 97 /* a */ && array.charCodeAt(startIndex + 2) === 108 /* l */ && array.charCodeAt(startIndex + 3) === 115 /* s */ && array.charCodeAt(startIndex + 4) === 101 /* e */) ? 24 /* FalseKeyword */ : 11 /* IdentifierName */;
-                        case 116 /* t */:
-                            return (array.charCodeAt(startIndex + 1) === 104 /* h */ && array.charCodeAt(startIndex + 2) === 114 /* r */ && array.charCodeAt(startIndex + 3) === 111 /* o */ && array.charCodeAt(startIndex + 4) === 119 /* w */) ? 36 /* ThrowKeyword */ : 11 /* IdentifierName */;
-                        case 119 /* w */:
-                            return (array.charCodeAt(startIndex + 1) === 104 /* h */ && array.charCodeAt(startIndex + 2) === 105 /* i */ && array.charCodeAt(startIndex + 3) === 108 /* l */ && array.charCodeAt(startIndex + 4) === 101 /* e */) ? 42 /* WhileKeyword */ : 11 /* IdentifierName */;
-                        case 115 /* s */:
-                            return (array.charCodeAt(startIndex + 1) === 117 /* u */ && array.charCodeAt(startIndex + 2) === 112 /* p */ && array.charCodeAt(startIndex + 3) === 101 /* e */ && array.charCodeAt(startIndex + 4) === 114 /* r */) ? 50 /* SuperKeyword */ : 11 /* IdentifierName */;
-                        case 121 /* y */:
-                            return (array.charCodeAt(startIndex + 1) === 105 /* i */ && array.charCodeAt(startIndex + 2) === 101 /* e */ && array.charCodeAt(startIndex + 3) === 108 /* l */ && array.charCodeAt(startIndex + 4) === 100 /* d */) ? 59 /* YieldKeyword */ : 11 /* IdentifierName */;
-                        default:
-                            return 11 /* IdentifierName */;
+                        case 102 /* f */: return (str.charCodeAt(start + 1) === 97 /* a */ && str.charCodeAt(start + 2) === 108 /* l */ && str.charCodeAt(start + 3) === 115 /* s */ && str.charCodeAt(start + 4) === 101 /* e */) ? 24 /* FalseKeyword */ : 11 /* IdentifierName */;
+                        case 115 /* s */: return (str.charCodeAt(start + 1) === 117 /* u */ && str.charCodeAt(start + 2) === 112 /* p */ && str.charCodeAt(start + 3) === 101 /* e */ && str.charCodeAt(start + 4) === 114 /* r */) ? 50 /* SuperKeyword */ : 11 /* IdentifierName */;
+                        case 116 /* t */: return (str.charCodeAt(start + 1) === 104 /* h */ && str.charCodeAt(start + 2) === 114 /* r */ && str.charCodeAt(start + 3) === 111 /* o */ && str.charCodeAt(start + 4) === 119 /* w */) ? 36 /* ThrowKeyword */ : 11 /* IdentifierName */;
+                        case 119 /* w */: return (str.charCodeAt(start + 1) === 104 /* h */ && str.charCodeAt(start + 2) === 105 /* i */ && str.charCodeAt(start + 3) === 108 /* l */ && str.charCodeAt(start + 4) === 101 /* e */) ? 42 /* WhileKeyword */ : 11 /* IdentifierName */;
+                        case 121 /* y */: return (str.charCodeAt(start + 1) === 105 /* i */ && str.charCodeAt(start + 2) === 101 /* e */ && str.charCodeAt(start + 3) === 108 /* l */ && str.charCodeAt(start + 4) === 100 /* d */) ? 59 /* YieldKeyword */ : 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
                 case 6:
-                    switch (array.charCodeAt(startIndex)) {
-                        case 100 /* d */:
-                            return (array.charCodeAt(startIndex + 1) === 101 /* e */ && array.charCodeAt(startIndex + 2) === 108 /* l */ && array.charCodeAt(startIndex + 3) === 101 /* e */ && array.charCodeAt(startIndex + 4) === 116 /* t */ && array.charCodeAt(startIndex + 5) === 101 /* e */) ? 21 /* DeleteKeyword */ : 11 /* IdentifierName */;
-                        case 114 /* r */:
-                            return (array.charCodeAt(startIndex + 1) === 101 /* e */ && array.charCodeAt(startIndex + 2) === 116 /* t */ && array.charCodeAt(startIndex + 3) === 117 /* u */ && array.charCodeAt(startIndex + 4) === 114 /* r */ && array.charCodeAt(startIndex + 5) === 110 /* n */) ? 33 /* ReturnKeyword */ : 11 /* IdentifierName */;
+                    switch (str.charCodeAt(start)) {
+                        case 100 /* d */: return (str.charCodeAt(start + 1) === 101 /* e */ && str.charCodeAt(start + 2) === 108 /* l */ && str.charCodeAt(start + 3) === 101 /* e */ && str.charCodeAt(start + 4) === 116 /* t */ && str.charCodeAt(start + 5) === 101 /* e */) ? 21 /* DeleteKeyword */ : 11 /* IdentifierName */;
+                        case 101 /* e */: return (str.charCodeAt(start + 1) === 120 /* x */ && str.charCodeAt(start + 2) === 112 /* p */ && str.charCodeAt(start + 3) === 111 /* o */ && str.charCodeAt(start + 4) === 114 /* r */ && str.charCodeAt(start + 5) === 116 /* t */) ? 47 /* ExportKeyword */ : 11 /* IdentifierName */;
+                        case 105 /* i */: return (str.charCodeAt(start + 1) === 109 /* m */ && str.charCodeAt(start + 2) === 112 /* p */ && str.charCodeAt(start + 3) === 111 /* o */ && str.charCodeAt(start + 4) === 114 /* r */ && str.charCodeAt(start + 5) === 116 /* t */) ? 49 /* ImportKeyword */ : 11 /* IdentifierName */;
+                        case 109 /* m */: return (str.charCodeAt(start + 1) === 111 /* o */ && str.charCodeAt(start + 2) === 100 /* d */ && str.charCodeAt(start + 3) === 117 /* u */ && str.charCodeAt(start + 4) === 108 /* l */ && str.charCodeAt(start + 5) === 101 /* e */) ? 65 /* ModuleKeyword */ : 11 /* IdentifierName */;
+                        case 110 /* n */: return (str.charCodeAt(start + 1) === 117 /* u */ && str.charCodeAt(start + 2) === 109 /* m */ && str.charCodeAt(start + 3) === 98 /* b */ && str.charCodeAt(start + 4) === 101 /* e */ && str.charCodeAt(start + 5) === 114 /* r */) ? 67 /* NumberKeyword */ : 11 /* IdentifierName */;
+                        case 112 /* p */: return (str.charCodeAt(start + 1) === 117 /* u */ && str.charCodeAt(start + 2) === 98 /* b */ && str.charCodeAt(start + 3) === 108 /* l */ && str.charCodeAt(start + 4) === 105 /* i */ && str.charCodeAt(start + 5) === 99 /* c */) ? 57 /* PublicKeyword */ : 11 /* IdentifierName */;
+                        case 114 /* r */: return (str.charCodeAt(start + 1) === 101 /* e */ && str.charCodeAt(start + 2) === 116 /* t */ && str.charCodeAt(start + 3) === 117 /* u */ && str.charCodeAt(start + 4) === 114 /* r */ && str.charCodeAt(start + 5) === 110 /* n */) ? 33 /* ReturnKeyword */ : 11 /* IdentifierName */;
                         case 115 /* s */:
-                            switch (array.charCodeAt(startIndex + 1)) {
-                                case 119 /* w */:
-                                    return (array.charCodeAt(startIndex + 2) === 105 /* i */ && array.charCodeAt(startIndex + 3) === 116 /* t */ && array.charCodeAt(startIndex + 4) === 99 /* c */ && array.charCodeAt(startIndex + 5) === 104 /* h */) ? 34 /* SwitchKeyword */ : 11 /* IdentifierName */;
+                            switch (str.charCodeAt(start + 1)) {
                                 case 116 /* t */:
-                                    switch (array.charCodeAt(startIndex + 2)) {
-                                        case 97 /* a */:
-                                            return (array.charCodeAt(startIndex + 3) === 116 /* t */ && array.charCodeAt(startIndex + 4) === 105 /* i */ && array.charCodeAt(startIndex + 5) === 99 /* c */) ? 58 /* StaticKeyword */ : 11 /* IdentifierName */;
-                                        case 114 /* r */:
-                                            return (array.charCodeAt(startIndex + 3) === 105 /* i */ && array.charCodeAt(startIndex + 4) === 110 /* n */ && array.charCodeAt(startIndex + 5) === 103 /* g */) ? 69 /* StringKeyword */ : 11 /* IdentifierName */;
-                                        default:
-                                            return 11 /* IdentifierName */;
+                                    switch (str.charCodeAt(start + 2)) {
+                                        case 97 /* a */: return (str.charCodeAt(start + 3) === 116 /* t */ && str.charCodeAt(start + 4) === 105 /* i */ && str.charCodeAt(start + 5) === 99 /* c */) ? 58 /* StaticKeyword */ : 11 /* IdentifierName */;
+                                        case 114 /* r */: return (str.charCodeAt(start + 3) === 105 /* i */ && str.charCodeAt(start + 4) === 110 /* n */ && str.charCodeAt(start + 5) === 103 /* g */) ? 69 /* StringKeyword */ : 11 /* IdentifierName */;
+                                        default: return 11 /* IdentifierName */;
                                     }
-
-                                default:
-                                    return 11 /* IdentifierName */;
+                                case 119 /* w */: return (str.charCodeAt(start + 2) === 105 /* i */ && str.charCodeAt(start + 3) === 116 /* t */ && str.charCodeAt(start + 4) === 99 /* c */ && str.charCodeAt(start + 5) === 104 /* h */) ? 34 /* SwitchKeyword */ : 11 /* IdentifierName */;
+                                default: return 11 /* IdentifierName */;
                             }
-
-                        case 116 /* t */:
-                            return (array.charCodeAt(startIndex + 1) === 121 /* y */ && array.charCodeAt(startIndex + 2) === 112 /* p */ && array.charCodeAt(startIndex + 3) === 101 /* e */ && array.charCodeAt(startIndex + 4) === 111 /* o */ && array.charCodeAt(startIndex + 5) === 102 /* f */) ? 39 /* TypeOfKeyword */ : 11 /* IdentifierName */;
-                        case 101 /* e */:
-                            return (array.charCodeAt(startIndex + 1) === 120 /* x */ && array.charCodeAt(startIndex + 2) === 112 /* p */ && array.charCodeAt(startIndex + 3) === 111 /* o */ && array.charCodeAt(startIndex + 4) === 114 /* r */ && array.charCodeAt(startIndex + 5) === 116 /* t */) ? 47 /* ExportKeyword */ : 11 /* IdentifierName */;
-                        case 105 /* i */:
-                            return (array.charCodeAt(startIndex + 1) === 109 /* m */ && array.charCodeAt(startIndex + 2) === 112 /* p */ && array.charCodeAt(startIndex + 3) === 111 /* o */ && array.charCodeAt(startIndex + 4) === 114 /* r */ && array.charCodeAt(startIndex + 5) === 116 /* t */) ? 49 /* ImportKeyword */ : 11 /* IdentifierName */;
-                        case 112 /* p */:
-                            return (array.charCodeAt(startIndex + 1) === 117 /* u */ && array.charCodeAt(startIndex + 2) === 98 /* b */ && array.charCodeAt(startIndex + 3) === 108 /* l */ && array.charCodeAt(startIndex + 4) === 105 /* i */ && array.charCodeAt(startIndex + 5) === 99 /* c */) ? 57 /* PublicKeyword */ : 11 /* IdentifierName */;
-                        case 109 /* m */:
-                            return (array.charCodeAt(startIndex + 1) === 111 /* o */ && array.charCodeAt(startIndex + 2) === 100 /* d */ && array.charCodeAt(startIndex + 3) === 117 /* u */ && array.charCodeAt(startIndex + 4) === 108 /* l */ && array.charCodeAt(startIndex + 5) === 101 /* e */) ? 65 /* ModuleKeyword */ : 11 /* IdentifierName */;
-                        case 110 /* n */:
-                            return (array.charCodeAt(startIndex + 1) === 117 /* u */ && array.charCodeAt(startIndex + 2) === 109 /* m */ && array.charCodeAt(startIndex + 3) === 98 /* b */ && array.charCodeAt(startIndex + 4) === 101 /* e */ && array.charCodeAt(startIndex + 5) === 114 /* r */) ? 67 /* NumberKeyword */ : 11 /* IdentifierName */;
-                        default:
-                            return 11 /* IdentifierName */;
+                        case 116 /* t */: return (str.charCodeAt(start + 1) === 121 /* y */ && str.charCodeAt(start + 2) === 112 /* p */ && str.charCodeAt(start + 3) === 101 /* e */ && str.charCodeAt(start + 4) === 111 /* o */ && str.charCodeAt(start + 5) === 102 /* f */) ? 39 /* TypeOfKeyword */ : 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
                 case 7:
-                    switch (array.charCodeAt(startIndex)) {
+                    switch (str.charCodeAt(start)) {
+                        case 98 /* b */: return (str.charCodeAt(start + 1) === 111 /* o */ && str.charCodeAt(start + 2) === 111 /* o */ && str.charCodeAt(start + 3) === 108 /* l */ && str.charCodeAt(start + 4) === 101 /* e */ && str.charCodeAt(start + 5) === 97 /* a */ && str.charCodeAt(start + 6) === 110 /* n */) ? 61 /* BooleanKeyword */ : 11 /* IdentifierName */;
                         case 100 /* d */:
-                            switch (array.charCodeAt(startIndex + 1)) {
+                            switch (str.charCodeAt(start + 1)) {
                                 case 101 /* e */:
-                                    switch (array.charCodeAt(startIndex + 2)) {
-                                        case 102 /* f */:
-                                            return (array.charCodeAt(startIndex + 3) === 97 /* a */ && array.charCodeAt(startIndex + 4) === 117 /* u */ && array.charCodeAt(startIndex + 5) === 108 /* l */ && array.charCodeAt(startIndex + 6) === 116 /* t */) ? 20 /* DefaultKeyword */ : 11 /* IdentifierName */;
-                                        case 99 /* c */:
-                                            return (array.charCodeAt(startIndex + 3) === 108 /* l */ && array.charCodeAt(startIndex + 4) === 97 /* a */ && array.charCodeAt(startIndex + 5) === 114 /* r */ && array.charCodeAt(startIndex + 6) === 101 /* e */) ? 63 /* DeclareKeyword */ : 11 /* IdentifierName */;
-                                        default:
-                                            return 11 /* IdentifierName */;
+                                    switch (str.charCodeAt(start + 2)) {
+                                        case 99 /* c */: return (str.charCodeAt(start + 3) === 108 /* l */ && str.charCodeAt(start + 4) === 97 /* a */ && str.charCodeAt(start + 5) === 114 /* r */ && str.charCodeAt(start + 6) === 101 /* e */) ? 63 /* DeclareKeyword */ : 11 /* IdentifierName */;
+                                        case 102 /* f */: return (str.charCodeAt(start + 3) === 97 /* a */ && str.charCodeAt(start + 4) === 117 /* u */ && str.charCodeAt(start + 5) === 108 /* l */ && str.charCodeAt(start + 6) === 116 /* t */) ? 20 /* DefaultKeyword */ : 11 /* IdentifierName */;
+                                        default: return 11 /* IdentifierName */;
                                     }
-
-                                default:
-                                    return 11 /* IdentifierName */;
+                                default: return 11 /* IdentifierName */;
                             }
-
-                        case 102 /* f */:
-                            return (array.charCodeAt(startIndex + 1) === 105 /* i */ && array.charCodeAt(startIndex + 2) === 110 /* n */ && array.charCodeAt(startIndex + 3) === 97 /* a */ && array.charCodeAt(startIndex + 4) === 108 /* l */ && array.charCodeAt(startIndex + 5) === 108 /* l */ && array.charCodeAt(startIndex + 6) === 121 /* y */) ? 25 /* FinallyKeyword */ : 11 /* IdentifierName */;
-                        case 101 /* e */:
-                            return (array.charCodeAt(startIndex + 1) === 120 /* x */ && array.charCodeAt(startIndex + 2) === 116 /* t */ && array.charCodeAt(startIndex + 3) === 101 /* e */ && array.charCodeAt(startIndex + 4) === 110 /* n */ && array.charCodeAt(startIndex + 5) === 100 /* d */ && array.charCodeAt(startIndex + 6) === 115 /* s */) ? 48 /* ExtendsKeyword */ : 11 /* IdentifierName */;
+                        case 101 /* e */: return (str.charCodeAt(start + 1) === 120 /* x */ && str.charCodeAt(start + 2) === 116 /* t */ && str.charCodeAt(start + 3) === 101 /* e */ && str.charCodeAt(start + 4) === 110 /* n */ && str.charCodeAt(start + 5) === 100 /* d */ && str.charCodeAt(start + 6) === 115 /* s */) ? 48 /* ExtendsKeyword */ : 11 /* IdentifierName */;
+                        case 102 /* f */: return (str.charCodeAt(start + 1) === 105 /* i */ && str.charCodeAt(start + 2) === 110 /* n */ && str.charCodeAt(start + 3) === 97 /* a */ && str.charCodeAt(start + 4) === 108 /* l */ && str.charCodeAt(start + 5) === 108 /* l */ && str.charCodeAt(start + 6) === 121 /* y */) ? 25 /* FinallyKeyword */ : 11 /* IdentifierName */;
                         case 112 /* p */:
-                            switch (array.charCodeAt(startIndex + 1)) {
-                                case 97 /* a */:
-                                    return (array.charCodeAt(startIndex + 2) === 99 /* c */ && array.charCodeAt(startIndex + 3) === 107 /* k */ && array.charCodeAt(startIndex + 4) === 97 /* a */ && array.charCodeAt(startIndex + 5) === 103 /* g */ && array.charCodeAt(startIndex + 6) === 101 /* e */) ? 54 /* PackageKeyword */ : 11 /* IdentifierName */;
-                                case 114 /* r */:
-                                    return (array.charCodeAt(startIndex + 2) === 105 /* i */ && array.charCodeAt(startIndex + 3) === 118 /* v */ && array.charCodeAt(startIndex + 4) === 97 /* a */ && array.charCodeAt(startIndex + 5) === 116 /* t */ && array.charCodeAt(startIndex + 6) === 101 /* e */) ? 55 /* PrivateKeyword */ : 11 /* IdentifierName */;
-                                default:
-                                    return 11 /* IdentifierName */;
+                            switch (str.charCodeAt(start + 1)) {
+                                case 97 /* a */: return (str.charCodeAt(start + 2) === 99 /* c */ && str.charCodeAt(start + 3) === 107 /* k */ && str.charCodeAt(start + 4) === 97 /* a */ && str.charCodeAt(start + 5) === 103 /* g */ && str.charCodeAt(start + 6) === 101 /* e */) ? 54 /* PackageKeyword */ : 11 /* IdentifierName */;
+                                case 114 /* r */: return (str.charCodeAt(start + 2) === 105 /* i */ && str.charCodeAt(start + 3) === 118 /* v */ && str.charCodeAt(start + 4) === 97 /* a */ && str.charCodeAt(start + 5) === 116 /* t */ && str.charCodeAt(start + 6) === 101 /* e */) ? 55 /* PrivateKeyword */ : 11 /* IdentifierName */;
+                                default: return 11 /* IdentifierName */;
                             }
-
-                        case 98 /* b */:
-                            return (array.charCodeAt(startIndex + 1) === 111 /* o */ && array.charCodeAt(startIndex + 2) === 111 /* o */ && array.charCodeAt(startIndex + 3) === 108 /* l */ && array.charCodeAt(startIndex + 4) === 101 /* e */ && array.charCodeAt(startIndex + 5) === 97 /* a */ && array.charCodeAt(startIndex + 6) === 110 /* n */) ? 61 /* BooleanKeyword */ : 11 /* IdentifierName */;
-                        case 114 /* r */:
-                            return (array.charCodeAt(startIndex + 1) === 101 /* e */ && array.charCodeAt(startIndex + 2) === 113 /* q */ && array.charCodeAt(startIndex + 3) === 117 /* u */ && array.charCodeAt(startIndex + 4) === 105 /* i */ && array.charCodeAt(startIndex + 5) === 114 /* r */ && array.charCodeAt(startIndex + 6) === 101 /* e */) ? 66 /* RequireKeyword */ : 11 /* IdentifierName */;
-                        default:
-                            return 11 /* IdentifierName */;
+                        case 114 /* r */: return (str.charCodeAt(start + 1) === 101 /* e */ && str.charCodeAt(start + 2) === 113 /* q */ && str.charCodeAt(start + 3) === 117 /* u */ && str.charCodeAt(start + 4) === 105 /* i */ && str.charCodeAt(start + 5) === 114 /* r */ && str.charCodeAt(start + 6) === 101 /* e */) ? 66 /* RequireKeyword */ : 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
                 case 8:
-                    switch (array.charCodeAt(startIndex)) {
-                        case 99 /* c */:
-                            return (array.charCodeAt(startIndex + 1) === 111 /* o */ && array.charCodeAt(startIndex + 2) === 110 /* n */ && array.charCodeAt(startIndex + 3) === 116 /* t */ && array.charCodeAt(startIndex + 4) === 105 /* i */ && array.charCodeAt(startIndex + 5) === 110 /* n */ && array.charCodeAt(startIndex + 6) === 117 /* u */ && array.charCodeAt(startIndex + 7) === 101 /* e */) ? 18 /* ContinueKeyword */ : 11 /* IdentifierName */;
-                        case 100 /* d */:
-                            return (array.charCodeAt(startIndex + 1) === 101 /* e */ && array.charCodeAt(startIndex + 2) === 98 /* b */ && array.charCodeAt(startIndex + 3) === 117 /* u */ && array.charCodeAt(startIndex + 4) === 103 /* g */ && array.charCodeAt(startIndex + 5) === 103 /* g */ && array.charCodeAt(startIndex + 6) === 101 /* e */ && array.charCodeAt(startIndex + 7) === 114 /* r */) ? 19 /* DebuggerKeyword */ : 11 /* IdentifierName */;
-                        case 102 /* f */:
-                            return (array.charCodeAt(startIndex + 1) === 117 /* u */ && array.charCodeAt(startIndex + 2) === 110 /* n */ && array.charCodeAt(startIndex + 3) === 99 /* c */ && array.charCodeAt(startIndex + 4) === 116 /* t */ && array.charCodeAt(startIndex + 5) === 105 /* i */ && array.charCodeAt(startIndex + 6) === 111 /* o */ && array.charCodeAt(startIndex + 7) === 110 /* n */) ? 27 /* FunctionKeyword */ : 11 /* IdentifierName */;
-                        default:
-                            return 11 /* IdentifierName */;
+                    switch (str.charCodeAt(start)) {
+                        case 99 /* c */: return (str.charCodeAt(start + 1) === 111 /* o */ && str.charCodeAt(start + 2) === 110 /* n */ && str.charCodeAt(start + 3) === 116 /* t */ && str.charCodeAt(start + 4) === 105 /* i */ && str.charCodeAt(start + 5) === 110 /* n */ && str.charCodeAt(start + 6) === 117 /* u */ && str.charCodeAt(start + 7) === 101 /* e */) ? 18 /* ContinueKeyword */ : 11 /* IdentifierName */;
+                        case 100 /* d */: return (str.charCodeAt(start + 1) === 101 /* e */ && str.charCodeAt(start + 2) === 98 /* b */ && str.charCodeAt(start + 3) === 117 /* u */ && str.charCodeAt(start + 4) === 103 /* g */ && str.charCodeAt(start + 5) === 103 /* g */ && str.charCodeAt(start + 6) === 101 /* e */ && str.charCodeAt(start + 7) === 114 /* r */) ? 19 /* DebuggerKeyword */ : 11 /* IdentifierName */;
+                        case 102 /* f */: return (str.charCodeAt(start + 1) === 117 /* u */ && str.charCodeAt(start + 2) === 110 /* n */ && str.charCodeAt(start + 3) === 99 /* c */ && str.charCodeAt(start + 4) === 116 /* t */ && str.charCodeAt(start + 5) === 105 /* i */ && str.charCodeAt(start + 6) === 111 /* o */ && str.charCodeAt(start + 7) === 110 /* n */) ? 27 /* FunctionKeyword */ : 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
                 case 9:
-                    switch (array.charCodeAt(startIndex)) {
-                        case 105 /* i */:
-                            return (array.charCodeAt(startIndex + 1) === 110 /* n */ && array.charCodeAt(startIndex + 2) === 116 /* t */ && array.charCodeAt(startIndex + 3) === 101 /* e */ && array.charCodeAt(startIndex + 4) === 114 /* r */ && array.charCodeAt(startIndex + 5) === 102 /* f */ && array.charCodeAt(startIndex + 6) === 97 /* a */ && array.charCodeAt(startIndex + 7) === 99 /* c */ && array.charCodeAt(startIndex + 8) === 101 /* e */) ? 52 /* InterfaceKeyword */ : 11 /* IdentifierName */;
-                        case 112 /* p */:
-                            return (array.charCodeAt(startIndex + 1) === 114 /* r */ && array.charCodeAt(startIndex + 2) === 111 /* o */ && array.charCodeAt(startIndex + 3) === 116 /* t */ && array.charCodeAt(startIndex + 4) === 101 /* e */ && array.charCodeAt(startIndex + 5) === 99 /* c */ && array.charCodeAt(startIndex + 6) === 116 /* t */ && array.charCodeAt(startIndex + 7) === 101 /* e */ && array.charCodeAt(startIndex + 8) === 100 /* d */) ? 56 /* ProtectedKeyword */ : 11 /* IdentifierName */;
-                        default:
-                            return 11 /* IdentifierName */;
+                    switch (str.charCodeAt(start)) {
+                        case 105 /* i */: return (str.charCodeAt(start + 1) === 110 /* n */ && str.charCodeAt(start + 2) === 116 /* t */ && str.charCodeAt(start + 3) === 101 /* e */ && str.charCodeAt(start + 4) === 114 /* r */ && str.charCodeAt(start + 5) === 102 /* f */ && str.charCodeAt(start + 6) === 97 /* a */ && str.charCodeAt(start + 7) === 99 /* c */ && str.charCodeAt(start + 8) === 101 /* e */) ? 52 /* InterfaceKeyword */ : 11 /* IdentifierName */;
+                        case 112 /* p */: return (str.charCodeAt(start + 1) === 114 /* r */ && str.charCodeAt(start + 2) === 111 /* o */ && str.charCodeAt(start + 3) === 116 /* t */ && str.charCodeAt(start + 4) === 101 /* e */ && str.charCodeAt(start + 5) === 99 /* c */ && str.charCodeAt(start + 6) === 116 /* t */ && str.charCodeAt(start + 7) === 101 /* e */ && str.charCodeAt(start + 8) === 100 /* d */) ? 56 /* ProtectedKeyword */ : 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
                 case 10:
-                    switch (array.charCodeAt(startIndex)) {
+                    switch (str.charCodeAt(start)) {
                         case 105 /* i */:
-                            switch (array.charCodeAt(startIndex + 1)) {
-                                case 110 /* n */:
-                                    return (array.charCodeAt(startIndex + 2) === 115 /* s */ && array.charCodeAt(startIndex + 3) === 116 /* t */ && array.charCodeAt(startIndex + 4) === 97 /* a */ && array.charCodeAt(startIndex + 5) === 110 /* n */ && array.charCodeAt(startIndex + 6) === 99 /* c */ && array.charCodeAt(startIndex + 7) === 101 /* e */ && array.charCodeAt(startIndex + 8) === 111 /* o */ && array.charCodeAt(startIndex + 9) === 102 /* f */) ? 30 /* InstanceOfKeyword */ : 11 /* IdentifierName */;
-                                case 109 /* m */:
-                                    return (array.charCodeAt(startIndex + 2) === 112 /* p */ && array.charCodeAt(startIndex + 3) === 108 /* l */ && array.charCodeAt(startIndex + 4) === 101 /* e */ && array.charCodeAt(startIndex + 5) === 109 /* m */ && array.charCodeAt(startIndex + 6) === 101 /* e */ && array.charCodeAt(startIndex + 7) === 110 /* n */ && array.charCodeAt(startIndex + 8) === 116 /* t */ && array.charCodeAt(startIndex + 9) === 115 /* s */) ? 51 /* ImplementsKeyword */ : 11 /* IdentifierName */;
-                                default:
-                                    return 11 /* IdentifierName */;
+                            switch (str.charCodeAt(start + 1)) {
+                                case 109 /* m */: return (str.charCodeAt(start + 2) === 112 /* p */ && str.charCodeAt(start + 3) === 108 /* l */ && str.charCodeAt(start + 4) === 101 /* e */ && str.charCodeAt(start + 5) === 109 /* m */ && str.charCodeAt(start + 6) === 101 /* e */ && str.charCodeAt(start + 7) === 110 /* n */ && str.charCodeAt(start + 8) === 116 /* t */ && str.charCodeAt(start + 9) === 115 /* s */) ? 51 /* ImplementsKeyword */ : 11 /* IdentifierName */;
+                                case 110 /* n */: return (str.charCodeAt(start + 2) === 115 /* s */ && str.charCodeAt(start + 3) === 116 /* t */ && str.charCodeAt(start + 4) === 97 /* a */ && str.charCodeAt(start + 5) === 110 /* n */ && str.charCodeAt(start + 6) === 99 /* c */ && str.charCodeAt(start + 7) === 101 /* e */ && str.charCodeAt(start + 8) === 111 /* o */ && str.charCodeAt(start + 9) === 102 /* f */) ? 30 /* InstanceOfKeyword */ : 11 /* IdentifierName */;
+                                default: return 11 /* IdentifierName */;
                             }
-
-                        default:
-                            return 11 /* IdentifierName */;
+                        default: return 11 /* IdentifierName */;
                     }
-
-                case 11:
-                    return (array.charCodeAt(startIndex) === 99 /* c */ && array.charCodeAt(startIndex + 1) === 111 /* o */ && array.charCodeAt(startIndex + 2) === 110 /* n */ && array.charCodeAt(startIndex + 3) === 115 /* s */ && array.charCodeAt(startIndex + 4) === 116 /* t */ && array.charCodeAt(startIndex + 5) === 114 /* r */ && array.charCodeAt(startIndex + 6) === 117 /* u */ && array.charCodeAt(startIndex + 7) === 99 /* c */ && array.charCodeAt(startIndex + 8) === 116 /* t */ && array.charCodeAt(startIndex + 9) === 111 /* o */ && array.charCodeAt(startIndex + 10) === 114 /* r */) ? 62 /* ConstructorKeyword */ : 11 /* IdentifierName */;
-                default:
-                    return 11 /* IdentifierName */;
+                case 11: return (str.charCodeAt(start) === 99 /* c */ && str.charCodeAt(start + 1) === 111 /* o */ && str.charCodeAt(start + 2) === 110 /* n */ && str.charCodeAt(start + 3) === 115 /* s */ && str.charCodeAt(start + 4) === 116 /* t */ && str.charCodeAt(start + 5) === 114 /* r */ && str.charCodeAt(start + 6) === 117 /* u */ && str.charCodeAt(start + 7) === 99 /* c */ && str.charCodeAt(start + 8) === 116 /* t */ && str.charCodeAt(start + 9) === 111 /* o */ && str.charCodeAt(start + 10) === 114 /* r */) ? 62 /* ConstructorKeyword */ : 11 /* IdentifierName */;
+                default: return 11 /* IdentifierName */;
             }
         };
         return ScannerUtilities;
@@ -12754,8 +12660,9 @@ var TypeScript;
                     case 70 /* OpenBraceToken */: return parseObjectType();
                     case 31 /* NewKeyword */: return parseConstructorType();
                     case 39 /* TypeOfKeyword */: return parseTypeQuery(_currentToken);
-                    default: return tryParseNameOrGenericType();
                 }
+
+                return tryParseNameOrGenericType();
             }
 
             function tryParseNameOrGenericType() {
