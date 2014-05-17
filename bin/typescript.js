@@ -2582,254 +2582,6 @@ var TypeScript;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
-    (function (TextFactory) {
-        function getStartAndLengthOfLineBreakEndingAt(text, index, info) {
-            var c = text.charCodeAt(index);
-            if (c === 10 /* lineFeed */) {
-                if (index > 0 && text.charCodeAt(index - 1) === 13 /* carriageReturn */) {
-                    info.startPosition = index - 1;
-                    info.length = 2;
-                } else {
-                    info.startPosition = index;
-                    info.length = 1;
-                }
-            } else if (TypeScript.TextUtilities.isAnyLineBreakCharacter(c)) {
-                info.startPosition = index;
-                info.length = 1;
-            } else {
-                info.startPosition = index + 1;
-                info.length = 0;
-            }
-        }
-
-        var LinebreakInfo = (function () {
-            function LinebreakInfo(startPosition, length) {
-                this.startPosition = startPosition;
-                this.length = length;
-            }
-            return LinebreakInfo;
-        })();
-
-        var TextLine = (function () {
-            function TextLine(text, body, lineBreakLength, lineNumber) {
-                this._text = null;
-                this._textSpan = null;
-                if (text === null) {
-                    throw TypeScript.Errors.argumentNull('text');
-                }
-                TypeScript.Debug.assert(lineBreakLength >= 0);
-                TypeScript.Debug.assert(lineNumber >= 0);
-                this._text = text;
-                this._textSpan = body;
-                this._lineBreakLength = lineBreakLength;
-                this._lineNumber = lineNumber;
-            }
-            TextLine.prototype.start = function () {
-                return this._textSpan.start();
-            };
-
-            TextLine.prototype.end = function () {
-                return this._textSpan.end();
-            };
-
-            TextLine.prototype.endIncludingLineBreak = function () {
-                return this.end() + this._lineBreakLength;
-            };
-
-            TextLine.prototype.extent = function () {
-                return this._textSpan;
-            };
-
-            TextLine.prototype.extentIncludingLineBreak = function () {
-                return TypeScript.TextSpan.fromBounds(this.start(), this.endIncludingLineBreak());
-            };
-
-            TextLine.prototype.toString = function () {
-                return this._text.toString(this._textSpan);
-            };
-
-            TextLine.prototype.lineNumber = function () {
-                return this._lineNumber;
-            };
-            return TextLine;
-        })();
-
-        var TextBase = (function () {
-            function TextBase() {
-                this.linebreakInfo = new LinebreakInfo(0, 0);
-                this.lastLineFoundForPosition = null;
-            }
-            TextBase.prototype.length = function () {
-                throw TypeScript.Errors.abstract();
-            };
-
-            TextBase.prototype.charCodeAt = function (position) {
-                throw TypeScript.Errors.abstract();
-            };
-
-            TextBase.prototype.checkSubSpan = function (span) {
-                if (span.start() < 0 || span.start() > this.length() || span.end() > this.length()) {
-                    throw TypeScript.Errors.argumentOutOfRange("span");
-                }
-            };
-
-            TextBase.prototype.toString = function (span) {
-                if (typeof span === "undefined") { span = null; }
-                throw TypeScript.Errors.abstract();
-            };
-
-            TextBase.prototype.substr = function (start, length) {
-                throw TypeScript.Errors.abstract();
-            };
-
-            TextBase.prototype.lineCount = function () {
-                return this._lineStarts().length;
-            };
-
-            TextBase.prototype.lines = function () {
-                var lines = [];
-
-                var length = this.lineCount();
-                for (var i = 0; i < length; ++i) {
-                    lines[i] = this.getLineFromLineNumber(i);
-                }
-
-                return lines;
-            };
-
-            TextBase.prototype.lineMap = function () {
-                var _this = this;
-                return new TypeScript.LineMap(function () {
-                    return _this._lineStarts();
-                }, this.length());
-            };
-
-            TextBase.prototype._lineStarts = function () {
-                throw TypeScript.Errors.abstract();
-            };
-
-            TextBase.prototype.getLineFromLineNumber = function (lineNumber) {
-                var lineStarts = this._lineStarts();
-
-                if (lineNumber < 0 || lineNumber >= lineStarts.length) {
-                    throw TypeScript.Errors.argumentOutOfRange("lineNumber");
-                }
-
-                var first = lineStarts[lineNumber];
-                if (lineNumber === lineStarts.length - 1) {
-                    return new TextLine(this, new TypeScript.TextSpan(first, this.length() - first), 0, lineNumber);
-                } else {
-                    getStartAndLengthOfLineBreakEndingAt(this, lineStarts[lineNumber + 1] - 1, this.linebreakInfo);
-                    return new TextLine(this, new TypeScript.TextSpan(first, this.linebreakInfo.startPosition - first), this.linebreakInfo.length, lineNumber);
-                }
-            };
-
-            TextBase.prototype.getLineFromPosition = function (position) {
-                var lastFound = this.lastLineFoundForPosition;
-                if (lastFound !== null && lastFound.start() <= position && lastFound.endIncludingLineBreak() > position) {
-                    return lastFound;
-                }
-
-                var lineNumber = this.getLineNumberFromPosition(position);
-
-                var result = this.getLineFromLineNumber(lineNumber);
-                this.lastLineFoundForPosition = result;
-                return result;
-            };
-
-            TextBase.prototype.getLineNumberFromPosition = function (position) {
-                if (position < 0 || position > this.length()) {
-                    throw TypeScript.Errors.argumentOutOfRange("position");
-                }
-
-                if (position === this.length()) {
-                    return this.lineCount() - 1;
-                }
-
-                var lineNumber = TypeScript.ArrayUtilities.binarySearch(this._lineStarts(), position);
-                if (lineNumber < 0) {
-                    lineNumber = (~lineNumber) - 1;
-                }
-
-                return lineNumber;
-            };
-
-            TextBase.prototype.getLinePosition = function (position) {
-                if (position < 0 || position > this.length()) {
-                    throw TypeScript.Errors.argumentOutOfRange("position");
-                }
-
-                var lineNumber = this.getLineNumberFromPosition(position);
-
-                return new TypeScript.LineAndCharacter(lineNumber, position - this._lineStarts()[lineNumber]);
-            };
-            return TextBase;
-        })();
-
-        var StringText = (function (_super) {
-            __extends(StringText, _super);
-            function StringText(data) {
-                _super.call(this);
-                this.source = null;
-                this._lazyLineStarts = null;
-
-                if (data === null) {
-                    throw TypeScript.Errors.argumentNull("data");
-                }
-
-                this.source = data;
-            }
-            StringText.prototype.length = function () {
-                return this.source.length;
-            };
-
-            StringText.prototype.charCodeAt = function (position) {
-                if (position < 0 || position >= this.source.length) {
-                    throw TypeScript.Errors.argumentOutOfRange("position");
-                }
-
-                return this.source.charCodeAt(position);
-            };
-
-            StringText.prototype.substr = function (start, length) {
-                return this.source.substr(start, length);
-            };
-
-            StringText.prototype.toString = function (span) {
-                if (typeof span === "undefined") { span = null; }
-                if (span === null) {
-                    span = new TypeScript.TextSpan(0, this.length());
-                }
-
-                this.checkSubSpan(span);
-
-                if (span.start() === 0 && span.length() === this.length()) {
-                    return this.source;
-                }
-
-                return this.source.substr(span.start(), span.length());
-            };
-
-            StringText.prototype._lineStarts = function () {
-                if (this._lazyLineStarts === null) {
-                    this._lazyLineStarts = TypeScript.TextUtilities.parseLineStarts(this.source);
-                }
-
-                return this._lazyLineStarts;
-            };
-            return StringText;
-        })(TextBase);
-
-        function createText(value) {
-            return new StringText(value);
-        }
-        TextFactory.createText = createText;
-    })(TypeScript.TextFactory || (TypeScript.TextFactory = {}));
-    var TextFactory = TypeScript.TextFactory;
-})(TypeScript || (TypeScript = {}));
-
-var TypeScript;
-(function (TypeScript) {
     (function (SimpleText) {
         var SimpleStringText = (function () {
             function SimpleStringText(value) {
@@ -2856,36 +2608,6 @@ var TypeScript;
                 return this._lineMap;
             };
             return SimpleStringText;
-        })();
-
-        var SubstrStringText = (function () {
-            function SubstrStringText(value, _from, _length) {
-                this.value = value;
-                this._from = _from;
-                this._length = _length;
-                this._lineMap = null;
-            }
-            SubstrStringText.prototype.length = function () {
-                return this._length;
-            };
-
-            SubstrStringText.prototype.substr = function (start, length) {
-                return this.value.substr(start + this._from, length);
-            };
-
-            SubstrStringText.prototype.charCodeAt = function (index) {
-                return this.value.charCodeAt(index + this._from);
-            };
-
-            SubstrStringText.prototype.lineMap = function () {
-                if (!this._lineMap) {
-                    this._lineMap = TypeScript.LineMap1.fromSimpleText(this);
-                }
-
-                return this._lineMap;
-            };
-            SubstrStringText.charArray = TypeScript.ArrayUtilities.createArray(1024, 0);
-            return SubstrStringText;
         })();
 
         var SimpleScriptSnapshotText = (function () {
@@ -2917,11 +2639,6 @@ var TypeScript;
             };
             return SimpleScriptSnapshotText;
         })();
-
-        function fromSubstr(value, from, length) {
-            return new SubstrStringText(value, from, length);
-        }
-        SimpleText.fromSubstr = fromSubstr;
 
         function fromString(value) {
             return new SimpleStringText(value);
@@ -3747,21 +3464,6 @@ var TypeScript;
         }
         SyntaxFacts.isAnyKeyword = isAnyKeyword;
 
-        function isStandardKeyword(kind) {
-            return kind >= 15 /* FirstStandardKeyword */ && kind <= 43 /* LastStandardKeyword */;
-        }
-        SyntaxFacts.isStandardKeyword = isStandardKeyword;
-
-        function isFutureReservedKeyword(kind) {
-            return kind >= 44 /* FirstFutureReservedKeyword */ && kind <= 50 /* LastFutureReservedKeyword */;
-        }
-        SyntaxFacts.isFutureReservedKeyword = isFutureReservedKeyword;
-
-        function isFutureReservedStrictKeyword(kind) {
-            return kind >= 51 /* FirstFutureReservedStrictKeyword */ && kind <= 59 /* LastFutureReservedStrictKeyword */;
-        }
-        SyntaxFacts.isFutureReservedStrictKeyword = isFutureReservedStrictKeyword;
-
         function isAnyPunctuation(kind) {
             return kind >= 70 /* FirstPunctuation */ && kind <= 119 /* LastPunctuation */;
         }
@@ -3941,10 +3643,6 @@ var TypeScript;
 
         function largeTokenPackFullStartAndInfo(fullStart, hasLeadingTriviaInfo, hasTrailingTriviaInfo) {
             return (fullStart << 2 /* LargeTokenFullStartShift */) | hasLeadingTriviaInfo | hasTrailingTriviaInfo;
-        }
-
-        function largeTokenPackFullWidthAndKind(fullWidth, kind) {
-            return (fullWidth << 7 /* LargeTokenFullWidthShift */) | kind;
         }
 
         function largeTokenUnpackFullWidth(packedFullWidthAndKind) {
@@ -4678,7 +4376,6 @@ var TypeScript;
 
             function slowScanTriviaInfo(ch) {
                 switch (ch) {
-                    case 32 /* space */:
                     case 160 /* nonBreakingSpace */:
                     case 8192 /* enQuad */:
                     case 8193 /* emQuad */:
@@ -5749,10 +5446,6 @@ var TypeScript;
             this._pinCount = 0;
             this.firstPinnedAbsoluteIndex = -1;
         }
-        SlidingWindow.prototype.windowAbsoluteEndIndex = function () {
-            return this.windowAbsoluteStartIndex + this.windowCount;
-        };
-
         SlidingWindow.prototype.addMoreItemsToWindow = function (argument) {
             var sourceLength = this.sourceLength;
             if (sourceLength >= 0 && this.absoluteIndex() >= sourceLength) {
@@ -5854,25 +5547,6 @@ var TypeScript;
             this.windowCount = this.currentRelativeItemIndex;
         };
 
-        SlidingWindow.prototype.setAbsoluteIndex = function (absoluteIndex) {
-            if (this.absoluteIndex() === absoluteIndex) {
-                return;
-            }
-
-            if (this._pinCount > 0) {
-            }
-
-            if (absoluteIndex >= this.windowAbsoluteStartIndex && absoluteIndex < this.windowAbsoluteEndIndex()) {
-                this.currentRelativeItemIndex = (absoluteIndex - this.windowAbsoluteStartIndex);
-            } else {
-                this.windowAbsoluteStartIndex = absoluteIndex;
-
-                this.windowCount = 0;
-
-                this.currentRelativeItemIndex = 0;
-            }
-        };
-
         SlidingWindow.prototype.pinCount = function () {
             return this._pinCount;
         };
@@ -5901,52 +5575,6 @@ var TypeScript;
             return positionedToken;
         }
         Syntax.getStandaloneExpression = getStandaloneExpression;
-
-        function isInModuleOrTypeContext(positionedToken) {
-            if (positionedToken !== null) {
-                var positionedNodeOrToken = getStandaloneExpression(positionedToken);
-                var parent = containingNode(positionedNodeOrToken);
-
-                if (parent !== null) {
-                    switch (parent.kind()) {
-                        case 246 /* ModuleNameModuleReference */:
-                            return true;
-                        case 121 /* QualifiedName */:
-                            return true;
-                        default:
-                            return isInTypeOnlyContext(positionedToken);
-                    }
-                }
-            }
-
-            return false;
-        }
-        Syntax.isInModuleOrTypeContext = isInModuleOrTypeContext;
-
-        function isInTypeOnlyContext(positionedToken) {
-            var positionedNodeOrToken = getStandaloneExpression(positionedToken);
-            var positionedParent = containingNode(positionedNodeOrToken);
-
-            var parent = containingNode(positionedParent);
-            var nodeOrToken = positionedNodeOrToken;
-
-            if (parent !== null) {
-                switch (parent.kind()) {
-                    case 124 /* ArrayType */:
-                        return parent.type === nodeOrToken;
-                    case 220 /* CastExpression */:
-                        return parent.type === nodeOrToken;
-                    case 244 /* TypeAnnotation */:
-                    case 230 /* ExtendsHeritageClause */:
-                    case 231 /* ImplementsHeritageClause */:
-                    case 228 /* TypeArgumentList */:
-                        return true;
-                }
-            }
-
-            return false;
-        }
-        Syntax.isInTypeOnlyContext = isInTypeOnlyContext;
 
         function childOffset(parent, child) {
             var offset = 0;
@@ -8937,94 +8565,50 @@ var TypeScript;
             return visitor.visitToken(element);
         }
         switch (element.kind()) {
-            case 120 /* SourceUnit */:
-                return visitor.visitSourceUnit(element);
-            case 121 /* QualifiedName */:
-                return visitor.visitQualifiedName(element);
-            case 122 /* ObjectType */:
-                return visitor.visitObjectType(element);
-            case 123 /* FunctionType */:
-                return visitor.visitFunctionType(element);
-            case 124 /* ArrayType */:
-                return visitor.visitArrayType(element);
-            case 125 /* ConstructorType */:
-                return visitor.visitConstructorType(element);
-            case 126 /* GenericType */:
-                return visitor.visitGenericType(element);
-            case 127 /* TypeQuery */:
-                return visitor.visitTypeQuery(element);
-            case 128 /* InterfaceDeclaration */:
-                return visitor.visitInterfaceDeclaration(element);
-            case 129 /* FunctionDeclaration */:
-                return visitor.visitFunctionDeclaration(element);
-            case 130 /* ModuleDeclaration */:
-                return visitor.visitModuleDeclaration(element);
-            case 131 /* ClassDeclaration */:
-                return visitor.visitClassDeclaration(element);
-            case 132 /* EnumDeclaration */:
-                return visitor.visitEnumDeclaration(element);
-            case 133 /* ImportDeclaration */:
-                return visitor.visitImportDeclaration(element);
-            case 134 /* ExportAssignment */:
-                return visitor.visitExportAssignment(element);
-            case 135 /* MemberFunctionDeclaration */:
-                return visitor.visitMemberFunctionDeclaration(element);
-            case 136 /* MemberVariableDeclaration */:
-                return visitor.visitMemberVariableDeclaration(element);
-            case 137 /* ConstructorDeclaration */:
-                return visitor.visitConstructorDeclaration(element);
-            case 138 /* IndexMemberDeclaration */:
-                return visitor.visitIndexMemberDeclaration(element);
-            case 139 /* GetAccessor */:
-                return visitor.visitGetAccessor(element);
-            case 140 /* SetAccessor */:
-                return visitor.visitSetAccessor(element);
-            case 141 /* PropertySignature */:
-                return visitor.visitPropertySignature(element);
-            case 142 /* CallSignature */:
-                return visitor.visitCallSignature(element);
-            case 143 /* ConstructSignature */:
-                return visitor.visitConstructSignature(element);
-            case 144 /* IndexSignature */:
-                return visitor.visitIndexSignature(element);
-            case 145 /* MethodSignature */:
-                return visitor.visitMethodSignature(element);
-            case 146 /* Block */:
-                return visitor.visitBlock(element);
-            case 147 /* IfStatement */:
-                return visitor.visitIfStatement(element);
-            case 148 /* VariableStatement */:
-                return visitor.visitVariableStatement(element);
-            case 149 /* ExpressionStatement */:
-                return visitor.visitExpressionStatement(element);
-            case 150 /* ReturnStatement */:
-                return visitor.visitReturnStatement(element);
-            case 151 /* SwitchStatement */:
-                return visitor.visitSwitchStatement(element);
-            case 152 /* BreakStatement */:
-                return visitor.visitBreakStatement(element);
-            case 153 /* ContinueStatement */:
-                return visitor.visitContinueStatement(element);
-            case 154 /* ForStatement */:
-                return visitor.visitForStatement(element);
-            case 155 /* ForInStatement */:
-                return visitor.visitForInStatement(element);
-            case 156 /* EmptyStatement */:
-                return visitor.visitEmptyStatement(element);
-            case 157 /* ThrowStatement */:
-                return visitor.visitThrowStatement(element);
-            case 158 /* WhileStatement */:
-                return visitor.visitWhileStatement(element);
-            case 159 /* TryStatement */:
-                return visitor.visitTryStatement(element);
-            case 160 /* LabeledStatement */:
-                return visitor.visitLabeledStatement(element);
-            case 161 /* DoStatement */:
-                return visitor.visitDoStatement(element);
-            case 162 /* DebuggerStatement */:
-                return visitor.visitDebuggerStatement(element);
-            case 163 /* WithStatement */:
-                return visitor.visitWithStatement(element);
+            case 120 /* SourceUnit */: return visitor.visitSourceUnit(element);
+            case 121 /* QualifiedName */: return visitor.visitQualifiedName(element);
+            case 122 /* ObjectType */: return visitor.visitObjectType(element);
+            case 123 /* FunctionType */: return visitor.visitFunctionType(element);
+            case 124 /* ArrayType */: return visitor.visitArrayType(element);
+            case 125 /* ConstructorType */: return visitor.visitConstructorType(element);
+            case 126 /* GenericType */: return visitor.visitGenericType(element);
+            case 127 /* TypeQuery */: return visitor.visitTypeQuery(element);
+            case 128 /* InterfaceDeclaration */: return visitor.visitInterfaceDeclaration(element);
+            case 129 /* FunctionDeclaration */: return visitor.visitFunctionDeclaration(element);
+            case 130 /* ModuleDeclaration */: return visitor.visitModuleDeclaration(element);
+            case 131 /* ClassDeclaration */: return visitor.visitClassDeclaration(element);
+            case 132 /* EnumDeclaration */: return visitor.visitEnumDeclaration(element);
+            case 133 /* ImportDeclaration */: return visitor.visitImportDeclaration(element);
+            case 134 /* ExportAssignment */: return visitor.visitExportAssignment(element);
+            case 135 /* MemberFunctionDeclaration */: return visitor.visitMemberFunctionDeclaration(element);
+            case 136 /* MemberVariableDeclaration */: return visitor.visitMemberVariableDeclaration(element);
+            case 137 /* ConstructorDeclaration */: return visitor.visitConstructorDeclaration(element);
+            case 138 /* IndexMemberDeclaration */: return visitor.visitIndexMemberDeclaration(element);
+            case 139 /* GetAccessor */: return visitor.visitGetAccessor(element);
+            case 140 /* SetAccessor */: return visitor.visitSetAccessor(element);
+            case 141 /* PropertySignature */: return visitor.visitPropertySignature(element);
+            case 142 /* CallSignature */: return visitor.visitCallSignature(element);
+            case 143 /* ConstructSignature */: return visitor.visitConstructSignature(element);
+            case 144 /* IndexSignature */: return visitor.visitIndexSignature(element);
+            case 145 /* MethodSignature */: return visitor.visitMethodSignature(element);
+            case 146 /* Block */: return visitor.visitBlock(element);
+            case 147 /* IfStatement */: return visitor.visitIfStatement(element);
+            case 148 /* VariableStatement */: return visitor.visitVariableStatement(element);
+            case 149 /* ExpressionStatement */: return visitor.visitExpressionStatement(element);
+            case 150 /* ReturnStatement */: return visitor.visitReturnStatement(element);
+            case 151 /* SwitchStatement */: return visitor.visitSwitchStatement(element);
+            case 152 /* BreakStatement */: return visitor.visitBreakStatement(element);
+            case 153 /* ContinueStatement */: return visitor.visitContinueStatement(element);
+            case 154 /* ForStatement */: return visitor.visitForStatement(element);
+            case 155 /* ForInStatement */: return visitor.visitForInStatement(element);
+            case 156 /* EmptyStatement */: return visitor.visitEmptyStatement(element);
+            case 157 /* ThrowStatement */: return visitor.visitThrowStatement(element);
+            case 158 /* WhileStatement */: return visitor.visitWhileStatement(element);
+            case 159 /* TryStatement */: return visitor.visitTryStatement(element);
+            case 160 /* LabeledStatement */: return visitor.visitLabeledStatement(element);
+            case 161 /* DoStatement */: return visitor.visitDoStatement(element);
+            case 162 /* DebuggerStatement */: return visitor.visitDebuggerStatement(element);
+            case 163 /* WithStatement */: return visitor.visitWithStatement(element);
             case 168 /* PreIncrementExpression */:
             case 169 /* PreDecrementExpression */:
             case 164 /* PlusExpression */:
@@ -9032,14 +8616,10 @@ var TypeScript;
             case 166 /* BitwiseNotExpression */:
             case 167 /* LogicalNotExpression */:
                 return visitor.visitPrefixUnaryExpression(element);
-            case 170 /* DeleteExpression */:
-                return visitor.visitDeleteExpression(element);
-            case 171 /* TypeOfExpression */:
-                return visitor.visitTypeOfExpression(element);
-            case 172 /* VoidExpression */:
-                return visitor.visitVoidExpression(element);
-            case 186 /* ConditionalExpression */:
-                return visitor.visitConditionalExpression(element);
+            case 170 /* DeleteExpression */: return visitor.visitDeleteExpression(element);
+            case 171 /* TypeOfExpression */: return visitor.visitTypeOfExpression(element);
+            case 172 /* VoidExpression */: return visitor.visitVoidExpression(element);
+            case 186 /* ConditionalExpression */: return visitor.visitConditionalExpression(element);
             case 205 /* MultiplyExpression */:
             case 206 /* DivideExpression */:
             case 207 /* ModuloExpression */:
@@ -9080,75 +8660,42 @@ var TypeScript;
             case 210 /* PostIncrementExpression */:
             case 211 /* PostDecrementExpression */:
                 return visitor.visitPostfixUnaryExpression(element);
-            case 212 /* MemberAccessExpression */:
-                return visitor.visitMemberAccessExpression(element);
-            case 213 /* InvocationExpression */:
-                return visitor.visitInvocationExpression(element);
-            case 214 /* ArrayLiteralExpression */:
-                return visitor.visitArrayLiteralExpression(element);
-            case 215 /* ObjectLiteralExpression */:
-                return visitor.visitObjectLiteralExpression(element);
-            case 216 /* ObjectCreationExpression */:
-                return visitor.visitObjectCreationExpression(element);
-            case 217 /* ParenthesizedExpression */:
-                return visitor.visitParenthesizedExpression(element);
-            case 218 /* ParenthesizedArrowFunctionExpression */:
-                return visitor.visitParenthesizedArrowFunctionExpression(element);
-            case 219 /* SimpleArrowFunctionExpression */:
-                return visitor.visitSimpleArrowFunctionExpression(element);
-            case 220 /* CastExpression */:
-                return visitor.visitCastExpression(element);
-            case 221 /* ElementAccessExpression */:
-                return visitor.visitElementAccessExpression(element);
-            case 222 /* FunctionExpression */:
-                return visitor.visitFunctionExpression(element);
-            case 223 /* OmittedExpression */:
-                return visitor.visitOmittedExpression(element);
-            case 224 /* VariableDeclaration */:
-                return visitor.visitVariableDeclaration(element);
-            case 225 /* VariableDeclarator */:
-                return visitor.visitVariableDeclarator(element);
-            case 226 /* ArgumentList */:
-                return visitor.visitArgumentList(element);
-            case 227 /* ParameterList */:
-                return visitor.visitParameterList(element);
-            case 228 /* TypeArgumentList */:
-                return visitor.visitTypeArgumentList(element);
-            case 229 /* TypeParameterList */:
-                return visitor.visitTypeParameterList(element);
+            case 212 /* MemberAccessExpression */: return visitor.visitMemberAccessExpression(element);
+            case 213 /* InvocationExpression */: return visitor.visitInvocationExpression(element);
+            case 214 /* ArrayLiteralExpression */: return visitor.visitArrayLiteralExpression(element);
+            case 215 /* ObjectLiteralExpression */: return visitor.visitObjectLiteralExpression(element);
+            case 216 /* ObjectCreationExpression */: return visitor.visitObjectCreationExpression(element);
+            case 217 /* ParenthesizedExpression */: return visitor.visitParenthesizedExpression(element);
+            case 218 /* ParenthesizedArrowFunctionExpression */: return visitor.visitParenthesizedArrowFunctionExpression(element);
+            case 219 /* SimpleArrowFunctionExpression */: return visitor.visitSimpleArrowFunctionExpression(element);
+            case 220 /* CastExpression */: return visitor.visitCastExpression(element);
+            case 221 /* ElementAccessExpression */: return visitor.visitElementAccessExpression(element);
+            case 222 /* FunctionExpression */: return visitor.visitFunctionExpression(element);
+            case 223 /* OmittedExpression */: return visitor.visitOmittedExpression(element);
+            case 224 /* VariableDeclaration */: return visitor.visitVariableDeclaration(element);
+            case 225 /* VariableDeclarator */: return visitor.visitVariableDeclarator(element);
+            case 226 /* ArgumentList */: return visitor.visitArgumentList(element);
+            case 227 /* ParameterList */: return visitor.visitParameterList(element);
+            case 228 /* TypeArgumentList */: return visitor.visitTypeArgumentList(element);
+            case 229 /* TypeParameterList */: return visitor.visitTypeParameterList(element);
             case 230 /* ExtendsHeritageClause */:
             case 231 /* ImplementsHeritageClause */:
                 return visitor.visitHeritageClause(element);
-            case 232 /* EqualsValueClause */:
-                return visitor.visitEqualsValueClause(element);
-            case 233 /* CaseSwitchClause */:
-                return visitor.visitCaseSwitchClause(element);
-            case 234 /* DefaultSwitchClause */:
-                return visitor.visitDefaultSwitchClause(element);
-            case 235 /* ElseClause */:
-                return visitor.visitElseClause(element);
-            case 236 /* CatchClause */:
-                return visitor.visitCatchClause(element);
-            case 237 /* FinallyClause */:
-                return visitor.visitFinallyClause(element);
-            case 238 /* TypeParameter */:
-                return visitor.visitTypeParameter(element);
-            case 239 /* Constraint */:
-                return visitor.visitConstraint(element);
-            case 240 /* SimplePropertyAssignment */:
-                return visitor.visitSimplePropertyAssignment(element);
-            case 241 /* FunctionPropertyAssignment */:
-                return visitor.visitFunctionPropertyAssignment(element);
-            case 242 /* Parameter */:
-                return visitor.visitParameter(element);
-            case 243 /* EnumElement */:
-                return visitor.visitEnumElement(element);
-            case 244 /* TypeAnnotation */:
-                return visitor.visitTypeAnnotation(element);
-            case 245 /* ExternalModuleReference */:
-                return visitor.visitExternalModuleReference(element);
-            case 246 /* ModuleNameModuleReference */:
-                return visitor.visitModuleNameModuleReference(element);
+            case 232 /* EqualsValueClause */: return visitor.visitEqualsValueClause(element);
+            case 233 /* CaseSwitchClause */: return visitor.visitCaseSwitchClause(element);
+            case 234 /* DefaultSwitchClause */: return visitor.visitDefaultSwitchClause(element);
+            case 235 /* ElseClause */: return visitor.visitElseClause(element);
+            case 236 /* CatchClause */: return visitor.visitCatchClause(element);
+            case 237 /* FinallyClause */: return visitor.visitFinallyClause(element);
+            case 238 /* TypeParameter */: return visitor.visitTypeParameter(element);
+            case 239 /* Constraint */: return visitor.visitConstraint(element);
+            case 240 /* SimplePropertyAssignment */: return visitor.visitSimplePropertyAssignment(element);
+            case 241 /* FunctionPropertyAssignment */: return visitor.visitFunctionPropertyAssignment(element);
+            case 242 /* Parameter */: return visitor.visitParameter(element);
+            case 243 /* EnumElement */: return visitor.visitEnumElement(element);
+            case 244 /* TypeAnnotation */: return visitor.visitTypeAnnotation(element);
+            case 245 /* ExternalModuleReference */: return visitor.visitExternalModuleReference(element);
+            case 246 /* ModuleNameModuleReference */: return visitor.visitModuleNameModuleReference(element);
         }
 
         throw TypeScript.Errors.invalidOperation();
