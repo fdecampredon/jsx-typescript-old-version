@@ -695,6 +695,7 @@ module TypeScript.Parser {
         }
         
         public currentXJSToken(): ISyntaxToken {
+            this.resetToPosition(this._absolutePosition);
             return this.slidingWindow.currentItem(false, true)
         }
     }
@@ -4492,7 +4493,8 @@ module TypeScript.Parser {
                     if (_currentTokenKind === SyntaxKind.LessThanToken && peekToken(1).kind() === SyntaxKind.SlashToken) {
                         break;
                     }
-                    children.push(parseXJSChild())
+                    children.push(parseXJSChild());
+                    _currentTokenKind = currentXJSToken().kind()
                 }
                 closingElement = parseXJSClosingElement();
                 //todo error if closing and opening element names does not match
@@ -4556,6 +4558,7 @@ module TypeScript.Parser {
                 case SyntaxKind.OpenBraceToken:
                     return parseXJSExpressionContainer();
                 case SyntaxKind.XJSText:
+                    consumeToken(_currentToken)
                     return _currentToken;
                 default:
                     return parseXJSElement();

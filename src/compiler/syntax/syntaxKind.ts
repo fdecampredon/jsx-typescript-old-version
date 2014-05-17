@@ -27,6 +27,9 @@ module TypeScript {
         RegularExpressionLiteral,
         NumericLiteral,
         StringLiteral,
+        
+        //XJSIdentifier, //esprima-fb have a special xjs identifier that contains namespace, don't use it for now
+        XJSText,
 
         // All fixed width tokens follow.
 
@@ -93,9 +96,6 @@ module TypeScript {
         SetKeyword,
         StringKeyword,
         
-        //XJSIdentifier, //esprima-fb have a special xjs identifier that contains namespace, don't use it for now
-        XJSText, //TODO this is a token see how we can include it in the scanner
-
         // Punctuators
         OpenBraceToken,
         CloseBraceToken,

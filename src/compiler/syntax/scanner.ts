@@ -488,7 +488,7 @@ module TypeScript {
 
         function scan(allowContextualToken: boolean, isXJSTextExpected: boolean = false): ISyntaxToken {
             var fullStart = index;
-            var hasLeadingTrivia = scanTriviaInfo(/*isTrailing: */ false);
+            var hasLeadingTrivia = isXJSTextExpected ? false : scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
             var kindAndIsVariableWidth = scanSyntaxKind(allowContextualToken, isXJSTextExpected);
@@ -850,7 +850,7 @@ module TypeScript {
                 switch (character) {
                     case CharacterCodes.lessThan: return SyntaxKind.LessThanToken;
                     case CharacterCodes.openBrace: return SyntaxKind.OpenBraceToken;
-                    default: return scanXJSText();
+                    default: return scanXJSText(character);
                 }
             }
 
@@ -1557,10 +1557,10 @@ module TypeScript {
             return intChar;
         }
         
-        function scanXJSText(): SyntaxKind {
+        function scanXJSText(ch: number): SyntaxKind {
             while (true) {
-                var ch = str.charCodeAt(index);
                 if (ch === CharacterCodes.openBrace || ch === CharacterCodes.lessThan) {
+                    index--;
                     break;
                 }
                 else if (isNaN(ch)) {
@@ -1569,10 +1569,10 @@ module TypeScript {
                     break;
                 }
                 else {
+                    ch = str.charCodeAt(index);
                     index++;
                 }
             }
-
             return SyntaxKind.XJSText;
         }
 
@@ -1584,7 +1584,7 @@ module TypeScript {
             var leadingTriviaInfo = scanTriviaInfo(/*isTrailing: */ false);
 
             var start = index;
-            scanSyntaxKind(isContextualToken(token), false);
+            scanSyntaxKind(isContextualToken(token), token.kind() === SyntaxKind.XJSText);
             var end = index;
 
             tokenInfo.leadingTriviaWidth = start - fullStart;

@@ -112,6 +112,9 @@ module TypeScript {
 
             }
         }
+        else if (kind === SyntaxKind.XJSText) {
+            return massageEscapes(text);
+        }
         else if (kind === SyntaxKind.RegularExpressionLiteral) {
             return regularExpressionValue(text);
         }
