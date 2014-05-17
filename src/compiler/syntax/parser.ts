@@ -2506,12 +2506,11 @@ module TypeScript.Parser {
             if (SyntaxUtilities.isLeftHandSizeExpression(leftOperand)) {
                 // Note: we call currentOperatorToken so that we get an appropriately merged token
                 // for cases like > > =  becoming >>=
-                var token0 = currentOperatorToken();
-                var token0Kind = token0.kind();
+                var operatorToken = currentOperatorToken();
 
                 // Check for recursive assignment expressions.
-                if (isAssignmentOperatorToken(token0Kind)) {
-                    return new BinaryExpressionSyntax(parseNodeData, leftOperand, consumeToken(token0), 
+                if (isAssignmentOperatorToken(operatorToken.kind())) {
+                    return new BinaryExpressionSyntax(parseNodeData, leftOperand, consumeToken(operatorToken), 
                         tryParseAssignmentExpressionOrHigher(/*force:*/ true, allowIn));
                 }
             }
