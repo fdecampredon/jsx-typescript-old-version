@@ -463,20 +463,6 @@ module TypeScript.Parser {
             return eatToken(SyntaxKind.SemicolonToken);
         }
 
-        function isKeyword(kind: SyntaxKind): boolean {
-            if (kind >= SyntaxKind.FirstKeyword) {
-                if (kind <= SyntaxKind.LastFutureReservedKeyword) {
-                    return true;
-                }
-
-                if (isInStrictMode) {
-                    return kind <= SyntaxKind.LastFutureReservedStrictKeyword;
-                }
-            }
-
-            return false;
-        }
-
         function createMissingToken(expectedKind: SyntaxKind, actual: ISyntaxToken): ISyntaxToken {
             var diagnostic = getExpectedTokenDiagnostic(expectedKind, actual);
             addDiagnostic(diagnostic);
@@ -566,9 +552,6 @@ module TypeScript.Parser {
             else {
                 throw Errors.invalidOperation();
             }
-        }
-
-        function clearCachedNodeData(element: ISyntaxElement): void {
         }
 
         function replaceTokenInParent(oldToken: ISyntaxToken, newToken: ISyntaxToken): void {
