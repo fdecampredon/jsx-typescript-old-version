@@ -224,8 +224,7 @@ function syntaxTreeToJSON(tree: TypeScript.SyntaxTree): any {
 }
 
 function emptySourceUnit(): TypeScript.SourceUnitSyntax {
-    return new TypeScript.SourceUnitSyntax(0, TypeScript.Syntax.emptyList<TypeScript.IModuleElementSyntax>(),
-        TypeScript.Syntax.token(TypeScript.SyntaxKind.EndOfFileToken, { text: "" }, 0));
+    return TypeScript.Parser.parse("", TypeScript.SimpleText.fromString(""), TypeScript.LanguageVersion.EcmaScript5, false).sourceUnit();
 }
 
 class Program {

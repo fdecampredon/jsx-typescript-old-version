@@ -3,51 +3,6 @@
 module TypeScript.Syntax {
     export var _nextSyntaxID: number = 1;
 
-    export function getStandaloneExpression(positionedToken: ISyntaxToken): ISyntaxNodeOrToken {
-        var token = positionedToken;
-        if (positionedToken !== null && positionedToken.kind() === SyntaxKind.IdentifierName) {
-            var parentPositionedNode = containingNode(positionedToken);
-            var parentNode = containingNode(parentPositionedNode);
-
-            if (parentNode.kind() === SyntaxKind.QualifiedName && (<QualifiedNameSyntax>parentNode).right === token) {
-                return parentPositionedNode;
-            }
-            else if (parentNode.kind() === SyntaxKind.MemberAccessExpression && (<MemberAccessExpressionSyntax>parentNode).name === token) {
-                return parentPositionedNode;
-            }
-        }
-
-        return positionedToken;
-    }
-
-    export function childOffset(parent: ISyntaxElement, child: ISyntaxElement) {
-        var offset = 0;
-        for (var i = 0, n = childCount(parent); i < n; i++) {
-            var current = childAt(parent, i);
-            if (current === child) {
-                return offset;
-            }
-
-            if (current !== null) {
-                offset += fullWidth(current);
-            }
-        }
-
-        throw Errors.invalidOperation();
-    }
-
-    export function childOffsetAt(parent: ISyntaxElement, index: number) {
-        var offset = 0;
-        for (var i = 0; i < index; i++) {
-            var current = childAt(parent, i);
-            if (current !== null) {
-                offset += fullWidth(current);
-            }
-        }
-
-        return offset;
-    }
-
     export function childIndex(parent: ISyntaxElement, child: ISyntaxElement) {
         for (var i = 0, n = childCount(parent); i < n; i++) {
             var current = childAt(parent, i);
@@ -57,26 +12,6 @@ module TypeScript.Syntax {
         }
 
         throw Errors.invalidOperation();
-    }
-
-    export function identifierName(text: string, info: ITokenInfo = null): ISyntaxToken {
-        return identifier(text);
-    }
-
-    export function trueExpression(): IUnaryExpressionSyntax {
-        return Syntax.token(SyntaxKind.TrueKeyword);
-    }
-
-    export function falseExpression(): IUnaryExpressionSyntax {
-        return Syntax.token(SyntaxKind.FalseKeyword);
-    }
-
-    export function numericLiteralExpression(text: string): IUnaryExpressionSyntax {
-        return Syntax.token(SyntaxKind.NumericLiteral, { text: text });
-    }
-
-    export function stringLiteralExpression(text: string): IUnaryExpressionSyntax {
-        return Syntax.token(SyntaxKind.StringLiteral, { text: text });
     }
 
     export function isSuperInvocationExpression(node: IExpressionSyntax): boolean {
@@ -98,10 +33,6 @@ module TypeScript.Syntax {
         return node.kind() === SyntaxKind.InvocationExpression &&
             isSuperMemberAccessExpression((<InvocationExpressionSyntax>node).expression);
     }
-
-    //export function assignmentExpression(left: IExpressionSyntax, token: ISyntaxToken, right: IExpressionSyntax): BinaryExpressionSyntax {
-    //    return new BinaryExpressionSyntax(SyntaxKind.AssignmentExpression, left, token, right);
-    //}
 
     export function nodeHasSkippedOrMissingTokens(node: ISyntaxNode): boolean {
         for (var i = 0; i < childCount(node); i++) {

@@ -2680,6 +2680,21 @@ function firstEnumName(e: any, value: number) {
     }
 }
 
+function groupBy<T>(array: T[], func: (v: T) => string): any {
+    var result: TypeScript.IIndexable<T[]> = {};
+
+    for (var i = 0, n = array.length; i < n; i++) {
+        var v: any = array[i];
+        var k = func(v);
+
+        var list: T[] = result[k] || [];
+        list.push(v);
+        result[k] = list;
+    }
+
+    return result;
+}
+
 function generateKeywordCondition(keywords: { text: string; kind: TypeScript.SyntaxKind; }[], currentCharacter: number, indent: string): string {
     var length = keywords[0].text.length;
 
@@ -2713,7 +2728,7 @@ function generateKeywordCondition(keywords: { text: string; kind: TypeScript.Syn
         index = currentCharacter === 0 ? "start" : ("start + " + currentCharacter);
         result += indent + "switch(str.charCodeAt(" + index + ")) {\r\n"
 
-        var groupedKeywords = TypeScript.ArrayUtilities.groupBy(keywords, k => k.text.substr(currentCharacter, 1));
+        var groupedKeywords = groupBy(keywords, k => k.text.substr(currentCharacter, 1));
 
         for (var c in groupedKeywords) {
             if (groupedKeywords.hasOwnProperty(c)) {

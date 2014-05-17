@@ -34,22 +34,6 @@ module TypeScript {
             return false;
         }
 
-        public static groupBy<T>(array: T[], func: (v: T) => string): any {
-            var result: IIndexable<T[]> = {};
-
-            for (var i = 0, n = array.length; i < n; i++) {
-                var v: any = array[i];
-                var k = func(v);
-
-                var list: T[] = result[k] || [];
-                list.push(v);
-                result[k] = list;
-            }
-
-            return result;
-        }
-
-
         // Gets unique element array
         public static distinct<T>(array: T[], equalsFn?: (a: T, b: T) => boolean): T[] {
             var result: T[] = [];

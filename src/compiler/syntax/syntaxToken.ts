@@ -64,12 +64,6 @@ module TypeScript {
 
         clone(): ISyntaxToken;
     }
-
-    export interface ITokenInfo {
-        leadingTrivia?: ISyntaxTrivia[];
-        text?: string;
-        trailingTrivia?: ISyntaxTrivia[];
-    }
 }
 
 module TypeScript {
@@ -561,18 +555,5 @@ module TypeScript.Syntax {
         public clone(): ISyntaxToken {
             return new ConvertedKeywordToken(this.underlyingToken);
         }
-    }
-
-    export function token(kind: SyntaxKind, info: ITokenInfo = null, fullStart = -1): ISyntaxToken {
-        var text = (info !== null && info.text !== undefined) ? info.text : SyntaxFacts.getText(kind);
-
-        return new RealizedToken(
-            fullStart, kind, false, Syntax.triviaList(info === null ? null : info.leadingTrivia), text, Syntax.triviaList(info === null ? null : info.trailingTrivia));
-    }
-    
-    export function identifier(text: string, info: ITokenInfo = null): ISyntaxToken {
-        info = info || {};
-        info.text = text;
-        return token(SyntaxKind.IdentifierName, info);
     }
 }
