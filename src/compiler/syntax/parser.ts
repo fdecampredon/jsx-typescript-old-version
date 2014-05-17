@@ -3819,7 +3819,6 @@ module TypeScript.Parser {
             // already reported the error, so just return to our caller so that a higher up 
             // production can consume it.
             for (var state = ListParsingState.LastListParsingState; state >= ListParsingState.FirstListParsingState; state--) {
-
                 if ((listParsingState & (1 << state)) !== 0) {
                     if (isExpectedListTerminator(state) || isExpectedListItem(state, /*inErrorRecovery:*/ true)) {
                         // Abort parsing this list.
@@ -3942,7 +3941,7 @@ module TypeScript.Parser {
             // Debug.assert(skippedTokens !== separators);
             // Debug.assert(<any>nodes !== separators);
 
-            var _separatorKind = separatorKind(currentListType);
+            var _separatorKind = currentListType === ListParsingState.ObjectType_TypeMembers ? SyntaxKind.SemicolonToken : SyntaxKind.CommaToken;
             var allowAutomaticSemicolonInsertion = _separatorKind === SyntaxKind.SemicolonToken;
 
             var inErrorRecovery = false;
@@ -4052,36 +4051,6 @@ module TypeScript.Parser {
             returnZeroLengthArray(separators);
 
             return { skippedTokens: skippedTokens, list: result };
-        }
-
-        function separatorKind(currentListType: ListParsingState): SyntaxKind {
-            switch (currentListType) {
-                case ListParsingState.HeritageClause_TypeNameList:
-                case ListParsingState.ArgumentList_AssignmentExpressions:
-                case ListParsingState.EnumDeclaration_EnumElements:
-                case ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn:
-                case ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn:
-                case ListParsingState.ObjectLiteralExpression_PropertyAssignments:
-                case ListParsingState.ParameterList_Parameters:
-                case ListParsingState.IndexSignature_Parameters:
-                case ListParsingState.ArrayLiteralExpression_AssignmentExpressions:
-                case ListParsingState.TypeArgumentList_Types:
-                case ListParsingState.TypeParameterList_TypeParameters:
-                    return SyntaxKind.CommaToken;
-
-                case ListParsingState.ObjectType_TypeMembers:
-                    return SyntaxKind.SemicolonToken;
-
-                case ListParsingState.SourceUnit_ModuleElements:
-                case ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses:
-                case ListParsingState.ClassDeclaration_ClassElements:
-                case ListParsingState.ModuleDeclaration_ModuleElements:
-                case ListParsingState.SwitchStatement_SwitchClauses:
-                case ListParsingState.SwitchClause_Statements:
-                case ListParsingState.Block_Statements:
-                default:
-                    throw Errors.notYetImplemented();
-            }
         }
 
         function reportUnexpectedTokenDiagnostic(listType: ListParsingState): void {
