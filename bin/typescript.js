@@ -455,10 +455,6 @@ var TypeScript;
     var ArrayUtilities = (function () {
         function ArrayUtilities() {
         }
-        ArrayUtilities.isArray = function (value) {
-            return Object.prototype.toString.apply(value, []) === '[object Array]';
-        };
-
         ArrayUtilities.sequenceEquals = function (array1, array2, equals) {
             if (array1 === array2) {
                 return true;
@@ -523,32 +519,6 @@ var TypeScript;
             }
 
             return result;
-        };
-
-        ArrayUtilities.min = function (array, func) {
-            var min = func(array[0]);
-
-            for (var i = 1; i < array.length; i++) {
-                var next = func(array[i]);
-                if (next < min) {
-                    min = next;
-                }
-            }
-
-            return min;
-        };
-
-        ArrayUtilities.max = function (array, func) {
-            var max = func(array[0]);
-
-            for (var i = 1; i < array.length; i++) {
-                var next = func(array[i]);
-                if (next > max) {
-                    max = next;
-                }
-            }
-
-            return max;
         };
 
         ArrayUtilities.last = function (array) {
@@ -1324,6 +1294,14 @@ var TypeScript;
     })();
     TypeScript.FileInformation = FileInformation;
 
+    function throwIOError(message, error) {
+        var errorMessage = message;
+        if (error && error.message) {
+            errorMessage += (" " + error.message);
+        }
+        throw new Error(errorMessage);
+    }
+
     TypeScript.Environment = (function () {
         function getWindowsScriptHostEnvironment() {
             try  {
@@ -1358,6 +1336,9 @@ var TypeScript;
                 },
                 supportsCodePage: function () {
                     return WScript.ReadFile;
+                },
+                absolutePath: function (path) {
+                    return fso.GetAbsolutePathName(path);
                 },
                 readFile: function (path, codepage) {
                     try  {
@@ -1446,6 +1427,18 @@ var TypeScript;
                 directoryExists: function (path) {
                     return fso.FolderExists(path);
                 },
+                directoryName: function (path) {
+                    return fso.GetParentFolderName(path);
+                },
+                createDirectory: function (path) {
+                    try  {
+                        if (!this.directoryExists(path)) {
+                            fso.CreateFolder(path);
+                        }
+                    } catch (e) {
+                        throwIOError(TypeScript.getDiagnosticMessage(TypeScript.DiagnosticCode.Could_not_create_directory_0, [path]), e);
+                    }
+                },
                 listFiles: function (path, spec, options) {
                     options = options || {};
                     function filesInFolder(folder, root) {
@@ -1477,7 +1470,19 @@ var TypeScript;
                     return filesInFolder(folder, path);
                 },
                 arguments: args,
-                standardOut: WScript.StdOut
+                standardOut: WScript.StdOut,
+                standardError: WScript.StdErr,
+                executingFilePath: function () {
+                    return WScript.ScriptFullName;
+                },
+                quit: function (exitCode) {
+                    if (typeof exitCode === "undefined") { exitCode = 0; }
+                    try  {
+                        WScript.Quit(exitCode);
+                    } catch (e) {
+                    }
+                },
+                watchFile: null
             };
         }
         ;
@@ -1495,6 +1500,9 @@ var TypeScript;
                 },
                 supportsCodePage: function () {
                     return false;
+                },
+                absolutePath: function (path) {
+                    return _path.resolve(path);
                 },
                 readFile: function (file, codepage) {
                     if (codepage !== null) {
@@ -1578,7 +1586,25 @@ var TypeScript;
                 directoryExists: function (path) {
                     return _fs.existsSync(path) && _fs.statSync(path).isDirectory();
                 },
-                listFiles: function dir(path, spec, options) {
+                directoryName: function (path) {
+                    var dirPath = _path.dirname(path);
+
+                    if (dirPath === path) {
+                        dirPath = null;
+                    }
+
+                    return dirPath;
+                },
+                createDirectory: function (path) {
+                    try  {
+                        if (!this.directoryExists(path)) {
+                            _fs.mkdirSync(path);
+                        }
+                    } catch (e) {
+                        throwIOError(TypeScript.getDiagnosticMessage(TypeScript.DiagnosticCode.Could_not_create_directory_0, [path]), e);
+                    }
+                },
+                listFiles: function (path, spec, options) {
                     options = options || {};
 
                     function filesInFolder(folder) {
@@ -1602,13 +1628,76 @@ var TypeScript;
                 arguments: process.argv.slice(2),
                 standardOut: {
                     Write: function (str) {
-                        process.stdout.write(str);
+                        return process.stdout.write(str);
                     },
                     WriteLine: function (str) {
-                        process.stdout.write(str + '\n');
+                        return process.stdout.write(str + '\n');
                     },
                     Close: function () {
                     }
+                },
+                standardError: {
+                    Write: function (str) {
+                        return process.stderr.write(str);
+                    },
+                    WriteLine: function (str) {
+                        return process.stderr.write(str + '\n');
+                    },
+                    Close: function () {
+                    }
+                },
+                executingFilePath: function () {
+                    return process.mainModule.filename;
+                },
+                quit: function (code) {
+                    var stderrFlushed = process.stderr.write('');
+                    var stdoutFlushed = process.stdout.write('');
+                    process.stderr.on('drain', function () {
+                        stderrFlushed = true;
+                        if (stdoutFlushed) {
+                            process.exit(code);
+                        }
+                    });
+                    process.stdout.on('drain', function () {
+                        stdoutFlushed = true;
+                        if (stderrFlushed) {
+                            process.exit(code);
+                        }
+                    });
+                    setTimeout(function () {
+                        process.exit(code);
+                    }, 5);
+                },
+                watchFile: function (fileName, callback) {
+                    var firstRun = true;
+                    var processingChange = false;
+
+                    var fileChanged = function (curr, prev) {
+                        if (!firstRun) {
+                            if (curr.mtime < prev.mtime) {
+                                return;
+                            }
+
+                            _fs.unwatchFile(fileName, fileChanged);
+                            if (!processingChange) {
+                                processingChange = true;
+                                callback(fileName);
+                                setTimeout(function () {
+                                    processingChange = false;
+                                }, 100);
+                            }
+                        }
+                        firstRun = false;
+                        _fs.watchFile(fileName, { persistent: true, interval: 500 }, fileChanged);
+                    };
+
+                    fileChanged();
+                    return {
+                        fileName: fileName,
+                        close: function () {
+                            _fs.unwatchFile(fileName, fileChanged);
+                        }
+                    };
                 }
             };
         }
@@ -1775,22 +1864,6 @@ var TypeScript;
         return LineAndCharacter;
     })();
     TypeScript.LineAndCharacter = LineAndCharacter;
-})(TypeScript || (TypeScript = {}));
-var TypeScript;
-(function (TypeScript) {
-    var MathPrototype = (function () {
-        function MathPrototype() {
-        }
-        MathPrototype.max = function (a, b) {
-            return a >= b ? a : b;
-        };
-
-        MathPrototype.min = function (a, b) {
-            return a <= b ? a : b;
-        };
-        return MathPrototype;
-    })();
-    TypeScript.MathPrototype = MathPrototype;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
@@ -2980,15 +3053,15 @@ var TypeScript;
         };
 
         TextSpan.prototype.overlapsWith = function (span) {
-            var overlapStart = TypeScript.MathPrototype.max(this._start, span._start);
-            var overlapEnd = TypeScript.MathPrototype.min(this.end(), span.end());
+            var overlapStart = Math.max(this._start, span._start);
+            var overlapEnd = Math.min(this.end(), span.end());
 
             return overlapStart < overlapEnd;
         };
 
         TextSpan.prototype.overlap = function (span) {
-            var overlapStart = TypeScript.MathPrototype.max(this._start, span._start);
-            var overlapEnd = TypeScript.MathPrototype.min(this.end(), span.end());
+            var overlapStart = Math.max(this._start, span._start);
+            var overlapEnd = Math.min(this.end(), span.end());
 
             if (overlapStart < overlapEnd) {
                 return TextSpan.fromBounds(overlapStart, overlapEnd);
@@ -3011,8 +3084,8 @@ var TypeScript;
         };
 
         TextSpan.prototype.intersection = function (span) {
-            var intersectStart = TypeScript.MathPrototype.max(this._start, span._start);
-            var intersectEnd = TypeScript.MathPrototype.min(this.end(), span.end());
+            var intersectStart = Math.max(this._start, span._start);
+            var intersectEnd = Math.min(this.end(), span.end());
 
             if (intersectStart <= intersectEnd) {
                 return TextSpan.fromBounds(intersectStart, intersectEnd);
@@ -3111,9 +3184,9 @@ var TypeScript;
                 var oldEnd2 = nextChange.span().end();
                 var newEnd2 = oldStart2 + nextChange.newLength();
 
-                oldStartN = TypeScript.MathPrototype.min(oldStart1, oldStart2);
-                oldEndN = TypeScript.MathPrototype.max(oldEnd1, oldEnd1 + (oldEnd2 - newEnd1));
-                newEndN = TypeScript.MathPrototype.max(newEnd2, newEnd2 + (newEnd1 - oldEnd2));
+                oldStartN = Math.min(oldStart1, oldStart2);
+                oldEndN = Math.max(oldEnd1, oldEnd1 + (oldEnd2 - newEnd1));
+                newEndN = Math.max(newEnd2, newEnd2 + (newEnd1 - oldEnd2));
             }
 
             return new TextChangeRange(TypeScript.TextSpan.fromBounds(oldStartN, oldEndN), newEndN - oldStartN);
@@ -5257,7 +5330,7 @@ var TypeScript;
                         index++;
                         break;
                     } else if (isNaN(ch) || isNewLineCharacter(ch)) {
-                        reportDiagnostic(TypeScript.MathPrototype.min(index, end), 1, TypeScript.DiagnosticCode.Missing_close_quote_character, null);
+                        reportDiagnostic(Math.min(index, end), 1, TypeScript.DiagnosticCode.Missing_close_quote_character, null);
                         break;
                     } else {
                         index++;
@@ -14619,38 +14692,6 @@ var TypeScript;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
-    (function (CompilerDiagnostics) {
-        CompilerDiagnostics.debug = false;
-
-        CompilerDiagnostics.diagnosticWriter = null;
-
-        CompilerDiagnostics.analysisPass = 0;
-
-        function Alert(output) {
-            if (CompilerDiagnostics.diagnosticWriter) {
-                CompilerDiagnostics.diagnosticWriter.Alert(output);
-            }
-        }
-        CompilerDiagnostics.Alert = Alert;
-
-        function debugPrint(s) {
-            if (CompilerDiagnostics.debug) {
-                Alert(s);
-            }
-        }
-        CompilerDiagnostics.debugPrint = debugPrint;
-
-        function assert(condition, s) {
-            if (CompilerDiagnostics.debug) {
-                if (!condition) {
-                    Alert(s);
-                }
-            }
-        }
-        CompilerDiagnostics.assert = assert;
-    })(TypeScript.CompilerDiagnostics || (TypeScript.CompilerDiagnostics = {}));
-    var CompilerDiagnostics = TypeScript.CompilerDiagnostics;
-
     var NullLogger = (function () {
         function NullLogger() {
         }
@@ -20565,9 +20606,6 @@ var TypeScript;
                     var adjustedPath = TypeScript.normalizePath(path);
 
                     var isResident = fullReference.length >= 7 && fullReference[6] === "true";
-                    if (isResident) {
-                        TypeScript.CompilerDiagnostics.debugPrint(path + " is resident");
-                    }
                     return {
                         line: 0,
                         character: 0,
@@ -22077,14 +22115,13 @@ var TypeScript;
             this.useCaseSensitiveFileResolution = false;
             this.gatherDiagnostics = false;
             this.codepage = null;
-            this.createFileLog = false;
         }
         return CompilationSettings;
     })();
     TypeScript.CompilationSettings = CompilationSettings;
 
     var ImmutableCompilationSettings = (function () {
-        function ImmutableCompilationSettings(propagateEnumConstants, removeComments, watch, noResolve, allowAutomaticSemicolonInsertion, noImplicitAny, noLib, codeGenTarget, moduleGenTarget, outFileOption, outDirOption, mapSourceFiles, mapRoot, sourceRoot, generateDeclarationFiles, useCaseSensitiveFileResolution, gatherDiagnostics, codepage, createFileLog) {
+        function ImmutableCompilationSettings(propagateEnumConstants, removeComments, watch, noResolve, allowAutomaticSemicolonInsertion, noImplicitAny, noLib, codeGenTarget, moduleGenTarget, outFileOption, outDirOption, mapSourceFiles, mapRoot, sourceRoot, generateDeclarationFiles, useCaseSensitiveFileResolution, gatherDiagnostics, codepage) {
             this._propagateEnumConstants = propagateEnumConstants;
             this._removeComments = removeComments;
             this._watch = watch;
@@ -22103,7 +22140,6 @@ var TypeScript;
             this._useCaseSensitiveFileResolution = useCaseSensitiveFileResolution;
             this._gatherDiagnostics = gatherDiagnostics;
             this._codepage = codepage;
-            this._createFileLog = createFileLog;
         }
         ImmutableCompilationSettings.prototype.propagateEnumConstants = function () {
             return this._propagateEnumConstants;
@@ -22159,9 +22195,6 @@ var TypeScript;
         ImmutableCompilationSettings.prototype.codepage = function () {
             return this._codepage;
         };
-        ImmutableCompilationSettings.prototype.createFileLog = function () {
-            return this._createFileLog;
-        };
 
         ImmutableCompilationSettings.defaultSettings = function () {
             if (!ImmutableCompilationSettings._defaultSettings) {
@@ -22172,7 +22205,7 @@ var TypeScript;
         };
 
         ImmutableCompilationSettings.fromCompilationSettings = function (settings) {
-            return new ImmutableCompilationSettings(settings.propagateEnumConstants, settings.removeComments, settings.watch, settings.noResolve, settings.allowAutomaticSemicolonInsertion, settings.noImplicitAny, settings.noLib, settings.codeGenTarget, settings.moduleGenTarget, settings.outFileOption, settings.outDirOption, settings.mapSourceFiles, settings.mapRoot, settings.sourceRoot, settings.generateDeclarationFiles, settings.useCaseSensitiveFileResolution, settings.gatherDiagnostics, settings.codepage, settings.createFileLog);
+            return new ImmutableCompilationSettings(settings.propagateEnumConstants, settings.removeComments, settings.watch, settings.noResolve, settings.allowAutomaticSemicolonInsertion, settings.noImplicitAny, settings.noLib, settings.codeGenTarget, settings.moduleGenTarget, settings.outFileOption, settings.outDirOption, settings.mapSourceFiles, settings.mapRoot, settings.sourceRoot, settings.generateDeclarationFiles, settings.useCaseSensitiveFileResolution, settings.gatherDiagnostics, settings.codepage);
         };
 
         ImmutableCompilationSettings.prototype.toCompilationSettings = function () {
@@ -23745,7 +23778,7 @@ var TypeScript;
         PullSymbol.prototype.consumeLeadingSpace = function (line, startIndex, maxSpacesToRemove) {
             var endIndex = line.length;
             if (maxSpacesToRemove !== undefined) {
-                endIndex = TypeScript.MathPrototype.min(startIndex + maxSpacesToRemove, endIndex);
+                endIndex = Math.min(startIndex + maxSpacesToRemove, endIndex);
             }
 
             for (; startIndex < endIndex; startIndex++) {
@@ -41864,9 +41897,6 @@ var TypeScript;
                 case 268435456 /* CatchBlock */:
                 case 134217728 /* WithBlock */:
                     break;
-
-                default:
-                    TypeScript.CompilerDiagnostics.assert(false, "Unrecognized type declaration");
             }
 
             TypeScript.Debug.assert(TypeScript.ArrayUtilities.last(this.declsBeingBound) === decl.declID);
