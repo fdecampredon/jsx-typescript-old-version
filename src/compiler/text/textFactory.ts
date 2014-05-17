@@ -114,20 +114,7 @@ module TypeScript.TextFactory {
             throw Errors.abstract();
         }
 
-        public subText(span: TextSpan): IText {
-            this.checkSubSpan(span);
-
-            return new SubText(this, span);
-        }
-
         public substr(start: number, length: number): string {
-            throw Errors.abstract();
-        }
-
-        /**
-         * Copy a range of characters from this IText to a destination array.
-         */
-        public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
             throw Errors.abstract();
         }
 
@@ -232,79 +219,6 @@ module TypeScript.TextFactory {
     }
 
     /**
-     * An IText that represents a subrange of another IText.
-     */
-    class SubText extends TextBase {
-        private text: IText;
-        private span: TextSpan;
-
-        /**
-         * The line start position of each line.
-         */
-        private _lazyLineStarts: number[] = null;
-
-        constructor(text: IText, span: TextSpan) {
-            super();
-
-            if (text === null) {
-                throw Errors.argumentNull("text");
-            }
-
-            if (span.start() < 0 ||
-                span.start() >= text.length() ||
-                 span.end() < 0 ||
-                 span.end() > text.length()) {
-                throw Errors.argument("span");
-            }
-
-            this.text = text;
-            this.span = span;
-        }
-
-        public length(): number {
-            return this.span.length();
-        }
-
-        public charCodeAt(position: number): number {
-            if (position < 0 || position > this.length()) {
-                throw Errors.argumentOutOfRange("position");
-            }
-
-            return this.text.charCodeAt(this.span.start() + position);
-        }
-
-        public subText(span: TextSpan): IText {
-            this.checkSubSpan(span);
-
-            return new SubText(this.text, this.getCompositeSpan(span.start(), span.length()));
-        }
-
-        public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
-            var span = this.getCompositeSpan(sourceIndex, count);
-            this.text.copyTo(span.start(), destination, destinationIndex, span.length());
-        }
-
-        public substr(start: number, length: number): string {
-            var startInOriginalText = this.span.start() + start;
-            return this.text.substr(startInOriginalText, length);
-        }
-
-        private getCompositeSpan(start: number, length: number): TextSpan {
-            var compositeStart = MathPrototype.min(this.text.length(), this.span.start() + start);
-            var compositeEnd = MathPrototype.min(this.text.length(), compositeStart + length);
-            return new TextSpan(compositeStart, compositeEnd - compositeStart);
-        }
-
-        public _lineStarts(): number[] {
-            if (!this._lazyLineStarts) {
-                this._lazyLineStarts = TextUtilities.parseLineStarts({ charCodeAt: index => this.charCodeAt(index), length: this.length() });
-            }
-
-            return this._lazyLineStarts;
-        }
-    }
-
-    /**
      * Implementation of IText based on a System.String input
      */
     class StringText extends TextBase {
@@ -372,10 +286,6 @@ module TypeScript.TextFactory {
             return this.source.substr(span.start(), span.length());
         }
 
-        public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
-            StringUtilities.copyTo(this.source, sourceIndex, destination, destinationIndex, count);
-        }
-
         public _lineStarts(): number[] {
             if (this._lazyLineStarts === null) {
                 this._lazyLineStarts = TextUtilities.parseLineStarts(this.source);
@@ -391,82 +301,6 @@ module TypeScript.TextFactory {
 }
 
 module TypeScript.SimpleText {
-    /**
-     * An IText that represents a subrange of another IText.
-     */
-    class SimpleSubText implements ISimpleText {
-        private text: ISimpleText = null;
-        private span: TextSpan = null;
-        private _lineMap: LineMap = null;
-
-        constructor(text: ISimpleText, span: TextSpan) {
-            if (text === null) {
-                throw Errors.argumentNull("text");
-            }
-
-            if (span.start() < 0 ||
-                span.start() >= text.length() ||
-                 span.end() < 0 ||
-                 span.end() > text.length()) {
-                throw Errors.argument("span");
-            }
-
-            this.text = text;
-            this.span = span;
-        }
-
-        private checkSubSpan(span: TextSpan): void {
-            if (span.start() < 0 || span.start() > this.length() || span.end() > this.length()) {
-                throw Errors.argumentOutOfRange("span");
-            }
-        }
-
-        private checkSubPosition(position: number): void {
-            if (position < 0 || position >= this.length()) {
-                throw Errors.argumentOutOfRange("position");
-            }
-        }
-
-        public length(): number {
-            return this.span.length();
-        }
-
-        public subText(span: TextSpan): ISimpleText {
-            this.checkSubSpan(span);
-
-            return new SimpleSubText(this.text, this.getCompositeSpan(span.start(), span.length()));
-        }
-
-        public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
-            var span = this.getCompositeSpan(sourceIndex, count);
-            this.text.copyTo(span.start(), destination, destinationIndex, span.length());
-        }
-
-        public substr(start: number, length: number): string {
-            var span = this.getCompositeSpan(start, length);
-            return this.text.substr(span.start(), span.length());
-        }
-
-        private getCompositeSpan(start: number, length: number): TextSpan {
-            var compositeStart = MathPrototype.min(this.text.length(), this.span.start() + start);
-            var compositeEnd = MathPrototype.min(this.text.length(), compositeStart + length);
-            return new TextSpan(compositeStart, compositeEnd - compositeStart);
-        }
-
-        public charCodeAt(index: number): number {
-            this.checkSubPosition(index);
-            return this.text.charCodeAt(this.span.start() + index);
-        }
-
-        public lineMap(): LineMap {
-            if (this._lineMap === null) {
-                this._lineMap = LineMap1.fromSimpleText(this);
-            }
-
-            return this._lineMap;
-        }
-    }
-
     class SimpleStringText implements ISimpleText {
         private _lineMap: LineMap = null;
 
@@ -477,16 +311,8 @@ module TypeScript.SimpleText {
             return this.value.length;
         }
 
-        public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
-            StringUtilities.copyTo(this.value, sourceIndex, destination, destinationIndex, count);
-        }
-
         public substr(start: number, length: number): string {
             return this.value.substr(start, length);
-        }
-
-        public subText(span: TextSpan): ISimpleText {
-            return new SimpleSubText(this, span);
         }
 
         public charCodeAt(index: number): number {
@@ -512,18 +338,10 @@ module TypeScript.SimpleText {
             return this._length;
         }
 
-        public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
-            StringUtilities.copyTo(this.value, sourceIndex + this._from, destination, destinationIndex, count);
-        }
-
         private static charArray: number[] = ArrayUtilities.createArray<number>(1024, 0);
 
         public substr(start: number, length: number): string {
             return this.value.substr(start + this._from, length);
-        }
-
-        public subText(span: TextSpan): ISimpleText {
-            return new SimpleSubText(this, span);
         }
 
         public charCodeAt(index: number): number {
@@ -554,17 +372,8 @@ module TypeScript.SimpleText {
             return this.scriptSnapshot.getLength();
         }
 
-        public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
-            var text = this.scriptSnapshot.getText(sourceIndex, sourceIndex + count);
-            StringUtilities.copyTo(text, 0, destination, destinationIndex, count);
-        }
-
         public substr(start: number, length: number): string {
             return this.scriptSnapshot.getText(start, start + length);
-        }
-
-        public subText(span: TextSpan): ISimpleText {
-            return new SimpleSubText(this, span);
         }
 
         public lineMap(): LineMap {

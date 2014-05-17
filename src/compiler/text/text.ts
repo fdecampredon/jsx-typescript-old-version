@@ -10,18 +10,7 @@ module TypeScript {
          */
         length(): number;
 
-        /**
-         * Copy the count contents of IText starting from sourceIndex to destination starting at
-         * destinationIndex.
-         */
-        copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void;
-
         substr(start: number, length: number): string;
-
-        /**
-         * Gets the a new IText that corresponds to the contents of this IText for the given span.
-         */
-        subText(span: TextSpan): ISimpleText;
 
         charCodeAt(index: number): number;
         lineMap(): LineMap;
