@@ -2434,8 +2434,8 @@ module TypeScript.Parser {
             // must *not* recurse for productsion 1, 2 or 3. An ArrowFunction is not a 
             // LeftHandSideExpression, nor does it start a ConditionalExpression.  So we are done 
             // with AssignmentExpression if we see one.
-
-            var arrowFunction = tryParseAnyArrowFunctionExpression();
+            var _currentToken = currentToken();
+            var arrowFunction = tryParseAnyArrowFunctionExpression(_currentToken);
             if (arrowFunction !== null) {
                 return arrowFunction;
             }
@@ -2449,7 +2449,7 @@ module TypeScript.Parser {
             // Otherwise, we try to parse out the conditional expression bit.  We want to allow any 
             // binary expression here, so we pass in the 'lowest' precedence here so that it matches
             // and consumes anything.
-            var leftOperand = tryParseBinaryExpressionOrHigher(force, BinaryExpressionPrecedence.Lowest, allowIn);
+            var leftOperand = tryParseBinaryExpressionOrHigher(_currentToken, force, BinaryExpressionPrecedence.Lowest, allowIn);
             if (leftOperand === null) {
                 return null;
             }
@@ -2491,14 +2491,13 @@ module TypeScript.Parser {
             }
         }
 
-        function tryParseAnyArrowFunctionExpression(): IExpressionSyntax {
-            return isSimpleArrowFunctionExpression()
+        function tryParseAnyArrowFunctionExpression(_currentToken: ISyntaxToken): IExpressionSyntax {
+            return isSimpleArrowFunctionExpression(_currentToken)
                 ? parseSimpleArrowFunctionExpression()
                 : tryParseParenthesizedArrowFunctionExpression();
         }
 
-        function tryParseUnaryExpressionOrHigher(force: boolean): IUnaryExpressionSyntax {
-            var _currentToken = currentToken();
+        function tryParseUnaryExpressionOrHigher(_currentToken: ISyntaxToken, force: boolean): IUnaryExpressionSyntax {
             var currentTokenKind = _currentToken.kind();
 
             switch (currentTokenKind) {
@@ -2508,17 +2507,17 @@ module TypeScript.Parser {
                 case SyntaxKind.ExclamationToken:
                 case SyntaxKind.PlusPlusToken:
                 case SyntaxKind.MinusMinusToken:
-                    return new PrefixUnaryExpressionSyntax(parseNodeData, consumeToken(_currentToken), tryParseUnaryExpressionOrHigher(/*force:*/ true));
-                case SyntaxKind.TypeOfKeyword: return parseTypeOfExpression();
-                case SyntaxKind.VoidKeyword:   return parseVoidExpression();
-                case SyntaxKind.DeleteKeyword: return parseDeleteExpression();
-                case SyntaxKind.LessThanToken: return parseCastExpression();
+                    return new PrefixUnaryExpressionSyntax(parseNodeData, consumeToken(_currentToken), tryParseUnaryExpressionOrHigher(currentToken(), /*force:*/ true));
+                case SyntaxKind.TypeOfKeyword: return parseTypeOfExpression(_currentToken);
+                case SyntaxKind.VoidKeyword:   return parseVoidExpression(_currentToken);
+                case SyntaxKind.DeleteKeyword: return parseDeleteExpression(_currentToken);
+                case SyntaxKind.LessThanToken: return parseCastExpression(_currentToken);
                 default:
-                    return tryParsePostfixExpressionOrHigher(force);
+                    return tryParsePostfixExpressionOrHigher(_currentToken, force);
             }
         }
 
-        function tryParseBinaryExpressionOrHigher(force: boolean, precedence: BinaryExpressionPrecedence, allowIn: boolean): IExpressionSyntax {
+        function tryParseBinaryExpressionOrHigher(_currentToken: ISyntaxToken, force: boolean, precedence: BinaryExpressionPrecedence, allowIn: boolean): IExpressionSyntax {
             // The binary expressions are incredibly left recursive in their definitions. We 
             // clearly can't implement that through recursion.  So, instead, we first bottom out 
             // of all the recursion by jumping to this production and consuming a UnaryExpression 
@@ -2526,7 +2525,7 @@ module TypeScript.Parser {
             //
             // MultiplicativeExpression: See 11.5 
             //      UnaryExpression 
-            var leftOperand = tryParseUnaryExpressionOrHigher(force);
+            var leftOperand = tryParseUnaryExpressionOrHigher(_currentToken, force);
             if (leftOperand === null) {
                 return null;
             }
@@ -2590,7 +2589,7 @@ module TypeScript.Parser {
                 // Now skip the operator token we're on.
 
                 leftOperand = new BinaryExpressionSyntax(parseNodeData, leftOperand, consumeToken(operatorToken), 
-                    tryParseBinaryExpressionOrHigher(/*force:*/ true, newPrecedence, allowIn));
+                    tryParseBinaryExpressionOrHigher(currentToken(), /*force:*/ true, newPrecedence, allowIn));
             }
 
             return leftOperand;
@@ -2602,7 +2601,7 @@ module TypeScript.Parser {
             // If we see a > we need to see if we can actually merge this contextually into a 
             // >>  >>>  >=  >>=  >>>=  token.
             if (token0.kind() === SyntaxKind.GreaterThanToken) {
-                token0 = currentContextualToken();
+                return currentContextualToken();
                 // var kind = token0.kind;
                 //Debug.assert(kind() === SyntaxKind.GreaterThanToken || kind() === SyntaxKind.GreaterThanGreaterThanToken ||
                 //             kind() === SyntaxKind.GreaterThanGreaterThanGreaterThanToken || kind() === SyntaxKind.GreaterThanEqualsToken ||
@@ -2612,7 +2611,7 @@ module TypeScript.Parser {
             return token0;
         }
 
-        function tryParseMemberExpressionOrHigher(force: boolean, inObjectCreation: boolean): IMemberExpressionSyntax {
+        function tryParseMemberExpressionOrHigher(_currentToken: ISyntaxToken, force: boolean, inObjectCreation: boolean): IMemberExpressionSyntax {
             // Note: to make our lives simpler, we merge the NewExpression production into the
             // MemberExpression construct like so:
             //
@@ -2647,12 +2646,11 @@ module TypeScript.Parser {
             // immediately.  The two possible bottom out states are 'new' or a primary/function
             // expression.  So we parse those out first.
             var expression: IMemberExpressionSyntax = null;
-            var _currentToken = currentToken();
             if (_currentToken.kind() === SyntaxKind.NewKeyword) {
                 expression = parseObjectCreationExpression(_currentToken);
             }
             else {
-                expression = tryParsePrimaryExpression(force);
+                expression = tryParsePrimaryExpression(_currentToken, force);
                 if (expression === null) {
                     return null;
                 }
@@ -2716,7 +2714,7 @@ module TypeScript.Parser {
             }
         }
 
-        function tryParseLeftHandSideExpressionOrHigher(force: boolean): ILeftHandSideExpressionSyntax {
+        function tryParseLeftHandSideExpressionOrHigher(_currentToken: ISyntaxToken, force: boolean): ILeftHandSideExpressionSyntax {
             // Original Ecma:
             // LeftHandSideExpression: See 11.2 
             //      NewExpression
@@ -2749,12 +2747,11 @@ module TypeScript.Parser {
             // CallExpression productions.
 
             var expression: ILeftHandSideExpressionSyntax = null;
-            var _currentToken = currentToken();
             if (_currentToken.kind() === SyntaxKind.SuperKeyword) {
                 expression = parseSuperExpression(_currentToken);
             }
             else {
-                expression = tryParseMemberExpressionOrHigher(force, /*inObjectCreation:*/ false);
+                expression = tryParseMemberExpressionOrHigher(_currentToken, force, /*inObjectCreation:*/ false);
                 if (expression === null) {
                     return null;
                 }
@@ -2776,8 +2773,8 @@ module TypeScript.Parser {
                 : new MemberAccessExpressionSyntax(parseNodeData, expression, eatToken(SyntaxKind.DotToken), eatIdentifierNameToken());
         }
 
-        function tryParsePostfixExpressionOrHigher(force: boolean): IPostfixExpressionSyntax {
-            var expression = tryParseLeftHandSideExpressionOrHigher(force);
+        function tryParsePostfixExpressionOrHigher(_currentToken: ISyntaxToken, force: boolean): IPostfixExpressionSyntax {
+            var expression = tryParseLeftHandSideExpressionOrHigher(_currentToken, force);
             if (expression === null) {
                 return null;
             }
@@ -2908,9 +2905,7 @@ module TypeScript.Parser {
                 parseElementAccessArgumentExpression(openBracketToken, inObjectCreation), eatToken(SyntaxKind.CloseBracketToken));
         }
 
-        function tryParsePrimaryExpression(force: boolean): IPrimaryExpressionSyntax {
-            var _currentToken = currentToken();
-
+        function tryParsePrimaryExpression(_currentToken: ISyntaxToken, force: boolean): IPrimaryExpressionSyntax {
             if (isIdentifier(_currentToken)) {
                 return eatIdentifierToken();
             }
@@ -2926,10 +2921,10 @@ module TypeScript.Parser {
                 case SyntaxKind.StringLiteral:
                     return consumeToken(_currentToken);
 
-                case SyntaxKind.FunctionKeyword:  return parseFunctionExpression();
+                case SyntaxKind.FunctionKeyword:  return parseFunctionExpression(_currentToken);
                 case SyntaxKind.OpenBracketToken: return parseArrayLiteralExpression(_currentToken);
                 case SyntaxKind.OpenBraceToken:   return parseObjectLiteralExpression(_currentToken);
-                case SyntaxKind.OpenParenToken:   return parseParenthesizedExpression();
+                case SyntaxKind.OpenParenToken:   return parseParenthesizedExpression(_currentToken);
 
                 case SyntaxKind.SlashToken:
                 case SyntaxKind.SlashEqualsToken:
@@ -2980,21 +2975,21 @@ module TypeScript.Parser {
             }
         }
 
-        function parseTypeOfExpression(): TypeOfExpressionSyntax {
-            return new TypeOfExpressionSyntax(parseNodeData, eatToken(SyntaxKind.TypeOfKeyword), tryParseUnaryExpressionOrHigher(/*force:*/ true));
+        function parseTypeOfExpression(typeOfKeyword: ISyntaxToken): TypeOfExpressionSyntax {
+            return new TypeOfExpressionSyntax(parseNodeData, consumeToken(typeOfKeyword), tryParseUnaryExpressionOrHigher(currentToken(), /*force:*/ true));
         }
 
-        function parseDeleteExpression(): DeleteExpressionSyntax {
-            return new DeleteExpressionSyntax(parseNodeData, eatToken(SyntaxKind.DeleteKeyword), tryParseUnaryExpressionOrHigher(/*force:*/ true));
+        function parseDeleteExpression(deleteKeyword: ISyntaxToken): DeleteExpressionSyntax {
+            return new DeleteExpressionSyntax(parseNodeData, consumeToken(deleteKeyword), tryParseUnaryExpressionOrHigher(currentToken(), /*force:*/ true));
         }
 
-        function parseVoidExpression(): VoidExpressionSyntax {
-            return new VoidExpressionSyntax(parseNodeData, eatToken(SyntaxKind.VoidKeyword), tryParseUnaryExpressionOrHigher(/*force:*/ true));
+        function parseVoidExpression(voidKeyword: ISyntaxToken): VoidExpressionSyntax {
+            return new VoidExpressionSyntax(parseNodeData, consumeToken(voidKeyword), tryParseUnaryExpressionOrHigher(currentToken(), /*force:*/ true));
         }
 
-        function parseFunctionExpression(): FunctionExpressionSyntax {
+        function parseFunctionExpression(functionKeyword: ISyntaxToken): FunctionExpressionSyntax {
             return new FunctionExpressionSyntax(parseNodeData,
-                eatToken(SyntaxKind.FunctionKeyword), eatOptionalIdentifierToken(),
+                consumeToken(functionKeyword), eatOptionalIdentifierToken(),
                 parseCallSignature(/*requireCompleteTypeParameterList:*/ false),
                 parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ true));
         }
@@ -3010,17 +3005,17 @@ module TypeScript.Parser {
             // this decision.
 
             return new ObjectCreationExpressionSyntax(parseNodeData,
-                consumeToken(newKeyword), tryParseMemberExpressionOrHigher(/*force:*/ true, /*inObjectCreation:*/ true), tryParseArgumentList());
+                consumeToken(newKeyword), tryParseMemberExpressionOrHigher(currentToken(), /*force:*/ true, /*inObjectCreation:*/ true), tryParseArgumentList());
         }
 
-        function parseCastExpression(): CastExpressionSyntax {
+        function parseCastExpression(lessThanToken: ISyntaxToken): CastExpressionSyntax {
             return new CastExpressionSyntax(parseNodeData,
-                eatToken(SyntaxKind.LessThanToken), parseType(), eatToken(SyntaxKind.GreaterThanToken), tryParseUnaryExpressionOrHigher(/*force:*/ true));
+                consumeToken(lessThanToken), parseType(), eatToken(SyntaxKind.GreaterThanToken), tryParseUnaryExpressionOrHigher(currentToken(), /*force:*/ true));
         }
 
-        function parseParenthesizedExpression(): ParenthesizedExpressionSyntax {
+        function parseParenthesizedExpression(openParenToken: ISyntaxToken): ParenthesizedExpressionSyntax {
             return new ParenthesizedExpressionSyntax(parseNodeData,
-                eatToken(SyntaxKind.OpenParenToken), parseExpression(/*allowIn:*/ true), eatToken(SyntaxKind.CloseParenToken));
+                consumeToken(openParenToken), parseExpression(/*allowIn:*/ true), eatToken(SyntaxKind.CloseParenToken));
         }
 
         function tryParseParenthesizedArrowFunctionExpression(): ParenthesizedArrowFunctionExpressionSyntax {
@@ -3112,16 +3107,15 @@ module TypeScript.Parser {
             }
         }
 
-        function isSimpleArrowFunctionExpression(): boolean {
+        function isSimpleArrowFunctionExpression(_currentToken: ISyntaxToken): boolean {
             // ERROR RECOVERY TWEAK:
             // If we see a standalone => try to parse it as an arrow function as that's likely what
             // the user intended to write.
-            var token0 = currentToken();
-            if (token0.kind() === SyntaxKind.EqualsGreaterThanToken) {
+            if (_currentToken.kind() === SyntaxKind.EqualsGreaterThanToken) {
                 return true;
             }
 
-            return isIdentifier(token0) &&
+            return isIdentifier(_currentToken) &&
                    peekToken(1).kind() === SyntaxKind.EqualsGreaterThanToken;
         }
 
