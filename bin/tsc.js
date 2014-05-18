@@ -5055,118 +5055,117 @@ var TypeScript;
 
         
 
-        var ScannerParserSource = (function () {
-            function ScannerParserSource(fileName, languageVersion, text) {
-                var _this = this;
-                this.fileName = fileName;
-                this.languageVersion = languageVersion;
-                this.text = text;
-                this._absolutePosition = 0;
-                this._tokenDiagnostics = [];
-                this.rewindPointPool = [];
-                this.rewindPointPoolCount = 0;
-                this.lastDiagnostic = null;
-                this.reportDiagnostic = function (position, fullWidth, diagnosticKey, args) {
-                    _this.lastDiagnostic = new TypeScript.Diagnostic(_this.fileName, _this.text.lineMap(), position, fullWidth, diagnosticKey, args);
-                };
-                this.slidingWindow = new TypeScript.SlidingWindow(this, TypeScript.ArrayUtilities.createArray(1024, null), null);
-                this.scanner = createScanner(languageVersion, text, this.reportDiagnostic);
+        function createParserSource(fileName, text, languageVersion) {
+            var _absolutePosition = 0;
+
+            var _tokenDiagnostics = [];
+
+            var rewindPointPool = [];
+            var rewindPointPoolCount = 0;
+
+            var lastDiagnostic = null;
+            var reportDiagnostic = function (position, fullWidth, diagnosticKey, args) {
+                lastDiagnostic = new TypeScript.Diagnostic(fileName, text.lineMap(), position, fullWidth, diagnosticKey, args);
+            };
+
+            var slidingWindow = new TypeScript.SlidingWindow(fetchNextItem, TypeScript.ArrayUtilities.createArray(1024, null), null);
+
+            var scanner = createScanner(languageVersion, text, reportDiagnostic);
+
+            function release() {
+                slidingWindow = null;
+                scanner = null;
+                _tokenDiagnostics = [];
+                rewindPointPool = [];
+                lastDiagnostic = null;
+                reportDiagnostic = null;
             }
-            ScannerParserSource.prototype.release = function () {
-                this.slidingWindow = null;
-                this.scanner = null;
-                this._tokenDiagnostics = [];
-                this.rewindPointPool = [];
-                this.lastDiagnostic = null;
-                this.reportDiagnostic = null;
-            };
 
-            ScannerParserSource.prototype.currentNode = function () {
+            function currentNode() {
                 return null;
-            };
+            }
 
-            ScannerParserSource.prototype.consumeNode = function (node) {
+            function consumeNode(node) {
                 throw TypeScript.Errors.invalidOperation();
-            };
+            }
 
-            ScannerParserSource.prototype.absolutePosition = function () {
-                return this._absolutePosition;
-            };
+            function absolutePosition() {
+                return _absolutePosition;
+            }
 
-            ScannerParserSource.prototype.tokenDiagnostics = function () {
-                return this._tokenDiagnostics;
-            };
+            function tokenDiagnostics() {
+                return _tokenDiagnostics;
+            }
 
-            ScannerParserSource.prototype.getOrCreateRewindPoint = function () {
-                if (this.rewindPointPoolCount === 0) {
+            function getOrCreateRewindPoint() {
+                if (rewindPointPoolCount === 0) {
                     return {};
                 }
 
-                this.rewindPointPoolCount--;
-                var result = this.rewindPointPool[this.rewindPointPoolCount];
-                this.rewindPointPool[this.rewindPointPoolCount] = null;
+                rewindPointPoolCount--;
+                var result = rewindPointPool[rewindPointPoolCount];
+                rewindPointPool[rewindPointPoolCount] = null;
                 return result;
-            };
+            }
 
-            ScannerParserSource.prototype.getRewindPoint = function () {
-                var slidingWindowIndex = this.slidingWindow.getAndPinAbsoluteIndex();
+            function getRewindPoint() {
+                var slidingWindowIndex = slidingWindow.getAndPinAbsoluteIndex();
 
-                var rewindPoint = this.getOrCreateRewindPoint();
+                var rewindPoint = getOrCreateRewindPoint();
 
                 rewindPoint.slidingWindowIndex = slidingWindowIndex;
-                rewindPoint.absolutePosition = this._absolutePosition;
+                rewindPoint.absolutePosition = _absolutePosition;
 
                 return rewindPoint;
-            };
+            }
 
-            ScannerParserSource.prototype.isPinned = function () {
-                return this.slidingWindow.pinCount() > 0;
-            };
+            function isPinned() {
+                return slidingWindow.pinCount() > 0;
+            }
 
-            ScannerParserSource.prototype.rewind = function (rewindPoint) {
-                this.slidingWindow.rewindToPinnedIndex(rewindPoint.slidingWindowIndex);
+            function rewind(rewindPoint) {
+                slidingWindow.rewindToPinnedIndex(rewindPoint.slidingWindowIndex);
 
-                this._absolutePosition = rewindPoint.absolutePosition;
-            };
+                _absolutePosition = rewindPoint.absolutePosition;
+            }
 
-            ScannerParserSource.prototype.releaseRewindPoint = function (rewindPoint) {
-                this.slidingWindow.releaseAndUnpinAbsoluteIndex(rewindPoint.absoluteIndex);
+            function releaseRewindPoint(rewindPoint) {
+                slidingWindow.releaseAndUnpinAbsoluteIndex(rewindPoint.absoluteIndex);
 
-                this.rewindPointPool[this.rewindPointPoolCount] = rewindPoint;
-                this.rewindPointPoolCount++;
-            };
+                rewindPointPool[rewindPointPoolCount] = rewindPoint;
+                rewindPointPoolCount++;
+            }
 
-            ScannerParserSource.prototype.fetchNextItem = function (allowContextualToken) {
-                var token = this.scanner.scan(allowContextualToken);
+            function fetchNextItem(allowContextualToken) {
+                var token = scanner.scan(allowContextualToken);
 
-                var lastDiagnostic = this.lastDiagnostic;
                 if (lastDiagnostic === null) {
                     return token;
                 }
 
-                this._tokenDiagnostics.push(lastDiagnostic);
-                this.lastDiagnostic = null;
+                _tokenDiagnostics.push(lastDiagnostic);
+                lastDiagnostic = null;
                 return TypeScript.Syntax.realizeToken(token);
-            };
+            }
 
-            ScannerParserSource.prototype.peekToken = function (n) {
-                return this.slidingWindow.peekItemN(n);
-            };
+            function peekToken(n) {
+                return slidingWindow.peekItemN(n);
+            }
 
-            ScannerParserSource.prototype.consumeToken = function (token) {
-                this._absolutePosition += token.fullWidth();
+            function consumeToken(token) {
+                _absolutePosition += token.fullWidth();
 
-                this.slidingWindow.moveToNextItem();
-            };
+                slidingWindow.moveToNextItem();
+            }
 
-            ScannerParserSource.prototype.currentToken = function () {
-                return this.slidingWindow.currentItem(false);
-            };
+            function currentToken() {
+                return slidingWindow.currentItem(false);
+            }
 
-            ScannerParserSource.prototype.removeDiagnosticsOnOrAfterPosition = function (position) {
-                var tokenDiagnosticsLength = this._tokenDiagnostics.length;
+            function removeDiagnosticsOnOrAfterPosition(position) {
+                var tokenDiagnosticsLength = _tokenDiagnostics.length;
                 while (tokenDiagnosticsLength > 0) {
-                    var diagnostic = this._tokenDiagnostics[tokenDiagnosticsLength - 1];
+                    var diagnostic = _tokenDiagnostics[tokenDiagnosticsLength - 1];
                     if (diagnostic.start() >= position) {
                         tokenDiagnosticsLength--;
                     } else {
@@ -5174,31 +5173,46 @@ var TypeScript;
                     }
                 }
 
-                this._tokenDiagnostics.length = tokenDiagnosticsLength;
-            };
+                _tokenDiagnostics.length = tokenDiagnosticsLength;
+            }
 
-            ScannerParserSource.prototype.resetToPosition = function (absolutePosition) {
-                this._absolutePosition = absolutePosition;
+            function resetToPosition(absolutePosition) {
+                _absolutePosition = absolutePosition;
 
-                this.removeDiagnosticsOnOrAfterPosition(absolutePosition);
+                removeDiagnosticsOnOrAfterPosition(absolutePosition);
 
-                this.slidingWindow.disgardAllItemsFromCurrentIndexOnwards();
+                slidingWindow.disgardAllItemsFromCurrentIndexOnwards();
 
-                this.scanner.setIndex(absolutePosition);
-            };
+                scanner.setIndex(absolutePosition);
+            }
 
-            ScannerParserSource.prototype.currentContextualToken = function () {
-                this.resetToPosition(this._absolutePosition);
+            function currentContextualToken() {
+                resetToPosition(_absolutePosition);
 
-                var token = this.slidingWindow.currentItem(true);
+                var token = slidingWindow.currentItem(true);
 
                 return token;
-            };
-            return ScannerParserSource;
-        })();
+            }
 
-        function createParserSource(fileName, text, languageVersion) {
-            return new ScannerParserSource(fileName, languageVersion, text);
+            return {
+                text: text,
+                fileName: fileName,
+                languageVersion: languageVersion,
+                currentNode: currentNode,
+                currentToken: currentToken,
+                currentContextualToken: currentContextualToken,
+                peekToken: peekToken,
+                consumeNode: consumeNode,
+                consumeToken: consumeToken,
+                getRewindPoint: getRewindPoint,
+                rewind: rewind,
+                releaseRewindPoint: releaseRewindPoint,
+                tokenDiagnostics: tokenDiagnostics,
+                release: release,
+                absolutePosition: absolutePosition,
+                resetToPosition: resetToPosition,
+                isPinned: isPinned
+            };
         }
         Scanner.createParserSource = createParserSource;
     })(TypeScript.Scanner || (TypeScript.Scanner = {}));
@@ -5352,9 +5366,9 @@ var TypeScript;
 var TypeScript;
 (function (TypeScript) {
     var SlidingWindow = (function () {
-        function SlidingWindow(source, window, defaultValue, sourceLength) {
+        function SlidingWindow(fetchNextItem, window, defaultValue, sourceLength) {
             if (typeof sourceLength === "undefined") { sourceLength = -1; }
-            this.source = source;
+            this.fetchNextItem = fetchNextItem;
             this.window = window;
             this.defaultValue = defaultValue;
             this.sourceLength = sourceLength;
@@ -5374,7 +5388,7 @@ var TypeScript;
                 this.tryShiftOrGrowWindow();
             }
 
-            var item = this.source.fetchNextItem(argument);
+            var item = this.fetchNextItem(argument);
 
             this.window[this.windowCount] = item;
 
@@ -12003,8 +12017,7 @@ var TypeScript;
             }
 
             function isExpectedTypeParameterList_TypeParametersTerminator() {
-                var token = currentToken();
-                var tokenKind = token.kind();
+                var tokenKind = currentToken().kind();
                 if (tokenKind === 81 /* GreaterThanToken */) {
                     return true;
                 }
@@ -12017,8 +12030,7 @@ var TypeScript;
             }
 
             function isExpectedParameterList_ParametersTerminator() {
-                var token = currentToken();
-                var tokenKind = token.kind();
+                var tokenKind = currentToken().kind();
                 if (tokenKind === 73 /* CloseParenToken */) {
                     return true;
                 }
@@ -12035,8 +12047,7 @@ var TypeScript;
             }
 
             function isExpectedIndexSignature_ParametersTerminator() {
-                var token = currentToken();
-                var tokenKind = token.kind();
+                var tokenKind = currentToken().kind();
                 if (tokenKind === 75 /* CloseBracketToken */) {
                     return true;
                 }
@@ -12049,8 +12060,7 @@ var TypeScript;
             }
 
             function isExpectedVariableDeclaration_VariableDeclarators_DisallowInTerminator() {
-                var _currentToken = currentToken();
-                var tokenKind = _currentToken.kind();
+                var tokenKind = currentToken().kind();
 
                 if (tokenKind === 78 /* SemicolonToken */ || tokenKind === 73 /* CloseParenToken */) {
                     return true;
@@ -12072,8 +12082,7 @@ var TypeScript;
             }
 
             function isExpectedClassOrInterfaceDeclaration_HeritageClausesTerminator() {
-                var token0 = currentToken();
-                var tokenKind = token0.kind();
+                var tokenKind = currentToken().kind();
                 if (tokenKind === 70 /* OpenBraceToken */ || tokenKind === 71 /* CloseBraceToken */) {
                     return true;
                 }
@@ -12082,8 +12091,7 @@ var TypeScript;
             }
 
             function isExpectedHeritageClause_TypeNameListTerminator() {
-                var token0 = currentToken();
-                var tokenKind = token0.kind();
+                var tokenKind = currentToken().kind();
                 if (tokenKind === 48 /* ExtendsKeyword */ || tokenKind === 51 /* ImplementsKeyword */) {
                     return true;
                 }
