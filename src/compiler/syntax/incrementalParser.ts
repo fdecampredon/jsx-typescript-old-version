@@ -1,7 +1,6 @@
 ///<reference path="references.ts" />
 
 module TypeScript.IncrementalParser {
-
     interface IParserRewindPoint {
         // Information used by the incremental parser source.
         oldSourceUnitCursor: SyntaxCursor;
@@ -21,9 +20,9 @@ module TypeScript.IncrementalParser {
     // This allows for an enormous amount of tree reuse in common scenarios.  Situations that 
     // prevent this level of reuse include substantially destructive operations like introducing
     // "/*" without a "*/" nearby to terminate the comment.
-    class IncrementalParserSource implements Parser.IParserSource {
-        public fileName: string;
-        public languageVersion: LanguageVersion;
+    function createParserSource(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, text: ISimpleText): Parser.IParserSource {
+        var fileName = oldSyntaxTree.fileName();
+        var languageVersion = oldSyntaxTree.languageVersion();
 
         // The underlying source that we will use to scan tokens from any new text, or any tokens 
         // from the old tree that we decide we can't use for any reason.  We will also continue 
@@ -32,14 +31,14 @@ module TypeScript.IncrementalParser {
         //
         // This parser source also keeps track of the absolute position in the text that we're in,
         // and any token diagnostics produced.  That way we dont' have to track that ourselves.
-        private _scannerParserSource: Scanner.IScannerParserSource;
+        var _scannerParserSource: Scanner.IScannerParserSource;
 
         // The range of text in the *original* text that was changed, and the new length of it after
         // the change.
-        private _changeRange: TextChangeRange;
+        var _changeRange: TextChangeRange;
 
         // Cached value of _changeRange.newSpan().  Cached for performance.
-        private _changeRangeNewSpan: TextSpan;
+        var _changeRangeNewSpan: TextSpan;
 
         // This number represents how our position in the old tree relates to the position we're 
         // pointing at in the new text.  If it is 0 then our positions are in sync and we can read
@@ -57,50 +56,41 @@ module TypeScript.IncrementalParser {
         // new text.  In this case we have no choice but to scan tokens from teh new text.  We will
         // continue to do so until, again, changeDelta becomes 0 and we've resynced, or change delta
         // becomes negative and we need to skip nodes or tokes in the original tree.
-        private _changeDelta: number = 0;
+        var _changeDelta: number = 0;
 
         // The cursor we use to navigate through and retrieve nodes and tokens from the old tree.
-        private _oldSourceUnitCursor: SyntaxCursor;
+        var _oldSourceUnitCursor = getSyntaxCursor();
+        var oldSourceUnit = oldSyntaxTree.sourceUnit();
 
-        public release() {
-            this._scannerParserSource.release();
-            this._scannerParserSource = null;
-            this._oldSourceUnitCursor = null;
+        // Start the cursor pointing at the first element in the source unit (if it exists).
+        if (oldSourceUnit.moduleElements.length > 0) {
+            _oldSourceUnitCursor.pushElement(childAt(oldSourceUnit.moduleElements, 0), /*indexInParent:*/ 0);
         }
 
-        constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, public text: ISimpleText) {
-            this.fileName = oldSyntaxTree.fileName();
-            this.languageVersion = oldSyntaxTree.languageVersion();
+        // In general supporting multiple individual edits is just not that important.  So we 
+        // just collapse this all down to a single range to make the code here easier.  The only
+        // time this could be problematic would be if the user made a ton of discontinuous edits.
+        // For example, doing a column select on a *large* section of a code.  If this is a 
+        // problem, we can always update this code to handle multiple changes.
+        _changeRange = extendToAffectedRange(textChangeRange, oldSourceUnit);
+        _changeRangeNewSpan = _changeRange.newSpan();
 
-            var newText = text;
-
-            var oldSourceUnit = oldSyntaxTree.sourceUnit();
-            this._oldSourceUnitCursor = getSyntaxCursor();
-
-            // Start the cursor pointing at the first element in the source unit (if it exists).
-            if (oldSourceUnit.moduleElements.length > 0) {
-                this._oldSourceUnitCursor.pushElement(childAt(oldSourceUnit.moduleElements, 0), /*indexInParent:*/ 0);
-            }
-
-            // In general supporting multiple individual edits is just not that important.  So we 
-            // just collapse this all down to a single range to make the code here easier.  The only
-            // time this could be problematic would be if the user made a ton of discontinuous edits.
-            // For example, doing a column select on a *large* section of a code.  If this is a 
-            // problem, we can always update this code to handle multiple changes.
-            this._changeRange = IncrementalParserSource.extendToAffectedRange(textChangeRange, oldSourceUnit);
-            this._changeRangeNewSpan = this._changeRange.newSpan();
-
-            // The old tree's length, plus whatever length change was caused by the edit
-            // Had better equal the new text's length!
-            if (Debug.shouldAssert(AssertionLevel.Aggressive)) {
-                Debug.assert((fullWidth(oldSourceUnit) - this._changeRange.span().length() + this._changeRange.newLength()) === newText.length());
-            }
-
-            // Set up a scanner so that we can scan tokens out of the new text.
-            this._scannerParserSource = Scanner.createParserSource(oldSyntaxTree.fileName(), text, oldSyntaxTree.languageVersion());
+        // The old tree's length, plus whatever length change was caused by the edit
+        // Had better equal the new text's length!
+        if (Debug.shouldAssert(AssertionLevel.Aggressive)) {
+            Debug.assert((fullWidth(oldSourceUnit) - _changeRange.span().length() + _changeRange.newLength()) === text.length());
         }
 
-        private static extendToAffectedRange(changeRange: TextChangeRange,
+        // Set up a scanner so that we can scan tokens out of the new text.
+        _scannerParserSource = Scanner.createParserSource(oldSyntaxTree.fileName(), text, oldSyntaxTree.languageVersion());
+
+        function release() {
+            _scannerParserSource.release();
+            _scannerParserSource = null;
+            _oldSourceUnitCursor = null;
+        }
+
+        function extendToAffectedRange(changeRange: TextChangeRange,
             sourceUnit: SourceUnitSyntax): TextChangeRange {
             // Consider the following code:
             //      void foo() { /; }
@@ -144,85 +134,85 @@ module TypeScript.IncrementalParser {
             return new TextChangeRange(finalSpan, finalLength);
         }
 
-        private absolutePosition() {
-            return this._scannerParserSource.absolutePosition();
+        function absolutePosition() {
+            return _scannerParserSource.absolutePosition();
         }
 
-        public tokenDiagnostics(): Diagnostic[] {
-            return this._scannerParserSource.tokenDiagnostics();
+        function tokenDiagnostics(): Diagnostic[] {
+            return _scannerParserSource.tokenDiagnostics();
         }
 
-        public getRewindPoint() {
+        function getRewindPoint() {
             // Get a rewind point for our new text reader and for our old source unit cursor.
-            var rewindPoint = <IParserRewindPoint>this._scannerParserSource.getRewindPoint();
+            var rewindPoint = <IParserRewindPoint>_scannerParserSource.getRewindPoint();
 
             // Clone our cursor.  That way we can restore to that point if hte parser needs to rewind.
-            var oldSourceUnitCursorClone = cloneSyntaxCursor(this._oldSourceUnitCursor);
+            var oldSourceUnitCursorClone = cloneSyntaxCursor(_oldSourceUnitCursor);
 
             // Store where we were when the rewind point was created.
-            rewindPoint.changeDelta = this._changeDelta;
-            rewindPoint.changeRange = this._changeRange;
-            rewindPoint.oldSourceUnitCursor = this._oldSourceUnitCursor;
+            rewindPoint.changeDelta = _changeDelta;
+            rewindPoint.changeRange = _changeRange;
+            rewindPoint.oldSourceUnitCursor = _oldSourceUnitCursor;
 
-            this._oldSourceUnitCursor = oldSourceUnitCursorClone;
+            _oldSourceUnitCursor = oldSourceUnitCursorClone;
 
-            // Debug.assert(rewindPoint.pinCount === this._oldSourceUnitCursor.pinCount());
+            // Debug.assert(rewindPoint.pinCount === _oldSourceUnitCursor.pinCount());
 
             return rewindPoint;
         }
 
-        public rewind(rewindPoint: IParserRewindPoint): void {
+        function rewind(rewindPoint: IParserRewindPoint): void {
             // Restore our state to the values when the rewind point was created.
-            this._changeRange = rewindPoint.changeRange;
-            this._changeDelta = rewindPoint.changeDelta;
+            _changeRange = rewindPoint.changeRange;
+            _changeDelta = rewindPoint.changeDelta;
 
             // Reset the cursor to what it was when we got the rewind point.  Make sure to return 
             // our existing cursor to the pool so it can be reused.
-            returnSyntaxCursor(this._oldSourceUnitCursor);
-            this._oldSourceUnitCursor = rewindPoint.oldSourceUnitCursor;
+            returnSyntaxCursor(_oldSourceUnitCursor);
+            _oldSourceUnitCursor = rewindPoint.oldSourceUnitCursor;
 
             // Null out the cursor that the rewind point points to.  This way we don't try
             // to return it in 'releaseRewindPoint'.
             rewindPoint.oldSourceUnitCursor = null;
 
-            this._scannerParserSource.rewind(rewindPoint);
+            _scannerParserSource.rewind(rewindPoint);
         }
 
-        public releaseRewindPoint(rewindPoint: IParserRewindPoint): void {
+        function releaseRewindPoint(rewindPoint: IParserRewindPoint): void {
             if (rewindPoint.oldSourceUnitCursor !== null) {
                 returnSyntaxCursor(rewindPoint.oldSourceUnitCursor);
             }
 
-            this._scannerParserSource.releaseRewindPoint(rewindPoint);
+            _scannerParserSource.releaseRewindPoint(rewindPoint);
         }
 
-        private canReadFromOldSourceUnit() {
+        function canReadFromOldSourceUnit() {
             // If we're currently pinned, then do not want to touch the cursor.  If we end up 
             // reading from the old source unit, we'll try to then set the position of the normal
             // parser source to an absolute position (in moveToNextToken).  Doing is unsupported
             // while the underlying source is pinned.
-            if (this._scannerParserSource.isPinned()) {
+            if (_scannerParserSource.isPinned()) {
                 return false;
             }
 
             // If our current absolute position is in the middle of the changed range in the new text
             // then we definitely can't read from the old source unit right now.
-            if (this._changeRange !== null && this._changeRangeNewSpan.intersectsWithPosition(this.absolutePosition())) {
+            if (_changeRange !== null && _changeRangeNewSpan.intersectsWithPosition(absolutePosition())) {
                 return false;
             }
 
             // First, try to sync up with the new text if we're behind.
-            this.syncCursorToNewTextIfBehind();
+            syncCursorToNewTextIfBehind();
 
             // Now, if we're synced up *and* we're not currently pinned in the new text scanner,
             // then we can read a node from the cursor.  If we're pinned in the scanner then we
             // can't read a node from the cursor because we will mess up the pinned scanner when
             // we try to move it forward past this node.
-            return this._changeDelta === 0 &&
-                !this._oldSourceUnitCursor.isFinished();
+            return _changeDelta === 0 &&
+                !_oldSourceUnitCursor.isFinished();
         }
 
-        private updateTokens(nodeOrToken: ISyntaxNodeOrToken): void {
+        function updateTokens(nodeOrToken: ISyntaxNodeOrToken): void {
             // If we got a node or token, and we're past the range of edited text, then walk its
             // constituent tokens, making sure all their positions are correct.  We don't need to
             // do this for the tokens before the edited range (since their positions couldn't have 
@@ -230,25 +220,25 @@ module TypeScript.IncrementalParser {
             // edited range, as their positions will be correct when the underlying parser source 
             // creates them.
 
-            var position = this.absolutePosition();
-            var tokenWasMoved = this.isPastChangeRange() && fullStart(nodeOrToken) !== position;
+            var position = absolutePosition();
+            var tokenWasMoved = isPastChangeRange() && fullStart(nodeOrToken) !== position;
 
             if (tokenWasMoved) {
-                setTokenTextAndFullStartWalker.text = this.text;
+                setTokenTextAndFullStartWalker.text = text;
                 setTokenTextAndFullStartWalker.position = position;
 
                 visitNodeOrToken(setTokenTextAndFullStartWalker, nodeOrToken);
             }
         }
 
-        public currentNode(): ISyntaxNode {
-            if (this.canReadFromOldSourceUnit()) {
+        function currentNode(): ISyntaxNode {
+            if (canReadFromOldSourceUnit()) {
                 // Try to read a node.  If we can't then our caller will call back in and just try
                 // to get a token.
-                var node = this.tryGetNodeFromOldSourceUnit();
+                var node = tryGetNodeFromOldSourceUnit();
                 if (node !== null) {
                     // Make sure the positions for the tokens in this node are correct.
-                    this.updateTokens(node);
+                    updateTokens(node);
                     return node;
                 }
             }
@@ -257,34 +247,34 @@ module TypeScript.IncrementalParser {
             return null;
         }
 
-        public currentToken(): ISyntaxToken {
-            if (this.canReadFromOldSourceUnit()) {
-                var token = this.tryGetTokenFromOldSourceUnit();
+        function currentToken(): ISyntaxToken {
+            if (canReadFromOldSourceUnit()) {
+                var token = tryGetTokenFromOldSourceUnit();
                 if (token !== null) {
                     // Make sure the token's position/text is correct.
-                    this.updateTokens(token);
+                    updateTokens(token);
                     return token;
                 }
             }
 
             // Either we couldn't read from the old source unit, or we weren't able to successfully
             // get a token from it.  In this case we need to read a token from the underlying text.
-            return this._scannerParserSource.currentToken();
+            return _scannerParserSource.currentToken();
         }
 
-        public currentContextualToken(): ISyntaxToken {
-            // Just delegate to the underlying source to handle this.
-            return this._scannerParserSource.currentContextualToken();
+        function currentContextualToken(): ISyntaxToken {
+            // Just delegate to the underlying source to handle 
+            return _scannerParserSource.currentContextualToken();
         }
 
-        private syncCursorToNewTextIfBehind() {
+        function syncCursorToNewTextIfBehind() {
             while (true) {
-                if (this._oldSourceUnitCursor.isFinished()) {
+                if (_oldSourceUnitCursor.isFinished()) {
                     // Can't sync up if the cursor is finished.
                     break;
                 }
 
-                if (this._changeDelta >= 0) {
+                if (_changeDelta >= 0) {
                     // Nothing to do if we're synced up or ahead of the text.
                     break;
                 }
@@ -292,24 +282,24 @@ module TypeScript.IncrementalParser {
                 // We're behind in the original tree.  Throw out a node or token in an attempt to 
                 // catch up to the position we're at in the new text.
 
-                var currentNodeOrToken = this._oldSourceUnitCursor.currentNodeOrToken();
+                var currentNodeOrToken = _oldSourceUnitCursor.currentNodeOrToken();
 
                 // If we're pointing at a node, and that node's width is less than our delta,
                 // then we can just skip that node.  Otherwise, if we're pointing at a node
                 // whose width is greater than the delta, then crumble it and try again.
                 // Otherwise, we must be pointing at a token.  Just skip it and try again.
 
-                if (isNode(currentNodeOrToken) && (fullWidth(currentNodeOrToken) > Math.abs(this._changeDelta))) {
+                if (isNode(currentNodeOrToken) && (fullWidth(currentNodeOrToken) > Math.abs(_changeDelta))) {
                     // We were pointing at a node whose width was more than changeDelta.  Crumble the 
                     // node and try again.  Note: we haven't changed changeDelta.  So the callers loop
                     // will just repeat this until we get to a node or token that we can skip over.
-                    this._oldSourceUnitCursor.moveToFirstChild();
+                    _oldSourceUnitCursor.moveToFirstChild();
                 }
                 else {
-                    this._oldSourceUnitCursor.moveToNextSibling();
+                    _oldSourceUnitCursor.moveToNextSibling();
 
                     // Get our change delta closer to 0 as we skip past this item.
-                    this._changeDelta += fullWidth(currentNodeOrToken);
+                    _changeDelta += fullWidth(currentNodeOrToken);
 
                     // If this was a node, then our changeDelta is 0 or negative.  If this was a 
                     // token, then we could still be negative (and we have to read another token),
@@ -323,15 +313,15 @@ module TypeScript.IncrementalParser {
             //   b) (ideally) caught up to the new text position.
             //   c) ahead of the new text position.
             // In case 'b' we can try to reuse a node from teh old tree.
-            // Debug.assert(this._oldSourceUnitCursor.isFinished() || this._changeDelta >= 0);
+            // Debug.assert(_oldSourceUnitCursor.isFinished() || _changeDelta >= 0);
         }
 
-        private intersectsWithChangeRangeSpanInOriginalText(start: number, length: number) {
-            return !this.isPastChangeRange() && this._changeRange.span().intersectsWith(start, length);
+        function intersectsWithChangeRangeSpanInOriginalText(start: number, length: number) {
+            return !isPastChangeRange() && _changeRange.span().intersectsWith(start, length);
         }
 
-        private tryGetNodeFromOldSourceUnit(): ISyntaxNode {
-            // Debug.assert(this.canReadFromOldSourceUnit());
+        function tryGetNodeFromOldSourceUnit(): ISyntaxNode {
+            // Debug.assert(canReadFromOldSourceUnit());
 
             // Keep moving the cursor down to the first node that is safe to return.  A node is 
             // safe to return if:
@@ -341,13 +331,13 @@ module TypeScript.IncrementalParser {
             //  d) it does not have a regex token in it.
             //  e) we are still in the same strict or non-strict state that the node was originally parsed in.
             while (true) {
-                var node = this._oldSourceUnitCursor.currentNode();
+                var node = _oldSourceUnitCursor.currentNode();
                 if (node === null) {
                     // Couldn't even read a node, nothing to return.
                     return null;
                 }
 
-                if (!this.intersectsWithChangeRangeSpanInOriginalText(this.absolutePosition(), fullWidth(node))) {
+                if (!intersectsWithChangeRangeSpanInOriginalText(absolutePosition(), fullWidth(node))) {
                     // Didn't intersect with the change range.
                     var isIncrementallyUnusuable = TypeScript.isIncrementallyUnusable(node);
                     if (!isIncrementallyUnusuable) {
@@ -361,11 +351,11 @@ module TypeScript.IncrementalParser {
                 // We couldn't use currentNode. Try to move to its first child (in case that's a 
                 // node).  If it is we can try using that.  Otherwise we'll just bail out in the
                 // next iteration of the loop.
-                this._oldSourceUnitCursor.moveToFirstChild();
+                _oldSourceUnitCursor.moveToFirstChild();
             }
         }
 
-        private canReuseTokenFromOldSourceUnit(position: number, token: ISyntaxToken): boolean {
+        function canReuseTokenFromOldSourceUnit(position: number, token: ISyntaxToken): boolean {
             // A token is safe to return if:
             //  a) it does not intersect the changed text.
             //  b) it does not contain skipped text.
@@ -384,7 +374,7 @@ module TypeScript.IncrementalParser {
             // Converted identifiers can't ever be created by the scanner, and as such, should not 
             // be returned by this source.
             if (token !== null) {
-                if (!this.intersectsWithChangeRangeSpanInOriginalText(position, token.fullWidth())) {
+                if (!intersectsWithChangeRangeSpanInOriginalText(position, token.fullWidth())) {
                     // Didn't intersect with the change range.
                     if (!token.isIncrementallyUnusable() && !Scanner.isContextualToken(token)) {
 
@@ -398,149 +388,166 @@ module TypeScript.IncrementalParser {
             return false;
         }
 
-        private tryGetTokenFromOldSourceUnit(): ISyntaxToken {
-            // Debug.assert(this.canReadFromOldSourceUnit());
+        function tryGetTokenFromOldSourceUnit(): ISyntaxToken {
+            // Debug.assert(canReadFromOldSourceUnit());
 
             // get the current token that the cursor is pointing at.
-            var token = this._oldSourceUnitCursor.currentToken();
+            var token = _oldSourceUnitCursor.currentToken();
 
-            return this.canReuseTokenFromOldSourceUnit(this.absolutePosition(), token)
+            return canReuseTokenFromOldSourceUnit(absolutePosition(), token)
                 ? token : null;
         }
 
-        public peekToken(n: number): ISyntaxToken {
-            if (this.canReadFromOldSourceUnit()) {
-                var token = this.tryPeekTokenFromOldSourceUnit(n);
+        function peekToken(n: number): ISyntaxToken {
+            if (canReadFromOldSourceUnit()) {
+                var token = tryPeekTokenFromOldSourceUnit(n);
                 if (token !== null) {
                     return token;
                 }
             }
 
             // Couldn't peek this far in the old tree.  Get the token from the new text.
-            return this._scannerParserSource.peekToken(n);
+            return _scannerParserSource.peekToken(n);
         }
 
-        private tryPeekTokenFromOldSourceUnit(n: number): ISyntaxToken {
-            // Debug.assert(this.canReadFromOldSourceUnit());
+        function tryPeekTokenFromOldSourceUnit(n: number): ISyntaxToken {
+            // Debug.assert(canReadFromOldSourceUnit());
 
             // clone the existing cursor so we can move it forward and then restore ourselves back
             // to where we started from.
 
-            var cursorClone = cloneSyntaxCursor(this._oldSourceUnitCursor);
+            var cursorClone = cloneSyntaxCursor(_oldSourceUnitCursor);
 
-            var token = this.tryPeekTokenFromOldSourceUnitWorker(n);
+            var token = tryPeekTokenFromOldSourceUnitWorker(n);
 
-            returnSyntaxCursor(this._oldSourceUnitCursor);
-            this._oldSourceUnitCursor = cursorClone;
+            returnSyntaxCursor(_oldSourceUnitCursor);
+            _oldSourceUnitCursor = cursorClone;
 
             return token;
         }
 
-        private tryPeekTokenFromOldSourceUnitWorker(n: number): ISyntaxToken {
+        function tryPeekTokenFromOldSourceUnitWorker(n: number): ISyntaxToken {
             // In order to peek the 'nth' token we need all the tokens up to that point.  That way
             // we know we know position that the nth token is at.  The position is necessary so 
             // that we can test if this token (or any that precede it cross the change range).
-            var currentPosition = this.absolutePosition();
+            var currentPosition = absolutePosition();
 
             // First, make sure the cursor is pointing at a token.
-            this._oldSourceUnitCursor.moveToFirstToken();
+            _oldSourceUnitCursor.moveToFirstToken();
 
             // Now, keep walking forward to successive tokens.
             for (var i = 0; i < n; i++) {
-                var interimToken = this._oldSourceUnitCursor.currentToken();
+                var interimToken = _oldSourceUnitCursor.currentToken();
 
-                if (!this.canReuseTokenFromOldSourceUnit(currentPosition, interimToken)) {
+                if (!canReuseTokenFromOldSourceUnit(currentPosition, interimToken)) {
                     return null;
                 }
 
                 currentPosition += interimToken.fullWidth();
-                this._oldSourceUnitCursor.moveToNextSibling();
+                _oldSourceUnitCursor.moveToNextSibling();
             }
 
-            var token = this._oldSourceUnitCursor.currentToken();
-            return this.canReuseTokenFromOldSourceUnit(currentPosition, token)
+            var token = _oldSourceUnitCursor.currentToken();
+            return canReuseTokenFromOldSourceUnit(currentPosition, token)
                 ? token : null;
         }
 
-        public consumeNode(node: ISyntaxNode): void {
+        function consumeNode(node: ISyntaxNode): void {
             // A node could have only come from the old source unit cursor.  Update it and our 
             // current state.
-            // Debug.assert(this._changeDelta === 0);
-            // Debug.assert(this.currentNode() === node);
+            // Debug.assert(_changeDelta === 0);
+            // Debug.assert(currentNode() === node);
 
-            this._oldSourceUnitCursor.moveToNextSibling();
+            _oldSourceUnitCursor.moveToNextSibling();
 
             // Update the underlying source with where it should now be currently pointin.
-            var absolutePosition = this.absolutePosition() + fullWidth(node);
-            this._scannerParserSource.resetToPosition(absolutePosition);
+            var _absolutePosition = absolutePosition() + fullWidth(node);
+            _scannerParserSource.resetToPosition(_absolutePosition);
 
             // Debug.assert(previousToken !== null);
             // Debug.assert(previousToken.width() > 0);
 
-            //if (!this.isPastChangeRange()) {
+            //if (!isPastChangeRange()) {
             //    // If we still have a change range, then this node must have ended before the 
             //    // change range starts.  Thus, we don't need to call 'skipPastChanges'.
-            //    Debug.assert(this.absolutePosition() < this._changeRange.span().start());
+            //    Debug.assert(absolutePosition() < _changeRange.span().start());
             //}
         }
 
-        public consumeToken(currentToken: ISyntaxToken): void {
+        function consumeToken(currentToken: ISyntaxToken): void {
             // This token may have come from the old source unit, or from the new text.  Handle
             // both accordingly.
 
-            if (this._oldSourceUnitCursor.currentToken() === currentToken) {
+            if (_oldSourceUnitCursor.currentToken() === currentToken) {
                 // The token came from the old source unit.  So our tree and text must be in sync.
-                // Debug.assert(this._changeDelta === 0);
+                // Debug.assert(_changeDelta === 0);
 
                 // Move the cursor past this token.
-                this._oldSourceUnitCursor.moveToNextSibling();
+                _oldSourceUnitCursor.moveToNextSibling();
 
-                // Debug.assert(!this._normalParserSource.isPinned());
+                // Debug.assert(!_normalParserSource.isPinned());
 
                 // Update the underlying source with where it should now be currently pointing. We 
                 // don't need to do this when the token came from the new text as the source will
                 // automatically be placed in the right position.
-                var absolutePosition = this.absolutePosition() + currentToken.fullWidth();
-                this._scannerParserSource.resetToPosition(absolutePosition);
+                var _absolutePosition = absolutePosition() + currentToken.fullWidth();
+                _scannerParserSource.resetToPosition(_absolutePosition);
 
                 // Debug.assert(previousToken !== null);
                 // Debug.assert(previousToken.width() > 0);
 
-                //if (!this.isPastChangeRange()) {
+                //if (!isPastChangeRange()) {
                 //    // If we still have a change range, then this token must have ended before the 
                 //    // change range starts.  Thus, we don't need to call 'skipPastChanges'.
-                //    Debug.assert(this.absolutePosition() < this._changeRange.span().start());
+                //    Debug.assert(absolutePosition() < _changeRange.span().start());
                 //}
             }
             else {
                 // the token came from the new text.  That means the normal source moved forward,
                 // while the syntax cursor stayed in the same place.  Thus our delta moves even 
                 // further back.
-                this._changeDelta -= currentToken.fullWidth();
+                _changeDelta -= currentToken.fullWidth();
 
                 // Move our underlying source forward.
-                this._scannerParserSource.consumeToken(currentToken);
+                _scannerParserSource.consumeToken(currentToken);
 
                 // Because we read a token from the new text, we may have moved ourselves past the
                 // change range.  If we did, then we may also have to update our change delta to
                 // compensate for the length change between the old and new text.
-                if (!this.isPastChangeRange()) {
-                    // var changeEndInNewText = this._changeRange.span().start() + this._changeRange.newLength();
-                    if (this.absolutePosition() >= this._changeRangeNewSpan.end()) {
-                        this._changeDelta += this._changeRange.newLength() - this._changeRange.span().length();
+                if (!isPastChangeRange()) {
+                    // var changeEndInNewText = _changeRange.span().start() + _changeRange.newLength();
+                    if (absolutePosition() >= _changeRangeNewSpan.end()) {
+                        _changeDelta += _changeRange.newLength() - _changeRange.span().length();
 
                         // Once we're past the change range, we no longer need it.  Null it out.
                         // From now on we can check if we're past the change range just by seeing
                         // if this is null.
-                        this._changeRange = null;
+                        _changeRange = null;
                     }
                 }
             }
         }
 
-        private isPastChangeRange(): boolean {
-            return this._changeRange === null;
+        function isPastChangeRange(): boolean {
+            return _changeRange === null;
         }
+
+        return {
+            text: text,
+            fileName: fileName,
+            languageVersion: languageVersion,
+            currentNode: currentNode,
+            currentToken: currentToken,
+            currentContextualToken: currentContextualToken,
+            peekToken: peekToken,
+            consumeNode: consumeNode,
+            consumeToken: consumeToken,
+            getRewindPoint: getRewindPoint,
+            rewind: rewind,
+            releaseRewindPoint: releaseRewindPoint,
+            tokenDiagnostics: tokenDiagnostics,
+            release: release
+        };
     }
 
     interface SyntaxCursorPiece {
@@ -571,7 +578,7 @@ module TypeScript.IncrementalParser {
         // Get an existing cursor from the pool if we have one.  Or create a new one if we don't.
         var cursor = syntaxCursorPoolCount > 0
             ? syntaxCursorPool[syntaxCursorPoolCount - 1]
-            : new SyntaxCursor();
+            : createSyntaxCursor();
 
         if (syntaxCursorPoolCount > 0) {
             // If we reused an existing cursor, take it out of the pool so no one else uses it.
@@ -592,21 +599,37 @@ module TypeScript.IncrementalParser {
         return newCursor;
     }
 
-    class SyntaxCursor {
+    interface SyntaxCursor {
+        pieces: SyntaxCursorPiece[];
+        currentPieceIndex: number;
+
+        clean(): void;
+        isFinished(): boolean;
+        moveToFirstChild(): void;
+        moveToFirstToken(): void;
+        moveToNextSibling(): void;
+        currentNodeOrToken(): ISyntaxNodeOrToken;
+        currentNode(): ISyntaxNode;
+        currentToken(): ISyntaxToken;
+        pushElement(element: ISyntaxElement, indexInParent: number): void;
+        deepCopyFrom(other: SyntaxCursor): void;
+    }
+
+    function createSyntaxCursor(): SyntaxCursor {
         // Our list of path pieces.  The piece pointed to by 'currentPieceIndex' must be a node or
         // token.  However, pieces earlier than that may point to list nodes.
         //
         // For perf we reuse pieces as much as possible.  i.e. instead of popping items off the 
         // list, we just will change currentPieceIndex so we can reuse that piece later.
-        private pieces: SyntaxCursorPiece[] = [];
-        private currentPieceIndex: number = -1;
+        var pieces: SyntaxCursorPiece[] = [];
+        var currentPieceIndex: number = -1;
 
         // Cleans up this cursor so that it doesn't have any references to actual syntax nodes.
         // This sould be done before returning the cursor to the pool so that the Parser module
         // doesn't unnecessarily keep old syntax trees alive.
-        public clean(): void {
-            for (var i = 0, n = this.pieces.length; i < n; i++) {
-                var piece = this.pieces[i];
+        function clean(): void {
+            for (var i = 0, n = pieces.length; i < n; i++) {
+                var piece = pieces[i];
 
                 if (piece.element === null) {
                     break;
@@ -616,12 +639,12 @@ module TypeScript.IncrementalParser {
                 piece.indexInParent = -1;
             }
 
-            this.currentPieceIndex = -1;
+            currentPieceIndex = -1;
         }
 
         // Makes this cursor into a deep copy of the cursor passed in.
-        public deepCopyFrom(other: SyntaxCursor): void {
-            // Debug.assert(this.currentPieceIndex === -1);
+        function deepCopyFrom(other: SyntaxCursor): void {
+            // Debug.assert(currentPieceIndex === -1);
             for (var i = 0, n = other.pieces.length; i < n; i++) {
                 var piece = other.pieces[i];
 
@@ -629,22 +652,22 @@ module TypeScript.IncrementalParser {
                     break;
                 }
 
-                this.pushElement(piece.element, piece.indexInParent);
+                pushElement(piece.element, piece.indexInParent);
             }
 
-            // Debug.assert(this.currentPieceIndex === other.currentPieceIndex);
+            // Debug.assert(currentPieceIndex === other.currentPieceIndex);
         }
 
-        public isFinished(): boolean {
-            return this.currentPieceIndex < 0;
+        function isFinished(): boolean {
+            return currentPieceIndex < 0;
         }
 
-        public currentNodeOrToken(): ISyntaxNodeOrToken {
-            if (this.isFinished()) {
+        function currentNodeOrToken(): ISyntaxNodeOrToken {
+            if (isFinished()) {
                 return null;
             }
 
-            var result = this.pieces[this.currentPieceIndex].element;
+            var result = pieces[currentPieceIndex].element;
 
             // The current element must always be a node or a token.
             // Debug.assert(result !== null);
@@ -653,13 +676,13 @@ module TypeScript.IncrementalParser {
             return <ISyntaxNodeOrToken>result;
         }
 
-        public currentNode(): ISyntaxNode {
-            var element = this.currentNodeOrToken();
+        function currentNode(): ISyntaxNode {
+            var element = currentNodeOrToken();
             return isNode(element) ? <ISyntaxNode>element : null;
         }
 
-        public moveToFirstChild() {
-            var nodeOrToken = this.currentNodeOrToken();
+        function moveToFirstChild() {
+            var nodeOrToken = currentNodeOrToken();
             if (nodeOrToken === null) {
                 return;
             }
@@ -679,11 +702,11 @@ module TypeScript.IncrementalParser {
                 var child = childAt(nodeOrToken, i);
                 if (child !== null && !isShared(child)) {
                     // Great, we found a real child.  Push that.
-                    this.pushElement(child, /*indexInParent:*/ i);
+                    pushElement(child, /*indexInParent:*/ i);
 
                     // If it was a list, make sure we're pointing at its first element.  We know we
                     // must have one because this is a non-shared list.
-                    this.moveToFirstChildIfList();
+                    moveToFirstChildIfList();
                     return;
                 }
             }
@@ -692,13 +715,13 @@ module TypeScript.IncrementalParser {
             // moving to the next sibling.
 
             // Debug.assert(fullWidth(nodeOrToken) === 0);
-            this.moveToNextSibling();
+            moveToNextSibling();
         }
 
-        public moveToNextSibling(): void {
-            while (!this.isFinished()) {
+        function moveToNextSibling(): void {
+            while (!isFinished()) {
                 // first look to our parent and see if it has a sibling of us that we can move to.
-                var currentPiece = this.pieces[this.currentPieceIndex];
+                var currentPiece = pieces[currentPieceIndex];
                 var parent = currentPiece.element.parent;
 
                 // We start searching at the index one past our own index in the parent.
@@ -713,7 +736,7 @@ module TypeScript.IncrementalParser {
 
                         // The sibling might have been a list.  Move to it's first child.  it must have
                         // one since this was a non-shared element.
-                        this.moveToFirstChildIfList();
+                        moveToFirstChildIfList();
                         return;
                     }
                 }
@@ -726,43 +749,43 @@ module TypeScript.IncrementalParser {
                 currentPiece.indexInParent = -1;
 
                 // Point at the parent.  if we move past the top of the path, then we're finished.
-                this.currentPieceIndex--;
+                currentPieceIndex--;
             }
         }
 
-        private moveToFirstChildIfList(): void {
-            var element = this.pieces[this.currentPieceIndex].element;
+        function moveToFirstChildIfList(): void {
+            var element = pieces[currentPieceIndex].element;
 
             if (isList(element) || isSeparatedList(element)) {
                 // We cannot ever get an empty list in our piece path.  Empty lists are 'shared' and
                 // we make sure to filter that out before pushing any children.
                 // Debug.assert(childCount(element) > 0);
 
-                this.pushElement(childAt(element, 0), /*indexInParent:*/ 0);
+                pushElement(childAt(element, 0), /*indexInParent:*/ 0);
             }
         }
 
-        public pushElement(element: ISyntaxElement, indexInParent: number): void {
+        function pushElement(element: ISyntaxElement, indexInParent: number): void {
             // Debug.assert(element !== null);
             // Debug.assert(indexInParent >= 0);
-            this.currentPieceIndex++;
+            currentPieceIndex++;
 
             // Reuse an existing piece if we have one.  Otherwise, push a new piece to our list.
-            if (this.currentPieceIndex === this.pieces.length) {
-                this.pieces.push(createSyntaxCursorPiece(element, indexInParent));
+            if (currentPieceIndex === pieces.length) {
+                pieces.push(createSyntaxCursorPiece(element, indexInParent));
             }
             else {
-                var piece = this.pieces[this.currentPieceIndex];
+                var piece = pieces[currentPieceIndex];
                 piece.element = element;
                 piece.indexInParent = indexInParent;
             }
         }
 
-        public moveToFirstToken(): void {
-            while (!this.isFinished()) {
-                var element = this.pieces[this.currentPieceIndex].element;
+        function moveToFirstToken(): void {
+            while (!isFinished()) {
+                var element = pieces[currentPieceIndex].element;
                 if (isNode(element)) {
-                    this.moveToFirstChild();
+                    moveToFirstChild();
                     continue;
                 }
 
@@ -771,13 +794,28 @@ module TypeScript.IncrementalParser {
             }
         }
 
-        public currentToken(): ISyntaxToken {
-            this.moveToFirstToken();
+        function currentToken(): ISyntaxToken {
+            moveToFirstToken();
 
-            var element = this.currentNodeOrToken();
+            var element = currentNodeOrToken();
             // Debug.assert(element === null || element.isToken());
             return element === null ? null : <ISyntaxToken>element;
         }
+
+        return {
+            pieces: pieces,
+            currentPieceIndex: currentPieceIndex,
+            clean: clean,
+            isFinished: isFinished,
+            moveToFirstChild: moveToFirstChild,
+            moveToFirstToken: moveToFirstToken,
+            moveToNextSibling: moveToNextSibling,
+            currentNodeOrToken: currentNodeOrToken,
+            currentNode: currentNode,
+            currentToken: currentToken,
+            pushElement: pushElement,
+            deepCopyFrom: deepCopyFrom
+        };
     }
 
     // A simple walker we use to hit all the tokens of a node and update their positions when they
@@ -802,6 +840,6 @@ module TypeScript.IncrementalParser {
             return oldSyntaxTree;
         }
 
-        return Parser.parseSource(new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText), oldSyntaxTree.isDeclaration());
+        return Parser.parseSource(createParserSource(oldSyntaxTree, textChangeRange, newText), oldSyntaxTree.isDeclaration());
     }
 }

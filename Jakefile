@@ -143,6 +143,7 @@ var servicesSources = [
 	"pullLanguageService.ts",
 	"shims.ts",
 	"signatureInfoHelpers.ts",
+	"../compiler/syntax/incrementalParser.ts",
 	"formatting/formatter.ts", 
 	"formatting/formatting.ts", 
 	"formatting/formattingContext.ts",
