@@ -187,10 +187,23 @@ module TypeScript.IncrementalParser {
         }
 
         function canReadFromOldSourceUnit() {
-            // If we're currently pinned, then do not want to touch the cursor.  If we end up 
-            // reading from the old source unit, we'll try to then set the position of the normal
-            // parser source to an absolute position (in moveToNextToken).  Doing is unsupported
-            // while the underlying source is pinned.
+            // If we're currently pinned, then do not want to touch the cursor.  Here's why.  First,
+            // recall that we're 'pinned' when we're speculatively parsing.  So say we were to allow
+            // returning old nodes/tokens while speculatively parsing. Then, the parser might start
+            // mutating the nodes and tokens we returned (i.e. by setting their parents).   Then, 
+            // when we rewound, those nodes and tokens would still have those updated parents.  
+            // Parents which we just decided we did *not* want to parse (hence why we rewound).  For
+            // Example, say we have something like:
+            //
+            //          var v = f<a,b,c>e;  // note: this is not generic.
+            //
+            // When incrementally parsing, we will need to speculatively parse to determine if the
+            // above is generic.  This will cause us to reuse the "a, b, c" tokens, and set their 
+            // parent to a new type argument list.  A type argument list we will then throw away once
+            // we decide that it isn't actually generic.  We will have now 'broken' the original tree.
+            //
+            // As such, the rule is simple.  We only return nodes/tokens from teh original tree if
+            // we know the parser will accept and consume them and never rewind back before them.
             if (_scannerParserSource.isPinned()) {
                 return false;
             }
