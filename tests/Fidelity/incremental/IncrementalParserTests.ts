@@ -332,6 +332,39 @@ module TypeScript {
             compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 59);
         }
 
+        public static testIncremental3() {
+            var source = "var v = (a, b, c, d, e)";
+
+            var index = source.indexOf('a');
+
+            var oldText = SimpleText.fromString(source);
+            var newTextAndChange = withInsert(oldText, index + 1, ":");
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
+
+        public static testIncremental4() {
+            var source = "var v = (a:, b, c, d, e)";
+
+            var index = source.indexOf(':');
+
+            var oldText = SimpleText.fromString(source);
+            var newTextAndChange = withDelete(oldText, index, 1);
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
+
+        public static testIncremental7() {
+            var source = "var v = F<a,b,c,d>e";
+
+            var index = source.indexOf('b');
+
+            var oldText = SimpleText.fromString(source);
+            var newTextAndChange = withInsert(oldText, index + 1, ",x");
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
+
         public static testGenerics1() {
             var source = "var v = <T>(a);";
 
