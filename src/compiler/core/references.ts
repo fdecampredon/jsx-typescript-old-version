@@ -12,7 +12,6 @@
 ///<reference path='diagnosticInfo.ts' />
 ///<reference path='errors.ts' />
 ///<reference path='hash.ts' />
-// ///<reference path='hashTable.ts' />
 ///<reference path='environment.ts' />
 ///<reference path='indexable.ts' />
 ///<reference path='integerUtilities.ts' />

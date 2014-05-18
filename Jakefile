@@ -50,7 +50,6 @@ var compilerSources = [
 	"core/environment.ts",
 	"core/errors.ts",
 	"core/hash.ts",
-	"core/hashTable.ts",
 	"core/integerUtilities.ts",
 	"core/lineAndCharacter.ts",
 	"core/lineMap.ts",
