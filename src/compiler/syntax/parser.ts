@@ -4037,8 +4037,7 @@ module TypeScript.Parser {
         }
 
         function isExpectedTypeParameterList_TypeParametersTerminator(): boolean {
-            var token = currentToken();
-            var tokenKind = token.kind();
+            var tokenKind = currentToken().kind();
             if (tokenKind === SyntaxKind.GreaterThanToken) {
                 return true;
             }
@@ -4056,8 +4055,7 @@ module TypeScript.Parser {
         }
 
         function isExpectedParameterList_ParametersTerminator(): boolean {
-            var token = currentToken();
-            var tokenKind = token.kind();
+            var tokenKind = currentToken().kind();
             if (tokenKind === SyntaxKind.CloseParenToken) {
                 return true;
             }
@@ -4078,8 +4076,7 @@ module TypeScript.Parser {
         }
 
         function isExpectedIndexSignature_ParametersTerminator() {
-            var token = currentToken();
-            var tokenKind = token.kind();
+            var tokenKind = currentToken().kind();
             if (tokenKind === SyntaxKind.CloseBracketToken) {
                 return true;
             }
@@ -4095,8 +4092,7 @@ module TypeScript.Parser {
 
         function isExpectedVariableDeclaration_VariableDeclarators_DisallowInTerminator(): boolean {
             // This is the case when we're parsing variable declarations in a for/for-in statement.
-            var _currentToken = currentToken();
-            var tokenKind = _currentToken.kind();
+            var tokenKind = currentToken().kind();
 
             if (tokenKind === SyntaxKind.SemicolonToken ||
                 tokenKind === SyntaxKind.CloseParenToken) {
@@ -4126,10 +4122,8 @@ module TypeScript.Parser {
         }
 
         function isExpectedClassOrInterfaceDeclaration_HeritageClausesTerminator(): boolean {
-            var token0 = currentToken();
-            var tokenKind = token0.kind();
-            if (tokenKind === SyntaxKind.OpenBraceToken ||
-                tokenKind === SyntaxKind.CloseBraceToken) {
+            var tokenKind = currentToken().kind();
+            if (tokenKind === SyntaxKind.OpenBraceToken || tokenKind === SyntaxKind.CloseBraceToken) {
                 return true;
             }
 
@@ -4137,10 +4131,8 @@ module TypeScript.Parser {
         }
 
         function isExpectedHeritageClause_TypeNameListTerminator(): boolean {
-            var token0 = currentToken();
-            var tokenKind = token0.kind();
-            if (tokenKind === SyntaxKind.ExtendsKeyword ||
-                tokenKind === SyntaxKind.ImplementsKeyword) {
+            var tokenKind = currentToken().kind();
+            if (tokenKind === SyntaxKind.ExtendsKeyword || tokenKind === SyntaxKind.ImplementsKeyword) {
                 return true;
             }
 

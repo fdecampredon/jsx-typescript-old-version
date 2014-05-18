@@ -543,10 +543,13 @@ module TypeScript.IncrementalParser {
         }
     }
 
-    class SyntaxCursorPiece {
-        constructor(public element: ISyntaxElement,
-                    public indexInParent: number) {
-        }
+    interface SyntaxCursorPiece {
+        element: ISyntaxElement;
+        indexInParent: number
+    }
+
+    function createSyntaxCursorPiece(element: ISyntaxElement, indexInParent: number) {
+        return { element: element, indexInParent: indexInParent };
     }
 
     // Pool syntax cursors so we don't churn too much memory when we need temporary cursors.  
@@ -746,7 +749,7 @@ module TypeScript.IncrementalParser {
 
             // Reuse an existing piece if we have one.  Otherwise, push a new piece to our list.
             if (this.currentPieceIndex === this.pieces.length) {
-                this.pieces.push(new SyntaxCursorPiece(element, indexInParent));
+                this.pieces.push(createSyntaxCursorPiece(element, indexInParent));
             }
             else {
                 var piece = this.pieces[this.currentPieceIndex];
@@ -794,9 +797,7 @@ module TypeScript.IncrementalParser {
 
     var setTokenTextAndFullStartWalker = new SetTokenTextAndFullStartWalker();
 
-    export function parse(oldSyntaxTree: SyntaxTree,
-                          textChangeRange: TextChangeRange,
-                          newText: ISimpleText): SyntaxTree {
+    export function parse(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, newText: ISimpleText): SyntaxTree {
         if (textChangeRange.isUnchanged()) {
             return oldSyntaxTree;
         }
