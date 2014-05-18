@@ -14,26 +14,6 @@ module TypeScript.Syntax {
         throw Errors.invalidOperation();
     }
 
-    export function isSuperInvocationExpression(node: IExpressionSyntax): boolean {
-        return node.kind() === SyntaxKind.InvocationExpression &&
-            (<InvocationExpressionSyntax>node).expression.kind() === SyntaxKind.SuperKeyword;
-    }
-
-    export function isSuperInvocationExpressionStatement(node: ISyntaxNode): boolean {
-        return node.kind() === SyntaxKind.ExpressionStatement &&
-            isSuperInvocationExpression((<ExpressionStatementSyntax>node).expression);
-    }
-
-    export function isSuperMemberAccessExpression(node: IExpressionSyntax): boolean {
-        return node.kind() === SyntaxKind.MemberAccessExpression &&
-            (<MemberAccessExpressionSyntax>node).expression.kind() === SyntaxKind.SuperKeyword;
-    }
-
-    export function isSuperMemberAccessInvocationExpression(node: ISyntaxNode): boolean {
-        return node.kind() === SyntaxKind.InvocationExpression &&
-            isSuperMemberAccessExpression((<InvocationExpressionSyntax>node).expression);
-    }
-
     export function nodeHasSkippedOrMissingTokens(node: ISyntaxNode): boolean {
         for (var i = 0; i < childCount(node); i++) {
             var child = childAt(node, i);

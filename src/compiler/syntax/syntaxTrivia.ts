@@ -69,32 +69,6 @@ module TypeScript.Syntax {
         }
     }
 
-    class NormalTrivia extends AbstractTrivia {
-        constructor(kind: SyntaxKind, private _text: string, private _fullStart: number) {
-            super(kind);
-        }
-
-        public clone(): ISyntaxTrivia {
-            return new NormalTrivia(this.kind(), this._text, this._fullStart);
-        }
-
-        public fullStart(): number {
-            return this._fullStart;
-        }
-
-        public fullWidth(): number {
-            return this.fullText().length;
-        }
-
-        public fullText(): string {
-            return this._text;
-        }
-
-        public skippedToken(): ISyntaxToken {
-            throw Errors.invalidOperation();
-        }
-    }
-
     class SkippedTokenTrivia extends AbstractTrivia {
         constructor(private _skippedToken: ISyntaxToken) {
             super(SyntaxKind.SkippedTokenTrivia);
@@ -153,39 +127,12 @@ module TypeScript.Syntax {
         return new DeferredTrivia(kind, text, fullStart, fullWidth);
     }
 
-    export function trivia(kind: SyntaxKind, text: string, fullStart: number): ISyntaxTrivia {
-        // Debug.assert(kind === SyntaxKind.MultiLineCommentTrivia || kind === SyntaxKind.NewLineTrivia || kind === SyntaxKind.SingleLineCommentTrivia || kind === SyntaxKind.WhitespaceTrivia || kind === SyntaxKind.SkippedTextTrivia);
-        // Debug.assert(text.length > 0);
-        return new NormalTrivia(kind, text, fullStart);
-    }
-
     export function skippedTokenTrivia(token: ISyntaxToken): ISyntaxTrivia {
         Debug.assert(!token.hasLeadingTrivia());
         Debug.assert(!token.hasTrailingTrivia());
         Debug.assert(token.fullWidth() > 0);
         return new SkippedTokenTrivia(token);
     }
-
-    export function spaces(count: number): ISyntaxTrivia {
-        return trivia(SyntaxKind.WhitespaceTrivia, StringUtilities.repeat(" ", count), -1);
-    }
-
-    export function whitespace(text: string): ISyntaxTrivia {
-        return trivia(SyntaxKind.WhitespaceTrivia, text, -1);
-    }
-
-    export function multiLineComment(text: string): ISyntaxTrivia {
-        return trivia(SyntaxKind.MultiLineCommentTrivia, text, -1);
-    }
-
-    export function singleLineComment(text: string): ISyntaxTrivia {
-        return trivia(SyntaxKind.SingleLineCommentTrivia, text, -1);
-    }
-
-    export var spaceTrivia: ISyntaxTrivia = spaces(1);
-    export var lineFeedTrivia: ISyntaxTrivia = trivia(SyntaxKind.NewLineTrivia, "\n", -1);
-    export var carriageReturnTrivia: ISyntaxTrivia = trivia(SyntaxKind.NewLineTrivia, "\r", -1);
-    export var carriageReturnLineFeedTrivia: ISyntaxTrivia = trivia(SyntaxKind.NewLineTrivia, "\r\n", -1);
 
     // Breaks a multiline trivia up into individual line components.  If the trivia doesn't span
     // any lines, then the result will be a single string with the entire text of the trivia. 

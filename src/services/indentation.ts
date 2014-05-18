@@ -142,10 +142,6 @@ module TypeScript.Indentation {
                StringUtilities.repeat(' ', numberOfSpaces);
     }
 
-    export function indentationTrivia(column: number, options: FormattingOptions): ISyntaxTrivia {
-        return Syntax.whitespace(this.indentationString(column, options));
-    }
-
     export function firstNonWhitespacePosition(value: string): number {
         for (var i = 0; i < value.length; i++) {
             var ch = value.charCodeAt(i);

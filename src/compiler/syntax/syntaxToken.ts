@@ -444,14 +444,6 @@ module TypeScript.Syntax {
             return this._isKeywordConvertedToIdentifier; 
         }
 
-        public childCount(): number {
-            return 0;
-        }
-
-        public childAt(index: number): ISyntaxElement {
-            throw Errors.argumentOutOfRange("index");
-        }
-
         public fullStart(): number { return this._fullStart; }
         public fullWidth(): number { return this._leadingTrivia.fullWidth() + this._text.length + this._trailingTrivia.fullWidth(); }
 

@@ -42,44 +42,6 @@ module TypeScript {
         }
 
         /**
-         * Called to merge all the changes that occurred between one version of a script snapshot to 
-         * the next into a single change.  i.e. say a user did a box selection and made an edit.  That
-         * will show up as N text change ranges between version V of a script and version V+1.  This
-         * function collapses those N changes into a single change range valid between V and V+1.
-         */
-        public static collapseChangesFromSingleVersion(changes: TextChangeRange[]): TextChangeRange {
-            var diff = 0;
-            var start = Constants.Max31BitInteger;
-            var end = 0;
-
-            // TODO: we are assuming that changes are normalized. That is currently not guaranteed,
-            // but changes that we get from IDE are normalized. Idealy changes should come in a kind
-            // of normalized change collection instead of IEnumerable to really guarantee that they
-            // are normalized.
-            for (var i = 0; i < changes.length; i++) {
-                var change = changes[i];
-                diff += change.newLength() - change.span().length();
-
-                if (change.span().start() < start) {
-                    start = change.span().start();
-                }
-
-                if (change.span().end() > end) {
-                    end = change.span().end();
-                }
-            }
-
-            if (start > end) {
-                return null;
-            }
-
-            var combined = TextSpan.fromBounds(start, end);
-            var newLen = combined.length() + diff;
-
-            return new TextChangeRange(combined, newLen);
-        }
-
-        /**
          * Called to merge all the changes that occurred across several versions of a script snapshot 
          * into a single change.  i.e. if a user keeps making successive edits to a script we will
          * have a text change from V1 to V2, V2 to V3, ..., Vn.  

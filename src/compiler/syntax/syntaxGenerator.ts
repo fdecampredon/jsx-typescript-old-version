@@ -2813,8 +2813,6 @@ function generateScannerUtilities(): string {
 }
 
 function generateVisitor(): string {
-    var i: number;
-    var definition: ITypeDefinition;
     var result = "";
 
     result += "///<reference path='references.ts' />\r\n\r\n";
@@ -2854,8 +2852,19 @@ function generateVisitor(): string {
         result += "        visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any;\r\n";
     }
 
-    result += "    }\r\n\r\n";
+    result += "    }";
 
+    result += "\r\n}";
+
+    return result;
+}
+
+function generateDefaultVisitor(): string {
+    var result = "";
+
+    result += "///<reference path='references.ts' />\r\n\r\n";
+
+    result += "module TypeScript {\r\n";
     if (!forPrettyPrinter) {
         result += "    export class SyntaxVisitor implements ISyntaxVisitor {\r\n";
         result += "        public defaultVisit(node: ISyntaxNodeOrToken): any {\r\n";
@@ -2866,8 +2875,8 @@ function generateVisitor(): string {
         result += "            return this.defaultVisit(token);\r\n";
         result += "        }\r\n";
 
-        for (i = 0; i < definitions.length; i++) {
-            definition = definitions[i];
+        for (var i = 0; i < definitions.length; i++) {
+            var definition = definitions[i];
 
             result += "\r\n        public visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any {\r\n";
             result += "            return this.defaultVisit(node);\r\n";
@@ -3154,6 +3163,7 @@ var rewriter = generateRewriter();
 var walker = generateWalker();
 var scannerUtilities = generateScannerUtilities();
 var visitor = generateVisitor();
+var defaultVisitor = generateDefaultVisitor();
 var servicesUtilities = generateServicesUtilities();
 
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxInterfaces.generated.ts", syntaxInterfaces, false);
@@ -3162,4 +3172,5 @@ TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxWalker.generated.ts", walker, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\scannerUtilities.generated.ts", scannerUtilities, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\syntaxVisitor.generated.ts", visitor, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\syntax\\defaultSyntaxVisitor.generated.ts", defaultVisitor, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "\\src\\services\\syntaxUtilities.generated.ts", servicesUtilities, false);
