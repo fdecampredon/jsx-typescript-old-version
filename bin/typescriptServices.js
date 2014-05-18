@@ -1304,38 +1304,11 @@ var TypeScript;
             return h;
         };
 
-        Hash.getPrime = function (min) {
-            for (var i = 0; i < Hash.primes.length; i++) {
-                var num = Hash.primes[i];
-                if (num >= min) {
-                    return num;
-                }
-            }
-
-            throw TypeScript.Errors.notYetImplemented();
-        };
-
-        Hash.expandPrime = function (oldSize) {
-            var num = oldSize << 1;
-            if (num > 2146435069 && 2146435069 > oldSize) {
-                return 2146435069;
-            }
-            return Hash.getPrime(num);
-        };
-
         Hash.combine = function (value, currentHash) {
             return (((currentHash << 5) + currentHash) + value) & 0x7FFFFFFF;
         };
         Hash.FNV_BASE = 2166136261;
         Hash.FNV_PRIME = 16777619;
-
-        Hash.primes = [
-            3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521,
-            631, 761, 919, 1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419,
-            10103, 12143, 14591, 17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431,
-            90523, 108631, 130363, 156437, 187751, 225307, 270371, 324449, 389357, 467237, 560689,
-            672827, 807403, 968897, 1162687, 1395263, 1674319, 2009191, 2411033, 2893249, 3471899,
-            4166287, 4999559, 5999471, 7199369];
         return Hash;
     })();
     TypeScript.Hash = Hash;
@@ -2903,34 +2876,6 @@ var TypeScript;
 
         TextChangeRange.prototype.isUnchanged = function () {
             return this.span().isEmpty() && this.newLength() === 0;
-        };
-
-        TextChangeRange.collapseChangesFromSingleVersion = function (changes) {
-            var diff = 0;
-            var start = 1073741823 /* Max31BitInteger */;
-            var end = 0;
-
-            for (var i = 0; i < changes.length; i++) {
-                var change = changes[i];
-                diff += change.newLength() - change.span().length();
-
-                if (change.span().start() < start) {
-                    start = change.span().start();
-                }
-
-                if (change.span().end() > end) {
-                    end = change.span().end();
-                }
-            }
-
-            if (start > end) {
-                return null;
-            }
-
-            var combined = TypeScript.TextSpan.fromBounds(start, end);
-            var newLen = combined.length() + diff;
-
-            return new TextChangeRange(combined, newLen);
         };
 
         TextChangeRange.collapseChangesAcrossMultipleVersions = function (changes) {
@@ -5629,26 +5574,6 @@ var TypeScript;
         }
         Syntax.childIndex = childIndex;
 
-        function isSuperInvocationExpression(node) {
-            return node.kind() === 213 /* InvocationExpression */ && node.expression.kind() === 50 /* SuperKeyword */;
-        }
-        Syntax.isSuperInvocationExpression = isSuperInvocationExpression;
-
-        function isSuperInvocationExpressionStatement(node) {
-            return node.kind() === 149 /* ExpressionStatement */ && isSuperInvocationExpression(node.expression);
-        }
-        Syntax.isSuperInvocationExpressionStatement = isSuperInvocationExpressionStatement;
-
-        function isSuperMemberAccessExpression(node) {
-            return node.kind() === 212 /* MemberAccessExpression */ && node.expression.kind() === 50 /* SuperKeyword */;
-        }
-        Syntax.isSuperMemberAccessExpression = isSuperMemberAccessExpression;
-
-        function isSuperMemberAccessInvocationExpression(node) {
-            return node.kind() === 213 /* InvocationExpression */ && isSuperMemberAccessExpression(node.expression);
-        }
-        Syntax.isSuperMemberAccessInvocationExpression = isSuperMemberAccessInvocationExpression;
-
         function nodeHasSkippedOrMissingTokens(node) {
             for (var i = 0; i < TypeScript.childCount(node); i++) {
                 var child = TypeScript.childAt(node, i);
@@ -7625,14 +7550,6 @@ var TypeScript;
                 return this._isKeywordConvertedToIdentifier;
             };
 
-            RealizedToken.prototype.childCount = function () {
-                return 0;
-            };
-
-            RealizedToken.prototype.childAt = function (index) {
-                throw TypeScript.Errors.argumentOutOfRange("index");
-            };
-
             RealizedToken.prototype.fullStart = function () {
                 return this._fullStart;
             };
@@ -7808,35 +7725,6 @@ var TypeScript;
             return AbstractTrivia;
         })();
 
-        var NormalTrivia = (function (_super) {
-            __extends(NormalTrivia, _super);
-            function NormalTrivia(kind, _text, _fullStart) {
-                _super.call(this, kind);
-                this._text = _text;
-                this._fullStart = _fullStart;
-            }
-            NormalTrivia.prototype.clone = function () {
-                return new NormalTrivia(this.kind(), this._text, this._fullStart);
-            };
-
-            NormalTrivia.prototype.fullStart = function () {
-                return this._fullStart;
-            };
-
-            NormalTrivia.prototype.fullWidth = function () {
-                return this.fullText().length;
-            };
-
-            NormalTrivia.prototype.fullText = function () {
-                return this._text;
-            };
-
-            NormalTrivia.prototype.skippedToken = function () {
-                throw TypeScript.Errors.invalidOperation();
-            };
-            return NormalTrivia;
-        })(AbstractTrivia);
-
         var SkippedTokenTrivia = (function (_super) {
             __extends(SkippedTokenTrivia, _super);
             function SkippedTokenTrivia(_skippedToken) {
@@ -7902,11 +7790,6 @@ var TypeScript;
         }
         Syntax.deferredTrivia = deferredTrivia;
 
-        function trivia(kind, text, fullStart) {
-            return new NormalTrivia(kind, text, fullStart);
-        }
-        Syntax.trivia = trivia;
-
         function skippedTokenTrivia(token) {
             TypeScript.Debug.assert(!token.hasLeadingTrivia());
             TypeScript.Debug.assert(!token.hasTrailingTrivia());
@@ -7914,31 +7797,6 @@ var TypeScript;
             return new SkippedTokenTrivia(token);
         }
         Syntax.skippedTokenTrivia = skippedTokenTrivia;
-
-        function spaces(count) {
-            return trivia(4 /* WhitespaceTrivia */, TypeScript.StringUtilities.repeat(" ", count), -1);
-        }
-        Syntax.spaces = spaces;
-
-        function whitespace(text) {
-            return trivia(4 /* WhitespaceTrivia */, text, -1);
-        }
-        Syntax.whitespace = whitespace;
-
-        function multiLineComment(text) {
-            return trivia(6 /* MultiLineCommentTrivia */, text, -1);
-        }
-        Syntax.multiLineComment = multiLineComment;
-
-        function singleLineComment(text) {
-            return trivia(7 /* SingleLineCommentTrivia */, text, -1);
-        }
-        Syntax.singleLineComment = singleLineComment;
-
-        Syntax.spaceTrivia = spaces(1);
-        Syntax.lineFeedTrivia = trivia(5 /* NewLineTrivia */, "\n", -1);
-        Syntax.carriageReturnTrivia = trivia(5 /* NewLineTrivia */, "\r", -1);
-        Syntax.carriageReturnLineFeedTrivia = trivia(5 /* NewLineTrivia */, "\r\n", -1);
 
         function splitMultiLineCommentTriviaIntoMultipleLines(trivia) {
             var result = [];
@@ -8199,8 +8057,6 @@ var TypeScript;
             return new NormalSyntaxTriviaList(trivia);
         }
         Syntax.triviaList = triviaList;
-
-        Syntax.spaceTriviaList = triviaList([Syntax.spaceTrivia]);
     })(TypeScript.Syntax || (TypeScript.Syntax = {}));
     var Syntax = TypeScript.Syntax;
 })(TypeScript || (TypeScript = {}));
@@ -8669,360 +8525,6 @@ var TypeScript;
         throw TypeScript.Errors.invalidOperation();
     }
     TypeScript.visitNodeOrToken = visitNodeOrToken;
-
-    var SyntaxVisitor = (function () {
-        function SyntaxVisitor() {
-        }
-        SyntaxVisitor.prototype.defaultVisit = function (node) {
-            return null;
-        };
-
-        SyntaxVisitor.prototype.visitToken = function (token) {
-            return this.defaultVisit(token);
-        };
-
-        SyntaxVisitor.prototype.visitSourceUnit = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitQualifiedName = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitObjectType = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitFunctionType = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitArrayType = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitConstructorType = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitGenericType = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitTypeQuery = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitInterfaceDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitFunctionDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitModuleDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitClassDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitEnumDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitImportDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitExportAssignment = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitMemberFunctionDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitMemberVariableDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitConstructorDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitIndexMemberDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitGetAccessor = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitSetAccessor = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitPropertySignature = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitCallSignature = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitConstructSignature = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitIndexSignature = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitMethodSignature = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitBlock = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitIfStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitVariableStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitExpressionStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitReturnStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitSwitchStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitBreakStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitContinueStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitForStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitForInStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitEmptyStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitThrowStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitWhileStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitTryStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitLabeledStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitDoStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitDebuggerStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitWithStatement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitPrefixUnaryExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitDeleteExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitTypeOfExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitVoidExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitConditionalExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitBinaryExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitPostfixUnaryExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitMemberAccessExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitInvocationExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitArrayLiteralExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitObjectLiteralExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitObjectCreationExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitParenthesizedExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitParenthesizedArrowFunctionExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitSimpleArrowFunctionExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitCastExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitElementAccessExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitFunctionExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitOmittedExpression = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitVariableDeclaration = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitVariableDeclarator = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitArgumentList = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitParameterList = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitTypeArgumentList = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitTypeParameterList = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitHeritageClause = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitEqualsValueClause = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitCaseSwitchClause = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitDefaultSwitchClause = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitElseClause = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitCatchClause = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitFinallyClause = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitTypeParameter = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitConstraint = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitSimplePropertyAssignment = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitFunctionPropertyAssignment = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitParameter = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitEnumElement = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitTypeAnnotation = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitExternalModuleReference = function (node) {
-            return this.defaultVisit(node);
-        };
-
-        SyntaxVisitor.prototype.visitModuleNameModuleReference = function (node) {
-            return this.defaultVisit(node);
-        };
-        return SyntaxVisitor;
-    })();
-    TypeScript.SyntaxVisitor = SyntaxVisitor;
 })(TypeScript || (TypeScript = {}));
 var TypeScript;
 (function (TypeScript) {
@@ -44099,144 +43601,6 @@ var TypeScript;
     })();
     TypeScript.Comment = Comment;
 })(TypeScript || (TypeScript = {}));
-var TypeScript;
-(function (TypeScript) {
-    (function (Collections) {
-        Collections.DefaultHashTableCapacity = 1024;
-
-        var HashTableEntry = (function () {
-            function HashTableEntry(Key, Value, HashCode, Next) {
-                this.Key = Key;
-                this.Value = Value;
-                this.HashCode = HashCode;
-                this.Next = Next;
-            }
-            return HashTableEntry;
-        })();
-
-        var HashTable = (function () {
-            function HashTable(capacity, hash) {
-                this.hash = hash;
-                this.count = 0;
-                var size = TypeScript.Hash.getPrime(capacity);
-                this.entries = TypeScript.ArrayUtilities.createArray(size, null);
-            }
-            HashTable.prototype.set = function (key, value) {
-                this.addOrSet(key, value, false);
-            };
-
-            HashTable.prototype.add = function (key, value) {
-                this.addOrSet(key, value, true);
-            };
-
-            HashTable.prototype.containsKey = function (key) {
-                var hashCode = this.computeHashCode(key);
-                var entry = this.findEntry(key, hashCode);
-                return entry !== null;
-            };
-
-            HashTable.prototype.get = function (key) {
-                var hashCode = this.computeHashCode(key);
-                var entry = this.findEntry(key, hashCode);
-
-                return entry === null ? null : entry.Value;
-            };
-
-            HashTable.prototype.computeHashCode = function (key) {
-                var hashCode = this.hash === null ? key.hashCode : this.hash(key);
-
-                hashCode = hashCode & 0x7FFFFFFF;
-                TypeScript.Debug.assert(hashCode >= 0);
-
-                return hashCode;
-            };
-
-            HashTable.prototype.addOrSet = function (key, value, throwOnExistingEntry) {
-                var hashCode = this.computeHashCode(key);
-
-                var entry = this.findEntry(key, hashCode);
-                if (entry !== null) {
-                    if (throwOnExistingEntry) {
-                        throw TypeScript.Errors.argument('key', "Key was already in table.");
-                    }
-
-                    entry.Key = key;
-                    entry.Value = value;
-                    return;
-                }
-
-                return this.addEntry(key, value, hashCode);
-            };
-
-            HashTable.prototype.findEntry = function (key, hashCode) {
-                for (var e = this.entries[hashCode % this.entries.length]; e !== null; e = e.Next) {
-                    if (e.HashCode === hashCode && key === e.Key) {
-                        return e;
-                    }
-                }
-
-                return null;
-            };
-
-            HashTable.prototype.addEntry = function (key, value, hashCode) {
-                var index = hashCode % this.entries.length;
-
-                var e = new HashTableEntry(key, value, hashCode, this.entries[index]);
-
-                this.entries[index] = e;
-
-                if (this.count >= (this.entries.length / 2)) {
-                    this.grow();
-                }
-
-                this.count++;
-                return e.Key;
-            };
-
-            HashTable.prototype.grow = function () {
-                var newSize = TypeScript.Hash.expandPrime(this.entries.length);
-
-                var oldEntries = this.entries;
-                var newEntries = TypeScript.ArrayUtilities.createArray(newSize, null);
-
-                this.entries = newEntries;
-
-                for (var i = 0; i < oldEntries.length; i++) {
-                    var e = oldEntries[i];
-
-                    while (e !== null) {
-                        var newIndex = e.HashCode % newSize;
-                        var tmp = e.Next;
-                        e.Next = newEntries[newIndex];
-                        newEntries[newIndex] = e;
-                        e = tmp;
-                    }
-                }
-            };
-            return HashTable;
-        })();
-        Collections.HashTable = HashTable;
-
-        function createHashTable(capacity, hash) {
-            if (typeof capacity === "undefined") { capacity = Collections.DefaultHashTableCapacity; }
-            if (typeof hash === "undefined") { hash = null; }
-            return new HashTable(capacity, hash);
-        }
-        Collections.createHashTable = createHashTable;
-
-        var currentHashCode = 1;
-        function identityHashCode(value) {
-            if (value.__hash === undefined) {
-                value.__hash = currentHashCode;
-                currentHashCode++;
-            }
-
-            return value.__hash;
-        }
-        Collections.identityHashCode = identityHashCode;
-    })(TypeScript.Collections || (TypeScript.Collections = {}));
-    var Collections = TypeScript.Collections;
-})(TypeScript || (TypeScript = {}));
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^\s+|\s+$/g, '');
@@ -48654,11 +48018,6 @@ var TypeScript;
             return TypeScript.StringUtilities.repeat('\t', numberOfTabs) + TypeScript.StringUtilities.repeat(' ', numberOfSpaces);
         }
         Indentation.indentationString = indentationString;
-
-        function indentationTrivia(column, options) {
-            return TypeScript.Syntax.whitespace(this.indentationString(column, options));
-        }
-        Indentation.indentationTrivia = indentationTrivia;
 
         function firstNonWhitespacePosition(value) {
             for (var i = 0; i < value.length; i++) {
