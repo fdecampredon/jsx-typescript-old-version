@@ -601,7 +601,6 @@ module TypeScript.IncrementalParser {
 
     interface SyntaxCursor {
         pieces: SyntaxCursorPiece[];
-        currentPieceIndex: number;
 
         clean(): void;
         isFinished(): boolean;
@@ -804,7 +803,6 @@ module TypeScript.IncrementalParser {
 
         return {
             pieces: pieces,
-            currentPieceIndex: currentPieceIndex,
             clean: clean,
             isFinished: isFinished,
             moveToFirstChild: moveToFirstChild,
