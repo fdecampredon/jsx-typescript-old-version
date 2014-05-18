@@ -28,17 +28,6 @@ module TypeScript {
                     private _topLevelDecl: PullDecl) {
         }
 
-        // Only for use by the semantic info chain.
-        public invalidate(): void {
-            // Dump all information related to syntax.  We'll have to recompute it when asked.
-            this._declASTMap.length = 0;
-            this._astDeclMap.length = 0;
-            this._topLevelDecl = null;
-
-            this._syntaxTree = null;
-            this._bloomFilter = null;
-        }
-
         public isDeclareFile(): boolean {
             return isDTSFile(this.fileName);
         }
