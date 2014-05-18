@@ -355,7 +355,7 @@ module TypeScript {
         }
 
         public static testIncremental7() {
-            var source = "var v = F<a,b,c,d>e";
+            var source = "var v = F<b>e";
 
             var index = source.indexOf('b');
 
@@ -366,6 +366,39 @@ module TypeScript {
         }
 
         public static testIncremental8() {
+            var source = "var v = F<a,b>e";
+
+            var index = source.indexOf('b');
+
+            var oldText = SimpleText.fromString(source);
+            var newTextAndChange = withInsert(oldText, index + 1, ",x");
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
+
+        public static testIncremental9() {
+            var source = "var v = F<a,b,c>e";
+
+            var index = source.indexOf('b');
+
+            var oldText = SimpleText.fromString(source);
+            var newTextAndChange = withInsert(oldText, index + 1, ",x");
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
+
+        public static testIncremental10() {
+            var source = "var v = F<a,b,c,d>e";
+
+            var index = source.indexOf('b');
+
+            var oldText = SimpleText.fromString(source);
+            var newTextAndChange = withInsert(oldText, index + 1, ",x");
+
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
+
+        public static testIncremental11() {
             var source = "interface IFoo<T> { }\r\ninterface Array<T> extends IFoo<T> { }";
 
             var index = source.indexOf('extends');
