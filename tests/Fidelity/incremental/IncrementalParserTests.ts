@@ -365,6 +365,21 @@ module TypeScript {
             compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
         }
 
+        public static testIncremental8() {
+            var source = "interface IFoo<T> { }\r\ninterface Array<T> extends IFoo<T> { }";
+
+            var index = source.indexOf('extends');
+            var repeat = "extends IFoo<T>".length;
+
+            for (var i = 0; i < repeat; i++) {
+                var oldText = SimpleText.fromString(source);
+                var newTextAndChange = withDelete(oldText, index, 1);
+                compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+
+                source = newTextAndChange.text.substr(0, newTextAndChange.text.length());
+            }
+        }
+
         public static testGenerics1() {
             var source = "var v = <T>(a);";
 
