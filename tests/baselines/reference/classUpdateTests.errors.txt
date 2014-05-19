@@ -45,7 +45,7 @@
     class H {
         constructor() { super(); } // ERROR - no super call allowed
                      ~~~~~
-!!! classUpdateTests.ts(43,18): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! classUpdateTests.ts(43,18): error TS2103: 'super' can only be referenced in a derived class.
     }
     
     class I extends Object {
@@ -53,7 +53,7 @@
 !!! classUpdateTests.ts(46,17): error TS2073: A class may only extend another class.
         constructor() { super(); } // ERROR - no super call allowed
                      ~~~~~
-!!! classUpdateTests.ts(47,18): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! classUpdateTests.ts(47,18): error TS2103: 'super' can only be referenced in a derived class.
     }
     
     class J extends G {

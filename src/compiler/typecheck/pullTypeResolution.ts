@@ -7542,7 +7542,7 @@ module TypeScript {
                         return;
                     }
                     else {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_within_module_bodies));
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_a_module_body));
                         return;
                     }
                 }
@@ -7571,7 +7571,7 @@ module TypeScript {
                 }
                 else if (currentDecl.kind === PullElementKind.Class) {
                     if (this.inStaticMemberVariableDeclaration(thisExpression)) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_static_initializers_in_a_class_body));
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_a_static_property_initializer));
                     }
 
                     // Legal use of 'this'.  
@@ -7688,7 +7688,7 @@ module TypeScript {
                         // We're in some class member.  That's good.
 
                         if (!this.enclosingClassIsDerived(currentDecl)) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_can_only_be_referenced_in_a_derived_class));
                             return;
                         }
                         else if (this.inConstructorParameterList(ast)) {
@@ -7724,7 +7724,7 @@ module TypeScript {
                         var classDecl = currentDecl.getParentDecl();
 
                         if (!this.enclosingClassIsDerived(classDecl)) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_can_only_be_referenced_in_a_derived_class));
                             return;
                         }
                         else if (this.inConstructorParameterList(ast)) {

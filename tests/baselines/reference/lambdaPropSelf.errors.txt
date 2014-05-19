@@ -21,6 +21,6 @@
     module M {
         var x = this;
                 ~~~~
-!!! lambdaPropSelf.ts(21,13): error TS2108: 'this' cannot be referenced within module bodies.
+!!! lambdaPropSelf.ts(21,13): error TS2108: 'this' cannot be referenced in a module body.
     }
     

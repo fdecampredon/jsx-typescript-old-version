@@ -759,7 +759,7 @@
         "category": "Error",
         "code": 2102
     },
-    "'super' cannot be referenced in non-derived classes.": {
+    "'super' can only be referenced in a derived class.": {
         "category": "Error",
         "code": 2103
     },
@@ -779,7 +779,7 @@
         "category": "Error",
         "code": 2107
     },
-    "'this' cannot be referenced within module bodies.": {
+    "'this' cannot be referenced in a module body.": {
         "category": "Error",
         "code": 2108
     },
@@ -891,7 +891,7 @@
         "category": "Error",
         "code": 2139
     },
-    "'this' cannot be referenced in static initializers in a class body.": {
+    "'this' cannot be referenced in a static property initializer.": {
         "category": "Error",
         "code": 2140
     },

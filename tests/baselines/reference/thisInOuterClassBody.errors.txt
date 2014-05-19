@@ -5,7 +5,7 @@
     
         static y = this;
                    ~~~~
-!!! thisInOuterClassBody.ts(5,16): error TS2140: 'this' cannot be referenced in static initializers in a class body.
+!!! thisInOuterClassBody.ts(5,16): error TS2140: 'this' cannot be referenced in a static property initializer.
     
         bar() {
      
