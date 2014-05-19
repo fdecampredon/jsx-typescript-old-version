@@ -1,6 +1,6 @@
 ///<reference path='references.ts' />
 
-module TypeScript {
+module TypeScript.Scanner {
     // Make sure we can encode a token's kind in 7 bits.
     Debug.assert(SyntaxKind.LastToken <= 127);
 
@@ -88,10 +88,6 @@ module TypeScript {
         return (fullStart << ScannerConstants.FixedWidthTokenFullStartShift) | kind;
     }
 
-    function fixedWidthTokenUnpackKind(packedData: number) {
-        return packedData & ScannerConstants.KindMask;
-    }
-
     function fixedWidthTokenUnpackFullStart(packedData: number) {
         return packedData >> ScannerConstants.FixedWidthTokenFullStartShift;
     }
@@ -100,10 +96,6 @@ module TypeScript {
         return (fullStart << ScannerConstants.SmallTokenFullStartShift) |
                (fullWidth << ScannerConstants.SmallTokenFullWidthShift) |
                kind;
-    }
-
-    function smallTokenUnpackKind(packedData: number): SyntaxKind {
-        return packedData & ScannerConstants.KindMask;
     }
 
     function smallTokenUnpackFullWidth(packedData: number): SyntaxKind {
@@ -118,16 +110,8 @@ module TypeScript {
         return (fullStart << ScannerConstants.LargeTokenFullStartShift) | hasLeadingTriviaInfo | hasTrailingTriviaInfo;
     }
 
-    function largeTokenPackFullWidthAndKind(fullWidth: number, kind: number) {
-        return (fullWidth << ScannerConstants.LargeTokenFullWidthShift) | kind;
-    }
-
     function largeTokenUnpackFullWidth(packedFullWidthAndKind: number) {
         return packedFullWidthAndKind >> ScannerConstants.LargeTokenFullWidthShift;
-    }
-
-    function largeTokenUnpackKind(packedFullWidthAndKind: number) {
-        return packedFullWidthAndKind & ScannerConstants.KindMask;
     }
 
     function largeTokenUnpackFullStart(packedFullStartAndInfo: number): number {
@@ -255,8 +239,37 @@ module TypeScript {
         return false;
     }
 
-    export class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+    class IdentifierWithSingleTrailingSpace implements ISyntaxToken {
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
+
+        constructor(public _text: ISimpleText, private _fullStart: number, private _fullWidth: number) {
+        }
+
+        public setTextAndFullStart(text: ISimpleText, fullStart: number): void {
+            this._text = text;
+            this._fullStart = fullStart;
+        }
+
+        public isIncrementallyUnusable(): boolean { return false; }
+        public isKeywordConvertedToIdentifier(): boolean { return false; }
+        public hasSkippedToken(): boolean { return false; }
+        public fullText(): string { return this._text.substr(this.fullStart(), this.fullWidth()); }
+        public text(): string { return this._text.substr(this.fullStart(), this.fullWidth() - 1); }
+        public leadingTrivia(): ISyntaxTriviaList { return Syntax.emptyTriviaList; }
+        public trailingTrivia(): ISyntaxTriviaList { return triviaScanner.scanTrivia(this, /*isTrailing:*/ true); }
+        public leadingTriviaWidth(): number { return 0; }
+        public trailingTriviaWidth(): number { return 1; }
+
+        public kind(): SyntaxKind { return SyntaxKind.IdentifierName; }
+        public fullWidth(): number { return this._fullWidth; }
+        public fullStart(): number { return this._fullStart; }
+        public hasLeadingTrivia(): boolean { return false; }
+        public hasTrailingTrivia(): boolean { return true; }
+        public clone(): ISyntaxToken { return new IdentifierWithSingleTrailingSpace(this._text, this._fullStart, this._fullWidth); }
+    }
+
+    class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(private _packedData: number) {
         }
@@ -275,7 +288,7 @@ module TypeScript {
         public leadingTriviaWidth(): number { return 0; }
         public trailingTriviaWidth(): number { return 0; }
 
-        public kind(): SyntaxKind { return fixedWidthTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return this.fullText().length; }
         public fullStart(): number { return fixedWidthTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return false; }
@@ -283,8 +296,8 @@ module TypeScript {
         public clone(): ISyntaxToken { return new FixedWidthTokenWithNoTrivia(this._packedData); }
     }
 
-    export class SmallScannerTokenWithNoTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+    class SmallScannerTokenWithNoTrivia implements ISyntaxToken {
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -305,7 +318,7 @@ module TypeScript {
         public leadingTriviaWidth(): number { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return smallTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
         public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return false; }
@@ -313,8 +326,8 @@ module TypeScript {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithNoTrivia(this._text, this._packedData); }
     }
 
-    export class SmallScannerTokenWithLeadingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+    class SmallScannerTokenWithLeadingTrivia implements ISyntaxToken {
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -335,7 +348,7 @@ module TypeScript {
         public leadingTriviaWidth(): number { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return smallTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
         public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return true; }
@@ -343,8 +356,8 @@ module TypeScript {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithLeadingTrivia(this._text, this._packedData); }
     }
 
-    export class SmallScannerTokenWithTrailingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+    class SmallScannerTokenWithTrailingTrivia implements ISyntaxToken {
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -365,16 +378,16 @@ module TypeScript {
         public leadingTriviaWidth(): number { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return smallTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
         public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return false; }
         public hasTrailingTrivia(): boolean { return true; }
         public clone(): ISyntaxToken { return new SmallScannerTokenWithTrailingTrivia(this._text, this._packedData); }
     }
-    
-    export class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+
+    class SmallScannerTokenWithLeadingAndTrailingTrivia implements ISyntaxToken {
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedData: number) {
         }
@@ -395,7 +408,7 @@ module TypeScript {
         public leadingTriviaWidth(): number { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return smallTokenUnpackKind(this._packedData); }
+        public kind(): SyntaxKind { return this._packedData & ScannerConstants.KindMask; }
         public fullWidth(): number { return smallTokenUnpackFullWidth(this._packedData); }
         public fullStart(): number { return smallTokenUnpackFullStart(this._packedData); }
         public hasLeadingTrivia(): boolean { return true; }
@@ -403,8 +416,8 @@ module TypeScript {
         public clone(): ISyntaxToken { return new SmallScannerTokenWithLeadingAndTrailingTrivia(this._text, this._packedData); }
     }
 
-    export class LargeScannerToken implements ISyntaxToken {
-        public _isPrimaryExpression: any; public _isMemberExpression: any; public _isLeftHandSideExpression: any; public _isPostfixExpression: any; public _isUnaryExpression: any; public _isExpression: any; public _isType: any;
+    class LargeScannerToken implements ISyntaxToken {
+        public _primaryExpressionBrand: any; public _memberExpressionBrand: any; public _leftHandSideExpressionBrand: any; public _postfixExpressionBrand: any; public _unaryExpressionBrand: any; public _expressionBrand: any; public _typeBrand: any;
 
         constructor(public _text: ISimpleText, private _packedFullStartAndInfo: number, private _packedFullWidthAndKind: number) {
         }
@@ -427,7 +440,7 @@ module TypeScript {
         public leadingTriviaWidth(): number                 { return leadingTriviaWidth(this); }
         public trailingTriviaWidth(): number                { return trailingTriviaWidth(this); }
 
-        public kind(): SyntaxKind { return largeTokenUnpackKind(this._packedFullWidthAndKind); }
+        public kind(): SyntaxKind { return this._packedFullWidthAndKind & ScannerConstants.KindMask; }
         public fullWidth(): number { return largeTokenUnpackFullWidth(this._packedFullWidthAndKind); }
         public fullStart(): number { return largeTokenUnpackFullStart(this._packedFullStartAndInfo); }
         public hasLeadingTrivia(): boolean { return largeTokenUnpackHasLeadingTriviaInfo(this._packedFullStartAndInfo) !== 0; }
@@ -444,17 +457,17 @@ module TypeScript {
         width: number;
     }
 
-    interface ScannerInternal extends Scanner {
+    interface IScannerInternal extends IScanner {
         fillTokenInfo(token: IScannerToken, tokenInfo: TokenInfo): void;
         scanTrivia(token: IScannerToken, isTrailing: boolean): ISyntaxTriviaList;
     }
 
-    export interface Scanner {
+    export interface IScanner {
         setIndex(index: number): void;
         scan(allowContextualToken: boolean, isXJSTextExpected?: boolean): ISyntaxToken;
     }
 
-    export function createScanner(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): Scanner {
+    export function createScanner(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): IScanner {
         var scanner = createScannerInternal(languageVersion, text, reportDiagnostic);
         return {
             setIndex: scanner.setIndex,
@@ -462,7 +475,7 @@ module TypeScript {
         };
     }
 
-    function createScannerInternal(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): ScannerInternal {
+    function createScannerInternal(languageVersion: LanguageVersion, text: ISimpleText, reportDiagnostic: DiagnosticCallback): IScannerInternal {
         var str: string;
         var index: number;
         var start: number;
@@ -686,7 +699,6 @@ module TypeScript {
 
         function slowScanTriviaInfo(ch: number): boolean {
             switch (ch) {
-                case CharacterCodes.space:
                 case CharacterCodes.nonBreakingSpace:
                 case CharacterCodes.enQuad:
                 case CharacterCodes.emQuad:
@@ -1477,7 +1489,7 @@ module TypeScript {
                     break;
                 }
                 else if (isNaN(ch) || isNewLineCharacter(ch)) {
-                    reportDiagnostic(MathPrototype.min(index, end), 1, DiagnosticCode.Missing_close_quote_character, null);
+                    reportDiagnostic(Math.min(index, end), 1, DiagnosticCode.Missing_close_quote_character, null);
                     break;
                 }
                 else {
@@ -1608,5 +1620,225 @@ module TypeScript {
         var token = scanner.scan(/*allowContextualToken:*/ false);
 
         return !hadError && SyntaxFacts.isIdentifierNameOrAnyKeyword(token) && width(token) === text.length();
+    }
+
+    // A parser source that gets its data from an underlying scanner.
+    export interface IScannerParserSource extends Parser.IParserSource {
+        // The position that the scanner is currently at.
+        absolutePosition(): number;
+
+        // Resets the source to this position. Any diagnostics produced after this point will be
+        // removed.
+        resetToPosition(absolutePosition: number): void;
+    }
+
+    interface IScannerRewindPoint extends Parser.IRewindPoint {
+        // Information used by normal parser source.
+        absolutePosition: number;
+        slidingWindowIndex: number;
+    }
+
+    // Parser source used in batch scenarios.  Directly calls into an underlying text scanner and
+    // supports none of the functionality to reuse nodes.  Good for when you just want want to do
+    // a single parse of a file.
+    export function createParserSource(fileName: string, text: ISimpleText, languageVersion: LanguageVersion): IScannerParserSource {
+        // The absolute position we're at in the text we're reading from.
+        var _absolutePosition: number = 0;
+
+        // The diagnostics we get while scanning.  Note: this never gets rewound when we do a normal
+        // rewind.  That's because rewinding doesn't affect the tokens created.  It only affects where
+        // in the token stream we're pointing at.  However, it will get modified if we we decide to
+        // reparse a / or /= as a regular expression.
+        var _tokenDiagnostics: Diagnostic[] = [];
+
+        // Pool of rewind points we give out if the parser needs one.
+        var rewindPointPool: IScannerRewindPoint[] = [];
+        var rewindPointPoolCount = 0;
+
+        var lastDiagnostic: Diagnostic = null;
+        var reportDiagnostic = (position: number, fullWidth: number, diagnosticKey: string, args: any[]) => {
+            lastDiagnostic = new Diagnostic(fileName, text.lineMap(), position, fullWidth, diagnosticKey, args);
+        };
+
+        // The sliding window that we store tokens in.
+        var slidingWindow = new SlidingWindow(fetchNextItem, ArrayUtilities.createArray(/*defaultWindowSize:*/ 1024, null), null);
+
+        // The scanner we're pulling tokens from.
+        var scanner = createScanner(languageVersion, text, reportDiagnostic);
+
+        function release() {
+            slidingWindow = null;
+            scanner = null;
+            _tokenDiagnostics = [];
+            rewindPointPool = [];
+            lastDiagnostic = null;
+            reportDiagnostic = null;
+        }
+
+        function currentNode(): ISyntaxNode {
+            // The normal parser source never returns nodes.  They're only returned by the 
+            // incremental parser source.
+            return null;
+        }
+
+        function consumeNode(node: ISyntaxNode): void {
+            // Should never get called.
+            throw Errors.invalidOperation();
+        }
+
+        function absolutePosition() {
+            return _absolutePosition;
+        }
+
+        function tokenDiagnostics(): Diagnostic[] {
+            return _tokenDiagnostics;
+        }
+
+        function getOrCreateRewindPoint(): IScannerRewindPoint {
+            if (rewindPointPoolCount === 0) {
+                return <IScannerRewindPoint>{};
+            }
+
+            rewindPointPoolCount--;
+            var result = rewindPointPool[rewindPointPoolCount];
+            rewindPointPool[rewindPointPoolCount] = null;
+            return result;
+        }
+
+        function getRewindPoint(): IScannerRewindPoint {
+            var slidingWindowIndex = slidingWindow.getAndPinAbsoluteIndex();
+
+            var rewindPoint = getOrCreateRewindPoint();
+
+            rewindPoint.slidingWindowIndex = slidingWindowIndex;
+            rewindPoint.absolutePosition = _absolutePosition;
+
+            // rewindPoint.pinCount = slidingWindow.pinCount();
+
+            return rewindPoint;
+        }
+
+        function rewind(rewindPoint: IScannerRewindPoint): void {
+            slidingWindow.rewindToPinnedIndex(rewindPoint.slidingWindowIndex);
+
+            _absolutePosition = rewindPoint.absolutePosition;
+        }
+
+        function releaseRewindPoint(rewindPoint: IScannerRewindPoint): void {
+            // Debug.assert(slidingWindow.pinCount() === rewindPoint.pinCount);
+            slidingWindow.releaseAndUnpinAbsoluteIndex((<any>rewindPoint).absoluteIndex);
+
+            rewindPointPool[rewindPointPoolCount] = rewindPoint;
+            rewindPointPoolCount++;
+        }
+
+        function fetchNextItem(allowContextualToken: boolean): ISyntaxToken {
+            // Assert disabled because it is actually expensive enugh to affect perf.
+            // Debug.assert(spaceAvailable > 0);
+            var token = scanner.scan(allowContextualToken);
+
+            if (lastDiagnostic === null) {
+                return token;
+            }
+
+            // If we produced any diagnostics while creating this token, then realize the token so 
+            // it won't be reused in incremental scenarios.
+
+            _tokenDiagnostics.push(lastDiagnostic);
+            lastDiagnostic = null;
+            return Syntax.realizeToken(token);
+        }
+
+        function peekToken(n: number): ISyntaxToken {
+            return slidingWindow.peekItemN(n);
+        }
+
+        function consumeToken(token: ISyntaxToken): void {
+            // Debug.assert(currentToken() === token);
+            _absolutePosition += token.fullWidth();
+
+            slidingWindow.moveToNextItem();
+        }
+
+        function currentToken(): ISyntaxToken {
+            return slidingWindow.currentItem(/*allowContextualToken:*/ false);
+        }
+
+        function removeDiagnosticsOnOrAfterPosition(position: number): void {
+            // walk backwards, removing any diagnostics that came after the the current token's
+            // full start position.
+            var tokenDiagnosticsLength = _tokenDiagnostics.length;
+            while (tokenDiagnosticsLength > 0) {
+                var diagnostic = _tokenDiagnostics[tokenDiagnosticsLength - 1];
+                if (diagnostic.start() >= position) {
+                    tokenDiagnosticsLength--;
+                }
+                else {
+                    break;
+                }
+            }
+
+            _tokenDiagnostics.length = tokenDiagnosticsLength;
+        }
+
+        function resetToPosition(absolutePosition: number): void {
+            _absolutePosition = absolutePosition;
+
+            // First, remove any diagnostics that came after this position.
+            removeDiagnosticsOnOrAfterPosition(absolutePosition);
+
+            // Now, tell our sliding window to throw away all tokens after this position as well.
+            slidingWindow.disgardAllItemsFromCurrentIndexOnwards();
+
+            // Now tell the scanner to reset its position to this position as well.  That way
+            // when we try to scan the next item, we'll be at the right location.
+            scanner.setIndex(absolutePosition);
+        }
+
+        function currentContextualToken(): ISyntaxToken {
+            // We better be on a / or > token right now.
+            // Debug.assert(SyntaxFacts.isAnyDivideToken(currentToken().kind()));
+
+            // First, we're going to rewind all our data to the point where this / or /= token started.
+            // That's because if it does turn out to be a regular expression, then any tokens or token 
+            // diagnostics we produced after the original / may no longer be valid.  This would actually
+            // be a  fairly expected case.  For example, if you had:  / ... gibberish ... /, we may have 
+            // produced several diagnostics in the process of scanning the tokens after the first / as
+            // they may not have been legal javascript okens.
+            //
+            // We also need to remove all the tokens we've gotten from the slash and onwards.  They may
+            // not have been what the scanner would have produced if it decides that this is actually
+            // a regular expresion.
+            resetToPosition(_absolutePosition);
+
+            // Now actually fetch the token again from the scanner. This time let it know that it
+            // can scan it as a regex token if it wants to.
+            var token = slidingWindow.currentItem(/*allowContextualToken:*/ true);
+
+            // We have better gotten some sort of regex token.  Otherwise, something *very* wrong has
+            // occurred.
+            // Debug.assert(SyntaxFacts.isAnyDivideOrRegularExpressionToken(token.kind()));
+
+            return token;
+        }
+
+        return {
+            text: text,
+            fileName: fileName,
+            languageVersion: languageVersion,
+            currentNode: currentNode,
+            currentToken: currentToken,
+            currentContextualToken: currentContextualToken,
+            peekToken: peekToken,
+            consumeNode: consumeNode,
+            consumeToken: consumeToken,
+            getRewindPoint: getRewindPoint,
+            rewind: rewind,
+            releaseRewindPoint: releaseRewindPoint,
+            tokenDiagnostics: tokenDiagnostics,
+            release: release,
+            absolutePosition: absolutePosition,
+            resetToPosition: resetToPosition,
+        };
     }
 }

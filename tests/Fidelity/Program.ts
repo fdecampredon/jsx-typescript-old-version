@@ -224,8 +224,7 @@ function syntaxTreeToJSON(tree: TypeScript.SyntaxTree): any {
 }
 
 function emptySourceUnit(): TypeScript.SourceUnitSyntax {
-    return new TypeScript.SourceUnitSyntax(0, TypeScript.Syntax.emptyList<TypeScript.IModuleElementSyntax>(),
-        TypeScript.Syntax.token(TypeScript.SyntaxKind.EndOfFileToken, { text: "" }, 0));
+    return TypeScript.Parser.parse("", TypeScript.SimpleText.fromString(""), TypeScript.LanguageVersion.EcmaScript5, false).sourceUnit();
 }
 
 class Program {
@@ -360,8 +359,8 @@ class Program {
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
         // TypeScript.Environment.standardOut.WriteLine(fileName);
 
-        var text = TypeScript.TextFactory.createText(contents);
-        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), TypeScript.LanguageVersion.EcmaScript5);
+        var text = TypeScript.SimpleText.fromString(contents);
+        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.LanguageVersion.EcmaScript5, TypeScript.isDTSFile(fileName));
         var originalTree = tree;
 
         var totalIncrementalTime = 0;
@@ -371,7 +370,7 @@ class Program {
             var changeLength = i * 2;
 
             timer.start();
-            var tree2 = TypeScript.Parser.incrementalParse(tree, new TypeScript.TextChangeRange( new TypeScript.TextSpan((text.length() / 2) - i, changeLength), changeLength), text);
+            var tree2 = TypeScript.IncrementalParser.parse(tree, new TypeScript.TextChangeRange( new TypeScript.TextSpan((text.length() / 2) - i, changeLength), changeLength), text);
             timer.end();
             totalIncrementalTime += timer.time;
 
@@ -404,8 +403,8 @@ class Program {
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
         // TypeScript.Environment.standardOut.WriteLine(fileName);
 
-        var text = TypeScript.TextFactory.createText(contents);
-        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), TypeScript.LanguageVersion.EcmaScript5);
+        var text = TypeScript.SimpleText.fromString(contents);
+        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.LanguageVersion.EcmaScript5, TypeScript.isDTSFile(fileName));
         var originalTree = tree;
 
         var totalIncrementalTime = 0;
@@ -417,7 +416,7 @@ class Program {
             var changeLength = i * 2;
             var changeSpan = new TypeScript.TextSpan((text.length() / 2) - i, changeLength);
 
-            contents = text.toString();
+            contents = text.substr(0, text.length());
             var contentsToReplace = contents.substr(changeSpan.start(), changeSpan.length());
 
             var first = true;
@@ -430,14 +429,14 @@ class Program {
                 return sub;
             });
 
-            text = TypeScript.TextFactory.createText(
+            text = TypeScript.SimpleText.fromString(
                 contents.substr(0, changeSpan.start()) +
                 updatedText +
                 contents.substr(changeSpan.end()));
             var changeRange = new TypeScript.TextChangeRange(changeSpan, updatedText.length);
 
             timer.start();
-            var tree2 = TypeScript.Parser.incrementalParse(tree, changeRange, text);
+            var tree2 = TypeScript.IncrementalParser.parse(tree, changeRange, text);
             timer.end();
             totalIncrementalTime += timer.time;
 
@@ -562,9 +561,9 @@ class Program {
 
         totalSize += contents.length;
 
-        var text = TypeScript.TextFactory.createText(contents);
+        var text = TypeScript.SimpleText.fromString(contents);
 
-        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), languageVersion);
+        var tree = TypeScript.Parser.parse(fileName, text, languageVersion, TypeScript.isDTSFile(fileName));
         //var emitted = TypeScript.Emitter1.emit(<TypeScript.SourceUnitSyntax>tree.sourceUnit());
 
         //var result = justText
@@ -590,9 +589,9 @@ class Program {
 
         totalSize += contents.length;
 
-        var text = TypeScript.TextFactory.createText(contents);
+        var text = TypeScript.SimpleText.fromString(contents);
 
-        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), languageVersion);
+        var tree = TypeScript.Parser.parse(fileName, text, languageVersion, TypeScript.isDTSFile(fileName));
         var result = TypeScript.PrettyPrinter.prettyPrint(tree.sourceUnit());
 
         this.checkResult(fileName, result, null, verify, generateBaseline, true);
@@ -618,7 +617,7 @@ class Program {
 
         totalSize += contents.length;
 
-        var text = TypeScript.TextFactory.createText(contents);
+        var text = TypeScript.SimpleText.fromString(contents);
 
         //var andersText = ts.createSourceFile(fileName, contents);
         //timer.start();
@@ -627,7 +626,7 @@ class Program {
         //andersTime += timer.time;
 
         timer.start();
-        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), languageVersion);
+        var tree = TypeScript.Parser.parse(fileName, text, languageVersion, TypeScript.isDTSFile(fileName));
         timer.end();
 
         cyrusTime += timer.time;
@@ -662,10 +661,10 @@ class Program {
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
         // TypeScript.Environment.standardOut.WriteLine(fileName);
 
-        var text = TypeScript.TextFactory.createText(contents);
+        var text = TypeScript.SimpleText.fromString(contents);
 
-            var tree1 = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), languageVersion);
-        var tree2 = TypeScript.Parser.incrementalParse(
+        var tree1 = TypeScript.Parser.parse(fileName, text, languageVersion, TypeScript.isDTSFile(fileName));
+        var tree2 = TypeScript.IncrementalParser.parse(
             new TypeScript.SyntaxTree(emptySourceUnit(), TypeScript.isDTSFile(fileName), [], fileName, null, tree1.languageVersion()),
             new TypeScript.TextChangeRange(new TypeScript.TextSpan(0, 0), text.length()),
             text);
@@ -686,8 +685,8 @@ class Program {
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
         // TypeScript.Environment.standardOut.WriteLine(fileName);
 
-        var text = TypeScript.TextFactory.createText(contents);
-        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), languageVersion);
+        var text = TypeScript.SimpleText.fromString(contents);
+        var tree = TypeScript.Parser.parse(fileName, text, languageVersion, TypeScript.isDTSFile(fileName));
         var sourceUnit = tree.sourceUnit();
 
         TypeScript.Debug.assert(TypeScript.fullWidth(tree.sourceUnit()) === contents.length);
@@ -746,7 +745,7 @@ class Program {
 
         var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
         var text = TypeScript.SimpleText.fromString(contents);
-        var scanner = TypeScript.createScanner(languageVersion, text, () => { });
+        var scanner = TypeScript.Scanner.createScanner(languageVersion, text, () => { });
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var textArray: string[] = [];
@@ -777,7 +776,7 @@ class Program {
         };
 
         var text = TypeScript.SimpleText.fromString(contents);
-        var scanner = TypeScript.createScanner(languageVersion, text, reportDiagnostic);
+        var scanner = TypeScript.Scanner.createScanner(languageVersion, text, reportDiagnostic);
 
         var tokens: TypeScript.ISyntaxToken[] = [];
         var jsonTokens: any[] = [];
@@ -845,8 +844,8 @@ class Program {
             testCount++;
 
             try {
-                var stringText = TypeScript.TextFactory.createText(contents);
-                var tree = TypeScript.Parser.parse(fileName, stringText, TypeScript.isDTSFile(fileName), TypeScript.LanguageVersion.EcmaScript5);
+                var stringText = TypeScript.SimpleText.fromString(contents);
+                var tree = TypeScript.Parser.parse(fileName, stringText, TypeScript.LanguageVersion.EcmaScript5, TypeScript.isDTSFile(fileName));
 
                 if (isNegative) {
                     var nameOnly = fileName.substr(fileName.lastIndexOf("\\") + 1);

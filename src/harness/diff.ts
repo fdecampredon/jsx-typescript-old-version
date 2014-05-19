@@ -71,7 +71,7 @@ module Diff {
         }
 
         public equals(otherChunk: Chunk): boolean {
-            TypeScript.CompilerDiagnostics.assert(otherChunk !== null, "otherChunk is null");
+            TypeScript.Debug.assert(otherChunk !== null, "otherChunk is null");
 
             if (this.hashCode != otherChunk.hashCode) return false;
             return this.content === otherChunk.content;

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-///<reference path='typescriptServices.ts' />
+///<reference path='references.ts' />
 
 module TypeScript.Services {
     export enum EndOfLineState {
@@ -50,7 +50,7 @@ module TypeScript.Services {
     noRegexTable[TypeScript.SyntaxKind.FalseKeyword] = true;
 
     export class Classifier {
-        private scanner: TypeScript.Scanner;
+        private scanner: TypeScript.Scanner.IScanner;
         private lastDiagnosticKey: string = null;
         private reportDiagnostic = (position: number, fullWidth: number, key: string, args: any[]) => {
             this.lastDiagnosticKey = key;
@@ -82,7 +82,7 @@ module TypeScript.Services {
             }
 
             var result = new ClassificationResult();
-            this.scanner = createScanner(TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text), this.reportDiagnostic);
+            this.scanner = Scanner.createScanner(TypeScript.LanguageVersion.EcmaScript5, TypeScript.SimpleText.fromString(text), this.reportDiagnostic);
 
             var lastTokenKind = TypeScript.SyntaxKind.None;
             var token: ISyntaxToken = null;

@@ -71,9 +71,6 @@ module TypeScript {
                     var adjustedPath = normalizePath(path);
 
                     var isResident = fullReference.length >= 7 && fullReference[6] === "true";
-                    if (isResident) {
-                        CompilerDiagnostics.debugPrint(path + " is resident");
-                    }
                     return {
                         line: 0,
                         character: 0,
@@ -91,7 +88,7 @@ module TypeScript {
 
     var reportDiagnostic = () => { };
 
-    function processImports(lineMap: LineMap, scanner: Scanner, token: ISyntaxToken, importedFiles: IFileReference[]): void {
+    function processImports(lineMap: LineMap, scanner: Scanner.IScanner, token: ISyntaxToken, importedFiles: IFileReference[]): void {
         var lineChar = { line: -1, character: -1 };
 
         var start = new Date().getTime();
@@ -191,7 +188,7 @@ module TypeScript {
 
     export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, readImportFiles = true): IPreProcessedFileInfo {
         var text = SimpleText.fromScriptSnapshot(sourceText);
-        var scanner = createScanner(LanguageVersion.EcmaScript5, text, reportDiagnostic);
+        var scanner = Scanner.createScanner(LanguageVersion.EcmaScript5, text, reportDiagnostic);
 
         var firstToken = scanner.scan(/*allowRegularExpression:*/ false);
 

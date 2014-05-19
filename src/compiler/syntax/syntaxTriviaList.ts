@@ -243,6 +243,4 @@ module TypeScript.Syntax {
 
         return new NormalSyntaxTriviaList(trivia);
     }
-
-    export var spaceTriviaList: ISyntaxTriviaList = triviaList([Syntax.spaceTrivia]);
 }

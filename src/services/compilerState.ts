@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-///<reference path='typescriptServices.ts' />
+///<reference path='references.ts' />
 
 module TypeScript.Services {
     // Information about a specific host file.
@@ -158,8 +158,8 @@ module TypeScript.Services {
             // For the purposes of features that use this syntax tree, we can just use the default
             // compilation settings.  The features only use the syntax (and not the diagnostics),
             // and the syntax isn't affected by the compilation settings.
-            var syntaxTree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName),
-                TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget());
+            var syntaxTree = TypeScript.Parser.parse(fileName, text,
+                TypeScript.ImmutableCompilationSettings.defaultSettings().codeGenTarget(), TypeScript.isDTSFile(fileName));
 
             return syntaxTree;
         }
@@ -174,11 +174,8 @@ module TypeScript.Services {
                 return this.createSyntaxTree(fileName, scriptSnapshot);
             }
 
-            var nextSyntaxTree =
-                Parser.incrementalParse(
-                    previousSyntaxTree,
-                    editRange,
-                    SimpleText.fromScriptSnapshot(scriptSnapshot));
+            var nextSyntaxTree = IncrementalParser.parse(
+                previousSyntaxTree, editRange, SimpleText.fromScriptSnapshot(scriptSnapshot));
 
             this.ensureInvariants(fileName, editRange, nextSyntaxTree, this._currentFileScriptSnapshot, scriptSnapshot);
 

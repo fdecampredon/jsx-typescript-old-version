@@ -1,3 +1,5 @@
+///<reference path='references.ts' />
+
 module TypeScript.Indentation {
     export function columnForEndOfTokenAtPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {
         var token = findToken(syntaxTree.sourceUnit(), position);
@@ -129,7 +131,7 @@ module TypeScript.Indentation {
 
     export function indentationString(column: number, options: FormattingOptions): string {
         var numberOfTabs = 0;
-        var numberOfSpaces = MathPrototype.max(0, column);
+        var numberOfSpaces = Math.max(0, column);
 
         if (options.useTabs) {
             numberOfTabs = Math.floor(column / options.spacesPerTab);
@@ -138,10 +140,6 @@ module TypeScript.Indentation {
 
         return StringUtilities.repeat('\t', numberOfTabs) +
                StringUtilities.repeat(' ', numberOfSpaces);
-    }
-
-    export function indentationTrivia(column: number, options: FormattingOptions): ISyntaxTrivia {
-        return Syntax.whitespace(this.indentationString(column, options));
     }
 
     export function firstNonWhitespacePosition(value: string): number {

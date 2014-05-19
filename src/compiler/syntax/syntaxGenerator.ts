@@ -1570,7 +1570,7 @@ function generateIsProperties(definition: ITypeDefinition): string {
             var type = ifaces[i];
             type = getStringWithoutSuffix(type);
             if (isInterface(type)) {
-                type = type.substr(1);
+                type = "_" + type.substr(1, 1).toLowerCase() + type.substr(2) + "Brand";
             }
 
             types.push(type);
@@ -1581,7 +1581,7 @@ function generateIsProperties(definition: ITypeDefinition): string {
         properties += "       ";
 
         for (var i = 0; i < types.length; i++) {
-            properties += " public _is" + types[i] + ": any;";
+            properties += " public " + types[i] + ": any;";
         }
 
         properties += "\r\n";
@@ -2729,6 +2729,21 @@ function firstEnumName(e: any, value: number) {
     }
 }
 
+function groupBy<T>(array: T[], func: (v: T) => string): any {
+    var result: TypeScript.IIndexable<T[]> = {};
+
+    for (var i = 0, n = array.length; i < n; i++) {
+        var v: any = array[i];
+        var k = func(v);
+
+        var list: T[] = result[k] || [];
+        list.push(v);
+        result[k] = list;
+    }
+
+    return result;
+}
+
 function generateKeywordCondition(keywords: { text: string; kind: TypeScript.SyntaxKind; }[], currentCharacter: number, indent: string): string {
     var length = keywords[0].text.length;
 
@@ -2739,43 +2754,71 @@ function generateKeywordCondition(keywords: { text: string; kind: TypeScript.Syn
         var keyword = keywords[0];
         
         if (currentCharacter === length) {
-            return indent + "return SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + ";\r\n";
+            return " return SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + ";\r\n";
         }
 
         var keywordText = keywords[0].text;
-        result = indent + "return ("
+        result = " return ("
 
         for (var i = currentCharacter; i < length; i++) {
             if (i > currentCharacter) {
                 result += " && ";
             }
 
-            index = i === 0 ? "startIndex" : ("startIndex + " + i);
-            result += "array.charCodeAt(" + index + ") === CharacterCodes." + keywordText.substr(i, 1);
+            index = i === 0 ? "start" : ("start + " + i);
+            result += "str.charCodeAt(" + index + ") === CharacterCodes." + keywordText.substr(i, 1);
         }
 
         result += ") ? SyntaxKind." + firstEnumName(TypeScript.SyntaxKind, keyword.kind) + " : SyntaxKind.IdentifierName;\r\n";
     }
     else {
-        index = currentCharacter === 0 ? "startIndex" : ("startIndex + " + currentCharacter);
-        result += indent + "switch(array.charCodeAt(" + index + ")) {\r\n"
+        result += " // " + TypeScript.ArrayUtilities.select(keywords, k => k.text).join(", ") + "\r\n"
+        // result += "\r\n";
+        index = currentCharacter === 0 ? "start" : ("start + " + currentCharacter);
+        result += indent + "switch(str.charCodeAt(" + index + ")) {\r\n"
 
-        var groupedKeywords = TypeScript.ArrayUtilities.groupBy(keywords, k => k.text.substr(currentCharacter, 1));
+        var groupedKeywords = groupBy(keywords, k => k.text.substr(currentCharacter, 1));
 
         for (var c in groupedKeywords) {
             if (groupedKeywords.hasOwnProperty(c)) {
-                result += indent + "case CharacterCodes." + c + ":\r\n";
-                result += indent + "    // " + TypeScript.ArrayUtilities.select(groupedKeywords[c], (k: any) => k.text).join(", ") + "\r\n";
+                result += indent + "  case CharacterCodes." + c + ":";
                 result += generateKeywordCondition(groupedKeywords[c], currentCharacter + 1, indent + "    ");
             }
         }
 
-        result += indent + "default:\r\n";
-        result += indent + "    return SyntaxKind.IdentifierName;\r\n";
-        result += indent + "}\r\n\r\n";
+        result += indent + "  default: return SyntaxKind.IdentifierName;\r\n";
+        result += indent + "}\r\n";
     }
 
     return result;
+}
+
+function min<T>(array: T[], func: (v: T) => number): number {
+    // Debug.assert(array.length > 0);
+    var min = func(array[0]);
+
+    for (var i = 1; i < array.length; i++) {
+        var next = func(array[i]);
+        if (next < min) {
+            min = next;
+        }
+    }
+
+    return min;
+}
+
+function max<T>(array: T[], func: (v: T) => number): number {
+    // Debug.assert(array.length > 0);
+    var max = func(array[0]);
+
+    for (var i = 1; i < array.length; i++) {
+        var next = func(array[i]);
+        if (next > max) {
+            max = next;
+        }
+    }
+
+    return max;
 }
 
 function generateScannerUtilities(): string {
@@ -2791,27 +2834,24 @@ function generateScannerUtilities(): string {
         keywords.push({ kind: i, text: TypeScript.SyntaxFacts.getText(i) });
     }
 
-    result += "        public static identifierKind(array: string, startIndex: number, length: number): SyntaxKind {\r\n";
+    keywords.sort((a, b) => a.text.localeCompare(b.text));
 
-    var minTokenLength = TypeScript.ArrayUtilities.min(keywords, k => k.text.length);
-    var maxTokenLength = TypeScript.ArrayUtilities.max(keywords, k => k.text.length);
+    result += "        public static identifierKind(str: string, start: number, length: number): SyntaxKind {\r\n";
+
+    var minTokenLength = min(keywords, k => k.text.length);
+    var maxTokenLength = max(keywords, k => k.text.length);
     result += "            switch (length) {\r\n";
 
 
     for (i = minTokenLength; i <= maxTokenLength; i++) {
         var keywordsOfLengthI = TypeScript.ArrayUtilities.where(keywords, k => k.text.length === i);
         if (keywordsOfLengthI.length > 0) {
-            result += "            case " + i + ":\r\n";
-            result += "                // " + TypeScript.ArrayUtilities.select(keywordsOfLengthI, k => k.text).join(", ") + "\r\n";
-
+            result += "              case " + i + ":";
             result += generateKeywordCondition(keywordsOfLengthI, 0, "                ");
-
-            // result += "            return SyntaxKind.None;\r\n\r\n";
         }
     }
 
-    result += "            default:\r\n";
-    result += "                return SyntaxKind.IdentifierName;\r\n";
+    result += "              default: return SyntaxKind.IdentifierName;\r\n";
     result += "            }\r\n";
     result += "        }\r\n";
 
@@ -2822,8 +2862,6 @@ function generateScannerUtilities(): string {
 }
 
 function generateVisitor(): string {
-    var i: number;
-    var definition: ITypeDefinition;
     var result = "";
 
     result += "///<reference path='references.ts' />\r\n\r\n";
@@ -2842,13 +2880,13 @@ function generateVisitor(): string {
             for (var j = 0; j < definition.syntaxKinds.length; j++) {
                 result += " case SyntaxKind." + definition.syntaxKinds[j] + ":"
             }
-            result += "\r\n";
+            result += "\r\n                ";
         }
         else {
-            result += "            case SyntaxKind." + getNameWithoutSuffix(definition) + ":\r\n";
+            result += "            case SyntaxKind." + getNameWithoutSuffix(definition) + ": ";
         }
 
-        result += "                return visitor.visit" + getNameWithoutSuffix(definition) + "(<" + definition.name + ">element);\r\n";
+        result += "return visitor.visit" + getNameWithoutSuffix(definition) + "(<" + definition.name + ">element);\r\n";
     }
 
     result += "        }\r\n\r\n";
@@ -2863,8 +2901,19 @@ function generateVisitor(): string {
         result += "        visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any;\r\n";
     }
 
-    result += "    }\r\n\r\n";
+    result += "    }";
 
+    result += "\r\n}";
+
+    return result;
+}
+
+function generateDefaultVisitor(): string {
+    var result = "";
+
+    result += "///<reference path='references.ts' />\r\n\r\n";
+
+    result += "module TypeScript {\r\n";
     if (!forPrettyPrinter) {
         result += "    export class SyntaxVisitor implements ISyntaxVisitor {\r\n";
         result += "        public defaultVisit(node: ISyntaxNodeOrToken): any {\r\n";
@@ -2875,8 +2924,8 @@ function generateVisitor(): string {
         result += "            return this.defaultVisit(token);\r\n";
         result += "        }\r\n";
 
-        for (i = 0; i < definitions.length; i++) {
-            definition = definitions[i];
+        for (var i = 0; i < definitions.length; i++) {
+            var definition = definitions[i];
 
             result += "\r\n        public visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any {\r\n";
             result += "            return this.defaultVisit(node);\r\n";
@@ -3163,7 +3212,9 @@ var rewriter = generateRewriter();
 var walker = generateWalker();
 var scannerUtilities = generateScannerUtilities();
 var visitor = generateVisitor();
+var defaultVisitor = generateDefaultVisitor();
 var servicesUtilities = generateServicesUtilities();
+
 
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/syntaxInterfaces.generated.ts", syntaxInterfaces, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/syntaxNodes.generated.ts", syntaxNodes, false);
@@ -3171,4 +3222,5 @@ TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/s
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/syntaxWalker.generated.ts", walker, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/scannerUtilities.generated.ts", scannerUtilities, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/syntaxVisitor.generated.ts", visitor, false);
+TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/compiler/syntax/defaultSyntaxVisitor.generated.ts", defaultVisitor, false);
 TypeScript.Environment.writeFile(TypeScript.Environment.currentDirectory() + "/src/services/syntaxUtilities.generated.ts", servicesUtilities, false);

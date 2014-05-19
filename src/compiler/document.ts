@@ -1,11 +1,21 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    export interface IncrementalParse { 
+        (oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, newText: ISimpleText): SyntaxTree
+    }
+
+
     export class Document implements IASTForDeclMap {
         private _bloomFilter: BloomFilter = null;
 
         private _declASTMap: ISyntaxElement[] = [];
         private _astDeclMap: PullDecl[] = [];
+
+        // By default, our Document class doesn't support incremental update of its contents.
+        // However, we enable other layers (like teh services layer) to inject the capability
+        // into us by setting this function.
+        public static incrementalParse: IncrementalParse = null;
 
         constructor(private compilationSettings: ImmutableCompilationSettings,
                     public fileName: string,
@@ -16,17 +26,6 @@ module TypeScript {
                     public isOpen: boolean,
                     private _syntaxTree: SyntaxTree,
                     private _topLevelDecl: PullDecl) {
-        }
-
-        // Only for use by the semantic info chain.
-        public invalidate(): void {
-            // Dump all information related to syntax.  We'll have to recompute it when asked.
-            this._declASTMap.length = 0;
-            this._astDeclMap.length = 0;
-            this._topLevelDecl = null;
-
-            this._syntaxTree = null;
-            this._bloomFilter = null;
         }
 
         public isDeclareFile(): boolean {
@@ -51,7 +50,7 @@ module TypeScript {
                 var start = new Date().getTime();
 
                 this._syntaxTree = Parser.parse(
-                    this.fileName, SimpleText.fromScriptSnapshot(this._scriptSnapshot), this.isDeclareFile(), this.compilationSettings.codeGenTarget());
+                    this.fileName, SimpleText.fromScriptSnapshot(this._scriptSnapshot), this.compilationSettings.codeGenTarget(), this.isDeclareFile());
 
                 var time = new Date().getTime() - start;
 
@@ -127,9 +126,9 @@ module TypeScript {
 
             // If we don't have a text change, or we don't have an old syntax tree, then do a full
             // parse.  Otherwise, do an incremental parse.
-            var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null
-                ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), this.compilationSettings.codeGenTarget())
-                : TypeScript.Parser.incrementalParse(oldSyntaxTree, textChangeRange, text);
+            var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null || Document.incrementalParse === null
+                ? TypeScript.Parser.parse(this.fileName, text, this.compilationSettings.codeGenTarget(), TypeScript.isDTSFile(this.fileName))
+                : Document.incrementalParse(oldSyntaxTree, textChangeRange, text);
 
             return new Document(this.compilationSettings, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree, /*topLevelDecl:*/ null);
         }

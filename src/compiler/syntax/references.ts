@@ -38,8 +38,6 @@
 
 // DepthLimitedWalker depends on PositionTrackingWalker
 ///<reference path='depthLimitedWalker.ts' />
-
-// Parser depends on PositionTrackingWalker
 ///<reference path='parser.ts' />
 
 // SyntaxTree depends on PositionTrackingWalker

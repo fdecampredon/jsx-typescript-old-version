@@ -6,6 +6,5 @@ var Foo = (function () {
 })();
 
 switch (0) {
-    case Foo:
-        break;
+    case Foo: break;
 }

@@ -5,7 +5,7 @@ module TypeScript {
         // Asks the source to copy items starting at sourceIndex into the window at 'destinationIndex'
         // with up to 'spaceAvailable' items.  The actual number of items fetched should be given as 
         // the return value.
-        fetchNextItem(...args: any[]): any;
+        (...args: any[]): any;
     }
 
     export class SlidingWindow {
@@ -33,18 +33,13 @@ module TypeScript {
         private firstPinnedAbsoluteIndex: number = -1;
 
         constructor(// Underlying source that we retrieve items from.
-                    private source: ISlidingWindowSource,
+                    private fetchNextItem: ISlidingWindowSource,
                     // A window of items that has been read in from the underlying source.
                     public window: any[],
                     // The default value to return when there are no more items left in the window.
                     private defaultValue: any,
                     // The length of the source we're reading from if we know it up front.  -1 if we do not.
                     private sourceLength = -1) {
-        }
-
-        // The last legal index of the window (exclusive).
-        private windowAbsoluteEndIndex(): number {
-            return this.windowAbsoluteStartIndex + this.windowCount;
         }
 
         private addMoreItemsToWindow(args: any): boolean {
@@ -58,7 +53,7 @@ module TypeScript {
                 this.tryShiftOrGrowWindow();
             }
 
-            var item = this.source.fetchNextItem.apply(this.source, args);
+            var item = this.fetchNextItem.apply(args);
 
             this.window[this.windowCount] = item;
 
@@ -189,38 +184,6 @@ module TypeScript {
             // any items we added to the window from the current offset onwards unusable.  When we
             // try to get the next item, we'll be forced to refetch them from the underlying source.
             this.windowCount = this.currentRelativeItemIndex;
-        }
-
-        public setAbsoluteIndex(absoluteIndex: number): void {
-            if (this.absoluteIndex() === absoluteIndex) {
-                // Nothing to do if we're setting hte absolute index to where we current are.
-                return;
-            }
-
-            if (this._pinCount > 0) {
-                // If we have any active pins, then the caller better be setting the index somewhere
-                // inside our active window.
-                // Debug.assert(absoluteIndex >= this.windowAbsoluteStartIndex && absoluteIndex < this.windowAbsoluteEndIndex());
-            }
-
-            if (absoluteIndex >= this.windowAbsoluteStartIndex && absoluteIndex < this.windowAbsoluteEndIndex()) {
-                // The caller is setting the index to some place inside our current window.  This is 
-                // easy to handle (and should be the common case).
-                this.currentRelativeItemIndex = (absoluteIndex - this.windowAbsoluteStartIndex);
-            }
-            else {
-                // The caller is setting the index to a place not in the window.  Just throw away 
-                // everything we've got.
-
-                // First, set the window start to that index.
-                this.windowAbsoluteStartIndex = absoluteIndex;
-
-                // Now, set the count to 0.  So we'll be forced to fetch more items.
-                this.windowCount = 0;
-
-                // And set us back to the start of the window.
-                this.currentRelativeItemIndex = 0;
-            }
         }
 
         public pinCount(): number {

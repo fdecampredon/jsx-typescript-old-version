@@ -3,7 +3,6 @@
 ///<reference path='characterCodes.ts' />
 ///<reference path='scriptSnapshot.ts' />
 ///<reference path='text.ts' />
-///<reference path='textLine.ts' />
 ///<reference path='lineMap.ts' />
 ///<reference path='textFactory.ts' />
 ///<reference path='textUtilities.ts' />

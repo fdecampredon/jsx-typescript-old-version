@@ -23,6 +23,10 @@ module TypeScript {
         }
     }
 
+    export interface IFileWatcher {
+        close(): void;
+    }
+
     export interface IEnvironment {
         supportsCodePage(): boolean;
         readFile(path: string, codepage: number): FileInformation;
@@ -30,13 +34,29 @@ module TypeScript {
         deleteFile(path: string): void;
         fileExists(path: string): boolean;
         directoryExists(path: string): boolean;
+        directoryName(path: string): string;
+        createDirectory(path: string): void;
+        absolutePath(path: string): string;
         listFiles(path: string, re?: RegExp, options?: { recursive?: boolean; }): string[];
 
         arguments: string[];
         standardOut: ITextWriter;
+        standardError: ITextWriter;
 
+        executingFilePath(): string;
         currentDirectory(): string;
         newLine: string;
+        
+        watchFile(fileName: string, callback: (x: string) => void): IFileWatcher;
+        quit(exitCode?: number): void;
+    }
+
+    function throwIOError(message: string, error: Error) {
+        var errorMessage = message;
+        if (error && error.message) {
+            errorMessage += (" " + error.message);
+        }
+        throw new Error(errorMessage);
     }
 
     export var Environment = (function () {
@@ -73,15 +93,13 @@ module TypeScript {
                 // On windows, the newline sequence is always "\r\n";
                 newLine: "\r\n",
 
-                currentDirectory: (): string => {
-                    return (<any>WScript).CreateObject("WScript.Shell").CurrentDirectory;
-                },
+                currentDirectory: () => (<any>WScript).CreateObject("WScript.Shell").CurrentDirectory,
 
-                supportsCodePage: () => {
-                    return (<any>WScript).ReadFile;
-                },
+                supportsCodePage: () => (<any>WScript).ReadFile,
 
-                readFile: function (path: string, codepage: number): FileInformation {
+                absolutePath: path => fso.GetAbsolutePathName(path),
+
+                readFile: function (path, codepage) {
                     try {
                         // If a codepage is requested, defer to our host to do the reading.  If it
                         // fails, fall back to our normal BOM/utf8 logic.
@@ -150,7 +168,7 @@ module TypeScript {
                     }
                 },
 
-                writeFile: function (path: string, contents: string, writeByteOrderMark: boolean) {
+                writeFile: (path, contents, writeByteOrderMark) => {
                     // First, convert the text contents passed in to binary in UTF8 format.
                     var textStream = getStreamObject();
                     textStream.Charset = 'utf-8';
@@ -182,21 +200,29 @@ module TypeScript {
                     textStream.Close();
                 },
 
-                fileExists: function (path: string): boolean {
-                    return fso.FileExists(path);
-                },
+                fileExists: path => fso.FileExists(path),
 
-                deleteFile: function (path: string): void {
+                deleteFile: path => {
                     if (fso.FileExists(path)) {
                         fso.DeleteFile(path, true); // true: delete read-only files
                     }
                 },
 
-                directoryExists: function (path) {
-                    return <boolean>fso.FolderExists(path);
+                directoryExists: path => <boolean>fso.FolderExists(path),
+
+                directoryName: path => fso.GetParentFolderName(path),
+
+                createDirectory: function (path) {
+                    try {
+                        if (!this.directoryExists(path)) {
+                            fso.CreateFolder(path);
+                        }
+                    } catch (e) {
+                        throwIOError(TypeScript.getDiagnosticMessage(TypeScript.DiagnosticCode.Could_not_create_directory_0, [path]), e);
+                    }
                 },
 
-                listFiles: function (path, spec?, options?) {
+                listFiles: (path, spec?, options?) => {
                     options = options || <{ recursive?: boolean; }>{};
                     function filesInFolder(folder: any, root: string): string[] {
                         var paths: string[] = [];
@@ -230,6 +256,18 @@ module TypeScript {
                 arguments: <string[]>args,
 
                 standardOut: WScript.StdOut,
+                standardError: WScript.StdErr,
+
+                executingFilePath: () => WScript.ScriptFullName,
+
+                quit: (exitCode = 0) => {
+                    try {
+                        WScript.Quit(exitCode);
+                    } catch (e) {
+                    }
+                },
+
+                watchFile: null,
             };
         };
 
@@ -243,13 +281,13 @@ module TypeScript {
                 // On node pick up the newline character from the OS
                 newLine: _os.EOL,
 
-                currentDirectory: (): string => {
-                    return (<any>process).cwd();
-                },
+                currentDirectory: () => (<any>process).cwd(),
 
                 supportsCodePage: () => false,
 
-                readFile: function (file: string, codepage: number): FileInformation {
+                absolutePath: path => _path.resolve(path),
+
+                readFile: (file, codepage) => {
                     if (codepage !== null) {
                         throw new Error(TypeScript.getDiagnosticMessage(TypeScript.DiagnosticCode.codepage_option_not_supported_on_current_platform, null));
                     }
@@ -287,7 +325,7 @@ module TypeScript {
                     return new FileInformation(buffer.toString("utf8", 0), ByteOrderMark.None);
                 },
 
-                writeFile: function (path: string, contents: string, writeByteOrderMark: boolean) {
+                writeFile: (path, contents, writeByteOrderMark) => {
                     function mkdirRecursiveSync(path: string) {
                         var stats = _fs.statSync(path);
                         if (stats.isFile()) {
@@ -329,22 +367,40 @@ module TypeScript {
                     TypeScript.nodeWriteFileSyncTime += new Date().getTime() - start;
                 },
 
-                fileExists: function (path: string): boolean {
-                    return _fs.existsSync(path);
-                },
+                fileExists: path => _fs.existsSync(path),
 
-                deleteFile: function (path) {
+                deleteFile: path => {
                     try {
                         _fs.unlinkSync(path);
                     } catch (e) {
                     }
                 },
 
-                directoryExists: function (path: string): boolean {
-                    return _fs.existsSync(path) && _fs.statSync(path).isDirectory();
+                directoryExists: path => 
+                    _fs.existsSync(path) && _fs.statSync(path).isDirectory(),
+
+                directoryName: path => {
+                    var dirPath = _path.dirname(path);
+                
+                    // Node will just continue to repeat the root path, rather than return null
+                    if (dirPath === path) {
+                        dirPath = null;
+                    }
+                
+                    return dirPath;
                 },
 
-                listFiles: function dir(path, spec?, options?) {
+                createDirectory: function (path) {
+                    try {
+                        if (!this.directoryExists(path)) {
+                            _fs.mkdirSync(path);
+                        }
+                    } catch (e) {
+                        throwIOError(TypeScript.getDiagnosticMessage(TypeScript.DiagnosticCode.Could_not_create_directory_0, [path]), e);
+                    }
+                },
+
+                listFiles: (path, spec?, options?) => {
                     options = options || <{ recursive?: boolean; }>{};
 
                     function filesInFolder(folder: string): string[] {
@@ -370,9 +426,67 @@ module TypeScript {
                 arguments: process.argv.slice(2),
 
                 standardOut: {
-                    Write: function (str) { process.stdout.write(str); },
-                    WriteLine: function (str) { process.stdout.write(str + '\n'); },
-                    Close: function () { }
+                    Write: str => process.stdout.write(str),
+                    WriteLine: str => process.stdout.write(str + '\n'),
+                    Close() { }
+                },
+
+                standardError: {
+                    Write: str => process.stderr.write(str),
+                    WriteLine: str => process.stderr.write(str + '\n'),
+                    Close() { }
+                },
+
+                executingFilePath: () => process.mainModule.filename,
+
+                quit: code => {
+                    var stderrFlushed = process.stderr.write('');
+                    var stdoutFlushed = process.stdout.write('');
+                    process.stderr.on('drain', function () {
+                        stderrFlushed = true;
+                        if (stdoutFlushed) {
+                            process.exit(code);
+                        }
+                    });
+                    process.stdout.on('drain', function () {
+                        stdoutFlushed = true;
+                        if (stderrFlushed) {
+                            process.exit(code);
+                        }
+                    });
+                    setTimeout(function () {
+                        process.exit(code);
+                    }, 5);
+                },
+
+                watchFile: (fileName, callback) => {
+                    var firstRun = true;
+                    var processingChange = false;
+
+                    var fileChanged: any = function (curr: any, prev: any) {
+                        if (!firstRun) {
+                            if (curr.mtime < prev.mtime) {
+                                return;
+                            }
+
+                            _fs.unwatchFile(fileName, fileChanged);
+                            if (!processingChange) {
+                                processingChange = true;
+                                callback(fileName);
+                                setTimeout(function () { processingChange = false; }, 100);
+                            }
+                        }
+                        firstRun = false;
+                        _fs.watchFile(fileName, { persistent: true, interval: 500 }, fileChanged);
+                    };
+
+                    fileChanged();
+                    return {
+                        fileName: fileName,
+                        close: function () {
+                            _fs.unwatchFile(fileName, fileChanged);
+                        }
+                    };
                 },
             };
         };

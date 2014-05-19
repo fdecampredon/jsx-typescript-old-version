@@ -269,14 +269,12 @@ module TypeScript {
             return true;
         }
 
-        private checkForAtLeastOneElement(parent: ISyntaxElement, list: ISyntaxNodeOrToken[], expected: string): boolean {
+        private checkForAtLeastOneElement(parent: ISyntaxElement, list: ISyntaxNodeOrToken[], afterToken: ISyntaxToken, expected: string): boolean {
             if (childCount(list) > 0) {
                 return false;
             }
 
-            var listFullStart = fullStart(parent) + Syntax.childOffset(parent, list);
-            var tokenAtStart = findToken(this.syntaxTree.sourceUnit(), listFullStart);
-
+            var tokenAtStart = findToken(this.syntaxTree.sourceUnit(), fullEnd(afterToken));
             this.pushDiagnostic(tokenAtStart, DiagnosticCode.Unexpected_token_0_expected, [expected]);
 
             return true;
@@ -295,7 +293,7 @@ module TypeScript {
 
         public visitHeritageClause(node: HeritageClauseSyntax): void {
             if (this.checkForTrailingSeparator(node, node.typeNames) ||
-                this.checkForAtLeastOneElement(node, node.typeNames, getLocalizedText(DiagnosticCode.type_name, null))) {
+                this.checkForAtLeastOneElement(node, node.typeNames, node.extendsOrImplementsKeyword, getLocalizedText(DiagnosticCode.type_name, null))) {
                 return;
             }
 
@@ -311,7 +309,7 @@ module TypeScript {
         }
 
         public visitVariableDeclaration(node: VariableDeclarationSyntax): void {
-            if (this.checkForAtLeastOneElement(node, node.variableDeclarators, getLocalizedText(DiagnosticCode.identifier, null))) {
+            if (this.checkForAtLeastOneElement(node, node.variableDeclarators, node.varKeyword, getLocalizedText(DiagnosticCode.identifier, null))) {
                 return;
             }
 
@@ -332,7 +330,7 @@ module TypeScript {
 
         public visitTypeArgumentList(node: TypeArgumentListSyntax): void {
             if (this.checkForTrailingSeparator(node, node.typeArguments) ||
-                this.checkForAtLeastOneElement(node, node.typeArguments, getLocalizedText(DiagnosticCode.identifier, null))) {
+                this.checkForAtLeastOneElement(node, node.typeArguments, node.lessThanToken, getLocalizedText(DiagnosticCode.identifier, null))) {
                 return;
             }
 
@@ -341,7 +339,7 @@ module TypeScript {
 
         public visitTypeParameterList(node: TypeParameterListSyntax): void {
             if (this.checkForTrailingSeparator(node, node.typeParameters) ||
-                this.checkForAtLeastOneElement(node, node.typeParameters, getLocalizedText(DiagnosticCode.identifier, null))) {
+                this.checkForAtLeastOneElement(node, node.typeParameters, node.lessThanToken, getLocalizedText(DiagnosticCode.identifier, null))) {
                 return;
             }
 

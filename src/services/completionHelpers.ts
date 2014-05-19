@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the Apache License, Version 2.0. 
 // See LICENSE.txt in the project root for complete license information.
 
-///<reference path='typescriptServices.ts' />
+///<reference path='references.ts' />
 
 module TypeScript.Services {
     export class CompletionHelpers {
@@ -182,7 +182,7 @@ module TypeScript.Services {
                     displayName = TypeScript.stripStartAndEndQuotes(displayName);
                 }
 
-                if (TypeScript.isValidIdentifier(TypeScript.SimpleText.fromString(displayName), TypeScript.LanguageVersion.EcmaScript5)) {
+                if (TypeScript.Scanner.isValidIdentifier(TypeScript.SimpleText.fromString(displayName), TypeScript.LanguageVersion.EcmaScript5)) {
                     return displayName;
                 }
             }

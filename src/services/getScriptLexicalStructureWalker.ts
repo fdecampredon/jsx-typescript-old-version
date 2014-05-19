@@ -1,4 +1,5 @@
-/// <reference path="typescriptServices.ts" />
+
+///<reference path='references.ts' />
 module TypeScript.Services {
     interface LexicalScope {
         items: TypeScript.IIndexable<NavigateToItem>;
@@ -135,12 +136,6 @@ module TypeScript.Services {
                 super.visitModuleDeclaration(node);
             }
             else {
-                // If we have a dotted module (like "module A.B.C"):
-                //  1) If we're the outermost module, then use the modifiers provided on the node.
-                //  2) For any inner modules, consider it exported.
-                var modifiers = nameIndex === 0
-                    ? node.modifiers
-                    : TypeScript.Syntax.list([TypeScript.Syntax.token(TypeScript.SyntaxKind.ExportKeyword)]);
                 var name = names[nameIndex];
                 var kind = ScriptElementKind.moduleElement;
 

@@ -483,14 +483,14 @@ module TypeScript {
     }
 
     export interface IModuleReferenceSyntax extends ISyntaxNode {
-        _isModuleReference: any;
+        _moduleReferenceBrand: any;
     }
 
     export interface IModuleElementSyntax extends ISyntaxNode {
     }
 
     export interface IStatementSyntax extends IModuleElementSyntax {
-        _isStatement: any;
+        _statementBrand: any;
     }
 
     export interface ITypeMemberSyntax extends ISyntaxNode {
@@ -506,40 +506,41 @@ module TypeScript {
     }
 
     export interface ISwitchClauseSyntax extends ISyntaxNode {
-        _isSwitchClause: any;
+        _switchClauseBrand: any;
         statements: IStatementSyntax[];
     }
 
     export interface IExpressionSyntax extends ISyntaxNodeOrToken {
-        _isExpression: any;
+        _expressionBrand: any;
     }
 
     export interface IUnaryExpressionSyntax extends IExpressionSyntax {
-        _isUnaryExpression: any;
+        _unaryExpressionBrand: any;
     }
 
     export interface IPostfixExpressionSyntax extends IUnaryExpressionSyntax {
-        _isPostfixExpression: any;
+        _postfixExpressionBrand: any;
     }
 
     export interface ILeftHandSideExpressionSyntax extends IPostfixExpressionSyntax {
-        _isLeftHandSideExpression: any;
+        _leftHandSideExpressionBrand: any;
     }
 
     export interface IMemberExpressionSyntax extends ILeftHandSideExpressionSyntax {
-        _isMemberExpression: any;
+        _memberExpressionBrand: any;
     }
 
     export interface ICallExpressionSyntax extends ILeftHandSideExpressionSyntax {
-        _isCallExpression: any;
+        _callExpressionBrand: any;
+        expression: IExpressionSyntax;
     }
 
     export interface IPrimaryExpressionSyntax extends IMemberExpressionSyntax {
-        _isPrimaryExpression: any;
+        _primaryExpressionBrand: any;
     }
 
     export interface ITypeSyntax extends ISyntaxNodeOrToken {
-        _isType: any;
+        _typeBrand: any;
     }
 
     export interface INameSyntax extends ITypeSyntax {

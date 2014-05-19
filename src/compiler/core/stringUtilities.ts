@@ -14,12 +14,6 @@ module TypeScript {
             return string.substr(0, value.length) === value;
         }
 
-        public static copyTo(source: string, sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
-            for (var i = 0; i < count; i++) {
-                destination[destinationIndex + i] = source.charCodeAt(sourceIndex + i);
-            }
-        }
-
         public static repeat(value: string, count: number) {
             return Array(count + 1).join(value);
         }
