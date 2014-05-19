@@ -11,7 +11,7 @@
     
           public bar() { return this.store; } // should be an error
                                      ~~~~~
-!!! propertyOrdering.ts(9,34): error TS2094: The property 'store' does not exist on value of type 'Foo'.
+!!! propertyOrdering.ts(9,34): error TS2094: Property 'store' does not exist on value of type 'Foo'.
     
     }
     
@@ -20,13 +20,13 @@
     
                 return this._store.length;   // shouldn't be an error
                             ~~~~~~
-!!! propertyOrdering.ts(16,25): error TS2094: The property '_store' does not exist on value of type 'Bar'.
+!!! propertyOrdering.ts(16,25): error TS2094: Property '_store' does not exist on value of type 'Bar'.
     
           }
         constructor(store: string) {
             this._store = store;
                  ~~~~~~
-!!! propertyOrdering.ts(20,14): error TS2094: The property '_store' does not exist on value of type 'Bar'.
+!!! propertyOrdering.ts(20,14): error TS2094: Property '_store' does not exist on value of type 'Bar'.
         }
     }
     

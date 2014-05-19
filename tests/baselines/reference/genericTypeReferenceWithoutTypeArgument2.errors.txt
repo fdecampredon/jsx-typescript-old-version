@@ -65,13 +65,13 @@
     
     class D2 extends M.C { }
                        ~
-!!! genericTypeReferenceWithoutTypeArgument2.ts(29,20): error TS2094: The property 'C' does not exist on value of type 'M'.
+!!! genericTypeReferenceWithoutTypeArgument2.ts(29,20): error TS2094: Property 'C' does not exist on value of type 'M'.
     interface D3<T extends M.E> { }
                            ~~~
 !!! genericTypeReferenceWithoutTypeArgument2.ts(30,24): error TS2090: Generic type 'M.E<T>' requires 1 type argument(s).
     interface I2 extends M.C { }
                            ~
-!!! genericTypeReferenceWithoutTypeArgument2.ts(31,24): error TS2094: The property 'C' does not exist on value of type 'M'.
+!!! genericTypeReferenceWithoutTypeArgument2.ts(31,24): error TS2094: Property 'C' does not exist on value of type 'M'.
     
     function h<T extends I>(x: T) { }
                          ~

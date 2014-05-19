@@ -42,7 +42,7 @@
     
     declare class D2 extends M.C { }
                                ~
-!!! genericTypeReferenceWithoutTypeArgument.d.ts(22,28): error TS2094: The property 'C' does not exist on value of type 'M'.
+!!! genericTypeReferenceWithoutTypeArgument.d.ts(22,28): error TS2094: Property 'C' does not exist on value of type 'M'.
     declare class D3<T extends M.E> { }
                                ~~~
 !!! genericTypeReferenceWithoutTypeArgument.d.ts(23,28): error TS2090: Generic type 'M.E<T>' requires 1 type argument(s).

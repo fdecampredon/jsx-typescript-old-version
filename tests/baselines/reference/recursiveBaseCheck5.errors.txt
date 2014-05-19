@@ -6,4 +6,4 @@
     class X<T, U> implements I2<T> { }
     (new X).blah;
             ~~~~
-!!! recursiveBaseCheck5.ts(4,9): error TS2094: The property 'blah' does not exist on value of type 'X<{}, {}>'.
+!!! recursiveBaseCheck5.ts(4,9): error TS2094: Property 'blah' does not exist on value of type 'X<{}, {}>'.

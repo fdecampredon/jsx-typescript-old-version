@@ -103,7 +103,7 @@
 !!! implementingAnInterfaceExtendingClassWithPrivates2.ts(73,16): error TS2107: 'M2.Foo.x' is inaccessible.
         var r3 = b.y; // error
                    ~
-!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(74,16): error TS2094: The property 'y' does not exist on value of type 'Bar'.
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(74,16): error TS2094: Property 'y' does not exist on value of type 'Bar'.
     
         class Bar2 extends Foo implements I { // error
               ~~~~

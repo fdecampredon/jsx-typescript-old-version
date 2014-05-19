@@ -14,7 +14,7 @@
             var f = () => this.x; // 'this' should be type 'Foo' as well
             var p = this.y;
                          ~
-!!! thisInOuterClassBody.ts(12,22): error TS2094: The property 'y' does not exist on value of type 'Foo'.
+!!! thisInOuterClassBody.ts(12,22): error TS2094: Property 'y' does not exist on value of type 'Foo'.
             return this;
         }
     
@@ -22,6 +22,6 @@
             var a = this.y;
             var b = this.x;
                          ~
-!!! thisInOuterClassBody.ts(18,22): error TS2094: The property 'x' does not exist on value of type 'typeof Foo'.
+!!! thisInOuterClassBody.ts(18,22): error TS2094: Property 'x' does not exist on value of type 'typeof Foo'.
         }
     }

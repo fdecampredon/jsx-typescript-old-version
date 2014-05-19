@@ -32,7 +32,7 @@
 !!! genericMemberFunction.ts(17,30): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
           this.removeFile(each);
                ~~~~~~~~~~
-!!! genericMemberFunction.ts(18,12): error TS2094: The property 'removeFile' does not exist on value of type 'BuildResult<A, B, C>'.
+!!! genericMemberFunction.ts(18,12): error TS2094: Property 'removeFile' does not exist on value of type 'BuildResult<A, B, C>'.
         });
       }
     }

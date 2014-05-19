@@ -17,7 +17,7 @@
       var p2: foo.Provide;
       var p3:booz.bar;
                   ~~~
-!!! aliasBug.ts(17,15): error TS2094: The property 'bar' does not exist on value of type 'foo.bar.baz'.
+!!! aliasBug.ts(17,15): error TS2094: Property 'bar' does not exist on value of type 'foo.bar.baz'.
       var p22 = new provide.Provide();
     }
     

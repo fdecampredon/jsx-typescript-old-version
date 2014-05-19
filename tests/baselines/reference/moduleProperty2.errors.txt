@@ -14,6 +14,6 @@
     module N {
         var test3=M.y; // nope y private property of M
                     ~
-!!! moduleProperty2.ts(12,17): error TS2094: The property 'y' does not exist on value of type 'typeof M'.
+!!! moduleProperty2.ts(12,17): error TS2094: Property 'y' does not exist on value of type 'typeof M'.
         var test4=M.z; // ok public property of M
     }

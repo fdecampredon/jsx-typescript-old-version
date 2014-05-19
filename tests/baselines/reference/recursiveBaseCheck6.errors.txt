@@ -4,4 +4,4 @@
 !!! recursiveBaseCheck6.ts(1,7): error TS2100: Type 'S18<A>' recursively references itself as a base type.
     (new S18()).blah;
                 ~~~~
-!!! recursiveBaseCheck6.ts(2,13): error TS2094: The property 'blah' does not exist on value of type 'S18<{}>'.
+!!! recursiveBaseCheck6.ts(2,13): error TS2094: Property 'blah' does not exist on value of type 'S18<{}>'.

@@ -10,7 +10,7 @@
     
     var c : mod1.C; // ERROR: C should not be visible
                  ~
-!!! moduleNewExportBug.ts(10,14): error TS2094: The property 'C' does not exist on value of type 'mod1'.
+!!! moduleNewExportBug.ts(10,14): error TS2094: Property 'C' does not exist on value of type 'mod1'.
     
     
     

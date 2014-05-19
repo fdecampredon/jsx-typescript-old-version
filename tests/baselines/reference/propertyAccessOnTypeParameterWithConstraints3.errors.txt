@@ -50,7 +50,7 @@
     }
     var r3 = a().foo(); // error, no inferences for U so it doesn't satisfy constraint
                  ~~~
-!!! propertyAccessOnTypeParameterWithConstraints3.ts(42,14): error TS2094: The property 'foo' does not exist on value of type '{}'.
+!!! propertyAccessOnTypeParameterWithConstraints3.ts(42,14): error TS2094: Property 'foo' does not exist on value of type '{}'.
     var r3b = a()['foo']();
     // parameter supplied for type argument inference for U
     var r3c = a(new B()).foo(); // valid call to an invalid function, U is inferred as B, which has a foo

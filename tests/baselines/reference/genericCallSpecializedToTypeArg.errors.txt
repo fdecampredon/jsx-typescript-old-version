@@ -6,7 +6,7 @@
       var y = dupe(x); //<-- dupe has incorrect type here
       y.getDist();     //<-- this requires a missing constraint, but it's not caught
         ~~~~~~~
-!!! genericCallSpecializedToTypeArg.ts(6,5): error TS2094: The property 'getDist' does not exist on value of type 'U'.
+!!! genericCallSpecializedToTypeArg.ts(6,5): error TS2094: Property 'getDist' does not exist on value of type 'U'.
       return y;
     }
     

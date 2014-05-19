@@ -16,7 +16,7 @@
         public bar() {
             return super.super.foo;
                          ~~~~~
-!!! super1.ts(16,22): error TS2094: The property 'super' does not exist on value of type 'Sub1'.
+!!! super1.ts(16,22): error TS2094: Property 'super' does not exist on value of type 'Sub1'.
         }
     }
     
@@ -31,7 +31,7 @@
         public bar() {
             return super.prototype.foo = null;
                          ~~~~~~~~~
-!!! super1.ts(29,22): error TS2094: The property 'prototype' does not exist on value of type 'Base2'.
+!!! super1.ts(29,22): error TS2094: Property 'prototype' does not exist on value of type 'Base2'.
         }
     }
     
@@ -46,7 +46,7 @@
         public bar() {
             return super.bar();
                          ~~~
-!!! super1.ts(42,22): error TS2094: The property 'bar' does not exist on value of type 'Base3'.
+!!! super1.ts(42,22): error TS2094: Property 'bar' does not exist on value of type 'Base3'.
         }
     }
     

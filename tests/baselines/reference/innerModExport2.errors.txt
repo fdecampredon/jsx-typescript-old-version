@@ -26,4 +26,4 @@
     
     Outer.NonExportFunc();
           ~~~~~~~~~~~~~
-!!! innerModExport2.ts(20,7): error TS2094: The property 'NonExportFunc' does not exist on value of type 'typeof Outer'.
+!!! innerModExport2.ts(20,7): error TS2094: Property 'NonExportFunc' does not exist on value of type 'typeof Outer'.

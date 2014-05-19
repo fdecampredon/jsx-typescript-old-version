@@ -26,10 +26,10 @@
         r.foo();
         r.bar(); // error
           ~~~
-!!! cloduleTest2.ts(18,7): error TS2094: The property 'bar' does not exist on value of type 'm3d'.
+!!! cloduleTest2.ts(18,7): error TS2094: Property 'bar' does not exist on value of type 'm3d'.
         r.y; // error
           ~
-!!! cloduleTest2.ts(19,7): error TS2094: The property 'y' does not exist on value of type 'm3d'.
+!!! cloduleTest2.ts(19,7): error TS2094: Property 'y' does not exist on value of type 'm3d'.
     }
     
     module T4 {
@@ -39,10 +39,10 @@
         r.foo();
         r.bar(); // error
           ~~~
-!!! cloduleTest2.ts(27,7): error TS2094: The property 'bar' does not exist on value of type 'm3d'.
+!!! cloduleTest2.ts(27,7): error TS2094: Property 'bar' does not exist on value of type 'm3d'.
         r.y; // error
           ~
-!!! cloduleTest2.ts(28,7): error TS2094: The property 'y' does not exist on value of type 'm3d'.
+!!! cloduleTest2.ts(28,7): error TS2094: Property 'y' does not exist on value of type 'm3d'.
     }
     
     module m3d { export var y = 2; }

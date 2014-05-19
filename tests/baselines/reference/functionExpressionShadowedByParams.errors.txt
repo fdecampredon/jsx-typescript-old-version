@@ -12,7 +12,7 @@
           b.toPrecision(2); // should not error
           b.apply(null, null); // should error
             ~~~~~
-!!! functionExpressionShadowedByParams.ts(10,9): error TS2094: The property 'apply' does not exist on value of type 'number'.
+!!! functionExpressionShadowedByParams.ts(10,9): error TS2094: Property 'apply' does not exist on value of type 'number'.
        }
     };
     

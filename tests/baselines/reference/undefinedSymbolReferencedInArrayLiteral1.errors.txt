@@ -6,7 +6,7 @@
     var functions = [function() {
         [1, 2, 3].NonexistantMethod();
                   ~~~~~~~~~~~~~~~~~
-!!! undefinedSymbolReferencedInArrayLiteral1.ts(4,15): error TS2094: The property 'NonexistantMethod' does not exist on value of type 'number[]'.
+!!! undefinedSymbolReferencedInArrayLiteral1.ts(4,15): error TS2094: Property 'NonexistantMethod' does not exist on value of type 'number[]'.
         anotherNonExistingMethod();
         ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! undefinedSymbolReferencedInArrayLiteral1.ts(5,5): error TS2095: Cannot find name 'anotherNonExistingMethod'.

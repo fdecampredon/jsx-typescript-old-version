@@ -6751,7 +6751,7 @@ module TypeScript {
 
                 if (!nameSymbol) {
                     var enclosingDecl = this.getEnclosingDeclForAST(expression);
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name, DiagnosticCode.The_property_0_does_not_exist_on_value_of_type_1, [name.text(), originalLhsTypeForErrorReporting.toString(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null)]));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name, DiagnosticCode.Property_0_does_not_exist_on_value_of_type_1, [name.text(), originalLhsTypeForErrorReporting.toString(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null)]));
                     return this.getNewErrorTypeSymbol(rhsName);
                 }
             }
@@ -7090,7 +7090,7 @@ module TypeScript {
             }
 
             if (!childTypeSymbol) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(dottedNameAST.right, DiagnosticCode.The_property_0_does_not_exist_on_value_of_type_1, [dottedNameAST.right.text(), lhsType.toString(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null)]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(dottedNameAST.right, DiagnosticCode.Property_0_does_not_exist_on_value_of_type_1, [dottedNameAST.right.text(), lhsType.toString(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null)]));
                 return this.getNewErrorTypeSymbol(rhsName);
             }
 
@@ -8210,7 +8210,7 @@ module TypeScript {
             else {
                 return {
                     symbol: this.getNewErrorTypeSymbol(),
-                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.Value_of_type_0_is_not_indexable_by_type_1, [targetTypeSymbol.toString(), indexType.toString()])
+                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.Type_0_is_not_a_valid_index_expression_type, [indexType.toString()])
                 }
             }
         }

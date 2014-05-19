@@ -16,7 +16,7 @@
         var widths = enabled.map(function (e) {
             return e.xyxyxyx;  // error expected here
                      ~~~~~~~
-!!! unknownSymbolOffContextualType1.ts(16,18): error TS2094: The property 'xyxyxyx' does not exist on value of type 'HTMLElement'.
+!!! unknownSymbolOffContextualType1.ts(16,18): error TS2094: Property 'xyxyxyx' does not exist on value of type 'HTMLElement'.
         });
         var maxWidth = widths.reduce(function (a, b) {
             return a > b ? a : b;

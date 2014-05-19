@@ -25,7 +25,7 @@
 !!! staticVisibility.ts(18,9): error TS2095: Cannot find name 'v'.
             this.p = 0; // should be error
                  ~
-!!! staticVisibility.ts(19,14): error TS2094: The property 'p' does not exist on value of type 'typeof C1'.
+!!! staticVisibility.ts(19,14): error TS2094: Property 'p' does not exist on value of type 'typeof C1'.
             C1.s = 1; // should be ok
         }
     }

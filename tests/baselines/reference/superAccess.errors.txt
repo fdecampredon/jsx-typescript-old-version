@@ -9,7 +9,7 @@
         foo() {
             var l3 = super.S1;    // Expected => Error: Only public instance methods of the base class are accessible via the 'super' keyword
                            ~~
-!!! superAccess.ts(9,24): error TS2094: The property 'S1' does not exist on value of type 'MyBase'.
+!!! superAccess.ts(9,24): error TS2094: Property 'S1' does not exist on value of type 'MyBase'.
             var l4 = super.S2;    // Expected => Error: Only public instance methods of the base class are accessible via the 'super' keyword
                            ~~
 !!! superAccess.ts(10,24): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.

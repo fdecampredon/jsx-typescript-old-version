@@ -140,7 +140,7 @@
     new fn5((n) => n.substr(0));
     new fn5((n) => n.blah); // Error
                      ~~~~
-!!! overloadResolutionClassConstructors.ts(98,18): error TS2094: The property 'blah' does not exist on value of type 'string'.
+!!! overloadResolutionClassConstructors.ts(98,18): error TS2094: Property 'blah' does not exist on value of type 'string'.
     
     
     

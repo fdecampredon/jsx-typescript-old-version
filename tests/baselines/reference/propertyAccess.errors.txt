@@ -41,7 +41,7 @@
     // Dotted property access of property that doesn't exist on value's apparent type
     var cc = obj.qqq; // error
                  ~~~
-!!! propertyAccess.ts(37,14): error TS2094: The property 'qqq' does not exist on value of type '{ 10: string; x: string; y: number; z: { n: string; m: number; o: () => boolean; }; 'literal property': number; }'.
+!!! propertyAccess.ts(37,14): error TS2094: Property 'qqq' does not exist on value of type '{ 10: string; x: string; y: number; z: { n: string; m: number; o: () => boolean; }; 'literal property': number; }'.
     
     // Bracket notation property access using string literal value on type with property of that literal name
     var dd = obj['literal property'];
@@ -78,7 +78,7 @@
     // Bracket notation property access using value of other type on type with numeric index signature and no string index signature
     var ll = numIndex[window]; // Error
              ~~~~~~~~~~~~~~~~
-!!! propertyAccess.ts(72,10): error TS2008: Value of type '{ [n: number]: string; }' is not indexable by type 'any'.
+!!! propertyAccess.ts(72,10): error TS2008: Type 'any' is not a valid index expression type.
                       ~~~~~~
 !!! propertyAccess.ts(72,19): error TS2095: Cannot find name 'window'.
     
@@ -119,7 +119,7 @@
     // Bracket notation property access using values of other types on type with no index signatures
     var uu = noIndex[window]; // Error
              ~~~~~~~~~~~~~~~
-!!! propertyAccess.ts(109,10): error TS2008: Value of type 'typeof noIndex' is not indexable by type 'any'.
+!!! propertyAccess.ts(109,10): error TS2008: Type 'any' is not a valid index expression type.
                      ~~~~~~
 !!! propertyAccess.ts(109,18): error TS2095: Cannot find name 'window'.
     
@@ -162,6 +162,6 @@
     // Bracket notation property access using value of other type on type with numeric index signature and no string index signature and string index signature
     var zzzz = bothIndex[window]; // Error
                ~~~~~~~~~~~~~~~~~
-!!! propertyAccess.ts(132,12): error TS2008: Value of type '{ [n: string]: any; [m: number]: any; }' is not indexable by type 'any'.
+!!! propertyAccess.ts(132,12): error TS2008: Type 'any' is not a valid index expression type.
                          ~~~~~~
 !!! propertyAccess.ts(132,22): error TS2095: Cannot find name 'window'.

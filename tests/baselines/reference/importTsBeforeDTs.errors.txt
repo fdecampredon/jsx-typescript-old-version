@@ -2,7 +2,7 @@
     import foo = require("./foo_0");
     var z1 = foo.x + 10;   // Should error, as .ts preferred over .d.ts
                  ~
-!!! foo_1.ts(2,14): error TS2094: The property 'x' does not exist on value of type 'typeof foo'.
+!!! foo_1.ts(2,14): error TS2094: Property 'x' does not exist on value of type 'typeof foo'.
     var z2 = foo.y + 10; // Should resolve
     
 ==== tests/cases/compiler/foo_0.d.ts (0 errors) ====

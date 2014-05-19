@@ -4,7 +4,7 @@
     s.substring(3,4);
     s.subby(12);   // error unresolved
       ~~~~~
-!!! libMembers.ts(4,3): error TS2094: The property 'subby' does not exist on value of type 'string'.
+!!! libMembers.ts(4,3): error TS2094: Property 'subby' does not exist on value of type 'string'.
     String.fromCharCode(12);
     module M {
         export class C {
@@ -16,7 +16,7 @@
         a.push(new C());
         (new C()).prototype;
                   ~~~~~~~~~
-!!! libMembers.ts(12,15): error TS2094: The property 'prototype' does not exist on value of type 'C'.
+!!! libMembers.ts(12,15): error TS2094: Property 'prototype' does not exist on value of type 'C'.
     }
     
     

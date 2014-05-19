@@ -2,4 +2,4 @@
     declare function map<T, U>(f: (x: T) => U, xs: T[]): U[];
     map((a) => a.length, [1]);
                  ~~~~~~
-!!! genericFunctionTypedArgumentsAreFixed.ts(2,14): error TS2094: The property 'length' does not exist on value of type '{}'.
+!!! genericFunctionTypedArgumentsAreFixed.ts(2,14): error TS2094: Property 'length' does not exist on value of type '{}'.

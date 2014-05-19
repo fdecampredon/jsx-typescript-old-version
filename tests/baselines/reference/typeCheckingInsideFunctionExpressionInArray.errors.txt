@@ -8,7 +8,7 @@
 !!! typeCheckingInsideFunctionExpressionInArray.ts(3,5): error TS2011: Cannot convert 'Object' to 'string'.
         [1, 2, 3].NonexistantMethod();
                   ~~~~~~~~~~~~~~~~~
-!!! typeCheckingInsideFunctionExpressionInArray.ts(4,15): error TS2094: The property 'NonexistantMethod' does not exist on value of type 'number[]'.
+!!! typeCheckingInsideFunctionExpressionInArray.ts(4,15): error TS2094: Property 'NonexistantMethod' does not exist on value of type 'number[]'.
         derp();
         ~~~~
 !!! typeCheckingInsideFunctionExpressionInArray.ts(5,5): error TS2095: Cannot find name 'derp'.
