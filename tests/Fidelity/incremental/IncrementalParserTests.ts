@@ -422,7 +422,7 @@ module TypeScript {
             var newTextAndChange = withInsert(oldText, index, " => 1");
 
             // Note the decreased reuse of nodes compared to testStrictMode3
-            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 4);
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 7);
         }
 
         public static testGenerics2() {
@@ -470,7 +470,7 @@ module TypeScript {
             var newTextAndChange = withInsert(oldText, index, "Foo<Bar<");
 
             // Note the decreased reuse of nodes compared to testStrictMode3
-            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 4);
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, 5);
         }
 
         public static testGenerics6() {

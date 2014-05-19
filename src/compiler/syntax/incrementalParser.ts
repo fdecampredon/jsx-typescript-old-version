@@ -64,7 +64,7 @@ module TypeScript.IncrementalParser {
 
         // Start the cursor pointing at the first element in the source unit (if it exists).
         if (oldSourceUnit.moduleElements.length > 0) {
-            _oldSourceUnitCursor.pushElement(childAt(oldSourceUnit.moduleElements, 0), /*indexInParent:*/ 0);
+            _oldSourceUnitCursor.pushElement(childAt(oldSourceUnit.moduleElements, 0), /*parent:*/ oldSourceUnit.moduleElements, /*indexInParent:*/ 0);
         }
 
         // In general supporting multiple individual edits is just not that important.  So we 
@@ -187,27 +187,6 @@ module TypeScript.IncrementalParser {
         }
 
         function canReadFromOldSourceUnit() {
-            // If we're currently pinned, then do not want to touch the cursor.  Here's why.  First,
-            // recall that we're 'pinned' when we're speculatively parsing.  So say we were to allow
-            // returning old nodes/tokens while speculatively parsing. Then, the parser might start
-            // mutating the nodes and tokens we returned (i.e. by setting their parents).   Then, 
-            // when we rewound, those nodes and tokens would still have those updated parents.  
-            // Parents which we just decided we did *not* want to parse (hence why we rewound).  For
-            // Example, say we have something like:
-            //
-            //          var v = f<a,b,c>e;  // note: this is not generic.
-            //
-            // When incrementally parsing, we will need to speculatively parse to determine if the
-            // above is generic.  This will cause us to reuse the "a, b, c" tokens, and set their 
-            // parent to a new type argument list.  A type argument list we will then throw away once
-            // we decide that it isn't actually generic.  We will have now 'broken' the original tree.
-            //
-            // As such, the rule is simple.  We only return nodes/tokens from teh original tree if
-            // we know the parser will accept and consume them and never rewind back before them.
-            if (_scannerParserSource.isPinned()) {
-                return false;
-            }
-
             // If our current absolute position is in the middle of the changed range in the new text
             // then we definitely can't read from the old source unit right now.
             if (_changeRange !== null && _changeRangeNewSpan.intersectsWithPosition(absolutePosition())) {
@@ -498,8 +477,6 @@ module TypeScript.IncrementalParser {
                 // Move the cursor past this token.
                 _oldSourceUnitCursor.moveToNextSibling();
 
-                // Debug.assert(!_normalParserSource.isPinned());
-
                 // Update the underlying source with where it should now be currently pointing. We 
                 // don't need to do this when the token came from the new text as the source will
                 // automatically be placed in the right position.
@@ -563,13 +540,57 @@ module TypeScript.IncrementalParser {
         };
     }
 
+    // The incremental parser works by using a 'cursor' to point at the node or token in the old 
+    // tree that corresponds to the position that the parser is in while parsing the new text.
+    // As the parser consumes nodes and tokens from teh old tree, we then update the cursor to move
+    // forward accordingly.
+    //
+    // To represent this 'cursor' we store a 'path' of cursor 'pieces'.  Each piece stores the 
+    // node, token, or list it is pointing at,; the element in the original tree it was parented
+    // by; and the index in its parent that it was at.  With this information the cursor can easily
+    // move around the tree as necessary.
+    //
+    // NOTE: it is easy to wonder "why is 'parent' stored in the cursor piece?"  After all, we have
+    // the element.  Certainly we could get to its parent using its own .parent property.  However,
+    // during incremental parsing we must *never* examine the .parent property of a node or token.
+    // This property can, and will, be changed by the parser (especially during speculative parsing).
+    // For example say we have something like:
+    //
+    //          var v = f<a,b,c>e;  // note: this is not generic.
+    //
+    // When incrementally parsing, we will need to speculatively parse to determine if the above is 
+    // generic.  This will cause us to reuse the "a, b, c" tokens, and set their  parent to a *new 
+    // type argument list*.  A type argument list we will then throw away once we decide that it 
+    // isn't actually a generic argument list and rewind back to the <. 
+    //
+    // As such, the 'parent' of these tokens that were examined during speculative parsing will now
+    // have been mutated.  So, as we can never trust the original parent pointers, as we move down
+    // the original tree, creating the cursors, we store what the parent would be regardless of 
+    // what the parser actually changes.
+
     interface SyntaxCursorPiece {
         element: ISyntaxElement;
+        parent: ISyntaxElement;
         indexInParent: number
     }
 
-    function createSyntaxCursorPiece(element: ISyntaxElement, indexInParent: number) {
-        return { element: element, indexInParent: indexInParent };
+    interface SyntaxCursor {
+        pieces: SyntaxCursorPiece[];
+
+        clean(): void;
+        isFinished(): boolean;
+        moveToFirstChild(): void;
+        moveToFirstToken(): void;
+        moveToNextSibling(): void;
+        currentNodeOrToken(): ISyntaxNodeOrToken;
+        currentNode(): ISyntaxNode;
+        currentToken(): ISyntaxToken;
+        pushElement(element: ISyntaxElement, parent: ISyntaxElement, indexInParent: number): void;
+        deepCopyFrom(other: SyntaxCursor): void;
+    }
+
+    function createSyntaxCursorPiece(element: ISyntaxElement, parent: ISyntaxElement, indexInParent: number) {
+        return { element: element, parent: parent, indexInParent: indexInParent };
     }
 
     // Pool syntax cursors so we don't churn too much memory when we need temporary cursors.  
@@ -612,21 +633,6 @@ module TypeScript.IncrementalParser {
         return newCursor;
     }
 
-    interface SyntaxCursor {
-        pieces: SyntaxCursorPiece[];
-
-        clean(): void;
-        isFinished(): boolean;
-        moveToFirstChild(): void;
-        moveToFirstToken(): void;
-        moveToNextSibling(): void;
-        currentNodeOrToken(): ISyntaxNodeOrToken;
-        currentNode(): ISyntaxNode;
-        currentToken(): ISyntaxToken;
-        pushElement(element: ISyntaxElement, indexInParent: number): void;
-        deepCopyFrom(other: SyntaxCursor): void;
-    }
-
     function createSyntaxCursor(): SyntaxCursor {
         // Our list of path pieces.  The piece pointed to by 'currentPieceIndex' must be a node or
         // token.  However, pieces earlier than that may point to list nodes.
@@ -635,6 +641,12 @@ module TypeScript.IncrementalParser {
         // list, we just will change currentPieceIndex so we can reuse that piece later.
         var pieces: SyntaxCursorPiece[] = [];
         var currentPieceIndex: number = -1;
+
+        function cleanSyntaxCursorPiece(piece: SyntaxCursorPiece) {
+            piece.element = null;
+            piece.parent = null;
+            piece.indexInParent = -1;
+        }
 
         // Cleans up this cursor so that it doesn't have any references to actual syntax nodes.
         // This sould be done before returning the cursor to the pool so that the Parser module
@@ -647,8 +659,7 @@ module TypeScript.IncrementalParser {
                     break;
                 }
 
-                piece.element = null;
-                piece.indexInParent = -1;
+                cleanSyntaxCursorPiece(piece);
             }
 
             currentPieceIndex = -1;
@@ -664,7 +675,7 @@ module TypeScript.IncrementalParser {
                     break;
                 }
 
-                pushElement(piece.element, piece.indexInParent);
+                pushElement(piece.element, piece.parent, piece.indexInParent);
             }
 
             // Debug.assert(currentPieceIndex === other.currentPieceIndex);
@@ -714,7 +725,7 @@ module TypeScript.IncrementalParser {
                 var child = childAt(nodeOrToken, i);
                 if (child !== null && !isShared(child)) {
                     // Great, we found a real child.  Push that.
-                    pushElement(child, /*indexInParent:*/ i);
+                    pushElement(child, /*parent:*/ nodeOrToken, /*indexInParent:*/ i);
 
                     // If it was a list, make sure we're pointing at its first element.  We know we
                     // must have one because this is a non-shared list.
@@ -734,7 +745,13 @@ module TypeScript.IncrementalParser {
             while (!isFinished()) {
                 // first look to our parent and see if it has a sibling of us that we can move to.
                 var currentPiece = pieces[currentPieceIndex];
-                var parent = currentPiece.element.parent;
+
+                // Note: it is essential that we examine piece.parent here and not piece.element.parent.
+                // The current element may be something that we've already mutated the parent on as we
+                // were incrementally parsing (especially during speculative scenarios).  As such, we
+                // cannot trust it.  Instead, we use the parent stored in the cursor piece when we 
+                // created it.
+                var parent = currentPiece.parent;
 
                 // We start searching at the index one past our own index in the parent.
                 for (var i = currentPiece.indexInParent + 1, n = childCount(parent); i < n; i++) {
@@ -757,8 +774,7 @@ module TypeScript.IncrementalParser {
 
                 // Clear the data from the old piece.  We don't want to keep any elements around
                 // unintentionally.
-                currentPiece.element = null;
-                currentPiece.indexInParent = -1;
+                cleanSyntaxCursorPiece(currentPiece);
 
                 // Point at the parent.  if we move past the top of the path, then we're finished.
                 currentPieceIndex--;
@@ -773,22 +789,23 @@ module TypeScript.IncrementalParser {
                 // we make sure to filter that out before pushing any children.
                 // Debug.assert(childCount(element) > 0);
 
-                pushElement(childAt(element, 0), /*indexInParent:*/ 0);
+                pushElement(childAt(element, 0), /*parent:*/ element, /*indexInParent:*/ 0);
             }
         }
 
-        function pushElement(element: ISyntaxElement, indexInParent: number): void {
+        function pushElement(element: ISyntaxElement, parent: ISyntaxElement, indexInParent: number): void {
             // Debug.assert(element !== null);
             // Debug.assert(indexInParent >= 0);
             currentPieceIndex++;
 
             // Reuse an existing piece if we have one.  Otherwise, push a new piece to our list.
             if (currentPieceIndex === pieces.length) {
-                pieces.push(createSyntaxCursorPiece(element, indexInParent));
+                pieces.push(createSyntaxCursorPiece(element, parent, indexInParent));
             }
             else {
                 var piece = pieces[currentPieceIndex];
                 piece.element = element;
+                piece.parent = parent;
                 piece.indexInParent = indexInParent;
             }
         }
