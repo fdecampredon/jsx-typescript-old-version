@@ -53,7 +53,7 @@ module TypeScript {
                 this.tryShiftOrGrowWindow();
             }
 
-            var item = this.fetchNextItem.apply(args);
+            var item = this.fetchNextItem.apply(undefined, args);
 
             this.window[this.windowCount] = item;
 

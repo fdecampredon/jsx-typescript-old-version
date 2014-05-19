@@ -258,6 +258,11 @@ module TypeScript.IncrementalParser {
             // Just delegate to the underlying source to handle 
             return _scannerParserSource.currentContextualToken();
         }
+        
+        function currentXJSToken(): ISyntaxToken {
+            // Just delegate to the underlying source to handle 
+            return _scannerParserSource.currentXJSToken();
+        }
 
         function syncCursorToNewTextIfBehind() {
             while (true) {
@@ -529,6 +534,7 @@ module TypeScript.IncrementalParser {
             currentNode: currentNode,
             currentToken: currentToken,
             currentContextualToken: currentContextualToken,
+            currentXJSToken: currentXJSToken,
             peekToken: peekToken,
             consumeNode: consumeNode,
             consumeToken: consumeToken,

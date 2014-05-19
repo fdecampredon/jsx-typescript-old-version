@@ -1570,6 +1570,7 @@ module TypeScript.Scanner {
         }
         
         function scanXJSText(ch: number): SyntaxKind {
+            var MathPrototype = Math;
             while (true) {
                 if (ch === CharacterCodes.openBrace || ch === CharacterCodes.lessThan) {
                     index--;
@@ -1732,10 +1733,10 @@ module TypeScript.Scanner {
             rewindPointPoolCount++;
         }
 
-        function fetchNextItem(allowContextualToken: boolean): ISyntaxToken {
+        function fetchNextItem(allowContextualToken: boolean, inJSXElement: boolean): ISyntaxToken {
             // Assert disabled because it is actually expensive enugh to affect perf.
             // Debug.assert(spaceAvailable > 0);
-            var token = scanner.scan(allowContextualToken);
+            var token = scanner.scan(allowContextualToken, inJSXElement);
 
             if (lastDiagnostic === null) {
                 return token;
@@ -1821,6 +1822,11 @@ module TypeScript.Scanner {
 
             return token;
         }
+        
+        function currentXJSToken(): ISyntaxToken {
+            resetToPosition(_absolutePosition);
+            return slidingWindow.currentItem(false, true)
+        }
 
         return {
             text: text,
@@ -1829,6 +1835,7 @@ module TypeScript.Scanner {
             currentNode: currentNode,
             currentToken: currentToken,
             currentContextualToken: currentContextualToken,
+            currentXJSToken: currentXJSToken,
             peekToken: peekToken,
             consumeNode: consumeNode,
             consumeToken: consumeToken,
