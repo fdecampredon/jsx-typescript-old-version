@@ -1731,4 +1731,20 @@
         "category": "Error",
         "code": 7018
     },
+    "Unexpected end of file": { 
+        "code": 10001, 
+        "category": "Error" 
+    },
+    "Expected corresponding XJS closing tag for {0}": {
+        "code": 10002, 
+        "category": "Error" 
+    },
+    "XJS attributes must only be assigned a non-empty expression": {
+        "code": 10003, 
+        "category": "Error" 
+    },
+    "XJS value should be either an expression or a quoted XJS text": {
+        "code": 10004, 
+        "category": "Error" 
+    },
 }

@@ -433,5 +433,9 @@ module TypeScript {
         _0_which_lacks_get_accessor_and_parameter_type_annotation_on_set_accessor_implicitly_has_an_any_type: "'{0}', which lacks 'get' accessor and parameter type annotation on 'set' accessor, implicitly has an 'any' type.",
         Index_signature_of_object_type_implicitly_has_an_any_type: "Index signature of object type implicitly has an 'any' type.",
         Object_literal_s_property_0_implicitly_has_an_any_type_from_widening: "Object literal's property '{0}' implicitly has an 'any' type from widening.",
+        Unexpected_end_of_file: "Unexpected end of file",
+        Expected_xjs_closing_tag:  "Expected corresponding XJS closing tag for {0}",
+        Xjs_attributes_must_only_be_assigned_a_non_empty_expression: "XJS attributes must only be assigned a non-empty expression",
+        Xjs_value_should_be_either_an_expression_or_a_quoted_XJS_text: "XJS value should be either an expression or a quoted XJS text",
     };
 }
