@@ -32,7 +32,7 @@
             worksToo():R {
                 return <R>({ oneI: this });
                        ~~~~~~~~~~~~~~~~~~~
-!!! fuzzy.ts(25,20): error TS2012: Cannot convert '{ oneI: C; }' to 'R':
+!!! fuzzy.ts(25,20): error TS2237: Neither type '{ oneI: C; }' nor type 'R' is assignable to the other:
 !!! 	Type '{ oneI: C; }' is missing property 'anything' from type 'R'.
 !!! 	Types of property 'oneI' of types 'R' and '{ oneI: C; }' are incompatible:
 !!! 		Type 'I' is missing property 'x' from type 'C'.

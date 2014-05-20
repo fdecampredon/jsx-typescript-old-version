@@ -13,7 +13,7 @@
 !!! 		Call signatures of types '(x: A<number>) => void' and '(x: number) => void' are incompatible:
 !!! 			Type 'Number' is missing property 'foo' from type 'A<number>'.
                         ~~~~~~~~~~~~~~~~~
-!!! genericTypeAssertions1.ts(4,21): error TS2012: Cannot convert 'A<number>' to 'A<A<number>>':
+!!! genericTypeAssertions1.ts(4,21): error TS2237: Neither type 'A<number>' nor type 'A<A<number>>' is assignable to the other:
 !!! 	Types of property 'foo' of types 'A<number>' and 'A<A<number>>' are incompatible:
 !!! 		Call signatures of types '(x: number) => void' and '(x: A<number>) => void' are incompatible:
 !!! 			Type 'Number' is missing property 'foo' from type 'A<number>'.

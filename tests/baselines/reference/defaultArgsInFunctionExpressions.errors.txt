@@ -25,7 +25,7 @@
     // Contextually type the default arg with the type annotation
     var f3 = function (a: (s: string) => any = (s) => <number>s) { };
                                                       ~~~~~~~~~
-!!! defaultArgsInFunctionExpressions.ts(14,51): error TS2011: Cannot convert 'string' to 'number'.
+!!! defaultArgsInFunctionExpressions.ts(14,51): error TS2236: Neither type 'string' nor type 'number' is assignable to the other.
     
     // Type check using the function's contextual type
     var f4: (a: number) => void = function (a = "") { };
@@ -35,7 +35,7 @@
     // Contextually type the default arg using the function's contextual type
     var f5: (a: (s: string) => any) => void = function (a = s => <number>s) { };
                                                                  ~~~~~~~~~
-!!! defaultArgsInFunctionExpressions.ts(20,62): error TS2011: Cannot convert 'string' to 'number'.
+!!! defaultArgsInFunctionExpressions.ts(20,62): error TS2236: Neither type 'string' nor type 'number' is assignable to the other.
     
     // Instantiated module
     module T { }

@@ -1,6 +1,6 @@
 ==== tests/cases/compiler/contextualTyping39.ts (1 errors) ====
     var foo = <{ (): number; }> function() { return "err"; };
               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! contextualTyping39.ts(1,11): error TS2012: Cannot convert '() => string' to '() => number':
+!!! contextualTyping39.ts(1,11): error TS2237: Neither type '() => string' nor type '() => number' is assignable to the other:
 !!! 	Call signatures of types '() => string' and '() => number' are incompatible.
 !!! 	Call signatures of types '() => number' and '() => string' are incompatible.

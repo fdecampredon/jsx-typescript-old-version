@@ -312,6 +312,8 @@ module TypeScript {
         Duplicate_number_index_signature: "Duplicate number index signature.",
         All_declarations_of_an_interface_must_have_identical_type_parameters: "All declarations of an interface must have identical type parameters.",
         Expression_resolves_to_variable_declaration_i_that_compiler_uses_to_initialize_rest_parameter: "Expression resolves to variable declaration '_i' that compiler uses to initialize rest parameter.",
+        Neither_type_0_nor_type_1_is_assignable_to_the_other: "Neither type '{0}' nor type '{1}' is assignable to the other.",
+        Neither_type_0_nor_type_1_is_assignable_to_the_other_NL_2: "Neither type '{0}' nor type '{1}' is assignable to the other:{NL}{2}",
         Type_0_is_missing_property_1_from_type_2: "Type '{0}' is missing property '{1}' from type '{2}'.",
         Types_of_property_0_of_types_1_and_2_are_incompatible: "Types of property '{0}' of types '{1}' and '{2}' are incompatible.",
         Types_of_property_0_of_types_1_and_2_are_incompatible_NL_3: "Types of property '{0}' of types '{1}' and '{2}' are incompatible:{NL}{3}",

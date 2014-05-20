@@ -322,7 +322,7 @@
     var obj69: i7 = new obj66;
     var obj70: i7 = <i7>new Base;
                     ~~~~~~~~~~~~
-!!! intTypeCheck.ts(183,17): error TS2012: Cannot convert 'Base' to 'i7':
+!!! intTypeCheck.ts(183,17): error TS2237: Neither type 'Base' nor type 'i7' is assignable to the other:
 !!! 	Type 'i7' requires a construct signature, but type 'Base' lacks one.
 !!! 	Type 'i7' is missing property 'foo' from type 'Base'.
     var obj71: i7 = null;

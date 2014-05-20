@@ -313,6 +313,8 @@ module TypeScript {
     "Duplicate number index signature.": { "code": 2233, "category": DiagnosticCategory.Error },
     "All declarations of an interface must have identical type parameters.": { "code": 2234, "category": DiagnosticCategory.Error },
     "Expression resolves to variable declaration '_i' that compiler uses to initialize rest parameter.": { "code": 2235, "category": DiagnosticCategory.Error },
+    "Neither type '{0}' nor type '{1}' is assignable to the other.": { "code": 2236, "category": DiagnosticCategory.Error },
+    "Neither type '{0}' nor type '{1}' is assignable to the other:{NL}{2}": { "code": 2237, "category": DiagnosticCategory.Error },
     "Type '{0}' is missing property '{1}' from type '{2}'.": { "code": 4000, "category": DiagnosticCategory.NoPrefix },
     "Types of property '{0}' of types '{1}' and '{2}' are incompatible.": { "code": 4001, "category": DiagnosticCategory.NoPrefix },
     "Types of property '{0}' of types '{1}' and '{2}' are incompatible:{NL}{3}": { "code": 4002, "category": DiagnosticCategory.NoPrefix },

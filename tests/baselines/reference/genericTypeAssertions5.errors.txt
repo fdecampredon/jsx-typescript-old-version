@@ -29,10 +29,10 @@
         y = <T>a;
         y = <T>b; // error: cannot convert B to T
             ~~~~
-!!! genericTypeAssertions5.ts(23,9): error TS2012: Cannot convert 'B' to 'T':
+!!! genericTypeAssertions5.ts(23,9): error TS2237: Neither type 'B' nor type 'T' is assignable to the other:
 !!! 	Type 'A' is missing property 'bar' from type 'B'.
         y = <T>c; // error: cannot convert C to T
             ~~~~
-!!! genericTypeAssertions5.ts(24,9): error TS2012: Cannot convert 'C' to 'T':
+!!! genericTypeAssertions5.ts(24,9): error TS2237: Neither type 'C' nor type 'T' is assignable to the other:
 !!! 	Type 'A' is missing property 'baz' from type 'C'.
     }

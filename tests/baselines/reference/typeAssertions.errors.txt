@@ -33,7 +33,7 @@
     someBase = <SomeBase>someBase;
     someBase = <SomeBase>someOther; // Error
                ~~~~~~~~~~~~~~~~~~~
-!!! typeAssertions.ts(31,12): error TS2012: Cannot convert 'SomeOther' to 'SomeBase':
+!!! typeAssertions.ts(31,12): error TS2237: Neither type 'SomeOther' nor type 'SomeBase' is assignable to the other:
 !!! 	Type 'SomeOther' is missing property 'p' from type 'SomeBase'.
 !!! 	Type 'SomeBase' is missing property 'q' from type 'SomeOther'.
     
@@ -41,18 +41,18 @@
     someDerived = <SomeDerived>someBase;
     someDerived = <SomeDerived>someOther; // Error
                   ~~~~~~~~~~~~~~~~~~~~~~
-!!! typeAssertions.ts(35,15): error TS2012: Cannot convert 'SomeOther' to 'SomeDerived':
+!!! typeAssertions.ts(35,15): error TS2237: Neither type 'SomeOther' nor type 'SomeDerived' is assignable to the other:
 !!! 	Type 'SomeOther' is missing property 'x' from type 'SomeDerived'.
 !!! 	Type 'SomeDerived' is missing property 'q' from type 'SomeOther'.
     
     someOther = <SomeOther>someDerived; // Error
                 ~~~~~~~~~~~~~~~~~~~~~~
-!!! typeAssertions.ts(37,13): error TS2012: Cannot convert 'SomeDerived' to 'SomeOther':
+!!! typeAssertions.ts(37,13): error TS2237: Neither type 'SomeDerived' nor type 'SomeOther' is assignable to the other:
 !!! 	Type 'SomeDerived' is missing property 'q' from type 'SomeOther'.
 !!! 	Type 'SomeOther' is missing property 'x' from type 'SomeDerived'.
     someOther = <SomeOther>someBase; // Error
                 ~~~~~~~~~~~~~~~~~~~
-!!! typeAssertions.ts(38,13): error TS2012: Cannot convert 'SomeBase' to 'SomeOther':
+!!! typeAssertions.ts(38,13): error TS2237: Neither type 'SomeBase' nor type 'SomeOther' is assignable to the other:
 !!! 	Type 'SomeBase' is missing property 'q' from type 'SomeOther'.
 !!! 	Type 'SomeOther' is missing property 'p' from type 'SomeBase'.
     someOther = <SomeOther>someOther;
