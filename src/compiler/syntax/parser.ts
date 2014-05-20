@@ -3065,8 +3065,9 @@ module TypeScript.Parser {
                     _currentTokenKind = currentXJSToken().kind()
                 }
                 closingElement = parseXJSClosingElement();
-                var tagName = getQualifiedXJSName(openingElement.name); 
-                if (getQualifiedXJSName(closingElement.name) !== tagName) {
+                var tagName = getQualifiedXJSName(openingElement.name),
+                    closingTagName = getQualifiedXJSName(closingElement.name)
+                if (closingTagName && closingTagName !== tagName) {
                     var diagnostic = new Diagnostic(
                         fileName, source.text.lineMap(),
                         start(closingElement.name), width(closingElement.name),

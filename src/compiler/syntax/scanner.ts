@@ -1577,6 +1577,7 @@ module TypeScript.Scanner {
                     break;
                 }
                 else if (isNaN(ch)) {
+                    index--;
                     reportDiagnostic(MathPrototype.min(index, end), 1, DiagnosticCode.Unexpected_end_of_file, null);
                     break;
                 }
