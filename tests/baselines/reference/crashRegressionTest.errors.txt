@@ -16,7 +16,7 @@
             public text(value?: string): any {
                 this._templateStorage.templateSources[this._name] = value;
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! crashRegressionTest.ts(16,13): error TS2008: An index expression must be 'string', 'number', or 'any'.
+!!! crashRegressionTest.ts(16,13): error TS2008: An index expression argument must be 'string', 'number', or 'any'.
                                                            ~~~~~
 !!! crashRegressionTest.ts(16,56): error TS2094: Property '_name' does not exist on value of type 'StringTemplate'.
             }

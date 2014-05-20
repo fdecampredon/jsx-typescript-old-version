@@ -15,10 +15,10 @@
     function f1<T, U>(x: T, y: U) {
         var r = true ? x : y; // error
                 ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(12,13): error TS2226: Type of conditional '{}' must be identical to 'T' or 'U'.
+!!! subtypesOfTypeParameter.ts(12,13): error TS2226: No best common type exists between 'T' and 'U'.
         var r = true ? y : x; // error
                 ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(13,13): error TS2226: Type of conditional '{}' must be identical to 'U' or 'T'.
+!!! subtypesOfTypeParameter.ts(13,13): error TS2226: No best common type exists between 'U' and 'T'.
     }
     
     interface I1 { foo: number; }
@@ -45,123 +45,123 @@
     
         var r1 = true ? 1 : x; 
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(38,14): error TS2226: Type of conditional '{}' must be identical to 'number' or 'T'.
+!!! subtypesOfTypeParameter.ts(38,14): error TS2226: No best common type exists between 'number' and 'T'.
         var r1 = true ? x : 1;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(39,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'number'.
+!!! subtypesOfTypeParameter.ts(39,14): error TS2226: No best common type exists between 'T' and 'number'.
     
         var r2 = true ? '' : x;
                  ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(41,14): error TS2226: Type of conditional '{}' must be identical to 'string' or 'T'.
+!!! subtypesOfTypeParameter.ts(41,14): error TS2226: No best common type exists between 'string' and 'T'.
         var r2 = true ? x : '';
                  ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(42,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'string'.
+!!! subtypesOfTypeParameter.ts(42,14): error TS2226: No best common type exists between 'T' and 'string'.
     
         var r3 = true ? true : x;
                  ~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(44,14): error TS2226: Type of conditional '{}' must be identical to 'boolean' or 'T'.
+!!! subtypesOfTypeParameter.ts(44,14): error TS2226: No best common type exists between 'boolean' and 'T'.
         var r3 = true ? x : true;
                  ~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(45,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'boolean'.
+!!! subtypesOfTypeParameter.ts(45,14): error TS2226: No best common type exists between 'T' and 'boolean'.
     
         var r4 = true ? new Date() : x;
                  ~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(47,14): error TS2226: Type of conditional '{}' must be identical to 'Date' or 'T'.
+!!! subtypesOfTypeParameter.ts(47,14): error TS2226: No best common type exists between 'Date' and 'T'.
         var r4 = true ? x : new Date();
                  ~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(48,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'Date'.
+!!! subtypesOfTypeParameter.ts(48,14): error TS2226: No best common type exists between 'T' and 'Date'.
     
         var r5 = true ? /1/ : x;
                  ~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(50,14): error TS2226: Type of conditional '{}' must be identical to 'RegExp' or 'T'.
+!!! subtypesOfTypeParameter.ts(50,14): error TS2226: No best common type exists between 'RegExp' and 'T'.
         var r5 = true ? x : /1/;
                  ~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(51,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'RegExp'.
+!!! subtypesOfTypeParameter.ts(51,14): error TS2226: No best common type exists between 'T' and 'RegExp'.
     
         var r6 = true ? { foo: 1 } : x;
                  ~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(53,14): error TS2226: Type of conditional '{}' must be identical to '{ foo: number; }' or 'T'.
+!!! subtypesOfTypeParameter.ts(53,14): error TS2226: No best common type exists between '{ foo: number; }' and 'T'.
         var r6 = true ? x : { foo: 1 };
                  ~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(54,14): error TS2226: Type of conditional '{}' must be identical to 'T' or '{ foo: number; }'.
+!!! subtypesOfTypeParameter.ts(54,14): error TS2226: No best common type exists between 'T' and '{ foo: number; }'.
     
         var r7 = true ? () => { } : x;
                  ~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(56,14): error TS2226: Type of conditional '{}' must be identical to '() => void' or 'T'.
+!!! subtypesOfTypeParameter.ts(56,14): error TS2226: No best common type exists between '() => void' and 'T'.
         var r7 = true ? x : () => { };
                  ~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(57,14): error TS2226: Type of conditional '{}' must be identical to 'T' or '() => void'.
+!!! subtypesOfTypeParameter.ts(57,14): error TS2226: No best common type exists between 'T' and '() => void'.
     
         var r8 = true ? <T>(x: T) => { return x } : x;
                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(59,14): error TS2226: Type of conditional '{}' must be identical to '<T>(x: T) => T' or 'T'.
+!!! subtypesOfTypeParameter.ts(59,14): error TS2226: No best common type exists between '<T>(x: T) => T' and 'T'.
         var r8b = true ? x : <T>(x: T) => { return x }; // type parameters not identical across declarations
                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(60,15): error TS2226: Type of conditional '{}' must be identical to 'T' or '<T>(x: T) => T'.
+!!! subtypesOfTypeParameter.ts(60,15): error TS2226: No best common type exists between 'T' and '<T>(x: T) => T'.
     
         var i1: I1;
         var r9 = true ? i1 : x;
                  ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(63,14): error TS2226: Type of conditional '{}' must be identical to 'I1' or 'T'.
+!!! subtypesOfTypeParameter.ts(63,14): error TS2226: No best common type exists between 'I1' and 'T'.
         var r9 = true ? x : i1;
                  ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(64,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'I1'.
+!!! subtypesOfTypeParameter.ts(64,14): error TS2226: No best common type exists between 'T' and 'I1'.
     
         var c1: C1;
         var r10 = true ? c1 : x;
                   ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(67,15): error TS2226: Type of conditional '{}' must be identical to 'C1' or 'T'.
+!!! subtypesOfTypeParameter.ts(67,15): error TS2226: No best common type exists between 'C1' and 'T'.
         var r10 = true ? x : c1;
                   ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(68,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'C1'.
+!!! subtypesOfTypeParameter.ts(68,15): error TS2226: No best common type exists between 'T' and 'C1'.
     
     
         var c2: C2<number>;
         var r12 = true ? c2 : x;
                   ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(72,15): error TS2226: Type of conditional '{}' must be identical to 'C2<number>' or 'T'.
+!!! subtypesOfTypeParameter.ts(72,15): error TS2226: No best common type exists between 'C2<number>' and 'T'.
         var r12 = true ? x : c2;
                   ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(73,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'C2<number>'.
+!!! subtypesOfTypeParameter.ts(73,15): error TS2226: No best common type exists between 'T' and 'C2<number>'.
     
     
         var r13 = true ? E : x;
                   ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(76,15): error TS2226: Type of conditional '{}' must be identical to 'typeof E' or 'T'.
+!!! subtypesOfTypeParameter.ts(76,15): error TS2226: No best common type exists between 'typeof E' and 'T'.
         var r13 = true ? x : E;
                   ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(77,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'typeof E'.
+!!! subtypesOfTypeParameter.ts(77,15): error TS2226: No best common type exists between 'T' and 'typeof E'.
     
         var r14 = true ? E.A : x;
                   ~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(79,15): error TS2226: Type of conditional '{}' must be identical to 'E' or 'T'.
+!!! subtypesOfTypeParameter.ts(79,15): error TS2226: No best common type exists between 'E' and 'T'.
         var r14 = true ? x : E.A;
                   ~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(80,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'E'.
+!!! subtypesOfTypeParameter.ts(80,15): error TS2226: No best common type exists between 'T' and 'E'.
     
         var af: typeof f;
         var r15 = true ? af : x;
                   ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(83,15): error TS2226: Type of conditional '{}' must be identical to 'typeof f' or 'T'.
+!!! subtypesOfTypeParameter.ts(83,15): error TS2226: No best common type exists between 'typeof f' and 'T'.
         var r15 = true ? x : af;
                   ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(84,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'typeof f'.
+!!! subtypesOfTypeParameter.ts(84,15): error TS2226: No best common type exists between 'T' and 'typeof f'.
     
         var ac: typeof c;
         var r16 = true ? ac : x;
                   ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(87,15): error TS2226: Type of conditional '{}' must be identical to 'typeof c' or 'T'.
+!!! subtypesOfTypeParameter.ts(87,15): error TS2226: No best common type exists between 'typeof c' and 'T'.
         var r16 = true ? x : ac;
                   ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(88,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'typeof c'.
+!!! subtypesOfTypeParameter.ts(88,15): error TS2226: No best common type exists between 'T' and 'typeof c'.
     
         function f17<T>(a: T) {
             var r17 = true ? x : a;
                       ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(91,19): error TS2226: Type of conditional '{}' must be identical to 'T' or 'T'.
+!!! subtypesOfTypeParameter.ts(91,19): error TS2226: No best common type exists between 'T' and 'T'.
             var r17 = true ? a : x;
                       ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(92,19): error TS2226: Type of conditional '{}' must be identical to 'T' or 'T'.
+!!! subtypesOfTypeParameter.ts(92,19): error TS2226: No best common type exists between 'T' and 'T'.
         }
     
         function f18<T, U extends T>(a: U) {
@@ -169,10 +169,10 @@
 !!! subtypesOfTypeParameter.ts(95,21): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
             var r18 = true ? x : a;
                       ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(96,19): error TS2226: Type of conditional '{}' must be identical to 'T' or 'U'.
+!!! subtypesOfTypeParameter.ts(96,19): error TS2226: No best common type exists between 'T' and 'U'.
             var r18 = true ? a : x;
                       ~~~~~~~~~~~~
-!!! subtypesOfTypeParameter.ts(97,19): error TS2226: Type of conditional '{}' must be identical to 'U' or 'T'.
+!!! subtypesOfTypeParameter.ts(97,19): error TS2226: No best common type exists between 'U' and 'T'.
         }
     
         var r19 = true ? new Object() : x; // BCT is Object

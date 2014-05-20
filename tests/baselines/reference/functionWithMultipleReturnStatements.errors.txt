@@ -16,7 +16,7 @@
     ~~~~~
     }
     ~
-!!! functionWithMultipleReturnStatements.ts(4,1): error TS2198: Return expressions have no best common type.
+!!! functionWithMultipleReturnStatements.ts(4,1): error TS2198: No best common type exists among return expressions.
     
     function f2() {
     ~~~~~~~~~~~~~~~
@@ -36,7 +36,7 @@
     ~~~~~
     }
     ~
-!!! functionWithMultipleReturnStatements.ts(12,1): error TS2198: Return expressions have no best common type.
+!!! functionWithMultipleReturnStatements.ts(12,1): error TS2198: No best common type exists among return expressions.
     
     function f3() {
     ~~~~~~~~~~~~~~~
@@ -54,7 +54,7 @@
     ~~~~~
     }
     ~
-!!! functionWithMultipleReturnStatements.ts(22,1): error TS2198: Return expressions have no best common type.
+!!! functionWithMultipleReturnStatements.ts(22,1): error TS2198: No best common type exists among return expressions.
     
     function f4() {
     ~~~~~~~~~~~~~~~
@@ -78,7 +78,7 @@
     ~~~~~
     }
     ~
-!!! functionWithMultipleReturnStatements.ts(31,1): error TS2198: Return expressions have no best common type.
+!!! functionWithMultipleReturnStatements.ts(31,1): error TS2198: No best common type exists among return expressions.
     
     function f5() {
     ~~~~~~~~~~~~~~~
@@ -88,7 +88,7 @@
     ~~~~~~~~~~~~~~
     }
     ~
-!!! functionWithMultipleReturnStatements.ts(43,1): error TS2198: Return expressions have no best common type.
+!!! functionWithMultipleReturnStatements.ts(43,1): error TS2198: No best common type exists among return expressions.
     
     function f6<T, U>(x: T, y:U) {
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,7 +104,7 @@
     ~~~~~
     }
     ~
-!!! functionWithMultipleReturnStatements.ts(48,1): error TS2198: Return expressions have no best common type.
+!!! functionWithMultipleReturnStatements.ts(48,1): error TS2198: No best common type exists among return expressions.
     
     function f8<T extends U, U extends V, V>(x: T, y: U) {
                 ~~~~~~~~~~~

@@ -78,7 +78,7 @@
     // Bracket notation property access using value of other type on type with numeric index signature and no string index signature
     var ll = numIndex[window]; // Error
              ~~~~~~~~~~~~~~~~
-!!! propertyAccess.ts(72,10): error TS2008: An index expression must be 'string', 'number', or 'any'.
+!!! propertyAccess.ts(72,10): error TS2008: An index expression argument must be 'string', 'number', or 'any'.
                       ~~~~~~
 !!! propertyAccess.ts(72,19): error TS2095: Cannot find name 'window'.
     
@@ -119,7 +119,7 @@
     // Bracket notation property access using values of other types on type with no index signatures
     var uu = noIndex[window]; // Error
              ~~~~~~~~~~~~~~~
-!!! propertyAccess.ts(109,10): error TS2008: An index expression must be 'string', 'number', or 'any'.
+!!! propertyAccess.ts(109,10): error TS2008: An index expression argument must be 'string', 'number', or 'any'.
                      ~~~~~~
 !!! propertyAccess.ts(109,18): error TS2095: Cannot find name 'window'.
     
@@ -162,6 +162,6 @@
     // Bracket notation property access using value of other type on type with numeric index signature and no string index signature and string index signature
     var zzzz = bothIndex[window]; // Error
                ~~~~~~~~~~~~~~~~~
-!!! propertyAccess.ts(132,12): error TS2008: An index expression must be 'string', 'number', or 'any'.
+!!! propertyAccess.ts(132,12): error TS2008: An index expression argument must be 'string', 'number', or 'any'.
                          ~~~~~~
 !!! propertyAccess.ts(132,22): error TS2095: Cannot find name 'window'.

@@ -68,28 +68,28 @@
     function f5<T extends Number>(x: T) {
         var r1 = true ? 1 : x; // error
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(60,14): error TS2226: Type of conditional '{}' must be identical to 'number' or 'T'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(60,14): error TS2226: No best common type exists between 'number' and 'T'.
         var r1 = true ? x : 1; // error
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(61,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'number'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(61,14): error TS2226: No best common type exists between 'T' and 'number'.
     }
     
     function f6<T extends String>(x: T) {
         var r2 = true ? '' : x; // error
                  ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(65,14): error TS2226: Type of conditional '{}' must be identical to 'string' or 'T'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(65,14): error TS2226: No best common type exists between 'string' and 'T'.
         var r2 = true ? x : ''; // error
                  ~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(66,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'string'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(66,14): error TS2226: No best common type exists between 'T' and 'string'.
     }
     
     function f7<T extends Boolean>(x: T) {
         var r3 = true ? true : x; // error
                  ~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(70,14): error TS2226: Type of conditional '{}' must be identical to 'boolean' or 'T'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(70,14): error TS2226: No best common type exists between 'boolean' and 'T'.
         var r3 = true ? x : true; // error
                  ~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(71,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'boolean'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(71,14): error TS2226: No best common type exists between 'T' and 'boolean'.
     }
     
     function f8<T extends Date>(x: T) {
@@ -138,17 +138,17 @@
     function f16<T extends E>(x: T) {
         var r13 = true ? E : x; // BUG 831833
                   ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(118,15): error TS2226: Type of conditional '{}' must be identical to 'typeof E' or 'T'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(118,15): error TS2226: No best common type exists between 'typeof E' and 'T'.
         var r13 = true ? x : E; // BUG 831833
                   ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(119,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'typeof E'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(119,15): error TS2226: No best common type exists between 'T' and 'typeof E'.
     
         var r14 = true ? E.A : x; // BUG 831833
                   ~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(121,15): error TS2226: Type of conditional '{}' must be identical to 'E' or 'T'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(121,15): error TS2226: No best common type exists between 'E' and 'T'.
         var r14 = true ? x : E.A; // BUG 831833
                   ~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints2.ts(122,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'E'.
+!!! subtypesOfTypeParameterWithConstraints2.ts(122,15): error TS2226: No best common type exists between 'T' and 'E'.
     }
     
     function f17<T extends typeof f>(x: T) {

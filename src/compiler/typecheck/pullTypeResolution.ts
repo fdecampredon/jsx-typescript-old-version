@@ -3590,7 +3590,7 @@ module TypeScript {
 
                         if (!ArrayUtilities.contains(returnExpressionSymbols, bestCommonReturnType)) {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST,
-                                DiagnosticCode.Return_expressions_have_no_best_common_type));
+                                DiagnosticCode.No_best_common_type_exists_among_return_expressions));
                         }
 
                         // if noImplicitAny flag is set to be true and return statements are not cast expressions, report an error
@@ -8210,7 +8210,7 @@ module TypeScript {
             else {
                 return {
                     symbol: this.getNewErrorTypeSymbol(),
-                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.An_index_expression_must_be_string_number_or_any)
+                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.An_index_expression_argument_must_be_string_number_or_any)
                 }
             }
         }
@@ -8461,13 +8461,13 @@ module TypeScript {
                     if (isContextuallyTyped) {
                         var contextualType = context.getContextualType();
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(trinex,
-                            DiagnosticCode.Type_of_conditional_0_must_be_identical_to_1_2_or_3,
-                            [expressionType.toString(), leftType.toString(), rightType.toString(), contextualType.toString()]));
+                            DiagnosticCode.No_best_common_type_exists_between_0_1_and_2,
+                            [contextualType.toString(), leftType.toString(), rightType.toString()]));
                     }
                     else {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(trinex,
-                            DiagnosticCode.Type_of_conditional_0_must_be_identical_to_1_or_2,
-                            [expressionType.toString(), leftType.toString(), rightType.toString()]));
+                            DiagnosticCode.No_best_common_type_exists_between_0_and_1,
+                            [leftType.toString(), rightType.toString()]));
                     }
                 }
             }

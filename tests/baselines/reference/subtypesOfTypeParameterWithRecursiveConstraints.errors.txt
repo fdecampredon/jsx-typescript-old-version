@@ -12,34 +12,34 @@
         // error
         var r1 = true ? t : u;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(6,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'U'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(6,14): error TS2226: No best common type exists between 'T' and 'U'.
         var r1 = true ? u : t;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(7,14): error TS2226: Type of conditional '{}' must be identical to 'U' or 'T'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(7,14): error TS2226: No best common type exists between 'U' and 'T'.
     
         // error
         var r2 = true ? t : v;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(10,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'V'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(10,14): error TS2226: No best common type exists between 'T' and 'V'.
         var r2 = true ? v : t;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(11,14): error TS2226: Type of conditional '{}' must be identical to 'V' or 'T'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(11,14): error TS2226: No best common type exists between 'V' and 'T'.
     
         // error
         var r3 = true ? v : u;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(14,14): error TS2226: Type of conditional '{}' must be identical to 'V' or 'U'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(14,14): error TS2226: No best common type exists between 'V' and 'U'.
         var r3 = true ? u : v;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(15,14): error TS2226: Type of conditional '{}' must be identical to 'U' or 'V'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(15,14): error TS2226: No best common type exists between 'U' and 'V'.
     
         // ok?
         var r4 = true ? t : new Foo<T>();
                  ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(18,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'Foo<T>'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(18,14): error TS2226: No best common type exists between 'T' and 'Foo<T>'.
         var r4 = true ? new Foo<T>() : t;
                  ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(19,14): error TS2226: Type of conditional '{}' must be identical to 'Foo<T>' or 'T'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(19,14): error TS2226: No best common type exists between 'Foo<T>' and 'T'.
     
         // ok?
         var r5 = true ? u : new Foo<T>();
@@ -48,10 +48,10 @@
         // ok?
         var r6 = true ? v : new Foo<T>();
                  ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(26,14): error TS2226: Type of conditional '{}' must be identical to 'V' or 'Foo<T>'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(26,14): error TS2226: No best common type exists between 'V' and 'Foo<T>'.
         var r6 = true ? new Foo<T>() : v;
                  ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(27,14): error TS2226: Type of conditional '{}' must be identical to 'Foo<T>' or 'V'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(27,14): error TS2226: No best common type exists between 'Foo<T>' and 'V'.
     
     
         // ok?
@@ -61,35 +61,35 @@
         // ok?
         var r8 = true ? u : new Foo<U>();
                  ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(35,14): error TS2226: Type of conditional '{}' must be identical to 'U' or 'Foo<U>'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(35,14): error TS2226: No best common type exists between 'U' and 'Foo<U>'.
         var r8 = true ? new Foo<U>() : u;
                  ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(36,14): error TS2226: Type of conditional '{}' must be identical to 'Foo<U>' or 'U'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(36,14): error TS2226: No best common type exists between 'Foo<U>' and 'U'.
     
         // ok?
         var r9 = true ? v : new Foo<U>();
                  ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(39,14): error TS2226: Type of conditional '{}' must be identical to 'V' or 'Foo<U>'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(39,14): error TS2226: No best common type exists between 'V' and 'Foo<U>'.
         var r9 = true ? new Foo<U>() : v;
                  ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(40,14): error TS2226: Type of conditional '{}' must be identical to 'Foo<U>' or 'V'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(40,14): error TS2226: No best common type exists between 'Foo<U>' and 'V'.
     
     
         // ok?
         var r10 = true ? t : new Foo<V>();
                   ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(44,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'Foo<V>'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(44,15): error TS2226: No best common type exists between 'T' and 'Foo<V>'.
         var r10 = true ? new Foo<V>() : t;
                   ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(45,15): error TS2226: Type of conditional '{}' must be identical to 'Foo<V>' or 'T'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(45,15): error TS2226: No best common type exists between 'Foo<V>' and 'T'.
     
         // ok?
         var r11 = true ? u : new Foo<V>();
                   ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(48,15): error TS2226: Type of conditional '{}' must be identical to 'U' or 'Foo<V>'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(48,15): error TS2226: No best common type exists between 'U' and 'Foo<V>'.
         var r11 = true ? new Foo<V>() : u;
                   ~~~~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(49,15): error TS2226: Type of conditional '{}' must be identical to 'Foo<V>' or 'U'.
+!!! subtypesOfTypeParameterWithRecursiveConstraints.ts(49,15): error TS2226: No best common type exists between 'Foo<V>' and 'U'.
     
         // ok?
         var r12 = true ? v : new Foo<V>();
