@@ -1,0 +1,203 @@
+{
+    "isDeclaration": false,
+    "languageVersion": "EcmaScript3",
+    "diagnostics": [
+        {
+            "start": 29,
+            "length": 1,
+            "diagnosticCode": "Expected corresponding XJS closing tag for {0}",
+            "arguments": [
+                "a"
+            ]
+        }
+    ],
+    "sourceUnit": {
+        "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 31,
+        "start": 11,
+        "end": 31,
+        "fullWidth": 31,
+        "width": 20,
+        "moduleElements": [
+            {
+                "kind": "ExpressionStatement",
+                "fullStart": 0,
+                "fullEnd": 31,
+                "start": 11,
+                "end": 31,
+                "fullWidth": 31,
+                "width": 20,
+                "expression": {
+                    "kind": "XJSElement",
+                    "fullStart": 0,
+                    "fullEnd": 31,
+                    "start": 11,
+                    "end": 31,
+                    "fullWidth": 31,
+                    "width": 20,
+                    "openingElement": {
+                        "kind": "XJSOpeningElement",
+                        "fullStart": 0,
+                        "fullEnd": 15,
+                        "start": 11,
+                        "end": 14,
+                        "fullWidth": 15,
+                        "width": 3,
+                        "lessThanToken": {
+                            "kind": "LessThanToken",
+                            "fullStart": 0,
+                            "fullEnd": 12,
+                            "start": 11,
+                            "end": 12,
+                            "fullWidth": 12,
+                            "width": 1,
+                            "text": "<",
+                            "value": "<",
+                            "valueText": "<",
+                            "hasLeadingTrivia": true,
+                            "hasLeadingComment": true,
+                            "hasLeadingNewLine": true,
+                            "leadingTrivia": [
+                                {
+                                    "kind": "SingleLineCommentTrivia",
+                                    "fullStart": 0,
+                                    "fullEnd": 10,
+                                    "text": "///<jsx />"
+                                },
+                                {
+                                    "kind": "NewLineTrivia",
+                                    "fullStart": 10,
+                                    "fullEnd": 11,
+                                    "text": "\n"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "kind": "IdentifierName",
+                            "fullStart": 12,
+                            "fullEnd": 13,
+                            "start": 12,
+                            "end": 13,
+                            "fullWidth": 1,
+                            "width": 1,
+                            "text": "a",
+                            "value": "a",
+                            "valueText": "a"
+                        },
+                        "attributes": [],
+                        "greaterThanToken": {
+                            "kind": "GreaterThanToken",
+                            "fullStart": 13,
+                            "fullEnd": 15,
+                            "start": 13,
+                            "end": 14,
+                            "fullWidth": 2,
+                            "width": 1,
+                            "text": ">",
+                            "value": ">",
+                            "valueText": ">",
+                            "hasTrailingTrivia": true,
+                            "trailingTrivia": [
+                                {
+                                    "kind": "WhitespaceTrivia",
+                                    "fullStart": 14,
+                                    "fullEnd": 15,
+                                    "text": " "
+                                }
+                            ]
+                        }
+                    },
+                    "children": [
+                        {
+                            "kind": "XJSText",
+                            "fullStart": 15,
+                            "fullEnd": 27,
+                            "start": 15,
+                            "end": 27,
+                            "fullWidth": 12,
+                            "width": 12,
+                            "text": "Hello World ",
+                            "value": "Hello World ",
+                            "valueText": "Hello World "
+                        }
+                    ],
+                    "closingElement": {
+                        "kind": "XJSClosingElement",
+                        "fullStart": 27,
+                        "fullEnd": 31,
+                        "start": 27,
+                        "end": 31,
+                        "fullWidth": 4,
+                        "width": 4,
+                        "lessThanToken": {
+                            "kind": "LessThanToken",
+                            "fullStart": 27,
+                            "fullEnd": 28,
+                            "start": 27,
+                            "end": 28,
+                            "fullWidth": 1,
+                            "width": 1,
+                            "text": "<",
+                            "value": "<",
+                            "valueText": "<"
+                        },
+                        "slashToken": {
+                            "kind": "SlashToken",
+                            "fullStart": 28,
+                            "fullEnd": 29,
+                            "start": 28,
+                            "end": 29,
+                            "fullWidth": 1,
+                            "width": 1,
+                            "text": "/",
+                            "value": "/",
+                            "valueText": "/"
+                        },
+                        "name": {
+                            "kind": "IdentifierName",
+                            "fullStart": 29,
+                            "fullEnd": 30,
+                            "start": 29,
+                            "end": 30,
+                            "fullWidth": 1,
+                            "width": 1,
+                            "text": "b",
+                            "value": "b",
+                            "valueText": "b"
+                        },
+                        "greaterThanToken": {
+                            "kind": "GreaterThanToken",
+                            "fullStart": 30,
+                            "fullEnd": 31,
+                            "start": 30,
+                            "end": 31,
+                            "fullWidth": 1,
+                            "width": 1,
+                            "text": ">",
+                            "value": ">",
+                            "valueText": ">"
+                        }
+                    }
+                }
+            }
+        ],
+        "endOfFileToken": {
+            "kind": "EndOfFileToken",
+            "fullStart": 31,
+            "fullEnd": 31,
+            "start": 31,
+            "end": 31,
+            "fullWidth": 0,
+            "width": 0,
+            "text": ""
+        }
+    },
+    "lineMap": {
+        "lineStarts": [
+            0,
+            11
+        ],
+        "length": 31
+    }
+}
