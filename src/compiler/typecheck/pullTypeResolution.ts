@@ -3590,7 +3590,7 @@ module TypeScript {
 
                         if (!ArrayUtilities.contains(returnExpressionSymbols, bestCommonReturnType)) {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST,
-                                DiagnosticCode.Could_not_find_the_best_common_type_of_types_of_all_return_statement_expressions));
+                                DiagnosticCode.Return_expressions_have_no_best_common_type));
                         }
 
                         // if noImplicitAny flag is set to be true and return statements are not cast expressions, report an error
@@ -4897,7 +4897,7 @@ module TypeScript {
             // the Number primitive type, or an enum type, and classified as a reference(section 4.1).
             var operandType = expression.type;
             if (!this.isAnyOrNumberOrEnum(operandType)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(unaryExpression.operand, DiagnosticCode.The_type_of_a_unary_arithmetic_operation_operand_must_be_of_type_any_number_or_an_enum_type));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(unaryExpression.operand, DiagnosticCode.An_arithmetic_operand_must_be_of_type_any_number_or_an_enum_type));
             }
 
             // September 17, ... and classified as a reference(section 4.1).
@@ -4921,7 +4921,7 @@ module TypeScript {
             // the Number primitive type, or an enum type, and classified as a reference(section 4.1).
             var operandType = expression.type;
             if (!this.isAnyOrNumberOrEnum(operandType)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(unaryExpression.operand, DiagnosticCode.The_type_of_a_unary_arithmetic_operation_operand_must_be_of_type_any_number_or_an_enum_type));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(unaryExpression.operand, DiagnosticCode.An_arithmetic_operand_must_be_of_type_any_number_or_an_enum_type));
             }
 
             // September 17, ... and classified as a reference(section 4.1).
