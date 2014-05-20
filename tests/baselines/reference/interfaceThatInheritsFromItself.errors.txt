@@ -1,17 +1,17 @@
 ==== tests/cases/compiler/interfaceThatInheritsFromItself.ts (4 errors) ====
     interface Foo extends Foo { // error
               ~~~
-!!! interfaceThatInheritsFromItself.ts(1,11): error TS2101: Interface 'Foo' is recursively referenced as a base type of itself.
+!!! interfaceThatInheritsFromItself.ts(1,11): error TS2100: Type 'Foo' recursively references itself as a base type.
     }
     
     interface Foo2<T> extends Foo2<T> { // error
               ~~~~
-!!! interfaceThatInheritsFromItself.ts(4,11): error TS2101: Interface 'Foo2<T>' is recursively referenced as a base type of itself.
+!!! interfaceThatInheritsFromItself.ts(4,11): error TS2100: Type 'Foo2<T>' recursively references itself as a base type.
     }
     
     interface Foo3<T> extends Foo3<string> { // error
               ~~~~
-!!! interfaceThatInheritsFromItself.ts(7,11): error TS2101: Interface 'Foo3<T>' is recursively referenced as a base type of itself.
+!!! interfaceThatInheritsFromItself.ts(7,11): error TS2100: Type 'Foo3<T>' recursively references itself as a base type.
     }
     
     interface Bar implements Bar { // error

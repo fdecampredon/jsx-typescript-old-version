@@ -2,5 +2,5 @@
     module foo {
         this.bar = 4;
         ~~~~
-!!! thisKeyword.ts(2,5): error TS2108: 'this' cannot be referenced within module bodies.
+!!! thisKeyword.ts(2,5): error TS2108: 'this' cannot be referenced in a module body.
     }

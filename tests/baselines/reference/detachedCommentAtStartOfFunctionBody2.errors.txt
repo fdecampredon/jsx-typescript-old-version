@@ -7,6 +7,6 @@
     
             return () => message + this.name;
                                         ~~~~
-!!! detachedCommentAtStartOfFunctionBody2.ts(7,37): error TS2094: The property 'name' does not exist on value of type 'TestFile'.
+!!! detachedCommentAtStartOfFunctionBody2.ts(7,37): error TS2094: Property 'name' does not exist on value of type 'TestFile'.
         }
     }

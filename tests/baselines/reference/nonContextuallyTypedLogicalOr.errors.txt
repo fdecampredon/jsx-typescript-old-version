@@ -16,4 +16,4 @@
     // needs to be a supertype of the LHS to win as the best common type.
     (c || e).dummy;
              ~~~~~
-!!! nonContextuallyTypedLogicalOr.ts(16,10): error TS2094: The property 'dummy' does not exist on value of type '{}'.
+!!! nonContextuallyTypedLogicalOr.ts(16,10): error TS2094: Property 'dummy' does not exist on value of type '{}'.

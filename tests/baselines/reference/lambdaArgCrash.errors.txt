@@ -27,7 +27,7 @@
     
          add(listener: (items: ItemSet) => void ) {
                             ~~~~~~~
-!!! lambdaArgCrash.ts(27,25): error TS2095: Could not find symbol 'ItemSet'.
+!!! lambdaArgCrash.ts(27,25): error TS2095: Cannot find name 'ItemSet'.
     
              super.add(listener);
              ~~~

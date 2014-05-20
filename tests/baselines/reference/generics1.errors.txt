@@ -10,7 +10,7 @@
     var v2: G<{ a: string }, C>;   // Ok, equivalent to G<A, C>
     var v3: G<A, A>;               // Error, A not valid argument for U
             ~~~~~~~
-!!! generics1.ts(10,9): error TS2086: Type 'A' does not satisfy the constraint 'B' for type parameter 'U extends B'.
+!!! generics1.ts(10,9): error TS2086: Type 'A' does not satisfy the constraint 'B'.
     var v4: G<G<A, B>, C>;         // Ok
     var v5: G<any, any>;           // Error, any does not satisfy constraint B
     var v6: G<any>;                // Error, wrong number of arguments
@@ -18,5 +18,5 @@
 !!! generics1.ts(13,9): error TS2090: Generic type 'G<T, U>' requires 2 type argument(s).
     var v7: G;                     // Error, no type arguments
             ~
-!!! generics1.ts(14,9): error TS2173: Generic type references must include all type arguments.
+!!! generics1.ts(14,9): error TS2090: Generic type 'G<T, U>' requires 2 type argument(s).
     

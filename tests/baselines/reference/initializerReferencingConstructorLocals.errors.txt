@@ -4,43 +4,43 @@
     class C {
         a = z; // error
             ~
-!!! initializerReferencingConstructorLocals.ts(4,9): error TS2095: Could not find symbol 'z'.
+!!! initializerReferencingConstructorLocals.ts(4,9): error TS2095: Cannot find name 'z'.
         b: typeof z; // error
                   ~
-!!! initializerReferencingConstructorLocals.ts(5,15): error TS2095: Could not find symbol 'z'.
+!!! initializerReferencingConstructorLocals.ts(5,15): error TS2095: Cannot find name 'z'.
         c = this.z; // error
                  ~
-!!! initializerReferencingConstructorLocals.ts(6,14): error TS2094: The property 'z' does not exist on value of type 'C'.
+!!! initializerReferencingConstructorLocals.ts(6,14): error TS2094: Property 'z' does not exist on value of type 'C'.
         d: typeof this.z; // error
                   ~~~~
 !!! initializerReferencingConstructorLocals.ts(7,15): error TS1006: Identifier expected; 'this' is a keyword.
                        ~
-!!! initializerReferencingConstructorLocals.ts(7,20): error TS2094: The property 'z' does not exist on value of type 'C'.
+!!! initializerReferencingConstructorLocals.ts(7,20): error TS2094: Property 'z' does not exist on value of type 'C'.
         constructor(x) {
             z = 1;
             ~
-!!! initializerReferencingConstructorLocals.ts(9,9): error TS2095: Could not find symbol 'z'.
+!!! initializerReferencingConstructorLocals.ts(9,9): error TS2095: Cannot find name 'z'.
         }
     }
     
     class D<T> {
         a = z; // error
             ~
-!!! initializerReferencingConstructorLocals.ts(14,9): error TS2095: Could not find symbol 'z'.
+!!! initializerReferencingConstructorLocals.ts(14,9): error TS2095: Cannot find name 'z'.
         b: typeof z; // error
                   ~
-!!! initializerReferencingConstructorLocals.ts(15,15): error TS2095: Could not find symbol 'z'.
+!!! initializerReferencingConstructorLocals.ts(15,15): error TS2095: Cannot find name 'z'.
         c = this.z; // error
                  ~
-!!! initializerReferencingConstructorLocals.ts(16,14): error TS2094: The property 'z' does not exist on value of type 'D<T>'.
+!!! initializerReferencingConstructorLocals.ts(16,14): error TS2094: Property 'z' does not exist on value of type 'D<T>'.
         d: typeof this.z; // error
                   ~~~~
 !!! initializerReferencingConstructorLocals.ts(17,15): error TS1006: Identifier expected; 'this' is a keyword.
                        ~
-!!! initializerReferencingConstructorLocals.ts(17,20): error TS2094: The property 'z' does not exist on value of type 'D<T>'.
+!!! initializerReferencingConstructorLocals.ts(17,20): error TS2094: Property 'z' does not exist on value of type 'D<T>'.
         constructor(x: T) {
             z = 1;
             ~
-!!! initializerReferencingConstructorLocals.ts(19,9): error TS2095: Could not find symbol 'z'.
+!!! initializerReferencingConstructorLocals.ts(19,9): error TS2095: Cannot find name 'z'.
         }
     }

@@ -14,5 +14,5 @@
                    ~~
 !!! optionalArgsWithDefaultValues.ts(8,16): error TS1005: ';' expected.
              ~
-!!! optionalArgsWithDefaultValues.ts(8,10): error TS2095: Could not find symbol 'x'.
+!!! optionalArgsWithDefaultValues.ts(8,10): error TS2095: Cannot find name 'x'.
     var b = (x, y?:number = 2) => { x; };

@@ -16,7 +16,7 @@
       
               getDomNode(): Element;
                       ~~~~~~~
-!!! recursiveClassReferenceTest.ts(16,19): error TS2095: Could not find symbol 'Element'.
+!!! recursiveClassReferenceTest.ts(16,19): error TS2095: Cannot find name 'Element'.
             
             addWidget(widgetId:string, widget:IWidget);
     
@@ -58,7 +58,7 @@
             public getDomNode() {
                 return domNode;
               ~~~~~~~
-!!! recursiveClassReferenceTest.ts(56,11): error TS2095: Could not find symbol 'domNode'.
+!!! recursiveClassReferenceTest.ts(56,11): error TS2095: Cannot find name 'domNode'.
             }
             
             public destroy() {
@@ -92,7 +92,7 @@
             
             public getMode(): IMode { return mode; }
                                        ~~~~
-!!! recursiveClassReferenceTest.ts(88,36): error TS2095: Could not find symbol 'mode'.
+!!! recursiveClassReferenceTest.ts(88,36): error TS2095: Cannot find name 'mode'.
         }
         
         export class Mode extends AbstractMode {

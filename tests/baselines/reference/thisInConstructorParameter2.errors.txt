@@ -3,7 +3,7 @@
         x = this;
         static y = this;
                    ~~~~
-!!! thisInConstructorParameter2.ts(3,16): error TS2140: 'this' cannot be referenced in static initializers in a class body.
+!!! thisInConstructorParameter2.ts(3,16): error TS2140: 'this' cannot be referenced in a static property initializer.
     
         constructor(public z = this, zz = this) { }
                                ~~~~

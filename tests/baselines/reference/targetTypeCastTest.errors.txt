@@ -3,8 +3,7 @@
     
     function Point(x, y) {
              ~~~~~
-!!! targetTypeCastTest.ts(3,10): error TS2000: Duplicate identifier 'Point'. Additional locations:
-!!! 	targetTypeCastTest.ts(1,13)
+!!! targetTypeCastTest.ts(3,10): error TS2000: Duplicate identifier 'Point'.
         this.x = x;
         this.y = y;   
     }

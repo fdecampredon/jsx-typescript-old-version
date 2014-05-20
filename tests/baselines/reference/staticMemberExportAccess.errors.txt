@@ -14,14 +14,14 @@
     var $: JQueryStatic;
     var instanceOfClassSammy: Sammy = new $.sammy(); // should be error
                                             ~~~~~
-!!! staticMemberExportAccess.ts(14,41): error TS2083: Invalid 'new' expression.
+!!! staticMemberExportAccess.ts(14,41): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var r1 = instanceOfClassSammy.foo(); // r1 is string
     var r2 = $.sammy.foo();
     var r3 = $.sammy.bar(); // error
                      ~~~
-!!! staticMemberExportAccess.ts(17,18): error TS2094: The property 'bar' does not exist on value of type 'Sammy'.
+!!! staticMemberExportAccess.ts(17,18): error TS2094: Property 'bar' does not exist on value of type 'Sammy'.
     var r4 = $.sammy.x; // error
                      ~
-!!! staticMemberExportAccess.ts(18,18): error TS2094: The property 'x' does not exist on value of type 'Sammy'.
+!!! staticMemberExportAccess.ts(18,18): error TS2094: Property 'x' does not exist on value of type 'Sammy'.
     
     Sammy.bar();

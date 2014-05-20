@@ -44,7 +44,7 @@
             for (var i=0,len=z.length;i<len;i++) {
                 result+=((Color._map[z[i].color])+"\r\n");
                                 ~~~~
-!!! interfaceAssignmentCompat.ts(37,29): error TS2094: The property '_map' does not exist on value of type 'typeof Color'.
+!!! interfaceAssignmentCompat.ts(37,29): error TS2094: Property '_map' does not exist on value of type 'typeof Color'.
             }
     
             var eeks:IFrenchEye[] = [];

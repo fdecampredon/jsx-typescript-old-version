@@ -241,7 +241,7 @@ module TypeScript {
                         var option = this.findOption(arg);
 
                         if (option === null) {
-                            this.host.standardOut.WriteLine(getDiagnosticMessage(DiagnosticCode.Unknown_option_0, [arg]));
+                            this.host.standardOut.WriteLine(getDiagnosticMessage(DiagnosticCode.Unknown_compiler_option_0, [arg]));
                             this.host.standardOut.WriteLine(getLocalizedText(DiagnosticCode.Use_the_0_flag_to_see_options, ["--help"]));
                         } else {
                             if (!option.flag) {

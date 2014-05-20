@@ -12,7 +12,7 @@
 !!! overloadsWithProvisionalErrors.ts(6,1): error TS2087: Could not select overload for 'call' expression.
     func(s => ({ a: blah, b: 3 })); // Only error inside the function, but not outside (since it would be applicable if not for the provisional error)
                     ~~~~
-!!! overloadsWithProvisionalErrors.ts(7,17): error TS2095: Could not find symbol 'blah'.
+!!! overloadsWithProvisionalErrors.ts(7,17): error TS2095: Cannot find name 'blah'.
     func(s => ({ a: blah })); // Two errors here, one for blah not being defined, and one for the overload since it would not be applicable anyway
     ~~~~
 !!! overloadsWithProvisionalErrors.ts(8,1): error TS2082: Supplied parameters do not match any signature of call target:
@@ -20,4 +20,4 @@
     ~~~~
 !!! overloadsWithProvisionalErrors.ts(8,1): error TS2087: Could not select overload for 'call' expression.
                     ~~~~
-!!! overloadsWithProvisionalErrors.ts(8,17): error TS2095: Could not find symbol 'blah'.
+!!! overloadsWithProvisionalErrors.ts(8,17): error TS2095: Cannot find name 'blah'.

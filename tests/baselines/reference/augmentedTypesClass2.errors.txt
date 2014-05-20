@@ -10,8 +10,7 @@
     
     interface c11 { // error
               ~~~
-!!! augmentedTypesClass2.ts(10,11): error TS2000: Duplicate identifier 'c11'. Additional locations:
-!!! 	augmentedTypesClass2.ts(4,1)
+!!! augmentedTypesClass2.ts(10,11): error TS2000: Duplicate identifier 'c11'.
         bar(): void;
     }
     
@@ -24,8 +23,7 @@
     }
     enum c33 { One };
          ~~~
-!!! augmentedTypesClass2.ts(21,6): error TS2000: Duplicate identifier 'c33'. Additional locations:
-!!! 	augmentedTypesClass2.ts(16,1)
+!!! augmentedTypesClass2.ts(21,6): error TS2000: Duplicate identifier 'c33'.
     
     // class then import
     class c44 {

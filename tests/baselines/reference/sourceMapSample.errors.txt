@@ -14,7 +14,7 @@
     
         function foo(greeting: string): Foo.Bar.Greeter {
                                                 ~~~~~~~
-!!! sourceMapSample.ts(14,45): error TS2094: The property 'Greeter' does not exist on value of type 'Bar'.
+!!! sourceMapSample.ts(14,45): error TS2094: Property 'Greeter' does not exist on value of type 'Bar'.
             return new Greeter(greeting);
         }
     

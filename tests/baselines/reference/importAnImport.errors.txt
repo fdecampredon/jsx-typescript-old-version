@@ -6,5 +6,5 @@
     module m0 {
         import m8 = c.a.b.ma;
                           ~~
-!!! importAnImport.ts(6,23): error TS2178: Could not find symbol 'ma' in module 'c.a.b'.
+!!! importAnImport.ts(6,23): error TS2178: Module 'c.a.b' has no exported member 'ma'.
     }

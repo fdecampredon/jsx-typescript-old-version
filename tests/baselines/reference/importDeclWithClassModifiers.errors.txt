@@ -7,17 +7,17 @@
            ~~~~~~
 !!! importDeclWithClassModifiers.ts(5,8): error TS1044: 'public' modifier cannot appear on a module element.
                                ~
-!!! importDeclWithClassModifiers.ts(5,28): error TS2178: Could not find symbol 'c' in module 'x'.
+!!! importDeclWithClassModifiers.ts(5,28): error TS2178: Module 'x' has no exported member 'c'.
     export private import b = x.c;
            ~~~~~~~
 !!! importDeclWithClassModifiers.ts(6,8): error TS1044: 'private' modifier cannot appear on a module element.
                                 ~
-!!! importDeclWithClassModifiers.ts(6,29): error TS2178: Could not find symbol 'c' in module 'x'.
+!!! importDeclWithClassModifiers.ts(6,29): error TS2178: Module 'x' has no exported member 'c'.
     export static import c = x.c;
            ~~~~~~
 !!! importDeclWithClassModifiers.ts(7,8): error TS1044: 'static' modifier cannot appear on a module element.
                                ~
-!!! importDeclWithClassModifiers.ts(7,28): error TS2178: Could not find symbol 'c' in module 'x'.
+!!! importDeclWithClassModifiers.ts(7,28): error TS2178: Module 'x' has no exported member 'c'.
     var b: a;
         ~~~~
 !!! importDeclWithClassModifiers.ts(8,5): error TS4026: Variable declaration cannot have the same name as an import declaration.

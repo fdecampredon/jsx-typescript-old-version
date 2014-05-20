@@ -67,7 +67,7 @@
     
     yellow[blue]; // error
     ~~~~~~~~~~~~
-!!! indexTypeCheck.ts(51,1): error TS2008: Value of type 'Yellow' is not indexable by type 'Blue'.
+!!! indexTypeCheck.ts(51,1): error TS2008: Type 'Blue' is not a valid index expression type.
     
     var x:number[];
     x[0];

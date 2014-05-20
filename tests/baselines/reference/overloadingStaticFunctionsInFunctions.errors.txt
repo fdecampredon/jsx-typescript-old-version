@@ -6,18 +6,18 @@
       ~~~~~~
 !!! overloadingStaticFunctionsInFunctions.ts(2,3): error TS1008: Unexpected token; 'statement' expected.
              ~~~~
-!!! overloadingStaticFunctionsInFunctions.ts(2,10): error TS2095: Could not find symbol 'test'.
+!!! overloadingStaticFunctionsInFunctions.ts(2,10): error TS2095: Cannot find name 'test'.
       static test(name:string)
       ~~~~~~
 !!! overloadingStaticFunctionsInFunctions.ts(3,3): error TS1008: Unexpected token; 'statement' expected.
                       ~
 !!! overloadingStaticFunctionsInFunctions.ts(3,19): error TS1005: ',' expected.
              ~~~~
-!!! overloadingStaticFunctionsInFunctions.ts(3,10): error TS2095: Could not find symbol 'test'.
+!!! overloadingStaticFunctionsInFunctions.ts(3,10): error TS2095: Cannot find name 'test'.
                   ~~~~
-!!! overloadingStaticFunctionsInFunctions.ts(3,15): error TS2095: Could not find symbol 'name'.
+!!! overloadingStaticFunctionsInFunctions.ts(3,15): error TS2095: Cannot find name 'name'.
                        ~~~~~~
-!!! overloadingStaticFunctionsInFunctions.ts(3,20): error TS2095: Could not find symbol 'string'.
+!!! overloadingStaticFunctionsInFunctions.ts(3,20): error TS2095: Cannot find name 'string'.
       static test(name?:any){ }
       ~~~~~~
 !!! overloadingStaticFunctionsInFunctions.ts(4,3): error TS1008: Unexpected token; 'statement' expected.
@@ -26,9 +26,9 @@
                             ~
 !!! overloadingStaticFunctionsInFunctions.ts(4,25): error TS1005: ';' expected.
              ~~~~
-!!! overloadingStaticFunctionsInFunctions.ts(4,10): error TS2095: Could not find symbol 'test'.
+!!! overloadingStaticFunctionsInFunctions.ts(4,10): error TS2095: Cannot find name 'test'.
                   ~~~~
-!!! overloadingStaticFunctionsInFunctions.ts(4,15): error TS2095: Could not find symbol 'name'.
+!!! overloadingStaticFunctionsInFunctions.ts(4,15): error TS2095: Cannot find name 'name'.
                         ~~~
-!!! overloadingStaticFunctionsInFunctions.ts(4,21): error TS2095: Could not find symbol 'any'.
+!!! overloadingStaticFunctionsInFunctions.ts(4,21): error TS2095: Cannot find name 'any'.
     }

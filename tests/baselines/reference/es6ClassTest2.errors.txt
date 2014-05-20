@@ -17,7 +17,7 @@
     m1.health = 0;
     console.log((<any>m5.isAlive).toString());
     ~~~~~~~
-!!! es6ClassTest2.ts(17,1): error TS2095: Could not find symbol 'console'.
+!!! es6ClassTest2.ts(17,1): error TS2095: Cannot find name 'console'.
     
     class GetSetMonster {
         constructor(public name: string, private _health: number) {

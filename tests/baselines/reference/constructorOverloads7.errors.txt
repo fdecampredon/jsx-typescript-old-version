@@ -15,8 +15,7 @@
     // to be Point and return type is inferred to be void
     function Point(x, y) {
              ~~~~~
-!!! constructorOverloads7.ts(15,10): error TS2000: Duplicate identifier 'Point'. Additional locations:
-!!! 	constructorOverloads7.ts(1,1)
+!!! constructorOverloads7.ts(15,10): error TS2000: Duplicate identifier 'Point'.
         this.x = x;
         this.y = y;
     

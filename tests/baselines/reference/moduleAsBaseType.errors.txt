@@ -7,7 +7,7 @@
 !!! moduleAsBaseType.ts(2,17): error TS4022: Type reference cannot refer to container 'M'.
     interface I extends M { }
                         ~
-!!! moduleAsBaseType.ts(3,21): error TS2075: An interface may only extend another class or interface.
+!!! moduleAsBaseType.ts(3,21): error TS2075: An interface may only extend a class or another interface.
                         ~
 !!! moduleAsBaseType.ts(3,21): error TS4022: Type reference cannot refer to container 'M'.
     class C2 implements M { }

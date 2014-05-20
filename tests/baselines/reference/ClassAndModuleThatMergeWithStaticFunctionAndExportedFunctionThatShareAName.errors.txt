@@ -10,8 +10,7 @@
     module Point {
         export function Origin() { return null; } //expected duplicate identifier error
                         ~~~~~~
-!!! ClassAndModuleThatMergeWithStaticFunctionAndExportedFunctionThatShareAName.ts(8,21): error TS2000: Duplicate identifier 'Origin'. Additional locations:
-!!! 	ClassAndModuleThatMergeWithStaticFunctionAndExportedFunctionThatShareAName.ts(4,5)
+!!! ClassAndModuleThatMergeWithStaticFunctionAndExportedFunctionThatShareAName.ts(8,21): error TS2000: Duplicate identifier 'Origin'.
     }
     
     
@@ -30,7 +29,6 @@
         export module Point {
             export function Origin() { return ""; }//expected duplicate identifier error
                             ~~~~~~
-!!! ClassAndModuleThatMergeWithStaticFunctionAndExportedFunctionThatShareAName.ts(20,25): error TS2000: Duplicate identifier 'Origin'. Additional locations:
-!!! 	ClassAndModuleThatMergeWithStaticFunctionAndExportedFunctionThatShareAName.ts(16,9)
+!!! ClassAndModuleThatMergeWithStaticFunctionAndExportedFunctionThatShareAName.ts(20,25): error TS2000: Duplicate identifier 'Origin'.
         }
     }

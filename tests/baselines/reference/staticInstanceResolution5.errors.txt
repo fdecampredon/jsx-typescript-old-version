@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/staticInstanceResolution5_1.ts (2 errors) ====
     import WinJS = require('staticInstanceResolution5_0.ts');
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! staticInstanceResolution5_1.ts(1,1): error TS2071: Unable to resolve external module ''staticInstanceResolution5_0.ts''.
+!!! staticInstanceResolution5_1.ts(1,1): error TS2071: Cannot find external module ''staticInstanceResolution5_0.ts''.
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! staticInstanceResolution5_1.ts(1,1): error TS2072: Module cannot be aliased to a non-module type.
     

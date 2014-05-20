@@ -1098,7 +1098,7 @@ module TypeScript {
                 var child = moduleElements[i];
                 if (child.kind() === SyntaxKind.ExportAssignment) {
                     if (seenExportAssignment) {
-                        this.pushDiagnostic(child, DiagnosticCode.Module_cannot_have_multiple_export_assignments);
+                        this.pushDiagnostic(child, DiagnosticCode.A_module_cannot_have_multiple_export_assignments);
                         errorFound = true;
                     }
                     seenExportAssignment = true;

@@ -3,7 +3,7 @@
         public injectRequestService<P0, P1, P2>(service: P0) {
             this.injectBuildService<number>(new X(service));
                                                 ~
-!!! crashIntypeCheckObjectCreationExpression.ts(3,45): error TS2095: Could not find symbol 'X'.
+!!! crashIntypeCheckObjectCreationExpression.ts(3,45): error TS2095: Cannot find name 'X'.
         }
         public injectBuildService<P0>(service: P0) {
         }

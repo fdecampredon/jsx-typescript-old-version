@@ -4,10 +4,10 @@
        public c() {
           v = 1;
           ~
-!!! scopeCheckExtendedClassInsidePublicMethod2.ts(4,7): error TS2095: Could not find symbol 'v'.
+!!! scopeCheckExtendedClassInsidePublicMethod2.ts(4,7): error TS2095: Cannot find name 'v'.
           this.p = 1;
           s = 1;
           ~
-!!! scopeCheckExtendedClassInsidePublicMethod2.ts(6,7): error TS2095: Could not find symbol 's'.
+!!! scopeCheckExtendedClassInsidePublicMethod2.ts(6,7): error TS2095: Cannot find name 's'.
        }
     }

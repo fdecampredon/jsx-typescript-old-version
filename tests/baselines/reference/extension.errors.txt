@@ -20,10 +20,9 @@
                          ~~~~~
 !!! extension.ts(16,22): error TS1005: ';' expected.
                ~~~~~~~~~
-!!! extension.ts(16,12): error TS2095: Could not find symbol 'extension'.
+!!! extension.ts(16,12): error TS2095: Cannot find name 'extension'.
                                ~
-!!! extension.ts(16,28): error TS2000: Duplicate identifier 'C'. Additional locations:
-!!! 	extension.ts(10,5)
+!!! extension.ts(16,28): error TS2000: Duplicate identifier 'C'.
             public pe:string;
         }
     }

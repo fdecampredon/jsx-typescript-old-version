@@ -251,7 +251,7 @@
         "category": "Error",
         "code": 1064
     },
-    "Module cannot have multiple export assignments.": {
+    "A module cannot have multiple export assignments.": {
         "category": "Error",
         "code": 1065
     },
@@ -399,7 +399,7 @@
         "category": "Error",
         "code": 2007
     },
-    "Value of type '{0}' is not indexable by type '{1}'.": {
+    "Type '{0}' is not a valid index expression type.": {
         "category": "Error",
         "code": 2008
     },
@@ -647,7 +647,7 @@
         "category": "Error",
         "code": 2070
     },
-    "Unable to resolve external module '{0}'.": {
+    "Cannot find external module '{0}'.": {
         "category": "Error",
         "code": 2071
     },
@@ -663,7 +663,7 @@
         "category": "Error",
         "code": 2074
     },
-    "An interface may only extend another class or interface.": {
+    "An interface may only extend a class or another interface.": {
         "category": "Error",
         "code": 2075
     },
@@ -691,11 +691,11 @@
         "category": "Error",
         "code": 2082
     },
-    "Invalid 'new' expression.": {
+    "Cannot use 'new' with an expression whose type lacks a signature.": {
         "category": "Error",
         "code": 2083
     },
-    "Call signatures used in a 'new' expression must have a 'void' return type.": {
+    "Only a void function can be called with the 'new' keyword.": {
         "category": "Error",
         "code": 2084
     },
@@ -703,7 +703,7 @@
         "category": "Error",
         "code": 2085
     },
-    "Type '{0}' does not satisfy the constraint '{1}' for type parameter '{2}'.": {
+    "Type '{0}' does not satisfy the constraint '{1}'.": {
         "category": "Error",
         "code": 2086
     },
@@ -731,11 +731,11 @@
         "category": "Error",
         "code": 2093
     },
-    "The property '{0}' does not exist on value of type '{1}'.": {
+    "Property '{0}' does not exist on value of type '{1}'.": {
         "category": "Error",
         "code": 2094
     },
-    "Could not find symbol '{0}'.": {
+    "Cannot find name '{0}'.": {
         "category": "Error",
         "code": 2095
     },
@@ -751,19 +751,15 @@
         "category": "Error",
         "code": 2099
     },
-    "Class '{0}' is recursively referenced as a base type of itself.": {
+    "Type '{0}' recursively references itself as a base type.": {
         "category": "Error",
         "code": 2100
-    },
-    "Interface '{0}' is recursively referenced as a base type of itself.": {
-        "category": "Error",
-        "code": 2101
     },
     "'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.": {
         "category": "Error",
         "code": 2102
     },
-    "'super' cannot be referenced in non-derived classes.": {
+    "'super' can only be referenced in a derived class.": {
         "category": "Error",
         "code": 2103
     },
@@ -783,7 +779,7 @@
         "category": "Error",
         "code": 2107
     },
-    "'this' cannot be referenced within module bodies.": {
+    "'this' cannot be referenced in a module body.": {
         "category": "Error",
         "code": 2108
     },
@@ -843,7 +839,7 @@
         "category": "Error",
         "code": 2124
     },
-    "Type '{0}' does not have type parameters.": {
+    "Type '{0}' is not generic.": {
         "category": "Error",
         "code": 2125
     },
@@ -895,7 +891,7 @@
         "category": "Error",
         "code": 2139
     },
-    "'this' cannot be referenced in static initializers in a class body.": {
+    "'this' cannot be referenced in a static property initializer.": {
         "category": "Error",
         "code": 2140
     },
@@ -1003,10 +999,6 @@
         "category": "Error",
         "code": 2172
     },
-    "Generic type references must include all type arguments.": {
-        "category": "Error",
-        "code": 2173
-    },
     "Default arguments are only allowed in implementation.": {
         "category": "Error",
         "code": 2174
@@ -1019,7 +1011,7 @@
         "category": "Error",
         "code": 2177
     },
-    "Could not find symbol '{0}' in module '{1}'.": {
+    "Module '{0}' has no exported member '{1}'.": {
         "category": "Error",
         "code": 2178
     },
@@ -1251,6 +1243,14 @@
         "category": "Error",
         "code": 2235
     },
+	"Neither type '{0}' nor type '{1}' is assignable to the other.": {
+        "category": "Error",
+        "code": 2236
+    },
+	"Neither type '{0}' nor type '{1}' is assignable to the other:{NL}{2}": {
+        "category": "Error",
+        "code": 2237
+    },
      "Type '{0}' is missing property '{1}' from type '{2}'.": {
         "category": "NoPrefix",
         "code": 4000
@@ -1423,7 +1423,7 @@
         "category": "Error",
         "code": 5002
     },
-    "Module code generation '{0}' not supported.": {
+    "Argument for '{0}' option must be '{1}' or '{2}'": {
         "category": "Error",
         "code": 5003
     },
@@ -1479,7 +1479,7 @@
         "category": "Error",
         "code": 5021
     },
-    "Unknown option '{0}'": {
+    "Unknown compiler option '{0}'": {
         "category": "Error",
         "code": 5023
     },

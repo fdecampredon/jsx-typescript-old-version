@@ -2,5 +2,5 @@
     class X {
         public f(a: Array) { }
                     ~~~~~
-!!! arrayReferenceWithoutTypeArgs.ts(2,17): error TS2173: Generic type references must include all type arguments.
+!!! arrayReferenceWithoutTypeArgs.ts(2,17): error TS2090: Generic type 'Array<T>' requires 1 type argument(s).
     }

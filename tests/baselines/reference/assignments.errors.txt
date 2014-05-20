@@ -11,7 +11,7 @@
     module M { }
     M = null; // Error
     ~
-!!! assignments.ts(11,1): error TS2095: Could not find symbol 'M'.
+!!! assignments.ts(11,1): error TS2095: Cannot find name 'M'.
     
     class C { }
     C = null; // Error
@@ -41,4 +41,4 @@
     interface I { }
     I = null; // Error
     ~
-!!! assignments.ts(31,1): error TS2095: Could not find symbol 'I'.
+!!! assignments.ts(31,1): error TS2095: Cannot find name 'I'.

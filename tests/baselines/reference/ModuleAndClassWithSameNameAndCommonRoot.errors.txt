@@ -10,8 +10,7 @@
         // duplicate identifier
         export class Point {
                      ~~~~~
-!!! class.ts(3,18): error TS2000: Duplicate identifier 'Point'. Additional locations:
-!!! 	module.ts(2,19)
+!!! class.ts(3,18): error TS2000: Duplicate identifier 'Point'.
             constructor(x: number, y: number) {
                 this.x = x;
                 this.y = y;
@@ -29,8 +28,7 @@
     // duplicate identifier
     class A {
           ~
-!!! simple.ts(6,7): error TS2000: Duplicate identifier 'A'. Additional locations:
-!!! 	simple.ts(1,8)
+!!! simple.ts(6,7): error TS2000: Duplicate identifier 'A'.
         id: string;
     }
     

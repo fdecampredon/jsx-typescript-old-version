@@ -6,8 +6,7 @@
         "1.0": number; // not a duplicate
         1.0: number;
         ~~~
-!!! numericStringNamedPropertyEquivalence.ts(6,5): error TS2000: Duplicate identifier '1.0'. Additional locations:
-!!! 	numericStringNamedPropertyEquivalence.ts(4,5)
+!!! numericStringNamedPropertyEquivalence.ts(6,5): error TS2000: Duplicate identifier '1.0'.
     }
     
     interface I {
@@ -15,22 +14,19 @@
         "1.": number; // not a duplicate
         1: number;
         ~
-!!! numericStringNamedPropertyEquivalence.ts(12,5): error TS2000: Duplicate identifier '1'. Additional locations:
-!!! 	numericStringNamedPropertyEquivalence.ts(10,5)
+!!! numericStringNamedPropertyEquivalence.ts(12,5): error TS2000: Duplicate identifier '1'.
     }
     
     var a: {
         "1": number;
         1.0: string;
         ~~~
-!!! numericStringNamedPropertyEquivalence.ts(17,5): error TS2000: Duplicate identifier '1.0'. Additional locations:
-!!! 	numericStringNamedPropertyEquivalence.ts(16,5)
+!!! numericStringNamedPropertyEquivalence.ts(17,5): error TS2000: Duplicate identifier '1.0'.
     }
     
     var b = {
         "0": '',
         0: ''
         ~~~~~
-!!! numericStringNamedPropertyEquivalence.ts(22,5): error TS2000: Duplicate identifier '0'. Additional locations:
-!!! 	numericStringNamedPropertyEquivalence.ts(21,5)
+!!! numericStringNamedPropertyEquivalence.ts(22,5): error TS2000: Duplicate identifier '0'.
     }

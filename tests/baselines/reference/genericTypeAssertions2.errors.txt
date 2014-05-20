@@ -20,6 +20,6 @@
     var r4: A<number> = <A<number>>new A();
     var r5: A<number> = <A<number>>[]; // error
                         ~~~~~~~~~~~~~
-!!! genericTypeAssertions2.ts(13,21): error TS2012: Cannot convert 'any[]' to 'A<number>':
+!!! genericTypeAssertions2.ts(13,21): error TS2237: Neither type 'any[]' nor type 'A<number>' is assignable to the other:
 !!! 	Type 'any[]' is missing property 'foo' from type 'A<number>'.
 !!! 	Type 'A<number>' is missing property 'concat' from type 'any[]'.

@@ -6,47 +6,47 @@
         constructor() {
             var a = super.prototype;
                     ~~~~~
-!!! errorSuperPropertyAccess.ts(6,17): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(6,17): error TS2103: 'super' can only be referenced in a derived class.
             var b = super.hasOwnProperty('');
                     ~~~~~
-!!! errorSuperPropertyAccess.ts(7,17): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(7,17): error TS2103: 'super' can only be referenced in a derived class.
         }
     
         fn() {
             var a = super.prototype;
                     ~~~~~
-!!! errorSuperPropertyAccess.ts(11,17): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(11,17): error TS2103: 'super' can only be referenced in a derived class.
             var b = super.hasOwnProperty('');
                     ~~~~~
-!!! errorSuperPropertyAccess.ts(12,17): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(12,17): error TS2103: 'super' can only be referenced in a derived class.
         }
     
         m = super.prototype;
             ~~~~~
-!!! errorSuperPropertyAccess.ts(15,9): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(15,9): error TS2103: 'super' can only be referenced in a derived class.
         n = super.hasOwnProperty('');
             ~~~~~
-!!! errorSuperPropertyAccess.ts(16,9): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(16,9): error TS2103: 'super' can only be referenced in a derived class.
     
         //super static property access in static member function of class with no base type
         //super static property access in static member accessor(get and set) of class with no base type
         public static static1() {
             super.hasOwnProperty('');
             ~~~~~
-!!! errorSuperPropertyAccess.ts(21,9): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(21,9): error TS2103: 'super' can only be referenced in a derived class.
         }
     
         public static get static2() {
             super.hasOwnProperty('');
             ~~~~~
-!!! errorSuperPropertyAccess.ts(25,9): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(25,9): error TS2103: 'super' can only be referenced in a derived class.
             return '';
         }
     
         public static set static2(n) {
             super.hasOwnProperty('');
             ~~~~~
-!!! errorSuperPropertyAccess.ts(30,9): error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(30,9): error TS2103: 'super' can only be referenced in a derived class.
         }
     }
     

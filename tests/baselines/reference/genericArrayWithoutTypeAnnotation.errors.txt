@@ -4,7 +4,7 @@
     class Bar {
         public getBar(foo: IFoo[]) {
                            ~~~~
-!!! genericArrayWithoutTypeAnnotation.ts(4,24): error TS2173: Generic type references must include all type arguments.
+!!! genericArrayWithoutTypeAnnotation.ts(4,24): error TS2090: Generic type 'IFoo<T>' requires 1 type argument(s).
         }
     }
     

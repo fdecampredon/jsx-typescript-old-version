@@ -4,20 +4,20 @@
     class C {
         a = x; // error
             ~
-!!! initializerReferencingConstructorParameters.ts(4,9): error TS2095: Could not find symbol 'x'.
+!!! initializerReferencingConstructorParameters.ts(4,9): error TS2095: Cannot find name 'x'.
         b: typeof x; // error
                   ~
-!!! initializerReferencingConstructorParameters.ts(5,15): error TS2095: Could not find symbol 'x'.
+!!! initializerReferencingConstructorParameters.ts(5,15): error TS2095: Cannot find name 'x'.
         constructor(x) { }
     }
     
     class D {
         a = x; // error
             ~
-!!! initializerReferencingConstructorParameters.ts(10,9): error TS2095: Could not find symbol 'x'.
+!!! initializerReferencingConstructorParameters.ts(10,9): error TS2095: Cannot find name 'x'.
         b: typeof x; // error
                   ~
-!!! initializerReferencingConstructorParameters.ts(11,15): error TS2095: Could not find symbol 'x'.
+!!! initializerReferencingConstructorParameters.ts(11,15): error TS2095: Cannot find name 'x'.
         constructor(public x) { }
     }
     
@@ -33,6 +33,6 @@
         a = this.x; // ok
         b = x; // error
             ~
-!!! initializerReferencingConstructorParameters.ts(23,9): error TS2095: Could not find symbol 'x'.
+!!! initializerReferencingConstructorParameters.ts(23,9): error TS2095: Cannot find name 'x'.
         constructor(public x: T) { }
     }

@@ -6,7 +6,7 @@
         export function ping(x: number) {
             if (x>0) XYZ.pong (x-1);
                ~~~
-!!! moduleImport.ts(4,12): error TS2095: Could not find symbol 'XYZ'.
+!!! moduleImport.ts(4,12): error TS2095: Cannot find name 'XYZ'.
         }
     }
     

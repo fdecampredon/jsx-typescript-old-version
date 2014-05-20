@@ -652,11 +652,11 @@ class ProjectRunner extends RunnerBase {
                 , negative: true
                 , skipRun: true
                 , errors: [
-                    TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(1,1): error TS2071: Unable to resolve external module '\"./foo/bar.js\"'.",
+                    TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(1,1): error TS2071: Cannot find external module '\"./foo/bar.js\"'.",
                     TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(1,1): error TS2072: Module cannot be aliased to a non-module type.",
-                    TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(2,1): error TS2071: Unable to resolve external module '\"baz\"'.",
+                    TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(2,1): error TS2071: Cannot find external module '\"baz\"'.",
                     TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(2,1): error TS2072: Module cannot be aliased to a non-module type.",
-                    TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(3,1): error TS2071: Unable to resolve external module '\"./baz\"'.",
+                    TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(3,1): error TS2071: Cannot find external module '\"./baz\"'.",
                     TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(3,1): error TS2072: Module cannot be aliased to a non-module type."]
             });
 
@@ -884,8 +884,7 @@ class ProjectRunner extends RunnerBase {
                 , negative: true
                 , skipRun: true
                 , bug: '535531'
-                , errors: [TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/declareVariableCollision/in2.d.ts") + "(1,1): error TS2000: Duplicate identifier 'a'. Additional locations:"
-                    + TypeScript.Environment.newLine + "\t" + TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/declareVariableCollision/in1.d.ts") + "(1,1)"]
+                , errors: [TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + "tests/cases/projects/declareVariableCollision/in2.d.ts") + "(1,1): error TS2000: Duplicate identifier 'a'."]
             })
 
             tests.push({
@@ -2529,7 +2528,7 @@ class ProjectRunner extends RunnerBase {
                 , skipRun: true
                 , negative: true
                 , errors: [
-                    TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + 'tests/cases/projects/No-default-lib/test.ts') + '(3,8): error TS2095: Could not find symbol \'Array\'.']
+                    TypeScript.Environment.absolutePath(Harness.userSpecifiedroot + 'tests/cases/projects/No-default-lib/test.ts') + '(3,8): error TS2095: Cannot find name \'Array\'.']
             });
 
             tests.push({

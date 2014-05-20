@@ -36,12 +36,12 @@
                           ~
 !!! newOperatorErrorCases.ts(32,23): error TS1003: Identifier expected.
                    ~~~~~~
-!!! newOperatorErrorCases.ts(32,16): error TS2095: Could not find symbol 'string'.
+!!! newOperatorErrorCases.ts(32,16): error TS2095: Cannot find name 'string'.
     
     
     // Construct expression of non-void returning function
     function fnNumber(): number { return 32; }
     var s = new fnNumber(); // Error
                 ~~~~~~~~
-!!! newOperatorErrorCases.ts(37,13): error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
+!!! newOperatorErrorCases.ts(37,13): error TS2084: Only a void function can be called with the 'new' keyword.
     

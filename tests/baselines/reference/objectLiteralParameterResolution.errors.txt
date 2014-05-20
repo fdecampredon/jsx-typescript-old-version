@@ -9,18 +9,18 @@
         data: "data" ,
         success: wrapSuccessCallback(requestContext, callback) ,
                  ~~~~~~~~~~~~~~~~~~~
-!!! objectLiteralParameterResolution.ts(9,14): error TS2095: Could not find symbol 'wrapSuccessCallback'.
+!!! objectLiteralParameterResolution.ts(9,14): error TS2095: Cannot find name 'wrapSuccessCallback'.
                                      ~~~~~~~~~~~~~~
-!!! objectLiteralParameterResolution.ts(9,34): error TS2095: Could not find symbol 'requestContext'.
+!!! objectLiteralParameterResolution.ts(9,34): error TS2095: Cannot find name 'requestContext'.
                                                      ~~~~~~~~
-!!! objectLiteralParameterResolution.ts(9,50): error TS2095: Could not find symbol 'callback'.
+!!! objectLiteralParameterResolution.ts(9,50): error TS2095: Cannot find name 'callback'.
         error: wrapErrorCallback(requestContext, errorCallback) ,
                ~~~~~~~~~~~~~~~~~
-!!! objectLiteralParameterResolution.ts(10,12): error TS2095: Could not find symbol 'wrapErrorCallback'.
+!!! objectLiteralParameterResolution.ts(10,12): error TS2095: Cannot find name 'wrapErrorCallback'.
                                  ~~~~~~~~~~~~~~
-!!! objectLiteralParameterResolution.ts(10,30): error TS2095: Could not find symbol 'requestContext'.
+!!! objectLiteralParameterResolution.ts(10,30): error TS2095: Cannot find name 'requestContext'.
                                                  ~~~~~~~~~~~~~
-!!! objectLiteralParameterResolution.ts(10,46): error TS2095: Could not find symbol 'errorCallback'.
+!!! objectLiteralParameterResolution.ts(10,46): error TS2095: Cannot find name 'errorCallback'.
         dataType: "json" ,
         converters: { "text json": "" },
         traditional: true ,

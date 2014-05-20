@@ -204,7 +204,7 @@ module TypeScript {
                 if (enumContainerSymbol.kind !== enumDeclKind) {
                     // duplicate symbol error
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        enumAST.identifier, enumContainerDecl.getDisplayName(), enumContainerSymbol.getDeclarations()[0].ast());
+                        enumAST.identifier, enumContainerDecl.getDisplayName());
                     enumContainerSymbol = null;
                 }
                 else if (!this.checkThatExportsMatch(enumContainerDecl, enumContainerSymbol)) {
@@ -486,7 +486,7 @@ module TypeScript {
                     // duplicate symbol error
                     if (isInitializedModule) {
                         this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                            moduleNameAST, moduleContainerDecl.getDisplayName(), /*additionalLocation:*/ moduleContainerTypeSymbol.getDeclarations()[0].ast());
+                            moduleNameAST, moduleContainerDecl.getDisplayName());
                     }
 
                     moduleContainerTypeSymbol = null;
@@ -599,7 +599,7 @@ module TypeScript {
 
             if (importSymbol) {
                 this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                    importDeclAST, importDeclaration.getDisplayName(), importSymbol.getDeclarations()[0].ast());
+                    importDeclAST, importDeclaration.getDisplayName());
                 importSymbol = null;
             }
 
@@ -681,7 +681,7 @@ module TypeScript {
             // Only error if it is an interface (for classes and enums we will error when we bind the implicit variable)
             if (classSymbol && classSymbol.kind === PullElementKind.Interface) {
                 this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                    classAST.identifier, classDecl.getDisplayName(), classSymbol.getDeclarations()[0].ast());
+                    classAST.identifier, classDecl.getDisplayName());
                 classSymbol = null;
             }
 
@@ -793,7 +793,7 @@ module TypeScript {
             if (interfaceSymbol) {
                 if (!(interfaceSymbol.kind & acceptableSharedKind)) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        interfaceAST.identifier, interfaceDecl.getDisplayName(), interfaceSymbol.getDeclarations()[0].ast());
+                        interfaceAST.identifier, interfaceDecl.getDisplayName());
                     interfaceSymbol = null;
                 }
                 else if (!this.checkThatExportsMatch(interfaceDecl, interfaceSymbol)) {
@@ -1008,7 +1008,7 @@ module TypeScript {
                     // However, we will error when a variable clobbers a function, or when the two explicit var declarations are not in the same parent declaration
                     if (!prevIsParam && (isImplicit || prevIsImplicit || hasFlag(prevKind, PullElementKind.SomeFunction)) || !shareParent) {
                         this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                            nameAST, variableDeclaration.getDisplayName(), variableSymbol.getDeclarations()[0].ast());
+                            nameAST, variableDeclaration.getDisplayName());
                         variableSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(declName);
                     }
                     else { // double var declaration (keep them separate so we can verify type sameness during type check)
@@ -1214,7 +1214,7 @@ module TypeScript {
 
             if (propertySymbol) {
                 this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                    propDeclAST.propertyName, propertyDeclaration.getDisplayName(), propertySymbol.getDeclarations()[0].ast());
+                    propDeclAST.propertyName, propertyDeclaration.getDisplayName());
             }
 
             if (propertySymbol) {
@@ -1276,7 +1276,7 @@ module TypeScript {
 
             if (propertySymbol) {
                 this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                    astName, propertyDeclaration.getDisplayName(), propertySymbol.getDeclarations()[0].ast());
+                    astName, propertyDeclaration.getDisplayName());
             }
 
             if (propertySymbol) {
@@ -1419,7 +1419,7 @@ module TypeScript {
 
                 if (!acceptableRedeclaration) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        funcDeclAST.identifier, functionDeclaration.getDisplayName(), functionSymbol.getDeclarations()[0].ast());
+                        funcDeclAST.identifier, functionDeclaration.getDisplayName());
                     functionSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(funcName);
                 }
             }
@@ -1647,7 +1647,7 @@ module TypeScript {
                 (methodSymbol.kind !== PullElementKind.Method ||
                 (!isSignature && !methodSymbol.allDeclsHaveFlag(PullElementFlags.Signature)))) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        methodAST, methodDeclaration.getDisplayName(), methodSymbol.getDeclarations()[0].ast());
+                        methodAST, methodDeclaration.getDisplayName());
                 methodSymbol = null;
             }
 
@@ -1972,7 +1972,7 @@ module TypeScript {
             if (accessorSymbol) {
                 if (!accessorSymbol.isAccessor()) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        funcDeclAST.propertyName, getAccessorDeclaration.getDisplayName(), accessorSymbol.getDeclarations()[0].ast());
+                        funcDeclAST.propertyName, getAccessorDeclaration.getDisplayName());
                     accessorSymbol = null;
                 }
                 else {
@@ -2069,7 +2069,7 @@ module TypeScript {
             if (accessorSymbol) {
                 if (!accessorSymbol.isAccessor()) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        funcDeclAST.propertyName, setAccessorDeclaration.getDisplayName(), accessorSymbol.getDeclarations()[0].ast());
+                        funcDeclAST.propertyName, setAccessorDeclaration.getDisplayName());
                     accessorSymbol = null;
                 }
                 else {

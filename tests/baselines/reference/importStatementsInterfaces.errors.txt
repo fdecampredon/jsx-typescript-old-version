@@ -23,7 +23,7 @@
         import b = a.inA;
         var m: typeof a;
                       ~
-!!! importStatementsInterfaces.ts(23,19): error TS2095: Could not find symbol 'a'.
+!!! importStatementsInterfaces.ts(23,19): error TS2095: Cannot find name 'a'.
         var p: b.Point3D;
         var p = {x:0, y:0, z: 0 };
     }

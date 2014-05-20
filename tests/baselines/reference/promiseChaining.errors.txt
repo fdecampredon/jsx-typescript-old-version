@@ -7,7 +7,7 @@
         ~~
 !!! promiseChaining.ts(1,5): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
             ~~~~
-!!! promiseChaining.ts(1,9): error TS2095: Could not find symbol 'HEAD'.
+!!! promiseChaining.ts(1,9): error TS2095: Cannot find name 'HEAD'.
     =======
     ~~~
 !!! promiseChaining.ts(2,1): error TS1005: '>' expected.
@@ -43,13 +43,13 @@
                                           ~~~~~
 !!! promiseChaining.ts(7,39): error TS1005: ';' expected.
             ~~~~~~~
-!!! promiseChaining.ts(7,9): error TS2095: Could not find symbol 'd99cb83'.
+!!! promiseChaining.ts(7,9): error TS2095: Cannot find name 'd99cb83'.
                        ~~~~~
-!!! promiseChaining.ts(7,20): error TS2095: Could not find symbol 'Clean'.
+!!! promiseChaining.ts(7,20): error TS2095: Cannot find name 'Clean'.
                              ~~
-!!! promiseChaining.ts(7,26): error TS2095: Could not find symbol 'up'.
+!!! promiseChaining.ts(7,26): error TS2095: Cannot find name 'up'.
                                           ~~~~~
-!!! promiseChaining.ts(7,39): error TS2095: Could not find symbol 'tests'.
+!!! promiseChaining.ts(7,39): error TS2095: Cannot find name 'tests'.
     class Chain<T> {
         constructor(public value: T) { }
         then<S>(cb: (x: T) => S): Chain<S> {
@@ -62,7 +62,7 @@
         ~~
 !!! promiseChaining.ts(12,5): error TS1008: Unexpected token; 'statement' expected.
             ~~~~
-!!! promiseChaining.ts(12,9): error TS2095: Could not find symbol 'HEAD'.
+!!! promiseChaining.ts(12,9): error TS2095: Cannot find name 'HEAD'.
             // should get a fresh type parameter which each then call
             var z = this.then(x => result)/*S*/.then(x => "abc")/*string*/.then(x => x.length)/*number*/; // No error
             ~~~
@@ -79,10 +79,10 @@
 !!! promiseChaining.ts(18,7): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
             var z = this.then(x => result).then(x => "abc").then(x => x.length); 
                                    ~~~~~~
-!!! promiseChaining.ts(19,32): error TS2095: Could not find symbol 'result'.
+!!! promiseChaining.ts(19,32): error TS2095: Cannot find name 'result'.
             return new Chain(result);
                              ~~~~~~
-!!! promiseChaining.ts(20,26): error TS2095: Could not find symbol 'result'.
+!!! promiseChaining.ts(20,26): error TS2095: Cannot find name 'result'.
         }
         ~
 !!! promiseChaining.ts(21,5): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
@@ -130,11 +130,11 @@
                                           ~~~~~
 !!! promiseChaining.ts(34,39): error TS1005: ';' expected.
             ~~~~~~~
-!!! promiseChaining.ts(34,9): error TS2095: Could not find symbol 'd99cb83'.
+!!! promiseChaining.ts(34,9): error TS2095: Cannot find name 'd99cb83'.
                        ~~~~~
-!!! promiseChaining.ts(34,20): error TS2095: Could not find symbol 'Clean'.
+!!! promiseChaining.ts(34,20): error TS2095: Cannot find name 'Clean'.
                              ~~
-!!! promiseChaining.ts(34,26): error TS2095: Could not find symbol 'up'.
+!!! promiseChaining.ts(34,26): error TS2095: Cannot find name 'up'.
                                           ~~~~~
-!!! promiseChaining.ts(34,39): error TS2095: Could not find symbol 'tests'.
+!!! promiseChaining.ts(34,39): error TS2095: Cannot find name 'tests'.
     

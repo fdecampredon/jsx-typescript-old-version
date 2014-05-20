@@ -19,10 +19,10 @@
     
     var c: D.inner.Class1;
              ~~~~~
-!!! innerAliases.ts(19,10): error TS2094: The property 'inner' does not exist on value of type 'D'.
+!!! innerAliases.ts(19,10): error TS2094: Property 'inner' does not exist on value of type 'D'.
     
     c = new D.inner.Class1();
               ~~~~~
-!!! innerAliases.ts(21,11): error TS2094: The property 'inner' does not exist on value of type 'typeof D'.
+!!! innerAliases.ts(21,11): error TS2094: Property 'inner' does not exist on value of type 'typeof D'.
     
     

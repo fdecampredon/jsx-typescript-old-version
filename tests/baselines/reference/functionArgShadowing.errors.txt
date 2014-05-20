@@ -7,7 +7,7 @@
 !!! functionArgShadowing.ts(4,8): error TS2134: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'A', but here has type 'B'.
          x.bar(); // the property bar does not exist on a value of type A
            ~~~
-!!! functionArgShadowing.ts(5,8): error TS2094: The property 'bar' does not exist on value of type 'A'.
+!!! functionArgShadowing.ts(5,8): error TS2094: Property 'bar' does not exist on value of type 'A'.
     }
      
     class C {

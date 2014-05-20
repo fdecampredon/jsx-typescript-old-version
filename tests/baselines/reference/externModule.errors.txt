@@ -34,17 +34,17 @@
     
     var d=new XDate();
               ~~~~~
-!!! externModule.ts(32,11): error TS2095: Could not find symbol 'XDate'.
+!!! externModule.ts(32,11): error TS2095: Cannot find name 'XDate'.
     d.getDay();
     d=new XDate(1978,2);
           ~~~~~
-!!! externModule.ts(34,7): error TS2095: Could not find symbol 'XDate'.
+!!! externModule.ts(34,7): error TS2095: Cannot find name 'XDate'.
     d.getXDate();
     var n=XDate.parse("3/2/2004");
           ~~~~~
-!!! externModule.ts(36,7): error TS2095: Could not find symbol 'XDate'.
+!!! externModule.ts(36,7): error TS2095: Cannot find name 'XDate'.
     n=XDate.UTC(1964,2,1);
       ~~~~~
-!!! externModule.ts(37,3): error TS2095: Could not find symbol 'XDate'.
+!!! externModule.ts(37,3): error TS2095: Cannot find name 'XDate'.
     
     

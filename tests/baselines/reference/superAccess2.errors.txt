@@ -29,7 +29,7 @@
             super.x();
             super.y(); // error
                   ~
-!!! superAccess2.ts(17,15): error TS2094: The property 'y' does not exist on value of type 'P'.
+!!! superAccess2.ts(17,15): error TS2094: Property 'y' does not exist on value of type 'P'.
         }
     
         static bar(zz = super) {
@@ -37,7 +37,7 @@
 !!! superAccess2.ts(20,26): error TS1005: '.' expected.
             super.x(); // error
                   ~
-!!! superAccess2.ts(21,15): error TS2094: The property 'x' does not exist on value of type 'typeof P'.
+!!! superAccess2.ts(21,15): error TS2094: Property 'x' does not exist on value of type 'typeof P'.
             super.y();
         }
     }

@@ -2,8 +2,7 @@
     // Should be error - duplicate identifiers
     var foo1: { a:string; a: string; };
                           ~
-!!! propertySignatures.ts(2,23): error TS2000: Duplicate identifier 'a'. Additional locations:
-!!! 	propertySignatures.ts(2,13)
+!!! propertySignatures.ts(2,23): error TS2000: Duplicate identifier 'a'.
     
     // Should be OK
     var foo2: { a; };
@@ -17,7 +16,7 @@
     var foo4: { (): void; };
     var test = foo();
                ~~~
-!!! propertySignatures.ts(14,12): error TS2095: Could not find symbol 'foo'.
+!!! propertySignatures.ts(14,12): error TS2095: Cannot find name 'foo'.
     
     // Should be OK
     var foo5: {();};

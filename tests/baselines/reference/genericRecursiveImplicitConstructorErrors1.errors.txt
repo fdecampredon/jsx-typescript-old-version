@@ -9,7 +9,7 @@
       }
       class PullTypeParameterSymbol <A,B,C> extends PullTypeSymbol {
                                                     ~~~~~~~~~~~~~~
-!!! genericRecursiveImplicitConstructorErrors1.ts(9,49): error TS2173: Generic type references must include all type arguments.
+!!! genericRecursiveImplicitConstructorErrors1.ts(9,49): error TS2090: Generic type 'TypeScript.PullTypeSymbol<A, B, C>' requires 3 type argument(s).
       }
     }
      

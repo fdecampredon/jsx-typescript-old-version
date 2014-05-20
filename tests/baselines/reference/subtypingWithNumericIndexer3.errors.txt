@@ -28,7 +28,7 @@
     
         class B extends A<Base> {
                         ~~~~~~~
-!!! subtypingWithNumericIndexer3.ts(24,21): error TS2086: Type 'Base' does not satisfy the constraint 'Derived' for type parameter 'T extends Derived'.
+!!! subtypingWithNumericIndexer3.ts(24,21): error TS2086: Type 'Base' does not satisfy the constraint 'Derived'.
             [x: number]: Derived; // error
         }
     

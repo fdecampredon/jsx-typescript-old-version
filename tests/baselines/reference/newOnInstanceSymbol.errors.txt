@@ -3,4 +3,4 @@
     var x = new C(); // should be ok
     new x(); // should error
         ~
-!!! newOnInstanceSymbol.ts(3,5): error TS2083: Invalid 'new' expression.
+!!! newOnInstanceSymbol.ts(3,5): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.

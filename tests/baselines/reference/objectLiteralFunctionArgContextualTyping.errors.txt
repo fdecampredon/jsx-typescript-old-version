@@ -28,4 +28,4 @@
 !!! objectLiteralFunctionArgContextualTyping.ts(12,1): error TS2087: Could not select overload for 'call' expression.
     f2({ value: '', toString: (s) => s.uhhh }) // error
                                        ~~~~
-!!! objectLiteralFunctionArgContextualTyping.ts(13,36): error TS2094: The property 'uhhh' does not exist on value of type 'string'.
+!!! objectLiteralFunctionArgContextualTyping.ts(13,36): error TS2094: Property 'uhhh' does not exist on value of type 'string'.

@@ -15,7 +15,7 @@
     var x2: importInst.C = new x1();
     var x3: typeof importUninst.P; // Error again
                    ~~~~~~~~~~~~
-!!! typeofInternalModules.ts(15,16): error TS2095: Could not find symbol 'importUninst'.
+!!! typeofInternalModules.ts(15,16): error TS2095: Cannot find name 'importUninst'.
     
     var x4: Outer = Outer;
             ~~~~~
@@ -28,7 +28,7 @@
     x5 = Outer.instantiated;
     var x6: typeof importUninst;
                    ~~~~~~~~~~~~
-!!! typeofInternalModules.ts(21,16): error TS2095: Could not find symbol 'importUninst'.
+!!! typeofInternalModules.ts(21,16): error TS2095: Cannot find name 'importUninst'.
     var x7: typeof Outer = Outer;
     x7 = importInst;
     ~~

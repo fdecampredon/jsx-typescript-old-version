@@ -11,11 +11,11 @@
     var r4 = r3();
     var r4b = new r3(); // error
                   ~~
-!!! arrayTypeOfFunctionTypes.ts(11,15): error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
+!!! arrayTypeOfFunctionTypes.ts(11,15): error TS2084: Only a void function can be called with the 'new' keyword.
     
     var x3: Array<() => string>;
     var r5 = x2[1];
     var r6 = r5();
     var r6b = new r5(); // error
                   ~~
-!!! arrayTypeOfFunctionTypes.ts(16,15): error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
+!!! arrayTypeOfFunctionTypes.ts(16,15): error TS2084: Only a void function can be called with the 'new' keyword.

@@ -24,8 +24,7 @@
         public pgF() { }
         public get pgF()
                    ~~~
-!!! giant.ts(24,16): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(23,5)
+!!! giant.ts(24,16): error TS2000: Duplicate identifier 'pgF'.
                    ~~~
 !!! giant.ts(24,16): error TS2126: Getters must return a value.
         public psF(param:any) { }
@@ -33,15 +32,13 @@
 !!! giant.ts(25,5): error TS1005: '{' expected.
         public set psF(param:any)
                    ~~~
-!!! giant.ts(26,16): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(25,5)
+!!! giant.ts(26,16): error TS2000: Duplicate identifier 'psF'.
         private rgF() { }
         ~~~~~~~
 !!! giant.ts(27,5): error TS1005: '{' expected.
         private get rgF()
                     ~~~
-!!! giant.ts(28,17): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(27,5)
+!!! giant.ts(28,17): error TS2000: Duplicate identifier 'rgF'.
                     ~~~
 !!! giant.ts(28,17): error TS2126: Getters must return a value.
         private rsF(param:any) { }
@@ -49,8 +46,7 @@
 !!! giant.ts(29,5): error TS1005: '{' expected.
         private set rsF(param:any)
                     ~~~
-!!! giant.ts(30,17): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(29,5)
+!!! giant.ts(30,17): error TS2000: Duplicate identifier 'rsF'.
         static tV;
         ~~~~~~
 !!! giant.ts(31,5): error TS1005: '{' expected.
@@ -58,15 +54,13 @@
         static tsF(param:any) { }
         static set tsF(param:any)
                    ~~~
-!!! giant.ts(34,16): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(33,5)
+!!! giant.ts(34,16): error TS2000: Duplicate identifier 'tsF'.
         static tgF() { }
         ~~~~~~
 !!! giant.ts(35,5): error TS1005: '{' expected.
         static get tgF()
                    ~~~
-!!! giant.ts(36,16): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(35,5)
+!!! giant.ts(36,16): error TS2000: Duplicate identifier 'tgF'.
                    ~~~
 !!! giant.ts(36,16): error TS2126: Getters must return a value.
     }
@@ -101,8 +95,7 @@
         [p1: string];
         [p2: string, p3: number];
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(63,5): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	giant.ts(62,5)
+!!! giant.ts(63,5): error TS2232: Duplicate string index signature.
     
         //Property Signature
         p;
@@ -131,8 +124,7 @@
             public pgF() { }
             public get pgF()
                        ~~~
-!!! giant.ts(88,20): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(87,9)
+!!! giant.ts(88,20): error TS2000: Duplicate identifier 'pgF'.
                        ~~~
 !!! giant.ts(88,20): error TS2126: Getters must return a value.
             public psF(param:any) { }
@@ -140,15 +132,13 @@
 !!! giant.ts(89,9): error TS1005: '{' expected.
             public set psF(param:any)
                        ~~~
-!!! giant.ts(90,20): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(89,9)
+!!! giant.ts(90,20): error TS2000: Duplicate identifier 'psF'.
             private rgF() { }
             ~~~~~~~
 !!! giant.ts(91,9): error TS1005: '{' expected.
             private get rgF()
                         ~~~
-!!! giant.ts(92,21): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(91,9)
+!!! giant.ts(92,21): error TS2000: Duplicate identifier 'rgF'.
                         ~~~
 !!! giant.ts(92,21): error TS2126: Getters must return a value.
             private rsF(param:any) { }
@@ -156,8 +146,7 @@
 !!! giant.ts(93,9): error TS1005: '{' expected.
             private set rsF(param:any)
                         ~~~
-!!! giant.ts(94,21): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(93,9)
+!!! giant.ts(94,21): error TS2000: Duplicate identifier 'rsF'.
             static tV;
             ~~~~~~
 !!! giant.ts(95,9): error TS1005: '{' expected.
@@ -165,15 +154,13 @@
             static tsF(param:any) { }
             static set tsF(param:any)
                        ~~~
-!!! giant.ts(98,20): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(97,9)
+!!! giant.ts(98,20): error TS2000: Duplicate identifier 'tsF'.
             static tgF() { }
             ~~~~~~
 !!! giant.ts(99,9): error TS1005: '{' expected.
             static get tgF()
                        ~~~
-!!! giant.ts(100,20): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(99,9)
+!!! giant.ts(100,20): error TS2000: Duplicate identifier 'tgF'.
                        ~~~
 !!! giant.ts(100,20): error TS2126: Getters must return a value.
         }
@@ -208,8 +195,7 @@
             [p1: string];
             [p2: string, p3: number];
             ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(127,9): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	giant.ts(126,9)
+!!! giant.ts(127,9): error TS2232: Duplicate string index signature.
     
             //Property Signature
             p;
@@ -253,8 +239,7 @@
             public pgF() { }
             public get pgF()
                        ~~~
-!!! giant.ts(167,20): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(166,9)
+!!! giant.ts(167,20): error TS2000: Duplicate identifier 'pgF'.
                        ~~~
 !!! giant.ts(167,20): error TS2126: Getters must return a value.
             public psF(param:any) { }
@@ -262,15 +247,13 @@
 !!! giant.ts(168,9): error TS1005: '{' expected.
             public set psF(param:any)
                        ~~~
-!!! giant.ts(169,20): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(168,9)
+!!! giant.ts(169,20): error TS2000: Duplicate identifier 'psF'.
             private rgF() { }
             ~~~~~~~
 !!! giant.ts(170,9): error TS1005: '{' expected.
             private get rgF()
                         ~~~
-!!! giant.ts(171,21): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(170,9)
+!!! giant.ts(171,21): error TS2000: Duplicate identifier 'rgF'.
                         ~~~
 !!! giant.ts(171,21): error TS2126: Getters must return a value.
             private rsF(param:any) { }
@@ -278,8 +261,7 @@
 !!! giant.ts(172,9): error TS1005: '{' expected.
             private set rsF(param:any)
                         ~~~
-!!! giant.ts(173,21): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(172,9)
+!!! giant.ts(173,21): error TS2000: Duplicate identifier 'rsF'.
             static tV;
             ~~~~~~
 !!! giant.ts(174,9): error TS1005: '{' expected.
@@ -287,15 +269,13 @@
             static tsF(param:any) { }
             static set tsF(param:any)
                        ~~~
-!!! giant.ts(177,20): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(176,9)
+!!! giant.ts(177,20): error TS2000: Duplicate identifier 'tsF'.
             static tgF() { }
             ~~~~~~
 !!! giant.ts(178,9): error TS1005: '{' expected.
             static get tgF()
                        ~~~
-!!! giant.ts(179,20): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(178,9)
+!!! giant.ts(179,20): error TS2000: Duplicate identifier 'tgF'.
                        ~~~
 !!! giant.ts(179,20): error TS2126: Getters must return a value.
         }
@@ -330,8 +310,7 @@
             [p1: string];
             [p2: string, p3: number];
             ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(206,9): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	giant.ts(205,9)
+!!! giant.ts(206,9): error TS2232: Duplicate string index signature.
     
             //Property Signature
             p;
@@ -375,8 +354,7 @@
             public pgF() { }
             public get pgF()
                        ~~~
-!!! giant.ts(246,20): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(245,9)
+!!! giant.ts(246,20): error TS2000: Duplicate identifier 'pgF'.
                        ~~~
 !!! giant.ts(246,20): error TS2126: Getters must return a value.
             public psF(param:any) { }
@@ -384,15 +362,13 @@
 !!! giant.ts(247,9): error TS1005: '{' expected.
             public set psF(param:any)
                        ~~~
-!!! giant.ts(248,20): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(247,9)
+!!! giant.ts(248,20): error TS2000: Duplicate identifier 'psF'.
             private rgF() { }
             ~~~~~~~
 !!! giant.ts(249,9): error TS1005: '{' expected.
             private get rgF()
                         ~~~
-!!! giant.ts(250,21): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(249,9)
+!!! giant.ts(250,21): error TS2000: Duplicate identifier 'rgF'.
                         ~~~
 !!! giant.ts(250,21): error TS2126: Getters must return a value.
             private rsF(param:any) { }
@@ -400,8 +376,7 @@
 !!! giant.ts(251,9): error TS1005: '{' expected.
             private set rsF(param:any)
                         ~~~
-!!! giant.ts(252,21): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(251,9)
+!!! giant.ts(252,21): error TS2000: Duplicate identifier 'rsF'.
             static tV;
             ~~~~~~
 !!! giant.ts(253,9): error TS1005: '{' expected.
@@ -409,15 +384,13 @@
             static tsF(param:any) { }
             static set tsF(param:any)
                        ~~~
-!!! giant.ts(256,20): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(255,9)
+!!! giant.ts(256,20): error TS2000: Duplicate identifier 'tsF'.
             static tgF() { }
             ~~~~~~
 !!! giant.ts(257,9): error TS1005: '{' expected.
             static get tgF()
                        ~~~
-!!! giant.ts(258,20): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(257,9)
+!!! giant.ts(258,20): error TS2000: Duplicate identifier 'tgF'.
                        ~~~
 !!! giant.ts(258,20): error TS2126: Getters must return a value.
         }
@@ -449,8 +422,7 @@
         public pgF() { }
         public get pgF()
                    ~~~
-!!! giant.ts(282,16): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(281,5)
+!!! giant.ts(282,16): error TS2000: Duplicate identifier 'pgF'.
                    ~~~
 !!! giant.ts(282,16): error TS2126: Getters must return a value.
         public psF(param:any) { }
@@ -458,15 +430,13 @@
 !!! giant.ts(283,5): error TS1005: '{' expected.
         public set psF(param:any)
                    ~~~
-!!! giant.ts(284,16): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(283,5)
+!!! giant.ts(284,16): error TS2000: Duplicate identifier 'psF'.
         private rgF() { }
         ~~~~~~~
 !!! giant.ts(285,5): error TS1005: '{' expected.
         private get rgF()
                     ~~~
-!!! giant.ts(286,17): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(285,5)
+!!! giant.ts(286,17): error TS2000: Duplicate identifier 'rgF'.
                     ~~~
 !!! giant.ts(286,17): error TS2126: Getters must return a value.
         private rsF(param:any) { }
@@ -474,8 +444,7 @@
 !!! giant.ts(287,5): error TS1005: '{' expected.
         private set rsF(param:any)
                     ~~~
-!!! giant.ts(288,17): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(287,5)
+!!! giant.ts(288,17): error TS2000: Duplicate identifier 'rsF'.
         static tV;
         ~~~~~~
 !!! giant.ts(289,5): error TS1005: '{' expected.
@@ -483,15 +452,13 @@
         static tsF(param:any) { }
         static set tsF(param:any)
                    ~~~
-!!! giant.ts(292,16): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(291,5)
+!!! giant.ts(292,16): error TS2000: Duplicate identifier 'tsF'.
         static tgF() { }
         ~~~~~~
 !!! giant.ts(293,5): error TS1005: '{' expected.
         static get tgF()
                    ~~~
-!!! giant.ts(294,16): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(293,5)
+!!! giant.ts(294,16): error TS2000: Duplicate identifier 'tgF'.
                    ~~~
 !!! giant.ts(294,16): error TS2126: Getters must return a value.
     }
@@ -526,8 +493,7 @@
         [p1: string];
         [p2: string, p3: number];
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(321,5): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	giant.ts(320,5)
+!!! giant.ts(321,5): error TS2232: Duplicate string index signature.
     
         //Property Signature
         p;
@@ -556,8 +522,7 @@
             public pgF() { }
             public get pgF()
                        ~~~
-!!! giant.ts(346,20): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(345,9)
+!!! giant.ts(346,20): error TS2000: Duplicate identifier 'pgF'.
                        ~~~
 !!! giant.ts(346,20): error TS2126: Getters must return a value.
             public psF(param:any) { }
@@ -565,15 +530,13 @@
 !!! giant.ts(347,9): error TS1005: '{' expected.
             public set psF(param:any)
                        ~~~
-!!! giant.ts(348,20): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(347,9)
+!!! giant.ts(348,20): error TS2000: Duplicate identifier 'psF'.
             private rgF() { }
             ~~~~~~~
 !!! giant.ts(349,9): error TS1005: '{' expected.
             private get rgF()
                         ~~~
-!!! giant.ts(350,21): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(349,9)
+!!! giant.ts(350,21): error TS2000: Duplicate identifier 'rgF'.
                         ~~~
 !!! giant.ts(350,21): error TS2126: Getters must return a value.
             private rsF(param:any) { }
@@ -581,8 +544,7 @@
 !!! giant.ts(351,9): error TS1005: '{' expected.
             private set rsF(param:any)
                         ~~~
-!!! giant.ts(352,21): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(351,9)
+!!! giant.ts(352,21): error TS2000: Duplicate identifier 'rsF'.
             static tV;
             ~~~~~~
 !!! giant.ts(353,9): error TS1005: '{' expected.
@@ -590,15 +552,13 @@
             static tsF(param:any) { }
             static set tsF(param:any)
                        ~~~
-!!! giant.ts(356,20): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(355,9)
+!!! giant.ts(356,20): error TS2000: Duplicate identifier 'tsF'.
             static tgF() { }
             ~~~~~~
 !!! giant.ts(357,9): error TS1005: '{' expected.
             static get tgF()
                        ~~~
-!!! giant.ts(358,20): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(357,9)
+!!! giant.ts(358,20): error TS2000: Duplicate identifier 'tgF'.
                        ~~~
 !!! giant.ts(358,20): error TS2126: Getters must return a value.
         }
@@ -633,8 +593,7 @@
             [p1: string];
             [p2: string, p3: number];
             ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(385,9): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	giant.ts(384,9)
+!!! giant.ts(385,9): error TS2232: Duplicate string index signature.
     
             //Property Signature
             p;
@@ -678,8 +637,7 @@
             public pgF() { }
             public get pgF()
                        ~~~
-!!! giant.ts(425,20): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(424,9)
+!!! giant.ts(425,20): error TS2000: Duplicate identifier 'pgF'.
                        ~~~
 !!! giant.ts(425,20): error TS2126: Getters must return a value.
             public psF(param:any) { }
@@ -687,15 +645,13 @@
 !!! giant.ts(426,9): error TS1005: '{' expected.
             public set psF(param:any)
                        ~~~
-!!! giant.ts(427,20): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(426,9)
+!!! giant.ts(427,20): error TS2000: Duplicate identifier 'psF'.
             private rgF() { }
             ~~~~~~~
 !!! giant.ts(428,9): error TS1005: '{' expected.
             private get rgF()
                         ~~~
-!!! giant.ts(429,21): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(428,9)
+!!! giant.ts(429,21): error TS2000: Duplicate identifier 'rgF'.
                         ~~~
 !!! giant.ts(429,21): error TS2126: Getters must return a value.
             private rsF(param:any) { }
@@ -703,8 +659,7 @@
 !!! giant.ts(430,9): error TS1005: '{' expected.
             private set rsF(param:any)
                         ~~~
-!!! giant.ts(431,21): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(430,9)
+!!! giant.ts(431,21): error TS2000: Duplicate identifier 'rsF'.
             static tV;
             ~~~~~~
 !!! giant.ts(432,9): error TS1005: '{' expected.
@@ -712,15 +667,13 @@
             static tsF(param:any) { }
             static set tsF(param:any)
                        ~~~
-!!! giant.ts(435,20): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(434,9)
+!!! giant.ts(435,20): error TS2000: Duplicate identifier 'tsF'.
             static tgF() { }
             ~~~~~~
 !!! giant.ts(436,9): error TS1005: '{' expected.
             static get tgF()
                        ~~~
-!!! giant.ts(437,20): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(436,9)
+!!! giant.ts(437,20): error TS2000: Duplicate identifier 'tgF'.
                        ~~~
 !!! giant.ts(437,20): error TS2126: Getters must return a value.
         }
@@ -755,8 +708,7 @@
             [p1: string];
             [p2: string, p3: number];
             ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(464,9): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	giant.ts(463,9)
+!!! giant.ts(464,9): error TS2232: Duplicate string index signature.
     
             //Property Signature
             p;
@@ -800,8 +752,7 @@
             public pgF() { }
             public get pgF()
                        ~~~
-!!! giant.ts(504,20): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(503,9)
+!!! giant.ts(504,20): error TS2000: Duplicate identifier 'pgF'.
                        ~~~
 !!! giant.ts(504,20): error TS2126: Getters must return a value.
             public psF(param:any) { }
@@ -809,15 +760,13 @@
 !!! giant.ts(505,9): error TS1005: '{' expected.
             public set psF(param:any)
                        ~~~
-!!! giant.ts(506,20): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(505,9)
+!!! giant.ts(506,20): error TS2000: Duplicate identifier 'psF'.
             private rgF() { }
             ~~~~~~~
 !!! giant.ts(507,9): error TS1005: '{' expected.
             private get rgF()
                         ~~~
-!!! giant.ts(508,21): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(507,9)
+!!! giant.ts(508,21): error TS2000: Duplicate identifier 'rgF'.
                         ~~~
 !!! giant.ts(508,21): error TS2126: Getters must return a value.
             private rsF(param:any) { }
@@ -825,8 +774,7 @@
 !!! giant.ts(509,9): error TS1005: '{' expected.
             private set rsF(param:any)
                         ~~~
-!!! giant.ts(510,21): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(509,9)
+!!! giant.ts(510,21): error TS2000: Duplicate identifier 'rsF'.
             static tV;
             ~~~~~~
 !!! giant.ts(511,9): error TS1005: '{' expected.
@@ -834,15 +782,13 @@
             static tsF(param:any) { }
             static set tsF(param:any)
                        ~~~
-!!! giant.ts(514,20): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(513,9)
+!!! giant.ts(514,20): error TS2000: Duplicate identifier 'tsF'.
             static tgF() { }
             ~~~~~~
 !!! giant.ts(515,9): error TS1005: '{' expected.
             static get tgF()
                        ~~~
-!!! giant.ts(516,20): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(515,9)
+!!! giant.ts(516,20): error TS2000: Duplicate identifier 'tgF'.
                        ~~~
 !!! giant.ts(516,20): error TS2126: Getters must return a value.
         }
@@ -874,8 +820,7 @@
         public pgF() { }
         public get pgF()
                    ~~~
-!!! giant.ts(540,16): error TS2000: Duplicate identifier 'pgF'. Additional locations:
-!!! 	giant.ts(539,5)
+!!! giant.ts(540,16): error TS2000: Duplicate identifier 'pgF'.
                    ~~~
 !!! giant.ts(540,16): error TS2126: Getters must return a value.
         public psF(param:any) { }
@@ -883,15 +828,13 @@
 !!! giant.ts(541,5): error TS1005: '{' expected.
         public set psF(param:any)
                    ~~~
-!!! giant.ts(542,16): error TS2000: Duplicate identifier 'psF'. Additional locations:
-!!! 	giant.ts(541,5)
+!!! giant.ts(542,16): error TS2000: Duplicate identifier 'psF'.
         private rgF() { }
         ~~~~~~~
 !!! giant.ts(543,5): error TS1005: '{' expected.
         private get rgF()
                     ~~~
-!!! giant.ts(544,17): error TS2000: Duplicate identifier 'rgF'. Additional locations:
-!!! 	giant.ts(543,5)
+!!! giant.ts(544,17): error TS2000: Duplicate identifier 'rgF'.
                     ~~~
 !!! giant.ts(544,17): error TS2126: Getters must return a value.
         private rsF(param:any) { }
@@ -899,8 +842,7 @@
 !!! giant.ts(545,5): error TS1005: '{' expected.
         private set rsF(param:any)
                     ~~~
-!!! giant.ts(546,17): error TS2000: Duplicate identifier 'rsF'. Additional locations:
-!!! 	giant.ts(545,5)
+!!! giant.ts(546,17): error TS2000: Duplicate identifier 'rsF'.
         static tV;
         ~~~~~~
 !!! giant.ts(547,5): error TS1005: '{' expected.
@@ -908,15 +850,13 @@
         static tsF(param:any) { }
         static set tsF(param:any)
                    ~~~
-!!! giant.ts(550,16): error TS2000: Duplicate identifier 'tsF'. Additional locations:
-!!! 	giant.ts(549,5)
+!!! giant.ts(550,16): error TS2000: Duplicate identifier 'tsF'.
         static tgF() { }
         ~~~~~~
 !!! giant.ts(551,5): error TS1005: '{' expected.
         static get tgF()
                    ~~~
-!!! giant.ts(552,16): error TS2000: Duplicate identifier 'tgF'. Additional locations:
-!!! 	giant.ts(551,5)
+!!! giant.ts(552,16): error TS2000: Duplicate identifier 'tgF'.
                    ~~~
 !!! giant.ts(552,16): error TS2126: Getters must return a value.
     }
@@ -961,8 +901,7 @@
             [p1: string];
             [p2: string, p3: number];
             ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(589,9): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	giant.ts(588,9)
+!!! giant.ts(589,9): error TS2232: Duplicate string index signature.
     
             //Property Signature
             p;
@@ -1032,8 +971,7 @@
             [p1: string];
             [p2: string, p3: number];
             ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(655,9): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	giant.ts(654,9)
+!!! giant.ts(655,9): error TS2232: Duplicate string index signature.
     
             //Property Signature
             p;

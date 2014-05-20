@@ -64,8 +64,7 @@
         }
         export function F() { } // Only one error for duplicate identifier (don't consider visibility)
                         ~
-!!! duplicateSymbolsExportMatching.ts(52,21): error TS2000: Duplicate identifier 'F'. Additional locations:
-!!! 	duplicateSymbolsExportMatching.ts(49,12)
+!!! duplicateSymbolsExportMatching.ts(52,21): error TS2000: Duplicate identifier 'F'.
     }
     
     module M {

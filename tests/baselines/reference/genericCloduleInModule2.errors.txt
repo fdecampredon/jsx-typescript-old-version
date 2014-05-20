@@ -14,5 +14,5 @@
     
     var b: A.B;
            ~~~
-!!! genericCloduleInModule2.ts(14,8): error TS2173: Generic type references must include all type arguments.
+!!! genericCloduleInModule2.ts(14,8): error TS2090: Generic type 'A.B<T>' requires 1 type argument(s).
     b.foo();

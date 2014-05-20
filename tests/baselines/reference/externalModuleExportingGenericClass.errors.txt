@@ -2,7 +2,7 @@
     import a = require('externalModuleExportingGenericClass_file0');
     var v: a; // this should report error
            ~
-!!! externalModuleExportingGenericClass_file1.ts(2,8): error TS2173: Generic type references must include all type arguments.
+!!! externalModuleExportingGenericClass_file1.ts(2,8): error TS2090: Generic type 'a' requires 0 type argument(s).
     var v2: any = (new a()).foo;
     var v3: number = (new a<number>()).foo;
     

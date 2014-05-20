@@ -1802,8 +1802,7 @@ module TypeScript {
                     if (currentParameterType === this.semanticInfoChain.stringTypeSymbol) {
                         if (firstStringIndexer) {
                             this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
-                                DiagnosticCode.Duplicate_string_index_signature, null,
-                                [this.semanticInfoChain.locationFromAST(firstStringIndexer.getDeclarations()[0].ast())]);
+                                DiagnosticCode.Duplicate_string_index_signature, null);
                             return;
                         }
                         else {
@@ -1813,8 +1812,7 @@ module TypeScript {
                     else if (currentParameterType === this.semanticInfoChain.numberTypeSymbol) {
                         if (firstNumberIndexer) {
                             this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
-                                DiagnosticCode.Duplicate_number_index_signature, null,
-                                [this.semanticInfoChain.locationFromAST(firstNumberIndexer.getDeclarations()[0].ast())]);
+                                DiagnosticCode.Duplicate_number_index_signature, null);
                             return;
                         }
                         else {
@@ -1922,7 +1920,7 @@ module TypeScript {
             }
 
             if (!valueSymbol && !typeSymbol && !containerSymbol) {
-                this.semanticInfoChain.addDiagnosticFromAST(identifier, DiagnosticCode.Could_not_find_symbol_0_in_module_1, [rhsName, moduleSymbol.toString()]);
+                this.semanticInfoChain.addDiagnosticFromAST(identifier, DiagnosticCode.Module_0_has_no_exported_member_1, [moduleSymbol.toString(), rhsName]);
                 return null;
             }
 
@@ -2070,7 +2068,7 @@ module TypeScript {
 
                 if (!aliasedType) {
                     var path = (<ExternalModuleReferenceSyntax>importStatementAST.moduleReference).stringLiteral.text();
-                    this.semanticInfoChain.addDiagnosticFromAST(importStatementAST, DiagnosticCode.Unable_to_resolve_external_module_0, [path]);
+                    this.semanticInfoChain.addDiagnosticFromAST(importStatementAST, DiagnosticCode.Cannot_find_external_module_0, [path]);
                     aliasedType = this.getNewErrorTypeSymbol();
 
                 }
@@ -2283,7 +2281,7 @@ module TypeScript {
 
             if (!valueSymbol && !typeSymbol && !containerSymbol) {
                 // Error
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(exportAssignmentAST, DiagnosticCode.Could_not_find_symbol_0, [id]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(exportAssignmentAST, DiagnosticCode.Cannot_find_name_0, [id]));
                 return this.semanticInfoChain.voidTypeSymbol;
             }
 
@@ -2846,7 +2844,7 @@ module TypeScript {
             }
 
             if (this.genericTypeIsUsedWithoutRequiredTypeArguments(typeDeclSymbol, term, context)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(term, DiagnosticCode.Generic_type_references_must_include_all_type_arguments));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(term, DiagnosticCode.Generic_type_0_requires_1_type_argument_s, [typeDeclSymbol.toString(), typeDeclSymbol.getTypeParameters().length]));
                 typeDeclSymbol = this.instantiateTypeToAny(typeDeclSymbol, context);
             }
 
@@ -5547,7 +5545,7 @@ module TypeScript {
             var matchingLabel = ArrayUtilities.firstOrDefault(breakableLabels, s => tokenValueText(s.identifier) === labelIdentifier);
             if (matchingLabel) {
                 context.postDiagnostic(this.semanticInfoChain.duplicateIdentifierDiagnosticFromAST(
-                    ast.identifier, labelIdentifier, matchingLabel));
+                    ast.identifier, labelIdentifier));
             }
 
             this.resolveAST(ast.statement, /*isContextuallyTyped*/ false, context);
@@ -6526,7 +6524,7 @@ module TypeScript {
             }
 
             if (!nameSymbol) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Could_not_find_symbol_0, [nameAST.text()]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Cannot_find_name_0, [nameAST.text()]));
                 return this.getNewErrorTypeSymbol(id);
             }
             else if (this.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST, nameSymbol, context)) {
@@ -6753,7 +6751,7 @@ module TypeScript {
 
                 if (!nameSymbol) {
                     var enclosingDecl = this.getEnclosingDeclForAST(expression);
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name, DiagnosticCode.The_property_0_does_not_exist_on_value_of_type_1, [name.text(), originalLhsTypeForErrorReporting.toString(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null)]));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name, DiagnosticCode.Property_0_does_not_exist_on_value_of_type_1, [name.text(), originalLhsTypeForErrorReporting.toString(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null)]));
                     return this.getNewErrorTypeSymbol(rhsName);
                 }
             }
@@ -6812,7 +6810,7 @@ module TypeScript {
             }
 
             if (!typeNameSymbol) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Could_not_find_symbol_0, [nameAST.text()]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Cannot_find_name_0, [nameAST.text()]));
                 return this.getNewErrorTypeSymbol(id);
             }
 
@@ -6869,7 +6867,7 @@ module TypeScript {
 
             var typeParameters = genericTypeSymbol.getTypeParameters();
             if (typeParameters.length === 0) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_does_not_have_type_parameters, [genericTypeSymbol.toString()]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_is_not_generic, [genericTypeSymbol.toString()]));
                 return this.getNewErrorTypeSymbol();
             }
 
@@ -6970,7 +6968,7 @@ module TypeScript {
                             // to(section 3.8.4) the constraint type once type arguments are substituted for type parameters.
                             if (!this.sourceIsAssignableToTarget(typeArg, typeConstraint, genericTypeAST, context)) {
                                 var enclosingSymbol = this.getEnclosingSymbolForAST(genericTypeAST);
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1_for_type_parameter_2, [typeArg.toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true), typeParameter.toString(enclosingSymbol, /*useConstraintInName*/ true)]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1, [typeArg.toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true)]));
                             }
                         });
                     }
@@ -7092,7 +7090,7 @@ module TypeScript {
             }
 
             if (!childTypeSymbol) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(dottedNameAST.right, DiagnosticCode.The_property_0_does_not_exist_on_value_of_type_1, [dottedNameAST.right.text(), lhsType.toString(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null)]));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(dottedNameAST.right, DiagnosticCode.Property_0_does_not_exist_on_value_of_type_1, [dottedNameAST.right.text(), lhsType.toString(enclosingDecl ? enclosingDecl.getSymbol(this.semanticInfoChain) : null)]));
                 return this.getNewErrorTypeSymbol(rhsName);
             }
 
@@ -7544,7 +7542,7 @@ module TypeScript {
                         return;
                     }
                     else {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_within_module_bodies));
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_a_module_body));
                         return;
                     }
                 }
@@ -7573,7 +7571,7 @@ module TypeScript {
                 }
                 else if (currentDecl.kind === PullElementKind.Class) {
                     if (this.inStaticMemberVariableDeclaration(thisExpression)) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_static_initializers_in_a_class_body));
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_a_static_property_initializer));
                     }
 
                     // Legal use of 'this'.  
@@ -7690,7 +7688,7 @@ module TypeScript {
                         // We're in some class member.  That's good.
 
                         if (!this.enclosingClassIsDerived(currentDecl)) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_can_only_be_referenced_in_a_derived_class));
                             return;
                         }
                         else if (this.inConstructorParameterList(ast)) {
@@ -7726,7 +7724,7 @@ module TypeScript {
                         var classDecl = currentDecl.getParentDecl();
 
                         if (!this.enclosingClassIsDerived(classDecl)) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_can_only_be_referenced_in_a_derived_class));
                             return;
                         }
                         else if (this.inConstructorParameterList(ast)) {
@@ -7821,8 +7819,7 @@ module TypeScript {
                     // Make sure this was not defined before
                     var existingMember = objectLiteralTypeSymbol.findMember(memberSymbol.name, /*lookInParent*/ true);
                     if (existingMember) {
-                        pullTypeContext.postDiagnostic(this.semanticInfoChain.duplicateIdentifierDiagnosticFromAST(propertyAssignment, assignmentText.actualText,
-                            existingMember.getDeclarations()[0].ast()));
+                        pullTypeContext.postDiagnostic(this.semanticInfoChain.duplicateIdentifierDiagnosticFromAST(propertyAssignment, assignmentText.actualText));
                     }
 
                     objectLiteralTypeSymbol.addMember(memberSymbol);
@@ -8213,7 +8210,7 @@ module TypeScript {
             else {
                 return {
                     symbol: this.getNewErrorTypeSymbol(),
-                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.Value_of_type_0_is_not_indexable_by_type_1, [targetTypeSymbol.toString(), indexType.toString()])
+                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.Type_0_is_not_a_valid_index_expression_type, [indexType.toString()])
                 }
             }
         }
@@ -8736,7 +8733,7 @@ module TypeScript {
                                 // to(section 3.8.4) the constraint type once type arguments are substituted for type parameters.
                                 if (!this.sourceIsAssignableToTarget(inferredOrExplicitTypeArgs[j], typeConstraint, targetAST, context, /*comparisonInfo:*/ null, /*isComparingInstantiatedSignatures:*/ true)) {
                                     var enclosingSymbol = this.getEnclosingSymbolForAST(targetAST);
-                                    constraintDiagnostic = this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1_for_type_parameter_2, [inferredOrExplicitTypeArgs[j].toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true), typeParameters[j].toString(enclosingSymbol, /*useConstraintInName*/ true)]);
+                                    constraintDiagnostic = this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1, [inferredOrExplicitTypeArgs[j].toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true)]);
                                     couldNotAssignToConstraint = true;
                                 }
 
@@ -9096,7 +9093,7 @@ module TypeScript {
                                         // to(section 3.8.4) the constraint type once type arguments are substituted for type parameters.
                                         if (!this.sourceIsAssignableToTarget(inferredOrExplicitTypeArgs[j], typeConstraint, targetAST, context, null, /*isComparingInstantiatedSignatures:*/ true)) {
                                             var enclosingSymbol = this.getEnclosingSymbolForAST(targetAST);
-                                            constraintDiagnostic = this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1_for_type_parameter_2, [inferredOrExplicitTypeArgs[j].toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true), typeParameters[j].toString(enclosingSymbol, /*useConstraintInName*/ true)]);
+                                            constraintDiagnostic = this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1, [inferredOrExplicitTypeArgs[j].toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true)]);
                                             couldNotAssignToConstraint = true;
                                         }
 
@@ -9187,7 +9184,7 @@ module TypeScript {
 
                 if (usedCallSignaturesInstead) {
                     if (returnType !== this.semanticInfoChain.voidTypeSymbol) {
-                        this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Call_signatures_used_in_a_new_expression_must_have_a_void_return_type),
+                        this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Only_a_void_function_can_be_called_with_the_new_keyword),
                             additionalResults, context);
                         // POST diagnostics
                         return this.getNewErrorTypeSymbol();
@@ -9263,7 +9260,7 @@ module TypeScript {
                 this.resolveAST(callEx.argumentList.arguments, /*isContextuallyTyped:*/ false, context);
             }
 
-            this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Invalid_new_expression),
+            this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Cannot_use_new_with_an_expression_whose_type_lacks_a_signature),
                 additionalResults, context);
 
             // POST diagnostics
@@ -9367,10 +9364,10 @@ module TypeScript {
             if (!isAssignable) {
                 var enclosingSymbol = this.getEnclosingSymbolForAST(assertionExpression);
                 if (comparisonInfo.message) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(assertionExpression, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [exprType.toString(enclosingSymbol), typeAssertionType.toString(enclosingSymbol), comparisonInfo.message]));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(assertionExpression, DiagnosticCode.Neither_type_0_nor_type_1_is_assignable_to_the_other_NL_2, [exprType.toString(enclosingSymbol), typeAssertionType.toString(enclosingSymbol), comparisonInfo.message]));
                 }
                 else {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(assertionExpression, DiagnosticCode.Cannot_convert_0_to_1, [exprType.toString(enclosingSymbol), typeAssertionType.toString(enclosingSymbol)]));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(assertionExpression, DiagnosticCode.Neither_type_0_nor_type_1_is_assignable_to_the_other, [exprType.toString(enclosingSymbol), typeAssertionType.toString(enclosingSymbol)]));
                 }
             }
         }
@@ -12976,7 +12973,7 @@ module TypeScript {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(baseDeclAST, DiagnosticCode.A_class_may_only_extend_another_class));
                         }
                         else {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(baseDeclAST, DiagnosticCode.An_interface_may_only_extend_another_class_or_interface));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(baseDeclAST, DiagnosticCode.An_interface_may_only_extend_a_class_or_another_interface));
                         }
                     }
                     else {
@@ -13001,7 +12998,7 @@ module TypeScript {
                 baseType.setHasBaseTypeConflict();
                 // Report error
                 context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name,
-                    typeDeclIsClass ? DiagnosticCode.Class_0_is_recursively_referenced_as_a_base_type_of_itself : DiagnosticCode.Interface_0_is_recursively_referenced_as_a_base_type_of_itself, [typeSymbol.getScopedName()]));
+                    DiagnosticCode.Type_0_recursively_references_itself_as_a_base_type, [typeSymbol.getScopedName()]));
                 return;
             }
 

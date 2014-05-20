@@ -3,13 +3,11 @@
         class C { }
         interface C { }
                   ~
-!!! clinterfaces.ts(3,15): error TS2000: Duplicate identifier 'C'. Additional locations:
-!!! 	clinterfaces.ts(2,5)
+!!! clinterfaces.ts(3,15): error TS2000: Duplicate identifier 'C'.
         interface D { }
         class D { }
               ~
-!!! clinterfaces.ts(5,11): error TS2000: Duplicate identifier 'D'. Additional locations:
-!!! 	clinterfaces.ts(4,5)
+!!! clinterfaces.ts(5,11): error TS2000: Duplicate identifier 'D'.
     }
     
     interface Foo<T> {
@@ -18,8 +16,7 @@
     
     class Foo<T>{
           ~~~
-!!! clinterfaces.ts(12,7): error TS2000: Duplicate identifier 'Foo'. Additional locations:
-!!! 	clinterfaces.ts(8,1)
+!!! clinterfaces.ts(12,7): error TS2000: Duplicate identifier 'Foo'.
         b: number;
     }
     
@@ -29,8 +26,7 @@
     
     interface Bar<T> {
               ~~~
-!!! clinterfaces.ts(20,11): error TS2000: Duplicate identifier 'Bar'. Additional locations:
-!!! 	clinterfaces.ts(16,1)
+!!! clinterfaces.ts(20,11): error TS2000: Duplicate identifier 'Bar'.
         a: string;
     }
     

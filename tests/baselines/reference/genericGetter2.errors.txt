@@ -5,7 +5,7 @@
         data: A<T>;
         get x(): A {
                  ~
-!!! genericGetter2.ts(5,14): error TS2173: Generic type references must include all type arguments.
+!!! genericGetter2.ts(5,14): error TS2090: Generic type 'A<T>' requires 1 type argument(s).
             return this.data;
         }
     }

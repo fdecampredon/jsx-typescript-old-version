@@ -25,28 +25,28 @@
     
     var r = Base.x; // ok
                  ~
-!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(22,14): error TS2094: The property 'x' does not exist on value of type 'typeof Base'.
+!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(22,14): error TS2094: Property 'x' does not exist on value of type 'typeof Base'.
     var r2 = Derived.x; // error
                      ~
-!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(23,18): error TS2094: The property 'x' does not exist on value of type 'typeof Derived'.
+!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(23,18): error TS2094: Property 'x' does not exist on value of type 'typeof Derived'.
     
     var r3 = Base.fn(); // ok
                   ~~
-!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(25,15): error TS2094: The property 'fn' does not exist on value of type 'typeof Base'.
+!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(25,15): error TS2094: Property 'fn' does not exist on value of type 'typeof Base'.
     var r4 = Derived.fn(); // error
                      ~~
-!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(26,18): error TS2094: The property 'fn' does not exist on value of type 'typeof Derived'.
+!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(26,18): error TS2094: Property 'fn' does not exist on value of type 'typeof Derived'.
     
     var r5 = Base.a; // ok
                   ~
-!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(28,15): error TS2094: The property 'a' does not exist on value of type 'typeof Base'.
+!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(28,15): error TS2094: Property 'a' does not exist on value of type 'typeof Base'.
     Base.a = 2; // ok
          ~
-!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(29,6): error TS2094: The property 'a' does not exist on value of type 'typeof Base'.
+!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(29,6): error TS2094: Property 'a' does not exist on value of type 'typeof Base'.
     
     var r6 = Derived.a; // error
                      ~
-!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(31,18): error TS2094: The property 'a' does not exist on value of type 'typeof Derived'.
+!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(31,18): error TS2094: Property 'a' does not exist on value of type 'typeof Derived'.
     Derived.a = 2; // error
             ~
-!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(32,9): error TS2094: The property 'a' does not exist on value of type 'typeof Derived'.
+!!! derivedClassWithPrivateInstanceShadowingPublicInstance.ts(32,9): error TS2094: Property 'a' does not exist on value of type 'typeof Derived'.

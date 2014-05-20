@@ -12,13 +12,13 @@
 !!! classExtendingPrimitive.ts(5,18): error TS2073: A class may only extend another class.
     class C4 extends Void  { }
                      ~~~~
-!!! classExtendingPrimitive.ts(6,18): error TS2095: Could not find symbol 'Void'.
+!!! classExtendingPrimitive.ts(6,18): error TS2095: Cannot find name 'Void'.
     class C4a extends void {}
                       ~~~~
 !!! classExtendingPrimitive.ts(7,19): error TS1008: Unexpected token; 'type name' expected.
     class C5 extends Null { }
                      ~~~~
-!!! classExtendingPrimitive.ts(8,18): error TS2095: Could not find symbol 'Null'.
+!!! classExtendingPrimitive.ts(8,18): error TS2095: Cannot find name 'Null'.
     class C5a extends null { }
                       ~~~~
 !!! classExtendingPrimitive.ts(9,19): error TS1008: Unexpected token; 'type name' expected.
@@ -26,10 +26,10 @@
 !!! classExtendingPrimitive.ts(9,24): error TS1005: ';' expected.
     class C6 extends undefined { }
                      ~~~~~~~~~
-!!! classExtendingPrimitive.ts(10,18): error TS2095: Could not find symbol 'undefined'.
+!!! classExtendingPrimitive.ts(10,18): error TS2095: Cannot find name 'undefined'.
     class C7 extends Undefined { }
                      ~~~~~~~~~
-!!! classExtendingPrimitive.ts(11,18): error TS2095: Could not find symbol 'Undefined'.
+!!! classExtendingPrimitive.ts(11,18): error TS2095: Cannot find name 'Undefined'.
     
     enum E { A }
     class C8 extends E { }

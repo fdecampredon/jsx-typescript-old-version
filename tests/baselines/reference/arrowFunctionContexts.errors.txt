@@ -21,7 +21,7 @@
     // Arrow function as function argument
     window.setTimeout(() => null, 100);
     ~~~~~~
-!!! arrowFunctionContexts.ts(19,1): error TS2095: Could not find symbol 'window'.
+!!! arrowFunctionContexts.ts(19,1): error TS2095: Cannot find name 'window'.
     
     // Arrow function as value in array literal
     
@@ -70,7 +70,7 @@
         // Arrow function as function argument
         window.setTimeout(() => null, 100);
         ~~~~~~
-!!! arrowFunctionContexts.ts(60,5): error TS2095: Could not find symbol 'window'.
+!!! arrowFunctionContexts.ts(60,5): error TS2095: Cannot find name 'window'.
     
         // Arrow function as value in array literal
     

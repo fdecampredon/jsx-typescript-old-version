@@ -44,8 +44,7 @@
         interface IIndexable<T> {
             [s: string]: T;
             ~~~~~~~~~~~~~~
-!!! genericClassesRedeclaration.ts(42,9): error TS2232: Duplicate string index signature. Additional locations:
-!!! 	genericClassesRedeclaration.ts(3,9)
+!!! genericClassesRedeclaration.ts(42,9): error TS2232: Duplicate string index signature.
         }
         function createIntrinsicsObject<T>(): IIndexable<T>;
         interface IHashTable<T> {
@@ -60,8 +59,7 @@
         }
         class StringHashTable<T> implements IHashTable<T> {
               ~~~~~~~~~~~~~~~
-!!! genericClassesRedeclaration.ts(55,11): error TS2000: Duplicate identifier 'StringHashTable'. Additional locations:
-!!! 	genericClassesRedeclaration.ts(16,5)
+!!! genericClassesRedeclaration.ts(55,11): error TS2000: Duplicate identifier 'StringHashTable'.
             private itemCount;
             private table;
             public getAllKeys(): string[];
@@ -76,8 +74,7 @@
         }
         class IdentiferNameHashTable<T> extends StringHashTable<T> {
               ~~~~~~~~~~~~~~~~~~~~~~
-!!! genericClassesRedeclaration.ts(68,11): error TS2000: Duplicate identifier 'IdentiferNameHashTable'. Additional locations:
-!!! 	genericClassesRedeclaration.ts(29,5)
+!!! genericClassesRedeclaration.ts(68,11): error TS2000: Duplicate identifier 'IdentiferNameHashTable'.
                                                 ~~~~~~~~~~~~~~~~~~
 !!! genericClassesRedeclaration.ts(68,45): error TS2186: Type name 'StringHashTable' in extends clause does not reference constructor function for 'StringHashTable<T>'.
             public getAllKeys(): string[];

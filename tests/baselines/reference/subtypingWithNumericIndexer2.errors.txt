@@ -28,7 +28,7 @@
     
         interface B extends A<Base> {
                             ~~~~~~~
-!!! subtypingWithNumericIndexer2.ts(24,25): error TS2086: Type 'Base' does not satisfy the constraint 'Derived' for type parameter 'T extends Derived'.
+!!! subtypingWithNumericIndexer2.ts(24,25): error TS2086: Type 'Base' does not satisfy the constraint 'Derived'.
             [x: number]: Derived; // error
         }
     

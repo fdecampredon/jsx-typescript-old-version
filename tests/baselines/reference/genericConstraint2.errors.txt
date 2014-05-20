@@ -26,4 +26,4 @@
     var b = new ComparableString("b");
     var c = compare<ComparableString>(a, b);
             ~~~~~~~
-!!! genericConstraint2.ts(21,9): error TS2086: Type 'ComparableString' does not satisfy the constraint 'Comparable<ComparableString>' for type parameter 'T extends Comparable<T>'.
+!!! genericConstraint2.ts(21,9): error TS2086: Type 'ComparableString' does not satisfy the constraint 'Comparable<ComparableString>'.

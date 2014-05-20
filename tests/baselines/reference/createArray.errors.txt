@@ -3,7 +3,7 @@
                      ~~
 !!! createArray.ts(1,18): error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
                ~~~~~~
-!!! createArray.ts(1,12): error TS2095: Could not find symbol 'number'.
+!!! createArray.ts(1,12): error TS2095: Cannot find name 'number'.
     
     class C {
     }
@@ -15,12 +15,12 @@
                       ~~
 !!! createArray.ts(7,19): error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
                ~~~~~~~
-!!! createArray.ts(7,12): error TS2095: Could not find symbol 'boolean'.
+!!! createArray.ts(7,12): error TS2095: Cannot find name 'boolean'.
     var sa=new string[];
                      ~~
 !!! createArray.ts(8,18): error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
                ~~~~~~
-!!! createArray.ts(8,12): error TS2095: Could not find symbol 'string'.
+!!! createArray.ts(8,12): error TS2095: Cannot find name 'string'.
     function f(s:string):number { return 0;
     }
     if (ba[14]) {

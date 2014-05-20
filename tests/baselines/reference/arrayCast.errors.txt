@@ -3,7 +3,7 @@
     // has type { foo: string }[], which is not assignable to { id: number }[].
     <{ id: number; }[]>[{ foo: "s" }];
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! arrayCast.ts(3,1): error TS2012: Cannot convert '{ foo: string; }[]' to '{ id: number; }[]':
+!!! arrayCast.ts(3,1): error TS2237: Neither type '{ foo: string; }[]' nor type '{ id: number; }[]' is assignable to the other:
 !!! 	Types of property 'pop' of types '{ foo: string; }[]' and '{ id: number; }[]' are incompatible:
 !!! 		Call signatures of types '() => { foo: string; }' and '() => { id: number; }' are incompatible:
 !!! 			Type '{ foo: string; }' is missing property 'id' from type '{ id: number; }'.

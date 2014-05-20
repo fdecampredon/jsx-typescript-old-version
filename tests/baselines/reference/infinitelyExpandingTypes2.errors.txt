@@ -10,7 +10,7 @@
     function f(p: Foo<number>) {
         console.log(p);
         ~~~~~~~
-!!! infinitelyExpandingTypes2.ts(10,5): error TS2095: Could not find symbol 'console'.
+!!! infinitelyExpandingTypes2.ts(10,5): error TS2095: Cannot find name 'console'.
     }
     
     var v: Bar<number> = null;

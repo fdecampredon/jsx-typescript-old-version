@@ -22,10 +22,10 @@
                          ~~~~~
 !!! moduleVisibilityTest3.ts(20,22): error TS4022: Type reference cannot refer to container 'editor.modes'.
                                           ~~~~
-!!! moduleVisibilityTest3.ts(20,39): error TS2094: The property 'Mode' does not exist on value of type '_modes'.
+!!! moduleVisibilityTest3.ts(20,39): error TS2094: Property 'Mode' does not exist on value of type '_modes'.
              var x:modes.Mode;
                          ~~~~
-!!! moduleVisibilityTest3.ts(21,22): error TS2094: The property 'Mode' does not exist on value of type '_modes'.
+!!! moduleVisibilityTest3.ts(21,22): error TS2094: Property 'Mode' does not exist on value of type '_modes'.
          }
         
      }

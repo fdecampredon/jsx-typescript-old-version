@@ -14,6 +14,6 @@
     var v1: C<A>; // should work
     var v2: C<B>; // should not work
             ~~~~
-!!! constraints0.ts(14,9): error TS2086: Type 'B' does not satisfy the constraint 'A' for type parameter 'T extends A'.
+!!! constraints0.ts(14,9): error TS2086: Type 'B' does not satisfy the constraint 'A'.
     
     var y = v1.x.a; // 'a' should be of type 'number'

@@ -2,13 +2,13 @@
     for (var i = 0; i < 10; i++) {
         WScript.Echo("i: " + i);
         ~~~~~~~
-!!! sourceMapValidationFor.ts(2,5): error TS2095: Could not find symbol 'WScript'.
+!!! sourceMapValidationFor.ts(2,5): error TS2095: Cannot find name 'WScript'.
     }
     for (i = 0; i < 10; i++)
     {
         WScript.Echo("i: " + i);
         ~~~~~~~
-!!! sourceMapValidationFor.ts(6,5): error TS2095: Could not find symbol 'WScript'.
+!!! sourceMapValidationFor.ts(6,5): error TS2095: Cannot find name 'WScript'.
     }
     for (var j = 0; j < 10; ) {
         j++;

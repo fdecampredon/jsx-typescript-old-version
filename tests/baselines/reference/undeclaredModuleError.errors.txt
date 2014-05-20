@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/undeclaredModuleError.ts (6 errors) ====
     import fs = require('fs');
     ~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! undeclaredModuleError.ts(1,1): error TS2071: Unable to resolve external module ''fs''.
+!!! undeclaredModuleError.ts(1,1): error TS2071: Cannot find external module ''fs''.
     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! undeclaredModuleError.ts(1,1): error TS2072: Module cannot be aliased to a non-module type.
     function readdir(path: string, accept: (stat: fs.Stats, name: string) => boolean, callback: (error: Error, results: { name: string; stat: fs.Stats; }[]) => void ) {}
@@ -11,7 +11,7 @@
     function instrumentFile(covFileDir: string, covFileName: string, originalFilePath: string) {
         fs.readFile(originalFilePath, () => {       
         ~~
-!!! undeclaredModuleError.ts(7,5): error TS2095: Could not find symbol 'fs'.
+!!! undeclaredModuleError.ts(7,5): error TS2095: Cannot find name 'fs'.
             readdir(covFileDir, () => {
             ~~~~~~~
 !!! undeclaredModuleError.ts(8,9): error TS2082: Supplied parameters do not match any signature of call target:
@@ -22,7 +22,7 @@
                     files.forEach((file) => {
                         var fullPath = join(IDoNotExist);
                                             ~~~~~~~~~~~
-!!! undeclaredModuleError.ts(11,41): error TS2095: Could not find symbol 'IDoNotExist'.
+!!! undeclaredModuleError.ts(11,41): error TS2095: Cannot find name 'IDoNotExist'.
                     } );
                 } );
         } );

@@ -84,7 +84,7 @@
         class Signature extends Symbol {
             constructor(public typeParameters: TypeParameter[], public parameters: Parameter[], public returnType: Type) {
                                                ~~~~~~~~~~~~~
-!!! unspecializedConstraints.ts(84,44): error TS2095: Could not find symbol 'TypeParameter'.
+!!! unspecializedConstraints.ts(84,44): error TS2095: Cannot find name 'TypeParameter'.
                 super();
             }
             equalsNoReturn(other: Signature): boolean {
