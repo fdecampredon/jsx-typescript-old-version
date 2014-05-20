@@ -3064,6 +3064,7 @@ module TypeScript.Parser {
                     children.push(parseXJSChild());
                     _currentTokenKind = currentXJSToken().kind()
                 }
+                children = Syntax.list(children);
                 closingElement = parseXJSClosingElement();
                 var tagName = getQualifiedXJSName(openingElement.name),
                     closingTagName = getQualifiedXJSName(closingElement.name)
@@ -3100,6 +3101,7 @@ module TypeScript.Parser {
             while (currentToken().kind() === SyntaxKind.IdentifierName) {
                 attibutes.push(parseXJSAttribute())
             }
+            attibutes = Syntax.list(attibutes);
             var slashToken: ISyntaxToken = null;
             var _currentToken = currentToken();
             if (_currentToken.kind() === SyntaxKind.SlashToken) {
