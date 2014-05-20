@@ -101,7 +101,7 @@ module TypeScript {
         Value_of_type_0_is_not_callable_Did_you_mean_to_include_new: "Value of type '{0}' is not callable. Did you mean to include 'new'?",
         Value_of_type_0_is_not_callable: "Value of type '{0}' is not callable.",
         Value_of_type_0_is_not_newable: "Value of type '{0}' is not newable.",
-        Type_0_is_not_a_valid_index_expression_type: "Type '{0}' is not a valid index expression type.",
+        An_index_expression_must_be_string_number_or_any: "An index expression must be 'string', 'number', or 'any'.",
         Operator_0_cannot_be_applied_to_types_1_and_2: "Operator '{0}' cannot be applied to types '{1}' and '{2}'.",
         Operator_0_cannot_be_applied_to_types_1_and_2_3: "Operator '{0}' cannot be applied to types '{1}' and '{2}': {3}",
         Cannot_convert_0_to_1: "Cannot convert '{0}' to '{1}'.",

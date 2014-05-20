@@ -102,7 +102,7 @@ module TypeScript {
     "Value of type '{0}' is not callable. Did you mean to include 'new'?": { "code": 2161, "category": DiagnosticCategory.Error },
     "Value of type '{0}' is not callable.": { "code": 2006, "category": DiagnosticCategory.Error },
     "Value of type '{0}' is not newable.": { "code": 2007, "category": DiagnosticCategory.Error },
-    "Type '{0}' is not a valid index expression type.": { "code": 2008, "category": DiagnosticCategory.Error },
+    "An index expression must be 'string', 'number', or 'any'.": { "code": 2008, "category": DiagnosticCategory.Error },
     "Operator '{0}' cannot be applied to types '{1}' and '{2}'.": { "code": 2009, "category": DiagnosticCategory.Error },
     "Operator '{0}' cannot be applied to types '{1}' and '{2}': {3}": { "code": 2010, "category": DiagnosticCategory.Error },
     "Cannot convert '{0}' to '{1}'.": { "code": 2011, "category": DiagnosticCategory.Error },

@@ -8210,7 +8210,7 @@ module TypeScript {
             else {
                 return {
                     symbol: this.getNewErrorTypeSymbol(),
-                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.Type_0_is_not_a_valid_index_expression_type, [indexType.toString()])
+                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.An_index_expression_must_be_string_number_or_any)
                 }
             }
         }
