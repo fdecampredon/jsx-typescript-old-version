@@ -3065,9 +3065,31 @@ module TypeScript.Parser {
                     _currentTokenKind = currentXJSToken().kind()
                 }
                 closingElement = parseXJSClosingElement();
-                //todo error if closing and opening element names does not match
+                var tagName = getQualifiedXJSName(openingElement.name); 
+                if (getQualifiedXJSName(closingElement.name) !== tagName) {
+                    var diagnostic = new Diagnostic(
+                        fileName, source.text.lineMap(),
+                        start(closingElement.name), width(closingElement.name),
+                        DiagnosticCode.Expected_xjs_closing_tag, 
+                        [tagName]
+                    );
+                    addDiagnostic(diagnostic);
+                }
             }
             return new XJSElementSyntax(parseNodeData, openingElement, children, closingElement);
+        }
+        
+        
+        function getQualifiedXJSName(name: INameSyntax): string {
+            if (name.kind() === SyntaxKind.IdentifierName) {
+                var token: ISyntaxToken = <any>name;
+                return token.text();
+            } else if (name.kind() === SyntaxKind.QualifiedName) {
+                var qualifiedName: QualifiedNameSyntax = <any>name;
+                return getQualifiedXJSName(qualifiedName.left) + '.' + getQualifiedXJSName(qualifiedName.right);
+            } else {
+                return '';
+            }
         }
         
         function parseXJSOpeningElement(): XJSOpeningElementSyntax {
@@ -3099,24 +3121,43 @@ module TypeScript.Parser {
                 equalsToken = _currentToken;
                 consumeToken(_currentToken);
                 _currentToken = currentToken();
-                if (_currentToken.kind() === SyntaxKind.OpenBraceToken) {
-                    value = parseXJSExpressionContainer();
-                    //TODO error if empty
+                var _currentTokenKind = _currentToken.kind();
+                if (_currentTokenKind === SyntaxKind.OpenBraceToken) {
+                    var expression = parseXJSExpressionContainer(_currentToken);
+                    if (!expression.expression) {
+                        var diagnostic = new Diagnostic(
+                            fileName, source.text.lineMap(),
+                            start(expression), width(expression),
+                            DiagnosticCode.Xjs_attributes_must_only_be_assigned_a_non_empty_expression, 
+                            null
+                        );
+                        addDiagnostic(diagnostic);
+                    }
+                    value = expression;
+                } else if (_currentTokenKind === SyntaxKind.StringLiteral) {
+                    value = consumeToken(_currentToken);
                 } else {
-                    value = eatToken(SyntaxKind.StringLiteral);
+                    var diagnostic = new Diagnostic(
+                        fileName, source.text.lineMap(),
+                        start(_currentToken), width(_currentToken),
+                        DiagnosticCode.Xjs_value_should_be_either_an_expression_or_a_quoted_XJS_text, 
+                        null
+                    );
+                    addDiagnostic(diagnostic);
+                    value = createMissingToken(SyntaxKind.StringLiteral, _currentToken);
                 }
             }
             return new XJSAttributeSyntax(parseNodeData, name, equalsToken, value);
         }
         
-        function parseXJSExpressionContainer(): XJSExpressionContainerSyntax {
-            var openBraceToken = eatToken(SyntaxKind.OpenBraceToken);
+        function parseXJSExpressionContainer(openBraceToken: ISyntaxToken): XJSExpressionContainerSyntax {
+            consumeToken(openBraceToken)
             var expression: IExpressionSyntax = null
             if (currentToken().kind() !== SyntaxKind.CloseBraceToken) {
                 expression = parseExpression(true);
             }
             var closeBraceToken = eatToken(SyntaxKind.CloseBraceToken);
-            return new XJSExpressionContainerSyntax(parseNodeData, openBraceToken, expression, closeBraceToken)
+            return new XJSExpressionContainerSyntax(parseNodeData, openBraceToken, expression, closeBraceToken);
         }
         
         function parseXJSChild(): IExpressionSyntax {
@@ -3124,7 +3165,7 @@ module TypeScript.Parser {
             var _currentTokenKind = _currentToken.kind();
             switch (_currentTokenKind) {
                 case SyntaxKind.OpenBraceToken:
-                    return parseXJSExpressionContainer();
+                    return parseXJSExpressionContainer(_currentToken);
                 case SyntaxKind.XJSText:
                     consumeToken(_currentToken)
                     return _currentToken;
