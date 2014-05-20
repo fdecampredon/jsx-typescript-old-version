@@ -11,7 +11,7 @@
     noGenericParams<number>('');
     noGenericParams<{}>(''); // Error
     ~~~~~~~~~~~~~~~
-!!! typeArgumentInferenceWithConstraints.ts(11,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'T extends number'.
+!!! typeArgumentInferenceWithConstraints.ts(11,1): error TS2086: Type '{}' does not satisfy the constraint 'number'.
     
     // Generic call with multiple type parameters and only one used in parameter type annotation
     function someGenerics1<T, U extends T>(n: T, m: number) { }
@@ -20,10 +20,10 @@
     someGenerics1(3, 4); // Valid
     someGenerics1<string, number>(3, 4); // Error
     ~~~~~~~~~~~~~
-!!! typeArgumentInferenceWithConstraints.ts(16,1): error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'U extends T'.
+!!! typeArgumentInferenceWithConstraints.ts(16,1): error TS2086: Type 'number' does not satisfy the constraint 'string'.
     someGenerics1<number, {}>(3, 4); // Error
     ~~~~~~~~~~~~~
-!!! typeArgumentInferenceWithConstraints.ts(17,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
+!!! typeArgumentInferenceWithConstraints.ts(17,1): error TS2086: Type '{}' does not satisfy the constraint 'number'.
     someGenerics1<number, number>(3, 4);
     
     // Generic call with argument of function type whose parameter is of type parameter type
@@ -71,7 +71,7 @@
 !!! typeArgumentInferenceWithConstraints.ts(48,1): error TS2087: Could not select overload for 'call' expression.
     someGenerics5<string, number>(null, null); // Error
     ~~~~~~~~~~~~~
-!!! typeArgumentInferenceWithConstraints.ts(49,1): error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends number'.
+!!! typeArgumentInferenceWithConstraints.ts(49,1): error TS2086: Type 'string' does not satisfy the constraint 'number'.
     
     // Generic call with multiple arguments of function types that each have parameters of the same generic type
     function someGenerics6<A extends number>(a: (a: A) => A, b: (b: A) => A, c: (c: A) => A) { }

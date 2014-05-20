@@ -691,11 +691,11 @@
         "category": "Error",
         "code": 2082
     },
-    "Invalid 'new' expression.": {
+    "Cannot use 'new' with an expression whose type lacks a signature.": {
         "category": "Error",
         "code": 2083
     },
-    "Call signatures used in a 'new' expression must have a 'void' return type.": {
+    "Only a void function can be called with the 'new' keyword.": {
         "category": "Error",
         "code": 2084
     },
@@ -703,7 +703,7 @@
         "category": "Error",
         "code": 2085
     },
-    "Type '{0}' does not satisfy the constraint '{1}' for type parameter '{2}'.": {
+    "Type '{0}' does not satisfy the constraint '{1}'.": {
         "category": "Error",
         "code": 2086
     },

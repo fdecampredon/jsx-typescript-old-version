@@ -107,7 +107,7 @@
 !!! 	Type 'Object' is missing property 'p' from type 'i1'.
     var obj3: i1 = new obj0;
                        ~~~~
-!!! intTypeCheck.ts(98,20): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(98,20): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var obj4: i1 = new Base;
         ~~~~~~~~~~~~~~~~~~~
 !!! intTypeCheck.ts(99,5): error TS2012: Cannot convert 'Base' to 'i1':
@@ -129,7 +129,7 @@
 !!! intTypeCheck.ts(104,21): error TS2095: Cannot find name 'i1'.
     var obj10: i1 = new {};
                         ~~
-!!! intTypeCheck.ts(105,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(105,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     //
     // Call signatures
     //
@@ -144,7 +144,7 @@
 !!! 	Type 'i2' requires a call signature, but type 'Object' lacks one.
     var obj14: i2 = new obj11;
                         ~~~~~
-!!! intTypeCheck.ts(112,21): error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
+!!! intTypeCheck.ts(112,21): error TS2084: Only a void function can be called with the 'new' keyword.
     var obj15: i2 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
 !!! intTypeCheck.ts(113,5): error TS2012: Cannot convert 'Base' to 'i2':
@@ -163,7 +163,7 @@
 !!! intTypeCheck.ts(118,22): error TS2095: Cannot find name 'i2'.
     var obj21: i2 = new {};
                         ~~
-!!! intTypeCheck.ts(119,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(119,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     //
     // Construct Signatures
     //
@@ -198,7 +198,7 @@
 !!! intTypeCheck.ts(132,22): error TS2095: Cannot find name 'i3'.
     var obj32: i3 = new {};
                         ~~
-!!! intTypeCheck.ts(133,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(133,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     //
     // Index Signatures
     //
@@ -210,7 +210,7 @@
 !!! 	Index signatures of types 'Object' and 'i4' are incompatible.
     var obj36: i4 = new obj33;
                         ~~~~~
-!!! intTypeCheck.ts(140,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(140,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var obj37: i4 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
 !!! intTypeCheck.ts(141,5): error TS2012: Cannot convert 'Base' to 'i4':
@@ -232,7 +232,7 @@
 !!! intTypeCheck.ts(146,22): error TS2095: Cannot find name 'i4'.
     var obj43: i4 = new {};
                         ~~
-!!! intTypeCheck.ts(147,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(147,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     //
     // Interface Derived I1
     //
@@ -247,7 +247,7 @@
 !!! 	Type 'Object' is missing property 'p' from type 'i5'.
     var obj47: i5 = new obj44;
                         ~~~~~
-!!! intTypeCheck.ts(154,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(154,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var obj48: i5 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
 !!! intTypeCheck.ts(155,5): error TS2012: Cannot convert 'Base' to 'i5':
@@ -269,7 +269,7 @@
 !!! intTypeCheck.ts(160,22): error TS2095: Cannot find name 'i5'.
     var obj54: i5 = new {};
                         ~~
-!!! intTypeCheck.ts(161,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(161,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     //
     // Interface Derived I2
     //
@@ -284,7 +284,7 @@
 !!! 	Type 'i6' requires a call signature, but type 'Object' lacks one.
     var obj58: i6 = new obj55;
                         ~~~~~
-!!! intTypeCheck.ts(168,21): error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
+!!! intTypeCheck.ts(168,21): error TS2084: Only a void function can be called with the 'new' keyword.
     var obj59: i6 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
 !!! intTypeCheck.ts(169,5): error TS2012: Cannot convert 'Base' to 'i6':
@@ -306,7 +306,7 @@
 !!! intTypeCheck.ts(174,22): error TS2095: Cannot find name 'i6'.
     var obj65: i6 = new {};
                         ~~
-!!! intTypeCheck.ts(175,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(175,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     //
     // Interface Derived I3
     //
@@ -342,7 +342,7 @@
 !!! intTypeCheck.ts(188,22): error TS2095: Cannot find name 'i7'.
     var obj76: i7 = new {};
                         ~~
-!!! intTypeCheck.ts(189,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(189,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     //
     // Interface Derived I4
     //
@@ -354,7 +354,7 @@
 !!! 	Index signatures of types 'Object' and 'i8' are incompatible.
     var obj80: i8 = new obj77;
                         ~~~~~
-!!! intTypeCheck.ts(196,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(196,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var obj81: i8 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
 !!! intTypeCheck.ts(197,5): error TS2012: Cannot convert 'Base' to 'i8':
@@ -376,4 +376,4 @@
 !!! intTypeCheck.ts(202,22): error TS2095: Cannot find name 'i8'.
     var obj87: i8 = new {};
                         ~~
-!!! intTypeCheck.ts(203,21): error TS2083: Invalid 'new' expression.
+!!! intTypeCheck.ts(203,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.

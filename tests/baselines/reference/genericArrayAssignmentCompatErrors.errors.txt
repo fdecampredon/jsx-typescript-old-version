@@ -2,7 +2,7 @@
     var myCars=new Array(); 
     var myCars2 = new [];
                       ~~
-!!! genericArrayAssignmentCompatErrors.ts(2,19): error TS2083: Invalid 'new' expression.
+!!! genericArrayAssignmentCompatErrors.ts(2,19): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var myCars3 = new Array({});
     var myCars4: Array; // error
                  ~~~~~

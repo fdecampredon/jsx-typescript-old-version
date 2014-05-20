@@ -12,10 +12,10 @@
     // Target is not a class or var, good error
     var t1 = new 53();
                  ~~
-!!! newOperator.ts(10,14): error TS2083: Invalid 'new' expression.
+!!! newOperator.ts(10,14): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var t2 = new ''();
                  ~~
-!!! newOperator.ts(11,14): error TS2083: Invalid 'new' expression.
+!!! newOperator.ts(11,14): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     new string;
         ~~~~~~
 !!! newOperator.ts(12,5): error TS2095: Cannot find name 'string'.
@@ -50,7 +50,7 @@
     // not legal
     var t5 = new new Date;
                  ~~~~~~~~
-!!! newOperator.ts(31,14): error TS2083: Invalid 'new' expression.
+!!! newOperator.ts(31,14): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     
     // Can be an expression
     new String;

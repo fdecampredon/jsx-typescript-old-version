@@ -28,7 +28,7 @@
 !!! 	Index signatures of types 'B' and 'A<Base>' are incompatible:
 !!! 		Type 'String' is missing property 'foo' from type 'Base'.
                         ~~~~~~~
-!!! subtypingWithNumericIndexer4.ts(20,21): error TS2086: Type 'Base' does not satisfy the constraint 'Derived' for type parameter 'T extends Derived'.
+!!! subtypingWithNumericIndexer4.ts(20,21): error TS2086: Type 'Base' does not satisfy the constraint 'Derived'.
             [x: number]: string; // error
         }
     

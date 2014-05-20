@@ -90,10 +90,10 @@
 !!! overloadResolutionClassConstructors.ts(73,5): error TS2085: Could not select overload for 'new' expression.
     new fn4<number, string>('', 3); // Error
         ~~~
-!!! overloadResolutionClassConstructors.ts(74,5): error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'T extends string'.
+!!! overloadResolutionClassConstructors.ts(74,5): error TS2086: Type 'number' does not satisfy the constraint 'string'.
     new fn4<number, string>(3, ''); // Error
         ~~~
-!!! overloadResolutionClassConstructors.ts(75,5): error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'T extends string'.
+!!! overloadResolutionClassConstructors.ts(75,5): error TS2086: Type 'number' does not satisfy the constraint 'string'.
     
     // Generic overloads with constraints called without type arguments but with types that satisfy the constraints
     new fn4('', 3);
@@ -114,7 +114,7 @@
     // Generic overloads with constraints called with type arguments that do not satisfy the constraints
     new fn4<boolean, Date>(null, null); // Error
         ~~~
-!!! overloadResolutionClassConstructors.ts(84,5): error TS2086: Type 'boolean' does not satisfy the constraint 'string' for type parameter 'T extends string'.
+!!! overloadResolutionClassConstructors.ts(84,5): error TS2086: Type 'boolean' does not satisfy the constraint 'string'.
     
     // Generic overloads with constraints called without type arguments but with types that do not satisfy the constraints
     new fn4(true, null); // Error

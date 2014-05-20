@@ -6968,7 +6968,7 @@ module TypeScript {
                             // to(section 3.8.4) the constraint type once type arguments are substituted for type parameters.
                             if (!this.sourceIsAssignableToTarget(typeArg, typeConstraint, genericTypeAST, context)) {
                                 var enclosingSymbol = this.getEnclosingSymbolForAST(genericTypeAST);
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1_for_type_parameter_2, [typeArg.toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true), typeParameter.toString(enclosingSymbol, /*useConstraintInName*/ true)]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1, [typeArg.toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true)]));
                             }
                         });
                     }
@@ -8733,7 +8733,7 @@ module TypeScript {
                                 // to(section 3.8.4) the constraint type once type arguments are substituted for type parameters.
                                 if (!this.sourceIsAssignableToTarget(inferredOrExplicitTypeArgs[j], typeConstraint, targetAST, context, /*comparisonInfo:*/ null, /*isComparingInstantiatedSignatures:*/ true)) {
                                     var enclosingSymbol = this.getEnclosingSymbolForAST(targetAST);
-                                    constraintDiagnostic = this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1_for_type_parameter_2, [inferredOrExplicitTypeArgs[j].toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true), typeParameters[j].toString(enclosingSymbol, /*useConstraintInName*/ true)]);
+                                    constraintDiagnostic = this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1, [inferredOrExplicitTypeArgs[j].toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true)]);
                                     couldNotAssignToConstraint = true;
                                 }
 
@@ -9093,7 +9093,7 @@ module TypeScript {
                                         // to(section 3.8.4) the constraint type once type arguments are substituted for type parameters.
                                         if (!this.sourceIsAssignableToTarget(inferredOrExplicitTypeArgs[j], typeConstraint, targetAST, context, null, /*isComparingInstantiatedSignatures:*/ true)) {
                                             var enclosingSymbol = this.getEnclosingSymbolForAST(targetAST);
-                                            constraintDiagnostic = this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1_for_type_parameter_2, [inferredOrExplicitTypeArgs[j].toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true), typeParameters[j].toString(enclosingSymbol, /*useConstraintInName*/ true)]);
+                                            constraintDiagnostic = this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1, [inferredOrExplicitTypeArgs[j].toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true)]);
                                             couldNotAssignToConstraint = true;
                                         }
 
@@ -9184,7 +9184,7 @@ module TypeScript {
 
                 if (usedCallSignaturesInstead) {
                     if (returnType !== this.semanticInfoChain.voidTypeSymbol) {
-                        this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Call_signatures_used_in_a_new_expression_must_have_a_void_return_type),
+                        this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Only_a_void_function_can_be_called_with_the_new_keyword),
                             additionalResults, context);
                         // POST diagnostics
                         return this.getNewErrorTypeSymbol();
@@ -9260,7 +9260,7 @@ module TypeScript {
                 this.resolveAST(callEx.argumentList.arguments, /*isContextuallyTyped:*/ false, context);
             }
 
-            this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Invalid_new_expression),
+            this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Cannot_use_new_with_an_expression_whose_type_lacks_a_signature),
                 additionalResults, context);
 
             // POST diagnostics
