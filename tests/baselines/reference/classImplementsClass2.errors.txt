@@ -16,5 +16,5 @@
     c = c2;
     c2 = c;
     ~~
-!!! classImplementsClass2.ts(13,1): error TS2012: Cannot convert 'C' to 'C2':
+!!! classImplementsClass2.ts(13,1): error TS2012: Type 'C' is not assignable to type 'C2':
 !!! 	Type 'C' is missing property 'foo' from type 'C2'.

@@ -4,7 +4,7 @@
     obj1 = {}; // Ok
     obj1 = obj2; // Error - indexer doesn't match
     ~~~~
-!!! contextualTypingOfObjectLiterals.ts(4,1): error TS2012: Cannot convert '{ x: string; }' to '{ [x: string]: string; }':
+!!! contextualTypingOfObjectLiterals.ts(4,1): error TS2012: Type '{ x: string; }' is not assignable to type '{ [x: string]: string; }':
 !!! 	Index signatures of types '{ x: string; }' and '{ [x: string]: string; }' are incompatible.
     
     function f(x: { [s: string]: string }) { }

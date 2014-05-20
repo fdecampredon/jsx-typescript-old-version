@@ -57,7 +57,7 @@
     c = d;
     c = e;
     ~
-!!! derivedClassWithAny.ts(57,1): error TS2012: Cannot convert 'E' to 'C':
+!!! derivedClassWithAny.ts(57,1): error TS2012: Type 'E' is not assignable to type 'C':
 !!! 	Types of property 'x' of types 'E' and 'C' are incompatible.
     var r = c.foo(); // e.foo would return string
     

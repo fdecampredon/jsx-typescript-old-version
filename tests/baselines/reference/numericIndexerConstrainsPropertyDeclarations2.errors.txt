@@ -69,6 +69,6 @@
     ~~~~~~~~~~~~~
     }
     ~
-!!! numericIndexerConstrainsPropertyDeclarations2.ts(39,5): error TS2012: Cannot convert '{ 1.0: A; 2.0: B; "2.5": B; 3.0: number; "4.0": string; [x: number]: {}; }' to '{ [x: number]: A; }':
+!!! numericIndexerConstrainsPropertyDeclarations2.ts(39,5): error TS2012: Type '{ 1.0: A; 2.0: B; "2.5": B; 3.0: number; "4.0": string; [x: number]: {}; }' is not assignable to type '{ [x: number]: A; }':
 !!! 	Index signatures of types '{ 1.0: A; 2.0: B; "2.5": B; 3.0: number; "4.0": string; [x: number]: {}; }' and '{ [x: number]: A; }' are incompatible:
 !!! 		Type '{}' is missing property 'foo' from type 'A'.

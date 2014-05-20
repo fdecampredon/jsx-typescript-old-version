@@ -9,5 +9,5 @@
     }
     __test2__.__val__aa = __test1__.__val__obj4
     ~~~~~~~~~~~~~~~~~~~
-!!! assignmentCompatability37.ts(9,1): error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to 'new<number>(param: number) => any':
+!!! assignmentCompatability37.ts(9,1): error TS2012: Type '__test1__.interfaceWithPublicAndOptional<number, string>' is not assignable to type 'new<number>(param: number) => any':
 !!! 	Type 'new<number>(param: number) => any' requires a construct signature, but type '__test1__.interfaceWithPublicAndOptional<number, string>' lacks one.

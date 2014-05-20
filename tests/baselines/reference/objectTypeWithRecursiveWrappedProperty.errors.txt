@@ -13,5 +13,5 @@
     list1 = list2; // ok
     list1 = list3; // error
     ~~~~~
-!!! objectTypeWithRecursiveWrappedProperty.ts(13,1): error TS2012: Cannot convert 'List<string>' to 'List<number>':
+!!! objectTypeWithRecursiveWrappedProperty.ts(13,1): error TS2012: Type 'List<string>' is not assignable to type 'List<number>':
 !!! 	Types of property 'data' of types 'List<string>' and 'List<number>' are incompatible.

@@ -24,12 +24,12 @@
     }
     function fn10(): D { return { id: 12 }; } 
                                 ~~~~~~~~~~
-!!! invalidReturnStatements.ts(16,29): error TS2012: Cannot convert '{ id: number; }' to 'D':
+!!! invalidReturnStatements.ts(16,29): error TS2012: Type '{ id: number; }' is not assignable to type 'D':
 !!! 	Type '{ id: number; }' is missing property 'name' from type 'D'.
     
     function fn11(): D { return new C(); }
                                 ~~~~~~~
-!!! invalidReturnStatements.ts(18,29): error TS2012: Cannot convert 'C' to 'D':
+!!! invalidReturnStatements.ts(18,29): error TS2012: Type 'C' is not assignable to type 'D':
 !!! 	Type 'C' is missing property 'name' from type 'D'.
     
     

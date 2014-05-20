@@ -11,6 +11,6 @@
     }
     var a: D = foo("hi", []);
         ~~~~~~~~~~~~~~~~~~~~
-!!! crashInsourcePropertyIsRelatableToTargetProperty.ts(9,5): error TS2012: Cannot convert 'typeof foo' to 'D':
+!!! crashInsourcePropertyIsRelatableToTargetProperty.ts(9,5): error TS2012: Type 'typeof foo' is not assignable to type 'D':
 !!! 	Type 'typeof foo' is missing property 'x' from type 'D'.
     

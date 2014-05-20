@@ -8,7 +8,7 @@
     f = i;
     i = f;
     ~
-!!! objectTypeWithCallSignatureHidingMembersOfFunctionAssignmentCompat.ts(8,1): error TS2012: Cannot convert 'Object' to 'I':
+!!! objectTypeWithCallSignatureHidingMembersOfFunctionAssignmentCompat.ts(8,1): error TS2012: Type 'Object' is not assignable to type 'I':
 !!! 	Type 'I' requires a call signature, but type 'Object' lacks one.
     
     var a: {
@@ -17,5 +17,5 @@
     f = a;
     a = f;
     ~
-!!! objectTypeWithCallSignatureHidingMembersOfFunctionAssignmentCompat.ts(14,1): error TS2012: Cannot convert 'Object' to '() => void':
+!!! objectTypeWithCallSignatureHidingMembersOfFunctionAssignmentCompat.ts(14,1): error TS2012: Type 'Object' is not assignable to type '() => void':
 !!! 	Type '() => void' requires a call signature, but type 'Object' lacks one.

@@ -2453,10 +2453,10 @@ module TypeScript {
                         if (!isAssignable) {
                             var enclosingSymbol = this.getEnclosingSymbolForAST(argDeclAST);
                             if (comparisonInfo.message) {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [initTypeSymbol.toString(enclosingSymbol), contextualType.toString(enclosingSymbol), comparisonInfo.message]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [initTypeSymbol.toString(enclosingSymbol), contextualType.toString(enclosingSymbol), comparisonInfo.message]));
                             }
                             else {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Cannot_convert_0_to_1, [initTypeSymbol.toString(enclosingSymbol), contextualType.toString(enclosingSymbol)]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Type_0_is_not_assignable_to_type_1, [initTypeSymbol.toString(enclosingSymbol), contextualType.toString(enclosingSymbol)]));
                             }
                         }
                     }
@@ -3227,10 +3227,10 @@ module TypeScript {
                     if (!isAssignable) {
                         var enclosingSymbol = this.getEnclosingSymbolForAST(varDeclOrParameter);
                         if (comparisonInfo.message) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [initTypeSymbol.toString(enclosingSymbol), typeExprSymbol.toString(enclosingSymbol), comparisonInfo.message]));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [initTypeSymbol.toString(enclosingSymbol), typeExprSymbol.toString(enclosingSymbol), comparisonInfo.message]));
                         }
                         else {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Cannot_convert_0_to_1, [initTypeSymbol.toString(enclosingSymbol), typeExprSymbol.toString(enclosingSymbol)]));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Type_0_is_not_assignable_to_type_1, [initTypeSymbol.toString(enclosingSymbol), typeExprSymbol.toString(enclosingSymbol)]));
                         }
                     }
                 }
@@ -5429,10 +5429,10 @@ module TypeScript {
                         if (!isAssignable) {
                             var enclosingSymbol = this.getEnclosingSymbolForAST(expression);
                             if (comparisonInfo.message) {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(expression, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [expressionType.toString(enclosingSymbol), sigReturnType.toString(enclosingSymbol), comparisonInfo.message]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(expression, DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [expressionType.toString(enclosingSymbol), sigReturnType.toString(enclosingSymbol), comparisonInfo.message]));
                             }
                             else {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(expression, DiagnosticCode.Cannot_convert_0_to_1, [expressionType.toString(enclosingSymbol), sigReturnType.toString(enclosingSymbol)]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(expression, DiagnosticCode.Type_0_is_not_assignable_to_type_1, [expressionType.toString(enclosingSymbol), sigReturnType.toString(enclosingSymbol)]));
                             }
                         }
                     }
@@ -5496,11 +5496,11 @@ module TypeScript {
                         var enclosingSymbol = this.getEnclosingSymbolForAST(caseSwitchClause.expression);
                         if (comparisonInfo.message) {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(caseSwitchClause.expression,
-                                DiagnosticCode.Cannot_convert_0_to_1_NL_2, [caseClauseExpressionType.toString(enclosingSymbol), expressionType.toString(enclosingSymbol), comparisonInfo.message]));
+                                DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [caseClauseExpressionType.toString(enclosingSymbol), expressionType.toString(enclosingSymbol), comparisonInfo.message]));
                         }
                         else {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(caseSwitchClause.expression,
-                                DiagnosticCode.Cannot_convert_0_to_1, [caseClauseExpressionType.toString(enclosingSymbol), expressionType.toString(enclosingSymbol)]));
+                                DiagnosticCode.Type_0_is_not_assignable_to_type_1, [caseClauseExpressionType.toString(enclosingSymbol), expressionType.toString(enclosingSymbol)]));
                         }
                     }
                 }
@@ -13332,10 +13332,10 @@ module TypeScript {
             if (!isAssignable) {
                 var enclosingSymbol = this.getEnclosingSymbolForAST(ast);
                 if (comparisonInfo.message) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [source.toString(enclosingSymbol), target.toString(enclosingSymbol), comparisonInfo.message]));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [source.toString(enclosingSymbol), target.toString(enclosingSymbol), comparisonInfo.message]));
                 }
                 else {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Cannot_convert_0_to_1, [source.toString(enclosingSymbol), target.toString(enclosingSymbol)]));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Type_0_is_not_assignable_to_type_1, [source.toString(enclosingSymbol), target.toString(enclosingSymbol)]));
                 }
             }
         }

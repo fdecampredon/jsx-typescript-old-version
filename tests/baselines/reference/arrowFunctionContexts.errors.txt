@@ -35,7 +35,7 @@
     enum E {
         x = () => 4, // Error expected
         ~~~~~~~~~~~
-!!! arrowFunctionContexts.ts(31,5): error TS2011: Cannot convert '() => number' to 'E'.
+!!! arrowFunctionContexts.ts(31,5): error TS2011: Type '() => number' is not assignable to type 'E'.
         y = (() => this).length // error, can't use this in enum
                    ~~~~
 !!! arrowFunctionContexts.ts(32,16): error TS2097: 'this' cannot be referenced in current location.
@@ -84,7 +84,7 @@
         enum E {
             x = () => 4, // Error expected
             ~~~~~~~~~~~
-!!! arrowFunctionContexts.ts(72,9): error TS2011: Cannot convert '() => number' to 'E'.
+!!! arrowFunctionContexts.ts(72,9): error TS2011: Type '() => number' is not assignable to type 'E'.
             y = (() => this).length
                        ~~~~
 !!! arrowFunctionContexts.ts(73,20): error TS2097: 'this' cannot be referenced in current location.

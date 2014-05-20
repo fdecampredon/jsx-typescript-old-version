@@ -10,12 +10,12 @@
     var r: A<string> = <B<string>>new B();
     var r2: A<number> = <B<string>>new B(); // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! genericTypeAssertions2.ts(10,5): error TS2012: Cannot convert 'B<string>' to 'A<number>':
+!!! genericTypeAssertions2.ts(10,5): error TS2012: Type 'B<string>' is not assignable to type 'A<number>':
 !!! 	Types of property 'foo' of types 'B<string>' and 'A<number>' are incompatible:
 !!! 		Call signatures of types '(x: string) => void' and '(x: number) => void' are incompatible.
     var r3: B<number> = <A<number>>new B(); // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! genericTypeAssertions2.ts(11,5): error TS2012: Cannot convert 'A<number>' to 'B<number>':
+!!! genericTypeAssertions2.ts(11,5): error TS2012: Type 'A<number>' is not assignable to type 'B<number>':
 !!! 	Type 'A<number>' is missing property 'bar' from type 'B<number>'.
     var r4: A<number> = <A<number>>new A();
     var r5: A<number> = <A<number>>[]; // error

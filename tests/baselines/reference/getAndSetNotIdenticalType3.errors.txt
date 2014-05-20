@@ -15,7 +15,7 @@
             this.data = v;
     ~~~~~~~~~~~~~~~~~~~~~~
             ~~~~~~~~~
-!!! getAndSetNotIdenticalType3.ts(9,9): error TS2012: Cannot convert 'A<string>' to 'A<number>':
+!!! getAndSetNotIdenticalType3.ts(9,9): error TS2012: Type 'A<string>' is not assignable to type 'A<number>':
 !!! 	Types of property 'foo' of types 'A<string>' and 'A<number>' are incompatible.
         }
     ~~~~~

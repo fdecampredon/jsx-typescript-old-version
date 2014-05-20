@@ -24,7 +24,7 @@
             doesntWork():R {
                 return { anything:1, oneI:this };
                        ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! fuzzy.ts(21,20): error TS2012: Cannot convert '{ anything: number; oneI: C; }' to 'R':
+!!! fuzzy.ts(21,20): error TS2012: Type '{ anything: number; oneI: C; }' is not assignable to type 'R':
 !!! 	Types of property 'oneI' of types '{ anything: number; oneI: C; }' and 'R' are incompatible:
 !!! 		Type 'C' is missing property 'alsoWorks' from type 'I'.
             }

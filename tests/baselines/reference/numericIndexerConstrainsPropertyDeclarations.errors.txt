@@ -132,5 +132,5 @@
     ~~~~~
     }
     ~
-!!! numericIndexerConstrainsPropertyDeclarations.ts(78,5): error TS2012: Cannot convert '{ a: string; b: number; c: () => void; "d": string; "e": number; 1.0: string; 2.0: number; "3.0": string; "4.0": number; f: any; X: string; foo(): string; [x: number]: {}; }' to '{ [x: number]: string; }':
+!!! numericIndexerConstrainsPropertyDeclarations.ts(78,5): error TS2012: Type '{ a: string; b: number; c: () => void; "d": string; "e": number; 1.0: string; 2.0: number; "3.0": string; "4.0": number; f: any; X: string; foo(): string; [x: number]: {}; }' is not assignable to type '{ [x: number]: string; }':
 !!! 	Index signatures of types '{ a: string; b: number; c: () => void; "d": string; "e": number; 1.0: string; 2.0: number; "3.0": string; "4.0": number; f: any; X: string; foo(): string; [x: number]: {}; }' and '{ [x: number]: string; }' are incompatible.

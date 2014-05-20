@@ -10,7 +10,7 @@
                                  ~
 !!! arrayTypeOfTypeOf.ts(6,30): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! arrayTypeOfTypeOf.ts(6,5): error TS2012: Cannot convert 'number' to '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }':
+!!! arrayTypeOfTypeOf.ts(6,5): error TS2012: Type 'number' is not assignable to type '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }':
 !!! 	Type 'Number' is missing property 'isArray' from type '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }'.
     var xs4: typeof Array<typeof x>;
                          ~
@@ -18,5 +18,5 @@
                                    ~
 !!! arrayTypeOfTypeOf.ts(7,32): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! arrayTypeOfTypeOf.ts(7,5): error TS2012: Cannot convert 'number' to '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }':
+!!! arrayTypeOfTypeOf.ts(7,5): error TS2012: Type 'number' is not assignable to type '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }':
 !!! 	Type 'Number' is missing property 'isArray' from type '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }'.

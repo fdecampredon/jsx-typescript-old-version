@@ -29,7 +29,7 @@
                 var lineTokens:ILineTokens= this.tokenize(line, state, true);
                 var tokens:IStateToken[]= lineTokens.tokens;
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! arrayAssignmentTest5.ts(23,17): error TS2012: Cannot convert 'IToken[]' to 'IStateToken[]':
+!!! arrayAssignmentTest5.ts(23,17): error TS2012: Type 'IToken[]' is not assignable to type 'IStateToken[]':
 !!! 	Types of property 'pop' of types 'IToken[]' and 'IStateToken[]' are incompatible:
 !!! 		Call signatures of types '() => IToken' and '() => IStateToken' are incompatible:
 !!! 			Type 'IToken' is missing property 'state' from type 'IStateToken'.

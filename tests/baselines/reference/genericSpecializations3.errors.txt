@@ -32,12 +32,12 @@
     
     intFoo = stringFoo2; // error
     ~~~~~~
-!!! genericSpecializations3.ts(28,1): error TS2012: Cannot convert 'StringFoo2' to 'IntFoo':
+!!! genericSpecializations3.ts(28,1): error TS2012: Type 'StringFoo2' is not assignable to type 'IntFoo':
 !!! 	Types of property 'foo' of types 'StringFoo2' and 'IntFoo' are incompatible:
 !!! 		Call signatures of types '(x: string) => string' and '(x: number) => number' are incompatible.
     stringFoo2 = intFoo; // error
     ~~~~~~~~~~
-!!! genericSpecializations3.ts(29,1): error TS2012: Cannot convert 'IntFoo' to 'StringFoo2':
+!!! genericSpecializations3.ts(29,1): error TS2012: Type 'IntFoo' is not assignable to type 'StringFoo2':
 !!! 	Types of property 'foo' of types 'IntFoo' and 'StringFoo2' are incompatible:
 !!! 		Call signatures of types '(x: number) => number' and '(x: string) => string' are incompatible.
     

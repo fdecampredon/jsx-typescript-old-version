@@ -19,7 +19,7 @@
     var t = [3, (3, null)];
     t[3] = "";
     ~~~~
-!!! widenedTypes.ts(11,1): error TS2011: Cannot convert 'string' to 'number'.
+!!! widenedTypes.ts(11,1): error TS2011: Type 'string' is not assignable to type 'number'.
     
     var x: typeof undefined = 3;
     x = 3;
@@ -28,17 +28,17 @@
     var u = [3, (y = null)];
     u[3] = "";
     ~~~~
-!!! widenedTypes.ts(18,1): error TS2011: Cannot convert 'string' to 'number'.
+!!! widenedTypes.ts(18,1): error TS2011: Type 'string' is not assignable to type 'number'.
     
     var ob: { x: typeof undefined } = { x: "" };
     
     // Highlights the difference between array literals and object literals
     var arr: string[] = [3, null]; // not assignable because null is not widened. BCT is {}
         ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! widenedTypes.ts(23,5): error TS2012: Cannot convert 'number[]' to 'string[]':
+!!! widenedTypes.ts(23,5): error TS2012: Type 'number[]' is not assignable to type 'string[]':
 !!! 	Types of property 'pop' of types 'number[]' and 'string[]' are incompatible:
 !!! 		Call signatures of types '() => number' and '() => string' are incompatible.
     var obj: { [x: string]: string; } = { x: 3, y: null }; // assignable because null is widened, and therefore BCT is any
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! widenedTypes.ts(24,5): error TS2012: Cannot convert '{ x: number; y: any; [x: string]: number; }' to '{ [x: string]: string; }':
+!!! widenedTypes.ts(24,5): error TS2012: Type '{ x: number; y: any; [x: string]: number; }' is not assignable to type '{ [x: string]: string; }':
 !!! 	Index signatures of types '{ x: number; y: any; [x: string]: number; }' and '{ [x: string]: string; }' are incompatible.

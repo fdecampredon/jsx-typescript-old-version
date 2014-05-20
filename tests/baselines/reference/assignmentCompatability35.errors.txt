@@ -9,5 +9,5 @@
     }
     __test2__.__val__aa = __test1__.__val__obj4
     ~~~~~~~~~~~~~~~~~~~
-!!! assignmentCompatability35.ts(9,1): error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '{ [index: number]: number; }':
+!!! assignmentCompatability35.ts(9,1): error TS2012: Type '__test1__.interfaceWithPublicAndOptional<number, string>' is not assignable to type '{ [index: number]: number; }':
 !!! 	Index signatures of types '__test1__.interfaceWithPublicAndOptional<number, string>' and '{ [index: number]: number; }' are incompatible.

@@ -103,19 +103,19 @@
     };
     var obj2: i1 = new Object();
         ~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(97,5): error TS2012: Cannot convert 'Object' to 'i1':
+!!! intTypeCheck.ts(97,5): error TS2012: Type 'Object' is not assignable to type 'i1':
 !!! 	Type 'Object' is missing property 'p' from type 'i1'.
     var obj3: i1 = new obj0;
                        ~~~~
 !!! intTypeCheck.ts(98,20): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var obj4: i1 = new Base;
         ~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(99,5): error TS2012: Cannot convert 'Base' to 'i1':
+!!! intTypeCheck.ts(99,5): error TS2012: Type 'Base' is not assignable to type 'i1':
 !!! 	Type 'Base' is missing property 'p' from type 'i1'.
     var obj5: i1 = null;
     var obj6: i1 = function () { };
         ~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(101,5): error TS2012: Cannot convert '() => void' to 'i1':
+!!! intTypeCheck.ts(101,5): error TS2012: Type '() => void' is not assignable to type 'i1':
 !!! 	Type '() => void' is missing property 'p' from type 'i1'.
     //var obj7: i1 = function foo() { };
     var obj8: i1 = <i1> anyVar;
@@ -123,7 +123,7 @@
                        ~
 !!! intTypeCheck.ts(104,20): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(104,5): error TS2012: Cannot convert 'boolean' to 'i1':
+!!! intTypeCheck.ts(104,5): error TS2012: Type 'boolean' is not assignable to type 'i1':
 !!! 	Type 'Boolean' is missing property 'p' from type 'i1'.
                         ~~
 !!! intTypeCheck.ts(104,21): error TS2095: Cannot find name 'i1'.
@@ -136,18 +136,18 @@
     var obj11: i2;
     var obj12: i2 = {};
         ~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(110,5): error TS2012: Cannot convert '{}' to 'i2':
+!!! intTypeCheck.ts(110,5): error TS2012: Type '{}' is not assignable to type 'i2':
 !!! 	Type 'i2' requires a call signature, but type '{}' lacks one.
     var obj13: i2 = new Object();
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(111,5): error TS2012: Cannot convert 'Object' to 'i2':
+!!! intTypeCheck.ts(111,5): error TS2012: Type 'Object' is not assignable to type 'i2':
 !!! 	Type 'i2' requires a call signature, but type 'Object' lacks one.
     var obj14: i2 = new obj11;
                         ~~~~~
 !!! intTypeCheck.ts(112,21): error TS2084: Only a void function can be called with the 'new' keyword.
     var obj15: i2 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(113,5): error TS2012: Cannot convert 'Base' to 'i2':
+!!! intTypeCheck.ts(113,5): error TS2012: Type 'Base' is not assignable to type 'i2':
 !!! 	Type 'i2' requires a call signature, but type 'Base' lacks one.
     var obj16: i2 = null;
     var obj17: i2 = function ():any { return 0; };
@@ -157,7 +157,7 @@
                         ~
 !!! intTypeCheck.ts(118,21): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(118,5): error TS2012: Cannot convert 'boolean' to 'i2':
+!!! intTypeCheck.ts(118,5): error TS2012: Type 'boolean' is not assignable to type 'i2':
 !!! 	Type 'i2' requires a call signature, but type 'Boolean' lacks one.
                          ~~
 !!! intTypeCheck.ts(118,22): error TS2095: Cannot find name 'i2'.
@@ -170,21 +170,21 @@
     var obj22: i3;
     var obj23: i3 = {};
         ~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(124,5): error TS2012: Cannot convert '{}' to 'i3':
+!!! intTypeCheck.ts(124,5): error TS2012: Type '{}' is not assignable to type 'i3':
 !!! 	Type 'i3' requires a construct signature, but type '{}' lacks one.
     var obj24: i3 = new Object();
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(125,5): error TS2012: Cannot convert 'Object' to 'i3':
+!!! intTypeCheck.ts(125,5): error TS2012: Type 'Object' is not assignable to type 'i3':
 !!! 	Type 'i3' requires a construct signature, but type 'Object' lacks one.
     var obj25: i3 = new obj22;
     var obj26: i3 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(127,5): error TS2012: Cannot convert 'Base' to 'i3':
+!!! intTypeCheck.ts(127,5): error TS2012: Type 'Base' is not assignable to type 'i3':
 !!! 	Type 'i3' requires a construct signature, but type 'Base' lacks one.
     var obj27: i3 = null;
     var obj28: i3 = function () { };
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(129,5): error TS2012: Cannot convert '() => void' to 'i3':
+!!! intTypeCheck.ts(129,5): error TS2012: Type '() => void' is not assignable to type 'i3':
 !!! 	Type 'i3' requires a construct signature, but type '() => void' lacks one.
     //var obj29: i3 = function foo() { };
     var obj30: i3 = <i3> anyVar;
@@ -192,7 +192,7 @@
                         ~
 !!! intTypeCheck.ts(132,21): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(132,5): error TS2012: Cannot convert 'boolean' to 'i3':
+!!! intTypeCheck.ts(132,5): error TS2012: Type 'boolean' is not assignable to type 'i3':
 !!! 	Type 'i3' requires a construct signature, but type 'Boolean' lacks one.
                          ~~
 !!! intTypeCheck.ts(132,22): error TS2095: Cannot find name 'i3'.
@@ -206,19 +206,19 @@
     var obj34: i4 = {};
     var obj35: i4 = new Object();
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(139,5): error TS2012: Cannot convert 'Object' to 'i4':
+!!! intTypeCheck.ts(139,5): error TS2012: Type 'Object' is not assignable to type 'i4':
 !!! 	Index signatures of types 'Object' and 'i4' are incompatible.
     var obj36: i4 = new obj33;
                         ~~~~~
 !!! intTypeCheck.ts(140,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var obj37: i4 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(141,5): error TS2012: Cannot convert 'Base' to 'i4':
+!!! intTypeCheck.ts(141,5): error TS2012: Type 'Base' is not assignable to type 'i4':
 !!! 	Index signatures of types 'Base' and 'i4' are incompatible.
     var obj38: i4 = null;
     var obj39: i4 = function () { };
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(143,5): error TS2012: Cannot convert '() => void' to 'i4':
+!!! intTypeCheck.ts(143,5): error TS2012: Type '() => void' is not assignable to type 'i4':
 !!! 	Index signatures of types '() => void' and 'i4' are incompatible.
     //var obj40: i4 = function foo() { };
     var obj41: i4 = <i4> anyVar;
@@ -226,7 +226,7 @@
                         ~
 !!! intTypeCheck.ts(146,21): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(146,5): error TS2012: Cannot convert 'boolean' to 'i4':
+!!! intTypeCheck.ts(146,5): error TS2012: Type 'boolean' is not assignable to type 'i4':
 !!! 	Index signatures of types 'Boolean' and 'i4' are incompatible.
                          ~~
 !!! intTypeCheck.ts(146,22): error TS2095: Cannot find name 'i4'.
@@ -239,23 +239,23 @@
     var obj44: i5;
     var obj45: i5 = {};
         ~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(152,5): error TS2012: Cannot convert '{}' to 'i5':
+!!! intTypeCheck.ts(152,5): error TS2012: Type '{}' is not assignable to type 'i5':
 !!! 	Type '{}' is missing property 'p' from type 'i5'.
     var obj46: i5 = new Object();
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(153,5): error TS2012: Cannot convert 'Object' to 'i5':
+!!! intTypeCheck.ts(153,5): error TS2012: Type 'Object' is not assignable to type 'i5':
 !!! 	Type 'Object' is missing property 'p' from type 'i5'.
     var obj47: i5 = new obj44;
                         ~~~~~
 !!! intTypeCheck.ts(154,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var obj48: i5 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(155,5): error TS2012: Cannot convert 'Base' to 'i5':
+!!! intTypeCheck.ts(155,5): error TS2012: Type 'Base' is not assignable to type 'i5':
 !!! 	Type 'Base' is missing property 'p' from type 'i5'.
     var obj49: i5 = null;
     var obj50: i5 = function () { };
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(157,5): error TS2012: Cannot convert '() => void' to 'i5':
+!!! intTypeCheck.ts(157,5): error TS2012: Type '() => void' is not assignable to type 'i5':
 !!! 	Type '() => void' is missing property 'p' from type 'i5'.
     //var obj51: i5 = function foo() { };
     var obj52: i5 = <i5> anyVar;
@@ -263,7 +263,7 @@
                         ~
 !!! intTypeCheck.ts(160,21): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(160,5): error TS2012: Cannot convert 'boolean' to 'i5':
+!!! intTypeCheck.ts(160,5): error TS2012: Type 'boolean' is not assignable to type 'i5':
 !!! 	Type 'Boolean' is missing property 'p' from type 'i5'.
                          ~~
 !!! intTypeCheck.ts(160,22): error TS2095: Cannot find name 'i5'.
@@ -276,23 +276,23 @@
     var obj55: i6;
     var obj56: i6 = {};
         ~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(166,5): error TS2012: Cannot convert '{}' to 'i6':
+!!! intTypeCheck.ts(166,5): error TS2012: Type '{}' is not assignable to type 'i6':
 !!! 	Type 'i6' requires a call signature, but type '{}' lacks one.
     var obj57: i6 = new Object();
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(167,5): error TS2012: Cannot convert 'Object' to 'i6':
+!!! intTypeCheck.ts(167,5): error TS2012: Type 'Object' is not assignable to type 'i6':
 !!! 	Type 'i6' requires a call signature, but type 'Object' lacks one.
     var obj58: i6 = new obj55;
                         ~~~~~
 !!! intTypeCheck.ts(168,21): error TS2084: Only a void function can be called with the 'new' keyword.
     var obj59: i6 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(169,5): error TS2012: Cannot convert 'Base' to 'i6':
+!!! intTypeCheck.ts(169,5): error TS2012: Type 'Base' is not assignable to type 'i6':
 !!! 	Type 'i6' requires a call signature, but type 'Base' lacks one.
     var obj60: i6 = null;
     var obj61: i6 = function () { };
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(171,5): error TS2012: Cannot convert '() => void' to 'i6':
+!!! intTypeCheck.ts(171,5): error TS2012: Type '() => void' is not assignable to type 'i6':
 !!! 	Call signatures of types '() => void' and 'i6' are incompatible.
     //var obj62: i6 = function foo() { };
     var obj63: i6 = <i6> anyVar;
@@ -300,7 +300,7 @@
                         ~
 !!! intTypeCheck.ts(174,21): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(174,5): error TS2012: Cannot convert 'boolean' to 'i6':
+!!! intTypeCheck.ts(174,5): error TS2012: Type 'boolean' is not assignable to type 'i6':
 !!! 	Type 'i6' requires a call signature, but type 'Boolean' lacks one.
                          ~~
 !!! intTypeCheck.ts(174,22): error TS2095: Cannot find name 'i6'.
@@ -313,11 +313,11 @@
     var obj66: i7;
     var obj67: i7 = {};
         ~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(180,5): error TS2012: Cannot convert '{}' to 'i7':
+!!! intTypeCheck.ts(180,5): error TS2012: Type '{}' is not assignable to type 'i7':
 !!! 	Type 'i7' requires a construct signature, but type '{}' lacks one.
     var obj68: i7 = new Object();
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(181,5): error TS2012: Cannot convert 'Object' to 'i7':
+!!! intTypeCheck.ts(181,5): error TS2012: Type 'Object' is not assignable to type 'i7':
 !!! 	Type 'i7' requires a construct signature, but type 'Object' lacks one.
     var obj69: i7 = new obj66;
     var obj70: i7 = <i7>new Base;
@@ -328,7 +328,7 @@
     var obj71: i7 = null;
     var obj72: i7 = function () { };
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(185,5): error TS2012: Cannot convert '() => void' to 'i7':
+!!! intTypeCheck.ts(185,5): error TS2012: Type '() => void' is not assignable to type 'i7':
 !!! 	Type 'i7' requires a construct signature, but type '() => void' lacks one.
     //var obj73: i7 = function foo() { };
     var obj74: i7 = <i7> anyVar;
@@ -336,7 +336,7 @@
                         ~
 !!! intTypeCheck.ts(188,21): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(188,5): error TS2012: Cannot convert 'boolean' to 'i7':
+!!! intTypeCheck.ts(188,5): error TS2012: Type 'boolean' is not assignable to type 'i7':
 !!! 	Type 'i7' requires a construct signature, but type 'Boolean' lacks one.
                          ~~
 !!! intTypeCheck.ts(188,22): error TS2095: Cannot find name 'i7'.
@@ -350,19 +350,19 @@
     var obj78: i8 = {};
     var obj79: i8 = new Object();
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(195,5): error TS2012: Cannot convert 'Object' to 'i8':
+!!! intTypeCheck.ts(195,5): error TS2012: Type 'Object' is not assignable to type 'i8':
 !!! 	Index signatures of types 'Object' and 'i8' are incompatible.
     var obj80: i8 = new obj77;
                         ~~~~~
 !!! intTypeCheck.ts(196,21): error TS2083: Cannot use 'new' with an expression whose type lacks a signature.
     var obj81: i8 = new Base;
         ~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(197,5): error TS2012: Cannot convert 'Base' to 'i8':
+!!! intTypeCheck.ts(197,5): error TS2012: Type 'Base' is not assignable to type 'i8':
 !!! 	Index signatures of types 'Base' and 'i8' are incompatible.
     var obj82: i8 = null;
     var obj83: i8 = function () { };
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(199,5): error TS2012: Cannot convert '() => void' to 'i8':
+!!! intTypeCheck.ts(199,5): error TS2012: Type '() => void' is not assignable to type 'i8':
 !!! 	Index signatures of types '() => void' and 'i8' are incompatible.
     //var obj84: i8 = function foo() { };
     var obj85: i8 = <i8> anyVar;
@@ -370,7 +370,7 @@
                         ~
 !!! intTypeCheck.ts(202,21): error TS1003: Identifier expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(202,5): error TS2012: Cannot convert 'boolean' to 'i8':
+!!! intTypeCheck.ts(202,5): error TS2012: Type 'boolean' is not assignable to type 'i8':
 !!! 	Index signatures of types 'Boolean' and 'i8' are incompatible.
                          ~~
 !!! intTypeCheck.ts(202,22): error TS2095: Cannot find name 'i8'.

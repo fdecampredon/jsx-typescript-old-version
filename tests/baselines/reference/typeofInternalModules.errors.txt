@@ -23,7 +23,7 @@
     var x5: typeof importInst;
     x5 = Outer;
     ~~
-!!! typeofInternalModules.ts(19,1): error TS2012: Cannot convert 'typeof Outer' to 'typeof Outer.instantiated':
+!!! typeofInternalModules.ts(19,1): error TS2012: Type 'typeof Outer' is not assignable to type 'typeof Outer.instantiated':
 !!! 	Type 'typeof Outer' is missing property 'Outer.instantiated.C' from type 'typeof Outer.instantiated'.
     x5 = Outer.instantiated;
     var x6: typeof importUninst;
@@ -32,6 +32,6 @@
     var x7: typeof Outer = Outer;
     x7 = importInst;
     ~~
-!!! typeofInternalModules.ts(23,1): error TS2012: Cannot convert 'typeof Outer.instantiated' to 'typeof Outer':
+!!! typeofInternalModules.ts(23,1): error TS2012: Type 'typeof Outer.instantiated' is not assignable to type 'typeof Outer':
 !!! 	Type 'typeof Outer.instantiated' is missing property 'Outer.instantiated' from type 'typeof Outer'.
     

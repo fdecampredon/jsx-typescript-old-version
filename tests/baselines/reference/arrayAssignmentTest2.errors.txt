@@ -47,50 +47,50 @@
     // "clean up error" occurs at this point
     arr_c3 = arr_c2_2; // should be an error - is
     ~~~~~~
-!!! arrayAssignmentTest2.ts(47,1): error TS2012: Cannot convert 'C2[]' to 'C3[]':
+!!! arrayAssignmentTest2.ts(47,1): error TS2012: Type 'C2[]' is not assignable to type 'C3[]':
 !!! 	Types of property 'pop' of types 'C2[]' and 'C3[]' are incompatible:
 !!! 		Call signatures of types '() => C2' and '() => C3' are incompatible:
 !!! 			Type 'C2' is missing property 'CM3M1' from type 'C3'.
     arr_c3 = arr_c1_2; // should be an error - is
     ~~~~~~
-!!! arrayAssignmentTest2.ts(48,1): error TS2012: Cannot convert 'C1[]' to 'C3[]':
+!!! arrayAssignmentTest2.ts(48,1): error TS2012: Type 'C1[]' is not assignable to type 'C3[]':
 !!! 	Types of property 'pop' of types 'C1[]' and 'C3[]' are incompatible:
 !!! 		Call signatures of types '() => C1' and '() => C3' are incompatible:
 !!! 			Type 'C1' is missing property 'CM3M1' from type 'C3'.
     arr_c3 = arr_i1_2; // should be an error - is
     ~~~~~~
-!!! arrayAssignmentTest2.ts(49,1): error TS2012: Cannot convert 'I1[]' to 'C3[]':
+!!! arrayAssignmentTest2.ts(49,1): error TS2012: Type 'I1[]' is not assignable to type 'C3[]':
 !!! 	Types of property 'pop' of types 'I1[]' and 'C3[]' are incompatible:
 !!! 		Call signatures of types '() => I1' and '() => C3' are incompatible:
 !!! 			Type 'I1' is missing property 'CM3M1' from type 'C3'.
     
     arr_any = f1; // should be an error - is
     ~~~~~~~
-!!! arrayAssignmentTest2.ts(51,1): error TS2012: Cannot convert '() => C1' to 'any[]':
+!!! arrayAssignmentTest2.ts(51,1): error TS2012: Type '() => C1' is not assignable to type 'any[]':
 !!! 	Type '() => C1' is missing property 'concat' from type 'any[]'.
     arr_any = function () { return null;} // should be an error - is
     ~~~~~~~
-!!! arrayAssignmentTest2.ts(52,1): error TS2012: Cannot convert '() => any' to 'any[]':
+!!! arrayAssignmentTest2.ts(52,1): error TS2012: Type '() => any' is not assignable to type 'any[]':
 !!! 	Type '() => any' is missing property 'concat' from type 'any[]'.
     arr_any = o1; // should be an error - is
     ~~~~~~~
-!!! arrayAssignmentTest2.ts(53,1): error TS2012: Cannot convert '{ one: number; }' to 'any[]':
+!!! arrayAssignmentTest2.ts(53,1): error TS2012: Type '{ one: number; }' is not assignable to type 'any[]':
 !!! 	Type '{ one: number; }' is missing property 'concat' from type 'any[]'.
     arr_any = a1; // should be ok - is
     arr_any = c1; // should be an error - is
     ~~~~~~~
-!!! arrayAssignmentTest2.ts(55,1): error TS2012: Cannot convert 'C1' to 'any[]':
+!!! arrayAssignmentTest2.ts(55,1): error TS2012: Type 'C1' is not assignable to type 'any[]':
 !!! 	Type 'C1' is missing property 'concat' from type 'any[]'.
     arr_any = c2; // should be an error - is
     ~~~~~~~
-!!! arrayAssignmentTest2.ts(56,1): error TS2012: Cannot convert 'C2' to 'any[]':
+!!! arrayAssignmentTest2.ts(56,1): error TS2012: Type 'C2' is not assignable to type 'any[]':
 !!! 	Type 'C2' is missing property 'concat' from type 'any[]'.
     arr_any = c3; // should be an error - is
     ~~~~~~~
-!!! arrayAssignmentTest2.ts(57,1): error TS2012: Cannot convert 'C3' to 'any[]':
+!!! arrayAssignmentTest2.ts(57,1): error TS2012: Type 'C3' is not assignable to type 'any[]':
 !!! 	Type 'C3' is missing property 'concat' from type 'any[]'.
     arr_any = i1; // should be an error - is
     ~~~~~~~
-!!! arrayAssignmentTest2.ts(58,1): error TS2012: Cannot convert 'I1' to 'any[]':
+!!! arrayAssignmentTest2.ts(58,1): error TS2012: Type 'I1' is not assignable to type 'any[]':
 !!! 	Type 'I1' is missing property 'concat' from type 'any[]'.
     

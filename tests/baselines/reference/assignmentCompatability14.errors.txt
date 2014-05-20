@@ -9,5 +9,5 @@
     }
     __test2__.__val__obj = __test1__.__val__obj4
     ~~~~~~~~~~~~~~~~~~~~
-!!! assignmentCompatability14.ts(9,1): error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '{ one: boolean; }':
+!!! assignmentCompatability14.ts(9,1): error TS2012: Type '__test1__.interfaceWithPublicAndOptional<number, string>' is not assignable to type '{ one: boolean; }':
 !!! 	Types of property 'one' of types '__test1__.interfaceWithPublicAndOptional<number, string>' and '{ one: boolean; }' are incompatible.

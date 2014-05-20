@@ -3,16 +3,16 @@
         var a = { x: 1, y: 2 };
         a = {}; // error
      ~
-!!! typeMatch2.ts(3,2): error TS2012: Cannot convert '{}' to '{ x: number; y: number; }':
+!!! typeMatch2.ts(3,2): error TS2012: Type '{}' is not assignable to type '{ x: number; y: number; }':
 !!! 	Type '{}' is missing property 'x' from type '{ x: number; y: number; }'.
         a = { x: 1 }; // error
         ~
-!!! typeMatch2.ts(4,5): error TS2012: Cannot convert '{ x: number; }' to '{ x: number; y: number; }':
+!!! typeMatch2.ts(4,5): error TS2012: Type '{ x: number; }' is not assignable to type '{ x: number; y: number; }':
 !!! 	Type '{ x: number; }' is missing property 'y' from type '{ x: number; y: number; }'.
         a = { x: 1, y: 2, z: 3 };
         a = { x: 1, z: 3 };  // error
         ~
-!!! typeMatch2.ts(6,5): error TS2012: Cannot convert '{ x: number; z: number; }' to '{ x: number; y: number; }':
+!!! typeMatch2.ts(6,5): error TS2012: Type '{ x: number; z: number; }' is not assignable to type '{ x: number; y: number; }':
 !!! 	Type '{ x: number; z: number; }' is missing property 'y' from type '{ x: number; y: number; }'.
     }
     
@@ -27,7 +27,7 @@
         aa = gg;
         gg = aa; // error
         ~~
-!!! typeMatch2.ts(18,5): error TS2012: Cannot convert 'Animal[]' to 'Giraffe[]':
+!!! typeMatch2.ts(18,5): error TS2012: Type 'Animal[]' is not assignable to type 'Giraffe[]':
 !!! 	Types of property 'pop' of types 'Animal[]' and 'Giraffe[]' are incompatible:
 !!! 		Call signatures of types '() => Animal' and '() => Giraffe' are incompatible:
 !!! 			Type 'Animal' is missing property 'g' from type 'Giraffe'.
@@ -36,7 +36,7 @@
         xa = xb; // Should be ok
         xb = xa; // Not ok
         ~~
-!!! typeMatch2.ts(22,5): error TS2012: Cannot convert '{ f1: number; f2: Animal[]; }' to '{ f1: number; f2: Giraffe[]; }':
+!!! typeMatch2.ts(22,5): error TS2012: Type '{ f1: number; f2: Animal[]; }' is not assignable to type '{ f1: number; f2: Giraffe[]; }':
 !!! 	Types of property 'f2' of types '{ f1: number; f2: Animal[]; }' and '{ f1: number; f2: Giraffe[]; }' are incompatible:
 !!! 		Types of property 'pop' of types 'Animal[]' and 'Giraffe[]' are incompatible:
 !!! 			Call signatures of types '() => Animal' and '() => Giraffe' are incompatible:
@@ -55,7 +55,7 @@
         a = { x: 1, y: _any, z:1 }; 
         a = { x: 1 }; // error
         ~
-!!! typeMatch2.ts(35,5): error TS2012: Cannot convert '{ x: number; }' to '{ x: number; y: number; }':
+!!! typeMatch2.ts(35,5): error TS2012: Type '{ x: number; }' is not assignable to type '{ x: number; y: number; }':
 !!! 	Type '{ x: number; }' is missing property 'y' from type '{ x: number; y: number; }'.
         var mf = function m(n) { return false; };
         var zf = function z(n: number) { return true; };

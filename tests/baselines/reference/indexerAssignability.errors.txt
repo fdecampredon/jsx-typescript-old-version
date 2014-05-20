@@ -5,16 +5,16 @@
     
     a = b;
     ~
-!!! indexerAssignability.ts(5,1): error TS2012: Cannot convert '{ [n: number]: string; }' to '{ [s: string]: string; }':
+!!! indexerAssignability.ts(5,1): error TS2012: Type '{ [n: number]: string; }' is not assignable to type '{ [s: string]: string; }':
 !!! 	Index signatures of types '{ [n: number]: string; }' and '{ [s: string]: string; }' are incompatible.
     a = c;
     ~
-!!! indexerAssignability.ts(6,1): error TS2012: Cannot convert '{}' to '{ [s: string]: string; }':
+!!! indexerAssignability.ts(6,1): error TS2012: Type '{}' is not assignable to type '{ [s: string]: string; }':
 !!! 	Index signatures of types '{}' and '{ [s: string]: string; }' are incompatible.
     b = a;
     b = c;
     ~
-!!! indexerAssignability.ts(8,1): error TS2012: Cannot convert '{}' to '{ [n: number]: string; }':
+!!! indexerAssignability.ts(8,1): error TS2012: Type '{}' is not assignable to type '{ [n: number]: string; }':
 !!! 	Index signatures of types '{}' and '{ [n: number]: string; }' are incompatible.
     c = a;
     c = b;

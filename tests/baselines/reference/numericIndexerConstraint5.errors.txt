@@ -2,5 +2,5 @@
     var x = { name: "x", 0: new Date() };
     var z: { [name: number]: string } = x;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! numericIndexerConstraint5.ts(2,5): error TS2012: Cannot convert '{ name: string; 0: Date; }' to '{ [name: number]: string; }':
+!!! numericIndexerConstraint5.ts(2,5): error TS2012: Type '{ name: string; 0: Date; }' is not assignable to type '{ [name: number]: string; }':
 !!! 	Index signatures of types '{ name: string; 0: Date; }' and '{ [name: number]: string; }' are incompatible.

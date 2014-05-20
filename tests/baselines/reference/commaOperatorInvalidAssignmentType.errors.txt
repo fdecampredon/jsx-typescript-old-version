@@ -10,22 +10,22 @@
     //Expect errors when the results type is different form the second operand
     resultIsBoolean = (BOOLEAN, STRING);
     ~~~~~~~~~~~~~~~
-!!! commaOperatorInvalidAssignmentType.ts(10,1): error TS2011: Cannot convert 'string' to 'boolean'.
+!!! commaOperatorInvalidAssignmentType.ts(10,1): error TS2011: Type 'string' is not assignable to type 'boolean'.
     resultIsBoolean = (BOOLEAN, NUMBER);
     ~~~~~~~~~~~~~~~
-!!! commaOperatorInvalidAssignmentType.ts(11,1): error TS2011: Cannot convert 'number' to 'boolean'.
+!!! commaOperatorInvalidAssignmentType.ts(11,1): error TS2011: Type 'number' is not assignable to type 'boolean'.
     
     resultIsNumber = (NUMBER, BOOLEAN);
     ~~~~~~~~~~~~~~
-!!! commaOperatorInvalidAssignmentType.ts(13,1): error TS2011: Cannot convert 'boolean' to 'number'.
+!!! commaOperatorInvalidAssignmentType.ts(13,1): error TS2011: Type 'boolean' is not assignable to type 'number'.
     resultIsNumber = (NUMBER, STRING);
     ~~~~~~~~~~~~~~
-!!! commaOperatorInvalidAssignmentType.ts(14,1): error TS2011: Cannot convert 'string' to 'number'.
+!!! commaOperatorInvalidAssignmentType.ts(14,1): error TS2011: Type 'string' is not assignable to type 'number'.
     
     resultIsString = (STRING, BOOLEAN);
     ~~~~~~~~~~~~~~
-!!! commaOperatorInvalidAssignmentType.ts(16,1): error TS2011: Cannot convert 'boolean' to 'string'.
+!!! commaOperatorInvalidAssignmentType.ts(16,1): error TS2011: Type 'boolean' is not assignable to type 'string'.
     resultIsString = (STRING, NUMBER);
     ~~~~~~~~~~~~~~
-!!! commaOperatorInvalidAssignmentType.ts(17,1): error TS2011: Cannot convert 'number' to 'string'.
+!!! commaOperatorInvalidAssignmentType.ts(17,1): error TS2011: Type 'number' is not assignable to type 'string'.
     

@@ -6,5 +6,5 @@
     i = x;
     x = i;
     ~
-!!! i3.ts(6,1): error TS2012: Cannot convert 'I3' to '{ one: number; }':
+!!! i3.ts(6,1): error TS2012: Type 'I3' is not assignable to type '{ one: number; }':
 !!! 	Property 'one' defined as optional in type 'I3', but is required in type '{ one: number; }'.

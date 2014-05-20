@@ -73,7 +73,7 @@
                                    ~~~~~~~~~~~~~~~
 !!! callSignatureWithOptionalParameterAndInitializer.ts(45,32): error TS1015: Parameter cannot have question mark and initializer.
                                    ~~~~~~~~~~~~~~~
-!!! callSignatureWithOptionalParameterAndInitializer.ts(45,32): error TS2011: Cannot convert 'string' to 'number'.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(45,32): error TS2011: Type 'string' is not assignable to type 'number'.
         b: (x?: any = '') => { }
             ~~~~~~~~~~~~
 !!! callSignatureWithOptionalParameterAndInitializer.ts(46,9): error TS1015: Parameter cannot have question mark and initializer.

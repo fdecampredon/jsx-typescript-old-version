@@ -3,5 +3,5 @@
     var a: Boolean;
     x = a;
     ~
-!!! assignFromBooleanInterface.ts(3,1): error TS2011: Cannot convert 'Boolean' to 'boolean'.
+!!! assignFromBooleanInterface.ts(3,1): error TS2011: Type 'Boolean' is not assignable to type 'boolean'.
     a = x;

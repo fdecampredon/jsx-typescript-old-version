@@ -3,6 +3,6 @@
     var x: { [index: string]: number; };
     var result: Foo = x["one"]; // error
         ~~~~~~~~~~~~~~~~~~~~~~
-!!! numericIndexerConstraint1.ts(3,5): error TS2012: Cannot convert 'number' to 'Foo':
+!!! numericIndexerConstraint1.ts(3,5): error TS2012: Type 'number' is not assignable to type 'Foo':
 !!! 	Type 'Number' is missing property 'foo' from type 'Foo'.
     

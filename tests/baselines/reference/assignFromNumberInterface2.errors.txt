@@ -23,9 +23,9 @@
     
     x = a; // expected error
     ~
-!!! assignFromNumberInterface2.ts(23,1): error TS2011: Cannot convert 'Number' to 'number'.
+!!! assignFromNumberInterface2.ts(23,1): error TS2011: Type 'Number' is not assignable to type 'number'.
     x = b; // expected error
     ~
-!!! assignFromNumberInterface2.ts(24,1): error TS2011: Cannot convert 'NotNumber' to 'number'.
+!!! assignFromNumberInterface2.ts(24,1): error TS2011: Type 'NotNumber' is not assignable to type 'number'.
     
     

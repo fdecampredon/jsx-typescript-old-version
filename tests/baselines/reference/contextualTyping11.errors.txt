@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/contextualTyping11.ts (1 errors) ====
     class foo { public bar:{id:number;}[] = [<foo>({})]; }
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! contextualTyping11.ts(1,13): error TS2012: Cannot convert 'foo[]' to '{ id: number; }[]':
+!!! contextualTyping11.ts(1,13): error TS2012: Type 'foo[]' is not assignable to type '{ id: number; }[]':
 !!! 	Types of property 'pop' of types 'foo[]' and '{ id: number; }[]' are incompatible:
 !!! 		Call signatures of types '() => foo' and '() => { id: number; }' are incompatible:
 !!! 			Type 'foo' is missing property 'id' from type '{ id: number; }'.
