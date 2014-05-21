@@ -1,0 +1,19 @@
+=== tests/cases/compiler/elementWithChildElement.ts ===
+///<jsx />
+
+<div> 
+>div : any
+
+    <a>
+>a : any
+
+        <img src="myImage.png" />
+>img : any
+>src : any
+
+    </a> 
+>a : any
+
+</div>
+>div : any
+

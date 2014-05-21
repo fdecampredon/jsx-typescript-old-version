@@ -1,0 +1,15 @@
+=== tests/cases/compiler/expressionWithJsxElement.ts ===
+///<jsx />
+<ul> {myArray.map((text) => <li>{text}</li>)} </ul>
+>ul : any
+>myArray.map((text) => <li>{text}</li>) : any
+>myArray.map : any
+>myArray : any
+>map : any
+>(text) => <li>{text}</li> : (text: any) => any
+>text : any
+>li : any
+>text : any
+>li : any
+>ul : any
+

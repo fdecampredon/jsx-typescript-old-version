@@ -1,0 +1,75 @@
+=== tests/cases/compiler/esprimaFBTest.ts ===
+///<jsx />
+
+<a />;
+>a : any
+
+<a foo="bar"> {value} <b><c /></b></a>;
+>a : any
+>foo : any
+>value : any
+>b : any
+>c : any
+>b : any
+>a : any
+
+<a
+>a : any
+
+/>;
+
+<日本語></日本語>;
+>日本語 : any
+>日本語 : any
+
+<a b={x ? <c /> : <d />} />;
+>a : any
+>b : any
+>x ? <c /> : <d /> : any
+>x : any
+>c : any
+>d : any
+
+<a>{}</a>;
+>a : any
+>a : any
+
+<a>{/* this is a comment */}</a>;
+>a : any
+>a : any
+
+<div>@test content</div>;
+>div : any
+>div : any
+
+<div><br />7x invalid-js-identifier</div>;
+>div : any
+>br : any
+>div : any
+
+<a.b></a.b>;
+>a : any
+>b : any
+>a : any
+>b : any
+
+<a.b.c></a.b.c>;
+>a : any
+>b : any
+>c : any
+>a : any
+>b : any
+>c : any
+
+
+//TODO multilple statement containing XJSElement without semilicon seems to not working property
+// ex: <a />\n<a/> won't work
+//<n:a n:v /> we does not support namespace
+//<a n:foo="bar"> {value} <b><c /></b></a> we does not support namespace
+//<a b={" "} c=" " d="&amp;" /> we does not translate html entities at parse time
+/*<AbC-def
+test="&#x0026;&#38;">
+bar
+baz
+</AbC-def>*/ //we does not support invalid javascript token in node
+//<LeftRight left=<a /> right=<b>monkeys /> gorillas</b> /> we does not support the syntax <tag attribute=<tag /> /> for now

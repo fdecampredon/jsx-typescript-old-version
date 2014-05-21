@@ -1,0 +1,11 @@
+=== tests/cases/compiler/autoClosingWithAttribute.ts ===
+///<jsx />
+
+<a foo={ bar() } hello="world" world='hello' />
+>a : any
+>foo : any
+>bar() : any
+>bar : any
+>hello : any
+>world : any
+

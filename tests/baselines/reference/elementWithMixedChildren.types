@@ -1,0 +1,84 @@
+=== tests/cases/compiler/elementWithMixedChildren.ts ===
+///<jsx />
+
+
+<li> <img />
+>li : any
+>img : any
+
+    <img src="icon" />
+>img : any
+>src : any
+
+    Text : {myVar.text} 
+>myVar.text : any
+>myVar : any
+>text : any
+
+</li>;
+>li : any
+
+<li>
+>li : any
+
+    <img src="icon" />
+>img : any
+>src : any
+
+    Text : {myVar.text} 
+>myVar.text : any
+>myVar : any
+>text : any
+
+</li>;
+>li : any
+
+<li>
+>li : any
+
+    Text:
+    {myVar.text} 
+>myVar.text : any
+>myVar : any
+>text : any
+
+</li>;
+>li : any
+
+<li> hello <div /> </li>;
+>li : any
+>div : any
+>li : any
+
+<li>
+>li : any
+
+    hello world <span>hello &amp;</span>
+>span : any
+>span : any
+
+    hello: world <span /> </li>;
+>span : any
+>li : any
+
+<li>
+>li : any
+
+    hello world <span>hello &amp;
+>span : any
+
+    hello: world </span> </li>;
+>span : any
+>li : any
+    
+<li>    <span />   <div /></li>;
+>li : any
+>span : any
+>div : any
+>li : any
+
+<a> <span /> {} hello</a>;
+>a : any
+>span : any
+>a : any
+
