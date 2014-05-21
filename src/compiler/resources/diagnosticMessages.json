@@ -155,7 +155,7 @@
         "category": "Error",
         "code": 1037
     },
-    "'declare' modifier not allowed for code already in an ambient context.": {
+    "A 'declare' modifier cannot be used in an already ambient context.": {
         "category": "Error",
         "code": 1038
     },
@@ -183,11 +183,11 @@
         "category": "Error",
         "code": 1044
     },
-    "'declare' modifier cannot appear on an interface declaration.": {
+    "A 'declare' modifier cannot be used with an interface declaration.": {
         "category": "Error",
         "code": 1045
     },
-    "'declare' modifier required for top level element.": {
+    "A 'declare' modifier is required for a top level declaration in a .d.ts file.": {
         "category": "Error",
         "code": 1046
     },
@@ -307,7 +307,7 @@
         "category": "NoPrefix",
         "code": 1078
     },
-    "'declare' modifier not allowed on import declaration.": {
+    "A 'declare' modifier cannot be used with an import declaration.": {
         "category": "Error",
         "code": 1079
     },

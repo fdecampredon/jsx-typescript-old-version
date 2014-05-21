@@ -447,7 +447,7 @@ module TypeScript {
 
                 if (declareToken) {
                     this.pushDiagnostic(declareToken,
-                        DiagnosticCode.declare_modifier_not_allowed_for_code_already_in_an_ambient_context);
+                        DiagnosticCode.A_declare_modifier_cannot_be_used_in_an_already_ambient_context);
                     return true;
                 }
             }
@@ -463,7 +463,7 @@ module TypeScript {
                 // on most module elements.
                 if (!SyntaxUtilities.containsToken(modifiers, SyntaxKind.DeclareKeyword)) {
                     this.pushDiagnostic(firstToken(typeKeyword),
-                        DiagnosticCode.declare_modifier_required_for_top_level_element);
+                        DiagnosticCode.A_declare_modifier_is_required_for_a_top_level_declaration_in_a_d_ts_file);
                     return true;
                 }
             }
@@ -684,7 +684,7 @@ module TypeScript {
                 var modifier = modifiers[i];
                 if (modifier.kind() === SyntaxKind.DeclareKeyword) {
                     this.pushDiagnostic(modifier,
-                        DiagnosticCode.declare_modifier_cannot_appear_on_an_interface_declaration);
+                        DiagnosticCode.A_declare_modifier_cannot_be_used_with_an_interface_declaration);
                     return true;
                 }
             }
@@ -1017,7 +1017,7 @@ module TypeScript {
 
             if (declareToken) {
                 this.pushDiagnostic(declareToken,
-                    DiagnosticCode.declare_modifier_not_allowed_on_import_declaration);
+                    DiagnosticCode.A_declare_modifier_cannot_be_used_with_an_import_declaration);
                 return true;
             }
         }
