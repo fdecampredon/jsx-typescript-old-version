@@ -160,21 +160,21 @@ module TypeScript {
                     if (i !== (parameterCount - 1)) {
                         this.pushDiagnostic(
                             parameter,
-                            DiagnosticCode.Rest_parameter_must_be_last_in_list);
+                            DiagnosticCode.A_rest_parameter_must_be_last_in_a_parameter_list);
                         return true;
                     }
 
                     if (parameter.questionToken) {
                         this.pushDiagnostic(
                             parameter,
-                            DiagnosticCode.Rest_parameter_cannot_be_optional);
+                            DiagnosticCode.A_rest_parameter_cannot_be_optional);
                         return true;
                     }
 
                     if (parameter.equalsValueClause) {
                         this.pushDiagnostic(
                             parameter,
-                            DiagnosticCode.Rest_parameter_cannot_have_an_initializer);
+                            DiagnosticCode.A_rest_parameter_cannot_have_an_initializer);
                         return true;
                     }
                 }
@@ -192,7 +192,7 @@ module TypeScript {
                     if (seenOptionalParameter) {
                         this.pushDiagnostic(
                             parameter,
-                            DiagnosticCode.Required_parameter_cannot_follow_optional_parameter);
+                            DiagnosticCode.A_required_parameter_cannot_follow_an_optional_parameter);
                         return true;
                     }
                 }
@@ -243,12 +243,12 @@ module TypeScript {
 
                 if (!this.inAmbientDeclaration && this.currentConstructor && !this.currentConstructor.block && this.currentConstructor.callSignature.parameterList === parameterList) {
                     this.pushDiagnostic(modifier,
-                        DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_a_constructor_overload);
+                        DiagnosticCode.A_parameter_property_is_only_allowed_in_a_constructor_implementation);
                     return true;
                 }
                 else if (this.inAmbientDeclaration || this.currentConstructor === null || this.currentConstructor.callSignature.parameterList !== parameterList) {
                     this.pushDiagnostic(modifier,
-                        DiagnosticCode.Parameter_property_declarations_can_only_be_used_in_a_non_ambient_constructor_declaration);
+                        DiagnosticCode.A_parameter_property_is_only_allowed_in_a_constructor_implementation);
                     return true;
                 }
             }

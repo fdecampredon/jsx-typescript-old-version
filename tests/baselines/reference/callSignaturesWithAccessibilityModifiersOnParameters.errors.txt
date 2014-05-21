@@ -3,83 +3,83 @@
     
     function foo(public x, private y) { }
                  ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(3,14): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(3,14): error TS1040: A parameter property is only allowed in a constructor implementation.
     var f = function foo(public x, private y) { }
                          ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(4,22): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(4,22): error TS1040: A parameter property is only allowed in a constructor implementation.
     var f2 = function (public x, private y) { }
                        ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(5,20): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(5,20): error TS1040: A parameter property is only allowed in a constructor implementation.
     var f3 = (x, private y) => { }
                  ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(6,14): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(6,14): error TS1040: A parameter property is only allowed in a constructor implementation.
     var f4 = <T>(public x: T, y: T) => { }
                  ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(7,14): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(7,14): error TS1040: A parameter property is only allowed in a constructor implementation.
     
     function foo2(private x: string, public y: number) { }
                   ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(9,15): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(9,15): error TS1040: A parameter property is only allowed in a constructor implementation.
     var f5 = function foo(private x: string, public y: number) { }
                           ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(10,23): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(10,23): error TS1040: A parameter property is only allowed in a constructor implementation.
     var f6 = function (private x: string, public y: number) { }
                        ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(11,20): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(11,20): error TS1040: A parameter property is only allowed in a constructor implementation.
     var f7 = (private x: string, public y: number) => { }
               ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(12,11): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(12,11): error TS1040: A parameter property is only allowed in a constructor implementation.
     var f8 = <T>(private x: T, public y: T) => { }
                  ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(13,14): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(13,14): error TS1040: A parameter property is only allowed in a constructor implementation.
     
     class C {
         foo(public x, private y) { }
             ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(16,9): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(16,9): error TS1040: A parameter property is only allowed in a constructor implementation.
         foo2(public x: number, private y: string) { }
              ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(17,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(17,10): error TS1040: A parameter property is only allowed in a constructor implementation.
         foo3<T>(public x: T, private y: T) { }
                 ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(18,13): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(18,13): error TS1040: A parameter property is only allowed in a constructor implementation.
     }
     
     interface I {
         (private x, public y);
          ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(22,6): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(22,6): error TS1040: A parameter property is only allowed in a constructor implementation.
         (private x: string, public y: number);
          ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(23,6): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(23,6): error TS1040: A parameter property is only allowed in a constructor implementation.
         foo(private x, public y);
             ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(24,9): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(24,9): error TS1040: A parameter property is only allowed in a constructor implementation.
         foo(public x: number, y: string);
             ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(25,9): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(25,9): error TS1040: A parameter property is only allowed in a constructor implementation.
         foo3<T>(x: T, private y: T);
                       ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(26,19): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(26,19): error TS1040: A parameter property is only allowed in a constructor implementation.
     }
     
     var a: {
         foo(public x, private y);
             ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(30,9): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(30,9): error TS1040: A parameter property is only allowed in a constructor implementation.
         foo2(private x: number, public y: string);
              ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(31,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(31,10): error TS1040: A parameter property is only allowed in a constructor implementation.
     };
     
     var b = {
         foo(public x, y) { },
             ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(35,9): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(35,9): error TS1040: A parameter property is only allowed in a constructor implementation.
         a: function foo(x: number, private y: string) { },
                                    ~~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(36,32): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(36,32): error TS1040: A parameter property is only allowed in a constructor implementation.
         b: <T>(public x: T, private y: T) => { }
                ~~~~~~
-!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(37,12): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! callSignaturesWithAccessibilityModifiersOnParameters.ts(37,12): error TS1040: A parameter property is only allowed in a constructor implementation.
     }

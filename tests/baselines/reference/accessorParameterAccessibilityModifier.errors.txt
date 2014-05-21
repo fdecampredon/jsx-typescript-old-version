@@ -4,8 +4,8 @@
     class C {
         set X(public v) { }
               ~~~~~~
-!!! accessorParameterAccessibilityModifier.ts(4,11): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! accessorParameterAccessibilityModifier.ts(4,11): error TS1040: A parameter property is only allowed in a constructor implementation.
         static set X(public v2) { }
                      ~~~~~~
-!!! accessorParameterAccessibilityModifier.ts(5,18): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! accessorParameterAccessibilityModifier.ts(5,18): error TS1040: A parameter property is only allowed in a constructor implementation.
     }

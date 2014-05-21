@@ -33,12 +33,12 @@
          ~~~~~~
 !!! callSignatureWithOptionalParameterAndInitializer.ts(23,6): error TS1015: Parameter cannot have question mark and initializer.
          ~~~~~~
-!!! callSignatureWithOptionalParameterAndInitializer.ts(23,6): error TS2174: Default arguments are only allowed in implementation.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(23,6): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
         foo(x: number, y?: number = 1);
                        ~~~~~~~~~~~~~~
 !!! callSignatureWithOptionalParameterAndInitializer.ts(24,20): error TS1015: Parameter cannot have question mark and initializer.
                        ~~~~~~~~~~~~~~
-!!! callSignatureWithOptionalParameterAndInitializer.ts(24,20): error TS2174: Default arguments are only allowed in implementation.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(24,20): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     }
     
     var i: I;
@@ -52,12 +52,12 @@
          ~~~~~~~~~~~~~~
 !!! callSignatureWithOptionalParameterAndInitializer.ts(34,6): error TS1015: Parameter cannot have question mark and initializer.
          ~~~~~~~~~~~~~~
-!!! callSignatureWithOptionalParameterAndInitializer.ts(34,6): error TS2174: Default arguments are only allowed in implementation.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(34,6): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
         foo(x? = 1);
             ~~~~~~
 !!! callSignatureWithOptionalParameterAndInitializer.ts(35,9): error TS1015: Parameter cannot have question mark and initializer.
             ~~~~~~
-!!! callSignatureWithOptionalParameterAndInitializer.ts(35,9): error TS2174: Default arguments are only allowed in implementation.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(35,9): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     }
     
     a();

@@ -21,7 +21,7 @@
     // Ambient function with default parameter values
     declare function fn3(x = 3);
                          ~~~~~
-!!! ambientErrors.ts(17,22): error TS2174: Default arguments are only allowed in implementation.
+!!! ambientErrors.ts(17,22): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     
     // Ambient function with function body
     declare function fn4() { };

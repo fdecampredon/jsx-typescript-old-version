@@ -2347,7 +2347,7 @@ module TypeScript {
                 var typeRef = this.resolveTypeReference(argDeclAST.typeAnnotation.type, context);
 
                 if (paramSymbol.isVarArg && !typeRef.isArrayNamedTypeReference()) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Rest_parameters_must_be_array_types));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.A_rest_parameter_must_be_of_an_array_type));
                     typeRef = this.getNewErrorTypeSymbol();
                 }
 
@@ -2374,7 +2374,7 @@ module TypeScript {
             }
 
             if (hasFlag(paramDecl.flags, PullElementFlags.Optional) && argDeclAST.equalsValueClause && isTypesOnlyLocation(argDeclAST)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Default_arguments_are_only_allowed_in_implementation));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.A_parameter_initializer_is_only_allowed_in_a_function_or_constructor_implementation));
             }
 
             paramSymbol.setResolved();
@@ -2390,7 +2390,7 @@ module TypeScript {
                 var typeRef = this.resolveTypeReference(argDeclAST.typeAnnotation.type, context);
 
                 if (paramSymbol.isVarArg && !typeRef.isArrayNamedTypeReference()) {
-                    var diagnostic = context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Rest_parameters_must_be_array_types));
+                    var diagnostic = context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.A_rest_parameter_must_be_of_an_array_type));
                     typeRef = this.getNewErrorTypeSymbol();
                 }
 
@@ -3073,7 +3073,7 @@ module TypeScript {
                     }
                 }
                 else if (declSymbol.isVarArg && !(typeExprSymbol.isArrayNamedTypeReference() || typeExprSymbol === this.cachedArrayInterfaceType())) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Rest_parameters_must_be_array_types));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.A_rest_parameter_must_be_of_an_array_type));
                     typeExprSymbol = this.getNewErrorTypeSymbol();
                 }
 
@@ -3297,7 +3297,7 @@ module TypeScript {
             if (init && varDeclOrParameter.kind() === SyntaxKind.Parameter) {
                 var containerSignature = enclosingDecl.getSignatureSymbol(this.semanticInfoChain);
                 if (containerSignature && !containerSignature.isDefinition()) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Default_arguments_are_only_allowed_in_implementation));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.A_parameter_initializer_is_only_allowed_in_a_function_or_constructor_implementation));
                 }
             }
             if (declSymbol.kind !== PullElementKind.Parameter &&

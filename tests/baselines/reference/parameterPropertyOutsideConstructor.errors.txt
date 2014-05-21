@@ -2,6 +2,6 @@
     class C {
         foo(public x) {
             ~~~~~~
-!!! parameterPropertyOutsideConstructor.ts(2,9): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! parameterPropertyOutsideConstructor.ts(2,9): error TS1040: A parameter property is only allowed in a constructor implementation.
         }
     }

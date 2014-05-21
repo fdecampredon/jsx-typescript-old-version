@@ -35,7 +35,7 @@
         // "Optional parameters may only be followed by other optional parameters"
         public C1M5(C1M5A1:number,C1M5A2:number=0,C1M5A3:number) { return C1M5A1 + C1M5A2; }
                                                   ~~~~~~~~~~~~~
-!!! optionalParamArgsTest.ts(35,47): error TS1016: Required parameter cannot follow optional parameter.
+!!! optionalParamArgsTest.ts(35,47): error TS1016: A required parameter cannot follow an optional parameter.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! optionalParamArgsTest.ts(35,5): error TS2000: Duplicate identifier 'C1M5'.
     }

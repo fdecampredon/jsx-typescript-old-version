@@ -24,10 +24,10 @@
     interface I {
         (x = 1);
          ~~~~~
-!!! callSignaturesWithParameterInitializers.ts(24,6): error TS2174: Default arguments are only allowed in implementation.
+!!! callSignaturesWithParameterInitializers.ts(24,6): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
         foo(x: number, y = 1);
                        ~~~~~
-!!! callSignaturesWithParameterInitializers.ts(25,20): error TS2174: Default arguments are only allowed in implementation.
+!!! callSignaturesWithParameterInitializers.ts(25,20): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     }
     
     var i: I;
@@ -40,10 +40,10 @@
     var a: {
         (x = 1);
          ~~~~~
-!!! callSignaturesWithParameterInitializers.ts(36,6): error TS2174: Default arguments are only allowed in implementation.
+!!! callSignaturesWithParameterInitializers.ts(36,6): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
         foo(x = 1);
             ~~~~~
-!!! callSignaturesWithParameterInitializers.ts(37,9): error TS2174: Default arguments are only allowed in implementation.
+!!! callSignaturesWithParameterInitializers.ts(37,9): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     }
     
     a();

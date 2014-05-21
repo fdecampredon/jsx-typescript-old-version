@@ -63,7 +63,7 @@
         "category": "Error",
         "code": 1013
     },
-    "Rest parameter must be last in list.": {
+    "A rest parameter must be last in a parameter list.": {
         "category": "Error",
         "code": 1014
     },
@@ -71,7 +71,7 @@
         "category": "Error",
         "code": 1015
     },
-    "Required parameter cannot follow optional parameter.": {
+    "A required parameter cannot follow an optional parameter.": {
         "category": "Error",
         "code": 1016
     },
@@ -163,7 +163,7 @@
         "category": "Error",
         "code": 1039
     },
-    "Parameter property declarations can only be used in a non-ambient constructor declaration.": {
+    "A parameter property is only allowed in a constructor implementation.": {
         "category": "Error",
         "code": 1040
     },
@@ -191,11 +191,11 @@
         "category": "Error",
         "code": 1046
     },
-    "Rest parameter cannot be optional.": {
+    "A rest parameter cannot be optional.": {
         "category": "Error",
         "code": 1047
     },
-    "Rest parameter cannot have an initializer.": {
+    "A rest parameter cannot have an initializer.": {
         "category": "Error",
         "code": 1048
     },
@@ -318,10 +318,6 @@
     "Function overload must not be static.": {
         "category": "Error",
         "code": 1081
-    },
-    "Parameter property declarations cannot be used in a constructor overload.": {
-        "category": "Error",
-        "code": 1083
     },
     "Invalid 'reference' directive syntax.": {
         "category": "Error",
@@ -947,7 +943,7 @@
         "category": "Error",
         "code": 2160
     },
-    "Rest parameters must be array types.": {
+    "A rest parameter must be of an array type.": {
         "category": "Error",
         "code": 2162
     },
@@ -991,7 +987,7 @@
         "category": "Error",
         "code": 2172
     },
-    "Default arguments are only allowed in implementation.": {
+    "A parameter initializer is only allowed in a function or constructor implementation.": {
         "category": "Error",
         "code": 2174
     },
