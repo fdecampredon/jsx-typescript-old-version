@@ -151,7 +151,7 @@
         "category": "Error",
         "code": 1036
     },
-    "Implementations are not allowed in ambient contexts.": {
+    "A function implementation cannot be declared in an ambient context.": {
         "category": "Error",
         "code": 1037
     },
@@ -1236,6 +1236,10 @@
         "code": 2236
     },
 	"Neither type '{0}' nor type '{1}' is assignable to the other:{NL}{2}": {
+        "category": "Error",
+        "code": 2237
+    },
+	"Duplicate function implementation.": {
         "category": "Error",
         "code": 2237
     },

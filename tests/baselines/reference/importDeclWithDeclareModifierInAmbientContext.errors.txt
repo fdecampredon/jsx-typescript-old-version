@@ -6,7 +6,7 @@
         }
         declare export import a = x.c;
         ~~~~~~~
-!!! importDeclWithDeclareModifierInAmbientContext.ts(6,5): error TS1079: 'declare' modifier not allowed on import declaration.
+!!! importDeclWithDeclareModifierInAmbientContext.ts(6,5): error TS1079: A 'declare' modifier cannot be used with an import declaration.
         var b: a;
     }
     

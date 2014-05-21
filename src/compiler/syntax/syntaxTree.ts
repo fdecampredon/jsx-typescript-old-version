@@ -1124,7 +1124,7 @@ module TypeScript {
 
         public visitBlock(node: BlockSyntax): void {
             if (this.inAmbientDeclaration || this.syntaxTree.isDeclaration()) {
-                this.pushDiagnostic(firstToken(node), DiagnosticCode.Implementations_are_not_allowed_in_ambient_contexts);
+                this.pushDiagnostic(firstToken(node), DiagnosticCode.A_function_implementation_cannot_be_declared_in_an_ambient_context);
                 return;
             }
 

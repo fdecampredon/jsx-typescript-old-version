@@ -1396,18 +1396,20 @@ module TypeScript {
                 // SPEC: Nov 18
                 // When merging a non-ambient function or class declaration and a non-ambient internal module declaration, 
                 // the function or class declaration must be located prior to the internal module declaration in the same source file. 
-                // => when any of components is ambient - order doesn't matter                
-                var acceptableRedeclaration: boolean;
-                
+                // => when any of components is ambient - order doesn't matter
+
                 // Duplicate is acceptable if it is another signature (not a duplicate implementation), or an ambient fundule
                 if (functionSymbol.kind === PullElementKind.Function) {
                     // normal fundule - we are allowed to add overloads
-                    acceptableRedeclaration = isSignature || functionSymbol.allDeclsHaveFlag(PullElementFlags.Signature);
+                    var acceptableRedeclaration = isSignature || functionSymbol.allDeclsHaveFlag(PullElementFlags.Signature);
+                    if (!acceptableRedeclaration) {
+                        this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST.identifier, DiagnosticCode.Duplicate_function_implementation);
+                    }
                 }
                 else {
                     // check if this is ambient fundule?
                     var isCurrentDeclAmbient = hasFlag(functionDeclaration.flags, PullElementFlags.Ambient);
-                    acceptableRedeclaration = ArrayUtilities.all(functionSymbol.getDeclarations(), (decl) => {
+                    var acceptableRedeclaration = ArrayUtilities.all(functionSymbol.getDeclarations(), (decl) => {
                         // allowed elements for ambient fundules
                         // - signatures
                         // - initialized modules that can be ambient or not depending on whether current decl is ambient                       
@@ -1415,12 +1417,12 @@ module TypeScript {
                         var isSignature = hasFlag(decl.flags, PullElementFlags.Signature);
                         return isInitializedModuleOrAmbientDecl || isSignature;
                     });
-                }
 
-                if (!acceptableRedeclaration) {
-                    this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        funcDeclAST.identifier, functionDeclaration.getDisplayName());
-                    functionSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(funcName);
+                    if (!acceptableRedeclaration) {
+                        this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
+                            funcDeclAST.identifier, functionDeclaration.getDisplayName());
+                        functionSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(funcName);
+                    }
                 }
             }
 
@@ -1646,8 +1648,12 @@ module TypeScript {
             if (methodSymbol &&
                 (methodSymbol.kind !== PullElementKind.Method ||
                 (!isSignature && !methodSymbol.allDeclsHaveFlag(PullElementFlags.Signature)))) {
-                    this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        methodAST, methodDeclaration.getDisplayName());
+                if (methodSymbol.kind === PullElementKind.Method) {
+                    this.semanticInfoChain.addDiagnosticFromAST(methodAST, DiagnosticCode.Duplicate_function_implementation);
+                }
+                else {
+                    this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(methodAST, methodDeclaration.getDisplayName());
+                }
                 methodSymbol = null;
             }
 
