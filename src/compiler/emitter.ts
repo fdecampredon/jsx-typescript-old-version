@@ -224,7 +224,6 @@ module TypeScript {
         private declStack: PullDecl[] = [];
         private exportAssignment: ExportAssignmentSyntax = null;
         private inWithBlock = false;
-        private currentXJSElementTrivia = '';
 
         public document: Document = null;
 
@@ -3533,11 +3532,10 @@ module TypeScript {
         }
         
         public emitXJSElement(xjsElement: XJSElementSyntax): void {
-            this.currentXJSElementTrivia = '';
             this.recordSourceMappingStart(xjsElement);
             
             var openingElement = xjsElement.openingElement;
-            this.emitJavascript(openingElement.name, true);
+            this.emitJavascript(openingElement.name, false);
             this.writeToOutput("(");
             var hasAttributes = !!openingElement.attributes.length;
             if (hasAttributes) {
@@ -3549,17 +3547,101 @@ module TypeScript {
             }
             
             if (!openingElement.slashToken && xjsElement.children.length) {
-                this.currentXJSElementTrivia = openingElement.greaterThanToken.trailingTrivia().fullText();
-                this.writeToOutput(",");
-                this.emitCommaSeparatedList(xjsElement, xjsElement.children, " ", true);
+                this.emitXJSChildren(xjsElement);
             }
-            this.writeToOutput(')');
+            this.writeToOutput(")");
             this.recordSourceMappingEnd(xjsElement);
         }
         
-        public emitXJSText(xjsText: ISyntaxToken): void {
-            this.recordSourceMappingStart(xjsText);
-            var lines = ((this.currentXJSElementTrivia || '' ) + xjsText.text()).split(/\r\n|\n|\r/);
+        
+        // pretty much equivalent to emitCommaSeparated list but we need to be able to
+        // skip empty token
+        private emitXJSChildren(xjsElement: XJSElementSyntax): void {
+            var list = xjsElement.children;
+            var lastEmittedElement: IExpressionSyntax = xjsElement.openingElement;
+            var currentNode: IExpressionSyntax = null;
+            var currentTrivia = xjsElement.openingElement.greaterThanToken.trailingTrivia().fullText();
+            
+            var emitComma = (startLine: boolean) => {
+                
+                if (startLine) {
+                    this.writeLineToOutput(",");
+                    this.emitIndent();
+                }
+                else {
+                    this.writeToOutput(", ");
+                } 
+            }
+            
+            var emitTrivia = () => {
+                if(currentTrivia && this.isOnSameLine(end(lastEmittedElement), start(currentNode))) {
+                    this.writeToOutput("\"" + currentTrivia + "\", ");
+                }
+            }
+            
+            this.indenter.increaseIndent();
+            
+            for (var i = 0, n = list.length; i < n; i++) {
+                currentNode = list[i];
+                var comparePosition = lastEmittedElement.kind() === SyntaxKind.XJSText ? 
+                        start(lastEmittedElement): 
+                        end(lastEmittedElement);
+                
+                var startLine = !this.isOnSameLine(comparePosition, start(currentNode));
+                var currentNodeKind = currentNode.kind();
+                switch(currentNodeKind) {
+                    case SyntaxKind.XJSText:
+                        var result =  this.getXJSTextOutput(<ISyntaxToken>currentNode, currentTrivia);
+                        if (result) {
+                            emitComma(startLine);
+                            this.recordSourceMappingStart(currentNode);
+                            this.writeToOutput(JSON.stringify(result));
+                            this.recordSourceMappingEnd(currentNode);
+                            lastEmittedElement = currentNode;
+                        }
+                        currentTrivia = '';
+                        break;
+                    case SyntaxKind.XJSExpressionContainer:
+                        var xjsExpression = <XJSExpressionContainerSyntax>currentNode;
+                        var expressionTrivia = xjsExpression.closeBraceToken.trailingTrivia().fullText();
+                        if (xjsExpression.expression) {
+                            emitComma(startLine);
+                            emitTrivia();
+                            this.emitXJSExpressionContainer(xjsExpression);
+                            currentTrivia = expressionTrivia
+                        } else {
+                            currentTrivia += expressionTrivia;
+                        }
+                        lastEmittedElement = xjsExpression;
+                        break;
+                    case SyntaxKind.XJSElement:
+                        emitComma(startLine);
+                        emitTrivia();
+                        var childElement = lastEmittedElement = <XJSElementSyntax>currentNode;
+                        this.emitXJSElement(childElement);
+                        currentTrivia = getTrailingTriviaFromXJSElement(childElement);
+                        break;
+                }
+            }
+            
+            
+            this.indenter.decreaseIndent();
+
+            
+            // If the last element isn't on the same line as the parent, then emit a newline
+            // after the last element and emit our indent so the list's terminator will be
+            // on the right line.  Otherwise, emit the buffer string between the last value
+            // and the terminator.
+            if (!this.isOnSameLine(end(xjsElement), end(list[list.length - 1]))) {
+                this.writeLineToOutput("");
+                this.emitIndent();
+            } else if (currentTrivia) {
+                this.writeToOutput(", \"" + currentTrivia + "\"");
+            }
+        }
+        
+        public getXJSTextOutput(xjsText: ISyntaxToken, trivia: string): string {
+            var lines = ((trivia || "" ) + xjsText.text()).split(/\r\n|\n|\r/);
             var lastNonEmptyLine = 0;
 
             lines.forEach(function (line, index) {
@@ -3571,14 +3653,14 @@ module TypeScript {
             var result = lines.map((line, lineIndex) => {
 
                 // replace rendered whitespace tabs with spaces
-                var trimmedLine = line.replace(/\t/g, ' ');
+                var trimmedLine = line.replace(/\t/g, " ");
 
                 // trim whitespace touching a newline
                 if (lineIndex !== 0) {
-                  trimmedLine = trimmedLine.replace(/^[ ]+/, '');
+                  trimmedLine = trimmedLine.replace(/^[ ]+/, "");
                 }
                 if (lineIndex !== (lines.length - 1)) {
-                  trimmedLine = trimmedLine.replace(/[ ]+$/, '');
+                  trimmedLine = trimmedLine.replace(/[ ]+$/, "");
                 }
                 
                 
@@ -3587,23 +3669,23 @@ module TypeScript {
                 var length = trimmedLine.length
                 while(index < length) {
                     var ch = trimmedLine[index];
-                    var str = '';
-                    var entity = '';
-                    if (ch === '&') {
+                    var str = "";
+                    var entity = "";
+                    if (ch === "&") {
                         var count = 0
                         index++;
                         while (index < length && count++ < 10) {
                             ch = trimmedLine[index++];
-                            if (ch === ';') {
+                            if (ch === ";") {
                                 break;
                             }
                             str += ch;
                         }
                         //TODO perhaps we should report an error if entities is not finished 
                         //(count === 10 || index === length)
-                        if (str[0] === '#' && str[1] === 'x') {
+                        if (str[0] === "#" && str[1] === "x") {
                             entity = String.fromCharCode(parseInt(str.substr(2), 16));
-                        } else if (str[0] === '#') {
+                        } else if (str[0] === "#") {
                             entity = String.fromCharCode(parseInt(str.substr(1), 10));
                         } else {
                             entity = XHTMLEntities[str];
@@ -3618,18 +3700,15 @@ module TypeScript {
                 trimmedLine = result;
                 
                 if(trimmedLine && lineIndex !== lastNonEmptyLine) {
-                    trimmedLine += ' ';
+                    trimmedLine += " ";
                 }
                 return trimmedLine;
             }).join('');
             
-            this.writeToOutput(JSON.stringify(result));
-            this.recordSourceMappingEnd(xjsText);
-            this.currentXJSElementTrivia = '';
+            return result;
         }
         
         public emitXJSExpressionContainer(xjsExpression: XJSExpressionContainerSyntax): void {
-            this.currentXJSElementTrivia = '';
             this.recordSourceMappingStart(xjsExpression);
             this.emitJavascript(xjsExpression.expression, false);
             this.recordSourceMappingEnd(xjsExpression);
@@ -3637,7 +3716,7 @@ module TypeScript {
         
         public emitXJSAttribute(xjsAttr: XJSAttributeSyntax): void {
             this.writeToken(xjsAttr.name);
-            this.writeToOutput(':');
+            this.writeToOutput(": ");
             this.emitJavascript(xjsAttr.value, false);
         }
 
@@ -3714,9 +3793,6 @@ module TypeScript {
                     return this.emitFunctionExpression(<FunctionExpressionSyntax>ast);
                 case SyntaxKind.VariableStatement:
                     return this.emitVariableStatement(<VariableStatementSyntax>ast);
-                    
-                case SyntaxKind.XJSText:
-                    return this.emitXJSText(<ISyntaxToken>ast);
             }
 
             this.emitComments(ast, true);
@@ -4169,4 +4245,12 @@ module TypeScript {
         hearts: '\u2665',
         diams: '\u2666'
     };
+    
+    function getTrailingTriviaFromXJSElement(xjsElement: XJSElementSyntax) {
+        if (xjsElement.closingElement) {
+            return xjsElement.closingElement.greaterThanToken.trailingTrivia().fullText();
+        } else {
+            return xjsElement.openingElement.greaterThanToken.trailingTrivia().fullText();
+        }
+    }
 }
