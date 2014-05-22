@@ -14,7 +14,7 @@
     
     a = b; // error
     ~
-!!! assignmentCompatWithNumericIndexer3.ts(14,1): error TS2012: Cannot convert '{ [x: number]: Base; }' to 'A':
+!!! assignmentCompatWithNumericIndexer3.ts(14,1): error TS2012: Type '{ [x: number]: Base; }' is not assignable to type 'A':
 !!! 	Index signatures of types '{ [x: number]: Base; }' and 'A' are incompatible:
 !!! 		Type 'Base' is missing property 'bar' from type 'Derived'.
     b = a; // ok
@@ -27,7 +27,7 @@
     a = b2; // ok
     b2 = a; // error
     ~~
-!!! assignmentCompatWithNumericIndexer3.ts(23,1): error TS2012: Cannot convert 'A' to '{ [x: number]: Derived2; }':
+!!! assignmentCompatWithNumericIndexer3.ts(23,1): error TS2012: Type 'A' is not assignable to type '{ [x: number]: Derived2; }':
 !!! 	Index signatures of types 'A' and '{ [x: number]: Derived2; }' are incompatible:
 !!! 		Type 'Derived' is missing property 'baz' from type 'Derived2'.
     
@@ -41,7 +41,7 @@
             var b: { [x: number]: Derived; };
             a = b; // error
             ~
-!!! assignmentCompatWithNumericIndexer3.ts(33,9): error TS2012: Cannot convert '{ [x: number]: Derived; }' to 'A<T>':
+!!! assignmentCompatWithNumericIndexer3.ts(33,9): error TS2012: Type '{ [x: number]: Derived; }' is not assignable to type 'A<T>':
 !!! 	Index signatures of types '{ [x: number]: Derived; }' and 'A<T>' are incompatible.
             b = a; // ok
     

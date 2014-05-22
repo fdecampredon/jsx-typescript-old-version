@@ -42,4 +42,4 @@
     var b: { Foo?: Derived; }
     var r = true ? a : b; // error
             ~~~~~~~~~~~~
-!!! subtypingWithObjectMembersOptionality2.ts(33,9): error TS2226: Type of conditional '{}' must be identical to '{ Foo: Base; }' or '{ Foo?: Derived; }'.
+!!! subtypingWithObjectMembersOptionality2.ts(33,9): error TS2226: No best common type exists between '{ Foo: Base; }' and '{ Foo?: Derived; }'.

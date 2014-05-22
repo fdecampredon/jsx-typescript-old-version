@@ -1,5 +1,5 @@
 ==== tests/cases/compiler/contextualTyping5.ts (1 errors) ====
     class foo { public bar:{id:number;} = { }; }
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! contextualTyping5.ts(1,13): error TS2012: Cannot convert '{}' to '{ id: number; }':
+!!! contextualTyping5.ts(1,13): error TS2012: Type '{}' is not assignable to type '{ id: number; }':
 !!! 	Type '{}' is missing property 'id' from type '{ id: number; }'.

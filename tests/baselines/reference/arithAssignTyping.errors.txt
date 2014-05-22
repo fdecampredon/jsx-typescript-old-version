@@ -3,7 +3,7 @@
     
     f += ''; // error
     ~
-!!! arithAssignTyping.ts(3,1): error TS2012: Cannot convert 'string' to 'typeof f':
+!!! arithAssignTyping.ts(3,1): error TS2012: Type 'string' is not assignable to type 'typeof f':
 !!! 	Type 'String' is missing property 'prototype' from type 'typeof f'.
     ~
 !!! arithAssignTyping.ts(3,1): error TS2130: Invalid left-hand side of assignment expression.

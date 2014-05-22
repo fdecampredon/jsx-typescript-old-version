@@ -24,12 +24,12 @@
     
         s = t; // error
         ~
-!!! assignmentCompatWithObjectMembers4.ts(24,5): error TS2012: Cannot convert 'T' to 'S':
+!!! assignmentCompatWithObjectMembers4.ts(24,5): error TS2012: Type 'T' is not assignable to type 'S':
 !!! 	Types of property 'foo' of types 'T' and 'S' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
         t = s; // error
         ~
-!!! assignmentCompatWithObjectMembers4.ts(25,5): error TS2012: Cannot convert 'S' to 'T':
+!!! assignmentCompatWithObjectMembers4.ts(25,5): error TS2012: Type 'S' is not assignable to type 'T':
 !!! 	Types of property 'foo' of types 'S' and 'T' are incompatible:
 !!! 		Type 'Derived' is missing property 'baz' from type 'Derived2'.
         s = s2; // ok
@@ -37,34 +37,34 @@
     
         s2 = t2; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(29,5): error TS2012: Cannot convert 'T2' to 'S2':
+!!! assignmentCompatWithObjectMembers4.ts(29,5): error TS2012: Type 'T2' is not assignable to type 'S2':
 !!! 	Types of property 'foo' of types 'T2' and 'S2' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
         t2 = s2; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(30,5): error TS2012: Cannot convert 'S2' to 'T2':
+!!! assignmentCompatWithObjectMembers4.ts(30,5): error TS2012: Type 'S2' is not assignable to type 'T2':
 !!! 	Types of property 'foo' of types 'S2' and 'T2' are incompatible:
 !!! 		Type 'Derived' is missing property 'baz' from type 'Derived2'.
         s2 = t; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(31,5): error TS2012: Cannot convert 'T' to 'S2':
+!!! assignmentCompatWithObjectMembers4.ts(31,5): error TS2012: Type 'T' is not assignable to type 'S2':
 !!! 	Types of property 'foo' of types 'T' and 'S2' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
         s2 = b; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(32,5): error TS2012: Cannot convert '{ foo: Derived2; }' to 'S2':
+!!! assignmentCompatWithObjectMembers4.ts(32,5): error TS2012: Type '{ foo: Derived2; }' is not assignable to type 'S2':
 !!! 	Types of property 'foo' of types '{ foo: Derived2; }' and 'S2' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
         s2 = a2; // ok
     
         a = b; // error
         ~
-!!! assignmentCompatWithObjectMembers4.ts(35,5): error TS2012: Cannot convert '{ foo: Derived2; }' to '{ foo: Derived; }':
+!!! assignmentCompatWithObjectMembers4.ts(35,5): error TS2012: Type '{ foo: Derived2; }' is not assignable to type '{ foo: Derived; }':
 !!! 	Types of property 'foo' of types '{ foo: Derived2; }' and '{ foo: Derived; }' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
         b = a; // error
         ~
-!!! assignmentCompatWithObjectMembers4.ts(36,5): error TS2012: Cannot convert '{ foo: Derived; }' to '{ foo: Derived2; }':
+!!! assignmentCompatWithObjectMembers4.ts(36,5): error TS2012: Type '{ foo: Derived; }' is not assignable to type '{ foo: Derived2; }':
 !!! 	Types of property 'foo' of types '{ foo: Derived; }' and '{ foo: Derived2; }' are incompatible:
 !!! 		Type 'Derived' is missing property 'baz' from type 'Derived2'.
         a = s; // ok
@@ -73,27 +73,27 @@
     
         a2 = b2; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(41,5): error TS2012: Cannot convert '{ foo: Derived2; }' to '{ foo: Derived; }':
+!!! assignmentCompatWithObjectMembers4.ts(41,5): error TS2012: Type '{ foo: Derived2; }' is not assignable to type '{ foo: Derived; }':
 !!! 	Types of property 'foo' of types '{ foo: Derived2; }' and '{ foo: Derived; }' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
         b2 = a2; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(42,5): error TS2012: Cannot convert '{ foo: Derived; }' to '{ foo: Derived2; }':
+!!! assignmentCompatWithObjectMembers4.ts(42,5): error TS2012: Type '{ foo: Derived; }' is not assignable to type '{ foo: Derived2; }':
 !!! 	Types of property 'foo' of types '{ foo: Derived; }' and '{ foo: Derived2; }' are incompatible:
 !!! 		Type 'Derived' is missing property 'baz' from type 'Derived2'.
         a2 = b; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(43,5): error TS2012: Cannot convert '{ foo: Derived2; }' to '{ foo: Derived; }':
+!!! assignmentCompatWithObjectMembers4.ts(43,5): error TS2012: Type '{ foo: Derived2; }' is not assignable to type '{ foo: Derived; }':
 !!! 	Types of property 'foo' of types '{ foo: Derived2; }' and '{ foo: Derived; }' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
         a2 = t2; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(44,5): error TS2012: Cannot convert 'T2' to '{ foo: Derived; }':
+!!! assignmentCompatWithObjectMembers4.ts(44,5): error TS2012: Type 'T2' is not assignable to type '{ foo: Derived; }':
 !!! 	Types of property 'foo' of types 'T2' and '{ foo: Derived; }' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
         a2 = t; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(45,5): error TS2012: Cannot convert 'T' to '{ foo: Derived; }':
+!!! assignmentCompatWithObjectMembers4.ts(45,5): error TS2012: Type 'T' is not assignable to type '{ foo: Derived; }':
 !!! 	Types of property 'foo' of types 'T' and '{ foo: Derived; }' are incompatible:
 !!! 		Type 'Derived2' is missing property 'bar' from type 'Derived'.
     }
@@ -122,7 +122,7 @@
         s = t; // ok
         t = s; // error
         ~
-!!! assignmentCompatWithObjectMembers4.ts(70,5): error TS2012: Cannot convert 'S' to 'T':
+!!! assignmentCompatWithObjectMembers4.ts(70,5): error TS2012: Type 'S' is not assignable to type 'T':
 !!! 	Types of property 'foo' of types 'S' and 'T' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
         s = s2; // ok
@@ -131,7 +131,7 @@
         s2 = t2; // ok
         t2 = s2; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(75,5): error TS2012: Cannot convert 'S2' to 'T2':
+!!! assignmentCompatWithObjectMembers4.ts(75,5): error TS2012: Type 'S2' is not assignable to type 'T2':
 !!! 	Types of property 'foo' of types 'S2' and 'T2' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
         s2 = t; // ok
@@ -141,7 +141,7 @@
         a = b; // ok
         b = a; // error
         ~
-!!! assignmentCompatWithObjectMembers4.ts(81,5): error TS2012: Cannot convert '{ foo: Base; }' to '{ foo: Derived2; }':
+!!! assignmentCompatWithObjectMembers4.ts(81,5): error TS2012: Type '{ foo: Base; }' is not assignable to type '{ foo: Derived2; }':
 !!! 	Types of property 'foo' of types '{ foo: Base; }' and '{ foo: Derived2; }' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
         a = s; // ok
@@ -151,7 +151,7 @@
         a2 = b2; // ok
         b2 = a2; // error
         ~~
-!!! assignmentCompatWithObjectMembers4.ts(87,5): error TS2012: Cannot convert '{ foo: Base; }' to '{ foo: Derived2; }':
+!!! assignmentCompatWithObjectMembers4.ts(87,5): error TS2012: Type '{ foo: Base; }' is not assignable to type '{ foo: Derived2; }':
 !!! 	Types of property 'foo' of types '{ foo: Base; }' and '{ foo: Derived2; }' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
         a2 = b; // ok

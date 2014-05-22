@@ -3,7 +3,7 @@
       class Customers {
         constructor(public names: string);
                     ~~~~~~
-!!! parameterPropertyInConstructor2.ts(3,17): error TS1083: Parameter property declarations cannot be used in a constructor overload.
+!!! parameterPropertyInConstructor2.ts(3,17): error TS1040: A parameter property is only allowed in a constructor implementation.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !!! parameterPropertyInConstructor2.ts(3,5): error TS2149: Overload signature is not compatible with function definition:
 !!! 	Call signature expects 1 or fewer parameters.

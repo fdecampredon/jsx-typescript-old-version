@@ -21,9 +21,9 @@
     
     c1 = c2 = c3; // Should be error
     ~~
-!!! chainedAssignmentChecking.ts(21,1): error TS2012: Cannot convert 'Z' to 'X':
+!!! chainedAssignmentChecking.ts(21,1): error TS2012: Type 'Z' is not assignable to type 'X':
 !!! 	Type 'Z' is missing property 'a' from type 'X'.
          ~~
-!!! chainedAssignmentChecking.ts(21,6): error TS2012: Cannot convert 'Z' to 'Y':
+!!! chainedAssignmentChecking.ts(21,6): error TS2012: Type 'Z' is not assignable to type 'Y':
 !!! 	Type 'Z' is missing property 'a' from type 'Y'.
     

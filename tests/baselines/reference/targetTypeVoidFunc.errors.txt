@@ -2,7 +2,7 @@
     function f1(): { new (): number; } {
         return function () { return; }
                ~~~~~~~~~~~~~~~~~~~~~~~
-!!! targetTypeVoidFunc.ts(2,12): error TS2012: Cannot convert '() => void' to 'new() => number':
+!!! targetTypeVoidFunc.ts(2,12): error TS2012: Type '() => void' is not assignable to type 'new() => number':
 !!! 	Type 'new() => number' requires a construct signature, but type '() => void' lacks one.
     }; 
     

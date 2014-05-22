@@ -9,7 +9,7 @@
     function y2() { }
     function y2() { } // error
              ~~
-!!! augmentedTypesFunction.ts(7,10): error TS2000: Duplicate identifier 'y2'.
+!!! augmentedTypesFunction.ts(7,10): error TS2237: Duplicate function implementation.
     
     function y2a() { }
     var y2a = () => { } // error

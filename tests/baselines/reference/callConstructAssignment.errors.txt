@@ -7,9 +7,9 @@
     
     foo = bar; // error
     ~~~
-!!! callConstructAssignment.ts(7,1): error TS2012: Cannot convert 'new() => any' to '() => void':
+!!! callConstructAssignment.ts(7,1): error TS2012: Type 'new() => any' is not assignable to type '() => void':
 !!! 	Type '() => void' requires a call signature, but type 'new() => any' lacks one.
     bar = foo; // error
     ~~~
-!!! callConstructAssignment.ts(8,1): error TS2012: Cannot convert '() => void' to 'new() => any':
+!!! callConstructAssignment.ts(8,1): error TS2012: Type '() => void' is not assignable to type 'new() => any':
 !!! 	Type 'new() => any' requires a construct signature, but type '() => void' lacks one.

@@ -2347,7 +2347,7 @@ module TypeScript {
                 var typeRef = this.resolveTypeReference(argDeclAST.typeAnnotation.type, context);
 
                 if (paramSymbol.isVarArg && !typeRef.isArrayNamedTypeReference()) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Rest_parameters_must_be_array_types));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.A_rest_parameter_must_be_of_an_array_type));
                     typeRef = this.getNewErrorTypeSymbol();
                 }
 
@@ -2374,7 +2374,7 @@ module TypeScript {
             }
 
             if (hasFlag(paramDecl.flags, PullElementFlags.Optional) && argDeclAST.equalsValueClause && isTypesOnlyLocation(argDeclAST)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Default_arguments_are_only_allowed_in_implementation));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.A_parameter_initializer_is_only_allowed_in_a_function_or_constructor_implementation));
             }
 
             paramSymbol.setResolved();
@@ -2390,7 +2390,7 @@ module TypeScript {
                 var typeRef = this.resolveTypeReference(argDeclAST.typeAnnotation.type, context);
 
                 if (paramSymbol.isVarArg && !typeRef.isArrayNamedTypeReference()) {
-                    var diagnostic = context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Rest_parameters_must_be_array_types));
+                    var diagnostic = context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.A_rest_parameter_must_be_of_an_array_type));
                     typeRef = this.getNewErrorTypeSymbol();
                 }
 
@@ -2453,10 +2453,10 @@ module TypeScript {
                         if (!isAssignable) {
                             var enclosingSymbol = this.getEnclosingSymbolForAST(argDeclAST);
                             if (comparisonInfo.message) {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [initTypeSymbol.toString(enclosingSymbol), contextualType.toString(enclosingSymbol), comparisonInfo.message]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [initTypeSymbol.toString(enclosingSymbol), contextualType.toString(enclosingSymbol), comparisonInfo.message]));
                             }
                             else {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Cannot_convert_0_to_1, [initTypeSymbol.toString(enclosingSymbol), contextualType.toString(enclosingSymbol)]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Type_0_is_not_assignable_to_type_1, [initTypeSymbol.toString(enclosingSymbol), contextualType.toString(enclosingSymbol)]));
                             }
                         }
                     }
@@ -3073,7 +3073,7 @@ module TypeScript {
                     }
                 }
                 else if (declSymbol.isVarArg && !(typeExprSymbol.isArrayNamedTypeReference() || typeExprSymbol === this.cachedArrayInterfaceType())) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Rest_parameters_must_be_array_types));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.A_rest_parameter_must_be_of_an_array_type));
                     typeExprSymbol = this.getNewErrorTypeSymbol();
                 }
 
@@ -3227,10 +3227,10 @@ module TypeScript {
                     if (!isAssignable) {
                         var enclosingSymbol = this.getEnclosingSymbolForAST(varDeclOrParameter);
                         if (comparisonInfo.message) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [initTypeSymbol.toString(enclosingSymbol), typeExprSymbol.toString(enclosingSymbol), comparisonInfo.message]));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [initTypeSymbol.toString(enclosingSymbol), typeExprSymbol.toString(enclosingSymbol), comparisonInfo.message]));
                         }
                         else {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Cannot_convert_0_to_1, [initTypeSymbol.toString(enclosingSymbol), typeExprSymbol.toString(enclosingSymbol)]));
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Type_0_is_not_assignable_to_type_1, [initTypeSymbol.toString(enclosingSymbol), typeExprSymbol.toString(enclosingSymbol)]));
                         }
                     }
                 }
@@ -3297,7 +3297,7 @@ module TypeScript {
             if (init && varDeclOrParameter.kind() === SyntaxKind.Parameter) {
                 var containerSignature = enclosingDecl.getSignatureSymbol(this.semanticInfoChain);
                 if (containerSignature && !containerSignature.isDefinition()) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Default_arguments_are_only_allowed_in_implementation));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.A_parameter_initializer_is_only_allowed_in_a_function_or_constructor_implementation));
                 }
             }
             if (declSymbol.kind !== PullElementKind.Parameter &&
@@ -3590,7 +3590,7 @@ module TypeScript {
 
                         if (!ArrayUtilities.contains(returnExpressionSymbols, bestCommonReturnType)) {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST,
-                                DiagnosticCode.Could_not_find_the_best_common_type_of_types_of_all_return_statement_expressions));
+                                DiagnosticCode.No_best_common_type_exists_among_return_expressions));
                         }
 
                         // if noImplicitAny flag is set to be true and return statements are not cast expressions, report an error
@@ -4897,7 +4897,7 @@ module TypeScript {
             // the Number primitive type, or an enum type, and classified as a reference(section 4.1).
             var operandType = expression.type;
             if (!this.isAnyOrNumberOrEnum(operandType)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(unaryExpression.operand, DiagnosticCode.The_type_of_a_unary_arithmetic_operation_operand_must_be_of_type_any_number_or_an_enum_type));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(unaryExpression.operand, DiagnosticCode.An_arithmetic_operand_must_be_of_type_any_number_or_an_enum_type));
             }
 
             // September 17, ... and classified as a reference(section 4.1).
@@ -4921,7 +4921,7 @@ module TypeScript {
             // the Number primitive type, or an enum type, and classified as a reference(section 4.1).
             var operandType = expression.type;
             if (!this.isAnyOrNumberOrEnum(operandType)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(unaryExpression.operand, DiagnosticCode.The_type_of_a_unary_arithmetic_operation_operand_must_be_of_type_any_number_or_an_enum_type));
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(unaryExpression.operand, DiagnosticCode.An_arithmetic_operand_must_be_of_type_any_number_or_an_enum_type));
             }
 
             // September 17, ... and classified as a reference(section 4.1).
@@ -5429,10 +5429,10 @@ module TypeScript {
                         if (!isAssignable) {
                             var enclosingSymbol = this.getEnclosingSymbolForAST(expression);
                             if (comparisonInfo.message) {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(expression, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [expressionType.toString(enclosingSymbol), sigReturnType.toString(enclosingSymbol), comparisonInfo.message]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(expression, DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [expressionType.toString(enclosingSymbol), sigReturnType.toString(enclosingSymbol), comparisonInfo.message]));
                             }
                             else {
-                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(expression, DiagnosticCode.Cannot_convert_0_to_1, [expressionType.toString(enclosingSymbol), sigReturnType.toString(enclosingSymbol)]));
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(expression, DiagnosticCode.Type_0_is_not_assignable_to_type_1, [expressionType.toString(enclosingSymbol), sigReturnType.toString(enclosingSymbol)]));
                             }
                         }
                     }
@@ -5496,11 +5496,11 @@ module TypeScript {
                         var enclosingSymbol = this.getEnclosingSymbolForAST(caseSwitchClause.expression);
                         if (comparisonInfo.message) {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(caseSwitchClause.expression,
-                                DiagnosticCode.Cannot_convert_0_to_1_NL_2, [caseClauseExpressionType.toString(enclosingSymbol), expressionType.toString(enclosingSymbol), comparisonInfo.message]));
+                                DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [caseClauseExpressionType.toString(enclosingSymbol), expressionType.toString(enclosingSymbol), comparisonInfo.message]));
                         }
                         else {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(caseSwitchClause.expression,
-                                DiagnosticCode.Cannot_convert_0_to_1, [caseClauseExpressionType.toString(enclosingSymbol), expressionType.toString(enclosingSymbol)]));
+                                DiagnosticCode.Type_0_is_not_assignable_to_type_1, [caseClauseExpressionType.toString(enclosingSymbol), expressionType.toString(enclosingSymbol)]));
                         }
                     }
                 }
@@ -8210,7 +8210,7 @@ module TypeScript {
             else {
                 return {
                     symbol: this.getNewErrorTypeSymbol(),
-                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.Type_0_is_not_a_valid_index_expression_type, [indexType.toString()])
+                    diagnostic: this.semanticInfoChain.diagnosticFromAST(callEx, DiagnosticCode.An_index_expression_argument_must_be_string_number_or_any)
                 }
             }
         }
@@ -8461,13 +8461,13 @@ module TypeScript {
                     if (isContextuallyTyped) {
                         var contextualType = context.getContextualType();
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(trinex,
-                            DiagnosticCode.Type_of_conditional_0_must_be_identical_to_1_2_or_3,
-                            [expressionType.toString(), leftType.toString(), rightType.toString(), contextualType.toString()]));
+                            DiagnosticCode.No_best_common_type_exists_between_0_1_and_2,
+                            [contextualType.toString(), leftType.toString(), rightType.toString()]));
                     }
                     else {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(trinex,
-                            DiagnosticCode.Type_of_conditional_0_must_be_identical_to_1_or_2,
-                            [expressionType.toString(), leftType.toString(), rightType.toString()]));
+                            DiagnosticCode.No_best_common_type_exists_between_0_and_1,
+                            [leftType.toString(), rightType.toString()]));
                     }
                 }
             }
@@ -13332,10 +13332,10 @@ module TypeScript {
             if (!isAssignable) {
                 var enclosingSymbol = this.getEnclosingSymbolForAST(ast);
                 if (comparisonInfo.message) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Cannot_convert_0_to_1_NL_2, [source.toString(enclosingSymbol), target.toString(enclosingSymbol), comparisonInfo.message]));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Type_0_is_not_assignable_to_type_1_NL_2, [source.toString(enclosingSymbol), target.toString(enclosingSymbol), comparisonInfo.message]));
                 }
                 else {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Cannot_convert_0_to_1, [source.toString(enclosingSymbol), target.toString(enclosingSymbol)]));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Type_0_is_not_assignable_to_type_1, [source.toString(enclosingSymbol), target.toString(enclosingSymbol)]));
                 }
             }
         }

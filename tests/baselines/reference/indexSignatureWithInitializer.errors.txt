@@ -4,7 +4,7 @@
          ~~~~~~
 !!! indexSignatureWithInitializer.ts(2,6): error TS1020: Index signature parameter cannot have an initializer.
          ~~~~~~
-!!! indexSignatureWithInitializer.ts(2,6): error TS2174: Default arguments are only allowed in implementation.
+!!! indexSignatureWithInitializer.ts(2,6): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     }
     
     class C {
@@ -12,5 +12,5 @@
          ~~~~~
 !!! indexSignatureWithInitializer.ts(6,6): error TS1020: Index signature parameter cannot have an initializer.
          ~~~~~
-!!! indexSignatureWithInitializer.ts(6,6): error TS2174: Default arguments are only allowed in implementation.
+!!! indexSignatureWithInitializer.ts(6,6): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     }

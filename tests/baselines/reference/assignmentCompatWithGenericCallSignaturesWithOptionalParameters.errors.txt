@@ -14,7 +14,7 @@
                 this.a = (x?: T) => null; // ok, same T of required params
                 this.a = (x: T) => null; // error, too many required params
                 ~~~~~~
-!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(14,13): error TS2012: Cannot convert '(x: T) => any' to '() => T':
+!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(14,13): error TS2012: Type '(x: T) => any' is not assignable to type '() => T':
 !!! 	Call signatures of types '(x: T) => any' and '() => T' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
     
@@ -27,7 +27,7 @@
                 this.a3 = (x: T) => null; // ok, same T of required params
                 this.a3 = (x: T, y: T) => null;  // error, too many required params
                 ~~~~~~~
-!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(23,13): error TS2012: Cannot convert '(x: T, y: T) => any' to '(x: T) => T':
+!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(23,13): error TS2012: Type '(x: T, y: T) => any' is not assignable to type '(x: T) => T':
 !!! 	Call signatures of types '(x: T, y: T) => any' and '(x: T) => T' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
     
@@ -73,12 +73,12 @@
             b.a = t.a2;
             b.a = t.a3;
             ~~~
-!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(65,9): error TS2012: Cannot convert '(x: T) => T' to '<T>() => T':
+!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(65,9): error TS2012: Type '(x: T) => T' is not assignable to type '<T>() => T':
 !!! 	Call signatures of types '(x: T) => T' and '<T>() => T' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
             b.a = t.a4;
             ~~~
-!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(66,9): error TS2012: Cannot convert '(x: T, y?: T) => T' to '<T>() => T':
+!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(66,9): error TS2012: Type '(x: T, y?: T) => T' is not assignable to type '<T>() => T':
 !!! 	Call signatures of types '(x: T, y?: T) => T' and '<T>() => T' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
             b.a = t.a5;
@@ -123,7 +123,7 @@
                 this.a = <T>(x?: T) => null; // ok, same T of required params
                 this.a = <T>(x: T) => null; // error, too many required params
                 ~~~~~~
-!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(107,13): error TS2012: Cannot convert '<T>(x: T) => any' to '<T>() => T':
+!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(107,13): error TS2012: Type '<T>(x: T) => any' is not assignable to type '<T>() => T':
 !!! 	Call signatures of types '<T>(x: T) => any' and '<T>() => T' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
     
@@ -136,7 +136,7 @@
                 this.a3 = <T>(x: T) => null; // ok, same T of required params
                 this.a3 = <T>(x: T, y: T) => null;  // error, too many required params
                 ~~~~~~~
-!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(116,13): error TS2012: Cannot convert '<T>(x: T, y: T) => any' to '<T>(x: T) => T':
+!!! assignmentCompatWithGenericCallSignaturesWithOptionalParameters.ts(116,13): error TS2012: Type '<T>(x: T, y: T) => any' is not assignable to type '<T>(x: T) => T':
 !!! 	Call signatures of types '<T>(x: T, y: T) => any' and '<T>(x: T) => T' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
     

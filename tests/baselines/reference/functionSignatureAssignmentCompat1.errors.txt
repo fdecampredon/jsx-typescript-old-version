@@ -10,6 +10,6 @@
     var c: ParserFunc = parsers.raw; // ok!
     var d: ParserFunc = parsers.readline; // not ok
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! functionSignatureAssignmentCompat1.ts(10,5): error TS2012: Cannot convert '(delimiter?: string) => ParserFunc' to 'ParserFunc':
+!!! functionSignatureAssignmentCompat1.ts(10,5): error TS2012: Type '(delimiter?: string) => ParserFunc' is not assignable to type 'ParserFunc':
 !!! 	Call signatures of types '(delimiter?: string) => ParserFunc' and 'ParserFunc' are incompatible.
     var e: ParserFunc = parsers.readline(); // ok

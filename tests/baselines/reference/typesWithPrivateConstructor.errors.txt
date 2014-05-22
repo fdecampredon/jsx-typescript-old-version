@@ -10,7 +10,7 @@
     var c = new C();
     var r: () => void = c.constructor;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! typesWithPrivateConstructor.ts(8,5): error TS2012: Cannot convert 'Function' to '() => void':
+!!! typesWithPrivateConstructor.ts(8,5): error TS2012: Type 'Function' is not assignable to type '() => void':
 !!! 	Type '() => void' requires a call signature, but type 'Function' lacks one.
     
     class C2 {

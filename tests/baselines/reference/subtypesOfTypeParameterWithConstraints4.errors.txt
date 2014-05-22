@@ -6,26 +6,26 @@
         // error
         var r = true ? t : u;
                 ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints4.ts(6,13): error TS2226: Type of conditional '{}' must be identical to 'T' or 'U'.
+!!! subtypesOfTypeParameterWithConstraints4.ts(6,13): error TS2226: No best common type exists between 'T' and 'U'.
         var r = true ? u : t;
                 ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints4.ts(7,13): error TS2226: Type of conditional '{}' must be identical to 'U' or 'T'.
+!!! subtypesOfTypeParameterWithConstraints4.ts(7,13): error TS2226: No best common type exists between 'U' and 'T'.
     
         // error
         var r2 = true ? t : v;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints4.ts(10,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'V'.
+!!! subtypesOfTypeParameterWithConstraints4.ts(10,14): error TS2226: No best common type exists between 'T' and 'V'.
         var r2 = true ? v : t;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints4.ts(11,14): error TS2226: Type of conditional '{}' must be identical to 'V' or 'T'.
+!!! subtypesOfTypeParameterWithConstraints4.ts(11,14): error TS2226: No best common type exists between 'V' and 'T'.
     
         // error
         var r3 = true ? v : u;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints4.ts(14,14): error TS2226: Type of conditional '{}' must be identical to 'V' or 'U'.
+!!! subtypesOfTypeParameterWithConstraints4.ts(14,14): error TS2226: No best common type exists between 'V' and 'U'.
         var r3 = true ? u : v;
                  ~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints4.ts(15,14): error TS2226: Type of conditional '{}' must be identical to 'U' or 'V'.
+!!! subtypesOfTypeParameterWithConstraints4.ts(15,14): error TS2226: No best common type exists between 'U' and 'V'.
     
         // ok
         var r4 = true ? t : new Foo();
@@ -38,10 +38,10 @@
         // BUG, should be error
         var r6 = true ? v : new Foo();
                  ~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints4.ts(26,14): error TS2226: Type of conditional '{}' must be identical to 'V' or 'Foo'.
+!!! subtypesOfTypeParameterWithConstraints4.ts(26,14): error TS2226: No best common type exists between 'V' and 'Foo'.
         var r6 = true ? new Foo() : v;
                  ~~~~~~~~~~~~~~~~~~~~
-!!! subtypesOfTypeParameterWithConstraints4.ts(27,14): error TS2226: Type of conditional '{}' must be identical to 'Foo' or 'V'.
+!!! subtypesOfTypeParameterWithConstraints4.ts(27,14): error TS2226: No best common type exists between 'Foo' and 'V'.
     
     }
     

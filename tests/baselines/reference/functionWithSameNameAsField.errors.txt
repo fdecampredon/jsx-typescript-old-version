@@ -6,7 +6,7 @@
             this.total = total;
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
             ~~~~~~~~~~
-!!! functionWithSameNameAsField.ts(4,9): error TS2012: Cannot convert 'number' to '(total: number) => TestProgressBar':
+!!! functionWithSameNameAsField.ts(4,9): error TS2012: Type 'number' is not assignable to type '(total: number) => TestProgressBar':
 !!! 	Type '(total: number) => TestProgressBar' requires a call signature, but type 'Number' lacks one.
             return this;
     ~~~~~~~~~~~~~~~~~~~~

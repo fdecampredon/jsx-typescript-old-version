@@ -234,5 +234,5 @@
     interface B extends A { }
     var x: B = { };
         ~~~~~~~~~~
-!!! contextualTyping.ts(230,5): error TS2012: Cannot convert '{}' to 'B':
+!!! contextualTyping.ts(230,5): error TS2012: Type '{}' is not assignable to type 'B':
 !!! 	Type '{}' is missing property 'x' from type 'B'.

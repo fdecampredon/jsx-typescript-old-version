@@ -9,5 +9,5 @@
     }
     __test2__.__val__x7 = __test1__.__val__obj4
     ~~~~~~~~~~~~~~~~~~~
-!!! assignmentCompatability42.ts(9,1): error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '__test2__.classWithPublicPrivate<number, string>':
+!!! assignmentCompatability42.ts(9,1): error TS2012: Type '__test1__.interfaceWithPublicAndOptional<number, string>' is not assignable to type '__test2__.classWithPublicPrivate<number, string>':
 !!! 	Property 'two' defined as public in type '__test1__.interfaceWithPublicAndOptional<T, U>' is defined as private in type '__test2__.classWithPublicPrivate<T, U>'.

@@ -220,7 +220,7 @@
         module m2 {
             declare module "abc" {
             ~~~~~~~
-!!! privacyGloImport.ts(134,9): error TS1038: 'declare' modifier not allowed for code already in an ambient context.
+!!! privacyGloImport.ts(134,9): error TS1038: A 'declare' modifier cannot be used in an already ambient context.
                            ~~~~~
 !!! privacyGloImport.ts(134,24): error TS2195: Ambient external module declaration must be defined in global context.
             }

@@ -7,7 +7,7 @@
         t = u; // error
         u = t; // ok
         ~
-!!! typeParameterAssignability2.ts(5,5): error TS2011: Cannot convert 'T' to 'U'.
+!!! typeParameterAssignability2.ts(5,5): error TS2011: Type 'T' is not assignable to type 'U'.
     }
     
     function foo2<T extends U, U>(t: T, u: U) {
@@ -15,7 +15,7 @@
 !!! typeParameterAssignability2.ts(8,15): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         t = u; // error
         ~
-!!! typeParameterAssignability2.ts(9,5): error TS2011: Cannot convert 'U' to 'T'.
+!!! typeParameterAssignability2.ts(9,5): error TS2011: Type 'U' is not assignable to type 'T'.
         u = t; // ok
     }
     
@@ -26,17 +26,17 @@
 !!! typeParameterAssignability2.ts(13,28): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         t = u; // error
         ~
-!!! typeParameterAssignability2.ts(14,5): error TS2011: Cannot convert 'U' to 'T'.
+!!! typeParameterAssignability2.ts(14,5): error TS2011: Type 'U' is not assignable to type 'T'.
         u = t;
     
         t = v; // error
         ~
-!!! typeParameterAssignability2.ts(17,5): error TS2011: Cannot convert 'V' to 'T'.
+!!! typeParameterAssignability2.ts(17,5): error TS2011: Type 'V' is not assignable to type 'T'.
         v = t; // ok
     
         u = v; // error
         ~
-!!! typeParameterAssignability2.ts(20,5): error TS2011: Cannot convert 'V' to 'U'.
+!!! typeParameterAssignability2.ts(20,5): error TS2011: Type 'V' is not assignable to type 'U'.
         v = u; // ok
     }
     
@@ -47,27 +47,27 @@
 !!! typeParameterAssignability2.ts(24,28): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         t = u; // error
         ~
-!!! typeParameterAssignability2.ts(25,5): error TS2011: Cannot convert 'U' to 'T'.
+!!! typeParameterAssignability2.ts(25,5): error TS2011: Type 'U' is not assignable to type 'T'.
         t = v; // error
         ~
-!!! typeParameterAssignability2.ts(26,5): error TS2011: Cannot convert 'V' to 'T'.
+!!! typeParameterAssignability2.ts(26,5): error TS2011: Type 'V' is not assignable to type 'T'.
         t = new Date(); // error
         ~
-!!! typeParameterAssignability2.ts(27,5): error TS2011: Cannot convert 'Date' to 'T'.
+!!! typeParameterAssignability2.ts(27,5): error TS2011: Type 'Date' is not assignable to type 'T'.
     
         u = t;
         u = v; // error
         ~
-!!! typeParameterAssignability2.ts(30,5): error TS2011: Cannot convert 'V' to 'U'.
+!!! typeParameterAssignability2.ts(30,5): error TS2011: Type 'V' is not assignable to type 'U'.
         u = new Date(); // error
         ~
-!!! typeParameterAssignability2.ts(31,5): error TS2011: Cannot convert 'Date' to 'U'.
+!!! typeParameterAssignability2.ts(31,5): error TS2011: Type 'Date' is not assignable to type 'U'.
     
         v = t;
         v = u;
         v = new Date(); // ok
         ~
-!!! typeParameterAssignability2.ts(35,5): error TS2011: Cannot convert 'Date' to 'V'.
+!!! typeParameterAssignability2.ts(35,5): error TS2011: Type 'Date' is not assignable to type 'V'.
     
         var d: Date;
         d = t; // ok
@@ -83,27 +83,27 @@
 !!! typeParameterAssignability2.ts(44,44): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         t = u; // error
         ~
-!!! typeParameterAssignability2.ts(45,5): error TS2011: Cannot convert 'U' to 'T'.
+!!! typeParameterAssignability2.ts(45,5): error TS2011: Type 'U' is not assignable to type 'T'.
         t = v; // error
         ~
-!!! typeParameterAssignability2.ts(46,5): error TS2011: Cannot convert 'V' to 'T'.
+!!! typeParameterAssignability2.ts(46,5): error TS2011: Type 'V' is not assignable to type 'T'.
         t = new Date(); // error
         ~
-!!! typeParameterAssignability2.ts(47,5): error TS2011: Cannot convert 'Date' to 'T'.
+!!! typeParameterAssignability2.ts(47,5): error TS2011: Type 'Date' is not assignable to type 'T'.
     
         u = t;
         u = v; // error
         ~
-!!! typeParameterAssignability2.ts(50,5): error TS2011: Cannot convert 'V' to 'U'.
+!!! typeParameterAssignability2.ts(50,5): error TS2011: Type 'V' is not assignable to type 'U'.
         u = new Date(); // error
         ~
-!!! typeParameterAssignability2.ts(51,5): error TS2011: Cannot convert 'Date' to 'U'.
+!!! typeParameterAssignability2.ts(51,5): error TS2011: Type 'Date' is not assignable to type 'U'.
     
         v = t;
         v = u;
         v = new Date(); // ok
         ~
-!!! typeParameterAssignability2.ts(55,5): error TS2011: Cannot convert 'Date' to 'V'.
+!!! typeParameterAssignability2.ts(55,5): error TS2011: Type 'Date' is not assignable to type 'V'.
     
         var d: Date;
         d = t; // ok
@@ -116,20 +116,20 @@
 !!! typeParameterAssignability2.ts(63,15): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         t = u; // error
         ~
-!!! typeParameterAssignability2.ts(64,5): error TS2011: Cannot convert 'U' to 'T'.
+!!! typeParameterAssignability2.ts(64,5): error TS2011: Type 'U' is not assignable to type 'T'.
         t = v; // error
         ~
-!!! typeParameterAssignability2.ts(65,5): error TS2011: Cannot convert 'V' to 'T'.
+!!! typeParameterAssignability2.ts(65,5): error TS2011: Type 'V' is not assignable to type 'T'.
     
         u = t; // ok
         u = v; // error
         ~
-!!! typeParameterAssignability2.ts(68,5): error TS2011: Cannot convert 'V' to 'U'.
+!!! typeParameterAssignability2.ts(68,5): error TS2011: Type 'V' is not assignable to type 'U'.
     
         v = t; // error
         ~
-!!! typeParameterAssignability2.ts(70,5): error TS2011: Cannot convert 'T' to 'V'.
+!!! typeParameterAssignability2.ts(70,5): error TS2011: Type 'T' is not assignable to type 'V'.
         v = u; // error
         ~
-!!! typeParameterAssignability2.ts(71,5): error TS2011: Cannot convert 'U' to 'V'.
+!!! typeParameterAssignability2.ts(71,5): error TS2011: Type 'U' is not assignable to type 'V'.
     }

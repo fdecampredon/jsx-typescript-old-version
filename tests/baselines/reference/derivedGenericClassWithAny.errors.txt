@@ -30,11 +30,11 @@
         x: T;
         get X(): T { return ''; } // error
                             ~~
-!!! derivedGenericClassWithAny.ts(30,25): error TS2011: Cannot convert 'string' to 'T'.
+!!! derivedGenericClassWithAny.ts(30,25): error TS2011: Type 'string' is not assignable to type 'T'.
         foo(): T {
             return ''; // error
                    ~~
-!!! derivedGenericClassWithAny.ts(32,16): error TS2011: Cannot convert 'string' to 'T'.
+!!! derivedGenericClassWithAny.ts(32,16): error TS2011: Type 'string' is not assignable to type 'T'.
         }
     }
     
@@ -45,6 +45,6 @@
     c = d;
     c = e;
     ~
-!!! derivedGenericClassWithAny.ts(41,1): error TS2012: Cannot convert 'E<string>' to 'C<number>':
+!!! derivedGenericClassWithAny.ts(41,1): error TS2012: Type 'E<string>' is not assignable to type 'C<number>':
 !!! 	Types of property 'x' of types 'E<string>' and 'C<number>' are incompatible.
     var r = c.foo(); // e.foo would return string

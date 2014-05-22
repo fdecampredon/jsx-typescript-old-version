@@ -13,7 +13,7 @@
     
     n = N;  // should not work, as 'number' has a different brand
     ~
-!!! primitiveMembers.ts(11,1): error TS2011: Cannot convert 'Number' to 'number'.
+!!! primitiveMembers.ts(11,1): error TS2011: Type 'Number' is not assignable to type 'number'.
     N = n; // should work
     
     var o: Object = {}

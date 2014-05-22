@@ -63,7 +63,7 @@
         "category": "Error",
         "code": 1013
     },
-    "Rest parameter must be last in list.": {
+    "A rest parameter must be last in a parameter list.": {
         "category": "Error",
         "code": 1014
     },
@@ -71,7 +71,7 @@
         "category": "Error",
         "code": 1015
     },
-    "Required parameter cannot follow optional parameter.": {
+    "A required parameter cannot follow an optional parameter.": {
         "category": "Error",
         "code": 1016
     },
@@ -151,11 +151,11 @@
         "category": "Error",
         "code": 1036
     },
-    "Implementations are not allowed in ambient contexts.": {
+    "A function implementation cannot be declared in an ambient context.": {
         "category": "Error",
         "code": 1037
     },
-    "'declare' modifier not allowed for code already in an ambient context.": {
+    "A 'declare' modifier cannot be used in an already ambient context.": {
         "category": "Error",
         "code": 1038
     },
@@ -163,7 +163,7 @@
         "category": "Error",
         "code": 1039
     },
-    "Parameter property declarations can only be used in a non-ambient constructor declaration.": {
+    "A parameter property is only allowed in a constructor implementation.": {
         "category": "Error",
         "code": 1040
     },
@@ -183,19 +183,19 @@
         "category": "Error",
         "code": 1044
     },
-    "'declare' modifier cannot appear on an interface declaration.": {
+    "A 'declare' modifier cannot be used with an interface declaration.": {
         "category": "Error",
         "code": 1045
     },
-    "'declare' modifier required for top level element.": {
+    "A 'declare' modifier is required for a top level declaration in a .d.ts file.": {
         "category": "Error",
         "code": 1046
     },
-    "Rest parameter cannot be optional.": {
+    "A rest parameter cannot be optional.": {
         "category": "Error",
         "code": 1047
     },
-    "Rest parameter cannot have an initializer.": {
+    "A rest parameter cannot have an initializer.": {
         "category": "Error",
         "code": 1048
     },
@@ -307,7 +307,7 @@
         "category": "NoPrefix",
         "code": 1078
     },
-    "'declare' modifier not allowed on import declaration.": {
+    "A 'declare' modifier cannot be used with an import declaration.": {
         "category": "Error",
         "code": 1079
     },
@@ -318,10 +318,6 @@
     "Function overload must not be static.": {
         "category": "Error",
         "code": 1081
-    },
-    "Parameter property declarations cannot be used in a constructor overload.": {
-        "category": "Error",
-        "code": 1083
     },
     "Invalid 'reference' directive syntax.": {
         "category": "Error",
@@ -399,7 +395,7 @@
         "category": "Error",
         "code": 2007
     },
-    "Type '{0}' is not a valid index expression type.": {
+    "An index expression argument must be 'string', 'number', or 'any'.": {
         "category": "Error",
         "code": 2008
     },
@@ -407,25 +403,17 @@
         "category": "Error",
         "code": 2009
     },
-    "Operator '{0}' cannot be applied to types '{1}' and '{2}': {3}": {
-        "category": "Error",
-        "code": 2010
-    },
-    "Cannot convert '{0}' to '{1}'.": {
+    "Type '{0}' is not assignable to type '{1}'.": {
         "category": "Error",
         "code": 2011
     },
-    "Cannot convert '{0}' to '{1}':{NL}{2}": {
+    "Type '{0}' is not assignable to type '{1}':{NL}{2}": {
         "category": "Error",
         "code": 2012
     },
     "Expected var, class, interface, or module.": {
         "category": "Error",
         "code": 2013
-    },
-    "Operator '{0}' cannot be applied to type '{1}'.": {
-        "category": "Error",
-        "code": 2014
     },
     "Getter '{0}' already declared.": {
         "category": "Error",
@@ -795,7 +783,7 @@
         "category": "Error",
         "code": 2113
     },
-    "The type of a unary arithmetic operation operand must be of type 'any', 'number' or an enum type.": {
+    "An arithmetic operand must be of type 'any', 'number' or an enum type.": {
         "category": "Error",
         "code": 2114
     },
@@ -955,7 +943,7 @@
         "category": "Error",
         "code": 2160
     },
-    "Rest parameters must be array types.": {
+    "A rest parameter must be of an array type.": {
         "category": "Error",
         "code": 2162
     },
@@ -999,7 +987,7 @@
         "category": "Error",
         "code": 2172
     },
-    "Default arguments are only allowed in implementation.": {
+    "A parameter initializer is only allowed in a function or constructor implementation.": {
         "category": "Error",
         "code": 2174
     },
@@ -1091,7 +1079,7 @@
         "category": "Error",
         "code": 2197
     },
-    "Could not find the best common type of types of all return statement expressions.": {
+    "No best common type exists among return expressions.": {
         "category": "Error",
         "code": 2198
     },
@@ -1203,11 +1191,11 @@
         "category": "Error",
         "code": 2225
     },
-    "Type of conditional '{0}' must be identical to '{1}' or '{2}'.": {
+    "No best common type exists between '{0}' and '{1}'.": {
         "category": "Error",
         "code": 2226
     },
-    "Type of conditional '{0}' must be identical to '{1}', '{2}' or '{3}'.": {
+    "No best common type exists between '{0}', '{1}', and '{2}'.": {
         "category": "Error",
         "code": 2227
     },
@@ -1248,6 +1236,10 @@
         "code": 2236
     },
 	"Neither type '{0}' nor type '{1}' is assignable to the other:{NL}{2}": {
+        "category": "Error",
+        "code": 2237
+    },
+	"Duplicate function implementation.": {
         "category": "Error",
         "code": 2237
     },

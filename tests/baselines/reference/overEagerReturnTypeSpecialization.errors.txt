@@ -10,7 +10,7 @@
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                .func(str => str.length);    // should error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! overEagerReturnTypeSpecialization.ts(8,5): error TS2012: Cannot convert 'I1<number>' to 'I1<string>':
+!!! overEagerReturnTypeSpecialization.ts(8,5): error TS2012: Type 'I1<number>' is not assignable to type 'I1<string>':
 !!! 	Types of property 'func' of types 'I1<number>' and 'I1<string>' are incompatible:
 !!! 		Call signatures of types '<U>(callback: (value: number) => U) => I1<U>' and '<U>(callback: (value: string) => U) => I1<U>' are incompatible:
 !!! 			Call signatures of types '(value: number) => any' and '(value: string) => any' are incompatible.

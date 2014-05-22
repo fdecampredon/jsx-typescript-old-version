@@ -8,6 +8,6 @@
     ~~~~~~~~
     };
     ~
-!!! objectLiteralWithNumericPropertyName.ts(4,5): error TS2012: Cannot convert '{ 0: number; }' to 'A':
+!!! objectLiteralWithNumericPropertyName.ts(4,5): error TS2012: Type '{ 0: number; }' is not assignable to type 'A':
 !!! 	Types of property '0' of types '{ 0: number; }' and 'A' are incompatible.
     

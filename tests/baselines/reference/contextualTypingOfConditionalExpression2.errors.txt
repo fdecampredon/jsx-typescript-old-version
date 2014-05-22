@@ -11,5 +11,5 @@
     
     var x2: (a: A) => void = true ? (a: C) => a.foo : (b: number) => { };
                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! contextualTypingOfConditionalExpression2.ts(11,26): error TS2227: Type of conditional '{}' must be identical to '(a: C) => number', '(b: number) => void' or '(a: A) => void'.
+!!! contextualTypingOfConditionalExpression2.ts(11,26): error TS2227: No best common type exists between '(a: A) => void', '(a: C) => number', and '(b: number) => void'.
     

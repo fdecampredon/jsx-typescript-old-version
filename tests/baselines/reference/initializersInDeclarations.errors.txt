@@ -11,7 +11,7 @@
 !!! initializersInDeclarations.ts(6,14): error TS1039: Initializers are not allowed in ambient contexts.
         fn(): boolean {
                    ~
-!!! initializersInDeclarations.ts(7,16): error TS1037: Implementations are not allowed in ambient contexts.
+!!! initializersInDeclarations.ts(7,16): error TS1037: A function implementation cannot be declared in an ambient context.
             return false;
         }
     }

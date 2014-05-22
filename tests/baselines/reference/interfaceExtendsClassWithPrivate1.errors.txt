@@ -21,17 +21,17 @@
     c = i;
     i = c; // error
     ~
-!!! interfaceExtendsClassWithPrivate1.ts(21,1): error TS2012: Cannot convert 'C' to 'I':
+!!! interfaceExtendsClassWithPrivate1.ts(21,1): error TS2012: Type 'C' is not assignable to type 'I':
 !!! 	Type 'C' is missing property 'other' from type 'I'.
     
     i = d;
     d = i; // error
     ~
-!!! interfaceExtendsClassWithPrivate1.ts(24,1): error TS2012: Cannot convert 'I' to 'D':
+!!! interfaceExtendsClassWithPrivate1.ts(24,1): error TS2012: Type 'I' is not assignable to type 'D':
 !!! 	Type 'I' is missing property 'bar' from type 'D'.
     
     c = d;
     d = c; // error
     ~
-!!! interfaceExtendsClassWithPrivate1.ts(27,1): error TS2012: Cannot convert 'C' to 'D':
+!!! interfaceExtendsClassWithPrivate1.ts(27,1): error TS2012: Type 'C' is not assignable to type 'D':
 !!! 	Type 'C' is missing property 'other' from type 'D'.

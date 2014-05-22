@@ -9,5 +9,5 @@
     }
     __test2__.__val__obj = __test1__.__val__obj4
     ~~~~~~~~~~~~~~~~~~~~
-!!! assignmentCompatability24.ts(9,1): error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '<string>(a: string) => string':
+!!! assignmentCompatability24.ts(9,1): error TS2012: Type '__test1__.interfaceWithPublicAndOptional<number, string>' is not assignable to type '<string>(a: string) => string':
 !!! 	Type '<string>(a: string) => string' requires a call signature, but type '__test1__.interfaceWithPublicAndOptional<number, string>' lacks one.

@@ -21,12 +21,12 @@
     // Ambient function with default parameter values
     declare function fn3(x = 3);
                          ~~~~~
-!!! ambientErrors.ts(17,22): error TS2174: Default arguments are only allowed in implementation.
+!!! ambientErrors.ts(17,22): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     
     // Ambient function with function body
     declare function fn4() { };
                            ~
-!!! ambientErrors.ts(20,24): error TS1037: Implementations are not allowed in ambient contexts.
+!!! ambientErrors.ts(20,24): error TS1037: A function implementation cannot be declared in an ambient context.
     
     // Ambient enum with non - integer literal constant member
     declare enum E1 {
@@ -49,7 +49,7 @@
 !!! ambientErrors.ts(34,11): error TS1039: Initializers are not allowed in ambient contexts.
         function fn() { }
                       ~
-!!! ambientErrors.ts(35,19): error TS1037: Implementations are not allowed in ambient contexts.
+!!! ambientErrors.ts(35,19): error TS1037: A function implementation cannot be declared in an ambient context.
         class C {
             static x = 3;
                      ~
@@ -59,13 +59,13 @@
 !!! ambientErrors.ts(38,11): error TS1039: Initializers are not allowed in ambient contexts.
             constructor() { }
                           ~
-!!! ambientErrors.ts(39,23): error TS1037: Implementations are not allowed in ambient contexts.
+!!! ambientErrors.ts(39,23): error TS1037: A function implementation cannot be declared in an ambient context.
             fn() { }
                  ~
-!!! ambientErrors.ts(40,14): error TS1037: Implementations are not allowed in ambient contexts.
+!!! ambientErrors.ts(40,14): error TS1037: A function implementation cannot be declared in an ambient context.
             static sfn() { }
                          ~
-!!! ambientErrors.ts(41,22): error TS1037: Implementations are not allowed in ambient contexts.
+!!! ambientErrors.ts(41,22): error TS1037: A function implementation cannot be declared in an ambient context.
         }
     }
     

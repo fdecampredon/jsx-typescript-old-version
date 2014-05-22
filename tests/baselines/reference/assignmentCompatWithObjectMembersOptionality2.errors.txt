@@ -74,43 +74,43 @@
     
         c = d; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(74,5): error TS2012: Cannot convert 'D' to 'C':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(74,5): error TS2012: Type 'D' is not assignable to type 'C':
 !!! 	Type 'D' is missing property 'opt' from type 'C'.
         c = e; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(75,5): error TS2012: Cannot convert 'E' to 'C':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(75,5): error TS2012: Type 'E' is not assignable to type 'C':
 !!! 	Type 'E' is missing property 'opt' from type 'C'.
         c = f; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(76,5): error TS2012: Cannot convert 'F' to 'C':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(76,5): error TS2012: Type 'F' is not assignable to type 'C':
 !!! 	Type 'F' is missing property 'opt' from type 'C'.
         c = a; // ok
     
         a = d; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(79,5): error TS2012: Cannot convert 'D' to '{ opt: Base; }':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(79,5): error TS2012: Type 'D' is not assignable to type '{ opt: Base; }':
 !!! 	Type 'D' is missing property 'opt' from type '{ opt: Base; }'.
         a = e; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(80,5): error TS2012: Cannot convert 'E' to '{ opt: Base; }':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(80,5): error TS2012: Type 'E' is not assignable to type '{ opt: Base; }':
 !!! 	Type 'E' is missing property 'opt' from type '{ opt: Base; }'.
         a = f; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(81,5): error TS2012: Cannot convert 'F' to '{ opt: Base; }':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(81,5): error TS2012: Type 'F' is not assignable to type '{ opt: Base; }':
 !!! 	Type 'F' is missing property 'opt' from type '{ opt: Base; }'.
         a = c; // ok
     
         b = d; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(84,5): error TS2012: Cannot convert 'D' to '{ opt: Base; }':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(84,5): error TS2012: Type 'D' is not assignable to type '{ opt: Base; }':
 !!! 	Type 'D' is missing property 'opt' from type '{ opt: Base; }'.
         b = e; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(85,5): error TS2012: Cannot convert 'E' to '{ opt: Base; }':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(85,5): error TS2012: Type 'E' is not assignable to type '{ opt: Base; }':
 !!! 	Type 'E' is missing property 'opt' from type '{ opt: Base; }'.
         b = f; // error
         ~
-!!! assignmentCompatWithObjectMembersOptionality2.ts(86,5): error TS2012: Cannot convert 'F' to '{ opt: Base; }':
+!!! assignmentCompatWithObjectMembersOptionality2.ts(86,5): error TS2012: Type 'F' is not assignable to type '{ opt: Base; }':
 !!! 	Type 'F' is missing property 'opt' from type '{ opt: Base; }'.
         b = a; // ok
         b = c; // ok

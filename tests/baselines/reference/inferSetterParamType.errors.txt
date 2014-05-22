@@ -13,7 +13,7 @@
         get bar() {
             return 0; // should be an error - can't coerce infered return type to match setter annotated type
                    ~
-!!! inferSetterParamType.ts(13,16): error TS2011: Cannot convert 'number' to 'string'.
+!!! inferSetterParamType.ts(13,16): error TS2011: Type 'number' is not assignable to type 'string'.
         }
         set bar(n:string) {
         }

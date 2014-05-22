@@ -2,7 +2,7 @@
     //Function overload signature with initializer
     function fn1(x = 3);
                  ~~~~~
-!!! functionOverloadErrors.ts(2,14): error TS2174: Default arguments are only allowed in implementation.
+!!! functionOverloadErrors.ts(2,14): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     function fn1() { }
     
     //Multiple function overload signatures that are identical
@@ -143,6 +143,6 @@
     //Function overloads which use initializer expressions
     function initExpr(n = 13);
                       ~~~~~~
-!!! functionOverloadErrors.ts(116,19): error TS2174: Default arguments are only allowed in implementation.
+!!! functionOverloadErrors.ts(116,19): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
     function initExpr() { }
     

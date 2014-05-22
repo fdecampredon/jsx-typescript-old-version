@@ -13,9 +13,9 @@
         class C {
             constructor (public c = 10);
                          ~~~~~~
-!!! varBlock.ts(11,22): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! varBlock.ts(11,22): error TS1040: A parameter property is only allowed in a constructor implementation.
                          ~~~~~~~~~~~~~
-!!! varBlock.ts(11,22): error TS2174: Default arguments are only allowed in implementation.
+!!! varBlock.ts(11,22): error TS2174: A parameter initializer is only allowed in a function or constructor implementation.
         }
     }
     

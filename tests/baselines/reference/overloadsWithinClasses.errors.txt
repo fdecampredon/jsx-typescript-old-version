@@ -5,7 +5,7 @@
      
         static fnOverload(foo: string){ } // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! overloadsWithinClasses.ts(5,5): error TS2000: Duplicate identifier 'fnOverload'.
+!!! overloadsWithinClasses.ts(5,5): error TS2237: Duplicate function implementation.
      
     }
     

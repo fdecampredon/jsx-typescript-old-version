@@ -18,11 +18,11 @@
     
     x6 = x7;
     ~~
-!!! typeMatch1.ts(18,1): error TS2012: Cannot convert 'D' to 'C':
+!!! typeMatch1.ts(18,1): error TS2012: Type 'D' is not assignable to type 'C':
 !!! 	Types 'D' and 'C' define property 'x' as private.
     x6=C;
     ~~
-!!! typeMatch1.ts(19,1): error TS2012: Cannot convert 'typeof C' to 'C':
+!!! typeMatch1.ts(19,1): error TS2012: Type 'typeof C' is not assignable to type 'C':
 !!! 	Type 'typeof C' is missing property 'x' from type 'C'.
     C==D;
     ~~~~

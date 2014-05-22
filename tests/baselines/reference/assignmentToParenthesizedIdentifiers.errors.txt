@@ -4,10 +4,10 @@
     (x) = 3; // OK
     x = ''; // Error
     ~
-!!! assignmentToParenthesizedIdentifiers.ts(4,1): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(4,1): error TS2011: Type 'string' is not assignable to type 'number'.
     (x) = ''; // Error
     ~~~
-!!! assignmentToParenthesizedIdentifiers.ts(5,1): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(5,1): error TS2011: Type 'string' is not assignable to type 'number'.
     
     module M {
         export var y: number;
@@ -17,13 +17,13 @@
     (M.y) = 3; // OK
     M.y = ''; // Error
     ~~~
-!!! assignmentToParenthesizedIdentifiers.ts(13,1): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(13,1): error TS2011: Type 'string' is not assignable to type 'number'.
     (M).y = ''; // Error
     ~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(14,1): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(14,1): error TS2011: Type 'string' is not assignable to type 'number'.
     (M.y) = ''; // Error
     ~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(15,1): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(15,1): error TS2011: Type 'string' is not assignable to type 'number'.
     
     M = { y: 3 }; // Error
     ~
@@ -47,15 +47,15 @@
     
     M2.M3 = { x: '' }; // Error
     ~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(31,1): error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
+!!! assignmentToParenthesizedIdentifiers.ts(31,1): error TS2012: Type '{ x: string; }' is not assignable to type 'typeof M2.M3':
 !!! 	Types of property 'M2.M3.x' of types '{ x: string; }' and 'typeof M2.M3' are incompatible.
     (M2).M3 = { x: '' }; // Error
     ~~~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(32,1): error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
+!!! assignmentToParenthesizedIdentifiers.ts(32,1): error TS2012: Type '{ x: string; }' is not assignable to type 'typeof M2.M3':
 !!! 	Types of property 'M2.M3.x' of types '{ x: string; }' and 'typeof M2.M3' are incompatible.
     (M2.M3) = { x: '' }; // Error
     ~~~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(33,1): error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
+!!! assignmentToParenthesizedIdentifiers.ts(33,1): error TS2012: Type '{ x: string; }' is not assignable to type 'typeof M2.M3':
 !!! 	Types of property 'M2.M3.x' of types '{ x: string; }' and 'typeof M2.M3' are incompatible.
     
     
@@ -72,32 +72,32 @@
         (x) = 3; // OK
         x = ''; // Error
         ~
-!!! assignmentToParenthesizedIdentifiers.ts(43,5): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(43,5): error TS2011: Type 'string' is not assignable to type 'number'.
         (x) = ''; // Error
         ~~~
-!!! assignmentToParenthesizedIdentifiers.ts(44,5): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(44,5): error TS2011: Type 'string' is not assignable to type 'number'.
     
         (y).t = 3; // OK
         (y.t) = 3; // OK
         (y).t = ''; // Error
         ~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(48,5): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(48,5): error TS2011: Type 'string' is not assignable to type 'number'.
         (y.t) = ''; // Error
         ~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(49,5): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(49,5): error TS2011: Type 'string' is not assignable to type 'number'.
     
         y['t'] = 3; // OK
         (y)['t'] = 3; // OK
         (y['t']) = 3; // OK
         y['t'] = ''; // Error
         ~~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(54,5): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(54,5): error TS2011: Type 'string' is not assignable to type 'number'.
         (y)['t'] = ''; // Error
         ~~~~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(55,5): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(55,5): error TS2011: Type 'string' is not assignable to type 'number'.
         (y['t']) = ''; // Error
         ~~~~~~~~
-!!! assignmentToParenthesizedIdentifiers.ts(56,5): error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(56,5): error TS2011: Type 'string' is not assignable to type 'number'.
     }
     
     enum E {

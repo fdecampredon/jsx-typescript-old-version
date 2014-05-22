@@ -7,7 +7,7 @@
     var n = g;
     n = f;
     ~
-!!! restArgAssignmentCompat.ts(7,1): error TS2012: Cannot convert 'typeof f' to 'typeof g':
+!!! restArgAssignmentCompat.ts(7,1): error TS2012: Type 'typeof f' is not assignable to type 'typeof g':
 !!! 	Call signatures of types 'typeof f' and 'typeof g' are incompatible:
 !!! 		Type 'Number' is missing property 'concat' from type 'number[]'.
     n([4], 'foo');

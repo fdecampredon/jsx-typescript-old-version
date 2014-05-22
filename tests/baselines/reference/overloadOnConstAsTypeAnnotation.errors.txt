@@ -3,7 +3,7 @@
                                         ~~
 !!! overloadOnConstAsTypeAnnotation.ts(1,37): error TS1005: ';' expected.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! overloadOnConstAsTypeAnnotation.ts(1,5): error TS2012: Cannot convert 'string' to '(x: 'hi') => number':
+!!! overloadOnConstAsTypeAnnotation.ts(1,5): error TS2012: Type 'string' is not assignable to type '(x: 'hi') => number':
 !!! 	Type '(x: 'hi') => number' requires a call signature, but type 'String' lacks one.
            ~~~~~~~~~~~~~~~~~~~
 !!! overloadOnConstAsTypeAnnotation.ts(1,8): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.

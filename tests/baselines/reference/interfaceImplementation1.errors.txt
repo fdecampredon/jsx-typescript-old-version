@@ -44,7 +44,7 @@
     ~~~~~~~~~~~~~~~~~~~~
     }
     ~
-!!! interfaceImplementation1.ts(34,5): error TS2012: Cannot convert '() => C2' to 'I4':
+!!! interfaceImplementation1.ts(34,5): error TS2012: Type '() => C2' is not assignable to type 'I4':
 !!! 	Type 'I4' requires a construct signature, but type '() => C2' lacks one.
     new a();
     

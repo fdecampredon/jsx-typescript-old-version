@@ -92,7 +92,7 @@
     
     var o1: { a: { a: string; }; b: string; } = { e: 0, f: 0 };
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! incompatibleTypes.ts(66,5): error TS2012: Cannot convert '{ e: number; f: number; }' to '{ a: { a: string; }; b: string; }':
+!!! incompatibleTypes.ts(66,5): error TS2012: Type '{ e: number; f: number; }' is not assignable to type '{ a: { a: string; }; b: string; }':
 !!! 	Type '{ e: number; f: number; }' is missing property 'a' from type '{ a: { a: string; }; b: string; }'.
     
     var a1 = [{ e: 0, f: 0 }, { e: 0, f: 0 }, { e: 0, g: 0 }];
@@ -101,12 +101,12 @@
     
     var i1c1: { (): string; } = 5;
         ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! incompatibleTypes.ts(72,5): error TS2012: Cannot convert 'number' to '() => string':
+!!! incompatibleTypes.ts(72,5): error TS2012: Type 'number' is not assignable to type '() => string':
 !!! 	Type '() => string' requires a call signature, but type 'Number' lacks one.
     
     var fp1: () =>any = a => 0;
         ~~~~~~~~~~~~~~~~~~~~~~
-!!! incompatibleTypes.ts(74,5): error TS2012: Cannot convert '(a: any) => number' to '() => any':
+!!! incompatibleTypes.ts(74,5): error TS2012: Type '(a: any) => number' is not assignable to type '() => any':
 !!! 	Call signatures of types '(a: any) => number' and '() => any' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
     

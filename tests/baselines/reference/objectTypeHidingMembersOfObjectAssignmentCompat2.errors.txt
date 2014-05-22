@@ -7,12 +7,12 @@
     var o: Object;
     o = i; // error
     ~
-!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(7,1): error TS2012: Cannot convert 'I' to 'Object':
+!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(7,1): error TS2012: Type 'I' is not assignable to type 'Object':
 !!! 	Types of property 'toString' of types 'I' and 'Object' are incompatible:
 !!! 		Call signatures of types '() => number' and '() => string' are incompatible.
     i = o; // error
     ~
-!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(8,1): error TS2012: Cannot convert 'Object' to 'I':
+!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(8,1): error TS2012: Type 'Object' is not assignable to type 'I':
 !!! 	Types of property 'toString' of types 'Object' and 'I' are incompatible:
 !!! 		Call signatures of types '() => string' and '() => number' are incompatible.
     
@@ -22,12 +22,12 @@
     var c: C;
     o = c; // error
     ~
-!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(14,1): error TS2012: Cannot convert 'C' to 'Object':
+!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(14,1): error TS2012: Type 'C' is not assignable to type 'Object':
 !!! 	Types of property 'toString' of types 'C' and 'Object' are incompatible:
 !!! 		Call signatures of types '() => number' and '() => string' are incompatible.
     c = o; // error
     ~
-!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(15,1): error TS2012: Cannot convert 'Object' to 'C':
+!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(15,1): error TS2012: Type 'Object' is not assignable to type 'C':
 !!! 	Types of property 'toString' of types 'Object' and 'C' are incompatible:
 !!! 		Call signatures of types '() => string' and '() => number' are incompatible.
     
@@ -36,7 +36,7 @@
     }
     o = a; // error
     ~
-!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(20,1): error TS2012: Cannot convert '{ toString: () => void; }' to 'Object':
+!!! objectTypeHidingMembersOfObjectAssignmentCompat2.ts(20,1): error TS2012: Type '{ toString: () => void; }' is not assignable to type 'Object':
 !!! 	Types of property 'toString' of types '{ toString: () => void; }' and 'Object' are incompatible:
 !!! 		Call signatures of types '() => void' and '() => string' are incompatible.
     a = o; // ok

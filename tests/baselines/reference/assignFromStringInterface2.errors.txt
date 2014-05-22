@@ -46,9 +46,9 @@
     
     x = a; // expected error
     ~
-!!! assignFromStringInterface2.ts(46,1): error TS2011: Cannot convert 'String' to 'string'.
+!!! assignFromStringInterface2.ts(46,1): error TS2011: Type 'String' is not assignable to type 'string'.
     x = b; // expected error
     ~
-!!! assignFromStringInterface2.ts(47,1): error TS2011: Cannot convert 'NotString' to 'string'.
+!!! assignFromStringInterface2.ts(47,1): error TS2011: Type 'NotString' is not assignable to type 'string'.
     
     
