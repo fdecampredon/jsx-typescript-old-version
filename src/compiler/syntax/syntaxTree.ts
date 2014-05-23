@@ -12,6 +12,7 @@ module TypeScript {
 
         // Computed on demand.
         private _amdDependencies: string[];
+        private _jsxDefault: string;
         private _isExternalModule: boolean;
 
         constructor(sourceUnit: SourceUnitSyntax,
@@ -82,23 +83,43 @@ module TypeScript {
             this._isExternalModule = ASTHelpers.externalModuleIndicatorSpan(sourceUnit) !== null;
 
             var amdDependencies: string[] = [];
+            var isXJS = false;
+            var jsxDefault: string = null;
             for (var i = 0, n = leadingTrivia.count(); i < n; i++) {
                 var trivia = leadingTrivia.syntaxTriviaAt(i);
                 if (trivia.isComment()) {
                     var amdDependency = this.getAmdDependency(trivia.fullText());
                     if (amdDependency) {
                         amdDependencies.push(amdDependency);
+                    }else if (!isXJS) {
+                        var infos = this.getJSXInfos(trivia.fullText());
+                        if (infos.isXJS) {
+                            isXJS = true;
+                            jsxDefault = infos.jsxDefault || null;
+                        }
                     }
                 }
             }
 
             this._amdDependencies = amdDependencies;
+            this._jsxDefault = jsxDefault;
         }
 
         private getAmdDependency(comment: string): string {
             var amdDependencyRegEx = /^\/\/\/\s*<amd-dependency\s+path=('|")(.+?)\1/gim;
             var match = amdDependencyRegEx.exec(comment);
             return match ? match[2] : null;
+        }
+        
+        // TODO we need a single place for this logic actyaly it's in precompile and here
+        // and it's use by parser and emitter (and will be by typeresolution), not coherent at all 
+        private getJSXInfos(comment: string): { isXJS: boolean; jsxDefault: string } {
+            var jsxRegEx = /^(\/\/\/\s*<jsx\s+(default=('|")(.+?)\3\s*)?)\/>/gim;
+            var match = jsxRegEx.exec(comment);
+            return {
+                isXJS: !!match,
+                jsxDefault: match ? match[4]: null
+            };
         }
 
         public isExternalModule(): boolean {
@@ -121,6 +142,15 @@ module TypeScript {
             }
 
             return this._amdDependencies;
+        }
+        
+        public jsxDefault(): string {
+            if (this._jsxDefault === undefined) {
+                this.cacheSyntaxTreeInfo();
+                Debug.assert(this._jsxDefault !== undefined);
+            }
+
+            return this._jsxDefault;
         }
     }
 
